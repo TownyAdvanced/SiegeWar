@@ -26,20 +26,6 @@ description: >
 
 msg_command_disabled: '&cCommand disabled.'
 
-
-# Added in Siege War/Backruptcy
-status_bank_bankrupt: '&2Bank: &a-%s &c(BANKRUPT)'
-msg_warning_bankrupt: '&4*** WARNING, %s WILL GO BANKRUPT AT NEXT NEW DAY DUE TO LACK OF FUNDS ***'
-msg_town_bankrupt_by_upkeep: '&b%s could not afford its upkeep and has gone bankrupt.'
-msg_town_bankrupt_by_upkeep_multiple: '&bThe following towns could not afford their upkeep and have gone bankrupt: '
-msg_town_bankrupt_by_nation_tax: '&b%s couldn''t pay taxes and has gone bankrupt.'
-msg_town_bankrupt_by_nation_tax_multiple:  '&bThe following towns could not afford the nation tax and have gone bankrupt: '
-msg_town_debts_cleared: '%s has cleared all its debts, and is no longer bankrupt.'
-msg_err_bankrupt_town_cannot_claim: 'Not allowed to claim plots for a bankrupt town.'
-msg_err_bankrupt_town_cannot_build: 'Not allowed to build in a bankrupt town.'
-msg_err_siege_bankrupt_town_cannot_toggle_open: 'Not allowed to toggle open in a bankrupt town.'
-msg_err_siege_bankrupt_town_cannot_invite: 'Not allowed to invite players to a bankrupt town.'
-
 #Added in (Siegewar version)
 #Siege war happy-path messages
 msg_siege_war_revolt: '&bThe people of %s, led by %s, have revolted against the occupying power of %s, and declared themselves free to choose their own destiny!'
@@ -68,7 +54,7 @@ msg_siege_war_banner_control_session_started: '&6[War]&b Banner control session 
 msg_siege_war_banner_control_session_success: '&6[War]&b Banner control session succeeded!. You have been added to the banner control list.'
 msg_siege_war_banner_control_gained_by_attacker: '&6[War]&b Siege on %s > The attackers have gained banner control.'
 msg_siege_war_banner_control_gained_by_defender: '&6[War]&b Siege on %s > The defenders have gained banner control.'
-msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/n refund'"
+msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw nation refund'"
 msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
 msg_town_destroyed_by_nation_tax: '&b%s couldn''t pay taxes and has fallen.'
 msg_town_destroyed_by_nation_tax_multiple:  '&bThe following towns could not afford the nation tax and have fallen: '
@@ -86,7 +72,7 @@ msg_err_siege_besieged_town_cannot_claim: "&6[War]&c Besieged towns cannot claim
 msg_err_siege_besieged_town_cannot_unclaim: "&6[War]&c Besieged towns (or towns which recently lost a siege) cannot un-claim land."
 msg_err_war_common_occupied_town_cannot_unclaim: "&6[War]&c Occupied towns cannot un-claim land."
 #Nation Delete
-msg_err_siege_war_delete_nation_warning: "WARNING!!!: If you delete your nation you will be refunded %s. This can be claimed later by using '/n refund'."
+msg_err_siege_war_delete_nation_warning: "WARNING!!!: If you delete your nation you will be refunded %s. This can be claimed later by using '/sw nation refund'."
 msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
 #Revolt
 msg_err_siege_war_town_voluntary_leave_impossible: "&6[War]&c Towns cannot leave nations without agreement. To leave your nation, persuade the king (or an assistant) to kick your town."
@@ -167,7 +153,6 @@ msg_attackers: '&aAttackers'
 msg_defenders: '&aDefenders'
 
 #Town Peacefulness
-status_town_title_peaceful: '&b (PEACEFUL)'
 status_town_peacefulness_status_change_timer: '&2Countdown To Peacefulness Status Change: &a%d days'
 msg_war_common_town_declared_peaceful: '&bPeacefulness Declared!. The town will be confirmed as peaceful in %d day(s).'
 msg_war_common_town_declared_non_peaceful: '&bNon-Peacefulness Declared!. The town will be confirmed as non-peaceful in %d day(s).'
