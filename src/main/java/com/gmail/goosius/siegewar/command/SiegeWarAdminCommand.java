@@ -79,10 +79,10 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			parseSiegeWarImmunityCommand(sender, StringMgmt.remFirstArg(args));
 			break;
 		default:
-			sender.sendMessage(ChatTools.formatTitle("/siegewar admin"));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/ta set", "siegeimmunities town [town_name] [hours]", ""));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/ta set", "siegeimmunities all towns in nation [nation_name] [hours]", ""));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/ta set", "siegeimmunities all towns [hours]", ""));
+			sender.sendMessage(ChatTools.formatTitle("/siegewaradmin"));
+			sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity town [town_name] [hours]", ""));
+			sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity all towns in nation [nation_name] [hours]", ""));
+			sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity all towns [hours]", ""));
 
 		}
 	}
@@ -125,9 +125,9 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		} else {
 
 			sender.sendMessage(ChatTools.formatTitle("/swa immunity"));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/ta set", "siegeimmunities town [town_name] [hours]", ""));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/ta set", "siegeimmunities all towns in nation [nation_name] [hours]", ""));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/ta set", "siegeimmunities all towns [hours]", ""));
+			sender.sendMessage(ChatTools.formatCommand("Eg", "/swa immunity", "town [town_name] [hours]", ""));
+			sender.sendMessage(ChatTools.formatCommand("Eg", "/swa immunity", "all towns in nation [nation_name] [hours]", ""));
+			sender.sendMessage(ChatTools.formatCommand("Eg", "/swa immunity", "all towns [hours]", ""));
 		}	}
 
 

@@ -92,13 +92,12 @@ public class SiegeController {
 	}
 
 	public static void loadSiegeList() {
-		System.out.println("SiegeWar: loading SiegeList...");
 		for (Town town : TownyUniverse.getInstance().getTowns())
 			if (SiegeMetaDataController.hasSiege(town)) {
-				System.out.println("SiegeWar: Found siege in Town " + town.getName());
+				System.out.println(SiegeWar.getPrefix() + "Found siege in Town " + town.getName());
 				String name = getSiegeName(town);
 				if (name != null) {
-					System.out.println("SiegeWar: loading siege " + name.replace("#", " "));
+					System.out.println(SiegeWar.getPrefix() + "Loading siege " + name.replace("#", " "));
 					newSiege(name);
 					setSiege(town, true);
 					townSiegeMap.put(town.getUUID(), sieges.get(name.toLowerCase()));
@@ -109,7 +108,7 @@ public class SiegeController {
 	public static boolean loadSieges() {
 		for (Siege siege : sieges.values()) {
 			if (!loadSiege(siege)) {
-				System.out.println("[SiegeWar] Loading Error: Could not read siege data '" + siege.getName() + "'.");
+				System.out.println(SiegeWar.getPrefix() + "Loading Error: Could not read siege data '" + siege.getName() + "'.");
 				return false;
 			}
 		}

@@ -14,9 +14,10 @@ import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
 import com.gmail.goosius.siegewar.listeners.SiegeWarActionListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarEventListener;
+import com.gmail.goosius.siegewar.listeners.SiegeWarBukkitEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarNationEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
+import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 
 import io.github.townyadvanced.util.JavaUtil;
 
@@ -25,7 +26,8 @@ public class SiegeWar extends JavaPlugin {
 	private static SiegeWar plugin;
 	private static Version requiredTownyVersion = Version.fromString("0.96.5.11");
 	private final SiegeWarActionListener siegeWarActionListener = new SiegeWarActionListener(this);
-	private final SiegeWarEventListener siegeWarEventListener = new SiegeWarEventListener(this);
+	private final SiegeWarBukkitEventListener siegeWarBukkitEventListener = new SiegeWarBukkitEventListener(this);
+	private final SiegeWarTownyEventListener siegeWarTownyListener = new SiegeWarTownyEventListener(this);
 	private final SiegeWarNationEventListener siegeWarNationListener = new SiegeWarNationEventListener(this);
 	private final SiegeWarTownEventListener siegeWarTownListener = new SiegeWarTownEventListener(this);
 	
@@ -35,12 +37,12 @@ public class SiegeWar extends JavaPlugin {
 	
     @Override
     public void onEnable() {
-        if (!townyVersionCheck(Bukkit.getPluginManager().getPlugin("Towny").getDescription().getVersion())) {
-            getLogger().severe("Towny version does not meet required minimum version: " + requiredTownyVersion.toString());
+        if (!townyVersionCheck(getTownyVersion())) {
+            System.err.println(getPrefix() + "Towny version does not meet required minimum version: " + requiredTownyVersion.toString());
             onDisable();
             return;
         } else {
-            getLogger().info("Towny version " + Bukkit.getPluginManager().getPlugin("Towny").getDescription().getVersion() + " found.");
+            System.out.println(getPrefix() + "Towny version " + getTownyVersion() + " found.");
         }
         
         if (!loadSettings())
@@ -61,16 +63,17 @@ public class SiegeWar extends JavaPlugin {
 		return this.getDescription().getVersion();
 	}
 
-	public String getPrefix() {
-		return "["+this.getDescription().getPrefix()+"] ";
+	public static String getPrefix() {
+		return "[SiegeWar] ";
 	}
 	
     private boolean townyVersionCheck(String version) {
-        Version ver = Version.fromString(version);
-
-        return ver.compareTo(requiredTownyVersion) >= 0;
+        return Version.fromString(version).compareTo(requiredTownyVersion) >= 0;
     }
 
+    private String getTownyVersion() {
+        return Bukkit.getPluginManager().getPlugin("Towny").getDescription().getVersion();
+    }
 	private boolean loadSettings() {
 		try {
 			Settings.loadConfig(this.getDataFolder().getPath() + File.separator + "config.yml", getVersion());
@@ -118,9 +121,10 @@ public class SiegeWar extends JavaPlugin {
 	private void registerListeners() {
 		PluginManager pm = Bukkit.getServer().getPluginManager();
 		pm.registerEvents(siegeWarActionListener, this);
-		pm.registerEvents(siegeWarEventListener, this);		
+		pm.registerEvents(siegeWarBukkitEventListener, this);		
 		pm.registerEvents(siegeWarNationListener, this);
 		pm.registerEvents(siegeWarTownListener, this);
+		pm.registerEvents(siegeWarTownyListener, this);
 	}
 	
 	private void registerCommands() {
@@ -129,10 +133,11 @@ public class SiegeWar extends JavaPlugin {
 	}
 	
 	public void loadSieges() {
+	    System.out.println(getPrefix() + "Loading SiegeList...");
 		SiegeController.clearSieges();
 		SiegeController.loadSiegeList();
 		SiegeController.loadSieges();
-		System.out.println("SiegeWar: " + SiegeController.getSieges().size() + " siege(s) loaded.");
+		System.out.println(getPrefix() + SiegeController.getSieges().size() + " siege(s) loaded.");
 		
 	}
 }
