@@ -11,7 +11,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Translation;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
 
 /**

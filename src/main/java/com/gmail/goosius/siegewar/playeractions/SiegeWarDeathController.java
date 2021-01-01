@@ -10,7 +10,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarPointsUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.Translation;
+import com.gmail.goosius.siegewar.settings.Translation;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;

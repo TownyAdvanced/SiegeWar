@@ -15,7 +15,7 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.Translation;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
 import org.bukkit.Bukkit;

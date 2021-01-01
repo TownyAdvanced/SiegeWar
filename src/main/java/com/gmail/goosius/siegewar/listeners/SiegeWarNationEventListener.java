@@ -30,13 +30,13 @@ import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
 import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
 import com.palmergames.bukkit.towny.event.nation.NationTownLeaveEvent;
 import com.palmergames.bukkit.towny.event.nation.PreNewNationEvent;
-//import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
-//import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
+import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
+import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.Translation;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.util.ChatTools;
 
 /**
@@ -184,38 +184,38 @@ public class SiegeWarNationEventListener implements Listener {
 		}
 	}
 	
-//	/*
-//	 * SiegeWar will disable nation-zones if the town has a siege.
-//	 */
-//	@EventHandler
-//	public void onNationZoneStatus(NationZoneTownBlockStatusEvent event) {
-//		if (SiegeWarSettings.getWarSiegeEnabled() 
-//			&& SiegeController.hasActiveSiege(event.getTown()))	{
-//			event.setCancelled(true);
-//		}
-//	}
-//	
-//	/*
-//	 * SiegeWar will add lines to Nation which have a siege
-//	 */
-//    @EventHandler
-//	public void onNationStatusScreen(NationStatusScreenEvent event) {
-//		if (SiegeWarSettings.getWarSiegeEnabled()) {
-//			Nation nation = event.getNation();
-//			
-//	        // Siege Attacks [3]: TownA, TownB, TownC
-//	        List<Town> siegeAttacks = getTownsUnderSiegeAttack(nation);
-//	        String[] formattedSiegeAttacks = TownyFormatter.getFormattedNames(siegeAttacks.toArray(new Town[0]));
-//	        List<String> out = new ArrayList<>(ChatTools.listArr(formattedSiegeAttacks, Translation.of("status_nation_siege_attacks", siegeAttacks.size())));
-//
-//	        // Siege Defences [3]: TownX, TownY, TownZ
-//	        List<Town> siegeDefences = getTownsUnderSiegeDefence(nation);
-//	        String[] formattedSiegeDefences = TownyFormatter.getFormattedNames(siegeDefences.toArray(new Town[0]));
-//	        out.addAll(ChatTools.listArr(formattedSiegeDefences, Translation.of("status_nation_siege_defences", siegeDefences.size())));
-//	        
-//	        event.addLines(out);
-//		}
-//	}
+	/*
+	 * SiegeWar will disable nation-zones if the town has a siege.
+	 */
+	@EventHandler
+	public void onNationZoneStatus(NationZoneTownBlockStatusEvent event) {
+		if (SiegeWarSettings.getWarSiegeEnabled() 
+			&& SiegeController.hasActiveSiege(event.getTown()))	{
+			event.setCancelled(true);
+		}
+	}
+	
+	/*
+	 * SiegeWar will add lines to Nation which have a siege
+	 */
+    @EventHandler
+	public void onNationStatusScreen(NationStatusScreenEvent event) {
+		if (SiegeWarSettings.getWarSiegeEnabled()) {
+			Nation nation = event.getNation();
+			
+	        // Siege Attacks [3]: TownA, TownB, TownC
+	        List<Town> siegeAttacks = getTownsUnderSiegeAttack(nation);
+	        String[] formattedSiegeAttacks = TownyFormatter.getFormattedNames(siegeAttacks.toArray(new Town[0]));
+	        List<String> out = new ArrayList<>(ChatTools.listArr(formattedSiegeAttacks, Translation.of("status_nation_siege_attacks", siegeAttacks.size())));
+
+	        // Siege Defences [3]: TownX, TownY, TownZ
+	        List<Town> siegeDefences = getTownsUnderSiegeDefence(nation);
+	        String[] formattedSiegeDefences = TownyFormatter.getFormattedNames(siegeDefences.toArray(new Town[0]));
+	        out.addAll(ChatTools.listArr(formattedSiegeDefences, Translation.of("status_nation_siege_defences", siegeDefences.size())));
+	        
+	        event.addLines(out);
+		}
+	}
     
 	public static List<Town> getTownsUnderSiegeAttack(Nation nation) {
 		List<Town> result = new ArrayList<>();

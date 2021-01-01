@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
 import com.gmail.goosius.siegewar.listeners.SiegeWarActionListener;
@@ -22,6 +23,7 @@ import io.github.townyadvanced.util.JavaUtil;
 public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
+	private static Version requiredTownyVersion = Version.fromString("0.96.5.11");
 	private final SiegeWarActionListener siegeWarActionListener = new SiegeWarActionListener(this);
 	private final SiegeWarEventListener siegeWarEventListener = new SiegeWarEventListener(this);
 	private final SiegeWarNationEventListener siegeWarNationListener = new SiegeWarNationEventListener(this);
@@ -33,6 +35,14 @@ public class SiegeWar extends JavaPlugin {
 	
     @Override
     public void onEnable() {
+        if (!townyVersionCheck(Bukkit.getPluginManager().getPlugin("Towny").getDescription().getVersion())) {
+            getLogger().severe("Towny version does not meet required minimum version: " + requiredTownyVersion.toString());
+            onDisable();
+            return;
+        } else {
+            getLogger().info("Towny version " + Bukkit.getPluginManager().getPlugin("Towny").getDescription().getVersion() + " found.");
+        }
+        
         if (!loadSettings())
         	onDisable();
 
@@ -54,6 +64,12 @@ public class SiegeWar extends JavaPlugin {
 	public String getPrefix() {
 		return "["+this.getDescription().getPrefix()+"] ";
 	}
+	
+    private boolean townyVersionCheck(String version) {
+        Version ver = Version.fromString(version);
+
+        return ver.compareTo(requiredTownyVersion) >= 0;
+    }
 
 	private boolean loadSettings() {
 		try {
