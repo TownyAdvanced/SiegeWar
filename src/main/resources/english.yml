@@ -1,0 +1,206 @@
+name: SiegeWar
+version: 0.01
+language: english
+author: Goosius
+website: 'http://townyadvanced.github.io/'
+description: >
+    Language file for all game messages.  Do not alter this file.
+    If you wish to change any of the entries, make a copy named something else.
+    Alternate language files can be enabled by altering the
+    [language] entry in config.yml
+
+#
+#
+#         You MUST retain spacing in the texts.
+#  If a text begins or ends with a space, it must remain that way.
+#
+#
+#       %s = data to be supplied by the plugin.
+
+# Text colouring
+# --------------
+# Black = &0, Navy = &1, Green = &2, Blue = &3, Red = &4
+# Purple = &5, Gold = &6, LightGray = &7, Gray = &8
+# DarkPurple = &9, LightGreen = &a, LightBlue = &b
+# Rose = &c, LightPurple = &d, Yellow = &e, White = &f
+
+
+# Added in Siege War/Backruptcy
+status_bank_bankrupt: '&2Bank: &a-%s &c(BANKRUPT)'
+msg_warning_bankrupt: '&4*** WARNING, %s WILL GO BANKRUPT AT NEXT NEW DAY DUE TO LACK OF FUNDS ***'
+msg_town_bankrupt_by_upkeep: '&b%s could not afford its upkeep and has gone bankrupt.'
+msg_town_bankrupt_by_upkeep_multiple: '&bThe following towns could not afford their upkeep and have gone bankrupt: '
+msg_town_bankrupt_by_nation_tax: '&b%s couldn''t pay taxes and has gone bankrupt.'
+msg_town_bankrupt_by_nation_tax_multiple:  '&bThe following towns could not afford the nation tax and have gone bankrupt: '
+msg_town_debts_cleared: '%s has cleared all its debts, and is no longer bankrupt.'
+msg_err_bankrupt_town_cannot_claim: 'Not allowed to claim plots for a bankrupt town.'
+msg_err_bankrupt_town_cannot_build: 'Not allowed to build in a bankrupt town.'
+msg_err_siege_bankrupt_town_cannot_toggle_open: 'Not allowed to toggle open in a bankrupt town.'
+msg_err_siege_bankrupt_town_cannot_invite: 'Not allowed to invite players to a bankrupt town.'
+
+#Added in (Siegewar version)
+#Siege war happy-path messages
+msg_siege_war_revolt: '&bThe people of %s, led by %s, have revolted against the occupying power of %s, and declared themselves free to choose their own destiny!'
+msg_siege_war_siege_started_neutral_town: '&6[War]&b An army belonging to %s has attacked %s. A siege has begun!'
+msg_siege_war_siege_started_nation_town: '&6[War]&b An army belonging to %s has attacked %s at %s. A siege has begun!'
+msg_siege_war_attack_pay_war_chest: '&6[War]&b A war-chest has been prepared by %s, with a value of %s. Whoever wins the siege will get this money.'
+msg_siege_war_attack_recover_war_chest: '&6[War]&b The war chest has been recovered by %s, with a value of %s.'
+msg_siege_war_attacker_death: '&6[War]&b Siege on %s > An attacker died > @%s. Siege points -%d.'
+msg_siege_war_defender_death: '&6[War]&b Siege on %s > A defender died > @%s. Siege points +%d.'
+msg_siege_war_defender_win: '&6[War]&b The defenders of %s have successfully driven off all attacking armies. The siege has failed!'
+msg_siege_war_attacker_win: '&6[War]&b An army belonging to %s has successfully breached the defences of %s. The siege is over!'
+msg_siege_war_attacker_abandon: '&6[War]&b An army belonging to %s has abandoned its attack on %s. The defenders are victorious!'
+msg_siege_war_pending_attacker_abandon: '&6[War]&b An army belonging to %s has abandoned its attack on %s. Defender victory will be confirmed in %s!'
+msg_siege_war_town_surrender: '&6[War]&b %s has surrendered to an army belonging to %s. The attackers are victorious!'
+msg_siege_war_pending_town_surrender: '&6[War]&b %s has surrendered to an army belonging to %s. Attacker victory will be confirmed in %s!'
+msg_siege_war_neutral_town_captured: '&6[War]&b %s has been captured by %s!'
+msg_siege_war_nation_town_captured: '&6[War]&b %s, previously belonging to %s, has been captured by %s!'
+msg_siege_war_neutral_town_plundered: '&6[War]&b %s has been plundered of %s by %s!'
+msg_siege_war_nation_town_plundered: '&6[War]&b %s has been plundered of %s by %s!'
+msg_siege_war_town_ruined_from_plunder: '&6[War]&b %s has been reduced to ruins by %s!'
+msg_siege_war_town_bankrupted_from_plunder: '&6[War]&b %s has been bankrupted by %s!'
+msg_siege_war_nation_defeated: '&6[War]&b %s has been defeated!.'
+msg_siege_war_attacking_troops_at_siege_banner: '&6[War]&b Siege on %s > Attackers are at the siege banner.'
+msg_siege_war_defending_troops_at_siege_banner: '&6[War]&b Siege on %s > Town defenders are at the siege banner.'
+msg_siege_war_banner_control_session_started: '&6[War]&b Banner control session started. Remain close to the siege-banner (%d blocks horizonally, %d blocks vertically), outside the town, not flying, and not under a block (world dependant), for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
+msg_siege_war_banner_control_session_success: '&6[War]&b Banner control session succeeded!. You have been added to the banner control list.'
+msg_siege_war_banner_control_gained_by_attacker: '&6[War]&b Siege on %s > The attackers have gained banner control.'
+msg_siege_war_banner_control_gained_by_defender: '&6[War]&b Siege on %s > The defenders have gained banner control.'
+msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/n refund'"
+msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
+msg_town_destroyed_by_nation_tax: '&b%s couldn''t pay taxes and has fallen.'
+msg_town_destroyed_by_nation_tax_multiple:  '&bThe following towns could not afford the nation tax and have fallen: '
+
+#Siege war error message
+#Town Toggling
+msg_err_siege_besieged_town_cannot_toggle_pvp: "&6[War]&c Besieged towns have PVP forced ON."
+msg_err_siege_besieged_town_cannot_toggle_explosions: "&6[War]&c Besieged towns have Explosions forced ON."
+#Recruiting
+msg_err_siege_besieged_town_cannot_toggle_open_off: "&6[War]&c Besieged towns cannot open their doors to new residents."
+msg_err_siege_besieged_town_cannot_recruit: "&6[War]&c Besieged towns cannot recruit new residents."
+#Claiming/Unclaiming
+msg_err_siege_claim_too_near_siege_zone: "&6[War]&c The claim is too close to a siege."
+msg_err_siege_besieged_town_cannot_claim: "&6[War]&c Besieged towns cannot claim new land."
+msg_err_siege_besieged_town_cannot_unclaim: "&6[War]&c Besieged towns (or towns which recently lost a siege) cannot un-claim land."
+msg_err_war_common_occupied_town_cannot_unclaim: "&6[War]&c Occupied towns cannot un-claim land."
+#Nation Delete
+msg_err_siege_war_delete_nation_warning: "WARNING!!!: If you delete your nation you will be refunded %s. This can be claimed later by using '/n refund'."
+msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
+#Revolt
+msg_err_siege_war_town_voluntary_leave_impossible: "&6[War]&c Towns cannot leave nations without agreement. To leave your nation, persuade the king (or an assistant) to kick your town."
+msg_err_siege_war_revolt_immunity_active: "&6[War]&c Your town has revolt immunity. It cannot revolt until the revolt immunity expires."
+#Attack
+msg_err_siege_war_not_enabled_in_world: '&6[War]&c War is not enabled in this world.'
+msg_err_siege_war_banner_must_be_placed_above_ground: '&6[War]&c The siege banner must be placed above ground.'
+msg_err_siege_war_action_not_a_town_member: '&6[War]&c You must be a member of a town to do this action.'
+msg_err_siege_war_action_not_a_nation_member: '&6[War]&c You must be a member of a nation to do this action.'
+msg_err_siege_war_cannot_attack_own_town: '&6[War]&c You cannot attack your own town.'
+msg_err_siege_war_cannot_attack_town_in_own_nation: '&6[War]&c You cannot attack a town in your own nation.'
+msg_err_siege_war_cannot_attack_non_enemy_nation: '&6[War]&c You cannot attack a town unless the nation of that town is an enemy of your nation.'
+msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&6[War]&c You cannot perform this action because this chunk is facing more than one town block. Try placing the item in a different area.'
+msg_err_siege_war_too_many_adjacent_towns: '&6[War]&c You cannot perform this action because there are multiple towns adjacent to this chunk. Try placing the item in a different area.'
+msg_err_siege_war_nation_already_attacking_town: '&6[War]&c Your nation is already attacking this town.'
+msg_err_siege_war_cannot_attack_siege_immunity: '&6[War]&c The target town has siege immunity. It cannot be attacked until the siege immunity expires.'
+msg_err_siege_war_cannot_place_banner_far_above_town: 'The siege banner cannot be placed on a much higher elevation than the town. Try placing the banner at a lower elevation'
+msg_err_siege_war_cannot_join_siege: '&6[War]&c You cannot attack a town while it is under siege by another nation.'
+msg_err_siege_war_nation_has_too_many_active_siege_attacks: '&6[War]&c Your nation is at the maximum number of concurrent siege-attacks. To start another attack, one or more of the current attacks must finish.'
+msg_err_siege_war_town_not_close_enough_to_nation: '&6[War]&c The town is too far away from your nation capital to be attacked.'
+#Abandon
+msg_err_siege_war_cannot_abandon_no_nearby_siege_attacks: '&6[War]&c You cannot abandon because there are no active siege banners nearby.'
+msg_err_siege_war_cannot_abandon_nation_not_attacking_zone: '&6[War]&c You cannot abandon because your nation is not attacking in this area.'
+msg_err_siege_war_cannot_abandon_siege_over: '&6[War]&c You cannot abandon because the siege is over.'
+#Invade
+msg_err_siege_war_cannot_invade_own_town: '&6[War]&c You cannot capture your own town.'
+msg_err_siege_war_cannot_invade_without_victory: "&6[War]&c You cannot capture the town unless your nation is victorious in the siege."
+msg_err_siege_war_no_siege_on_target_town: '&6[War]&c There is no siege on the target town of %s.'
+msg_err_siege_war_town_already_invaded: '&6[War]&c This town has already been captured'
+msg_err_siege_war_town_already_belongs_to_your_nation: '&6[War]&c This town already belongs to your nation'
+#Plunder
+msg_err_siege_war_cannot_plunder_own_town: '&6[War]&c You cannot plunder your own town.'
+msg_err_siege_war_cannot_plunder_without_victory: "&6[War]&c You cannot plunder unless your nation is victorious in the siege."
+msg_err_siege_war_cannot_plunder_without_economy: "&6[War]&c You cannot plunder because no economy plugin is active"
+msg_err_siege_war_town_already_plundered: '&6[War]&c This town has already been plundered.'
+#Surrender
+msg_err_siege_war_cannot_surrender_not_your_town: '&6[War]&c You cannot surrender because this is not your town.'
+msg_err_siege_war_cannot_surrender_siege_finished: '&6[War]&c You cannot surrender because the siege is over.'
+#Block change
+msg_err_siege_war_cannot_destroy_siege_banner: "&6[War]&c While the siege is in progress you cannot destroy the siege banner or the block it is attached to."
+msg_err_siege_war_nation_zone_this_area_protected_but_besieged: '&6[War]&c This part of the %s is under the protection of %s, and also cannot be altered while the nearby town is under siege.'
+msg_err_siege_war_banner_support_block_not_stable: "&6[War]&c You cannot place the banner on unstable ground e.g. sand or gravel."
+# Spawn
+msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&6[War]&c Only town residents can spawn into a besieged town or siege zone (unless the target town is peaceful).'
+#Banner control
+msg_siege_war_banner_control_session_failure: '&6[War]&c Banner control session failed!. Common causes for this include: Going into the town, too far from the banner, flying, or under a block (world-dependent).'
+msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'You cannot use this item while in a banner control session.'
+
+#Town Info Siege Section
+status_town_revolt_immunity_timer: '&2Revolt Immunity Timer: &a%s'
+status_town_siege_status: '&2Siege: &a%s'
+status_town_siege_status_in_progress: 'In Progress'
+status_town_siege_status_attacker_win: 'Attacker Victory - %s'
+status_town_siege_status_defender_win: 'Town Victory'
+status_town_siege_status_attacker_abandon: 'Attacker Retreat'
+status_town_siege_status_defender_surrender: 'Town Surrender - to %s'
+status_town_siege_status_pending_attacker_abandon: 'Attacker Retreat Pending, in %s'
+status_town_siege_status_pending_defender_surrender: 'Town Surrender Pending, in %s'
+
+status_town_siege_status_besieger: '&2 > Besieger: &a%s {%s}'
+status_town_siege_status_banner_xyz: '&2 > Banner XYZ: &a%d,%d,%d'
+status_town_siege_immunity_timer: '&2 > Immunity Timer: &a%s'
+status_town_siege_victory_timer: '&2 > Victory Timer: &a%s'
+status_town_siege_invaded_plundered_status: '&2 > Town Captured: %s  &2Town Plundered: %s'
+status_town_banner_control: '&2 > Banner Control: %s &a[%s]&2: &f'
+status_town_banner_control_nobody: '&2 > Banner Control: %s'
+
+#Nation Info Siege Section
+status_nation_siege_attacks: '&2Siege Attacks &a[%s]&2: &f'
+status_nation_siege_defences: '&2Siege Defences &a[%s]&2: &f'
+
+#General
+msg_days: ' days'
+status_no_green: '&aNO'
+msg_occupier: '&4*Occupier*'
+msg_nobody: '&aNobody'
+msg_attackers: '&aAttackers'
+msg_defenders: '&aDefenders'
+
+#Town Peacefulness
+status_town_title_peaceful: '&b (PEACEFUL)'
+status_town_peacefulness_status_change_timer: '&2Countdown To Peacefulness Status Change: &a%d days'
+msg_war_common_town_declared_peaceful: '&bPeacefulness Declared!. The town will be confirmed as peaceful in %d day(s).'
+msg_war_common_town_declared_non_peaceful: '&bNon-Peacefulness Declared!. The town will be confirmed as non-peaceful in %d day(s).'
+msg_war_common_town_peacefulness_countdown_cancelled: '&bThe peacefulness status change countdown was cancelled.'
+msg_war_common_town_became_peaceful: '&b%s has been confirmed as Peaceful.'
+msg_war_common_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful.'
+
+msg_war_siege_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to sieges and taxes. The town''s nation choice is now restricted to nations with a strong presence in the local area. (see user-guide for more details). Residents cannot enter siege-zones or gain nation-military ranks.'
+msg_war_siege_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to sieges and taxes. The town''s nation choice is no longer restricted. Residents can enter siege-zones and gain nation-military ranks.'
+msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they are in a peaceful town.'
+msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cWar-allergy active. To remove this effect, leave the siege-zone immediately.'
+msg_war_siege_err_cannot_attack_peaceful_town: '&6[War]&c You cannot attack a peaceful town.'
+msg_war_siege_peaceful_town_cannot_join_nation: 'c%s [PEACEFUL] cannot join %s, because the nation does not have a guardian town nearby (within %d chunks). A guardian town is a non-peaceful nation town with at least %d plots.'
+msg_war_siege_peaceful_town_cannot_revolt_nearby_guardian_towns_zero: '&cYou cannot revolt at this time, because there are no guardian towns nearby (within %d chunks). A guardian town is a non-peaceful nation town with at least %d plots.'
+msg_war_siege_peaceful_town_cannot_revolt_nearby_guardian_towns_one:  '&cYou cannot revolt at this time, because there is only 1 guardian town nearby (within %d chunks). A guardian town is a non-peaceful nation town with at least %d plots.'
+msg_war_siege_peaceful_town_changed_nation: "&b%s has peacefully changed hands, moving from %s to %s."
+msg_war_siege_peaceful_town_joined_nation: "&b%s has peacefully joined %s."
+msg_war_siege_peaceful_town_left_nation: "&b%s has peacefully left %s."
+msg_war_siege_warning_peaceful_town_should_not_create_nation: '&cYou are about to make a peaceful town into a nation capital. This is usually a bad idea, because the nation could fall without a fight.'
+msg_war_siege_peaceful_towns_cannot_make_nations: '&cPeaceful towns cannot found nations!'
+
+#Siege immunities
+msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s hours.'
+msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s hours.'
+msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s hours.'
+
+#Battle sessions
+msg_war_siege_battle_session_started: '&6[War]&2 Battle session started. You are free to enter any siege-zone for the next %s. After that you will get a %s rest from battle.'
+msg_war_siege_battle_session_warning: '&6[War]&c Your battle session will expire in %s. To avoid battle-fatigue, exit any siege zone you are in (and/or return to your own town).'
+msg_war_siege_battle_session_expired: '&6[War]&c Battle session expired. Battle-fatigue active. To remove this effect, leave the siege-zone (and/or return to your own town). You can return in %s.'
+msg_war_siege_battle_session_ended: '&6[War]&2 Battle session ended. The next time you enter a siege-zone, a new battle session will begin.'
+
+#Siege-zone block placement restrictions
+msg_war_siege_zone_block_placement_forbidden: '&6[War]&c You cannot place this type of block in the wilderness area of a siege zone.'
+msg_war_siege_zone_bucket_emptying_forbidden: '&6[War]&c You cannot use this type of bucket in the wilderness area of a siege zone.'
+
+#Nation Refund
+nation_help_11 : 'Claim all your nation refunds.'

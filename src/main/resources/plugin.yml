@@ -1,0 +1,49 @@
+name: ${project.artifactId}
+main: ${project.groupId}.${project.name}.${project.artifactId}
+version: ${project.version}
+api-version: ${project.bukkitAPIVersion}
+author: [Goosius,LlmDl]
+website: 'townyadvanced.github.io'
+prefix: ${project.artifactId}
+depend: [Towny]
+
+description: A war system made by Goosius for Towny.
+
+commands:
+    siegewar:
+        aliases: [sw]
+    siegewaradmin:
+        aliases: [swa]
+        
+permissions:
+    siegewar.admin:
+        description: User is able to use /siegewaradmin
+        default: op
+        children:
+            siegewaradmin.set.siegeimmunities: true
+
+    siegewar.nation:
+        description: User holds all of the siegewar nation nodes.
+        default: false
+        children:
+            siegewar.nation.siege.points: true
+            siegewar.nation.siege.leadership: true
+            siegewar.nation.siege.attack: true
+            siegewar.nation.siege.abandon: true
+            siegewar.nation.siege.invade: true
+            siegewar.nation.siege.plunder: true
+
+    siegewar.town:
+        description: User holds all of the siegewar town nodes.
+        default: false
+        children:
+            siegewar.town.siege.points: true
+            siegewar.town.siege.surrender: true
+            
+    siegewar.immune.to.war.nausea
+        description: User is immune to war nausea.
+        default: false
+        
+    siegewar.immune.to.battle.fatigue
+        description: User is immune to battle fatigue
+        default: false
