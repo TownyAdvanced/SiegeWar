@@ -26,10 +26,9 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	//Switches
 	WAR_SIEGE_ENABLED(
 			"war.siege.switches.enabled",
-			"false",
+			"true",
 			"",
 			"# If true, the Siege-War system is enabled.",
 			"# if false, the Siege-War system is disabled."),

@@ -10,12 +10,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.playeractions.PlaceBlock;
 import com.gmail.goosius.siegewar.playeractions.SiegeWarDeathController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.event.actions.TownyActionEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyBurnEvent;
@@ -37,11 +37,11 @@ import com.palmergames.bukkit.towny.object.WorldCoord;
 public class SiegeWarActionListener implements Listener {
 
 	@SuppressWarnings("unused")
-	private final Towny plugin;
+	private final SiegeWar plugin;
 	
-	public SiegeWarActionListener(Towny instance) {
+	public SiegeWarActionListener(SiegeWar siegeWar) {
 
-		plugin = instance;
+		plugin = siegeWar;
 	}
 	
 	@EventHandler

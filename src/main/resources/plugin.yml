@@ -17,10 +17,29 @@ commands:
         
 permissions:
     siegewar.admin:
-        description: User is able to use /siegewaradmin
+        description: User is able to use all siege war commands.
         default: op
         children:
-            siegewaradmin.set.siegeimmunities: true
+            siegewar.command.siegewaradmin.*: true
+            siegewar.command.siegewar.*: true
+    
+    siegewar.command.siegewaradmin.*:
+        description: User is able to use all /siegewaradmin commands.
+        default: op
+        children:
+            siegewar.command.siegewaradmin.immunity: true
+
+    siegewar.command.siegewar.*:
+        description: User is able to do all /siegewar commands.
+        default: false
+        children:
+            siegewar.command.siegewar.nation.*: true
+
+    siegewar.command.siegewar.nation.*:
+        description: User is able to do all /siegewar nation commands.
+        default: false
+        children:
+            siegewar.command.siegewar.nation.refund: true
 
     siegewar.nation:
         description: User holds all of the siegewar nation nodes.
@@ -40,10 +59,10 @@ permissions:
             siegewar.town.siege.points: true
             siegewar.town.siege.surrender: true
             
-    siegewar.immune.to.war.nausea
+    siegewar.immune.to.war.nausea:
         description: User is immune to war nausea.
         default: false
         
-    siegewar.immune.to.battle.fatigue
+    siegewar.immune.to.battle.fatigue:
         description: User is immune to battle fatigue
         default: false

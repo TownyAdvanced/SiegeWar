@@ -94,4 +94,80 @@ public class FileMgmt {
 		return file.exists() || file.mkdirs() || file.isDirectory();
 	}
 
+	public static File unpackResourceFile(String filePath, String resource, String defaultRes) {
+		// open a handle to yml file
+		File file = new File(filePath);
+
+		if ((file.exists())/* && (!filePath.contains(FileMgmt.fileSeparator() + defaultRes))*/)
+			return file;
+
+		String resString;
+
+		/*
+		 * create the file as it doesn't exist,
+		 * or it's the default file
+		 * so refresh just in case.
+		 */
+		checkOrCreateFile(filePath);
+
+		// Populate a new file
+		try {
+			resString = convertStreamToString("/" + resource);
+			FileMgmt.stringToFile(resString, filePath);
+
+		} catch (IOException e) {
+			// No resource file found
+			try {
+				resString = convertStreamToString("/" + defaultRes);
+				FileMgmt.stringToFile(resString, filePath);
+			} catch (IOException e1) {
+				// Default resource not found
+				e1.printStackTrace();
+			}
+		}
+
+		return file;
+		
+	}
+	
+	// pass a resource name and it will return it's contents as a string
+	public static String convertStreamToString(String name) throws IOException {
+		
+		if (name != null) {
+			Writer writer = new StringWriter();
+			InputStream is = FileMgmt.class.getResourceAsStream(name);
+
+			char[] buffer = new char[1024];
+			try {
+				Reader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+				int n;
+				while ((n = reader.read(buffer)) != -1) {
+					writer.write(buffer, 0, n);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					is.close();
+				} catch (NullPointerException e) {
+					//Failed to open a stream
+					throw new IOException();
+				}
+			}
+			return writer.toString();
+		} else {
+			return "";
+		}
+	}
+
+	//writes a string to a file making all newline codes platform specific
+	public static void stringToFile(String source, String FileName) {
+
+		if (source != null) {
+			// Save the string to file (*.yml)
+			stringToFile(source, new File(FileName));
+		}
+
+	}
+
 }

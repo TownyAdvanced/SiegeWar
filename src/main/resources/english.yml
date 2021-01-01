@@ -24,6 +24,8 @@ description: >
 # DarkPurple = &9, LightGreen = &a, LightBlue = &b
 # Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 
+msg_command_disabled: '&cCommand disabled.'
+
 
 # Added in Siege War/Backruptcy
 status_bank_bankrupt: '&2Bank: &a-%s &c(BANKRUPT)'

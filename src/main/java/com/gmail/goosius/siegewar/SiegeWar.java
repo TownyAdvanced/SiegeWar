@@ -4,15 +4,28 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gmail.goosius.siegewar.settings.Settings;
+import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
+import com.gmail.goosius.siegewar.command.SiegeWarCommand;
+import com.gmail.goosius.siegewar.listeners.SiegeWarActionListener;
+import com.gmail.goosius.siegewar.listeners.SiegeWarEventListener;
+import com.gmail.goosius.siegewar.listeners.SiegeWarNationEventListener;
+import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
 
 import io.github.townyadvanced.util.JavaUtil;
 
 public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
+	private final SiegeWarActionListener siegeWarActionListener = new SiegeWarActionListener(this);
+	private final SiegeWarEventListener siegeWarEventListener = new SiegeWarEventListener(this);
+	private final SiegeWarNationEventListener siegeWarNationListener = new SiegeWarNationEventListener(this);
+	private final SiegeWarTownEventListener siegeWarTownListener = new SiegeWarTownEventListener(this);
 	
 	public SiegeWar getSiegeWar() {
 		return plugin;
@@ -25,6 +38,13 @@ public class SiegeWar extends JavaPlugin {
 
         if (Settings.isUpdating(getVersion()))
         	update();
+        
+        registerListeners();
+        
+        registerCommands();
+        
+        if (Bukkit.getPluginManager().getPlugin("Towny").isEnabled())
+        	loadSieges();
     }
 
 	public String getVersion() {
@@ -44,6 +64,15 @@ public class SiegeWar extends JavaPlugin {
             return false;
         }
 		System.out.println(getPrefix() + "Config.yml loaded successfully.");
+
+		try {
+			Translation.loadLanguage(this.getDataFolder().getPath() + File.separator, "english.yml");
+		} catch (IOException e) {
+	        e.printStackTrace();
+	        System.err.println(getPrefix() + "Language file failed to load! Disabling!");
+	        return false;
+	    }
+		System.out.println(getPrefix() + "Language file loaded successfully.");
 		return true;
 	}
 
@@ -68,5 +97,26 @@ public class SiegeWar extends JavaPlugin {
 			System.err.println("Could not read ChangeLog.txt");
 		}
 		Settings.setLastRunVersion(getVersion());
+	}
+	
+	private void registerListeners() {
+		PluginManager pm = Bukkit.getServer().getPluginManager();
+		pm.registerEvents(siegeWarActionListener, this);
+		pm.registerEvents(siegeWarEventListener, this);		
+		pm.registerEvents(siegeWarNationListener, this);
+		pm.registerEvents(siegeWarTownListener, this);
+	}
+	
+	private void registerCommands() {
+		getCommand("siegewar").setExecutor(new SiegeWarCommand());
+		getCommand("siegewaradmin").setExecutor(new SiegeWarAdminCommand());
+	}
+	
+	public void loadSieges() {
+		SiegeController.clearSieges();
+		SiegeController.loadSiegeList();
+		SiegeController.loadSieges();
+		System.out.println("SiegeWar: " + SiegeController.getSieges().size() + " siege(s) loaded.");
+		
 	}
 }
