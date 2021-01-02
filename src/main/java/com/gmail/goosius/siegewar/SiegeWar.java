@@ -24,12 +24,8 @@ import io.github.townyadvanced.util.JavaUtil;
 public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
+	public static String prefix = "[SiegeWar] ";
 	private static Version requiredTownyVersion = Version.fromString("0.96.5.11");
-	private final SiegeWarActionListener siegeWarActionListener = new SiegeWarActionListener(this);
-	private final SiegeWarBukkitEventListener siegeWarBukkitEventListener = new SiegeWarBukkitEventListener(this);
-	private final SiegeWarTownyEventListener siegeWarTownyListener = new SiegeWarTownyEventListener(this);
-	private final SiegeWarNationEventListener siegeWarNationListener = new SiegeWarNationEventListener(this);
-	private final SiegeWarTownEventListener siegeWarTownListener = new SiegeWarTownEventListener(this);
 	
 	public SiegeWar getSiegeWar() {
 		return plugin;
@@ -37,12 +33,18 @@ public class SiegeWar extends JavaPlugin {
 	
     @Override
     public void onEnable() {
+    	
+    	plugin = this;
+    	
+    	printSickASCIIArt();
+    	
         if (!townyVersionCheck(getTownyVersion())) {
-            System.err.println(getPrefix() + "Towny version does not meet required minimum version: " + requiredTownyVersion.toString());
+            System.err.println(prefix + "Towny version does not meet required minimum version: " + requiredTownyVersion.toString());
+            System.err.println(prefix + "Shutting down....");
             onDisable();
             return;
         } else {
-            System.out.println(getPrefix() + "Towny version " + getTownyVersion() + " found.");
+            System.out.println(prefix + "Towny version " + getTownyVersion() + " found.");
         }
         
         if (!loadSettings())
@@ -56,15 +58,18 @@ public class SiegeWar extends JavaPlugin {
         registerCommands();
         
         if (Bukkit.getPluginManager().getPlugin("Towny").isEnabled())
-        	loadSieges();
+        	SiegeController.loadAll();
+        
+        System.out.println(prefix + "SiegeWar loaded successfully.");
+    }
+    
+    @Override
+    public void onDisable() {
+    	System.err.println(prefix + "Shutting down....");
     }
 
 	public String getVersion() {
 		return this.getDescription().getVersion();
-	}
-
-	public static String getPrefix() {
-		return "[SiegeWar] ";
 	}
 	
     private boolean townyVersionCheck(String version) {
@@ -74,24 +79,25 @@ public class SiegeWar extends JavaPlugin {
     private String getTownyVersion() {
         return Bukkit.getPluginManager().getPlugin("Towny").getDescription().getVersion();
     }
+
 	private boolean loadSettings() {
 		try {
 			Settings.loadConfig(this.getDataFolder().getPath() + File.separator + "config.yml", getVersion());
 		} catch (IOException e) {
             e.printStackTrace();
-            System.err.println(getPrefix() + "Config.yml failed to load! Disabling!");
+            System.err.println(prefix + "Config.yml failed to load! Disabling!");
+            System.err.println(prefix + "Shutting down....");
             return false;
         }
-		System.out.println(getPrefix() + "Config.yml loaded successfully.");
 
 		try {
 			Translation.loadLanguage(this.getDataFolder().getPath() + File.separator, "english.yml");
 		} catch (IOException e) {
 	        e.printStackTrace();
-	        System.err.println(getPrefix() + "Language file failed to load! Disabling!");
+	        System.err.println(prefix + "Language file failed to load! Disabling!");
+	        System.err.println(prefix + "Shutting down....");
 	        return false;
 	    }
-		System.out.println(getPrefix() + "Language file loaded successfully.");
 		return true;
 	}
 
@@ -101,7 +107,7 @@ public class SiegeWar extends JavaPlugin {
 			List<String> changeLog = JavaUtil.readTextFromJar("/ChangeLog.txt");
 			boolean display = false;
 			System.out.println("------------------------------------");
-			System.out.println(getPrefix() + " ChangeLog up until v" + getVersion());
+			System.out.println(prefix + " ChangeLog up until v" + getVersion());
 			String lastVersion = Settings.getLastRunVersion(getVersion()).split("_")[0];
 			for (String line : changeLog) {
 				if (line.startsWith(lastVersion)) {
@@ -120,24 +126,32 @@ public class SiegeWar extends JavaPlugin {
 	
 	private void registerListeners() {
 		PluginManager pm = Bukkit.getServer().getPluginManager();
-		pm.registerEvents(siegeWarActionListener, this);
-		pm.registerEvents(siegeWarBukkitEventListener, this);		
-		pm.registerEvents(siegeWarNationListener, this);
-		pm.registerEvents(siegeWarTownListener, this);
-		pm.registerEvents(siegeWarTownyListener, this);
+		pm.registerEvents(new SiegeWarActionListener(this), this);
+		pm.registerEvents(new SiegeWarBukkitEventListener(this), this);		
+		pm.registerEvents(new SiegeWarTownyEventListener(this), this);
+		pm.registerEvents(new SiegeWarNationEventListener(this), this);
+		pm.registerEvents(new SiegeWarTownEventListener(this), this);
 	}
 	
 	private void registerCommands() {
 		getCommand("siegewar").setExecutor(new SiegeWarCommand());
 		getCommand("siegewaradmin").setExecutor(new SiegeWarAdminCommand());
 	}
-	
-	public void loadSieges() {
-	    System.out.println(getPrefix() + "Loading SiegeList...");
-		SiegeController.clearSieges();
-		SiegeController.loadSiegeList();
-		SiegeController.loadSieges();
-		System.out.println(getPrefix() + SiegeController.getSieges().size() + " siege(s) loaded.");
-		
+
+	private void printSickASCIIArt() {
+		System.out.println("    _________.__                      ");
+		System.out.println("   /   _____/|__| ____   ____   ____  ");
+		System.out.println("   \\_____  \\ |  |/ __ \\ / ___\\_/ __ \\ ");
+		System.out.println("   /        \\|  \\  ___// /_/  >  ___/ ");
+		System.out.println("  /_______  /|__|\\___  >___  / \\___  >");
+		System.out.println("          \\/         \\/_____/      \\/ ");
+		System.out.println("       __      __                        ");
+		System.out.println("      /  \\    /  \\_____ _______          ");
+		System.out.println("      \\   \\/\\/   /\\__  \\\\_  __ \\         ");
+		System.out.println("       \\        /  / __ \\|  | \\/         ");
+		System.out.println("        \\__/\\  /  (____  /__|            ");
+		System.out.println("             \\/        \\/                ");
+		System.out.println("          By Goosius & LlmDl          ");
+		System.out.println("                                      ");
 	}
 }

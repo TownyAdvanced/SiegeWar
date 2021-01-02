@@ -39,7 +39,8 @@ public class SiegeWarTownyEventListener implements Listener {
      */
     @EventHandler
     public void onTownyDatabaseLoad(TownyLoadedDatabaseEvent event) {
-        plugin.loadSieges();
+    	System.out.println(SiegeWar.prefix + "Towny database reload detected, reloading sieges...");
+        SiegeController.loadAll();
     }
     
     /*

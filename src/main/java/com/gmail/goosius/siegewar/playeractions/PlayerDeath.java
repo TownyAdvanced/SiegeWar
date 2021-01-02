@@ -26,7 +26,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author Goosius
  */
-public class SiegeWarDeathController {
+public class PlayerDeath {
 
 	/**
 	 * Evaluates a siege death event.

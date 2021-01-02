@@ -12,7 +12,7 @@ import org.bukkit.event.Listener;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.playeractions.PlaceBlock;
-import com.gmail.goosius.siegewar.playeractions.SiegeWarDeathController;
+import com.gmail.goosius.siegewar.playeractions.PlayerDeath;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
@@ -143,7 +143,7 @@ public class SiegeWarActionListener implements Listener {
 			 * by moving to an PlayerKilledPlayerEvent which is fired from a MONITOR 
 			 * priority PlayerDeathEvent.
 			 */
-			SiegeWarDeathController.evaluateSiegePlayerDeath(event.getVictim(), event.getPlayerDeathEvent());
+			PlayerDeath.evaluateSiegePlayerDeath(event.getVictim(), event.getPlayerDeathEvent());
 		}
 	}
 

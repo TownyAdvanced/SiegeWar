@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.metadata;
 
-import com.palmergames.bukkit.towny.Towny;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
@@ -13,10 +13,10 @@ import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 public class ResidentMetaDataController {
 
 	@SuppressWarnings("unused")
-	private Towny plugin;
+	private SiegeWar plugin;
 	private static IntegerDataField refundAmount = new IntegerDataField("siegewar_nationrefund", 0, "Nation Refund");
 	
-	public ResidentMetaDataController(Towny plugin) {
+	public ResidentMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
 	}
 	

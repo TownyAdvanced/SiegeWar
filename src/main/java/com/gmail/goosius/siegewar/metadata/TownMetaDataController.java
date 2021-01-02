@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.metadata;
 
-import com.palmergames.bukkit.towny.Towny;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
@@ -16,13 +16,13 @@ import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 public class TownMetaDataController {
 
 	@SuppressWarnings("unused")
-	private Towny plugin;
+	private SiegeWar plugin;
 	private static IntegerDataField peacefulnessChangeConfirmationCounterDays = new IntegerDataField("siegewar_peacefuldays", 0, "Days To Peacefulness Status Change");
 	private static BooleanDataField desiredPeacefulness = new BooleanDataField("siegewar_desiredPeaceSetting", false);
 	private static LongDataField revoltImmunityEndTime = new LongDataField("siegewar_revoltImmunityEndTime", 0l);
 	private static LongDataField siegeImmunityEndTime = new LongDataField("siegewar_siegeImmunityEndTime", 0l);
 	
-	public TownMetaDataController(Towny plugin) {
+	public TownMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
 	}
 	

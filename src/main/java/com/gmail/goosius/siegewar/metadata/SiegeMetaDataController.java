@@ -2,8 +2,8 @@ package com.gmail.goosius.siegewar.metadata;
 
 import org.jetbrains.annotations.Nullable;
 
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.metadata.MetaDataUtil;
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.DecimalDataField;
@@ -20,7 +20,7 @@ import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 public class SiegeMetaDataController {
 
 	@SuppressWarnings("unused")
-	private Towny plugin;
+	private SiegeWar plugin;
 	private static SiegeMetaDataController siegeMetaDataController;
 	private static BooleanDataField hasSiege = new BooleanDataField("siegewar_hasSiege", false);
 	private static StringDataField siegeName = new StringDataField("siegewar_name", "");
@@ -37,7 +37,7 @@ public class SiegeMetaDataController {
 	private static LongDataField actualEndTime = new LongDataField("siegewar_actualEndTime", 0l);
 	
 	
-	public SiegeMetaDataController(Towny plugin) {
+	public SiegeMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
 	}
 	

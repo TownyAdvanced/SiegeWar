@@ -20,7 +20,6 @@ import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -33,14 +32,8 @@ import com.palmergames.bukkit.towny.object.Town;
  */
 public class SiegeController {
 
-	@SuppressWarnings("unused")
-	private final Towny towny;
 	private final static Map<String, Siege> sieges = new ConcurrentHashMap<>();
 	private static Map<UUID, Siege> townSiegeMap = new ConcurrentHashMap<>();
-
-	public SiegeController() {
-		towny = Towny.getPlugin();
-	}
 
 	public static void newSiege(String siegeName) {
 		Siege siege = new Siege(siegeName);		
@@ -91,13 +84,22 @@ public class SiegeController {
 		SiegeMetaDataController.setSiegeName(town, siege.getAttackingNation().getName() + "#vs#" + siege.getDefendingTown().getName());
 	}
 
+	public static void loadAll() {
+	    System.out.println(SiegeWar.prefix + "Loading SiegeList...");
+		clearSieges();
+		loadSiegeList();
+		loadSieges();
+		System.out.println(SiegeWar.prefix + SiegeController.getSieges().size() + " siege(s) loaded.");
+
+	}
+	
 	public static void loadSiegeList() {
 		for (Town town : TownyUniverse.getInstance().getTowns())
 			if (SiegeMetaDataController.hasSiege(town)) {
-				System.out.println(SiegeWar.getPrefix() + "Found siege in Town " + town.getName());
+				System.out.println(SiegeWar.prefix + "Found siege in Town " + town.getName());
 				String name = getSiegeName(town);
 				if (name != null) {
-					System.out.println(SiegeWar.getPrefix() + "Loading siege " + name.replace("#", " "));
+					System.out.println(SiegeWar.prefix + "Loading siege " + name.replace("#", " "));
 					newSiege(name);
 					setSiege(town, true);
 					townSiegeMap.put(town.getUUID(), sieges.get(name.toLowerCase()));
@@ -108,7 +110,7 @@ public class SiegeController {
 	public static boolean loadSieges() {
 		for (Siege siege : sieges.values()) {
 			if (!loadSiege(siege)) {
-				System.out.println(SiegeWar.getPrefix() + "Loading Error: Could not read siege data '" + siege.getName() + "'.");
+				System.out.println(SiegeWar.prefix + "Loading Error: Could not read siege data '" + siege.getName() + "'.");
 				return false;
 			}
 		}
