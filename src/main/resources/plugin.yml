@@ -28,6 +28,7 @@ permissions:
         default: op
         children:
             siegewar.command.siegewaradmin.immunity: true
+            siegewar.command.siegewaradmin.reload: true
 
     siegewar.command.siegewar.*:
         description: User is able to do all /siegewar commands.

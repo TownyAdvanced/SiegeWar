@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.settings;
 import java.io.File;
 import java.io.IOException;
 
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.settings.CommentedConfiguration;
 import com.gmail.goosius.siegewar.settings.ConfigNodes;
 
@@ -11,6 +12,26 @@ import io.github.townyadvanced.util.FileMgmt;
 public class Settings {
 	private static CommentedConfiguration config, newConfig;
 
+	public static boolean loadSettingsAndLang() {
+		SiegeWar sw = SiegeWar.getSiegeWar();
+		try {
+			Settings.loadConfig(sw.getDataFolder().getPath() + File.separator + "config.yml", sw.getVersion());
+		} catch (IOException e) {
+            e.printStackTrace();
+            System.err.println(SiegeWar.prefix + "Config.yml failed to load! Disabling!");
+            return false;
+        }
+
+		try {
+			Translation.loadLanguage(sw.getDataFolder().getPath() + File.separator, "english.yml");
+		} catch (IOException e) {
+	        e.printStackTrace();
+	        System.err.println(SiegeWar.prefix + "Language file failed to load! Disabling!");
+	        return false;
+	    }
+		return true;
+	}
+	
 	public static void loadConfig(String filepath, String version) throws IOException {
 		if (FileMgmt.checkOrCreateFile(filepath)) {
 			File file = new File(filepath);

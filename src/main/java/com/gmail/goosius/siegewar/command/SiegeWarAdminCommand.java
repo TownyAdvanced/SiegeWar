@@ -10,21 +10,24 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
+import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.util.ChatTools;
+import com.palmergames.bukkit.util.Colors;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
 
 public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	
-	private static final List<String> siegewaradminTabCompletes = Arrays.asList("immunity");
+	private static final List<String> siegewaradminTabCompletes = Arrays.asList("immunity","reload");
 	private static final List<String> siegewaradminImmunityTabCompletes = Arrays.asList("town","all");
 	private static final List<String> siegewaradminImmunityAllTabCompletes = Arrays.asList("towns");
 	
@@ -74,17 +77,51 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	}
 
 	private void parseSiegeWarAdminCommand(CommandSender sender, String[] args) {
-		switch (args[0]) {
-		case "immunity":
-			parseSiegeWarImmunityCommand(sender, StringMgmt.remFirstArg(args));
-			break;
-		default:
-			sender.sendMessage(ChatTools.formatTitle("/siegewaradmin"));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity town [town_name] [hours]", ""));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity all towns in nation [nation_name] [hours]", ""));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity all towns [hours]", ""));
-
+		/*
+		 * Parse Command.
+		 */
+		if (args.length > 0) {
+			switch (args[0]) {
+			case "reload":
+				parseSiegeWarReloadCommand(sender);
+				break;
+			case "immunity":
+				parseSiegeWarImmunityCommand(sender, StringMgmt.remFirstArg(args));
+				break;
+				
+			/*
+			 * Show help if no command found.
+			 */
+			default:
+				showHelp(sender);
+			}
+		} else {
+			showHelp(sender);
 		}
+	}
+	
+	private void showHelp(CommandSender sender) {
+		sender.sendMessage(ChatTools.formatTitle("/siegewaradmin"));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "reload", Translation.of("admin_help_1")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity town [town_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity all towns in nation [nation_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity all towns [hours]", ""));
+	
+	}
+
+	private void parseSiegeWarReloadCommand(CommandSender sender) {
+		if (sender instanceof Player
+				&& !((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN_RELOAD.getNode())) {
+			sender.sendMessage(Translation.of("msg_command_disabled"));
+			return;
+		}
+
+		if (Settings.loadSettingsAndLang()) {
+			sender.sendMessage(Colors.LightGreen + SiegeWar.prefix + Translation.of("config_and_lang_file_reloaded_successfully"));
+			return;
+		}
+		
+		sender.sendMessage(Colors.Red + SiegeWar.prefix + Translation.of("config_and_lang_file_could_not_be_loaded"));
 	}
 
 	private void parseSiegeWarImmunityCommand(CommandSender sender, String[] args) {

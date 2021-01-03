@@ -15,13 +15,14 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_NATION_SIEGE_PLUNDER("siegewar.nation.siege.plunder"),
 	SIEGEWAR_TOWN_SIEGE_POINTS("siegewar.town.siege.points"),
 	SIEGEWAR_TOWN_SIEGE_SURRENDER("siegewar.town.siege.surrender"),
-	SIEGEWAR_COMMAND_TOWNYADMIN_SET_SIEGEIMMUNITIES("siegewar.command.townyadmin.set.siegeimmunities"),
 	// Siegewar related war sickness immunities
 	SIEGEWAR_IMMUNE_TO_WAR_NAUSEA("siegewar.immune.to.war.nausea"),
 	SIEGEWAR_IMMUNE_TO_BATTLE_FATIGUE("siegewar.immune.to.battle.fatigue"),
 	// Command Nodes:
 	SIEGEWAR_COMMAND_SIEGEWAR_NATION_REFUND("siegewar.command.siegewar.nation.refund"),
-	SIEGEWAR_COMMAND_SIEGEWARADMIN_IMMUNITY("siegewar.command.siegewaradmin.immunity");
+	SIEGEWAR_COMMAND_SIEGEWARADMIN("siegewar.command.siegewaradmin.*"),
+	SIEGEWAR_COMMAND_SIEGEWARADMIN_IMMUNITY("siegewar.command.siegewaradmin.immunity"),
+	SIEGEWAR_COMMAND_SIEGEWARADMIN_RELOAD("siegewar.command.siegewaradmin.reload");
 	
 	private String value;
 

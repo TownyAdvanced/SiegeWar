@@ -1,2 +1,5 @@
 0.0.1:
   - Initial public test version.
+0.0.2:
+  - New Command: /swa reload - reloads the config and language file.
+  - New Permission: siegewar.command.siegewaradmin.reload - a child node of siegewar.command.siegewaradmin.*

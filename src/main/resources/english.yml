@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.01
+version: 0.02
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -191,3 +191,10 @@ msg_war_siege_zone_bucket_emptying_forbidden: '&6[War]&c You cannot use this typ
 
 #Nation Refund
 nation_help_11 : 'Claim all your nation refunds.'
+
+#Added in 0.02:
+admin_help_1: 'Reload the config and language file.'
+config_and_lang_file_reloaded_successfully: 'Config and Language file reloaded successfully.'
+config_and_lang_file_could_not_be_loaded: 'Reload unsuccessful. See console for details.'
+status_yes: '&aYES'
+status_no: '&cNO'

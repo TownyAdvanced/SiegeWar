@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gmail.goosius.siegewar.settings.Settings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
@@ -27,7 +25,7 @@ public class SiegeWar extends JavaPlugin {
 	public static String prefix = "[SiegeWar] ";
 	private static Version requiredTownyVersion = Version.fromString("0.96.5.11");
 	
-	public SiegeWar getSiegeWar() {
+	public static SiegeWar getSiegeWar() {
 		return plugin;
 	}
 	
@@ -47,8 +45,10 @@ public class SiegeWar extends JavaPlugin {
             System.out.println(prefix + "Towny version " + getTownyVersion() + " found.");
         }
         
-        if (!loadSettings())
+        if (!Settings.loadSettingsAndLang()) {
+        	System.err.println(SiegeWar.prefix + "Shutting down....");
         	onDisable();
+        }
 
         if (Settings.isUpdating(getVersion()))
         	update();
@@ -80,27 +80,6 @@ public class SiegeWar extends JavaPlugin {
         return Bukkit.getPluginManager().getPlugin("Towny").getDescription().getVersion();
     }
 
-	private boolean loadSettings() {
-		try {
-			Settings.loadConfig(this.getDataFolder().getPath() + File.separator + "config.yml", getVersion());
-		} catch (IOException e) {
-            e.printStackTrace();
-            System.err.println(prefix + "Config.yml failed to load! Disabling!");
-            System.err.println(prefix + "Shutting down....");
-            return false;
-        }
-
-		try {
-			Translation.loadLanguage(this.getDataFolder().getPath() + File.separator, "english.yml");
-		} catch (IOException e) {
-	        e.printStackTrace();
-	        System.err.println(prefix + "Language file failed to load! Disabling!");
-	        System.err.println(prefix + "Shutting down....");
-	        return false;
-	    }
-		return true;
-	}
-
 	private void update() {
 
 		try {
@@ -119,6 +98,8 @@ public class SiegeWar extends JavaPlugin {
 			}
 			System.out.println("------------------------------------");
 		} catch (IOException e) {
+			System.err.println("Could not read ChangeLog.txt");
+		} catch (NullPointerException e) {
 			System.err.println("Could not read ChangeLog.txt");
 		}
 		Settings.setLastRunVersion(getVersion());
