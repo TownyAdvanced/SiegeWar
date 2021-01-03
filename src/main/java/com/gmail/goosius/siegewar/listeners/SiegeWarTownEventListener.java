@@ -301,7 +301,7 @@ public class SiegeWarTownEventListener implements Listener {
 
 	        if (SiegeController.hasSiege(town)) {
 	            Siege siege = SiegeController.getSiege(town);
-	            String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getRevoltImmunityEndTime(town)- System.currentTimeMillis());
+	            String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getSiegeImmunityEndTime(town)- System.currentTimeMillis());
 	            switch (siege.getStatus()) {
 	                case IN_PROGRESS:
 	                    //Siege:

@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -21,7 +21,6 @@ import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.util.ChatTools;
-import com.palmergames.bukkit.util.Colors;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
 
@@ -81,6 +80,11 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		 * Parse Command.
 		 */
 		if (args.length > 0) {
+			if (sender instanceof Player
+					&& !((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN.getNode(args[0]))) {
+				Messaging.sendErrMessage(sender, Translation.of("msg_err_command_disable"));
+				return;
+			}
 			switch (args[0]) {
 			case "reload":
 				parseSiegeWarReloadCommand(sender);
@@ -96,6 +100,11 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 				showHelp(sender);
 			}
 		} else {
+			if (sender instanceof Player
+					&& !((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN.getNode())) {
+				Messaging.sendErrMessage(sender, Translation.of("msg_err_command_disable"));
+				return;
+			}
 			showHelp(sender);
 		}
 	}
@@ -110,26 +119,15 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	}
 
 	private void parseSiegeWarReloadCommand(CommandSender sender) {
-		if (sender instanceof Player
-				&& !((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN_RELOAD.getNode())) {
-			sender.sendMessage(Translation.of("msg_command_disabled"));
-			return;
-		}
-
 		if (Settings.loadSettingsAndLang()) {
-			sender.sendMessage(Colors.LightGreen + SiegeWar.prefix + Translation.of("config_and_lang_file_reloaded_successfully"));
+			Messaging.sendMessage(sender, Translation.of("config_and_lang_file_reloaded_successfully"));
 			return;
 		}
 		
-		sender.sendMessage(Colors.Red + SiegeWar.prefix + Translation.of("config_and_lang_file_could_not_be_loaded"));
+		Messaging.sendErrMessage(sender, Translation.of("config_and_lang_file_could_not_be_loaded"));
 	}
 
 	private void parseSiegeWarImmunityCommand(CommandSender sender, String[] args) {
-		if (sender instanceof Player
-				&& !((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN_IMMUNITY.getNode())) {
-			sender.sendMessage(Translation.of("msg_command_disabled"));
-			return;
-		}
 		if (args.length == 3 && args[0].equalsIgnoreCase("town")) {
 			//1 town
 			Town town = TownyUniverse.getInstance().getTown(args[1]);

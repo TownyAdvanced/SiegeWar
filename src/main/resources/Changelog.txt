@@ -5,3 +5,6 @@
   - New Permission: siegewar.command.siegewaradmin.reload - a child node of siegewar.command.siegewaradmin.*
   - Minimum Towny version bumped to 0.96.5.12.
   - Uses TownUnconquerEvent to prevent Towny de-occupying towns.
+0.0.3:
+  - Fix missing language strings: msg_err_no_money, msg_err_command_disable.
+  - Fix revolt time showing in the /t status screen where it should be showing the immunity time.
