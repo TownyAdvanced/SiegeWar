@@ -31,6 +31,7 @@ import com.palmergames.bukkit.towny.event.statusscreen.TownStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.time.dailytaxes.PreTownPaysNationTaxEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
+import com.palmergames.bukkit.towny.event.town.TownUnconquerEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleExplosionEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleOpenEvent;
@@ -402,4 +403,9 @@ public class SiegeWarTownEventListener implements Listener {
         }
     }
     
+    @EventHandler
+    public void onTownUnconquer(TownUnconquerEvent event) {
+    	if (SiegeWarSettings.getWarSiegeEnabled())
+    		event.setCancelled(true);
+    }
 }
