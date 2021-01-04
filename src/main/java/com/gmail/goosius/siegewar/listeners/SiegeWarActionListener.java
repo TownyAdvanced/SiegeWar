@@ -12,7 +12,6 @@ import org.bukkit.event.Listener;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.playeractions.PlaceBlock;
-import com.gmail.goosius.siegewar.playeractions.PlayerDeath;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
@@ -21,7 +20,6 @@ import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyBurnEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
-import com.palmergames.bukkit.towny.event.player.PlayerKilledPlayerEvent;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
@@ -128,22 +126,6 @@ public class SiegeWarActionListener implements Listener {
 				event.setMessage(Translation.of("msg_war_siege_zone_bucket_emptying_forbidden"));
 				event.setCancelled(true);
 			}
-		}
-	}
-	
-	/*
-	 * SW can affect whether an inventory is dropped and also can degrade an inventory.
-	 */
-	@EventHandler
-	public void onPlayerKillsPlayer(PlayerKilledPlayerEvent event) {
-		//Check for siege-war related death effects
-		if(SiegeWarSettings.getWarSiegeEnabled()) {
-			/*
-			 * TODO: Evaluate if we're doing something bad in the SiegeWarDeathController
-			 * by moving to an PlayerKilledPlayerEvent which is fired from a MONITOR 
-			 * priority PlayerDeathEvent.
-			 */
-			PlayerDeath.evaluateSiegePlayerDeath(event.getVictim(), event.getPlayerDeathEvent());
 		}
 	}
 

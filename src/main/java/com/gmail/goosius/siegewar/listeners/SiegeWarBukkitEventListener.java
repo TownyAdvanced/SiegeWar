@@ -9,10 +9,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.playeractions.PlayerDeath;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -118,5 +120,15 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 		return false;
 	}
-	
+
+	/*
+	 * SW can affect whether an inventory is dropped and also can degrade an inventory.
+	 */
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		//Check for siege-war related death effects
+		if(SiegeWarSettings.getWarSiegeEnabled()) {
+			PlayerDeath.evaluateSiegePlayerDeath(event.getEntity(), event);
+		}
+	}
 }
