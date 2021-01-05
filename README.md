@@ -6,7 +6,7 @@ Welcome to the WIP Readme for SiegeWar. SiegeWar is an ambitious war idea develo
 
 Originally SiegeWar was a fork of Towny, being built by Goosius directly into Towny. This was necessary because Towny did not have a sufficient API to allow for the things SiegeWar wanted to do.
 
-This repo is for the stand-alone SiegeWar.jar, the result of a little over a month of work separating SiegeWar from Towny. This included:
+This repo is for the stand-alone SiegeWar.jar, the result of roughly 2 months of work separating SiegeWar from Towny. This included:
   - updating/merging the SiegeWar branch of Towny from 0.96.2.8 all the way up to 0.96.5.12.
   - adding in many, many API events to Towny,
   - changing the entire Siege database to operate on Town metadata,
