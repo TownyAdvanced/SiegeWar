@@ -206,3 +206,4 @@ msg_err_no_money: '&cThere is not enough money in the bank.'
 #Added in 0.04:
 msg_war_siege_peaceful_town_total_switches: '&b%d peaceful town%s %s peacefully switched nations.'
 msg_err_not_registered_1: '&c%s is not registered.'
+msg_error_must_be_num: '&bAmount must be a number.'
