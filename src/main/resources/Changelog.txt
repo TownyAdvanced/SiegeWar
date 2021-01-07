@@ -12,3 +12,4 @@
   - Fix PlayerDeaths that weren't directly caused by PVP not counting as deaths that allowed for inventories to be kept.
 0.0.5:
   - Fix /ta town {name} toggle neutral altering the town's neutral status but not altering the backing metadata.
+  - Fix Messaging class having the wrong imports.
