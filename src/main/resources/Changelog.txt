@@ -13,3 +13,10 @@
 0.0.5:
   - Fix /ta town {name} toggle neutral altering the town's neutral status but not altering the backing metadata.
   - Fix Messaging class having the wrong imports.
+  - PR #11, courtesy of Warriorrr.
+    - Bumps language file to 0.04.
+    - Reduces global message spam surrounding peaceful towns.
+    - Fix a possible exception when /sw is run with no args.
+  - Change command: /swa immunity all towns in nation {nationname} {hours}
+    to: /swa immunity nation {nationname} {hours}
+  - Fix global message spam from /swa immunity {town|nation} sub-commands.

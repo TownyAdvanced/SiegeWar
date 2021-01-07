@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.command;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.command.Command;
@@ -27,8 +28,7 @@ import com.palmergames.util.TimeMgmt;
 public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	
 	private static final List<String> siegewaradminTabCompletes = Arrays.asList("immunity","reload");
-	private static final List<String> siegewaradminImmunityTabCompletes = Arrays.asList("town","all");
-	private static final List<String> siegewaradminImmunityAllTabCompletes = Arrays.asList("towns");
+	private static final List<String> siegewaradminImmunityTabCompletes = Arrays.asList("town","nation","all");
 	
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
@@ -41,32 +41,26 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 				switch (args[1].toLowerCase()) {
 				case "town":
 					return getTownyStartingWith(args[2], "t");
+				case "nation":
+					return getTownyStartingWith(args[2], "n");
 				case "all":
-					return NameUtil.filterByStart(siegewaradminImmunityAllTabCompletes, args[2]);
+					return Arrays.asList("towns");
 				}
 			}
 			
 			if (args.length == 4) {
-				if (args[1].equalsIgnoreCase("town"))
+				if (args[1].equalsIgnoreCase("town") || args[1].equalsIgnoreCase("nation"))
 					return Arrays.asList("1","2","3","4","5","6");
-				if (args[1].equalsIgnoreCase("all")) {
-					return Arrays.asList("in nation", "1","2","3","4","5","6");
+				if (args[1].equalsIgnoreCase("all") && args[2].equalsIgnoreCase("towns")) {
+					return Arrays.asList("1","2","3","4","5","6");
 				}
 			}
-			
-			if (args.length == 6) {
-				if (args[1].equalsIgnoreCase("all") && args[4].equalsIgnoreCase("nation")) {
-					return getTownyStartingWith(args[5], "n");
-				}
-			}
-			
-			if (args.length == 7) {
-				return Arrays.asList("1","2","3","4","5","6");
-			}
-				
 		
 		default:
-			return NameUtil.filterByStart(siegewaradminTabCompletes, args[0]);
+			if (args.length == 1)
+				return NameUtil.filterByStart(siegewaradminTabCompletes, args[0]);
+			else
+				return Collections.emptyList();
 		}
 	}
 	
@@ -113,9 +107,17 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatTitle("/siegewaradmin"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "reload", Translation.of("admin_help_1")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity town [town_name] [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity all towns in nation [nation_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity nation [nation_name] [hours]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity all towns [hours]", ""));
 	
+	}
+	
+	private void showImmunityHelp(CommandSender sender) {
+		sender.sendMessage(ChatTools.formatTitle("/swa immunity"));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa immunity", "town [town_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity nation [nation_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa immunity", "all towns [hours]", ""));
+
 	}
 
 	private void parseSiegeWarReloadCommand(CommandSender sender) {
@@ -128,42 +130,52 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	}
 
 	private void parseSiegeWarImmunityCommand(CommandSender sender, String[] args) {
-		if (args.length == 3 && args[0].equalsIgnoreCase("town")) {
-			//1 town
-			Town town = TownyUniverse.getInstance().getTown(args[1]);
-			long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
-			TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
-			TownyMessaging.sendGlobalMessage(Translation.of("msg_set_siege_immunities_town", args[1], args[2]));
+		try {
+			Integer.parseInt(args[2]);
+		} catch (NumberFormatException e) {
+			Messaging.sendMessage(sender, Translation.of("msg_error_must_be_num"));
+			showImmunityHelp(sender);
+			return;
+		}
+		long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 
-		} else if (args.length == 6
-			&& args[0].equalsIgnoreCase("all")
-			&& args[1].equalsIgnoreCase("towns")
-			&& args[2].equalsIgnoreCase("in")
-			&& args[3].equalsIgnoreCase("nation")) {
-			//All towns in nation
-			Nation nation = TownyUniverse.getInstance().getNation(args[4]);
-			long durationMillis = (long)(Long.parseLong(args[5]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
+		if (args.length == 3 && args[0].equalsIgnoreCase("town")) {
+			//town {townname} {hours}
+			Town town = TownyUniverse.getInstance().getTown(args[1]);
+			if (town == null) {
+				Messaging.sendErrMessage(sender, Translation.of("msg_err_not_registered_1", args[1]));
+				return;
+			}
+			TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
+			TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_set_siege_immunities_town", args[1], args[2]));
+			Messaging.sendMessage(sender, Translation.of("msg_set_siege_immunities_town", args[1], args[2]));
+
+		} else if (args.length == 3 && args[0].equalsIgnoreCase("nation")) {
+			//nation {nationname} {hours}
+			Nation nation = TownyUniverse.getInstance().getNation(args[1]);
+			if (nation == null) {
+				Messaging.sendErrMessage(sender, Translation.of("msg_err_not_registered_1", args[1]));
+				return;
+			}
 			for(Town town: nation.getTowns()) {
 				TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
 			}
-			TownyMessaging.sendGlobalMessage(Translation.of("msg_set_siege_immunities_nation", args[4], args[5]));
+			TownyMessaging.sendPrefixedNationMessage(nation, Translation.of("msg_set_siege_immunities_nation", args[1], args[2]));
+			Messaging.sendMessage(sender, Translation.of("msg_set_siege_immunities_nation", args[1], args[2]));
 
 		} else if(args.length == 3
 			&& args[0].equalsIgnoreCase("all")
 			&& args[1].equalsIgnoreCase("towns")) {
-			//All towns 
-			long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
+			//all towns 
 			for(Town town: new ArrayList<>(TownyUniverse.getInstance().getTowns()))  {
 				TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
 			}
 			TownyMessaging.sendGlobalMessage(Translation.of("msg_set_siege_immunities_all", args[2]));
-		} else {
 
-			sender.sendMessage(ChatTools.formatTitle("/swa immunity"));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/swa immunity", "town [town_name] [hours]", ""));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/swa immunity", "all towns in nation [nation_name] [hours]", ""));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/swa immunity", "all towns [hours]", ""));
-		}	}
+		} else {
+			showImmunityHelp(sender);
+		}	
+	}
 
 
 	/**
