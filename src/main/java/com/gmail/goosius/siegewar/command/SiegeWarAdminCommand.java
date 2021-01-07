@@ -76,7 +76,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		if (args.length > 0) {
 			if (sender instanceof Player
 					&& !((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN.getNode(args[0]))) {
-				Messaging.sendErrMessage(sender, Translation.of("msg_err_command_disable"));
+				Messaging.sendErrorMsg(sender, Translation.of("msg_err_command_disable"));
 				return;
 			}
 			switch (args[0]) {
@@ -96,7 +96,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		} else {
 			if (sender instanceof Player
 					&& !((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN.getNode())) {
-				Messaging.sendErrMessage(sender, Translation.of("msg_err_command_disable"));
+				Messaging.sendErrorMsg(sender, Translation.of("msg_err_command_disable"));
 				return;
 			}
 			showHelp(sender);
@@ -122,18 +122,18 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
 	private void parseSiegeWarReloadCommand(CommandSender sender) {
 		if (Settings.loadSettingsAndLang()) {
-			Messaging.sendMessage(sender, Translation.of("config_and_lang_file_reloaded_successfully"));
+			Messaging.sendMsg(sender, Translation.of("config_and_lang_file_reloaded_successfully"));
 			return;
 		}
 		
-		Messaging.sendErrMessage(sender, Translation.of("config_and_lang_file_could_not_be_loaded"));
+		Messaging.sendErrorMsg(sender, Translation.of("config_and_lang_file_could_not_be_loaded"));
 	}
 
 	private void parseSiegeWarImmunityCommand(CommandSender sender, String[] args) {
 		try {
 			Integer.parseInt(args[2]);
 		} catch (NumberFormatException e) {
-			Messaging.sendMessage(sender, Translation.of("msg_error_must_be_num"));
+			Messaging.sendMsg(sender, Translation.of("msg_error_must_be_num"));
 			showImmunityHelp(sender);
 			return;
 		}
@@ -143,25 +143,25 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			//town {townname} {hours}
 			Town town = TownyUniverse.getInstance().getTown(args[1]);
 			if (town == null) {
-				Messaging.sendErrMessage(sender, Translation.of("msg_err_not_registered_1", args[1]));
+				Messaging.sendErrorMsg(sender, Translation.of("msg_err_not_registered_1", args[1]));
 				return;
 			}
 			TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
 			TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_set_siege_immunities_town", args[1], args[2]));
-			Messaging.sendMessage(sender, Translation.of("msg_set_siege_immunities_town", args[1], args[2]));
+			Messaging.sendMsg(sender, Translation.of("msg_set_siege_immunities_town", args[1], args[2]));
 
 		} else if (args.length == 3 && args[0].equalsIgnoreCase("nation")) {
 			//nation {nationname} {hours}
 			Nation nation = TownyUniverse.getInstance().getNation(args[1]);
 			if (nation == null) {
-				Messaging.sendErrMessage(sender, Translation.of("msg_err_not_registered_1", args[1]));
+				Messaging.sendErrorMsg(sender, Translation.of("msg_err_not_registered_1", args[1]));
 				return;
 			}
 			for(Town town: nation.getTowns()) {
 				TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
 			}
 			TownyMessaging.sendPrefixedNationMessage(nation, Translation.of("msg_set_siege_immunities_nation", args[1], args[2]));
-			Messaging.sendMessage(sender, Translation.of("msg_set_siege_immunities_nation", args[1], args[2]));
+			Messaging.sendMsg(sender, Translation.of("msg_set_siege_immunities_nation", args[1], args[2]));
 
 		} else if(args.length == 3
 			&& args[0].equalsIgnoreCase("all")
@@ -170,7 +170,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			for(Town town: new ArrayList<>(TownyUniverse.getInstance().getTowns()))  {
 				TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
 			}
-			TownyMessaging.sendGlobalMessage(Translation.of("msg_set_siege_immunities_all", args[2]));
+			Messaging.sendGlobalMessage(Translation.of("msg_set_siege_immunities_all", args[2]));
 
 		} else {
 			showImmunityHelp(sender);

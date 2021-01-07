@@ -1,8 +1,8 @@
 package com.gmail.goosius.siegewar.playeractions;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.AlreadyRegisteredException;
@@ -108,21 +108,21 @@ public class InvadeTown {
 		
 		//Messaging
 		if(nationTown) {
-			TownyMessaging.sendGlobalMessage(String.format(
+			Messaging.sendGlobalMessage(String.format(
 				Translation.of("msg_siege_war_nation_town_captured"),
 				defendingTown.getFormattedName(),
 				nationOfDefendingTown.getFormattedName(),
 				attackingNation.getFormattedName()
 			));
 		} else {
-			TownyMessaging.sendGlobalMessage(String.format(
+			Messaging.sendGlobalMessage(String.format(
 				Translation.of("msg_siege_war_neutral_town_captured"),
 				defendingTown.getFormattedName(),
 				attackingNation.getFormattedName()
 			));
 		}
 		if(nationDefeated) {
-			TownyMessaging.sendGlobalMessage(String.format(
+			Messaging.sendGlobalMessage(String.format(
 				Translation.of("msg_siege_war_nation_defeated"),
 				nationOfDefendingTown.getFormattedName()
 			));

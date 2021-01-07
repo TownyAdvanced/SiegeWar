@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.playeractions;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
@@ -9,7 +10,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
@@ -63,14 +63,19 @@ public class PlaceBlock {
 			Material mat = block.getType();
 			//Banner placement
 			if (Tag.BANNERS.isTagged(mat))
-				evaluatePlaceBanner(player, block);
+                try {
+                    evaluatePlaceBanner(player, block);
+                } catch (TownyException e1) {
+                    Messaging.sendErrorMsg(player, e1.getMessage());
+                    return;
+                }
 	
 			//Chest placement
 			if (mat == Material.CHEST || mat == Material.TRAPPED_CHEST)
 				try {
 					evaluatePlaceChest(player, block);
 				} catch (TownyException e) {
-					TownyMessaging.sendErrorMsg(player, e.getMessage());
+					Messaging.sendErrorMsg(player, e.getMessage());
 					return;
 				}
 	

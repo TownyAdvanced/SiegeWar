@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -107,7 +108,7 @@ public class SiegeWarMoneyUtil {
 			int refundAmount = ResidentMetaDataController.getNationRefundAmount(formerKing);
 			formerKing.getAccount().deposit(refundAmount, "Nation Refund");
 			ResidentMetaDataController.setNationRefundAmount(formerKing, 0);
-			TownyMessaging.sendMsg(player, Translation.of("msg_siege_war_nation_refund_claimed", TownyEconomyHandler.getFormattedBalance(refundAmount)));
+			Messaging.sendMsg(player, Translation.of("msg_siege_war_nation_refund_claimed", TownyEconomyHandler.getFormattedBalance(refundAmount)));
 		} else {
 			throw new TownyException(Translation.of("msg_err_siege_war_nation_refund_unavailable"));
 		}
@@ -124,8 +125,8 @@ public class SiegeWarMoneyUtil {
 			int amountToRefund = (int)(TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
 			ResidentMetaDataController.setNationRefundAmount(king, amountToRefund);
 
-			TownyMessaging.sendMsg(
-				king,
+			Messaging.sendMsg(
+				king.getPlayer(),
 				String.format(
 					Translation.of("msg_siege_war_nation_refund_available"),
 					TownyEconomyHandler.getFormattedBalance(amountToRefund)));

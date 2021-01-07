@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.settings;
 
-import com.palmergames.bukkit.towny.TownyMessaging;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.command.HelpMenu;
 import com.palmergames.bukkit.util.Colors;
 import com.palmergames.util.StringMgmt;
@@ -41,7 +41,7 @@ public final class Translation {
 			System.out.println("[SiegeWar] Lang: " + res + " v" + Translation.of("version") + " loaded.");
 			return;
 		} catch (InvalidConfigurationException e) {
-			TownyMessaging.sendMsg("Invalid Configuration in language file detected.");
+			System.err.println(SiegeWar.prefix + "Invalid Configuration in language file detected.");
 		}
 		
 		String resVersion = newLanguage.getString("version");
@@ -69,7 +69,7 @@ public final class Translation {
 		String data = language.getString(key.toLowerCase());
 
 		if (data == null) {
-			System.out.println("[SiegeWar] Error could not read " + key.toLowerCase() + " from " + Settings.getString(ConfigNodes.LANGUAGE));
+			System.err.println("[SiegeWar] Error could not read " + key.toLowerCase() + " from " + Settings.getString(ConfigNodes.LANGUAGE));
 			return "";
 		}
 		return StringMgmt.translateHexColors(parseSingleLineString(data));

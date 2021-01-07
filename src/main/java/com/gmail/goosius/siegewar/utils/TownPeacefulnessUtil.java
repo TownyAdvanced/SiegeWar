@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -142,9 +143,9 @@ public class TownPeacefulnessUtil {
 				}
 			} catch (Exception e) {
 				try {
-					System.out.println("Problem punishing peaceful player in siege zone - " + player.getName());
+					System.err.println("Problem punishing peaceful player in siege zone - " + player.getName());
 				} catch (Exception e2) {
-					System.out.println("Problem punishing peaceful player in siege zone (could not read player name)");
+					System.err.println("Problem punishing peaceful player in siege zone (could not read player name)");
 				}
 				e.printStackTrace();
 			}
@@ -224,9 +225,9 @@ public class TownPeacefulnessUtil {
 				}
 			} catch (Exception e) {
 				try {
-					System.out.println("Problem evaluating peaceful town nation assignment for - " + peacefulTown.getName());
+					System.err.println("Problem evaluating peaceful town nation assignment for - " + peacefulTown.getName());
 				} catch (Exception e2) {
-					System.out.println("Problem evaluating peaceful town nation assignment (could not read town name)");
+					System.err.println("Problem evaluating peaceful town nation assignment (could not read town name)");
 				}
 				e.printStackTrace();
 			}
@@ -234,7 +235,7 @@ public class TownPeacefulnessUtil {
 		//Send a global message with how many towns were modified.
 		if (modifiedTowns > 0) {
 			Boolean one = modifiedTowns == 1;
-			TownyMessaging.sendGlobalMessage(Translation.of("msg_war_siege_peaceful_town_total_switches", modifiedTowns, one ? "" : "s", one ? "has" : "have"));
+			Messaging.sendGlobalMessage(Translation.of("msg_war_siege_peaceful_town_total_switches", modifiedTowns, one ? "" : "s", one ? "has" : "have"));
 		}
 	}
 
@@ -271,9 +272,9 @@ public class TownPeacefulnessUtil {
 			}
 		} catch (Exception e) {
 			try {
-				System.out.println("Problem getting valid guardian towns for - " + peacefulTown.getName());
+				System.err.println("Problem getting valid guardian towns for - " + peacefulTown.getName());
 			} catch (Exception e2) {
-				System.out.println("Problem getting valid guardian towns (could not read peaceful town name)");
+				System.err.println("Problem getting valid guardian towns (could not read peaceful town name)");
 			}
 			e.printStackTrace();
 		}

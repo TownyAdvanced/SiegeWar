@@ -11,13 +11,14 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.playeractions.PlayerDeath;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
-import com.palmergames.bukkit.towny.TownyMessaging;
 import com.gmail.goosius.siegewar.settings.Translation;
 
 /**
@@ -48,7 +49,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 					for(Siege siege: SiegeController.getSieges()) {
 						if(siege.getBannerControlSessions().containsKey(event.getPlayer())) {
 							event.setCancelled(true);
-							TownyMessaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control"));
+							Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control"));
 						}
 					}
 				}

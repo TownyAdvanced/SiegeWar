@@ -2,13 +2,13 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import org.bukkit.block.Block;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
-import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.gmail.goosius.siegewar.settings.Translation;
@@ -58,7 +58,7 @@ public class AbandonAttack {
 			//Pending abandon
 			siege.setStatus(SiegeStatus.PENDING_ATTACKER_ABANDON);
 			SiegeController.saveSiege(siege);
-			TownyMessaging.sendGlobalMessage(
+			Messaging.sendGlobalMessage(
 				String.format(Translation.of("msg_siege_war_pending_attacker_abandon"),
 					siege.getAttackingNation().getFormattedName(),
 					siege.getDefendingTown().getFormattedName(),
@@ -67,7 +67,7 @@ public class AbandonAttack {
 			//Immediate abandon
 			SiegeWarMoneyUtil.giveWarChestToDefendingTown(siege);
 			SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.ATTACKER_ABANDON);
-			TownyMessaging.sendGlobalMessage(
+			Messaging.sendGlobalMessage(
 				String.format(Translation.of("msg_siege_war_attacker_abandon"),
 					siege.getAttackingNation().getFormattedName(),
 					siege.getDefendingTown().getFormattedName()));

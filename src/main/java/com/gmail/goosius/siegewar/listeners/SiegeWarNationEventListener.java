@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
@@ -19,7 +21,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyFormatter;
-import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.DeleteNationEvent;
@@ -82,7 +83,7 @@ public class SiegeWarNationEventListener implements Listener {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("msg_war_siege_peaceful_towns_cannot_make_nations"));
 			} else 
-				TownyMessaging.sendMsg(event.getTown().getMayor(), Translation.of("msg_war_siege_warning_peaceful_town_should_not_create_nation"));
+				Messaging.sendMsg(event.getTown().getMayor().getPlayer(), Translation.of("msg_war_siege_warning_peaceful_town_should_not_create_nation"));
 		}
 	}
 	
@@ -95,7 +96,7 @@ public class SiegeWarNationEventListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled() && TownySettings.isUsingEconomy()
 				&& SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete()) {
 			int amountToRefund = (int)(TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
-			TownyMessaging.sendMsg(event.getNation().getKing(), Translation.of("msg_err_siege_war_delete_nation_warning", TownyEconomyHandler.getFormattedBalance(amountToRefund)));
+			Messaging.sendMsg(event.getNation().getKing().getPlayer(), Translation.of("msg_err_siege_war_delete_nation_warning", TownyEconomyHandler.getFormattedBalance(amountToRefund)));
 		}
 
 	}
@@ -152,7 +153,7 @@ public class SiegeWarNationEventListener implements Listener {
 			event.getTown().setConqueredDays(0);
 			TownyUniverse.getInstance().getDataSource().saveTown(event.getTown());
 
-			TownyMessaging.sendGlobalMessage(
+			Messaging.sendGlobalMessage(
 				String.format(Translation.of("msg_siege_war_revolt"),
 					event.getTown().getFormattedName(),
 					event.getTown().getMayor().getFormattedName(),

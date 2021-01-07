@@ -20,6 +20,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarDynmapUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
 
@@ -79,7 +80,8 @@ public class DynmapTask {
                     lines.add("Points: " + siege.getSiegePoints());
                     lines.add("Banner Control: " + siege.getBannerControllingSide());
                     lines.add("Time left: " + TimeMgmt.getFormattedTimeValue(siege.getTimeUntilCompletionMillis()));
-                    lines.add("War Chest: " + TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
+                    if (TownySettings.isUsingEconomy() && TownyEconomyHandler.isActive())
+                        lines.add("War Chest: " + TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
                     String desc = "<b>" + name + "</b><hr>" + StringMgmt.join(lines, "<br>");
                     Location siegeLoc = siege.getFlagLocation();
                     double siegeX = siegeLoc.getX();

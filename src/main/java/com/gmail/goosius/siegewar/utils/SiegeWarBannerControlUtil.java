@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
@@ -9,7 +10,6 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -42,9 +42,9 @@ public class SiegeWarBannerControlUtil {
 			}
 		} catch (Exception e) {
 			try {
-				System.out.println("Problem evaluating banner control for siege: " + siege.getName());
+				System.err.println("Problem evaluating banner control for siege: " + siege.getName());
 			} catch (Exception e2) {
-				System.out.println("Problem evaluating banner control for siege: (could not read siege name)");
+				System.err.println("Problem evaluating banner control for siege: (could not read siege name)");
 			}
 			e.printStackTrace();
 		}
@@ -108,7 +108,7 @@ public class SiegeWarBannerControlUtil {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Problem evaluating new banner control sessions");
+			System.err.println("Problem evaluating new banner control sessions");
 			e.printStackTrace();
 		}
 	}
@@ -122,7 +122,7 @@ public class SiegeWarBannerControlUtil {
 		siege.addBannerControlSession(player, bannerControlSession);
 
 		//Notify Player
-		TownyMessaging.sendMsg(player, String.format(
+		Messaging.sendMsg(player, String.format(
 			Translation.of("msg_siege_war_banner_control_session_started"), 
 			SiegeWarSettings.getBannerControlHorizontalDistanceBlocks(),
 			SiegeWarSettings.getBannerControlVerticalDistanceBlocks(),
@@ -199,7 +199,7 @@ public class SiegeWarBannerControlUtil {
 				//Check if session failed
 				if (!doesPlayerMeetBasicSessionRequirements(siege, bannerControlSession.getPlayer(), bannerControlSession.getResident())) {
 					siege.removeBannerControlSession(bannerControlSession);
-					TownyMessaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_failure"));
+					Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_failure"));
 					continue;
 				}
 
@@ -210,14 +210,14 @@ public class SiegeWarBannerControlUtil {
 					if(bannerControlSession.getSiegeSide() == siege.getBannerControllingSide()) {
 						//The player contributes to ongoing banner control
 						siege.addBannerControllingResident(bannerControlSession.getResident());
-						TownyMessaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_success"));
+						Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_success"));
 					} else {
 						//The player gains banner control for their side
 						siege.clearBannerControllingResidents();
 						siege.setBannerControllingSide(bannerControlSession.getSiegeSide());
 						siege.addBannerControllingResident(bannerControlSession.getResident());
 						//Inform player
-						TownyMessaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_success"));
+						Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_success"));
 						//Inform town/nation participants
 						String message;
 						if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
@@ -229,7 +229,7 @@ public class SiegeWarBannerControlUtil {
 					}
 				}
 			} catch (Exception e) {
-				System.out.println("Problem evaluating banner control session for player " + bannerControlSession.getPlayer().getName());
+				System.err.println("Problem evaluating banner control session for player " + bannerControlSession.getPlayer().getName());
 			}
 		}
 	}

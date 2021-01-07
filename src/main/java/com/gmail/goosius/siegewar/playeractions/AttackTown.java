@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -151,14 +152,14 @@ public class AttackTown {
 
 		//Send global message;
 		if (siege.getDefendingTown().hasNation()) {
-			TownyMessaging.sendGlobalMessage(String.format(
+			Messaging.sendGlobalMessage(String.format(
 				Translation.of("msg_siege_war_siege_started_nation_town"),
 				attackingNation.getFormattedName(),
 				defendingTown.getNation().getFormattedName(),
 				defendingTown.getFormattedName()
 			));
 		} else {
-			TownyMessaging.sendGlobalMessage(String.format(
+			Messaging.sendGlobalMessage(String.format(
 				Translation.of("msg_siege_war_siege_started_neutral_town"),
 				attackingNation.getFormattedName(),
 				defendingTown.getFormattedName()

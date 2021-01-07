@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.playeractions;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
@@ -7,7 +8,6 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
-import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
@@ -134,14 +134,14 @@ public class PlunderTown {
 
 		//Send plunder success messages
 		if (town.hasNation()) {
-			TownyMessaging.sendGlobalMessage(String.format(
+			Messaging.sendGlobalMessage(String.format(
 				Translation.of("msg_siege_war_nation_town_plundered"),
 				town.getFormattedName(),
 				TownyEconomyHandler.getFormattedBalance(plunderAmount),
 				nation.getFormattedName()
 			));
 		} else {
-			TownyMessaging.sendGlobalMessage(String.format(
+			Messaging.sendGlobalMessage(String.format(
 				Translation.of("msg_siege_war_neutral_town_plundered"),
 				town.getFormattedName(),
 				TownyEconomyHandler.getFormattedBalance(plunderAmount),
@@ -151,13 +151,13 @@ public class PlunderTown {
 
 		//Send town bankrupted/destroyed message
 		if(townNewlyBankrupted) {
-			TownyMessaging.sendGlobalMessage(
+			Messaging.sendGlobalMessage(
 				String.format(
 					Translation.of("msg_siege_war_town_bankrupted_from_plunder"),
 					town,
 					nation.getFormattedName()));
 		} else if (townDestroyed) {
-			TownyMessaging.sendGlobalMessage(
+			Messaging.sendGlobalMessage(
 				String.format(
 					Translation.of("msg_siege_war_town_ruined_from_plunder"),
 					town,
