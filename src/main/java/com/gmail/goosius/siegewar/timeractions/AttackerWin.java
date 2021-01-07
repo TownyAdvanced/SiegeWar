@@ -24,9 +24,8 @@ public class AttackerWin {
 	public static void attackerWin(Siege siege, Nation winnerNation) {
         SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.ATTACKER_WIN);
 
-		Messaging.sendGlobalMessage(String.format(
-			Translation.of("msg_siege_war_attacker_win"),
-			winnerNation.getFormattedName(),
+		Messaging.sendGlobalMessage(Translation.of("msg_siege_war_attacker_win", 
+		    winnerNation.getFormattedName(),
 			siege.getDefendingTown().getFormattedName()
 		));
 

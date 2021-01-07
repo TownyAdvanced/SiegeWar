@@ -25,3 +25,5 @@
     - Sieges will show on your dynmap, if dynmap is installed. Dynmap-Towny is not required.
     - Information can be seen about the siege including points, banner control side, warchest.
     - Closes #4.
+  - Switch from using TownyMessaging to Messaging where possible.
+  - Overhaul of the english.yml's strings to drop the [War] from strings.

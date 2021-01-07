@@ -24,9 +24,7 @@ public class DefenderWin
     public static void defenderWin(Siege siege, Town winnerTown) {
         SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.DEFENDER_WIN);
 
-		Messaging.sendGlobalMessage(String.format(
-			Translation.of("msg_siege_war_defender_win"),
-			winnerTown.getFormattedName()));
+		Messaging.sendGlobalMessage(Translation.of("msg_siege_war_defender_win", winnerTown.getFormattedName()));
 
 		SiegeWarMoneyUtil.giveWarChestToDefendingTown(siege);
     }

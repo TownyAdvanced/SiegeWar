@@ -108,22 +108,22 @@ public class InvadeTown {
 		
 		//Messaging
 		if(nationTown) {
-			Messaging.sendGlobalMessage(String.format(
-				Translation.of("msg_siege_war_nation_town_captured"),
+			Messaging.sendGlobalMessage(
+				Translation.of("msg_siege_war_nation_town_captured",
 				defendingTown.getFormattedName(),
 				nationOfDefendingTown.getFormattedName(),
 				attackingNation.getFormattedName()
 			));
 		} else {
-			Messaging.sendGlobalMessage(String.format(
-				Translation.of("msg_siege_war_neutral_town_captured"),
+			Messaging.sendGlobalMessage(
+				Translation.of("msg_siege_war_neutral_town_captured",
 				defendingTown.getFormattedName(),
 				attackingNation.getFormattedName()
 			));
 		}
 		if(nationDefeated) {
-			Messaging.sendGlobalMessage(String.format(
-				Translation.of("msg_siege_war_nation_defeated"),
+			Messaging.sendGlobalMessage(
+				Translation.of("msg_siege_war_nation_defeated",
 				nationOfDefendingTown.getFormattedName()
 			));
 		}

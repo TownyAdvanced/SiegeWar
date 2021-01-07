@@ -72,7 +72,7 @@ public class SiegeWarTownEventListener implements Listener {
 				&& SiegeWarSettings.getWarSiegeBesiegedTownRecruitmentDisabled()
 				&& SiegeController.hasActiveSiege(event.getTown())) {
 			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("msg_err_siege_besieged_town_cannot_recruit"));
+			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_recruit"));
 		}
 	}
 
@@ -97,7 +97,7 @@ public class SiegeWarTownEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& SiegeWarSettings.getWarSiegeExplosionsAlwaysOnInBesiegedTowns()
 				&& SiegeController.hasActiveSiege(event.getTown()))  {
-			event.setCancellationMsg(Translation.of("msg_err_siege_besieged_town_cannot_toggle_explosions"));
+			event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_explosions"));
 			event.setCancelled(true);
 		}
 	}
@@ -110,7 +110,7 @@ public class SiegeWarTownEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns()
 				&& SiegeController.hasActiveSiege(event.getTown()))  {
-			event.setCancellationMsg(Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
+			event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
 			event.setCancelled(true);
 		}
 	}
@@ -123,7 +123,7 @@ public class SiegeWarTownEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& SiegeWarSettings.getWarSiegeBesiegedTownRecruitmentDisabled()
 				&& SiegeController.hasActiveSiege(event.getTown())) {
-			event.setCancellationMsg(Translation.of("msg_err_siege_besieged_town_cannot_toggle_open_off"));
+			event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_open_off"));
 			event.setCancelled(true);
 		}
 	}
@@ -178,7 +178,7 @@ public class SiegeWarTownEventListener implements Listener {
 						}
 					}
 				}
-				event.setCancellationMsg(Translation.of("status_town_peacefulness_status_change_timer", days));
+				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("status_town_peacefulness_status_change_timer", days));
 				event.setCancelled(true);
 				
 			} else {
@@ -203,7 +203,7 @@ public class SiegeWarTownEventListener implements Listener {
 			if (SiegeWarSettings.getWarSiegeBesiegedTownClaimingDisabled()
 				&& SiegeController.hasActiveSiege(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("msg_err_siege_besieged_town_cannot_claim"));
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_claim"));
 				return;
 			}
 
@@ -214,7 +214,7 @@ public class SiegeWarTownEventListener implements Listener {
 						if (siege.getStatus().isActive()
 							&& SiegeWarDistanceUtil.isInSiegeZone(event.getPlayer(), siege)) {
 							event.setCancelled(true);
-							event.setCancelMessage(Translation.of("msg_err_siege_claim_too_near_siege_zone"));
+							event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_claim_too_near_siege_zone"));
 							break;
 						}
 					} catch (Exception e) {
@@ -238,7 +238,7 @@ public class SiegeWarTownEventListener implements Listener {
 	public void onTownUnclaim(TownPreUnclaimCmdEvent event) {
 		if (SiegeWarSettings.getWarCommonOccupiedTownUnClaimingDisabled() && event.getTown().isConquered()) {
 			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("msg_err_war_common_occupied_town_cannot_unclaim"));
+			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_war_common_occupied_town_cannot_unclaim"));
 			return;
 		}
 			
@@ -253,7 +253,7 @@ public class SiegeWarTownEventListener implements Listener {
 			)
 		{
 			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("msg_err_siege_besieged_town_cannot_unclaim"));
+			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_unclaim"));
 		}
 	}
 	

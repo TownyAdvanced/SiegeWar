@@ -30,10 +30,9 @@ public class SiegeWarMoneyUtil {
 			try {
 				winnerNation.getAccount().deposit(siege.getWarChestAmount(), "War Chest Captured/Returned");
 				String message =
-					String.format(
-						Translation.of("msg_siege_war_attack_recover_war_chest"),
-						winnerNation.getFormattedName(),
-						TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
+					Translation.of("msg_siege_war_attack_recover_war_chest",
+					winnerNation.getFormattedName(),
+					TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
 
 				//Send message to nation(
 				TownyMessaging.sendPrefixedNationMessage(winnerNation, message);
@@ -57,10 +56,9 @@ public class SiegeWarMoneyUtil {
 			try {
 				winnerTown.getAccount().deposit(siege.getWarChestAmount(), "War Chest Captured");
 				String message =
-					String.format(
-						Translation.of("msg_siege_war_attack_recover_war_chest"),
-						winnerTown.getFormattedName(),
-						TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
+					Translation.of("msg_siege_war_attack_recover_war_chest",
+					winnerTown.getFormattedName(),
+					TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
 
 				//Send message to nation
 				TownyMessaging.sendPrefixedNationMessage(siege.getAttackingNation(), message);

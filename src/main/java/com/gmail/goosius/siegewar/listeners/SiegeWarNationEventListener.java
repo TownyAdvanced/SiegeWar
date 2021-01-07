@@ -62,7 +62,7 @@ public class SiegeWarNationEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && event.getTown().isNeutral()) {
 			Set<Nation> validGuardianNations = TownPeacefulnessUtil.getValidGuardianNations(event.getTown());
 			if(!validGuardianNations.contains(event.getNation())) {
-				event.setCancelMessage(Translation.of("msg_war_siege_peaceful_town_cannot_join_nation", 
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_join_nation", 
 						event.getTown().getName(),
 						event.getNation().getName(),
 						SiegeWarSettings.getWarSiegePeacefulTownsGuardianTownMinDistanceRequirement(),
@@ -81,7 +81,7 @@ public class SiegeWarNationEventListener implements Listener {
 				&& event.getTown().isNeutral()) {
 			if (!SiegeWarSettings.getWarCommonPeacefulTownsAllowedToMakeNation()) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("msg_war_siege_peaceful_towns_cannot_make_nations"));
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_towns_cannot_make_nations"));
 			} else 
 				Messaging.sendMsg(event.getTown().getMayor().getPlayer(), Translation.of("msg_war_siege_warning_peaceful_town_should_not_create_nation"));
 		}
@@ -113,12 +113,12 @@ public class SiegeWarNationEventListener implements Listener {
 			if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && town.isNeutral()) {
 				Set<Nation> validGuardianNations = TownPeacefulnessUtil.getValidGuardianNations(town);
 				if(validGuardianNations.size() == 0) {
-					event.setCancelMessage(Translation.of("msg_war_siege_peaceful_town_cannot_revolt_nearby_guardian_towns_zero", 
+					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_revolt_nearby_guardian_towns_zero", 
 						SiegeWarSettings.getWarSiegePeacefulTownsGuardianTownMinDistanceRequirement(), 
 						SiegeWarSettings.getWarSiegePeacefulTownsGuardianTownPlotsRequirement()));
 					event.setCancelled(true);
 				} else if(validGuardianNations.size() == 1) {
-					event.setCancelMessage(Translation.of("msg_war_siege_peaceful_town_cannot_revolt_nearby_guardian_towns_one", 
+					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_revolt_nearby_guardian_towns_one", 
 						SiegeWarSettings.getWarSiegePeacefulTownsGuardianTownMinDistanceRequirement(), 
 						SiegeWarSettings.getWarSiegePeacefulTownsGuardianTownPlotsRequirement()));
 					event.setCancelled(true);
@@ -128,11 +128,11 @@ public class SiegeWarNationEventListener implements Listener {
 			if (SiegeWarSettings.getWarSiegeTownLeaveDisabled()) {
 
 				if (!SiegeWarSettings.getWarSiegeRevoltEnabled()) {
-					event.setCancelMessage(Translation.of("msg_err_siege_war_town_voluntary_leave_impossible"));
+					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_war_town_voluntary_leave_impossible"));
 					event.setCancelled(true);
 				}
 				if (town.isConquered() && System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(town)) {
-					event.setCancelMessage(Translation.of("msg_err_siege_war_revolt_immunity_active"));
+					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_war_revolt_immunity_active"));
 					event.setCancelled(true);
 				} else {
 					// Towny will cancel the leaving on lowest priority if the town is conquered.
@@ -154,10 +154,10 @@ public class SiegeWarNationEventListener implements Listener {
 			TownyUniverse.getInstance().getDataSource().saveTown(event.getTown());
 
 			Messaging.sendGlobalMessage(
-				String.format(Translation.of("msg_siege_war_revolt"),
-					event.getTown().getFormattedName(),
-					event.getTown().getMayor().getFormattedName(),
-					event.getNation().getFormattedName()));
+				Translation.of("msg_siege_war_revolt",
+				event.getTown().getFormattedName(),
+				event.getTown().getMayor().getFormattedName(),
+				event.getNation().getFormattedName()));
 		}	
 	}
 	
@@ -169,7 +169,7 @@ public class SiegeWarNationEventListener implements Listener {
 			&& SiegeWarPermissionUtil.doesNationRankAllowPermissionNode(event.getRank(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_POINTS)
 			&& event.getResident().getTown().isNeutral()) { // We know that the resident's town will not be null based on the tests already done.
 			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident"));
+			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident"));
 		}
 		
 	}

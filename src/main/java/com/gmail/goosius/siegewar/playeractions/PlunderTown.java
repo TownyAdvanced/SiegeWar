@@ -134,15 +134,15 @@ public class PlunderTown {
 
 		//Send plunder success messages
 		if (town.hasNation()) {
-			Messaging.sendGlobalMessage(String.format(
-				Translation.of("msg_siege_war_nation_town_plundered"),
+			Messaging.sendGlobalMessage(
+				Translation.of("msg_siege_war_nation_town_plundered",
 				town.getFormattedName(),
 				TownyEconomyHandler.getFormattedBalance(plunderAmount),
 				nation.getFormattedName()
 			));
 		} else {
-			Messaging.sendGlobalMessage(String.format(
-				Translation.of("msg_siege_war_neutral_town_plundered"),
+			Messaging.sendGlobalMessage(
+				Translation.of("msg_siege_war_neutral_town_plundered",
 				town.getFormattedName(),
 				TownyEconomyHandler.getFormattedBalance(plunderAmount),
 				nation.getFormattedName()
@@ -152,16 +152,14 @@ public class PlunderTown {
 		//Send town bankrupted/destroyed message
 		if(townNewlyBankrupted) {
 			Messaging.sendGlobalMessage(
-				String.format(
-					Translation.of("msg_siege_war_town_bankrupted_from_plunder"),
-					town,
-					nation.getFormattedName()));
+				Translation.of("msg_siege_war_town_bankrupted_from_plunder",
+				town,
+				nation.getFormattedName()));
 		} else if (townDestroyed) {
 			Messaging.sendGlobalMessage(
-				String.format(
-					Translation.of("msg_siege_war_town_ruined_from_plunder"),
-					town,
-					nation.getFormattedName()));
+				Translation.of("msg_siege_war_town_ruined_from_plunder",
+				town,
+				nation.getFormattedName()));
 		}
 	}
 }

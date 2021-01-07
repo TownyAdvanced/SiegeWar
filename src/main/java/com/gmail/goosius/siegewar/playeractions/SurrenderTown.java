@@ -24,8 +24,8 @@ public class SurrenderTown {
 			//Pending surrender
 			siege.setStatus(SiegeStatus.PENDING_DEFENDER_SURRENDER);
 			SiegeController.saveSiege(siege);
-			Messaging.sendGlobalMessage(String.format(
-				Translation.of("msg_siege_war_pending_town_surrender"),
+			Messaging.sendGlobalMessage(
+				Translation.of("msg_siege_war_pending_town_surrender",
 				siege.getDefendingTown().getFormattedName(),
 				siege.getAttackingNation().getFormattedName(),
 				TimeMgmt.getFormattedTimeValue(timeUntilSurrenderConfirmation)));
@@ -33,8 +33,8 @@ public class SurrenderTown {
 			//Immediate surrender
 			SiegeWarMoneyUtil.giveWarChestToAttackingNation(siege);
 			SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.DEFENDER_SURRENDER);
-			Messaging.sendGlobalMessage(String.format(
-				Translation.of("msg_siege_war_town_surrender"),
+			Messaging.sendGlobalMessage(
+				Translation.of("msg_siege_war_town_surrender",
 				siege.getDefendingTown().getFormattedName(),
 				siege.getAttackingNation().getFormattedName()));
 		}

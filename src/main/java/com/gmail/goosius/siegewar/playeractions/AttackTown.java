@@ -132,10 +132,9 @@ public class AttackTown {
 				//Pay upfront cost into warchest now
 				attackingNation.getAccount().withdraw(siege.getWarChestAmount(), "Cost of starting a siege.");
 				String moneyMessage =
-					String.format(
-						Translation.of("msg_siege_war_attack_pay_war_chest"),
-						attackingNation.getFormattedName(),
-						TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
+					Translation.of("msg_siege_war_attack_pay_war_chest",
+					attackingNation.getFormattedName(),
+					TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
 
 				TownyMessaging.sendPrefixedNationMessage(attackingNation, moneyMessage);
 				TownyMessaging.sendPrefixedTownMessage(defendingTown, moneyMessage);
