@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.dynmap.DynmapAPI;
 
 import com.gmail.goosius.siegewar.settings.Settings;
+import com.gmail.goosius.siegewar.tasks.DynmapTask;
 import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
@@ -60,11 +63,20 @@ public class SiegeWar extends JavaPlugin {
         if (Bukkit.getPluginManager().getPlugin("Towny").isEnabled())
         	SiegeController.loadAll();
         
+        Plugin dynmap = Bukkit.getPluginManager().getPlugin("dynmap");
+        if (dynmap != null) {
+        	System.out.println(prefix + "SiegeWar found Dynmap, enabling Dynmap support.");
+        	DynmapTask.setDynmapAPI((DynmapAPI) dynmap);
+        } else {
+        	System.out.println(prefix + "Dynmap not found.");
+        }
+        
         System.out.println(prefix + "SiegeWar loaded successfully.");
     }
     
     @Override
     public void onDisable() {
+    	DynmapTask.endDynmapTask();
     	System.err.println(prefix + "Shutting down....");
     }
 

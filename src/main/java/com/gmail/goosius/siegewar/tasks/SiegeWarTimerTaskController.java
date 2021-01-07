@@ -1,5 +1,6 @@
-package com.gmail.goosius.siegewar;
+package com.gmail.goosius.siegewar.tasks;
 
+import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
