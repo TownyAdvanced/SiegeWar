@@ -145,6 +145,8 @@ public class SiegeWarTownEventListener implements Listener {
 		Town town = event.getTown();
 		
 		if (event.isAdminAction()) {
+			TownMetaDataController.setDesiredPeacefullnessSetting(town, event.getFutureState());
+			TownMetaDataController.setPeacefulnessChangeDays(town, 0);
 			return;
 		} else {
 			int days;
