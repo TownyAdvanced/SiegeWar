@@ -4,7 +4,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.SiegeWarTimerTaskController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
@@ -18,6 +17,7 @@ import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
 
 /**
  * 

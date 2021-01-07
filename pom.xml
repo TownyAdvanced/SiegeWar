@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.gmail.goosius</groupId>
   <artifactId>SiegeWar</artifactId>
-  <version>0.0.5</version>
+  <version>0.0.6</version>
   <name>siegewar</name> <!-- Leave lower-cased -->
 
   <properties>
@@ -20,6 +20,10 @@
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
 	</repository>
+    <repository>
+      <id>dynmap-repo</id>
+      <url>http://repo.mikeprimm.com/</url>
+    </repository>
   </repositories>
   
   <dependencies>
@@ -40,6 +44,11 @@
       <artifactId>annotations</artifactId>
       <version>16.0.2</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>us.dynmap</groupId>
+      <artifactId>dynmap-api</artifactId>
+      <version>2.5</version>
     </dependency>
   </dependencies>
 

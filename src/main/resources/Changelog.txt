@@ -20,3 +20,8 @@
   - Change command: /swa immunity all towns in nation {nationname} {hours}
     to: /swa immunity nation {nationname} {hours}
   - Fix global message spam from /swa immunity {town|nation} sub-commands.
+0.0.6:
+  - Adds internal support for Dynmap-Towny features present in Goosius' fork of Dynmap-Towny.
+    - Sieges will show on your dynmap, if dynmap is installed.
+    - Information can be seen about the siege including points, banner control side, warchest.
+    - Closes #4.
