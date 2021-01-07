@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.03
+version: 0.04
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -202,3 +202,6 @@ status_no: '&cNO'
 
 #Added in 0.03:
 msg_err_no_money: '&cThere is not enough money in the bank.'
+
+#Added in 0.04:
+msg_war_siege_peaceful_town_total_switches: '&b%d peaceful town%s %s peacefully switched nations.'

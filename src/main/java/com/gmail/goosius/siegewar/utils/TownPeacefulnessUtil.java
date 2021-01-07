@@ -76,7 +76,7 @@ public class TownPeacefulnessUtil {
 				message = Translation.of("msg_war_common_town_became_non_peaceful", town.getFormattedName());
 			}
 		}
-		TownyMessaging.sendGlobalMessage(message);
+		TownyMessaging.sendPrefixedTownMessage(town, message);
 		TownyUniverse.getInstance().getDataSource().saveTown(town);
 	}
 
@@ -163,6 +163,7 @@ public class TownPeacefulnessUtil {
 		List<Town> towns = new ArrayList<>(townyUniverse.getDataSource().getTowns());
 		ListIterator<Town> townItr = towns.listIterator();
 		Town peacefulTown = null;
+		int modifiedTowns = 0;
 
 		CYCLE_ALL_TOWNS:
 		while (townItr.hasNext()) {
@@ -188,11 +189,13 @@ public class TownPeacefulnessUtil {
 				}
 
 				//Nation status change needed
+				modifiedTowns += 1;
+
 				if (guardianTowns.size() == 0) {
 					//Guardian town list was empty. Peaceful town leaves nation
 					Nation previousNation = peacefulTown.getNation();
+					TownyMessaging.sendPrefixedNationMessage(previousNation, Translation.of("msg_war_siege_peaceful_town_left_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName()));
 					peacefulTown.removeNation();
-					TownyMessaging.sendGlobalMessage(Translation.of("msg_war_siege_peaceful_town_left_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName()));
 				} else {
 					//Find guardian nation (the one with the largest guardian town)
 					Town topGuardianTown = null;
@@ -209,11 +212,12 @@ public class TownPeacefulnessUtil {
 						Nation previousNation = peacefulTown.getNation();
 						peacefulTown.removeNation();
 						peacefulTown.setNation(guardianNation);
-						TownyMessaging.sendGlobalMessage(Translation.of("msg_war_siege_peaceful_town_changed_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName(), guardianNation.getFormattedName()));
+						TownyMessaging.sendPrefixedNationMessage(previousNation, Translation.of("msg_war_siege_peaceful_town_changed_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName(), guardianNation.getFormattedName()));
+						TownyMessaging.sendPrefixedNationMessage(guardianNation, Translation.of("msg_war_siege_peaceful_town_changed_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName(), guardianNation.getFormattedName()));
 					} else {
 						//Peaceful town joins nation
 						peacefulTown.setNation(guardianNation);
-						TownyMessaging.sendGlobalMessage(Translation.of("msg_war_siege_peaceful_town_joined_nation", peacefulTown.getFormattedName(), guardianNation.getFormattedName()));
+						TownyMessaging.sendPrefixedNationMessage(guardianNation, Translation.of("msg_war_siege_peaceful_town_joined_nation", peacefulTown.getFormattedName(), guardianNation.getFormattedName()));
 					}
 					// .setNation() does not save the Town internally.
 					TownyUniverse.getInstance().getDataSource().saveTown(peacefulTown);
@@ -226,6 +230,11 @@ public class TownPeacefulnessUtil {
 				}
 				e.printStackTrace();
 			}
+		}
+		//Send a global message with how many towns were modified.
+		if (modifiedTowns > 0) {
+			Boolean one = modifiedTowns == 1;
+			TownyMessaging.sendGlobalMessage(Translation.of("msg_war_siege_peaceful_town_total_switches", modifiedTowns, one ? "" : "s", one ? "has" : "have"));
 		}
 	}
 
