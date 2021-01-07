@@ -35,7 +35,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if (sender instanceof Player)
+		if (sender instanceof Player && args.length > 0)
 			parseSiegeWarCommand((Player) sender, args);
 		else {
 			sender.sendMessage(ChatTools.formatTitle("/siegewar"));
