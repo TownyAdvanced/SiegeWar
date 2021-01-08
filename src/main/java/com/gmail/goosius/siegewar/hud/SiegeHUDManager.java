@@ -1,6 +1,8 @@
 package com.gmail.goosius.siegewar.hud;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.SiegeWar;
@@ -13,26 +15,35 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class SiegeHUDManager {
 
-    ArrayList<Player> warHudUsers;
+    static Map<Player, Siege> warHudUsers;
 
     public SiegeHUDManager(SiegeWar plugin) {
-        warHudUsers = new ArrayList<Player>();
+        warHudUsers = new HashMap<>();
     }
 
     public void toggleWarHud(Player player, Siege siege) {
-        System.out.println(warHudUsers);
-        if (!warHudUsers.contains(player)) {
-            warHudUsers.add(player);
+        if (!warHudUsers.containsKey(player)) {
+            warHudUsers.put(player, siege);
             SiegeWarHud.toggleOn(player, siege);
         } else {
             toggleOff(player);
         }
     }
 
-    public void toggleOff(Player player) {
+    public static void toggleOff(Player player) {
         warHudUsers.remove(player);
         if (player.isOnline())
             player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+    }
+
+    public static void updateHUDs() {
+        for (Entry<Player, Siege> entry : warHudUsers.entrySet()) {
+            if (entry.getKey().getScoreboard().getTeam("points") == null) {
+                toggleOff(entry.getKey());
+                continue;
+            } else
+                SiegeWarHud.updateInfo(entry.getKey(), entry.getValue());
+        }
     }
 
     @EventHandler
