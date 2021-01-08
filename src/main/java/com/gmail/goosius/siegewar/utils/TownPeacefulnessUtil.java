@@ -62,20 +62,24 @@ public class TownPeacefulnessUtil {
 			return;
 		}
 		TownMetaDataController.setPeacefulnessChangeDays(town, 0);
-		town.setNeutral(!town.isNeutral());
 
-		if(SiegeWarSettings.getWarSiegeEnabled()) {
-			if (town.isNeutral()) {
+		town.setNeutral(!town.isNeutral());
+		
+		if (town.isNeutral())
+			town.setAdminDisabledPVP(true);
+		else
+			town.setAdminDisabledPVP(false);
+
+		if (SiegeWarSettings.getWarSiegeEnabled()) {
+			if (town.isNeutral()) 
 				message = Translation.of("msg_war_siege_town_became_peaceful", town.getFormattedName());
-			} else {
+			else
 				message = Translation.of("msg_war_siege_town_became_non_peaceful", town.getFormattedName());
-			}
 		} else {
-			if (town.isNeutral()) {
+			if (town.isNeutral())
 				message = Translation.of("msg_war_common_town_became_peaceful", town.getFormattedName());
-			} else {
+			else
 				message = Translation.of("msg_war_common_town_became_non_peaceful", town.getFormattedName());
-			}
 		}
 		TownyMessaging.sendPrefixedTownMessage(town, message);
 		TownyUniverse.getInstance().getDataSource().saveTown(town);
