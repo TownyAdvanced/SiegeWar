@@ -1,4 +1,4 @@
-package com.gmail.goosius.siegewar;
+package com.gmail.goosius.siegewar.hud;
 
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.Translation;
@@ -24,7 +24,7 @@ public class SiegeWarHud {
         board.getTeam("attackers").setSuffix(siege.getAttackingNation().getName());
         board.getTeam("defenders").setSuffix(siege.getDefendingTown().getName());
         board.getTeam("points").setSuffix(siege.getSiegePoints().toString());
-        board.getTeam("bannerControl").setSuffix(siege.getBannerControllingSide().name());
+        board.getTeam("bannerControl").setSuffix(siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase());
         //board.getTeam("timeRemaining").setSuffix(siege.getFormattedHoursUntilScheduledCompletion());
         switch (siege.getStatus()) {
             case PENDING_ATTACKER_ABANDON: {
@@ -40,7 +40,6 @@ public class SiegeWarHud {
                 break;
             }
         }
-
     }
 
     public static void toggleOn(Player p, Siege siege) {
