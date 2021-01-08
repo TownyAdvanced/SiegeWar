@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.command;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -29,8 +27,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private static final List<String> siegewarTabCompletes = Arrays.asList("nation", "hud");
 	
 	private static final List<String> siegewarNationTabCompletes = Arrays.asList("refund");
-
-	private static final List<String> townsUnderSiegeTabCompletes = getOngoingSieges();
 	
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
@@ -40,7 +36,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
 		case "hud":
 			if (args.length > 1)
-				return NameUtil.filterByStart(getOngoingSieges(), args[1]);
+				return NameUtil.filterByStart((List<String>) SiegeController.getSiegedTownNames(), args[1]);
 		default:
 			return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
 		}
@@ -89,10 +85,9 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		try {
 			if (args.length == 0) {
 				player.sendMessage(ChatTools.formatTitle("/siegewar"));
-				player.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "refund", Translation.of("nation_help_11")));
 				player.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 			} else {
-				List<String> townsBeingSieged = getOngoingSieges();
+				List<String> townsBeingSieged = (List<String>) SiegeController.getSiegedTownNames();
 				Town town = TownyUniverse.getInstance().getTown(args[0]);
 				if (town == null) 
 					throw new TownyException(Translation.of("msg_err_town_not_registered", args[0]));
@@ -107,14 +102,5 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		} catch (Exception e) {
 			player.sendMessage(e.getMessage());
 		}
-	}
-
-	public static List<String> getOngoingSieges() {
-		List<String> townsBeingSieged = new ArrayList<String>();
-
-		for (Siege siege : SiegeController.getSieges()) {
-			townsBeingSieged.add(siege.getDefendingTown().getName());
-		}
-		return townsBeingSieged;
 	}
 }
