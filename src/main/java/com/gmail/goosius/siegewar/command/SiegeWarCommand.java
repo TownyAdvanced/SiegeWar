@@ -29,16 +29,16 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private static final List<String> siegewarTabCompletes = Arrays.asList("nation", "hud");
 	
 	private static final List<String> siegewarNationTabCompletes = Arrays.asList("refund");
-
-	private static final List<String> townsUnderSiegeTabCompletes = getOngoingSieges();
 	
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
 		switch (args[0].toLowerCase()) {
 		case "nation":
-			return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
+			if (args.length > 1)
+				return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
 		case "hud":
-			return NameUtil.filterByStart(townsUnderSiegeTabCompletes, args[1]); //Causes an error
+			if (args.length > 1)
+				return NameUtil.filterByStart(getOngoingSieges(), args[1]);
 		default:
 			return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
 		}
