@@ -53,11 +53,11 @@ public class SiegeWarHud {
             bannerControl = board.registerNewTeam("bannerControl"),
             timeRemaining = board.registerNewTeam("timeRemaining");
 
-        String attackers_entry = Colors.Green + Translation.of("hud_attackers"),
-            defenders_entry = Colors.Green + Translation.of("hud_defenders"),
-            points_entry = Colors.Green + Translation.of("hud_points"),
-            bannerControl_entry = Colors.Green + Translation.of("hud_banner_control"),
-            timeRemaining_entry = Colors.Green + Translation.of("hud_time_remaining");
+        String attackers_entry = Colors.LightGray + Translation.of("hud_attackers"),
+            defenders_entry = Colors.LightGray + Translation.of("hud_defenders"),
+            points_entry = Colors.LightGray + Translation.of("hud_points"),
+            bannerControl_entry = Colors.LightGray + Translation.of("hud_banner_control"),
+            timeRemaining_entry = Colors.LightGray + Translation.of("hud_time_remaining");
 
         attackers.addEntry(attackers_entry);
         defenders.addEntry(defenders_entry);

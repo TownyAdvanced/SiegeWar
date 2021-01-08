@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.4
+version: 0.05
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -207,16 +207,18 @@ msg_err_no_money: '&cThere is not enough money in the bank.'
 msg_war_siege_peaceful_town_total_switches: '&b%d peaceful town%s %s peacefully switched nations.'
 msg_err_not_registered_1: '&c%s is not registered.'
 msg_error_must_be_num: '&bAmount must be a number.'
+
+#Added in 0.05:
 msg_err_not_being_sieged: '&bTown %s is not under siege currently.'
 msg_err_town_not_registered: '&cTown %s is not registered.'
 
 #Scoreboard
 hud_title: 'Siege'
 hud_siegestatus: 'Siege Status'
-hud_attackers: 'Attackers: '
-hud_defenders: 'Defenders: '
+hud_attackers: 'ATK: '
+hud_defenders: 'DEF: '
 hud_points: 'Points: '
-hud_banner_control: 'Banner Control: '
-hud_time_remaining: 'Time Remaining: '
+hud_banner_control: 'Banner Ctrl: '
+hud_time_remaining: 'Time Left: '
 
 msg_err_peaceful_town_pvp_forced_off: '&cPeaceful towns have PVP forced OFF.'

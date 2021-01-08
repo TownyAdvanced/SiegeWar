@@ -36,9 +36,11 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 		switch (args[0].toLowerCase()) {
 		case "nation":
-			return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
+			if (args.length > 1)
+				return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
 		case "hud":
-			return NameUtil.filterByStart(townsUnderSiegeTabCompletes, args[1]); //Causes an error
+			if (args.length > 1)
+				return NameUtil.filterByStart(getOngoingSieges(), args[1]);
 		default:
 			return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
 		}
@@ -85,17 +87,23 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 	private void parseSiegeWarHudCommand(Player player, String[] args) {
 		try {
-			List<String> townsBeingSieged = getOngoingSieges();
-			Town town = TownyUniverse.getInstance().getTown(args[0]);
-			if (town == null) 
-				throw new TownyException(Translation.of("msg_err_town_not_registered", args[0]));
+			if (args.length == 0) {
+				player.sendMessage(ChatTools.formatTitle("/siegewar"));
+				player.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "refund", Translation.of("nation_help_11")));
+				player.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
+			} else {
+				List<String> townsBeingSieged = getOngoingSieges();
+				Town town = TownyUniverse.getInstance().getTown(args[0]);
+				if (town == null) 
+					throw new TownyException(Translation.of("msg_err_town_not_registered", args[0]));
 
-			if (!townsBeingSieged.contains(town.getName())) {
-				Messaging.sendErrorMsg(player, Translation.of("msg_err_not_being_sieged", town.getName()));
-				return;
+				if (!townsBeingSieged.contains(town.getName())) {
+					Messaging.sendErrorMsg(player, Translation.of("msg_err_not_being_sieged", town.getName()));
+					return;
+				}
+
+				SiegeWar.getSiegeHUDManager().toggleWarHud(player, SiegeController.getSiege(town));
 			}
-
-			SiegeWar.getSiegeHUDManager().toggleWarHud(player, SiegeController.getSiege(town));
 		} catch (Exception e) {
 			player.sendMessage(e.getMessage());
 		}
