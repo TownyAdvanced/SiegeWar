@@ -78,7 +78,7 @@ public class DynmapTask {
                     lines.add("Attacker: " + siege.getAttackingNation().getName());
                     lines.add("Defender: " + siege.getDefendingTown().getName());
                     lines.add("Points: " + siege.getSiegePoints());
-                    lines.add("Banner Control: " + siege.getBannerControllingSide());
+                    lines.add("Banner Control: " + siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase());
                     lines.add("Time left: " + TimeMgmt.getFormattedTimeValue(siege.getTimeUntilCompletionMillis()));
                     if (TownySettings.isUsingEconomy() && TownyEconomyHandler.isActive())
                         lines.add("War Chest: " + TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
