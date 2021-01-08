@@ -1,6 +1,8 @@
 package com.gmail.goosius.siegewar;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +36,8 @@ public class SiegeController {
 
 	private final static Map<String, Siege> sieges = new ConcurrentHashMap<>();
 	private static Map<UUID, Siege> townSiegeMap = new ConcurrentHashMap<>();
-
+	private static List<Town> siegedTowns = new ArrayList<>();
+	
 	public static void newSiege(String siegeName) {
 		Siege siege = new Siege(siegeName);		
 
@@ -51,10 +54,11 @@ public class SiegeController {
 		}
 		return sieges.get(siegeName.toLowerCase());
 	}
-
+	
 	public static void clearSieges() {
 		sieges.clear();
 		townSiegeMap.clear();
+		siegedTowns.clear();
 	}
 	
 	public static boolean saveSieges() {
@@ -103,6 +107,7 @@ public class SiegeController {
 					newSiege(name);
 					setSiege(town, true);
 					townSiegeMap.put(town.getUUID(), sieges.get(name.toLowerCase()));
+					siegedTowns.add(town);
 				}
 			}
 	}
@@ -183,6 +188,7 @@ public class SiegeController {
 		//Remove siege from maps
 		sieges.remove(siege.getName().toLowerCase());
 		townSiegeMap.remove(town.getUUID());
+		siegedTowns.remove(town);
 
 		//Save town
 		TownyUniverse.getInstance().getDataSource().saveTown(town);
@@ -209,6 +215,10 @@ public class SiegeController {
 	
 	public static boolean hasSieges(Nation nation) {
 		return !getSieges(nation).isEmpty();
+	}
+
+	public static Collection<Town> getSiegedTowns() {
+		return Collections.unmodifiableCollection(siegedTowns);
 	}
 	
 	@Nullable
