@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
@@ -27,6 +28,7 @@ import com.palmergames.bukkit.towny.event.NewTownEvent;
 import com.palmergames.bukkit.towny.event.RenameTownEvent;
 import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
+import com.palmergames.bukkit.towny.event.plot.toggle.PlotTogglePvpEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.TownStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.time.dailytaxes.PreTownPaysNationTaxEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
@@ -39,6 +41,7 @@ import com.palmergames.bukkit.towny.event.town.toggle.TownTogglePVPEvent;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.WorldCoord;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.TimeMgmt;
 
@@ -107,12 +110,34 @@ public class SiegeWarTownEventListener implements Listener {
 	 */
 	@EventHandler
 	public void onTownTogglePVP(TownTogglePVPEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns()
-				&& SiegeController.hasActiveSiege(event.getTown()))  {
-			event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
-			event.setCancelled(true);
+		if (SiegeWarSettings.getWarSiegeEnabled()) {
+			if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns() && SiegeController.hasActiveSiege(event.getTown()))  {
+				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
+				event.setCancelled(true);
+			}
+			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && event.getTown().isNeutral() && !event.getTown().isPVP()) {
+				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_pvp_forced_off"));
+				event.setCancelled(true);
+			}
 		}
+	}
+
+	@EventHandler
+	public void onPlotTogglePVP(PlotTogglePvpEvent event) {
+		if (SiegeWarSettings.getWarSiegeEnabled()) {
+			if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns() && SiegeController.hasActiveSiege(event.getTown()))  {
+				Messaging.sendErrorMsg(event.getPlayer(), Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
+				event.setCancelled(true);
+			}
+			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && event.getTown().isNeutral()) {
+				if (!event.getTown().isAdminDisabledPVP()) {
+					event.getTown().setAdminDisabledPVP(true);
+					TownyUniverse.getInstance().getDataSource().saveTown(event.getTown());
+				}
+				Messaging.sendErrorMsg(event.getPlayer(), Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_pvp_forced_off"));
+				event.setCancelled(true);
+			}
+		}	
 	}
 	
 	/*
