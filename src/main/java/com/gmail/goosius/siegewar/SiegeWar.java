@@ -14,6 +14,7 @@ import com.gmail.goosius.siegewar.tasks.DynmapTask;
 import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
+import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.listeners.SiegeWarActionListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarBukkitEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarNationEventListener;
@@ -30,6 +31,9 @@ public class SiegeWar extends JavaPlugin {
 	
 	public static SiegeWar getSiegeWar() {
 		return plugin;
+	}
+	public static SiegeHUDManager getSiegeHUDManager() {
+		return new SiegeHUDManager(getSiegeWar());
 	}
 	
     @Override

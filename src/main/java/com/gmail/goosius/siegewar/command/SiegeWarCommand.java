@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.SiegeWarHud;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.Translation;
@@ -94,8 +94,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				Messaging.sendErrorMsg(player, Translation.of("msg_err_not_being_sieged", town.getName()));
 				return;
 			}
-			//Needs a way to toggle it off again too
-			SiegeWarHud.toggleOn(player, SiegeController.getSiege(town));
+
+			SiegeWar.getSiegeHUDManager().toggleWarHud(player, SiegeController.getSiege(town));
 		} catch (Exception e) {
 			player.sendMessage(e.getMessage());
 		}
