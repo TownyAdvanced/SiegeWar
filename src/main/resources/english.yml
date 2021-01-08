@@ -212,8 +212,11 @@ msg_err_town_not_registered: '&cTown %s is not registered.'
 
 #Scoreboard
 hud_title: 'Siege'
+hud_siegestatus: 'Siege Status'
 hud_attackers: 'Attackers: '
 hud_defenders: 'Defenders: '
 hud_points: 'Points: '
 hud_banner_control: 'Banner Control: '
 hud_time_remaining: 'Time Remaining: '
+
+msg_err_peaceful_town_pvp_forced_off: '&cPeaceful towns have PVP forced OFF.'
