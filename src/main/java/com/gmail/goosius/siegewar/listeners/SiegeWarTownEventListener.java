@@ -264,6 +264,7 @@ public class SiegeWarTownEventListener implements Listener {
 	public void onTownRename(RenameTownEvent event) {
 		if (SiegeController.hasSiege(event.getTown())) {
 			SiegeController.saveSiege(SiegeController.getSiege(event.getTown()));
+			SiegeController.renameSiegedTownName(event.getOldName(), event.getTown().getName());
 		}
 	}
 

@@ -37,6 +37,7 @@ public class SiegeController {
 	private final static Map<String, Siege> sieges = new ConcurrentHashMap<>();
 	private static Map<UUID, Siege> townSiegeMap = new ConcurrentHashMap<>();
 	private static List<Town> siegedTowns = new ArrayList<>();
+	private static List<String> siegedTownNames = new ArrayList<>();
 	
 	public static void newSiege(String siegeName) {
 		Siege siege = new Siege(siegeName);		
@@ -59,6 +60,7 @@ public class SiegeController {
 		sieges.clear();
 		townSiegeMap.clear();
 		siegedTowns.clear();
+		siegedTownNames.clear();
 	}
 	
 	public static boolean saveSieges() {
@@ -108,6 +110,7 @@ public class SiegeController {
 					setSiege(town, true);
 					townSiegeMap.put(town.getUUID(), sieges.get(name.toLowerCase()));
 					siegedTowns.add(town);
+					siegedTownNames.add(town.getName());
 				}
 			}
 	}
@@ -189,6 +192,7 @@ public class SiegeController {
 		sieges.remove(siege.getName().toLowerCase());
 		townSiegeMap.remove(town.getUUID());
 		siegedTowns.remove(town);
+		siegedTownNames.remove(town.getName());
 
 		//Save town
 		TownyUniverse.getInstance().getDataSource().saveTown(town);
@@ -219,6 +223,15 @@ public class SiegeController {
 
 	public static Collection<Town> getSiegedTowns() {
 		return Collections.unmodifiableCollection(siegedTowns);
+	}
+	
+	public static Collection<String> getSiegedTownNames() {
+		return Collections.unmodifiableCollection(siegedTownNames);
+	}
+	
+	public static void renameSiegedTownName(String oldname, String newname) {
+		siegedTownNames.remove(oldname);
+		siegedTownNames.add(newname);
 	}
 	
 	@Nullable
