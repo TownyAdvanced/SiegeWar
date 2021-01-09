@@ -85,7 +85,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void parseSiegeWarHudCommand(Player player, String[] args) {
 		try {
 			if (args.length == 0) {
-				player.sendMessage(ChatTools.formatTitle("/siegewar"));
+				player.sendMessage(ChatTools.formatTitle("/siegewar hud"));
 				player.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 			} else {
 				List<String> townsBeingSieged = new ArrayList<String>(SiegeController.getSiegedTownNames());
