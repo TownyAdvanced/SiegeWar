@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.command;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
 		case "hud":
 			if (args.length > 1)
-				return NameUtil.filterByStart((List<String>) SiegeController.getSiegedTownNames(), args[1]);
+				return NameUtil.filterByStart(new ArrayList<String>(SiegeController.getSiegedTownNames()), args[1]);
 		default:
 			return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
 		}
@@ -87,7 +88,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				player.sendMessage(ChatTools.formatTitle("/siegewar"));
 				player.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 			} else {
-				List<String> townsBeingSieged = (List<String>) SiegeController.getSiegedTownNames();
+				List<String> townsBeingSieged = new ArrayList<String>(SiegeController.getSiegedTownNames());
 				Town town = TownyUniverse.getInstance().getTown(args[0]);
 				if (town == null) 
 					throw new TownyException(Translation.of("msg_err_town_not_registered", args[0]));
