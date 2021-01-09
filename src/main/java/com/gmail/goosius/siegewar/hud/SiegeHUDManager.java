@@ -52,6 +52,6 @@ public class SiegeHUDManager {
     }
 
     public static String checkLength(String string) {
-        return string.length() > 64 ? string.substring(0, 64) : string;
+        return string.length() > 32 ? string.substring(0, 32) + "..." : string;
     }
 }
