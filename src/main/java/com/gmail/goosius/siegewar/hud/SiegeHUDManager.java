@@ -50,4 +50,8 @@ public class SiegeHUDManager {
     public void onPlayerQuit(PlayerQuitEvent event) {
         warHudUsers.remove(event.getPlayer());
     }
+
+    public static String checkLength(String string) {
+        return string.length() > 64 ? string.substring(0, 64) : string;
+    }
 }
