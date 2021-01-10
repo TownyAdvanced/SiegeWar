@@ -219,3 +219,5 @@ hud_defenders: 'DEF: '
 hud_points: 'Points: '
 hud_banner_control: 'Banner Ctrl: '
 hud_time_remaining: 'Time Left: '
+
+msg_err_peaceful_town_pvp_forced_off: '&cPeaceful towns have PVP forced OFF.'

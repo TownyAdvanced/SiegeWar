@@ -107,13 +107,17 @@ public class SiegeWarTownEventListener implements Listener {
 	 */
 	@EventHandler
 	public void onTownTogglePVP(TownTogglePVPEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns()
-				&& SiegeController.hasActiveSiege(event.getTown()))  {
-			event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
-			event.setCancelled(true);
+		if (SiegeWarSettings.getWarSiegeEnabled()) {
+			if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns() && SiegeController.hasActiveSiege(event.getTown()))  {
+				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
+				event.setCancelled(true);
+			}
+			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && event.getTown().isNeutral() && !event.getTown().isPVP()) {
+				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_pvp_forced_off"));
+				event.setCancelled(true);
+			}
 		}
-	}
+	}	
 	
 	/*
 	 * On toggle open, SW will stop a town toggling open.
