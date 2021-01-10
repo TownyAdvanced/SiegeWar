@@ -18,6 +18,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarPermissionUtil;
+import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyFormatter;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -84,7 +85,7 @@ public class SiegeWarTownEventListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			Town town = event.getTown();
 			TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + (long)(SiegeWarSettings.getWarSiegeSiegeImmunityTimeNewTownsHours() * TimeMgmt.ONE_HOUR_IN_MILLIS));
-			TownMetaDataController.setDesiredPeacefullnessSetting(town, TownySettings.getTownDefaultNeutral());
+			TownMetaDataController.setDesiredPeacefulnessSetting(town, TownySettings.getTownDefaultNeutral());
 			TownyUniverse.getInstance().getDataSource().saveTown(town);
 		}
 	}
@@ -149,8 +150,10 @@ public class SiegeWarTownEventListener implements Listener {
 		Town town = event.getTown();
 		
 		if (event.isAdminAction()) {
-			TownMetaDataController.setDesiredPeacefullnessSetting(town, event.getFutureState());
+			TownMetaDataController.setDesiredPeacefulnessSetting(town, event.getFutureState());
 			TownMetaDataController.setPeacefulnessChangeDays(town, 0);
+			if (event.getFutureState() == true)
+				TownPeacefulnessUtil.disableTownPVP(town);
 			return;
 		} else {
 			int days;
@@ -163,7 +166,7 @@ public class SiegeWarTownEventListener implements Listener {
 			if (TownMetaDataController.getPeacefulnessChangeConfirmationCounterDays(town) == 0) {
 				
 				//Here, no countdown is in progress, and the town wishes to change peacefulness status
-				TownMetaDataController.setDesiredPeacefullnessSetting(town, !town.isNeutral());
+				TownMetaDataController.setDesiredPeacefulnessSetting(town, !town.isNeutral());
 				TownMetaDataController.setPeacefulnessChangeDays(town, days);
 				
 				//Send message to town
@@ -187,7 +190,7 @@ public class SiegeWarTownEventListener implements Listener {
 				
 			} else {
 				//Here, a countdown is in progress, and the town wishes to cancel the countdown,
-				TownMetaDataController.setDesiredPeacefullnessSetting(town, town.isNeutral());
+				TownMetaDataController.setDesiredPeacefulnessSetting(town, town.isNeutral());
 				TownMetaDataController.setPeacefulnessChangeDays(town, 0);
 				//Send message to town
 				TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_peacefulness_countdown_cancelled")));				

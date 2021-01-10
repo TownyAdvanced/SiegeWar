@@ -66,24 +66,8 @@ public class TownPeacefulnessUtil {
 		TownMetaDataController.setPeacefulnessChangeDays(town, 0);
 		town.setNeutral(!town.isNeutral());
 
-		if (town.isNeutral()) {
-			for (TownBlock plot : town.getTownBlocks()) {
-				if (plot.hasPlotObjectGroup()) {
-					TownyPermission groupPermissions = plot.getPlotObjectGroup().getPermissions();
-					if (groupPermissions.pvp) {
-						groupPermissions.pvp = false;
-						plot.getPlotObjectGroup().setPermissions(groupPermissions);
-					}
-				} 	
-				if (plot.getPermissions().pvp) {
-					if (plot.getType() == TownBlockType.ARENA)
-						plot.setType(TownBlockType.RESIDENTIAL);
-
-					plot.getPermissions().pvp = false;
-					plot.setChanged(true);
-				}
-			}
-		}		
+		if (town.isNeutral()) 
+			disableTownPVP(town);	
 
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			if (town.isNeutral()) {
@@ -302,5 +286,28 @@ public class TownPeacefulnessUtil {
 
 		//Return result
 		return validGuardianTowns;
+	}
+
+	public static void disableTownPVP(Town town) {
+		if (town.isPVP())
+				town.setPVP(false);
+
+		for (TownBlock plot : town.getTownBlocks()) {
+			if (plot.hasPlotObjectGroup()) {
+				TownyPermission groupPermissions = plot.getPlotObjectGroup().getPermissions();
+				if (groupPermissions.pvp) {
+					groupPermissions.pvp = false;
+					plot.getPlotObjectGroup().setPermissions(groupPermissions);
+				}
+			} 	
+			if (plot.getPermissions().pvp) {
+				if (plot.getType() == TownBlockType.ARENA)
+					plot.setType(TownBlockType.RESIDENTIAL);
+			
+				plot.getPermissions().pvp = false;
+				plot.setChanged(true);
+			}
+		}
+		TownyUniverse.getInstance().getDataSource().saveTown(town);
 	}
 }
