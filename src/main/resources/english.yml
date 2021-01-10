@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.05
+version: 0.06
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -220,4 +220,5 @@ hud_points: 'Points: '
 hud_banner_control: 'Banner Ctrl: '
 hud_time_remaining: 'Time Left: '
 
+#Added in 0.06:
 msg_err_peaceful_town_pvp_forced_off: '&cPeaceful towns have PVP forced OFF.'
