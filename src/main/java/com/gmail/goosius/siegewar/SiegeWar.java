@@ -14,6 +14,7 @@ import com.gmail.goosius.siegewar.tasks.DynmapTask;
 import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
+import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.listeners.SiegeWarActionListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarBukkitEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarNationEventListener;
@@ -27,9 +28,14 @@ public class SiegeWar extends JavaPlugin {
 	private static SiegeWar plugin;
 	public static String prefix = "[SiegeWar] ";
 	private static Version requiredTownyVersion = Version.fromString("0.96.5.12");
-	
+	private final static SiegeHUDManager SiegeHudManager = new SiegeHUDManager(plugin);
+
 	public static SiegeWar getSiegeWar() {
 		return plugin;
+	}
+
+	public static SiegeHUDManager getSiegeHUDManager() {
+		return SiegeHudManager;
 	}
 	
     @Override
