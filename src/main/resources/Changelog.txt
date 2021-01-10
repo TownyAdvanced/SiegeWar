@@ -34,3 +34,7 @@
   - New Permission: siegewar.command.siegewar.hud
     - Child node of siegewar.command.siegewar.*
   - Language file bumped to 0.05.
+  - Made it possible to deny peaceful towns the ability to toggle PVP, courtesy of Warriorrrr with PR #17.
+  - New Config Option: peaceful_towns.allowed_to_toggle_pvp
+    - Default: false
+    - If this setting is true, then peaceful towns can toggle PVP on and off.
