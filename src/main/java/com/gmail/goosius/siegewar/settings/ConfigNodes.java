@@ -534,7 +534,7 @@ public enum ConfigNodes {
 			"# The status has different effects depending on the war-system",
 			"# ",
 			"# COMMON:",
-			"# 1. PVP is forced off in the town",
+			"# 1. PVP is forced off in the town (configurable)",
 			"# 2. A resident who leaves such a town cannot inflict PVP for a (configured) number of hours.",
 			"# 3. (optional) T spawn is enabled, even if it is normally off via config.",
 			"# 4. (optional) Nationality is disregarded for spawn purposes (for residents and visitors to the town).",
@@ -587,6 +587,11 @@ public enum ConfigNodes {
 			"",
 			"# This setting applies only in the first week after a town is founded.",
 			"# The value determines the countdown duration to be applied to any peacefulness switch."),
+	PEACEFUL_TOWNS_ALLOWED_TO_TOGGLE_PVP(
+			"peaceful_towns.allowed_to_toggle_pvp",
+			"false",
+			"",
+			"# If this setting is true, then peaceful towns can toggle PVP on and off."),
 
 	OCCUPIED_TOWNS("occupied_towns",
 		"",

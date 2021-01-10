@@ -342,5 +342,8 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_BANNER_CONTROL_VERTICAL_DISTANCE_BLOCKS);
 	}
 
+	public static boolean getWarCommonPeacefulTownsAllowedToTogglePVP() {
+		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_ALLOWED_TO_TOGGLE_PVP);
+	}
 
 }
