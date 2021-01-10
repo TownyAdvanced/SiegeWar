@@ -25,13 +25,15 @@ public class SiegeWarPlotEventListener implements Listener {
     * SW will stop plot pvp being toggled in besieged or peaceful towns.
     */
     @EventHandler
-	public void onPlotTogglePVP(PlotTogglePvpEvent event) {
+	public void onPlotTogglePVP(PlotTogglePvpEvent event) { //TODO: Change Messaging.sendErrorMsg() to event.setCancelledMsg() later on.
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns() && SiegeController.hasActiveSiege(event.getTown()))  {
 				Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
 				event.setCancelled(true);
 			}
-			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && event.getTown().isNeutral()) {
+            if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
+                    && !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()
+                    && event.getTown().isNeutral()) {
 				Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_peaceful_town_pvp_forced_off"));
 				event.setCancelled(true);
 			}
@@ -45,9 +47,10 @@ public class SiegeWarPlotEventListener implements Listener {
     public void onPlotSetType(PlotPreChangeTypeEvent event) {
         try {
             if (SiegeWarSettings.getWarSiegeEnabled()
-            && SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
-            && event.getTownBlock().getTown().isNeutral()
-            && event.getNewType() == TownBlockType.ARENA) {
+                    && SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
+                    && !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()
+                    && event.getTownBlock().getTown().isNeutral()
+                    && event.getNewType() == TownBlockType.ARENA) {
                 event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_pvp_forced_off"));
                 event.setCancelled(true);
             }

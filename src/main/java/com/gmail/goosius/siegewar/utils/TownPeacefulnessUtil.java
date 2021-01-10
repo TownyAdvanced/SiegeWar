@@ -66,7 +66,7 @@ public class TownPeacefulnessUtil {
 		TownMetaDataController.setPeacefulnessChangeDays(town, 0);
 		town.setNeutral(!town.isNeutral());
 
-		if (town.isNeutral()) 
+		if (town.isNeutral() && !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()) 
 			disableTownPVP(town);	
 
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
