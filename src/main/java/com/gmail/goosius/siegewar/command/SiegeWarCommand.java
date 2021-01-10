@@ -9,7 +9,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
@@ -17,7 +16,6 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.util.ChatTools;
@@ -42,19 +40,29 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
 		}
 	}
+
+	private void showSiegeWarHelp(CommandSender sender) {
+		sender.sendMessage(ChatTools.formatTitle("/siegewar"));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "refund", Translation.of("nation_help_11")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
+	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if (sender instanceof Player && args.length > 0)
 			parseSiegeWarCommand((Player) sender, args);
-		else {
-			sender.sendMessage(ChatTools.formatTitle("/siegewar"));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "refund", Translation.of("nation_help_11")));
-			sender.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
-		}
+		else 
+			showSiegeWarHelp(sender);
+
 		return true;
 	}
 
 	private void parseSiegeWarCommand(Player player, String[] args) {
+		
+		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR.getNode(args[0]))) {
+			player.sendMessage(Translation.of("msg_err_command_disable"));
+			return;
+		}
+			
 		switch (args[0]) {
 		case "nation":
 			parseSiegeWarNationCommand(player, StringMgmt.remFirstArg(args));
@@ -64,21 +72,27 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			parseSiegeWarHudCommand(player, StringMgmt.remFirstArg(args));
 			break;
 		default:
-			player.sendMessage(ChatTools.formatTitle("/siegewar"));
-			player.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "refund", Translation.of("nation_help_11")));
-			player.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
+			showSiegeWarHelp(player);
 		}
 	}
 
-	private void parseSiegeWarNationCommand(Player player, String[] remFirstArg) {
-		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_REFUND.getNode())) {
+	private void parseSiegeWarNationCommand(Player player, String[] args) {
+		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION.getNode(args[0]))) {
 			player.sendMessage(Translation.of("msg_err_command_disable"));
 			return;
 		}
-		try {
-			SiegeWarMoneyUtil.claimNationRefund(player);
-		} catch (Exception e) {
-			player.sendMessage(e.getMessage());
+		
+		switch (args[0]) {
+		case "refund":
+			try {
+				SiegeWarMoneyUtil.claimNationRefund(player);
+			} catch (Exception e) {
+				player.sendMessage(e.getMessage());
+			}
+			break;
+		default:
+			player.sendMessage(ChatTools.formatTitle("/siegewar nation"));
+			player.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "refund", Translation.of("nation_help_11")));			
 		}
 	}
 
@@ -88,20 +102,17 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				player.sendMessage(ChatTools.formatTitle("/siegewar hud"));
 				player.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 			} else {
-				List<String> townsBeingSieged = new ArrayList<String>(SiegeController.getSiegedTownNames());
 				Town town = TownyUniverse.getInstance().getTown(args[0]);
 				if (town == null) 
-					throw new TownyException(Translation.of("msg_err_town_not_registered", args[0]));
+					throw new Exception(Translation.of("msg_err_town_not_registered", args[0]));
 
-				if (!townsBeingSieged.contains(town.getName())) {
-					Messaging.sendErrorMsg(player, Translation.of("msg_err_not_being_sieged", town.getName()));
-					return;
-				}
+				if (!SiegeController.getSiegedTowns().contains(town))
+					throw new Exception(Translation.of("msg_err_not_being_sieged", town.getName()));
 
 				SiegeWar.getSiegeHUDManager().toggleWarHud(player, SiegeController.getSiege(town));
 			}
 		} catch (Exception e) {
-			player.sendMessage(e.getMessage());
+			Messaging.sendErrorMsg(player, e.getMessage());
 		}
 	}
 }

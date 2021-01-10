@@ -27,3 +27,10 @@
     - Closes #4.
   - Switch from using TownyMessaging to Messaging where possible.
   - Overhaul of the english.yml's strings to drop the [War] from strings.
+  - SiegeWar hud, courtesy of Warriorrrr wiht PR #16.
+    - Adds hud for sieges.
+  - New Command: /sw hud [town]
+    - Brings up a scoreboard hud showing Siege information for the given town.
+  - New Permission: siegewar.command.siegewar.hud
+    - Child node of siegewar.command.siegewar.*
+  - Language file bumped to 0.05.

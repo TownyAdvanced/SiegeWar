@@ -19,10 +19,13 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_IMMUNE_TO_WAR_NAUSEA("siegewar.immune.to.war.nausea"),
 	SIEGEWAR_IMMUNE_TO_BATTLE_FATIGUE("siegewar.immune.to.battle.fatigue"),
 	// Command Nodes:
-	SIEGEWAR_COMMAND_SIEGEWAR_NATION_REFUND("siegewar.command.siegewar.nation.refund"),
+	SIEGEWAR_COMMAND_SIEGEWAR("siegewar.command.siegewar.*"),
+		SIEGEWAR_COMMAND_SIEGEWAR_NATION("siegewar.command.siegewar.nation.*"),
+			SIEGEWAR_COMMAND_SIEGEWAR_NATION_REFUND("siegewar.command.siegewar.nation.refund"),
+		SIEGEWAR_COMMAND_SIEGEWAR_HUD("siegewar.command.siegewar.hud"),
 	SIEGEWAR_COMMAND_SIEGEWARADMIN("siegewar.command.siegewaradmin.*"),
-	SIEGEWAR_COMMAND_SIEGEWARADMIN_IMMUNITY("siegewar.command.siegewaradmin.immunity"),
-	SIEGEWAR_COMMAND_SIEGEWARADMIN_RELOAD("siegewar.command.siegewaradmin.reload");
+		SIEGEWAR_COMMAND_SIEGEWARADMIN_IMMUNITY("siegewar.command.siegewaradmin.immunity"),
+		SIEGEWAR_COMMAND_SIEGEWARADMIN_RELOAD("siegewar.command.siegewaradmin.reload");
 	
 	private String value;
 
