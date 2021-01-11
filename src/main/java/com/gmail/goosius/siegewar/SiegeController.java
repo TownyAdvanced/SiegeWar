@@ -234,6 +234,16 @@ public class SiegeController {
 		siegedTownNames.add(newname);
 	}
 	
+	public static void addSiegedTown(Siege siege) {
+		siegedTowns.add(siege.getDefendingTown());
+		siegedTownNames.add(siege.getDefendingTown().getName());
+	}
+
+	public static void removeSiegedTown(Siege siege) {
+		siegedTowns.remove(siege.getDefendingTown());
+		siegedTownNames.remove(siege.getDefendingTown().getName());
+	}
+	
 	@Nullable
 	public static List<Siege> getSieges(Nation nation) {
 		List<Siege> siegeList = new ArrayList<>();
