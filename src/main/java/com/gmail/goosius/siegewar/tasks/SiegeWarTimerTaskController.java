@@ -74,7 +74,6 @@ public class SiegeWarTimerTaskController {
 				//Wait for siege immunity timer to end then delete siege
 				if (System.currentTimeMillis() > TownMetaDataController.getSiegeImmunityEndTime(siege.getDefendingTown())) {
 					SiegeController.removeSiege(siege, SiegeSide.NOBODY);
-					SiegeController.removeSiegedTown(siege);
 				}
 		}
 	}

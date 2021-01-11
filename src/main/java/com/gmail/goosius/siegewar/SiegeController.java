@@ -191,8 +191,7 @@ public class SiegeController {
 		//Remove siege from maps
 		sieges.remove(siege.getName().toLowerCase());
 		townSiegeMap.remove(town.getUUID());
-		siegedTowns.remove(town);
-		siegedTownNames.remove(town.getName());
+		removeSiegedTown(siege);
 
 		//Save town
 		TownyUniverse.getInstance().getDataSource().saveTown(town);
