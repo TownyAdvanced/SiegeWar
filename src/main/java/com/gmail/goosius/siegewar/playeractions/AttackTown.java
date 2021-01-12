@@ -146,6 +146,7 @@ public class AttackTown {
 
 		//Save to DB
 		SiegeController.saveSiege(siege);
+		SiegeController.addSiegedTown(siege);
 		universe.getDataSource().saveNation(attackingNation);
 		universe.getDataSource().saveTown(defendingTown);
 

@@ -39,8 +39,6 @@ public class SiegeWarTimerTaskController {
 	 * @param siege
 	 */
 	private static void evaluateTimedSiegeOutcome(Siege siege) {
-		TownyUniverse universe = TownyUniverse.getInstance();
-
 		switch(siege.getStatus()) {
 			case IN_PROGRESS:
 				//If scheduled end time has arrived, choose winner
@@ -53,7 +51,7 @@ public class SiegeWarTimerTaskController {
 					}
 
 					//Save changes to db
-					universe.getDataSource().saveTown(siege.getDefendingTown());
+					TownyUniverse.getInstance().getDataSource().saveTown(siege.getDefendingTown());
 				}
 				break;
 

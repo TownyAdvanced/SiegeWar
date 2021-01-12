@@ -191,8 +191,7 @@ public class SiegeController {
 		//Remove siege from maps
 		sieges.remove(siege.getName().toLowerCase());
 		townSiegeMap.remove(town.getUUID());
-		siegedTowns.remove(town);
-		siegedTownNames.remove(town.getName());
+		removeSiegedTown(siege);
 
 		//Save town
 		TownyUniverse.getInstance().getDataSource().saveTown(town);
@@ -232,6 +231,16 @@ public class SiegeController {
 	public static void renameSiegedTownName(String oldname, String newname) {
 		siegedTownNames.remove(oldname);
 		siegedTownNames.add(newname);
+	}
+	
+	public static void addSiegedTown(Siege siege) {
+		siegedTowns.add(siege.getDefendingTown());
+		siegedTownNames.add(siege.getDefendingTown().getName());
+	}
+
+	public static void removeSiegedTown(Siege siege) {
+		siegedTowns.remove(siege.getDefendingTown());
+		siegedTownNames.remove(siege.getDefendingTown().getName());
 	}
 	
 	@Nullable
