@@ -38,3 +38,4 @@
   - New Config Option: peaceful_towns.allowed_to_toggle_pvp
     - Default: false
     - If this setting is true, then peaceful towns can toggle PVP on and off.
+  - Fix backend maps not being added to properly, courtesy of Warriorrrr with PR #18.
