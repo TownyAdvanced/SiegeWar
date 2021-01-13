@@ -71,9 +71,6 @@ public class AttackTown {
                 throw new TownyException(Translation.of("msg_err_siege_war_cannot_attack_non_enemy_nation"));
         }
 
-        if (!SiegeWarDistanceUtil.isUndergroundBannerControlEnabledInWorld(block.getWorld()) && SiegeWarDistanceUtil.doesLocationHaveANonAirBlockAboveIt(block.getLocation()))
-            throw new TownyException(Translation.of("msg_err_siege_war_banner_must_be_placed_above_ground"));
-
         if(!SiegeWarDistanceUtil.isBannerToTownElevationDifferenceOk(block, townBlock)) {
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_place_banner_far_above_town"));
 		}

@@ -21,10 +21,6 @@ public class SiegeWarSettings {
 		return Settings.getString(ConfigNodes.WAR_SIEGE_WORLDS);
 	}
 
-	public static String getWarWorldsWithUndergroundBannerControl() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_WORLDS_WITH_UNDERGROUND_BANNER_CONTROL);
-	}
-
 	public static boolean getWarSiegeAttackEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_ATTACK_ENABLED);
 	}
