@@ -23,7 +23,8 @@ public class Messaging {
 	}
 	
 	public static void sendGlobalMessage(String message) {
-       for (Player player : Bukkit.getOnlinePlayers()) {
+        System.out.println(prefix + message);
+        for (Player player : Bukkit.getOnlinePlayers()) {
             if (player != null)
                 try {
                     if (TownyUniverse.getInstance().getDataSource().getWorld(player.getLocation().getWorld().getName()).isUsingTowny())

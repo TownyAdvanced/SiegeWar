@@ -59,7 +59,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void parseSiegeWarCommand(Player player, String[] args) {
 		
 		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR.getNode(args[0]))) {
-			player.sendMessage(Translation.of("msg_err_command_disable"));
+			Messaging.sendErrorMsg(player, Translation.of("msg_err_command_disable"));
 			return;
 		}
 			
