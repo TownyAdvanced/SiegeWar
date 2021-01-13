@@ -208,7 +208,7 @@ msg_err_not_registered_1: '&c%s is not registered.'
 msg_error_must_be_num: '&bAmount must be a number.'
 
 #Added in 0.05:
-msg_err_not_being_sieged: '&bTown %s is not under siege currently.'
+msg_err_not_being_sieged: '&bTown %s does not have any active sieges.'
 msg_err_town_not_registered: '&cTown %s is not registered.'
 
 #Scoreboard
@@ -221,3 +221,8 @@ hud_banner_control: 'Banner Ctrl: '
 hud_time_remaining: 'Time Left: '
 
 msg_err_peaceful_town_pvp_forced_off: '&cPeaceful towns have PVP forced OFF.'
+msg_swa_set_points_success: '&bSuccessfully set siege points to %d for %s.'
+msg_swa_resident_already_has_control: '&cResident %s already has control.'
+msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
+msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
+msg_swa_set_captured_success: '&bSet captured to %s for %s.'
