@@ -69,17 +69,42 @@ public class DynmapTask {
     }
 
     private static void displaySieges() {
+        markerMap.clear();
         for (Siege siege : SiegeController.getSieges()) {
             String name = "Siege: " + siege.getName().replace("#", " ");
             try {
-                if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
+                if (siege.getStatus() == SiegeStatus.IN_PROGRESS
+                    || siege.getStatus() == SiegeStatus.PENDING_DEFENDER_SURRENDER
+                    || siege.getStatus() == SiegeStatus.PENDING_ATTACKER_ABANDON) {
                     MarkerIcon siegeIcon = markerapi.getMarkerIcon("fire");
+                    String status = "";
+                    String timeLeft = "";
                     List<String> lines = new ArrayList<>();
                     lines.add("Attacker: " + siege.getAttackingNation().getName());
                     lines.add("Defender: " + siege.getDefendingTown().getName());
                     lines.add("Points: " + siege.getSiegePoints());
-                    lines.add("Banner Control: " + siege.getBannerControllingSide());
-                    lines.add("Time left: " + TimeMgmt.getFormattedTimeValue(siege.getTimeUntilCompletionMillis()));
+                    lines.add("Banner Control: " + siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase());
+                    
+                    switch (siege.getStatus()) {
+                        case IN_PROGRESS:
+                            status = "In Progress";
+                            timeLeft = TimeMgmt.getFormattedTimeValue(siege.getTimeUntilCompletionMillis());
+                            break;
+                        case PENDING_DEFENDER_SURRENDER:
+                            status = "Pending Surrender";
+                            timeLeft = siege.getFormattedTimeUntilDefenderSurrender();
+                            break;
+                        case PENDING_ATTACKER_ABANDON:
+                            status = "Pending Abandon";
+                            timeLeft = siege.getFormattedTimeUntilAttackerAbandon();
+                            break;
+                        default:
+                            status = "Unknown";
+                            timeLeft = "0";
+                    }
+                    lines.add("Status: " + status);
+                    lines.add("Time Left: " + timeLeft);
+
                     if (TownySettings.isUsingEconomy() && TownyEconomyHandler.isActive())
                         lines.add("War Chest: " + TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
                     String desc = "<b>" + name + "</b><hr>" + StringMgmt.join(lines, "<br>");
@@ -91,6 +116,11 @@ public class DynmapTask {
                     if (siegeMarker == null) {
                         siegeMarker = set.createMarker(siegeMarkerId, name, siegeLoc.getWorld().getName(), siegeX, 64,
                                 siegeZ, siegeIcon, false);
+                        
+                        siegeMarker.setLocation(siegeLoc.getWorld().getName(), siegeX, 64, siegeZ);
+                        siegeMarker.setLabel(name);
+                        siegeMarker.setDescription(desc);
+                        siegeMarker.setMarkerIcon(siegeIcon);
                     } else {
                         siegeMarker.setLocation(siegeLoc.getWorld().getName(), siegeX, 64, siegeZ);
                         siegeMarker.setLabel(name);
