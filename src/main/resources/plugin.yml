@@ -30,6 +30,8 @@ permissions:
         children:
             siegewar.command.siegewaradmin.immunity: true
             siegewar.command.siegewaradmin.reload: true
+            siegewar.command.siegewaradmin.siege: true
+            siegewar.command.siegewaradmin.town: true
 
     siegewar.command.siegewar.*:
         description: User is able to do all /siegewar commands.
@@ -39,7 +41,7 @@ permissions:
             siegewar.command.siegewar.nation.*: true
 
     siegewar.command.siegewar.hud.*:
-        description: User is able to do all /siegewar nation commands.
+        description: User is able to do all /siegewar hud commands.
         default: false
         children:
             siegewar.command.siegewar.hud: true
