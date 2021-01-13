@@ -15,9 +15,9 @@ import org.dynmap.markers.MarkerSet;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarDynmapUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -71,66 +71,53 @@ public class DynmapTask {
     private static void displaySieges() {
         markerMap.clear();
         for (Siege siege : SiegeController.getSieges()) {
-            String name = "Siege: " + siege.getName().replace("#", " ");
+            String name = Translation.of("dynmap_siege_title", siege.getName().replace("#", " "));
             try {
-                if (siege.getStatus() == SiegeStatus.IN_PROGRESS
-                    || siege.getStatus() == SiegeStatus.PENDING_DEFENDER_SURRENDER
-                    || siege.getStatus() == SiegeStatus.PENDING_ATTACKER_ABANDON) {
+                if (siege.getStatus().isActive()) {
                     MarkerIcon siegeIcon = markerapi.getMarkerIcon("fire");
                     String status = "";
                     String timeLeft = "";
                     List<String> lines = new ArrayList<>();
-                    lines.add("Attacker: " + siege.getAttackingNation().getName());
-                    lines.add("Defender: " + siege.getDefendingTown().getName());
-                    lines.add("Points: " + siege.getSiegePoints());
-                    lines.add("Banner Control: " + siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase());
+                    lines.add(Translation.of("dynmap_siege_attacker", siege.getAttackingNation().getName()));
+                    lines.add(Translation.of("dynmap_siege_defender", siege.getDefendingTown().getName()));
+                    lines.add(Translation.of("dynmap_siege_points", siege.getSiegePoints()));
+                    lines.add(Translation.of("dynmap_siege_banner_control", siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase()));
                     
                     switch (siege.getStatus()) {
                         case IN_PROGRESS:
-                            status = "In Progress";
+                            status = Translation.of("dynmap_siege_status_in_progress");
                             timeLeft = TimeMgmt.getFormattedTimeValue(siege.getTimeUntilCompletionMillis());
                             break;
                         case PENDING_DEFENDER_SURRENDER:
-                            status = "Pending Surrender";
+                            status = Translation.of("dynmap_siege_status_pending_surrender");
                             timeLeft = siege.getFormattedTimeUntilDefenderSurrender();
                             break;
                         case PENDING_ATTACKER_ABANDON:
-                            status = "Pending Abandon";
+                            status = Translation.of("dynmap_siege_status_pending_abandon");
                             timeLeft = siege.getFormattedTimeUntilAttackerAbandon();
                             break;
                         default:
                             status = "Unknown";
                             timeLeft = "0";
                     }
-                    lines.add("Status: " + status);
-                    lines.add("Time Left: " + timeLeft);
+                    lines.add(Translation.of("dynmap_siege_status", status));
+                    lines.add(Translation.of("dynmap_siege_time_left", timeLeft));
 
                     if (TownySettings.isUsingEconomy() && TownyEconomyHandler.isActive())
-                        lines.add("War Chest: " + TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
+                        lines.add(Translation.of("dynmap_siege_war_chest", TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount())));
                     String desc = "<b>" + name + "</b><hr>" + StringMgmt.join(lines, "<br>");
                     Location siegeLoc = siege.getFlagLocation();
                     double siegeX = siegeLoc.getX();
                     double siegeZ = siegeLoc.getZ();
                     String siegeMarkerId = siege.getName();
-                    Marker siegeMarker = markerMap.get(siegeMarkerId);
-                    if (siegeMarker == null) {
-                        siegeMarker = set.createMarker(siegeMarkerId, name, siegeLoc.getWorld().getName(), siegeX, 64,
-                                siegeZ, siegeIcon, false);
-                        
-                        siegeMarker.setLocation(siegeLoc.getWorld().getName(), siegeX, 64, siegeZ);
-                        siegeMarker.setLabel(name);
-                        siegeMarker.setDescription(desc);
-                        siegeMarker.setMarkerIcon(siegeIcon);
-                    } else {
-                        siegeMarker.setLocation(siegeLoc.getWorld().getName(), siegeX, 64, siegeZ);
-                        siegeMarker.setLabel(name);
-                        siegeMarker.setDescription(desc);
-                        siegeMarker.setMarkerIcon(siegeIcon);
-                    }
+                    set.createMarker(siegeMarkerId, name, siegeLoc.getWorld().getName(), siegeX, 64,
+                            siegeZ, siegeIcon, false);
+                    
+                    Marker siegeMarker = set.findMarker(siegeMarkerId);
+                    siegeMarker.setLabel(name);
+                    siegeMarker.setDescription(desc);
 
-                    if (siegeMarker != null)
-                        markerMap.put(siegeMarkerId, siegeMarker);
-
+                    markerMap.put(siegeMarkerId, siegeMarker);
                 }
             } catch (Exception ex) {
                 System.err.println(SiegeWar.prefix + "Problem adding siege marker for siege: " + name);
