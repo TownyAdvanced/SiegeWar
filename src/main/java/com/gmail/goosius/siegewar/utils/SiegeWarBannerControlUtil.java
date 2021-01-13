@@ -186,10 +186,6 @@ public class SiegeWarBannerControlUtil {
 		if(!SiegeWarPointsUtil.isPlayerInTimedPointZone(player, siege))
 			return false; //player is not in the timed point zone
 
-		if(!SiegeWarDistanceUtil.isUndergroundBannerControlEnabledInWorld(player.getLocation().getWorld())
-			&& SiegeWarDistanceUtil.doesLocationHaveANonAirBlockAboveIt(player.getLocation()))
-			return false; //player has a block above them
-
 		return true;
 	}
 

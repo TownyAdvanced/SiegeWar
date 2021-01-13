@@ -14,7 +14,6 @@ import com.palmergames.bukkit.towny.object.WorldCoord;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -33,7 +32,6 @@ public class SiegeWarDistanceUtil {
 
 	private static final int TOWNBLOCKSIZE= TownySettings.getTownBlockSize();
 	public static List<String> worldsWithSiegeWarEnabled = null;
-	public static List<String> worldsWithUndergroundBannerControlEnabled = null;
 
 	/**
 	 * This method determines if the difference in elevation between a (attack banner) block, 
@@ -124,26 +122,6 @@ public class SiegeWarDistanceUtil {
 		return false;
 	}
 
-    /**
-     * This method determines if a location has an air block above it
-     *
-     * @param location the location
-     * @return true if location has an air block above it
-     */
-    public static boolean doesLocationHaveANonAirBlockAboveIt(Location location) {
-        location.add(0,1,0);
-
-        while(location.getY() < 256)
-        {
-            if(!(location.getBlock().getType() == Material.AIR || location.getBlock().getType() == Material.CAVE_AIR || location.getBlock().getType() == Material.VOID_AIR))
-            {
-                return true;   //There is a non-air block above them
-            }
-            location.add(0,1,0);
-        }
-        return false;  //There is nothing but air above them
-    }
-
 	/**
 	 * This method determines if a siegewar is enabled in the given world
 	 *
@@ -160,24 +138,6 @@ public class SiegeWarDistanceUtil {
 			}
 		}
 		return worldsWithSiegeWarEnabled.contains(worldToCheck.getName());
-	}
-
-	/**
-	 * This method determines if underground banner control is enabled in the given world
-	 *
-	 * @param worldToCheck the world to check
-	 * @return true if underground banner control is enabled in the given world
-	 */
-	public static boolean isUndergroundBannerControlEnabledInWorld(World worldToCheck) {
-		if (worldsWithUndergroundBannerControlEnabled == null) {
-			worldsWithUndergroundBannerControlEnabled = new ArrayList<>();
-			String[] worldNamesAsArray = SiegeWarSettings.getWarWorldsWithUndergroundBannerControl().split(",");
-			for (String worldName : worldNamesAsArray) {
-				if (Bukkit.getServer().getWorld(worldName.trim()) != null)
-					worldsWithUndergroundBannerControlEnabled.add(Bukkit.getServer().getWorld(worldName.trim()).getName());
-			}
-		}
-		return worldsWithUndergroundBannerControlEnabled.contains(worldToCheck.getName());
 	}
 
 	public static boolean isInSiegeZone(Location location, Siege siege) {

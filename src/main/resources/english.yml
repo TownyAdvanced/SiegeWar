@@ -50,7 +50,7 @@ msg_siege_war_town_bankrupted_from_plunder: '&b%s has been bankrupted by %s!'
 msg_siege_war_nation_defeated: '&b%s has been defeated!.'
 msg_siege_war_attacking_troops_at_siege_banner: '&bSiege on %s > Attackers are at the siege banner.'
 msg_siege_war_defending_troops_at_siege_banner: '&bSiege on %s > Town defenders are at the siege banner.'
-msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain close to the siege-banner (%d blocks horizonally, %d blocks vertically), outside the town, not flying, and not under a block (world dependant), for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
+msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain close to the siege-banner (%d blocks horizonally, %d blocks vertically), outside the town, and not flying, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
 msg_siege_war_banner_control_session_success: '&bBanner control session succeeded!. You have been added to the banner control list.'
 msg_siege_war_banner_control_gained_by_attacker: '&bSiege on %s > The attackers have gained banner control.'
 msg_siege_war_banner_control_gained_by_defender: '&bSiege on %s > The defenders have gained banner control.'
@@ -118,7 +118,7 @@ msg_err_siege_war_banner_support_block_not_stable: "&cYou cannot place the banne
 # Spawn
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone (unless the target town is peaceful).'
 #Banner control
-msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: Going into the town, too far from the banner, flying, or under a block (world-dependent).'
+msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: Going into the town, too far from the banner, or flying.'
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'You cannot use this item while in a banner control session.'
 
 #Town Info Siege Section
