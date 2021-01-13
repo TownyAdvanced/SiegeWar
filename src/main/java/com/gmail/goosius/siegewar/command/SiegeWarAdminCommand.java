@@ -59,17 +59,15 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 					return Arrays.asList("0","1","2","3","4","5","6");
 			}
 		case "siege":
-			if (((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN_SIEGE.getNode())) {
-				if (args.length == 2)
-					return NameUtil.filterByStart(new ArrayList<>(SiegeController.getSiegedTownNames()), args[1]);
+			if (args.length == 2)
+				return NameUtil.filterByStart(new ArrayList<>(SiegeController.getSiegedTownNames()), args[1]);
 
-				if (args.length == 3)
-					return NameUtil.filterByStart(siegewaradminSiegeTabCompletes, args[2]);
+			if (args.length == 3)
+				return NameUtil.filterByStart(siegewaradminSiegeTabCompletes, args[2]);
 
-				if (args.length == 4 ) {
-					if (args[2].equalsIgnoreCase("addcontrol") || args[2].equalsIgnoreCase("removecontrol"))
-						return getTownyStartingWith(args[3], "r");
-				}
+			if (args.length == 4 ) {
+				if (args[2].equalsIgnoreCase("addcontrol") || args[2].equalsIgnoreCase("removecontrol"))
+					return getTownyStartingWith(args[3], "r");
 			}
 		case "town":
 			if (args.length == 2)
