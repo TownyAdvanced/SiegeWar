@@ -42,7 +42,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		case "immunity":
 			if (args.length == 2)
 				return NameUtil.filterByStart(siegewaradminImmunityTabCompletes, args[1]);
-
+			
 			if (args.length == 3) {
 				switch (args[1].toLowerCase()) {
 				case "town":
@@ -53,7 +53,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 					return Arrays.asList("0","1","2","3","4","5","6");
 				}
 			}
-
+			
 			if (args.length == 4) {
 				if (args[1].equalsIgnoreCase("town") || args[1].equalsIgnoreCase("nation"))
 					return Arrays.asList("0","1","2","3","4","5","6");
@@ -88,7 +88,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 				return Collections.emptyList();
 		}
 	}
-
+	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		parseSiegeWarAdminCommand(sender, args);
 		return true;
@@ -99,10 +99,9 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		 * Parse Command.
 		 */
 		if (args.length > 0) {
-			if (sender instanceof Player)
-				if (!((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN.getNode(args[0]))) {
-					Messaging.sendErrorMsg(sender, Translation.of("msg_err_command_disable"));
-					return;
+			if (sender instanceof Player && !((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN.getNode(args[0]))) {
+				Messaging.sendErrorMsg(sender, Translation.of("msg_err_command_disable"));
+				return;
 			}
 			switch (args[0]) {
 			case "reload":
@@ -133,7 +132,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			showHelp(sender);
 		}
 	}
-
+	
 	private void showHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewaradmin"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "reload", Translation.of("admin_help_1")));
@@ -145,7 +144,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setplundered [true/false]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setcaptured [true/false]", ""));
 	}
-
+	
 	private void showImmunityHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/swa immunity"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity town [town_name] [hours]", ""));
@@ -170,7 +169,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			Messaging.sendMsg(sender, Translation.of("config_and_lang_file_reloaded_successfully"));
 			return;
 		}
-
+		
 		Messaging.sendErrorMsg(sender, Translation.of("config_and_lang_file_could_not_be_loaded"));
 	}
 
