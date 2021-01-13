@@ -125,13 +125,14 @@ public class SiegeWarNationEventListener implements Listener {
 				}
 			}
 
+			//A town cannot leave unless its revolt immunity timer is finished
 			if (SiegeWarSettings.getWarSiegeTownLeaveDisabled()) {
 
 				if (!SiegeWarSettings.getWarSiegeRevoltEnabled()) {
 					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_war_town_voluntary_leave_impossible"));
 					event.setCancelled(true);
 				}
-				if (town.isConquered() && System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(town)) {
+				if (System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(town)) {
 					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_war_revolt_immunity_active"));
 					event.setCancelled(true);
 				} else {
@@ -146,7 +147,7 @@ public class SiegeWarNationEventListener implements Listener {
 	
 	@EventHandler
 	public void onTownLeavesNation(NationTownLeaveEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled() && event.getTown().isConquered()) {
+		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeRevoltEnabled()) {
 			//Activate revolt immunity
 			SiegeWarTimeUtil.activateRevoltImmunityTimer(event.getTown());
 			event.getTown().setConquered(false);
