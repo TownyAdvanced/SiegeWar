@@ -40,7 +40,7 @@ public class TownMetaDataController {
 				return;
 			}
 			MetaDataUtil.setInt(town, idf, days);
-		} else {
+		} else if (days != 0) {
 			town.addMetaData(new IntegerDataField("siegewar_peacefuldays", days, "Days To Peacefulness Status Change"));			
 		}
 	}
