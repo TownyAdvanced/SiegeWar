@@ -38,30 +38,25 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
-		if (!((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN.getNode()))
-			return Collections.emptyList();
-
 		switch (args[0].toLowerCase()) {
 		case "immunity":
-			if (((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN_IMMUNITY.getNode())) {
-				if (args.length == 2)
-					return NameUtil.filterByStart(siegewaradminImmunityTabCompletes, args[1]);
+			if (args.length == 2)
+				return NameUtil.filterByStart(siegewaradminImmunityTabCompletes, args[1]);
 
-				if (args.length == 3) {
-					switch (args[1].toLowerCase()) {
-					case "town":
-						return getTownyStartingWith(args[2], "t");
-					case "nation":
-						return getTownyStartingWith(args[2], "n");
-					case "alltowns":
-						return Arrays.asList("0","1","2","3","4","5","6");
-					}
+			if (args.length == 3) {
+				switch (args[1].toLowerCase()) {
+				case "town":
+					return getTownyStartingWith(args[2], "t");
+				case "nation":
+					return getTownyStartingWith(args[2], "n");
+				case "alltowns":
+					return Arrays.asList("0","1","2","3","4","5","6");
 				}
+			}
 
-				if (args.length == 4) {
-					if (args[1].equalsIgnoreCase("town") || args[1].equalsIgnoreCase("nation"))
-						return Arrays.asList("0","1","2","3","4","5","6");
-				}
+			if (args.length == 4) {
+				if (args[1].equalsIgnoreCase("town") || args[1].equalsIgnoreCase("nation"))
+					return Arrays.asList("0","1","2","3","4","5","6");
 			}
 		case "siege":
 			if (((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN_SIEGE.getNode())) {
@@ -77,17 +72,15 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 				}
 			}
 		case "town":
-			if (((Player)sender).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN_TOWN.getNode())) {
-				if (args.length == 2)
-					return getTownyStartingWith(args[1], "t");
+			if (args.length == 2)
+				return getTownyStartingWith(args[1], "t");
 
-				if (args.length == 3)
-					return NameUtil.filterByStart(siegewaradminTownTabCompletes, args[2]);
+			if (args.length == 3)
+				return NameUtil.filterByStart(siegewaradminTownTabCompletes, args[2]);
 
-				if (args.length == 4)
-					if (args[2].equalsIgnoreCase("setcaptured") || args[2].equalsIgnoreCase("setplundered"))
-						return Arrays.asList("true","false");
-			}
+			if (args.length == 4)
+				if (args[2].equalsIgnoreCase("setcaptured") || args[2].equalsIgnoreCase("setplundered"))
+					return Arrays.asList("true","false");
 		default:
 			if (args.length == 1)
 				return NameUtil.filterByStart(siegewaradminTabCompletes, args[0]);
@@ -146,7 +139,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "reload", Translation.of("admin_help_1")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity town [town_name] [hours]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity nation [nation_name] [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity all towns [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity alltowns [hours]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setpoints [points]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setplundered [true/false]", ""));
