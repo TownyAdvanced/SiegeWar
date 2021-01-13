@@ -28,7 +28,7 @@ msg_err_command_disable: '&cYou don''t have enough permissions for that command.
 
 #Added in (Siegewar version)
 #Siege war happy-path messages
-msg_siege_war_revolt: '&bThe people of %s, led by %s, have revolted against the occupying power of %s, and declared themselves free to choose their own destiny!'
+msg_siege_war_revolt: '&bThe people of %s, led by %s, have revolted against %s, and declared themselves free to choose their own destiny!'
 msg_siege_war_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A siege has begun!'
 msg_siege_war_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A siege has begun!'
 msg_siege_war_attack_pay_war_chest: '&bA war-chest has been prepared by %s, with a value of %s. Whoever wins the siege will get this money.'
