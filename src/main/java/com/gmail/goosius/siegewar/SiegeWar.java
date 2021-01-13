@@ -1,8 +1,5 @@
 package com.gmail.goosius.siegewar;
 
-import java.io.IOException;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -21,8 +18,6 @@ import com.gmail.goosius.siegewar.listeners.SiegeWarNationEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarPlotEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
-
-import io.github.townyadvanced.util.JavaUtil;
 
 public class SiegeWar extends JavaPlugin {
 	
@@ -59,9 +54,6 @@ public class SiegeWar extends JavaPlugin {
         	System.err.println(SiegeWar.prefix + "Shutting down....");
         	onDisable();
         }
-
-        if (Settings.isUpdating(getVersion()))
-        	update();
         
         registerListeners();
         
@@ -98,31 +90,6 @@ public class SiegeWar extends JavaPlugin {
     private String getTownyVersion() {
         return Bukkit.getPluginManager().getPlugin("Towny").getDescription().getVersion();
     }
-
-	private void update() {
-
-		try {
-			List<String> changeLog = JavaUtil.readTextFromJar("/ChangeLog.txt");
-			boolean display = false;
-			System.out.println("------------------------------------");
-			System.out.println(prefix + " ChangeLog up until v" + getVersion());
-			String lastVersion = Settings.getLastRunVersion(getVersion()).split("_")[0];
-			for (String line : changeLog) {
-				if (line.startsWith(lastVersion)) {
-					display = true;
-				}
-				if (display && line.replaceAll(" ", "").replaceAll("\t", "").length() > 0) {
-					System.out.println(line);
-				}
-			}
-			System.out.println("------------------------------------");
-		} catch (IOException e) {
-			System.err.println("Could not read ChangeLog.txt");
-		} catch (NullPointerException e) {
-			System.err.println("Could not read ChangeLog.txt");
-		}
-		Settings.setLastRunVersion(getVersion());
-	}
 	
 	private void registerListeners() {
 		PluginManager pm = Bukkit.getServer().getPluginManager();

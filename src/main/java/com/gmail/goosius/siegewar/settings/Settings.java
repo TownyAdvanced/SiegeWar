@@ -137,19 +137,6 @@ public class Settings {
 		return config.getString(node.getRoot().toLowerCase(), node.getDefault());
 	}
 
-	public static boolean isUpdating(String currentVersion) {
-
-		if (isUpToDate(currentVersion))
-			return false;
-		else
-			return true; // Assume
-	}
-
-	private static boolean isUpToDate(String currentVersion) {
-
-		return currentVersion.equals(getLastRunVersion(currentVersion));
-	}
-
 	public static void setLastRunVersion(String currentVersion) {
 
 		setProperty(ConfigNodes.LAST_RUN_VERSION.getRoot(), currentVersion);
