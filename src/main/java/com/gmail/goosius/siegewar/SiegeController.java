@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -292,6 +293,16 @@ public class SiegeController {
 			result.addAll(siege.getBannerControlSessions().keySet());
 		}
 		return result;
+	}
+
+	public static List<Siege> getSiegesAt(Location location) {
+		List<Siege> siegesAtLocation = new ArrayList<>();
+		for (Siege siege : sieges.values()) {
+			if (SiegeWarDistanceUtil.isInSiegeZone(location, siege)) {
+				siegesAtLocation.add(siege);
+			}
+		}
+		return siegesAtLocation;
 	}
     
 }

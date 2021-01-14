@@ -584,7 +584,36 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If this value is true, then a town under occupation cannot unclaim.",
-			"#  This setting is recommended, to avoid occupation escape exploits.");	
+			"#  This setting is recommended, to avoid occupation escape exploits."),
+
+	PUNISH_NON_SIEGE_PARTICIPANTS_IN_SIEGE_ZONE(
+			"punish_non_siege_participants_in_siege_zone",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                     War Sickness                     | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+
+	ENABLE_SICKNESS(
+			"punish_non_siege_participants_in_siege_zone.enable_sickness",
+			"true",
+			"# If true, players that are not participating in a siege will receive war sickness",
+			"# A non-participant is a player who does not have a military rank, is not allied to either the attacker or the defender, or is peaceful.",
+			"# There are two types of war sickness, full and special.",
+			"# Special war sickness is only given if a non-participant is at his town that happened to be in a siege zone",
+			"#   - Effects: Weakness V",
+			"# Full sickness is given to all players that are not allied to either side, do not have a military rank, or is peaceful, and are not in their own town.",
+			"#   - Effects: Nausea V, Poison V, Weakness V, Slowness III, Mining Fatigue III"
+	),
+
+	SECONDS_BEFORE_SICKNESS(
+			"punish_non_siege_participants_in_siege_zone.seconds_warning",
+			"5",
+			"# This is how many seconds a player has to leave the siege zone before he gets war sickness",
+			"# If this is set to 0, no war will be given and non-participants will receive war sickness instantly, if enabled"
+	);
 
 	private final String Root;
 	private final String Default;
