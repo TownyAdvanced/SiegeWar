@@ -29,16 +29,18 @@ public class SiegeWarSicknessUtil {
 
         for (Player player : BukkitTools.getOnlinePlayers()) {
             Location location = player.getLocation();
-            List<Siege> sieges = SiegeController.getSiegesAt(location);
-            Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 
             // Players immune to war nausea won't be punished
             if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
                 continue;
 
+            List<Siege> sieges = SiegeController.getSiegesAt(location);
+
             // not in a siege zone
             if (sieges.isEmpty())
                 continue;
+
+            Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 
             if (resident == null)
                 continue;
