@@ -630,7 +630,7 @@ public enum ConfigNodes {
 			"punish_non_siege_participants_in_siege_zone.seconds_warning",
 			"5",
 			"# This is how many seconds a player has to leave the siege zone before he gets war sickness",
-			"# If this is set to 0, no war will be given and non-participants will receive war sickness instantly, if enabled"
+			"# If this is set to 0, no warn will be given and non-participants will receive war sickness instantly, if enabled"
 	);
 
 	private final String Root;
