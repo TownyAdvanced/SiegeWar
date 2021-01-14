@@ -22,7 +22,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarDynmapUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.util.StringMgmt;
-import com.palmergames.util.TimeMgmt;
 
 public class DynmapTask {
 
@@ -75,33 +74,13 @@ public class DynmapTask {
             try {
                 if (siege.getStatus().isActive()) {
                     MarkerIcon siegeIcon = markerapi.getMarkerIcon("fire");
-                    String status = "";
-                    String timeLeft = "";
                     List<String> lines = new ArrayList<>();
                     lines.add(Translation.of("dynmap_siege_attacker", siege.getAttackingNation().getName()));
                     lines.add(Translation.of("dynmap_siege_defender", siege.getDefendingTown().getName()));
                     lines.add(Translation.of("dynmap_siege_points", siege.getSiegePoints()));
                     lines.add(Translation.of("dynmap_siege_banner_control", siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase()));
-                    
-                    switch (siege.getStatus()) {
-                        case IN_PROGRESS:
-                            status = Translation.of("dynmap_siege_status_in_progress");
-                            timeLeft = TimeMgmt.getFormattedTimeValue(siege.getTimeUntilCompletionMillis());
-                            break;
-                        case PENDING_DEFENDER_SURRENDER:
-                            status = Translation.of("dynmap_siege_status_pending_surrender");
-                            timeLeft = siege.getFormattedTimeUntilDefenderSurrender();
-                            break;
-                        case PENDING_ATTACKER_ABANDON:
-                            status = Translation.of("dynmap_siege_status_pending_abandon");
-                            timeLeft = siege.getFormattedTimeUntilAttackerAbandon();
-                            break;
-                        default:
-                            status = "Unknown";
-                            timeLeft = "0";
-                    }
-                    lines.add(Translation.of("dynmap_siege_status", status));
-                    lines.add(Translation.of("dynmap_siege_time_left", timeLeft));
+                    lines.add(Translation.of("dynmap_siege_status", siege.getStatus().getName()));
+                    lines.add(Translation.of("dynmap_siege_time_left", siege.getTimeRemaining()));
 
                     if (TownySettings.isUsingEconomy() && TownyEconomyHandler.isActive())
                         lines.add(Translation.of("dynmap_siege_war_chest", TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount())));
