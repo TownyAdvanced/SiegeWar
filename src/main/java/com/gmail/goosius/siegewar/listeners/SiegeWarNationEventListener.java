@@ -96,9 +96,10 @@ public class SiegeWarNationEventListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled() && TownySettings.isUsingEconomy()
 				&& SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete()) {
 			int amountToRefund = (int)(TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
-			Messaging.sendMsg(event.getNation().getKing().getPlayer(), Translation.of("msg_err_siege_war_delete_nation_warning", TownyEconomyHandler.getFormattedBalance(amountToRefund)));
+			if(event.getNation().getKing().getPlayer() != null) {
+				Messaging.sendMsg(event.getNation().getKing().getPlayer(), Translation.of("msg_err_siege_war_delete_nation_warning", TownyEconomyHandler.getFormattedBalance(amountToRefund)));
+			}
 		}
-
 	}
 	
 	/*
