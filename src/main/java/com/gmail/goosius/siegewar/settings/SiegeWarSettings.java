@@ -342,4 +342,12 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_ALLOWED_TO_TOGGLE_PVP);
 	}
 
+	public static boolean getPunishingNonSiegeParticipantsInSiegeZone() {
+		return Settings.getBoolean(ConfigNodes.ENABLE_SICKNESS);
+	}
+
+	public static int getSicknessWarningTimeInTicks() {
+		return Settings.getInt(ConfigNodes.SECONDS_BEFORE_SICKNESS) * 20;
+	}
+
 }
