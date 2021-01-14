@@ -73,14 +73,29 @@ public class SiegeWarSicknessUtil {
         }
         Towny.getPlugin().getServer().getScheduler().runTaskLater(Towny.getPlugin(), new Runnable() {
             public void run() {
-                List<PotionEffect> potionEffects = new ArrayList<>();
-                potionEffects.add(new PotionEffect(PotionEffectType.CONFUSION, effectDurationTicks, 4));
-                potionEffects.add(new PotionEffect(PotionEffectType.POISON, effectDurationTicks, 4));
-                potionEffects.add(new PotionEffect(PotionEffectType.WEAKNESS, effectDurationTicks, 4));
-                potionEffects.add(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 2));
-                potionEffects.add(new PotionEffect(PotionEffectType.SLOW_DIGGING, effectDurationTicks, 2));
-                player.addPotionEffects(potionEffects);
-                player.sendMessage(Translation.of("plugin_prefix") + Translation.of("msg_you_received_war_sickness"));
+                try {
+                    Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
+                    List<Siege> sieges = SiegeController.getSiegesAt(player.getLocation());
+                    boolean allowedInAnyOverlappingSiege = false;
+                    for (Siege siege : sieges) {
+                        if (isSiegeParticipant(resident, siege)) {
+                            allowedInAnyOverlappingSiege = true;
+                            break;
+                        }
+                    }
+
+                    if (!allowedInAnyOverlappingSiege && SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
+                        // still in siege zone
+                        List<PotionEffect> potionEffects = new ArrayList<>();
+                        potionEffects.add(new PotionEffect(PotionEffectType.CONFUSION, effectDurationTicks, 4));
+                        potionEffects.add(new PotionEffect(PotionEffectType.POISON, effectDurationTicks, 4));
+                        potionEffects.add(new PotionEffect(PotionEffectType.WEAKNESS, effectDurationTicks, 4));
+                        potionEffects.add(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 2));
+                        potionEffects.add(new PotionEffect(PotionEffectType.SLOW_DIGGING, effectDurationTicks, 2));
+                        player.addPotionEffects(potionEffects);
+                        player.sendMessage(Translation.of("plugin_prefix") + Translation.of("msg_you_received_war_sickness"));
+                    }
+                } catch (NotRegisteredException ignored) {}
             }
         }, SiegeWarSettings.getSicknessWarningTimeInTicks());
     }
