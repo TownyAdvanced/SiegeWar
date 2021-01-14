@@ -618,6 +618,7 @@ public enum ConfigNodes {
 	ENABLE_SICKNESS(
 			"punish_non_siege_participants_in_siege_zone.enable_sickness",
 			"true",
+			"",
 			"# If true, players that are not participating in a siege will receive war sickness",
 			"# A non-participant is a player who does not have a military rank, is not allied to either the attacker or the defender, or is peaceful.",
 			"# There are two types of war sickness, full and special.",
@@ -630,6 +631,7 @@ public enum ConfigNodes {
 	SECONDS_BEFORE_SICKNESS(
 			"punish_non_siege_participants_in_siege_zone.seconds_warning",
 			"5",
+			"",
 			"# This is how many seconds a player has to leave the siege zone before he gets war sickness",
 			"# If this is set to 0, no warn will be given and non-participants will receive war sickness instantly, if enabled"
 	);
