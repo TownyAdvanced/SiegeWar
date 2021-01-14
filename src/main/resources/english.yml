@@ -226,3 +226,7 @@ msg_swa_resident_already_has_control: '&cResident %s already has control.'
 msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
 msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
 msg_swa_set_captured_success: '&bSet captured to %s for %s.'
+
+#War sickness
+msg_you_received_war_sickness: '&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave to remove the war sickness. Common causes of war sickness: being in a peaceful town, not having a military rank or not being allied to either side.'
+msg_you_will_get_sickness: '&c&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave or you will receive war sickness in %s seconds.'

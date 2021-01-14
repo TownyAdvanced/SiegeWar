@@ -114,4 +114,11 @@ public class SiegeWarTimerTaskController {
 			TownPeacefulnessUtil.punishPeacefulPlayersInActiveSiegeZones();
 		}
 	}
+
+	public static void punishNonSiegeParticipantsInSiegeZone() {
+		if (SiegeWarSettings.getPunishingNonSiegeParticipantsInSiegeZone()) {
+			SiegeWarSicknessUtil.punishNonSiegeParticipantsInSiegeZone();
+		}
+	}
+
 }
