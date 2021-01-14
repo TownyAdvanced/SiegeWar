@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.enums;
 
+import com.gmail.goosius.siegewar.settings.Translation;
 /**
  * This class represents the "status" of a siege
  * 
@@ -9,21 +10,23 @@ package com.gmail.goosius.siegewar.enums;
  * @author Goosius
  */
 public enum SiegeStatus {
-    IN_PROGRESS(true), 
-	ATTACKER_WIN(false), 
-	DEFENDER_WIN(false), 
-	ATTACKER_ABANDON(false), 
-	DEFENDER_SURRENDER(false), 
-	PENDING_ATTACKER_ABANDON(true), 
-	PENDING_DEFENDER_SURRENDER(true), 
-	UNKNOWN(false);
+    IN_PROGRESS(true, Translation.of("siege_status_in_progress")), 
+	ATTACKER_WIN(false, Translation.of("siege_status_attacker_win")), 
+	DEFENDER_WIN(false, Translation.of("siege_status_defender_win")), 
+	ATTACKER_ABANDON(false, Translation.of("siege_status_attacker_abandon")), 
+	DEFENDER_SURRENDER(false, Translation.of("siege_status_defender_surrender")), 
+	PENDING_ATTACKER_ABANDON(true, Translation.of("siege_status_pending_attacker_abandon")), 
+	PENDING_DEFENDER_SURRENDER(true, Translation.of("siege_status_pending_defender_surrender")), 
+	UNKNOWN(false, Translation.of("siege_status_unknown"));
 
     private boolean active;
+    private String name;
     
-    SiegeStatus(boolean active) {
+    SiegeStatus(boolean active, String name) {
     	this.active = active;
+    	this.name = name;
 	}
-    
+
     public static SiegeStatus parseString(String line) {
         switch (line) {
             case "IN_PROGRESS":
@@ -50,5 +53,12 @@ public enum SiegeStatus {
 	 */
 	public boolean isActive() {
     	return this.active;
+	}
+	
+	/**
+	 * @return translated siege status.
+	 */
+	public String getName() {
+		return this.name;
 	}
 }

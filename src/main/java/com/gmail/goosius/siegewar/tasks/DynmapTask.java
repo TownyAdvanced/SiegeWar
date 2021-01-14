@@ -15,14 +15,13 @@ import org.dynmap.markers.MarkerSet;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarDynmapUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.util.StringMgmt;
-import com.palmergames.util.TimeMgmt;
 
 public class DynmapTask {
 
@@ -69,38 +68,35 @@ public class DynmapTask {
     }
 
     private static void displaySieges() {
+        markerMap.clear();
         for (Siege siege : SiegeController.getSieges()) {
-            String name = "Siege: " + siege.getName().replace("#", " ");
+            String name = Translation.of("dynmap_siege_title", siege.getName().replace("#", " "));
             try {
-                if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
+                if (siege.getStatus().isActive()) {
                     MarkerIcon siegeIcon = markerapi.getMarkerIcon("fire");
                     List<String> lines = new ArrayList<>();
-                    lines.add("Attacker: " + siege.getAttackingNation().getName());
-                    lines.add("Defender: " + siege.getDefendingTown().getName());
-                    lines.add("Points: " + siege.getSiegePoints());
-                    lines.add("Banner Control: " + siege.getBannerControllingSide());
-                    lines.add("Time left: " + TimeMgmt.getFormattedTimeValue(siege.getTimeUntilCompletionMillis()));
+                    lines.add(Translation.of("dynmap_siege_attacker", siege.getAttackingNation().getName()));
+                    lines.add(Translation.of("dynmap_siege_defender", siege.getDefendingTown().getName()));
+                    lines.add(Translation.of("dynmap_siege_points", siege.getSiegePoints()));
+                    lines.add(Translation.of("dynmap_siege_banner_control", siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase()));
+                    lines.add(Translation.of("dynmap_siege_status", siege.getStatus().getName()));
+                    lines.add(Translation.of("dynmap_siege_time_left", siege.getTimeRemaining()));
+
                     if (TownySettings.isUsingEconomy() && TownyEconomyHandler.isActive())
-                        lines.add("War Chest: " + TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
+                        lines.add(Translation.of("dynmap_siege_war_chest", TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount())));
                     String desc = "<b>" + name + "</b><hr>" + StringMgmt.join(lines, "<br>");
                     Location siegeLoc = siege.getFlagLocation();
                     double siegeX = siegeLoc.getX();
                     double siegeZ = siegeLoc.getZ();
                     String siegeMarkerId = siege.getName();
-                    Marker siegeMarker = markerMap.get(siegeMarkerId);
-                    if (siegeMarker == null) {
-                        siegeMarker = set.createMarker(siegeMarkerId, name, siegeLoc.getWorld().getName(), siegeX, 64,
-                                siegeZ, siegeIcon, false);
-                    } else {
-                        siegeMarker.setLocation(siegeLoc.getWorld().getName(), siegeX, 64, siegeZ);
-                        siegeMarker.setLabel(name);
-                        siegeMarker.setDescription(desc);
-                        siegeMarker.setMarkerIcon(siegeIcon);
-                    }
+                    set.createMarker(siegeMarkerId, name, siegeLoc.getWorld().getName(), siegeX, 64,
+                            siegeZ, siegeIcon, false);
+                    
+                    Marker siegeMarker = set.findMarker(siegeMarkerId);
+                    siegeMarker.setLabel(name);
+                    siegeMarker.setDescription(desc);
 
-                    if (siegeMarker != null)
-                        markerMap.put(siegeMarkerId, siegeMarker);
-
+                    markerMap.put(siegeMarkerId, siegeMarker);
                 }
             } catch (Exception ex) {
                 System.err.println(SiegeWar.prefix + "Problem adding siege marker for siege: " + name);
