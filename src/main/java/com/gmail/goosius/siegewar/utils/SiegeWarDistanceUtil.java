@@ -141,11 +141,11 @@ public class SiegeWarDistanceUtil {
 	}
 
 	public static boolean isInSiegeZone(Location location, Siege siege) {
-		return areLocationsClose(location, siege.getFlagLocation(), SiegeWarSettings.getWarSiegeZoneRadiusBlocks());
+		return areLocationsCloseHorizontally(location, siege.getFlagLocation(), SiegeWarSettings.getWarSiegeZoneRadiusBlocks());
 	}
 
 	public static boolean isInSiegeZone(Entity entity, Siege siege) {
-		return areLocationsClose(entity.getLocation(), siege.getFlagLocation(), SiegeWarSettings.getWarSiegeZoneRadiusBlocks());
+		return areLocationsCloseHorizontally(entity.getLocation(), siege.getFlagLocation(), SiegeWarSettings.getWarSiegeZoneRadiusBlocks());
 	}
 
 	public static boolean isCloseToLeader(Player player1, Player player2) {
@@ -206,7 +206,17 @@ public class SiegeWarDistanceUtil {
 
 		return true;
 	}
-	
+
+	//Check horizontal distance only
+	private static boolean areLocationsCloseHorizontally(Location location1, Location location2, int radius) {
+		if(!location1.getWorld().getName().equalsIgnoreCase(location2.getWorld().getName()))
+			return false;
+
+		//Check horizontal distance
+		double xzDistance = Math.sqrt(Math.pow(location1.getX() - location2.getX(), 2) + Math.pow(location1.getZ() - location2.getZ(), 2));
+		return xzDistance < radius;
+	}
+
 	private static Location getTopNorthWestCornerLocation(WorldCoord worldCoord) {
 		int locX = worldCoord.getX() * TOWNBLOCKSIZE;
 		int locZ = worldCoord.getZ() * TOWNBLOCKSIZE;
