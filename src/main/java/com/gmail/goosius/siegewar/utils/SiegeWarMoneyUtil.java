@@ -123,11 +123,14 @@ public class SiegeWarMoneyUtil {
 			int amountToRefund = (int)(TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
 			ResidentMetaDataController.setNationRefundAmount(king, amountToRefund);
 
-			Messaging.sendMsg(
-				king.getPlayer(),
-				String.format(
-					Translation.of("msg_siege_war_nation_refund_available"),
-					TownyEconomyHandler.getFormattedBalance(amountToRefund)));
+			//Send message if the king is online & not an npc
+			if(king.getPlayer() != null) {
+				Messaging.sendMsg(
+						king.getPlayer(),
+						String.format(
+								Translation.of("msg_siege_war_nation_refund_available"),
+								TownyEconomyHandler.getFormattedBalance(amountToRefund)));
+			}
 		}
 	}
 	
