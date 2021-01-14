@@ -408,9 +408,9 @@ public class SiegeWarTownEventListener implements Listener {
             case ATTACKER_ABANDON:
                 return Translation.of("status_town_siege_status_attacker_abandon");
             case PENDING_DEFENDER_SURRENDER:
-                return Translation.of("status_town_siege_status_pending_defender_surrender", siege.getFormattedTimeUntilDefenderSurrender());
+                return Translation.of("status_town_siege_status_pending_defender_surrender", siege.getTimeRemaining());
             case PENDING_ATTACKER_ABANDON:
-                return Translation.of("status_town_siege_status_pending_attacker_abandon", siege.getFormattedTimeUntilAttackerAbandon());
+                return Translation.of("status_town_siege_status_pending_attacker_abandon", siege.getTimeRemaining());
             default:
                 return "???";
         }
