@@ -226,3 +226,12 @@ msg_swa_resident_already_has_control: '&cResident %s already has control.'
 msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
 msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
 msg_swa_set_captured_success: '&bSet captured to %s for %s.'
+
+siege_status_in_progress: 'In Progress'
+siege_status_attacker_win: 'Attacker Win'
+siege_status_defender_win: 'Defender Win'
+siege_status_attacker_abandon: 'Attacker Abandon'
+siege_status_defender_surrender: 'Defender Surrender'
+siege_status_pending_attacker_abandon: 'Pending Attacker Abandon'
+siege_status_pending_defender_surrender: 'Pending Defender Surrender'
+siege_status_unknown: 'Unknown'
