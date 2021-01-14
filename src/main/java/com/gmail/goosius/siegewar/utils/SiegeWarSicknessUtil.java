@@ -31,15 +31,16 @@ public class SiegeWarSicknessUtil {
             Location location = player.getLocation();
             List<Siege> sieges = SiegeController.getSiegesAt(location);
             Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-            TownyUniverse universe = TownyUniverse.getInstance();
+
+            // Players immune to war nausea won't be punished
+            if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
+                continue;
 
             // not in a siege zone
             if (sieges.isEmpty())
                 continue;
 
-            // Players immune to war nausea won't be punished for this
-            if (universe.getPermissionSource().testPermission(player,
-                    SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
+            if (resident == null)
                 continue;
 
             boolean allowedInAnyOverlappingSiege = false;
