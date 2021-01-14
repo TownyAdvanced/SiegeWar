@@ -255,14 +255,25 @@ public class Siege {
 		this.attackerHasLowestPopulation = attackerHasLowestPopulation;
 	}
 
-	public String getFormattedTimeUntilDefenderSurrender() {
-		double timeMillis = (SiegeWarSettings.getWarSiegeMinSiegeDurationBeforeSurrenderHours() * ONE_HOUR_IN_MILLIS) - getDurationMillis();
-		return TimeMgmt.getFormattedTimeValue(timeMillis);
-	}
-
-	public String getFormattedTimeUntilAttackerAbandon() {
-		double timeMillis = (SiegeWarSettings.getWarSiegeMinSiegeDurationBeforeAbandonHours() * ONE_HOUR_IN_MILLIS) - getDurationMillis();
-		return TimeMgmt.getFormattedTimeValue(timeMillis);
+	/**
+	 * @return amount of time left as a String.
+	 */
+	public String getTimeRemaining() {
+		double timeLeft;
+		switch (this.getStatus()) {
+			case IN_PROGRESS:
+				timeLeft = getTimeUntilCompletionMillis();
+				break;
+			case PENDING_ATTACKER_ABANDON:
+				timeLeft = (SiegeWarSettings.getWarSiegeMinSiegeDurationBeforeAbandonHours() * ONE_HOUR_IN_MILLIS) - getDurationMillis();
+				break;
+			case PENDING_DEFENDER_SURRENDER:
+				timeLeft = (SiegeWarSettings.getWarSiegeMinSiegeDurationBeforeSurrenderHours() * ONE_HOUR_IN_MILLIS) - getDurationMillis();
+				break;
+			default:
+				timeLeft = System.currentTimeMillis();
+		}
+		return TimeMgmt.getFormattedTimeValue(timeLeft);
 	}
 
 }
