@@ -3,7 +3,6 @@ package com.gmail.goosius.siegewar.listeners;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -25,16 +24,16 @@ public class SiegeWarPlotEventListener implements Listener {
     * SW will stop plot pvp being toggled in besieged or peaceful towns.
     */
     @EventHandler
-	public void onPlotTogglePVP(PlotTogglePvpEvent event) { //TODO: Change Messaging.sendErrorMsg() to event.setCancelledMsg() later on.
+	public void onPlotTogglePVP(PlotTogglePvpEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns() && SiegeController.hasActiveSiege(event.getTown()))  {
-				Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
+				event.setCancellationMsg(Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
 				event.setCancelled(true);
 			}
             if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
                     && !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()
                     && event.getTown().isNeutral()) {
-				Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_peaceful_town_pvp_forced_off"));
+				event.setCancellationMsg(Translation.of("msg_err_peaceful_town_pvp_forced_off"));
 				event.setCancelled(true);
 			}
 		}	
