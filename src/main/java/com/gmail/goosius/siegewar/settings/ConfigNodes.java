@@ -598,7 +598,7 @@ public enum ConfigNodes {
 
 	ENABLE_SICKNESS(
 			"punish_non_siege_participants_in_siege_zone.enable_sickness",
-			"true",
+			"false",
 			"",
 			"# If true, players that are not participating in a siege will receive war sickness",
 			"# A non-participant is a player who does not have a military rank, is not allied to either the attacker or the defender, or is peaceful.",
