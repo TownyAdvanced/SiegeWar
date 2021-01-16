@@ -169,18 +169,6 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_EXTRA_MONEY_PERCENTAGE_PER_TOWN_LEVEL);
 	}
 
-	public static double getWarSiegePointsPercentageAdjustmentForLeaderProximity() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_PERCENTAGE_ADJUSTMENT_FOR_LEADER_PROXIMITY);
-	}
-
-	public static double getWarSiegePointsPercentageAdjustmentForLeaderDeath() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_PERCENTAGE_ADJUSTMENT_FOR_LEADER_DEATH);
-	}
-
-	public static int getWarSiegeLeadershipAuraRadiusBlocks() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_LEADERSHIP_AURA_RADIUS_BLOCKS);
-	}
-
 	public static boolean getWarSiegeTacticalVisibilityEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_TACTICAL_VISIBILITY_ENABLED);
 	}
