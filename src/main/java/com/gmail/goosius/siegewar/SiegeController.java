@@ -295,10 +295,10 @@ public class SiegeController {
 		return result;
 	}
 
-	public static List<Siege> getSiegesAt(Location location) {
+	public static List<Siege> getActiveSiegesAt(Location location) {
 		List<Siege> siegesAtLocation = new ArrayList<>();
 		for (Siege siege : sieges.values()) {
-			if (SiegeWarDistanceUtil.isInSiegeZone(location, siege)) {
+			if (SiegeWarDistanceUtil.isInSiegeZone(location, siege) && siege.getStatus().isActive()) {
 				siegesAtLocation.add(siege);
 			}
 		}

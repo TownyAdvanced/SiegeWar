@@ -34,7 +34,7 @@ public class SiegeWarSicknessUtil {
             if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
                 continue;
 
-            List<Siege> sieges = SiegeController.getSiegesAt(location);
+            List<Siege> sieges = SiegeController.getActiveSiegesAt(location);
 
             // not in a siege zone
             if (sieges.isEmpty())
@@ -78,7 +78,7 @@ public class SiegeWarSicknessUtil {
             public void run() {
                 try {
                     Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-                    List<Siege> sieges = SiegeController.getSiegesAt(player.getLocation());
+                    List<Siege> sieges = SiegeController.getActiveSiegesAt(player.getLocation());
                     boolean allowedInAnyOverlappingSiege = false;
                     for (Siege siege : sieges) {
                         if (isSiegeParticipant(resident, siege)) {
