@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
@@ -151,6 +152,7 @@ public class PlayerDeath {
 
 				degradeInventory(playerDeathEvent);
 				keepInventory(playerDeathEvent);
+				SiegeHUDManager.updateHUDs();
 			}
 		} catch (Exception e) {
 			try {
