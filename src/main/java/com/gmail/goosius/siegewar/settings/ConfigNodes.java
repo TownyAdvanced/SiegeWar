@@ -426,30 +426,28 @@ public enum ConfigNodes {
 			"",
 			"# This setting is used to indicate the list of forbidden buckets"),
 
-	//Tactical Visibility
+	//Map Sneaking
 	//Todo - Eventually move this to another location as it works regardless of war system, or without.
-	WAR_SIEGE_TACTICAL_VISIBILITY_ENABLED(
-			"war.siege.switches.tactical_visibility_enabled",
+	WAR_SIEGE_MAP_SNEAKING_ENABLED(
+			"war.siege.switches.map_sneaking_enabled",
 			"true",
 			"",
-			"# If this setting is true, then the tactical invisibility feature is enabled",
+			"# If this setting is true, then the map sneaking feature is enabled",
 			"# PREREQUISITES: ",
-			"# * You must have deployed a dynmap jar containing support for tactical invisibility.",
-			"# * In your dynmap config, tactical-invisibility must be enabled.",
+			"# * You must have deployed a standard dynmap jar.",
 			"# ",
 			"# DESCRIPTION",
 			"# * This feature is critical to enable normal military tactics such as ambushing.",
 			"# * The feature works as follows:",	
-			"# * Player in a banner control session - Always visible on map.",
-			"# * Player with certain items in their hands (configured below) - Invisible on map.",
-			"# * ",
-			"# * NOTE: Any additional dynmap config settings for map invisibility will override the 'always visible' scenarios above."),
-	WAR_SIEGE_TACTICAL_VISIBILITY_ITEMS(
-			"war.siege.items.tactical_visibility_items",
+			"# * if a player wishes to 'map sneak', they equip a specific combination of items in their hands (configured below).",
+			"# * Then in a few seconds they will disappear from the dynmap, and are then considered to be 'map sneaking'.",
+			"# * Player's in banner control sessions cannot map-sneak"),
+	WAR_SIEGE_MAP_SNEAKING_ITEMS(
+			"war.siege.items.map_sneaking_items",
 			"compass|diamond_sword, compass|bow",
 			"",
-			"# This list specifies the items which make players tactically invisible. ",
-			"# Each list entry is in the format of <off-hand>|<main-hand>.",
+			"# This list specifies the item combinations which allow players to map-sneak.",
+			"# Each list entry is in the form of <off-hand>|<main-hand>.",
 			"# ",
 			"# To specify that both items are required - e.g. 'compass|painting'" + 
 			"# To specify that only one item is required - e.g. 'compass|any'",
