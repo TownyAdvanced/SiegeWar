@@ -191,7 +191,7 @@ public class PlayerDeath {
 				}
 			}
 			if (closeToBreaking) //One or more items are close to breaking, send warning.
-				Messaging.sendMsg(playerDeathEvent.getEntity(), Translation.of("inventory_degrade_warning"));
+				Messaging.sendMsg(playerDeathEvent.getEntity(), Translation.of("msg_inventory_degrade_warning"));
 		}
 	}
 
