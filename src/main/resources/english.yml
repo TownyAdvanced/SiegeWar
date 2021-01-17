@@ -249,4 +249,4 @@ dynmap_siege_time_left: 'Time Left: %s'
 dynmap_siege_war_chest: 'War Chest: %s'
 
 #Added in 0.06:
-inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to breaking due to inventory degradation.'
+msg_inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to breaking due to inventory degradation.'
