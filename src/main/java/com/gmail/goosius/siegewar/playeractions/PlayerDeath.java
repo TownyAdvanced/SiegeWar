@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.playeractions;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
@@ -170,18 +171,27 @@ public class PlayerDeath {
 		int currentDurability;
 		int damageToInflict;
 		int newDurability;
-		if(SiegeWarSettings.getWarSiegeDeathPenaltyDegradeInventoryEnabled()) {
-			for(ItemStack itemStack: playerDeathEvent.getEntity().getInventory().getContents()) {
+		Boolean closeToBreaking = false;
+		if (SiegeWarSettings.getWarSiegeDeathPenaltyDegradeInventoryEnabled()) {
+			for (ItemStack itemStack : playerDeathEvent.getEntity().getInventory().getContents()) {
 				if (itemStack != null && itemStack.getItemMeta() instanceof Damageable) {
 					damageable = ((Damageable) itemStack.getItemMeta());
 					maxDurability = itemStack.getType().getMaxDurability();
 					currentDurability = damageable.getDamage();
 					damageToInflict = (int)(maxDurability / 100 * SiegeWarSettings.getWarSiegeDeathPenaltyDegradeInventoryPercentage());
 					newDurability = currentDurability + damageToInflict;
-					damageable.setDamage(newDurability);
+					if (newDurability >= maxDurability) {
+						damageable.setDamage(Math.max((int)maxDurability-10, currentDurability));
+						closeToBreaking = true;
+					}
+					else {
+						damageable.setDamage(newDurability);
+					}
 					itemStack.setItemMeta((ItemMeta)damageable);
 				}
 			}
+			if (closeToBreaking) //One or more items are close to breaking, send warning.
+				Messaging.sendMsg(playerDeathEvent.getEntity(), Translation.of("msg_inventory_degrade_warning"));
 		}
 	}
 
