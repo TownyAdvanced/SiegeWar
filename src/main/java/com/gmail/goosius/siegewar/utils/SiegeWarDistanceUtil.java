@@ -17,7 +17,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
