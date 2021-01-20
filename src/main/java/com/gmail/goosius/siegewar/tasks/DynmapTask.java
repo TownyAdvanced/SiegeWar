@@ -21,6 +21,7 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarDynmapUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownySettings;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.util.StringMgmt;
 
 public class DynmapTask {
@@ -68,7 +69,17 @@ public class DynmapTask {
     }
 
     private static void displaySieges() {
-        markerMap.clear();
+        for (Marker marker : markerMap.values()) { //Remove markers belonging to sieges that have ended
+            try {
+                if (!SiegeController.hasActiveSiege(SiegeController.getSiege(marker.getLabel().replaceAll(".+: ", "").replaceAll(" ", "#")).getDefendingTown())) {
+                    marker.deleteMarker();
+                    markerMap.remove(marker.getMarkerID());
+                }
+            } catch (NotRegisteredException e) {
+                marker.deleteMarker();
+                markerMap.remove(marker.getMarkerID());
+            }            
+        }
         for (Siege siege : SiegeController.getSieges()) {
             String name = Translation.of("dynmap_siege_title", siege.getName().replace("#", " "));
             try {
@@ -89,12 +100,18 @@ public class DynmapTask {
                     double siegeX = siegeLoc.getX();
                     double siegeZ = siegeLoc.getZ();
                     String siegeMarkerId = siege.getName();
-                    set.createMarker(siegeMarkerId, name, siegeLoc.getWorld().getName(), siegeX, 64,
-                            siegeZ, siegeIcon, false);
-                    
                     Marker siegeMarker = set.findMarker(siegeMarkerId);
-                    siegeMarker.setLabel(name);
-                    siegeMarker.setDescription(desc);
+                    if (siegeMarker == null) {
+                        set.createMarker(siegeMarkerId, name, siegeLoc.getWorld().getName(), siegeX, 64,
+                                siegeZ, siegeIcon, false);
+                        
+                        siegeMarker = set.findMarker(siegeMarkerId);
+                        siegeMarker.setLabel(name);
+                        siegeMarker.setDescription(desc);
+                    } else {
+                        siegeMarker.setLabel(name);
+                        siegeMarker.setDescription(desc);
+                    }                  
 
                     markerMap.put(siegeMarkerId, siegeMarker);
                 }
