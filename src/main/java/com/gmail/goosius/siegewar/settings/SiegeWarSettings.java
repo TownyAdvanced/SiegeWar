@@ -240,8 +240,8 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.OCCUPIED_TOWN_UNCLAIMING_DISABLED);
 	}
 
-	public static boolean isWarSiegeCounterattackBoosterEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_ENABLED);
+	public static boolean isWarSiegeCounterattackBoosterDisabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_DISABLED);
 	}
 
 	public static double getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercent() {

@@ -132,6 +132,15 @@ public enum ConfigNodes {
 			"",
 			"# If this value is true, then a town under active siege cannot unclaim.",
 			"#  This setting is recommended if invasion/occupation is enabled, to avoid occupation escape exploits."),
+	WAR_SIEGE_COUNTERATTACK_BOOSTER_DISABLED(
+			"war.siege.switches.counterattack_booster_disabled",
+			"false",
+			"",
+			"# If this setting is false, and a player from the banner controlling side dies,",
+			"# then the death points are increased by a certain percentage. (see points section below)",
+			"# This setting is very important as it prevents large unskilled armies from dominating small pvp-skilled armies during sieges.",
+			"# However, this is not an instant-win for the pvp-skilled side",
+			"# To fully even the odds, they may have to employ military tactics such as map-sneaking/ambushes to close with the enemy army."),
 	WAR_SIEGE_POPULATION_BASED_POINT_BOOSTS_ENABLED(
 			"war.siege.switches.population_based_point_boosts_enabled",
 			"false",
@@ -140,13 +149,6 @@ public enum ConfigNodes {
 			"# The attacking side population consists of the residents of the attacking nation, and allies.",
 			"# The defending side population consists of the residents of the defending town, and nation + allies if applicable.",
 			"# The level of the boost is configured in separate configs. See the scoring section of this file."),
-	WAR_SIEGE_COUNTERATTACK_BOOSTER_ENABLED(
-			"war.siege.switches.counterattack_booster_enabled",
-			"false",
-			"",
-			"# If this setting is true, and a player from the banner controlling side dies,",
-			"# then the death points are increased by a certain percentage. (see points section below)",
-			"# This setting gives smaller and weaker towns/nations a better chance, as they will tend to be the counter-attackers."),
 
 	//Monetary Values
 	WAR_SIEGE_ATTACKER_COST_UPFRONT_PER_PLOT(
@@ -320,7 +322,14 @@ public enum ConfigNodes {
 			"# ",
 			"# Configuration Outcomes:",
 			"# Value HIGH --> If the value is high, then PVP will be DISCOURAGED",
-			"# Value LOW --> If the value is low, then PVP will be ENCOURAGED"),	
+			"# Value LOW --> If the value is low, then PVP will be ENCOURAGED"),
+	WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENT(
+			"war.siege.scoring.counterattack_booster_extra_death_points_per_player_percent",
+			"10.0",
+			"",
+			"# As long as the counterattack booster feature is not disabled, then this setting determines the strength of the boost.",
+			"# Example: If this setting is 10.0, and there are 3 players on the banner control list, and a player from the banner-controlling side dies,",
+			"# then the death points will be increased by 30%."),
 	WAR_SIEGE_POPULATION_QUOTIENT_FOR_MAX_POINTS_BOOST(
 			"war.siege.scoring.population_quotient_for_max_points_boost",
 			"3.0",
@@ -341,13 +350,6 @@ public enum ConfigNodes {
 			"# 2. Assume that a siege attacker greatly outnumbers a siege defender in population. (also counting allies)",
 			"# 3. In this example, if the siege defender scores any siege points, the points will be multiplied by 2.",
 			"# 4. In this example, the siege attacker will not get any points boosts."),
-	WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENT(
-			"war.siege.scoring.counterattack_booster_extra_death_points_per_player_percent",
-			"5.0",
-			"",
-			"# If the counterattack booster feature is enabled, then this setting determines the strength of the boost.",
-			"# Example: If this setting is 5.0, and there are 3 players on the banner control list, and a player from the controlling side dies,",
-			"# then the death points will be increased by 15%."),
 
 	//Siege-war specific peaceful towns
 	WAR_SIEGE_PEACEFUL_TOWNS_GUARDIAN_TOWN_PLOTS_REQUIREMENT(
