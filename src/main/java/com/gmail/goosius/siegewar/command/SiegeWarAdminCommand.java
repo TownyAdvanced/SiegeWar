@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -33,7 +34,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
 	private static final List<String> siegewaradminTabCompletes = Arrays.asList("immunity","reload","siege","town");
 	private static final List<String> siegewaradminImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
-	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setpoints","end","setplundered");
+	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setpoints","end","setplundered","remove");
 	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setcaptured");
 
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
@@ -141,7 +142,8 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity alltowns [hours]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setpoints [points]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setplundered [true/false]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setcaptured [true/false]", ""));
 	}
 	
@@ -156,11 +158,12 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatTitle("/swa siege"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setpoints [points]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
 	}
 
 	private void showTownHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/swa town"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setplundered [true/false]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setcaptured [true/false]", ""));
 	}
 
@@ -229,16 +232,17 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		if (args.length >= 2) {
 			Town town = TownyUniverse.getInstance().getTown(args[0]);
 			Siege siege = SiegeController.getSiege(town);
+			List<String> ignoreActiveSiegeArgs = Arrays.asList("setplundered","remove");
 
 			if (town == null) {
 				Messaging.sendErrorMsg(sender, Translation.of("msg_err_town_not_registered", args[0]));
 				return;
 			}
-			if (!SiegeController.hasActiveSiege(town) && !args[1].equalsIgnoreCase("setplundered")) {
+			if (!SiegeController.hasActiveSiege(town) && !ignoreActiveSiegeArgs.contains(args[1].toLowerCase())) {
 				Messaging.sendErrorMsg(sender, Translation.of("msg_err_not_being_sieged", town.getName()));
 				return;
 			}
-			if (!SiegeController.hasSiege(town) && args[1].equalsIgnoreCase("setplundered")) {
+			if (!SiegeController.hasSiege(town) && ignoreActiveSiegeArgs.contains(args[1].toLowerCase())) {
 				Messaging.sendErrorMsg(sender, Translation.of("msg_err_not_being_sieged", town.getName()));
 				return;				
 			}
@@ -272,6 +276,10 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 					siege.setTownPlundered(plundered);
 					SiegeController.saveSiege(siege);
 					Messaging.sendMsg(sender, Translation.of("msg_swa_set_plunder_success", plundered.toString().toUpperCase(), town.getName()));
+					return;
+				case "remove":
+					SiegeController.removeSiege(siege, SiegeSide.ATTACKERS);
+					Messaging.sendMsg(sender, Translation.of("msg_swa_remove_siege_success"));
 					return;
 			}
 

@@ -250,3 +250,4 @@ dynmap_siege_war_chest: 'War Chest: %s'
 
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to breaking due to inventory degradation.'
+msg_swa_remove_siege_success: '&bSuccessfully removed siege.'
