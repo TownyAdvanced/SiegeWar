@@ -154,6 +154,11 @@ public class PlayerDeath {
 				degradeInventory(playerDeathEvent);
 				keepInventory(playerDeathEvent);
 				SiegeHUDManager.updateHUDs();
+
+				if (confirmedCandidateSiege.getBannerControlSessions().containsKey(deadPlayer)) { //If the player that died had an ongoing session, remove it.
+					confirmedCandidateSiege.removeBannerControlSession(confirmedCandidateSiege.getBannerControlSessions().get(deadPlayer));
+					Messaging.sendMsg(deadPlayer, Translation.of("msg_siege_war_banner_control_session_failure"));
+				}
 			}
 		} catch (Exception e) {
 			try {
@@ -174,7 +179,7 @@ public class PlayerDeath {
 		Boolean closeToBreaking = false;
 		if (SiegeWarSettings.getWarSiegeDeathPenaltyDegradeInventoryEnabled()) {
 			for (ItemStack itemStack : playerDeathEvent.getEntity().getInventory().getContents()) {
-				if (itemStack != null && itemStack.getItemMeta() instanceof Damageable) {
+				if (itemStack != null && itemStack.getType().getMaxDurability() != 0 && !itemStack.getItemMeta().isUnbreakable()) {
 					damageable = ((Damageable) itemStack.getItemMeta());
 					maxDurability = itemStack.getType().getMaxDurability();
 					currentDurability = damageable.getDamage();
