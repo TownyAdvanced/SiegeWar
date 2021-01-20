@@ -61,10 +61,11 @@ public class PlaceBlock {
 		
 		try {
 			Material mat = block.getType();
-			//Banner placement
-			if (Tag.BANNERS.isTagged(mat))
+
+			//Standing Banner placement
+			if (Tag.BANNERS.isTagged(mat) && !mat.toString().contains("_W"))
                 try {
-                    evaluatePlaceBanner(player, block);
+                    evaluatePlaceStandingBanner(player, block);
                 } catch (TownyException e1) {
                     Messaging.sendErrorMsg(player, e1.getMessage());
                     return;
@@ -100,7 +101,7 @@ public class PlaceBlock {
 	 * @param block The banner.
 	 * @throws TownyException thrown when the banner is not allowed to be placed.
 	 */
-	private static void evaluatePlaceBanner(Player player, Block block) throws TownyException {
+	private static void evaluatePlaceStandingBanner(Player player, Block block) throws TownyException {
 
 		// All outcomes require a town.
 		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
@@ -127,7 +128,7 @@ public class PlaceBlock {
 			} catch (NotRegisteredException ignored) {
 			}
 
-			if (isSurrenderBanner(block)) {
+			if (isWhiteBanner(block)) {
 				// Nation abandoning the siege.
 
 				if (!SiegeWarSettings.getWarSiegeAbandonEnabled())
@@ -149,7 +150,6 @@ public class PlaceBlock {
 				evaluatePlaceColouredBannerInWilderness(block, player, resident, town, nation);
 			}
 
-			
 		/*
 		 * The banner is being placed in a town, which means it is a Town
 		 * trying to surrender their siege. 
@@ -160,7 +160,7 @@ public class PlaceBlock {
 			if (town != null 
 					&& SiegeWarSettings.getWarSiegeSurrenderEnabled() 
 					&& SiegeController.hasSiege(town) 
-					&& isSurrenderBanner(block)) {
+					&& isWhiteBanner(block)) {
 				if (!town.hasResident(resident))
 		            throw new TownyException(Translation.of("msg_err_siege_war_cannot_surrender_not_your_town"));
 
@@ -169,7 +169,10 @@ public class PlaceBlock {
 
 				if (SiegeController.getSiege(town).getStatus() != SiegeStatus.IN_PROGRESS)
 					throw new TownyException(Translation.of("msg_err_siege_war_cannot_surrender_siege_finished"));
-				
+
+				if(town.isConquered())
+					throw new TownyException(Translation.of("msg_war_siege_occupied_towns_cannot_surrender"));
+
 				SurrenderTown.defenderSurrender(SiegeController.getSiege(town));
 			}
 		}
@@ -300,7 +303,7 @@ public class PlaceBlock {
 		PlunderTown.processPlunderTownRequest(player, town);
 	}
 	
-	private static boolean isSurrenderBanner(Block block) {
+	private static boolean isWhiteBanner(Block block) {
 		return block.getType() == Material.WHITE_BANNER  && ((Banner) block.getState()).getPatterns().size() == 0;
 	}
 	
