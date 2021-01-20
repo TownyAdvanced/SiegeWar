@@ -115,27 +115,27 @@ public class SiegeWarSicknessUtil {
         if (!resident.hasTown())
             return false;
 
-        TownyUniverse universe = TownyUniverse.getInstance();
         Town defendingTown = siege.getDefendingTown();
         Town residentTown = resident.getTown();
         Nation attackingNation = siege.getAttackingNation();
 
-        if (residentTown == defendingTown && universe.getPermissionSource().testPermission(resident.getPlayer(),
-                SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_POINTS.getNode())) {
+        if (residentTown == defendingTown && resident.getPlayer()
+                .hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_POINTS.getNode())) {
             // Player is defending their own town
             return true;
         }
 
         if (residentTown.hasNation() &&
-                (attackingNation == residentTown.getNation() || attackingNation.hasMutualAlly(residentTown.getNation()))) {
+                (attackingNation == residentTown.getNation() || attackingNation.hasMutualAlly(residentTown.getNation()))
+                && resident.getPlayer().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_POINTS.getNode())) {
             // Player is attacking
             return true;
-
         }
 
         if (defendingTown.hasNation()
                 && (defendingTown.getNation() == residentTown.getNation()
-                || defendingTown.getNation().hasMutualAlly(residentTown.getNation()))) {
+                || defendingTown.getNation().hasMutualAlly(residentTown.getNation()))
+                && resident.getPlayer().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_POINTS.getNode())) {
             // Player is defending another town in the nation
             return true;
         }
