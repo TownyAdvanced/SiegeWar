@@ -132,6 +132,15 @@ public enum ConfigNodes {
 			"",
 			"# If this value is true, then a town under active siege cannot unclaim.",
 			"#  This setting is recommended if invasion/occupation is enabled, to avoid occupation escape exploits."),
+	WAR_SIEGE_COUNTERATTACK_BOOSTER_DISABLED(
+			"war.siege.switches.counterattack_booster_disabled",
+			"false",
+			"",
+			"# If this setting is false, and a player from the banner controlling side dies,",
+			"# then the death points are increased by a certain percentage. (see points section below)",
+			"# This setting is very important as it prevents large unskilled armies from dominating small pvp-skilled armies during sieges.",
+			"# However, this is not an instant-win for the pvp-skilled side",
+			"# To fully even the odds, they may have to employ military tactics such as map-sneaking/ambushes to close with the enemy army."),
 	WAR_SIEGE_POPULATION_BASED_POINT_BOOSTS_ENABLED(
 			"war.siege.switches.population_based_point_boosts_enabled",
 			"false",
@@ -140,13 +149,6 @@ public enum ConfigNodes {
 			"# The attacking side population consists of the residents of the attacking nation, and allies.",
 			"# The defending side population consists of the residents of the defending town, and nation + allies if applicable.",
 			"# The level of the boost is configured in separate configs. See the scoring section of this file."),
-	WAR_SIEGE_COUNTERATTACK_BOOSTER_ENABLED(
-			"war.siege.switches.counterattack_booster_enabled",
-			"false",
-			"",
-			"# If this setting is true, and a player from the banner controlling side dies,",
-			"# then the death points are increased by a certain percentage. (see points section below)",
-			"# This setting gives smaller and weaker towns/nations a better chance, as they will tend to be the counter-attackers."),
 
 	//Monetary Values
 	WAR_SIEGE_ATTACKER_COST_UPFRONT_PER_PLOT(
@@ -273,14 +275,6 @@ public enum ConfigNodes {
 			"16",
 			"",
 			"# This is the vertical distance a soldier must be from the banner to get banner control."),
-	WAR_SIEGE_LEADERSHIP_AURA_RADIUS_BLOCKS(
-		"war.siege.distances.leadership_aura_radius_blocks",
-			"50",
-			"",
-			"# This setting determines the size of the 'Military Leadership Aura'.",
-			"# The aura emanates from kings, generals, and captains.",
-			"# The aura decreases death point losses for nearby nation/allied soldiers in a siege.",
-			"# The aura increases death point gains for nearby enemy soldiers in a siege."),
 
 	//Siege points
 	WAR_SIEGE_POINTS_FOR_ATTACKER_OCCUPATION(
@@ -328,18 +322,14 @@ public enum ConfigNodes {
 			"# ",
 			"# Configuration Outcomes:",
 			"# Value HIGH --> If the value is high, then PVP will be DISCOURAGED",
-			"# Value LOW --> If the value is low, then PVP will be ENCOURAGED"),	
-	WAR_SIEGE_POINTS_PERCENTAGE_ADJUSTMENT_FOR_LEADER_PROXIMITY(
-			"war.siege.scoring.percentage_adjustment_for_leader_proximity",
-			"10",
+			"# Value LOW --> If the value is low, then PVP will be ENCOURAGED"),
+	WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENT(
+			"war.siege.scoring.counterattack_booster_extra_death_points_per_player_percent",
+			"10.0",
 			"",
-			"# If a friendly military leader is nearby when a soldier dies in a siege, then points loss is reduced by this percentage.",
-			"# If an enemy military leader is nearby when a soldier dies in a siege, then points loss is increased by this percentage."),
-	WAR_SIEGE_POINTS_PERCENTAGE_ADJUSTMENT_FOR_LEADER_DEATH(
-			"war.siege.scoring.percentage_adjustment_for_leader_death",
-			"50",
-			"",
-			"# If a military leader dies in a siege, then points loss in increased by this percentage."),
+			"# As long as the counterattack booster feature is not disabled, then this setting determines the strength of the boost.",
+			"# Example: If this setting is 10.0, and there are 3 players on the banner control list, and a player from the banner-controlling side dies,",
+			"# then the death points will be increased by 30%."),
 	WAR_SIEGE_POPULATION_QUOTIENT_FOR_MAX_POINTS_BOOST(
 			"war.siege.scoring.population_quotient_for_max_points_boost",
 			"3.0",
@@ -360,13 +350,6 @@ public enum ConfigNodes {
 			"# 2. Assume that a siege attacker greatly outnumbers a siege defender in population. (also counting allies)",
 			"# 3. In this example, if the siege defender scores any siege points, the points will be multiplied by 2.",
 			"# 4. In this example, the siege attacker will not get any points boosts."),
-	WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENT(
-			"war.siege.scoring.counterattack_booster_extra_death_points_per_player_percent",
-			"5.0",
-			"",
-			"# If the counterattack booster feature is enabled, then this setting determines the strength of the boost.",
-			"# Example: If this setting is 5.0, and there are 3 players on the banner control list, and a player from the controlling side dies,",
-			"# then the death points will be increased by 15%."),
 
 	//Siege-war specific peaceful towns
 	WAR_SIEGE_PEACEFUL_TOWNS_GUARDIAN_TOWN_PLOTS_REQUIREMENT(
@@ -445,30 +428,28 @@ public enum ConfigNodes {
 			"",
 			"# This setting is used to indicate the list of forbidden buckets"),
 
-	//Tactical Visibility
+	//Map Sneaking
 	//Todo - Eventually move this to another location as it works regardless of war system, or without.
-	WAR_SIEGE_TACTICAL_VISIBILITY_ENABLED(
-			"war.siege.switches.tactical_visibility_enabled",
+	WAR_SIEGE_MAP_SNEAKING_ENABLED(
+			"war.siege.switches.map_sneaking_enabled",
 			"true",
 			"",
-			"# If this setting is true, then the tactical invisibility feature is enabled",
+			"# If this setting is true, then the map sneaking feature is enabled",
 			"# PREREQUISITES: ",
-			"# * You must have deployed a dynmap jar containing support for tactical invisibility.",
-			"# * In your dynmap config, tactical-invisibility must be enabled.",
+			"# * You must have deployed a standard dynmap jar.",
 			"# ",
 			"# DESCRIPTION",
 			"# * This feature is critical to enable normal military tactics such as ambushing.",
 			"# * The feature works as follows:",	
-			"# * Player in a banner control session - Always visible on map.",
-			"# * Player with certain items in their hands (configured below) - Invisible on map.",
-			"# * ",
-			"# * NOTE: Any additional dynmap config settings for map invisibility will override the 'always visible' scenarios above."),
-	WAR_SIEGE_TACTICAL_VISIBILITY_ITEMS(
-			"war.siege.items.tactical_visibility_items",
+			"# * if a player wishes to 'map sneak', they equip a specific combination of items in their hands (configured below).",
+			"# * Then in a few seconds they will disappear from the dynmap, and are then considered to be 'map sneaking'.",
+			"# * Player's in banner control sessions cannot map-sneak"),
+	WAR_SIEGE_MAP_SNEAKING_ITEMS(
+			"war.siege.items.map_sneaking_items",
 			"compass|diamond_sword, compass|bow",
 			"",
-			"# This list specifies the items which make players tactically invisible. ",
-			"# Each list entry is in the format of <off-hand>|<main-hand>.",
+			"# This list specifies the item combinations which allow players to map-sneak.",
+			"# Each list entry is in the form of <off-hand>|<main-hand>.",
 			"# ",
 			"# To specify that both items are required - e.g. 'compass|painting'" + 
 			"# To specify that only one item is required - e.g. 'compass|any'",

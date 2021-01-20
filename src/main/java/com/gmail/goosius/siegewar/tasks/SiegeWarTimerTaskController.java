@@ -80,11 +80,11 @@ public class SiegeWarTimerTaskController {
 
 	/**
 	 * Evaluate the visibility of players on the dynmap
-	 * when using the 'tactical visibility' feature
+	 * when using the 'map sneaking' feature
 	 */
-	public static void evaluateTacticalVisibility() {
-		if (SiegeWarSettings.getWarSiegeTacticalVisibilityEnabled()) {
-			SiegeWarDynmapUtil.evaluatePlayerTacticalInvisibility();
+	public static void evaluateMapSneaking() {
+		if (SiegeWarSettings.getWarSiegeMapSneakingEnabled()) {
+			SiegeWarDynmapUtil.evaluatePlayerMapSneaking();
 		}
 	}
 

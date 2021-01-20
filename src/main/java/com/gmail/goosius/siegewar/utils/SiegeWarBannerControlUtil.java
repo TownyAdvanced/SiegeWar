@@ -180,7 +180,7 @@ public class SiegeWarBannerControlUtil {
 		if(!player.isOnline())
 			return false; // Player offline
 
-		if(player.isFlying())
+		if(player.isFlying() || player.isGliding())
 			return false;   // Player is flying
 
 		if(!SiegeWarPointsUtil.isPlayerInTimedPointZone(player, siege))

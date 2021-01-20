@@ -1,18 +1,14 @@
 package com.gmail.goosius.siegewar.utils;
 
-import com.palmergames.bukkit.towny.TownyUniverse;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
-import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownyObject;
-import com.palmergames.bukkit.util.BukkitTools;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -80,13 +76,11 @@ public class SiegeWarPointsUtil {
 		if (residentIsAttacker) {
 			siegePoints = -SiegeWarSettings.getWarSiegePointsForAttackerDeath();
 			siegePoints = adjustSiegePointPenaltyForBannerControl(true, siegePoints, siege);
-			siegePoints = adjustSiegePenaltyPointsForMilitaryLeadership(true, siegePoints, player, resident, siege);
 			siegePoints = adjustSiegePointsForPopulationQuotient(false, siegePoints, siege);
 			siege.adjustSiegePoints(siegePoints);
 		} else {
 			siegePoints = SiegeWarSettings.getWarSiegePointsForDefenderDeath();
 			siegePoints = adjustSiegePointPenaltyForBannerControl(false, siegePoints, siege);
-			siegePoints = adjustSiegePenaltyPointsForMilitaryLeadership(false, siegePoints, player, resident, siege);
 			siegePoints = adjustSiegePointsForPopulationQuotient(true, siegePoints, siege);
 			siege.adjustSiegePoints(siegePoints);
 		}
@@ -94,120 +88,13 @@ public class SiegeWarPointsUtil {
 		SiegeController.saveSiege(siege);
 
 		//Send messages to siege participants
-		String residentInformationString;
-		try {
-			if(resident.hasTown()) {
-				Town residentTown = resident.getTown();
-				if(residentTown.hasNation())
-					residentInformationString = resident.getName() + " (" + residentTown.getName() + " | " + residentTown.getNation().getName() + ")";
-				else
-					residentInformationString = resident.getName() + " (" + residentTown.getName() + ")";
-			} else {
-				residentInformationString = resident.getName();
-			}
-		} catch (NotRegisteredException e) { residentInformationString = ""; }
-
 		String message = String.format(
 			unformattedErrorMessage,
 			siege.getDefendingTown().getName(),
-			residentInformationString,
+			resident.getName(),
 			Math.abs(siegePoints));
 
 		SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
-	}
-
-	private static int adjustSiegePenaltyPointsForMilitaryLeadership(boolean residentIsAttacker,
-																	 double siegePoints,
-																	 Player player,
-																	 Resident resident,
-																	 Siege siege) {
-		try {
-			TownyUniverse universe = TownyUniverse.getInstance();
-
-			//Resident town has nation
-			if(resident.getTown().hasNation()) {
-
-				if(universe.getPermissionSource().testPermission(resident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_LEADERSHIP.getNode())) {
-					//Player is Leader. Apply points increase
-					double modifier = 1 + (SiegeWarSettings.getWarSiegePointsPercentageAdjustmentForLeaderDeath() / 100);
-					return (int)(siegePoints * modifier);
-
-				} else {
-					//Player is not leader
-					if(player == null) {
-						//Player is null. Apply points increase regardless of player location/online/offline, to avoid exploits
-						double modifier = 1 + (SiegeWarSettings.getWarSiegePointsPercentageAdjustmentForLeaderProximity() / 100);
-						return (int)(siegePoints * modifier);
-					} else {
-						//Player is online. Look for nearby friendly/hostile leaders
-						Resident otherResident;
-						boolean friendlyLeaderNearby = false;
-						boolean hostileLeaderNearby = false;
-
-						for (Player otherPlayer : BukkitTools.getOnlinePlayers()) {
-							if (friendlyLeaderNearby && hostileLeaderNearby)
-								break;
-
-							otherResident = universe.getResident(otherPlayer.getUniqueId());
-							if (otherResident == null)
-								continue;
-							
-							//Look for friendly military leader 
-							if (!friendlyLeaderNearby) {
-								if (otherResident.hasTown()
-									&& otherResident.hasNation()
-									&& universe.getPermissionSource().testPermission(otherResident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_LEADERSHIP.getNode())
-									&& (otherResident.getTown().getNation() == resident.getTown().getNation() || otherResident.getTown().getNation().hasMutualAlly(resident.getTown().getNation()))
-									&& SiegeWarDistanceUtil.isCloseToLeader(player, otherPlayer)) {
-									friendlyLeaderNearby = true;
-									continue;
-								}
-							}
-
-							//As attacker, look for hostile military leader
-							if (!hostileLeaderNearby && residentIsAttacker) {
-								if (otherResident.hasTown()
-									&& otherResident.getTown().hasNation()
-									&& siege.getDefendingTown().hasNation()
-									&& universe.getPermissionSource().testPermission(otherResident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_LEADERSHIP.getNode())
-									&& (otherResident.getTown().getNation() == siege.getDefendingTown().getNation() || otherResident.getTown().getNation().hasMutualAlly(siege.getDefendingTown().getNation()))
-									&& SiegeWarDistanceUtil.isCloseToLeader(player, otherPlayer)) {
-									hostileLeaderNearby = true;
-									continue;
-								}
-							}
-
-							//As defender, look for hostile military leader
-							if (!hostileLeaderNearby && !residentIsAttacker) {
-								if (otherResident.hasTown()
-									&& otherResident.getTown().hasNation()
-									&& universe.getPermissionSource().testPermission(otherResident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_LEADERSHIP.getNode())
-									&& (otherResident.getTown().getNation() == siege.getAttackingNation() || otherResident.getTown().getNation().hasMutualAlly(siege.getAttackingNation()))
-									&& SiegeWarDistanceUtil.isCloseToLeader(player, otherPlayer)) {
-									hostileLeaderNearby = true;
-									continue;
-								}
-							}
-						}
-
-						if (friendlyLeaderNearby && !hostileLeaderNearby) {
-							//Friendly leader nearby. Apply points decrease
-							double modifier = 1 - (SiegeWarSettings.getWarSiegePointsPercentageAdjustmentForLeaderProximity() / 100);
-							return (int) (siegePoints * modifier);
-						} else if (hostileLeaderNearby && !friendlyLeaderNearby) {
-							//Enemy leader nearby. Apply points increase
-							double modifier = 1 + (SiegeWarSettings.getWarSiegePointsPercentageAdjustmentForLeaderProximity() / 100);
-							return (int) (siegePoints * modifier);
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-			System.out.println("Problem adjusting siege point penalty for military leadership");
-			e.printStackTrace();
-		}
-
-		return (int)siegePoints;
 	}
 
 	public static void updatePopulationBasedSiegePointModifiers() {
@@ -310,7 +197,7 @@ public class SiegeWarPointsUtil {
 	}
 
 	public static int adjustSiegePointPenaltyForBannerControl(boolean residentIsAttacker, int siegePoints, Siege siege) {
-		if(!SiegeWarSettings.isWarSiegeCounterattackBoosterEnabled())
+		if(SiegeWarSettings.isWarSiegeCounterattackBoosterDisabled())
 			return siegePoints;
 
 		if(

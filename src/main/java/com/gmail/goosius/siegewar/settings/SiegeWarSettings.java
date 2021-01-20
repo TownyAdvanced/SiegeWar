@@ -9,7 +9,7 @@ import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
 
 public class SiegeWarSettings {
 	
-	private static final List<HeldItemsCombination> tacticalVisibilityItems = new ArrayList<>();
+	private static final List<HeldItemsCombination> mapSneakingItems = new ArrayList<>();
 	private static List<Material> battleSessionsForbiddenBlockMaterials = null;
 	private static List<Material> battleSessionsForbiddenBucketMaterials = null;
 	
@@ -169,26 +169,14 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_EXTRA_MONEY_PERCENTAGE_PER_TOWN_LEVEL);
 	}
 
-	public static double getWarSiegePointsPercentageAdjustmentForLeaderProximity() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_PERCENTAGE_ADJUSTMENT_FOR_LEADER_PROXIMITY);
+	public static boolean getWarSiegeMapSneakingEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MAP_SNEAKING_ENABLED);
 	}
 
-	public static double getWarSiegePointsPercentageAdjustmentForLeaderDeath() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_PERCENTAGE_ADJUSTMENT_FOR_LEADER_DEATH);
-	}
-
-	public static int getWarSiegeLeadershipAuraRadiusBlocks() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_LEADERSHIP_AURA_RADIUS_BLOCKS);
-	}
-
-	public static boolean getWarSiegeTacticalVisibilityEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_TACTICAL_VISIBILITY_ENABLED);
-	}
-
-	public static List<HeldItemsCombination> getWarSiegeTacticalVisibilityItems() {
+	public static List<HeldItemsCombination> getWarSiegeMapSneakingItems() {
 		try {
-			if (tacticalVisibilityItems.isEmpty()) {
-				String itemsListAsString = Settings.getString(ConfigNodes.WAR_SIEGE_TACTICAL_VISIBILITY_ITEMS);
+			if (mapSneakingItems.isEmpty()) {
+				String itemsListAsString = Settings.getString(ConfigNodes.WAR_SIEGE_MAP_SNEAKING_ITEMS);
 				String[] itemsListAsArray = itemsListAsString.split(",");
 				String[] itemPair;
 				boolean ignoreOffHand;
@@ -221,15 +209,15 @@ public class SiegeWarSettings {
 						mainHandItem = Material.matchMaterial(itemPair[1]);
 					}
 
-					tacticalVisibilityItems.add(
+					mapSneakingItems.add(
 						new HeldItemsCombination(offHandItem,mainHandItem,ignoreOffHand,ignoreMainHand));
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Problem reading tactical visibility items list. The list is config.yml may be misconfigured.");
+			System.out.println("Problem reading map sneaking items list. The list is config.yml may be misconfigured.");
 			e.printStackTrace();
 		}
-		return tacticalVisibilityItems;
+		return mapSneakingItems;
 	}
 
 	public static int getWarSiegeBannerControlSessionDurationMinutes() {
@@ -252,8 +240,8 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.OCCUPIED_TOWN_UNCLAIMING_DISABLED);
 	}
 
-	public static boolean isWarSiegeCounterattackBoosterEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_ENABLED);
+	public static boolean isWarSiegeCounterattackBoosterDisabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_DISABLED);
 	}
 
 	public static double getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercent() {

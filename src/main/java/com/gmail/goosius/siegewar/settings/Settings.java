@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.IOException;
 
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.settings.CommentedConfiguration;
-import com.gmail.goosius.siegewar.settings.ConfigNodes;
 
-import io.github.townyadvanced.util.FileMgmt;
+import com.gmail.goosius.siegewar.utils.FileMgmt;
 
 public class Settings {
 	private static CommentedConfiguration config, newConfig;

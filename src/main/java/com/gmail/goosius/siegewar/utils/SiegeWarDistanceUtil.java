@@ -17,7 +17,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -148,10 +147,6 @@ public class SiegeWarDistanceUtil {
 		return areLocationsCloseHorizontally(entity.getLocation(), siege.getFlagLocation(), SiegeWarSettings.getWarSiegeZoneRadiusBlocks());
 	}
 
-	public static boolean isCloseToLeader(Player player1, Player player2) {
-		return areLocationsClose(player1.getLocation(), player2.getLocation(), SiegeWarSettings.getWarSiegeLeadershipAuraRadiusBlocks());
-	}
-
 	public static boolean isInTimedPointZone(Entity entity, Siege siege) {
 		return areLocationsClose(entity.getLocation(), siege.getFlagLocation(), SiegeWarSettings.getBannerControlHorizontalDistanceBlocks(), SiegeWarSettings.getBannerControlVerticalDistanceBlocks());
 	}
@@ -181,13 +176,6 @@ public class SiegeWarDistanceUtil {
 		double distanceTownblocks = Math.sqrt(Math.pow(coord1.getX() - coord2.getX(), 2) + Math.pow(coord1.getZ() - coord2.getZ(), 2));
 
 		return distanceTownblocks < radiusTownblocks;
-	}
-
-	private static boolean areLocationsClose(Location location1, Location location2, int radius) {
-		if(!location1.getWorld().getName().equalsIgnoreCase(location2.getWorld().getName()))
-			return false;
-
-		return location1.distance(location2) < radius;
 	}
 
 	private static boolean areLocationsClose(Location location1, Location location2, int maxHorizontalDistance, int maxVerticalDistance) {
