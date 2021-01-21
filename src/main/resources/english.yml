@@ -256,3 +256,4 @@ msg_war_siege_occupied_towns_cannot_surrender: '&cOccupied towns cannot surrende
 #War sickness
 msg_you_received_war_sickness: '&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave to remove the war sickness. Common causes of war sickness: being in a peaceful town, not having a military rank or not being allied to either side.'
 msg_you_will_get_sickness: '&c&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave or you will receive war sickness in %s seconds.'
+
