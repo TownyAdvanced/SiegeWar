@@ -65,7 +65,7 @@ public class PlaceBlock {
 			//Standing Banner placement
 			if (Tag.BANNERS.isTagged(mat) && !mat.toString().contains("_W"))
                 try {
-					if (isValidPlacement(block, player))
+					if (isValidPlacement(block))
                     	evaluatePlaceStandingBanner(player, block);
                 } catch (TownyException e1) {
                     Messaging.sendErrorMsg(player, e1.getMessage());
@@ -75,7 +75,7 @@ public class PlaceBlock {
 			//Chest placement
 			if (mat == Material.CHEST || mat == Material.TRAPPED_CHEST)
 				try {
-					if (isValidPlacement(block, player))
+					if (isValidPlacement(block))
 						evaluatePlaceChest(player, block);
 				} catch (TownyException e) {
 					Messaging.sendErrorMsg(player, e.getMessage());
@@ -191,7 +191,7 @@ public class PlaceBlock {
 		if(!SiegeWarDistanceUtil.isSiegeWarEnabledInWorld(block.getWorld()))
 			throw new TownyException(Translation.of("msg_err_siege_war_not_enabled_in_world"));
 		
-		List<TownBlock> nearbyCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(player, block);
+		List<TownBlock> nearbyCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
 
 		//Ensure that only one of the cardinal points has a townblock
 		if(nearbyCardinalTownBlocks.size() > 1)
@@ -208,7 +208,7 @@ public class PlaceBlock {
 		//Ensure that there is only one town adjacent
 		List<TownBlock> adjacentTownBlocks = new ArrayList<>();
 		adjacentTownBlocks.addAll(nearbyCardinalTownBlocks);
-		adjacentTownBlocks.addAll(SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(player, block));
+		adjacentTownBlocks.addAll(SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block));
 		for(TownBlock adjacentTownBlock: adjacentTownBlocks) {
 			try {
 				if (adjacentTownBlock.getTown() != town)
@@ -279,7 +279,7 @@ public class PlaceBlock {
 		if(!TownySettings.isUsingEconomy())
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_economy"));
 		
-		List<TownBlock> nearbyTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(player, block);
+		List<TownBlock> nearbyTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
 
 		if (nearbyTownBlocks.size() > 1) //More than one town block nearby. Error
 			throw new TownyException(Translation.of("msg_err_siege_war_too_many_town_blocks_nearby"));
@@ -311,10 +311,10 @@ public class PlaceBlock {
 		return result;
 	}
 
-	private static boolean isValidPlacement(Block block, Player player) {
+	private static boolean isValidPlacement(Block block) {
 		if (!TownyAPI.getInstance().isWilderness(block) && isWhiteBanner(block))
 			return true;
-		if (SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(player, block).size() > 0)
+		if (SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block).size() > 0)
 			return true;
 		return false;
 	}

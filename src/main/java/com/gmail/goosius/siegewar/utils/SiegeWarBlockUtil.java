@@ -27,38 +27,36 @@ public class SiegeWarBlockUtil {
 	/**
 	 * This method gets a list of adjacent cardinal townblocks, either N, S, E or W.
 	 * 
-	 * @param player the player
 	 * @param block the block to start from
 	 * @return list of adjacent cardinal townblocks
 	 */
-	public static List<TownBlock> getCardinalAdjacentTownBlocks(Player player, Block block) {
+	public static List<TownBlock> getCardinalAdjacentTownBlocks(Block block) {
 		List<WorldCoord> coOrdinates = new ArrayList<>();
 		WorldCoord startingCoOrdinate = WorldCoord.parseWorldCoord(block);
 		coOrdinates.add(startingCoOrdinate.add(0,-1));
 		coOrdinates.add(startingCoOrdinate.add(0,1));
 		coOrdinates.add(startingCoOrdinate.add(1,0));
 		coOrdinates.add(startingCoOrdinate.add(-1,0));
-		return getTownBlocks(player, coOrdinates);
+		return getTownBlocks(coOrdinates);
 	}
 
 	/**
 	 * This method gets a list of adjacent non-cardinal townblocks, either NE, SE, SW or NW.
 	 *
-	 * @param player the player
 	 * @param block the block to start from
 	 * @return list of adjacent noncardinal townblocks
 	 */
-	public static List<TownBlock> getNonCardinalAdjacentTownBlocks(Player player, Block block) {
+	public static List<TownBlock> getNonCardinalAdjacentTownBlocks(Block block) {
 		List<WorldCoord> coOrdinates = new ArrayList<>();
 		WorldCoord startingCoOrdinate = WorldCoord.parseWorldCoord(block);
 		coOrdinates.add(startingCoOrdinate.add(-1,1));
 		coOrdinates.add(startingCoOrdinate.add(1,1));
 		coOrdinates.add(startingCoOrdinate.add(1,-1));
 		coOrdinates.add(startingCoOrdinate.add(-1,-1));
-		return getTownBlocks(player, coOrdinates);
+		return getTownBlocks(coOrdinates);
 	}
 
-	private static List<TownBlock> getTownBlocks(Player player, List<WorldCoord> coOrdinatesToSearch) {
+	private static List<TownBlock> getTownBlocks(List<WorldCoord> coOrdinatesToSearch) {
 		List<TownBlock> townBlocks = new ArrayList<>();
 
 		for(WorldCoord nearbyCoord: coOrdinatesToSearch){
