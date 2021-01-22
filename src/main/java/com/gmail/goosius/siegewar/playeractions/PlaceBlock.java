@@ -65,7 +65,8 @@ public class PlaceBlock {
 			//Standing Banner placement
 			if (Tag.BANNERS.isTagged(mat) && !mat.toString().contains("_W"))
                 try {
-                    evaluatePlaceStandingBanner(player, block);
+					if (isValidPlacement(block, player))
+                    	evaluatePlaceStandingBanner(player, block);
                 } catch (TownyException e1) {
                     Messaging.sendErrorMsg(player, e1.getMessage());
                     return;
@@ -74,7 +75,8 @@ public class PlaceBlock {
 			//Chest placement
 			if (mat == Material.CHEST || mat == Material.TRAPPED_CHEST)
 				try {
-					evaluatePlaceChest(player, block);
+					if (isValidPlacement(block, player))
+						evaluatePlaceChest(player, block);
 				} catch (TownyException e) {
 					Messaging.sendErrorMsg(player, e.getMessage());
 					return;
@@ -188,13 +190,8 @@ public class PlaceBlock {
 		// Fail early if this is not a siege-enabled world.
 		if(!SiegeWarDistanceUtil.isSiegeWarEnabledInWorld(block.getWorld()))
 			throw new TownyException(Translation.of("msg_err_siege_war_not_enabled_in_world"));
-
 		
 		List<TownBlock> nearbyCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(player, block);
-
-		//If no townblocks are nearby, do normal block placement
-		if (nearbyCardinalTownBlocks.size() == 0)
-			return;
 
 		//Ensure that only one of the cardinal points has a townblock
 		if(nearbyCardinalTownBlocks.size() > 1)
@@ -283,8 +280,6 @@ public class PlaceBlock {
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_economy"));
 		
 		List<TownBlock> nearbyTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(player, block);
-		if (nearbyTownBlocks.size() == 0)
-			return;   //No town blocks are nearby. Normal block placement
 
 		if (nearbyTownBlocks.size() > 1) //More than one town block nearby. Error
 			throw new TownyException(Translation.of("msg_err_siege_war_too_many_town_blocks_nearby"));
@@ -314,6 +309,14 @@ public class PlaceBlock {
 				result++;
 		}
 		return result;
+	}
+
+	private static boolean isValidPlacement(Block block, Player player) {
+		if (!TownyAPI.getInstance().isWilderness(block) && isWhiteBanner(block))
+			return true;
+		if (SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(player, block).size() > 0)
+			return true;
+		return false;
 	}
 }
 
