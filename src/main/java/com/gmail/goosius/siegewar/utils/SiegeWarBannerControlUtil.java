@@ -196,6 +196,14 @@ public class SiegeWarBannerControlUtil {
 				if (!doesPlayerMeetBasicSessionRequirements(siege, bannerControlSession.getPlayer(), bannerControlSession.getResident())) {
 					siege.removeBannerControlSession(bannerControlSession);
 					Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_failure"));
+
+					if (bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
+						Towny.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(Towny.getPlugin(), new Runnable() {
+							public void run() {
+								bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
+							}
+						});
+					}
 					continue;
 				}
 
