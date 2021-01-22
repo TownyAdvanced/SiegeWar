@@ -205,7 +205,7 @@ public class SiegeWarPointsUtil {
 			||
 			(!residentIsAttacker && siege.getBannerControllingSide() == SiegeSide.DEFENDERS)
 		) {
-			return siegePoints + (int)(siegePoints * siege.getBannerControllingResidents().size() /100 * SiegeWarSettings.getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercent());
+			return siegePoints + (int)(siegePoints * siege.getBannerControllingResidents().size() /100 * SiegeWarSettings.getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercentage());
 		} else {
 			return siegePoints;
 		}
