@@ -244,8 +244,8 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_DISABLED);
 	}
 
-	public static double getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercent() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENT);
+	public static double getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercentage() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE);
 	}
 
 	public static boolean isWarSiegeBattleSessionsEnabled() {
