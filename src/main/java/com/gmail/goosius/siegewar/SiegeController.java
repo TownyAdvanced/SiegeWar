@@ -21,6 +21,7 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -193,6 +194,7 @@ public class SiegeController {
 		townSiegeMap.remove(town.getUUID());
 		removeSiegedTown(siege);
 
+		setTownFlags(town, false);
 		//Save town
 		town.save();
 		//Save attacking nation
@@ -304,5 +306,17 @@ public class SiegeController {
 		}
 		return siegesAtLocation;
 	}
-    
+	
+	/**
+	 * Sets pvp and explosions in a town to the desired setting, if enabled in the config.
+	 * 
+	 * @param town The town to set the flags for.
+	 * @param desiredSetting The value to set pvp and explosions to.
+	 */
+	public static void setTownFlags(Town town, boolean desiredSetting) {
+		if (town.getPermissions().pvp != desiredSetting && SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns())
+			town.getPermissions().pvp = desiredSetting;
+		if (town.getPermissions().explosion != desiredSetting && SiegeWarSettings.getWarSiegeExplosionsAlwaysOnInBesiegedTowns())
+			town.getPermissions().explosion = desiredSetting;
+	}
 }
