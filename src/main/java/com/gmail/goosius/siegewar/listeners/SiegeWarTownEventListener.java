@@ -91,13 +91,14 @@ public class SiegeWarTownEventListener implements Listener {
 	}
 	
 	/*
-	 * On toggle explosions, SW will stop a town toggling explosions.
+	 * On toggle explosions, SW will stop a town toggling explosions off.
 	 */
 	@EventHandler
 	public void onTownToggleExplosion(TownToggleExplosionEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled()
+		if (SiegeWarSettings.getWarSiegeEnabled()
 				&& SiegeWarSettings.getWarSiegeExplosionsAlwaysOnInBesiegedTowns()
-				&& SiegeController.hasActiveSiege(event.getTown()))  {
+				&& SiegeController.hasActiveSiege(event.getTown())
+				&& event.getFutureState() == false)  {
 			event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_explosions"));
 			event.setCancelled(true);
 		}
