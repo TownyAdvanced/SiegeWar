@@ -152,7 +152,7 @@ public class SiegeWarNationEventListener implements Listener {
 			SiegeWarTimeUtil.activateRevoltImmunityTimer(event.getTown());
 			event.getTown().setConquered(false);
 			event.getTown().setConqueredDays(0);
-			TownyUniverse.getInstance().getDataSource().saveTown(event.getTown());
+			event.getTown().save();
 
 			Messaging.sendGlobalMessage(
 				Translation.of("msg_siege_war_revolt",

@@ -194,7 +194,7 @@ public class SiegeController {
 		removeSiegedTown(siege);
 
 		//Save town
-		TownyUniverse.getInstance().getDataSource().saveTown(town);
+		town.save();
 		//Save attacking nation
 		TownyUniverse.getInstance().getDataSource().saveNation(siege.getAttackingNation());
 		siege = null;

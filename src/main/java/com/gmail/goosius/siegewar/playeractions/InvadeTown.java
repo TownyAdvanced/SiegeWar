@@ -100,7 +100,7 @@ public class InvadeTown {
 
 		//Save to db
         SiegeController.saveSiege(siege);
-		TownyUniverse.getInstance().getDataSource().saveTown(defendingTown);
+		defendingTown.save();
 		TownyUniverse.getInstance().getDataSource().saveNation(attackingNation);
 		if(nationTown && !nationDefeated) {
 			TownyUniverse.getInstance().getDataSource().saveNation(nationOfDefendingTown);

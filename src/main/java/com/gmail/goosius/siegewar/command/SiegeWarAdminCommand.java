@@ -308,7 +308,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 						siege.setTownInvaded(captured);
 						SiegeController.saveSiege(siege);
 					}
-					TownyUniverse.getInstance().getDataSource().saveTown(town);
+					town.save();
 					Messaging.sendMsg(sender, Translation.of("msg_swa_set_captured_success", captured.toString().toUpperCase(), town.getName()));
 					return;
 				}
