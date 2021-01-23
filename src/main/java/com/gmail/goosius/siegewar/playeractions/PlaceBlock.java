@@ -312,10 +312,13 @@ public class PlaceBlock {
 	}
 
 	private static boolean isValidPlacement(Block block) {
-		if (!TownyAPI.getInstance().isWilderness(block) && isWhiteBanner(block))
-			return true;
-		if (SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block).size() > 0)
-			return true;
+		if (!TownyAPI.getInstance().isWilderness(block)) {
+			if (isWhiteBanner(block))
+				return true;
+		} else {
+			if (SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block).size() > 0)
+				return true;
+		}
 		return false;
 	}
 }
