@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.metadata;
 
-import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
@@ -15,10 +14,6 @@ import com.palmergames.bukkit.towny.object.metadata.StringDataField;
  *
  */
 class MetaDataUtil {
-
-	private static void saveTown(Town town) {
-		TownyUniverse.getInstance().getDataSource().saveTown(town);
-	}
 
 	static String getString(Town town, StringDataField sdf) {
 		CustomDataField<?> cdf = town.getMetadata(sdf.getKey());
@@ -61,7 +56,7 @@ class MetaDataUtil {
 		if (cdf instanceof StringDataField) {
 			StringDataField value = (StringDataField) cdf;
 			value.setValue(string);
-			saveTown(town);
+			town.save();
 		}
 	}
 
@@ -70,7 +65,7 @@ class MetaDataUtil {
 		if (cdf instanceof BooleanDataField) {
 			BooleanDataField value = (BooleanDataField) cdf;
 			value.setValue(bool);
-			saveTown(town);
+			town.save();
 		}
 	}
 
@@ -79,7 +74,7 @@ class MetaDataUtil {
 		if (cdf instanceof LongDataField) {
 			LongDataField value = (LongDataField) cdf;
 			value.setValue(num);
-			saveTown(town);
+			town.save();
 		}
 	}
 	
@@ -88,7 +83,7 @@ class MetaDataUtil {
 		if (cdf instanceof IntegerDataField) {
 			IntegerDataField value = (IntegerDataField) cdf;
 			value.setValue(num);
-			saveTown(town);
+			town.save();
 		}
 	}
 	
@@ -97,7 +92,7 @@ class MetaDataUtil {
 		if (cdf instanceof DecimalDataField) {
 			DecimalDataField value = (DecimalDataField) cdf;
 			value.setValue(num);
-			saveTown(town);
+			town.save();
 		}
 	}
 }

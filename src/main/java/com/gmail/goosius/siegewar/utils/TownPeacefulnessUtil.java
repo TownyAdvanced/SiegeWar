@@ -83,7 +83,7 @@ public class TownPeacefulnessUtil {
 			}
 		}
 		TownyMessaging.sendPrefixedTownMessage(town, message);
-		TownyUniverse.getInstance().getDataSource().saveTown(town);
+		town.save();
 	}
 
 	/**
@@ -226,7 +226,7 @@ public class TownPeacefulnessUtil {
 						TownyMessaging.sendPrefixedNationMessage(guardianNation, Translation.of("msg_war_siege_peaceful_town_joined_nation", peacefulTown.getFormattedName(), guardianNation.getFormattedName()));
 					}
 					// .setNation() does not save the Town internally.
-					TownyUniverse.getInstance().getDataSource().saveTown(peacefulTown);
+					peacefulTown.save();
 				}
 			} catch (Exception e) {
 				try {
@@ -308,6 +308,6 @@ public class TownPeacefulnessUtil {
 				plot.setChanged(true);
 			}
 		}
-		TownyUniverse.getInstance().getDataSource().saveTown(town);
+		town.save();
 	}
 }

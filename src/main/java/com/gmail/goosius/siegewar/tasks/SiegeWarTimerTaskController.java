@@ -9,7 +9,6 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.timeractions.AttackerWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderWin;
 import com.gmail.goosius.siegewar.utils.*;
-import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownyObject;
@@ -51,7 +50,7 @@ public class SiegeWarTimerTaskController {
 					}
 
 					//Save changes to db
-					TownyUniverse.getInstance().getDataSource().saveTown(siege.getDefendingTown());
+					siege.getDefendingTown().save();
 				}
 				break;
 
