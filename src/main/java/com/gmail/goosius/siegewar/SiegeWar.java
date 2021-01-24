@@ -50,7 +50,7 @@ public class SiegeWar extends JavaPlugin {
             System.out.println(prefix + "Towny version " + getTownyVersion() + " found.");
         }
         
-        if (!Settings.loadSettingsAndLang()) {
+        if (!Settings.loadSettingsAndLang() && townyVersionCheck(getTownyVersion())) {
         	System.err.println(SiegeWar.prefix + "Shutting down....");
         	onDisable();
         }
