@@ -132,10 +132,14 @@ public class SiegeWarMoneyUtil {
 	}
 	
 	public static double getSiegeCost(Town town) {
-		double cost = 
-				SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot() 
+		if (town.isCapital())
+			return SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
+				* (1 + SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage()/100)
 				* town.getTownBlocks().size()
 				* getMoneyMultiplier(town);
-		return cost;
+		else
+			return SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
+			* town.getTownBlocks().size()
+			* getMoneyMultiplier(town);
 	} 
 }
