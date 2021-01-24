@@ -47,6 +47,11 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 	}
 	
+	private void showNationHelp(CommandSender sender) {
+		sender.sendMessage(ChatTools.formatTitle("/siegewar nation"));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "refund", Translation.of("nation_help_11")));			
+	}
+	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if (sender instanceof Player && args.length > 0)
 			parseSiegeWarCommand((Player) sender, args);
@@ -82,6 +87,9 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			return;
 		}
 		
+		if (args.length == 0)
+			showNationHelp(player);
+		
 		switch (args[0]) {
 		case "refund":
 			try {
@@ -91,8 +99,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			}
 			break;
 		default:
-			player.sendMessage(ChatTools.formatTitle("/siegewar nation"));
-			player.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "refund", Translation.of("nation_help_11")));			
+			showNationHelp(player);
 		}
 	}
 

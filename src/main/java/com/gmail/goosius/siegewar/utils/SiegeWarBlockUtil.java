@@ -12,7 +12,6 @@ import org.bukkit.Location;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
