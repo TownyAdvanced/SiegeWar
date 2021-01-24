@@ -43,17 +43,15 @@ public class SiegeWar extends JavaPlugin {
     	
         if (!townyVersionCheck(getTownyVersion())) {
             System.err.println(prefix + "Towny version does not meet required minimum version: " + requiredTownyVersion.toString());
-            System.err.println(prefix + "Shutting down....");
             onDisable();
             return;
         } else {
             System.out.println(prefix + "Towny version " + getTownyVersion() + " found.");
         }
         
-        if (!Settings.loadSettingsAndLang()) {
-        	System.err.println(SiegeWar.prefix + "Shutting down....");
+        if (!Settings.loadSettingsAndLang())
         	onDisable();
-        }
+
         
         registerListeners();
         
