@@ -163,6 +163,12 @@ public enum ConfigNodes {
 			"",
 			"# This is the amount plundered by the attacker is a siege is successful.",
 			"# It is recommended that the 'attack-cost:plunder-reward' ratio be about 1:2 ."),
+	WAR_SIEGE_CAPITAL_SIEGE_COST_INCREASE_PERCENTAGE(
+			"war.siege.money.capital_siege_cost_increase_percentage",
+			"0",
+			"",
+			"# The percentage to increase the cost of sieging capitals by.",
+			"# Example: If set to 50, with an attack cost of 20/plot, each plot would be 30."),
 	WAR_SIEGE_NATION_COST_REFUND_PERCENTAGE_ON_DELETE(
 			"war.siege.money.nation_cost_refund_percentage_on_delete",
 			"80.0",

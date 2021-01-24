@@ -338,4 +338,8 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.SECONDS_BEFORE_SICKNESS) * 20;
 	}
 
+	public static double getWarSiegeCapitalCostIncreasePercentage() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_CAPITAL_SIEGE_COST_INCREASE_PERCENTAGE);
+	}
+
 }
