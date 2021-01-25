@@ -20,6 +20,9 @@ public class Settings {
             return false;
         }
 
+		// Some list variables do not reload upon loadConfig.
+		SiegeWarSettings.resetSpecialCaseVariables();
+		
 		try {
 			Translation.loadLanguage(sw.getDataFolder().getPath() + File.separator, "english.yml");
 		} catch (IOException e) {

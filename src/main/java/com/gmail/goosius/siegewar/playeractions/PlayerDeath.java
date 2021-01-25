@@ -51,7 +51,7 @@ public class PlayerDeath {
 	 */
 	public static void evaluateSiegePlayerDeath(Player deadPlayer, PlayerDeathEvent playerDeathEvent)  {
 		try {
-			if (!SiegeWarDistanceUtil.isSiegeWarEnabledInWorld(playerDeathEvent.getEntity().getWorld()))
+			if (!SiegeWarSettings.getWarSiegeWorlds().contains(playerDeathEvent.getEntity().getWorld().getName()))
 				return;
 
 			TownyPermissionSource tps = TownyUniverse.getInstance().getPermissionSource();
