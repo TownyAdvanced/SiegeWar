@@ -3,22 +3,38 @@ package com.gmail.goosius.siegewar.settings;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
 
 public class SiegeWarSettings {
 	
-	private static final List<HeldItemsCombination> mapSneakingItems = new ArrayList<>();
-	private static List<Material> battleSessionsForbiddenBlockMaterials = null;
-	private static List<Material> battleSessionsForbiddenBucketMaterials = null;
+	private static List<HeldItemsCombination> mapSneakingItems = new ArrayList<>();
+	private static List<String> worldsWithSiegeWarEnabled = new ArrayList<>();
+	private static List<Material> battleSessionsForbiddenBlockMaterials = new ArrayList<>();
+	private static List<Material> battleSessionsForbiddenBucketMaterials = new ArrayList<>();
 	
+	protected static void resetSpecialCaseVariables() {
+		mapSneakingItems.clear();
+		worldsWithSiegeWarEnabled.clear();
+		battleSessionsForbiddenBlockMaterials.clear();
+		battleSessionsForbiddenBucketMaterials.clear();
+	}
+
 	public static boolean getWarSiegeEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_ENABLED);
 	}
 
-	public static String getWarSiegeWorlds() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_WORLDS);
+	public static List<String> getWarSiegeWorlds() {
+		if (worldsWithSiegeWarEnabled.isEmpty()) {
+			String[] worldNamesAsArray = Settings.getString(ConfigNodes.WAR_SIEGE_WORLDS).split(",");
+			for (String worldName : worldNamesAsArray) {
+				if (Bukkit.getServer().getWorld(worldName.trim()) != null)
+					worldsWithSiegeWarEnabled.add(Bukkit.getServer().getWorld(worldName.trim()).getName());
+			}
+		}
+		return worldsWithSiegeWarEnabled;
 	}
 
 	public static boolean getWarSiegeAttackEnabled() {
@@ -273,8 +289,7 @@ public class SiegeWarSettings {
 	}
 
 	public static List<Material> getWarSiegeZoneBlockPlacementRestrictionsMaterials() {
-		if(battleSessionsForbiddenBlockMaterials == null) {
-			battleSessionsForbiddenBlockMaterials = new ArrayList<>();
+		if(battleSessionsForbiddenBlockMaterials.isEmpty()) {
 			String listAsString = Settings.getString(ConfigNodes.WAR_SIEGE_ZONE_BLOCK_PLACEMENT_RESTRICTIONS_MATERIALS);
 			String[] listAsStringArray = listAsString.split(",");
 			for (String blockTypeAsString : listAsStringArray) {
@@ -290,8 +305,7 @@ public class SiegeWarSettings {
 	}
 
 	public static List<Material> getWarSiegeZoneBucketEmptyingRestrictionsMaterials() {
-		if(battleSessionsForbiddenBucketMaterials == null) {
-			battleSessionsForbiddenBucketMaterials = new ArrayList<>();
+		if(battleSessionsForbiddenBucketMaterials.isEmpty()) {
 			String listAsString = Settings.getString(ConfigNodes.WAR_SIEGE_ZONE_BUCKET_EMPTYING_RESTRICTIONS_MATERIALS);
 			String[] listAsStringArray = listAsString.split(",");
 			for (String blockTypeAsString : listAsStringArray) {

@@ -188,7 +188,7 @@ public class PlaceBlock {
 	private static void evaluatePlaceColouredBannerInWilderness(Block block, Player player, Resident resident, Town attackingTown, Nation nation) throws TownyException {
 
 		// Fail early if this is not a siege-enabled world.
-		if(!SiegeWarDistanceUtil.isSiegeWarEnabledInWorld(block.getWorld()))
+		if(!SiegeWarSettings.getWarSiegeWorlds().contains(block.getWorld().getName()))
 			throw new TownyException(Translation.of("msg_err_siege_war_not_enabled_in_world"));
 		
 		List<TownBlock> nearbyCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);

@@ -12,15 +12,10 @@ import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyWorld;
 import com.palmergames.bukkit.towny.object.WorldCoord;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class contains utility functions related to calculating and validating distances
@@ -30,7 +25,6 @@ import java.util.List;
 public class SiegeWarDistanceUtil {
 
 	private static final int TOWNBLOCKSIZE= TownySettings.getTownBlockSize();
-	public static List<String> worldsWithSiegeWarEnabled = null;
 
 	/**
 	 * This method determines if the difference in elevation between a (attack banner) block, 
@@ -119,24 +113,6 @@ public class SiegeWarDistanceUtil {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * This method determines if a siegewar is enabled in the given world
-	 *
-	 * @param worldToCheck the world to check
-	 * @return true if siegewar is enabled in the given world
-	 */
-	public static boolean isSiegeWarEnabledInWorld(World worldToCheck) {
-		if (worldsWithSiegeWarEnabled == null) {
-			worldsWithSiegeWarEnabled = new ArrayList<>();
-			String[] worldNamesAsArray = SiegeWarSettings.getWarSiegeWorlds().split(",");
-			for (String worldName : worldNamesAsArray) {
-				if (Bukkit.getServer().getWorld(worldName.trim()) != null)
-					worldsWithSiegeWarEnabled.add(Bukkit.getServer().getWorld(worldName.trim()).getName());
-			}
-		}
-		return worldsWithSiegeWarEnabled.contains(worldToCheck.getName());
 	}
 
 	public static boolean isInSiegeZone(Location location, Siege siege) {
