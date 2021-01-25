@@ -44,7 +44,6 @@ public class SiegeWar extends JavaPlugin {
         if (!townyVersionCheck(getTownyVersion())) {
             System.err.println(prefix + "Towny version does not meet required minimum version: " + requiredTownyVersion.toString());
             onDisable();
-            return;
         } else {
             System.out.println(prefix + "Towny version " + getTownyVersion() + " found.");
         }
