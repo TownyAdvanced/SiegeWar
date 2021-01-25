@@ -25,9 +25,11 @@ public class SiegeHUDManager {
         if (!warHudUsers.containsKey(player)) {
             warHudUsers.put(player, siege);
             SiegeWarHud.toggleOn(player, siege);
-        } else {
+        } else if (warHudUsers.get(player).getName() != siege.getName()) {
+            warHudUsers.replace(player, siege);
+            SiegeWarHud.updateInfo(player, siege);
+        } else
             toggleOff(player);
-        }
     }
 
     public static void toggleOff(Player player) {
@@ -39,7 +41,7 @@ public class SiegeHUDManager {
     public static void updateHUDs() {
         for (Entry<Player, Siege> entry : warHudUsers.entrySet()) {
             if (entry.getKey().getScoreboard().getTeam("points") == null) {
-                toggleOff(entry.getKey());
+                warHudUsers.remove(entry.getKey());
                 continue;
             } else
                 SiegeWarHud.updateInfo(entry.getKey(), entry.getValue());
