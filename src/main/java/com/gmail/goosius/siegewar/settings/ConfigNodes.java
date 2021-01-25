@@ -199,9 +199,9 @@ public enum ConfigNodes {
 	//Non-Monetary Quantities
 	WAR_SIEGE_MAX_ACTIVE_SIEGE_ATTACKS_PER_NATION(
 		"war.siege.quantities.max_active_siege_attacks_per_nation",
-		"999",
+		"3",
 		"",
-		"# The value specifies the maximum number of active/in-progress sieges allowed per nation." +
+		"# The value specifies the maximum number of active attack sieges allowed per nation." +
 			"# A low setting will generally reduce the aggression level on the server.",
 			"# A low setting will also rebalance the system in favour of smaller nations.",
 		 	"# This is because it will prevent larger nations from conducting as many sieges as their resources would otherwise allow."),
