@@ -42,7 +42,7 @@ permissions:
 
     siegewar.command.siegewar.hud.*:
         description: User is able to do all /siegewar hud commands.
-        default: false
+        default: true
         children:
             siegewar.command.siegewar.hud: true
 
