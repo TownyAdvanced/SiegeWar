@@ -575,6 +575,11 @@ public enum ConfigNodes {
 			"false",
 			"",
 			"# If this setting is true, then peaceful towns can toggle PVP on and off."),
+	PEACEFUL_TOWNS_PUBLIC_SPAWNING(
+			"peaceful_towns.public_spawning",
+			"true",
+			"",
+			"# If this setting is true, then anyone can teleport to a peaceful town."),
 
 	OCCUPIED_TOWNS("occupied_towns",
 		"",
