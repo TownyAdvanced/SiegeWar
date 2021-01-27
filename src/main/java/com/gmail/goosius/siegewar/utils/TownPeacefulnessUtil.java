@@ -267,7 +267,7 @@ public class TownPeacefulnessUtil {
 			List<Town> candidateTowns = new ArrayList<>(townyUniverse.getDataSource().getTowns());
 			for(Town candidateTown: candidateTowns) {
 				if(!candidateTown.isNeutral()
-					&& !SiegeController.hasSiege(candidateTown)
+					&& !SiegeController.hasActiveSiege(candidateTown)
 					&& candidateTown.hasNation()
 					&& candidateTown.getNation().isOpen()
 					&& candidateTown.getTownBlocks().size() >= guardianTownPlotsRequirement
