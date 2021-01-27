@@ -452,7 +452,7 @@ public enum ConfigNodes {
 			"# * Player's in banner control sessions cannot map-sneak"),
 	WAR_SIEGE_MAP_SNEAKING_ITEMS(
 			"war.siege.items.map_sneaking_items",
-			"compass|diamond_sword, compass|bow",
+			"diamond_sword|diamond_sword, diamond_axe|diamond_axe, diamond_shovel|diamond_shovel, bow|bow",
 			"",
 			"# This list specifies the item combinations which allow players to map-sneak.",
 			"# Each list entry is in the form of <off-hand>|<main-hand>.",
