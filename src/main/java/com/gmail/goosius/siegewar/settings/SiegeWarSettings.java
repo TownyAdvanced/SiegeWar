@@ -316,12 +316,12 @@ public class SiegeWarSettings {
 		return battleSessionsForbiddenBucketMaterials;
 	}
 
-	public static int getWarSiegePeacefulTownsGuardianTownPlotsRequirement() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_PEACEFUL_TOWNS_GUARDIAN_TOWN_PLOTS_REQUIREMENT);
+	public static int getPeacefulTownsGuardianTownPlotsRequirement() {
+		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_GUARDIAN_TOWN_PLOTS_REQUIREMENT);
 	}
 
-	public static int getWarSiegePeacefulTownsGuardianTownMinDistanceRequirement() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_PEACEFUL_TOWNS_GUARDIAN_TOWN_MIN_DISTANCE_REQUIREMENT_TOWNBLOCKS);
+	public static int getPeacefulTownsGuardianTownMinDistanceRequirement() {
+		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_GUARDIAN_TOWN_MIN_DISTANCE_REQUIREMENT_TOWNBLOCKS);
 	}
 
 	public static boolean getWarCommonPeacefulTownsAllowedToMakeNation() {

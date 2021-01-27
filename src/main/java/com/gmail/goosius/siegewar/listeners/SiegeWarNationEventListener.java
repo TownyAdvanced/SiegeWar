@@ -65,8 +65,8 @@ public class SiegeWarNationEventListener implements Listener {
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_join_nation", 
 						event.getTown().getName(),
 						event.getNation().getName(),
-						SiegeWarSettings.getWarSiegePeacefulTownsGuardianTownMinDistanceRequirement(),
-						SiegeWarSettings.getWarSiegePeacefulTownsGuardianTownPlotsRequirement()));
+						SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement(),
+						SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement()));
 				event.setCancelled(true);
 			}
 		}
@@ -114,13 +114,13 @@ public class SiegeWarNationEventListener implements Listener {
 				Set<Nation> validGuardianNations = TownPeacefulnessUtil.getValidGuardianNations(town);
 				if(validGuardianNations.size() == 0) {
 					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_revolt_nearby_guardian_towns_zero", 
-						SiegeWarSettings.getWarSiegePeacefulTownsGuardianTownMinDistanceRequirement(), 
-						SiegeWarSettings.getWarSiegePeacefulTownsGuardianTownPlotsRequirement()));
+						SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement(),
+						SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement()));
 					event.setCancelled(true);
 				} else if(validGuardianNations.size() == 1) {
 					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_revolt_nearby_guardian_towns_one", 
-						SiegeWarSettings.getWarSiegePeacefulTownsGuardianTownMinDistanceRequirement(), 
-						SiegeWarSettings.getWarSiegePeacefulTownsGuardianTownPlotsRequirement()));
+						SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement(),
+						SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement()));
 					event.setCancelled(true);
 				}
 			}
