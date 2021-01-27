@@ -95,7 +95,7 @@ public class SiegeWarTownyEventListener implements Listener {
                 return;
             
             // Don't block spawning for residents which belong to the Town, or to neutral towns.
-            if (destinationTown.hasResident(res) || destinationTown.isNeutral())
+            if (destinationTown.hasResident(res) || (destinationTown.isNeutral() && SiegeWarSettings.getWarCommonPeacefulTownsPublicSpawning()))
                 return;
 
             //Block TP if the target town is besieged

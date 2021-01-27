@@ -575,6 +575,16 @@ public enum ConfigNodes {
 			"false",
 			"",
 			"# If this setting is true, then peaceful towns can toggle PVP on and off."),
+	PEACEFUL_TOWNS_PUBLIC_SPAWNING(
+			"peaceful_towns.public_spawning",
+			"true",
+			"",
+			"# This setting is essential to allow peaceful players to play in their preferred style.",
+			"# For example, in servers with no war, a peaceful town can create and maintain a nation.",
+			"# This (usually) gives the town a public /n spawn, an important asset which delivers visitors and shop customers directly to the town.",
+			"# Also the nation can change allies/enemies, affecting visitors to the public /t spawn of the town (if there is one).",
+			"# However with SiegeWar, peaceful towns cannot (and must not) be able to maintain a nation",
+			"# Thus, without this setting, peaceful players would be denied control of a key asset (public spawn in the town) which they could get on other servers, and would be more likely to quit or never join."),
 
 	OCCUPIED_TOWNS("occupied_towns",
 		"",
