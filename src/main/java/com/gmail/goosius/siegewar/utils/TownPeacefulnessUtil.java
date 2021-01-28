@@ -260,8 +260,8 @@ public class TownPeacefulnessUtil {
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 
 		try {
-			int guardianTownPlotsRequirement = SiegeWarSettings.getWarSiegePeacefulTownsGuardianTownPlotsRequirement();
-			int guardianTownMaxDistanceRequirementTownblocks = SiegeWarSettings.getWarSiegePeacefulTownsGuardianTownMinDistanceRequirement();
+			int guardianTownPlotsRequirement = SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement();
+			int guardianTownMaxDistanceRequirementTownblocks = SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement();
 	
 			//Find valid guardian towns
 			List<Town> candidateTowns = new ArrayList<>(townyUniverse.getDataSource().getTowns());
