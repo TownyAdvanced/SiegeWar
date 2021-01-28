@@ -163,15 +163,21 @@ public class TownPeacefulnessUtil {
 	 * Cycle peaceful towns
 	 * - If town's nation is valid, skip and go to next town
 	 * - If town's nation is invalid, reassign nation status
+	 *
+	 * Rules for peaceful towns
+	 * If there are no guardian towns nearby - Town has free choice of nation
+	 * If there are guardian towns nearby, and just 1 is NOT under siege - Town must choose the nation of that town
+	 * If there are guardian towns nearby, and more than 1 is NOT under siege - Town must choose the nation of one of those towns
+	 * If there are guardian towns nearby, but all are under siege - Town cannot have any nation
 	 */
 	public static void evaluatePeacefulTownNationAssignments() {
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 		List<Town> towns = new ArrayList<>(townyUniverse.getDataSource().getTowns());
 		ListIterator<Town> townItr = towns.listIterator();
-		Town peacefulTown = null;
+		Town peacefulTown;
 		int modifiedTowns = 0;
+		boolean townTransferred;
 
-		CYCLE_ALL_TOWNS:
 		while (townItr.hasNext()) {
 			peacefulTown = townItr.next();
 
@@ -183,51 +189,31 @@ public class TownPeacefulnessUtil {
 				//Find guardian towns
 				Set<Town> guardianTowns = getValidGuardianTowns(peacefulTown);
 
-				//If the nation assignment ok?
-				if (peacefulTown.hasNation()) {
+				//If there are any guardian towns nearby, town does not have totally free nation choice
+				if(guardianTowns.size() > 0) {
+					List<Town> guardianTownsNotUnderSiege = new ArrayList<>();
 					for (Town guardianTown : guardianTowns) {
-						if (peacefulTown.getNation() == guardianTown.getNation())
-							continue CYCLE_ALL_TOWNS; //No change needed
+						if (!SiegeController.hasActiveSiege(guardianTown))
+							guardianTownsNotUnderSiege.add(guardianTown);
 					}
-				} else {
-					if (guardianTowns.size() == 0)
-						continue; //No change needed
-				}
 
-				//Nation status change needed
-				modifiedTowns += 1;
+					if (guardianTownsNotUnderSiege.size() == 0) {
+						//If all guardian towns are under siege - Town is removed from nation
+						townTransferred = ensurePeacefulTownJoinsNationOfGuardianTown(peacefulTown, null);
 
-				if (guardianTowns.size() == 0) {
-					//Guardian town list was empty. Peaceful town leaves nation
-					Nation previousNation = peacefulTown.getNation();
-					TownyMessaging.sendPrefixedNationMessage(previousNation, Translation.of("msg_war_siege_peaceful_town_left_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName()));
-					peacefulTown.removeNation();
-				} else {
-					//Find guardian nation (the one with the largest guardian town)
-					Town topGuardianTown = null;
-					for(Town guardianTown: guardianTowns) {
-						if(topGuardianTown == null || guardianTown.getTownBlocks().size() > topGuardianTown.getTownBlocks().size()) {
-							topGuardianTown = guardianTown;
-						}
-					}
-					Nation guardianNation = topGuardianTown.getNation();
+					} else if (guardianTownsNotUnderSiege.size() == 1) {
+						//If just 1 guardian town is NOT under siege - Join its nation
+						townTransferred = ensurePeacefulTownJoinsNationOfGuardianTown(peacefulTown, guardianTownsNotUnderSiege.get(0));
 
-					//Change town's nation
-					if (peacefulTown.hasNation()) {
-						//Peaceful town moves from one nation to another
-						Nation previousNation = peacefulTown.getNation();
-						peacefulTown.removeNation();
-						peacefulTown.setNation(guardianNation);
-						TownyMessaging.sendPrefixedNationMessage(previousNation, Translation.of("msg_war_siege_peaceful_town_changed_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName(), guardianNation.getFormattedName()));
-						TownyMessaging.sendPrefixedNationMessage(guardianNation, Translation.of("msg_war_siege_peaceful_town_changed_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName(), guardianNation.getFormattedName()));
 					} else {
-						//Peaceful town joins nation
-						peacefulTown.setNation(guardianNation);
-						TownyMessaging.sendPrefixedNationMessage(guardianNation, Translation.of("msg_war_siege_peaceful_town_joined_nation", peacefulTown.getFormattedName(), guardianNation.getFormattedName()));
+						//If more than 1 guardian town is NOT under siege - Ensure town is in one of their nations
+						townTransferred = ensurePeacefulTownJoinNationOfOneGuardianTown(peacefulTown, guardianTownsNotUnderSiege);
 					}
-					// .setNation() does not save the Town internally.
-					peacefulTown.save();
+
+					if (townTransferred)
+						modifiedTowns += 1;
 				}
+
 			} catch (Exception e) {
 				try {
 					System.err.println("Problem evaluating peaceful town nation assignment for - " + peacefulTown.getName());
@@ -239,9 +225,73 @@ public class TownPeacefulnessUtil {
 		}
 		//Send a global message with how many towns were modified.
 		if (modifiedTowns > 0) {
-			Boolean one = modifiedTowns == 1;
+			boolean one = modifiedTowns == 1;
 			Messaging.sendGlobalMessage(Translation.of("msg_war_siege_peaceful_town_total_switches", modifiedTowns, one ? "" : "s", one ? "has" : "have"));
 		}
+	}
+
+	private static boolean ensurePeacefulTownJoinsNationOfGuardianTown(Town peacefulTown, Town guardianTown) throws Exception {
+		Nation guardianNation = guardianTown.getNation();
+
+		if(guardianNation == null) {
+			if(!peacefulTown.hasNation()) {
+				//Already nationless
+				return false;
+
+			} else {
+				//Remove town from nation
+				Nation previousNation = peacefulTown.getNation();
+				TownyMessaging.sendPrefixedNationMessage(previousNation, Translation.of("msg_war_siege_peaceful_town_left_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName()));
+				peacefulTown.removeNation();
+				peacefulTown.save();
+				peacefulTown.getNation().save();
+				return true;
+			}
+
+		} else {
+			if(!peacefulTown.hasNation()) {
+				//Join nation
+				peacefulTown.setNation(guardianNation);
+				TownyMessaging.sendPrefixedNationMessage(guardianNation, Translation.of("msg_war_siege_peaceful_town_joined_nation", peacefulTown.getFormattedName(), guardianNation.getFormattedName()));
+				peacefulTown.save();
+				guardianNation.save();
+				return true;
+
+			} else if (peacefulTown.getNation() == guardianNation){
+				//Already in required nation
+				return false;
+
+			} else {
+				//Transfer town to new nation
+				Nation previousNation = peacefulTown.getNation();
+				peacefulTown.removeNation();
+				peacefulTown.setNation(guardianNation);
+				TownyMessaging.sendPrefixedNationMessage(previousNation, Translation.of("msg_war_siege_peaceful_town_changed_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName(), guardianNation.getFormattedName()));
+				TownyMessaging.sendPrefixedNationMessage(guardianNation, Translation.of("msg_war_siege_peaceful_town_changed_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName(), guardianNation.getFormattedName()));
+				peacefulTown.save();
+				guardianNation.save();
+				return true;
+			}
+		}
+	}
+
+	//Join one of the given nations
+	private static boolean ensurePeacefulTownJoinNationOfOneGuardianTown(Town peacefulTown, List<Town> eligibleGuardianTowns) throws Exception{
+		for (Town guardianTown : eligibleGuardianTowns) {
+			if (peacefulTown.getNation() == guardianTown.getNation())
+			return false;
+		}
+		//Transfer town to the nation with the largest guardian town
+		Town topGuardianTown = null;
+		for(Town guardianTown: eligibleGuardianTowns) {
+			if(topGuardianTown == null || guardianTown.getTownBlocks().size() > topGuardianTown.getTownBlocks().size()) {
+				topGuardianTown = guardianTown;
+			}
+		}
+		peacefulTown.setNation(topGuardianTown.getNation());
+		peacefulTown.save();
+		peacefulTown.getNation().save();
+		return true;
 	}
 
 	public static Set<Nation> getValidGuardianNations(Town peacefulTown) {
@@ -267,7 +317,6 @@ public class TownPeacefulnessUtil {
 			List<Town> candidateTowns = new ArrayList<>(townyUniverse.getDataSource().getTowns());
 			for(Town candidateTown: candidateTowns) {
 				if(!candidateTown.isNeutral()
-					&& !SiegeController.hasActiveSiege(candidateTown)
 					&& candidateTown.hasNation()
 					&& candidateTown.getNation().isOpen()
 					&& candidateTown.getTownBlocks().size() >= guardianTownPlotsRequirement
