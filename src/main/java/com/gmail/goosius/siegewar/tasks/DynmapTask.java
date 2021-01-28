@@ -1,9 +1,11 @@
 package com.gmail.goosius.siegewar.tasks;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.InputStream;
+import java.util.*;
+
+import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.settings.Settings;
+import jdk.vm.ci.code.site.Mark;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -32,7 +34,7 @@ public class DynmapTask {
     static MarkerSet set;
     static Map<String, Marker> markerMap = new HashMap<String, Marker>();
 
-    public static void setDynmapAPI(DynmapAPI _api) {
+    public static void setupDynmapAPI(DynmapAPI _api) {
         api = _api;
         markerapi = api.getMarkerAPI();
         if (markerapi == null) {
@@ -41,10 +43,14 @@ public class DynmapTask {
         }
 
         set = markerapi.getMarkerSet("siegewar.markerset");
-        if (set == null)
+        if (set == null) {
+            InputStream png = SiegeWar.getSiegeWar().getResource("fireandswords.png");
+            markerapi.createMarkerIcon("siegewar.fireandswords", "Siege and Battle", png);
+
             set = markerapi.createMarkerSet("siegewar.markerset", "SiegeWar", null, false);
-        else
+        } else
             set.setMarkerSetLabel("SiegeWar");
+
         if (set == null) {
             System.err.println(SiegeWar.prefix + "Error creating dynmap marker set");
             return;
@@ -84,7 +90,15 @@ public class DynmapTask {
             String name = Translation.of("dynmap_siege_title", siege.getName().replace("#", " "));
             try {
                 if (siege.getStatus().isActive()) {
-                    MarkerIcon siegeIcon = markerapi.getMarkerIcon("fire");
+                    //If anyone is in a BC session or on the BC list, it is a fire & swords icon
+                    //otherwise just fire
+                    MarkerIcon siegeIcon;
+                    if(siege.getBannerControllingSide() != SiegeSide.NOBODY
+                            || siege.getBannerControlSessions().size() > 0) {
+                        siegeIcon = markerapi.getMarkerIcon("siegewar.fireandswords");
+                    } else {
+                        siegeIcon = markerapi.getMarkerIcon("siegewar.fireandswords");
+                    }
                     List<String> lines = new ArrayList<>();
                     lines.add(Translation.of("dynmap_siege_attacker", siege.getAttackingNation().getName()));
                     lines.add(Translation.of("dynmap_siege_defender", siege.getDefendingTown().getName()));

@@ -1,7 +1,12 @@
 package com.gmail.goosius.siegewar.settings;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 
@@ -9,9 +14,11 @@ import com.gmail.goosius.siegewar.utils.FileMgmt;
 
 public class Settings {
 	private static CommentedConfiguration config, newConfig;
+	private static File fireAndSwordsIconFile;
 
 	public static boolean loadSettingsAndLang() {
 		SiegeWar sw = SiegeWar.getSiegeWar();
+
 		try {
 			Settings.loadConfig(sw.getDataFolder().getPath() + File.separator + "config.yml", sw.getVersion());
 		} catch (IOException e) {
@@ -30,6 +37,16 @@ public class Settings {
 	        System.err.println(SiegeWar.prefix + "Language file failed to load! Disabling!");
 	        return false;
 	    }
+
+		//Extract images
+		try {
+			fireAndSwordsIconFile = FileMgmt.extractImageFile("fireandswords.png");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(SiegeWar.prefix + "Could not load images! Disabling!");
+			return false;
+		}
+
 		return true;
 	}
 	
@@ -144,4 +161,7 @@ public class Settings {
 		config.save();
 	}
 
+	public static File getFireAndSwordsIconFile() {
+		return fireAndSwordsIconFile;
+	}
 }
