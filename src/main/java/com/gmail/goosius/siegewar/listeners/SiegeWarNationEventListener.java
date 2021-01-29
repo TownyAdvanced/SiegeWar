@@ -111,7 +111,7 @@ public class SiegeWarNationEventListener implements Listener {
 			//A peaceful town might not be able to leave
 			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
 					&& town.isNeutral()
-					&& TownPeacefulnessUtil.canPeacefulTownLeaveNation(town)) {
+					&& !TownPeacefulnessUtil.canPeacefulTownLeaveNation(town)) {
 
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_revolt_nearby_guardian_towns_one",
 						SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement(),

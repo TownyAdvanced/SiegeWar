@@ -242,9 +242,11 @@ public class TownPeacefulnessUtil {
 		}
 
 		//Check if the town is already in one of the eligible nations
-		for (Town guardianTown : eligibleGuardianTowns) {
-			if (peacefulTown.getNation() == guardianTown.getNation())
-			return false;
+		if(peacefulTown.hasNation()) {
+			for (Town guardianTown : eligibleGuardianTowns) {
+				if (peacefulTown.getNation() == guardianTown.getNation())
+					return false;
+			}
 		}
 
 		//Transfer town to the nation with the largest guardian town
