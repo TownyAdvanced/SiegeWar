@@ -60,7 +60,7 @@ public class SiegeWarNationEventListener implements Listener {
 	@EventHandler
 	public void onNationAddTownEvent(NationPreAddTownEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && event.getTown().isNeutral()) {
-			if(!TownPeacefulnessUtil.isPeacefulTownAllowedToBeInNation(event.getTown(), event.getNation())) {
+			if(!TownPeacefulnessUtil.canPeacefulTownJoinNation(event.getTown(), event.getNation())) {
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_join_nation",
 						event.getTown().getName(),
 						event.getNation().getName(),
@@ -101,27 +101,23 @@ public class SiegeWarNationEventListener implements Listener {
 	}
 	
 	/*
-	 * SW will prevent towns leaving their nations.
+	 * SW can prevent towns leaving their nations.
 	 */
 	@EventHandler
 	public void onTownTriesToLeaveNation(NationPreTownLeaveEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
-
 			Town town = event.getTown();
-			//If a peaceful town has no options, we don't let it revolt
-			if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && town.isNeutral()) {
-				Set<Nation> validGuardianNations = TownPeacefulnessUtil.getValidGuardianNations(town);
-				if(validGuardianNations.size() == 0) {
-					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_revolt_nearby_guardian_towns_zero", 
+
+			//A peaceful town might not be able to leave
+			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
+					&& town.isNeutral()
+					&& TownPeacefulnessUtil.canPeacefulTownLeaveNation(town)) {
+
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_revolt_nearby_guardian_towns_one",
 						SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement(),
 						SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement()));
-					event.setCancelled(true);
-				} else if(validGuardianNations.size() == 1) {
-					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_revolt_nearby_guardian_towns_one", 
-						SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement(),
-						SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement()));
-					event.setCancelled(true);
-				}
+				event.setCancelled(true);
+				return;
 			}
 
 			//A town cannot leave unless its revolt immunity timer is finished
@@ -143,7 +139,7 @@ public class SiegeWarNationEventListener implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void onTownLeavesNation(NationTownLeaveEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeRevoltEnabled()) {
