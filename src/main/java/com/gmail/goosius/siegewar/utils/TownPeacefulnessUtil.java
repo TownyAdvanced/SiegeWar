@@ -236,7 +236,6 @@ public class TownPeacefulnessUtil {
 				} catch (NotRegisteredException e) {}
 				TownyMessaging.sendPrefixedNationMessage(previousNation, Translation.of("msg_war_siege_peaceful_town_left_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName()));
 				peacefulTown.removeNation();
-				peacefulTown.save();
 				return true;
 			}
 		}
