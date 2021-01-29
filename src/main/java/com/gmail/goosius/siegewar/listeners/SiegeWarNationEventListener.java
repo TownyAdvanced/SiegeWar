@@ -113,7 +113,7 @@ public class SiegeWarNationEventListener implements Listener {
 					&& town.isNeutral()
 					&& !TownPeacefulnessUtil.canPeacefulTownLeaveNation(town)) {
 
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_revolt_nearby_guardian_towns_one",
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_revolt_zero_or_one_unsieged_guardian_towns_nearby",
 						SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement(),
 						SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement()));
 				event.setCancelled(true);
