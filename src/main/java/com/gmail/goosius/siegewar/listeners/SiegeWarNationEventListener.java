@@ -60,9 +60,8 @@ public class SiegeWarNationEventListener implements Listener {
 	@EventHandler
 	public void onNationAddTownEvent(NationPreAddTownEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && event.getTown().isNeutral()) {
-			Set<Nation> validGuardianNations = TownPeacefulnessUtil.getValidGuardianNations(event.getTown());
-			if(!validGuardianNations.contains(event.getNation())) {
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_join_nation", 
+			if(!TownPeacefulnessUtil.isPeacefulTownAllowedToBeInNation(event.getTown(), event.getNation())) {
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_join_nation",
 						event.getTown().getName(),
 						event.getNation().getName(),
 						SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement(),

@@ -230,6 +230,44 @@ public class TownPeacefulnessUtil {
 		}
 	}
 
+	public static boolean isPeacefulTownAllowedToBeInNation(Town peacefulTown, Nation nation)  {
+		Set<Town> guardianTowns = getValidGuardianTowns(peacefulTown);
+
+		if(guardianTowns.size() == 0) {
+			//If there are no guardian towns nearby, town can choose
+			return true;
+		} else {
+			//If there are any guardian towns nearby, town does not have totally free nation choice
+			List<Town> guardianTownsNotUnderSiege = new ArrayList<>();
+			for (Town guardianTown : guardianTowns) {
+				if (!SiegeController.hasActiveSiege(guardianTown))
+					guardianTownsNotUnderSiege.add(guardianTown);
+			}
+
+			if (guardianTownsNotUnderSiege.size() == 0) {
+				//If all guardian towns are under siege - Town cannot choose any nation
+				return false;
+
+			} else if (guardianTownsNotUnderSiege.size() == 1) {
+				//If just 1 guardian town is NOT under siege - Town must choose it
+				try {
+					return nation == guardianTownsNotUnderSiege.get(0).getNation();
+				} catch (NotRegisteredException e) {}
+
+			} else {
+				//If more than 1 guardian town is NOT under siege - Town can choose any
+				for(Town guardianTownNotUnderSiege: guardianTownsNotUnderSiege) {
+					try {
+						if(nation == guardianTownNotUnderSiege.getNation())
+							return true;
+					} catch (NotRegisteredException e) {}
+				}
+				return false;
+			}
+		}
+		return false;
+	}
+
 	private static boolean ensurePeacefulTownJoinsNationOfGuardianTown(Town peacefulTown, Town guardianTown) throws Exception {
 		Nation guardianNation = guardianTown.getNation();
 
@@ -244,7 +282,6 @@ public class TownPeacefulnessUtil {
 				TownyMessaging.sendPrefixedNationMessage(previousNation, Translation.of("msg_war_siege_peaceful_town_left_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName()));
 				peacefulTown.removeNation();
 				peacefulTown.save();
-				peacefulTown.getNation().save();
 				return true;
 			}
 
@@ -254,7 +291,6 @@ public class TownPeacefulnessUtil {
 				peacefulTown.setNation(guardianNation);
 				TownyMessaging.sendPrefixedNationMessage(guardianNation, Translation.of("msg_war_siege_peaceful_town_joined_nation", peacefulTown.getFormattedName(), guardianNation.getFormattedName()));
 				peacefulTown.save();
-				guardianNation.save();
 				return true;
 
 			} else if (peacefulTown.getNation() == guardianNation){
@@ -269,7 +305,6 @@ public class TownPeacefulnessUtil {
 				TownyMessaging.sendPrefixedNationMessage(previousNation, Translation.of("msg_war_siege_peaceful_town_changed_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName(), guardianNation.getFormattedName()));
 				TownyMessaging.sendPrefixedNationMessage(guardianNation, Translation.of("msg_war_siege_peaceful_town_changed_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName(), guardianNation.getFormattedName()));
 				peacefulTown.save();
-				guardianNation.save();
 				return true;
 			}
 		}
@@ -290,7 +325,6 @@ public class TownPeacefulnessUtil {
 		}
 		peacefulTown.setNation(topGuardianTown.getNation());
 		peacefulTown.save();
-		peacefulTown.getNation().save();
 		return true;
 	}
 
