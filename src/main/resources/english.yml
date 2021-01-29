@@ -166,7 +166,7 @@ msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cUnable to
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cWar-allergy active. To remove this effect, leave the siege-zone immediately.'
 msg_war_siege_err_cannot_attack_peaceful_town: '&cYou cannot attack a peaceful town.'
 msg_war_siege_peaceful_town_cannot_join_nation: 'c%s [PEACEFUL] cannot join %s, because the nation has no unsieged guardian towns nearby (within %d chunks). A guardian town is a non-peaceful town in an open nation, with at least %d plots.'
-msg_war_siege_peaceful_town_cannot_revolt_zero_or_one_unsieged_guardian_towns_nearby:  '&cYou cannot revolt at this time, because although here are guardian towns nearby (within %d chunks), less than 2 of them are unsieged. A guardian town is a non-peaceful town in an open nation, with at least %d plots.'
+msg_war_siege_peaceful_town_cannot_revolt_zero_or_one_unsieged_guardian_towns_nearby:  '&cYou cannot revolt at this time, because there are less than 2 unsieged guardian towns nearby (within %d chunks), less than 2 of them are unsieged. A guardian town is a non-peaceful town in an open nation, with at least %d plots.'
 msg_war_siege_peaceful_town_changed_nation: "&b%s has peacefully changed hands, moving from %s to %s."
 msg_war_siege_peaceful_town_joined_nation: "&b%s has peacefully joined %s."
 msg_war_siege_peaceful_town_left_nation: "&b%s has peacefully left %s."
