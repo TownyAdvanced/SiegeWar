@@ -101,7 +101,7 @@ public class InvadeTown {
 		SiegeWarTownUtil.disableNationPerms(defendingTown);
 
 		//Save to db
-    SiegeController.saveSiege(siege);
+    	SiegeController.saveSiege(siege);
 		defendingTown.save();
 		attackingNation.save();
 		if(nationTown && !nationDefeated) {
@@ -109,7 +109,7 @@ public class InvadeTown {
 		}
 		
 		//Messaging
-		if (nationTown) {
+		if(nationTown) {
 			Messaging.sendGlobalMessage(
 				Translation.of("msg_siege_war_nation_town_captured",
 				defendingTown.getFormattedName(),
@@ -123,7 +123,7 @@ public class InvadeTown {
 				attackingNation.getFormattedName()
 			));
 		}
-		if (nationDefeated) {
+		if(nationDefeated) {
 			Messaging.sendGlobalMessage(
 				Translation.of("msg_siege_war_nation_defeated",
 				nationOfDefendingTown.getFormattedName()

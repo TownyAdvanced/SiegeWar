@@ -30,6 +30,5 @@ public class SiegeWarSiegeCompletionUtil {
 
 		//Save to db
 		SiegeController.saveSiege(siege);
-		siege.getDefendingTown().save();
 	}
 }

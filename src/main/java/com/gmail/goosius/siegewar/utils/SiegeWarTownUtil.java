@@ -45,7 +45,8 @@ public class SiegeWarTownUtil {
             if (plot.hasPlotObjectGroup()) {
                 TownyPermission groupPermission = plot.getPlotObjectGroup().getPermissions();
                 groupPermission.change(Action.PERM_LEVEL, false, PermLevel.NATION);
-                plot.getPlotObjectGroup().setPermissions(groupPermission);
+				plot.getPlotObjectGroup().setPermissions(groupPermission);
+				plot.getPlotObjectGroup().save();
             }
 
             plot.getPermissions().change(Action.PERM_LEVEL, false, PermLevel.NATION);
@@ -65,5 +66,6 @@ public class SiegeWarTownUtil {
 			town.getPermissions().pvp = desiredSetting;
 		if (town.getPermissions().explosion != desiredSetting && SiegeWarSettings.getWarSiegeExplosionsAlwaysOnInBesiegedTowns())
 			town.getPermissions().explosion = desiredSetting;
+		town.save();
 	}
 }

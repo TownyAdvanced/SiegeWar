@@ -9,6 +9,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -119,7 +120,7 @@ public class AttackTown {
 		SiegeController.putTownInSiegeMap(defendingTown, siege);
 
 		//Set town pvp and explosions to true.
-		SiegeController.setTownFlags(defendingTown, true);
+		SiegeWarTownUtil.setTownFlags(defendingTown, true);
 		
 		//Pay into warchest
 		if (TownySettings.isUsingEconomy()) {
