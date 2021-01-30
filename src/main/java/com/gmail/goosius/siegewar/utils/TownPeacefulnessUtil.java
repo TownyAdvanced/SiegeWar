@@ -16,8 +16,6 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
-import com.palmergames.bukkit.towny.object.TownBlockType;
-import com.palmergames.bukkit.towny.object.TownyPermission;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.util.TimeTools;
@@ -67,7 +65,7 @@ public class TownPeacefulnessUtil {
 		town.setNeutral(!town.isNeutral());
 
 		if (town.isNeutral() && !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()) 
-			disableTownPVP(town);	
+			SiegeWarTownUtil.disableTownPVP(town);	
 
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			if (town.isNeutral()) {
@@ -355,28 +353,5 @@ public class TownPeacefulnessUtil {
 				guardianTownsNotUnderSiege.add(guardianTown);
 		}
 		return guardianTownsNotUnderSiege;
-	}
-
-	public static void disableTownPVP(Town town) {
-		if (town.isPVP())
-				town.setPVP(false);
-
-		for (TownBlock plot : town.getTownBlocks()) {
-			if (plot.hasPlotObjectGroup()) {
-				TownyPermission groupPermissions = plot.getPlotObjectGroup().getPermissions();
-				if (groupPermissions.pvp) {
-					groupPermissions.pvp = false;
-					plot.getPlotObjectGroup().setPermissions(groupPermissions);
-				}
-			} 	
-			if (plot.getPermissions().pvp) {
-				if (plot.getType() == TownBlockType.ARENA)
-					plot.setType(TownBlockType.RESIDENTIAL);
-			
-				plot.getPermissions().pvp = false;
-				plot.setChanged(true);
-			}
-		}
-		town.save();
 	}
 }
