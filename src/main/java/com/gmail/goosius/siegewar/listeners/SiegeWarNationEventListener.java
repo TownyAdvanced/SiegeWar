@@ -2,8 +2,6 @@ package com.gmail.goosius.siegewar.listeners;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
