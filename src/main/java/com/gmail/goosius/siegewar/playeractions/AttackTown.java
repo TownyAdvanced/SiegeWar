@@ -98,7 +98,6 @@ public class AttackTown {
     private static void attackTown(Block block, Nation attackingNation, Town defendingTown) throws TownyException {
 		//Create Siege
 		String siegeName = attackingNation.getName() + "#vs#" + defendingTown.getName();
-		TownyUniverse universe = TownyUniverse.getInstance();
 		SiegeController.newSiege(siegeName);
 		Siege siege = SiegeController.getSiege(siegeName);
 		
@@ -143,8 +142,8 @@ public class AttackTown {
 		//Save to DB
 		SiegeController.saveSiege(siege);
 		SiegeController.addSiegedTown(siege);
-		universe.getDataSource().saveNation(attackingNation);
-		universe.getDataSource().saveTown(defendingTown);
+		attackingNation.save();
+		defendingTown.save();
 
 		//Send global message;
 		if (siege.getDefendingTown().hasNation()) {
