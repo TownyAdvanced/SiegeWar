@@ -26,7 +26,7 @@ public class SiegeWarSiegeCompletionUtil {
 		if (siegeStatus == SiegeStatus.DEFENDER_SURRENDER || siegeStatus == SiegeStatus.ATTACKER_WIN) {
 			SiegeWarTimeUtil.activateRevoltImmunityTimer(siege.getDefendingTown()); //Prevent immediate revolt
 		}
-		SiegeController.setTownFlags(siege.getDefendingTown(), false);
+		SiegeWarTownUtil.setTownFlags(siege.getDefendingTown(), false);
 
 		//Save to db
 		SiegeController.saveSiege(siege);
