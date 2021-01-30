@@ -4,7 +4,6 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.TownySettings;
-import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.AlreadyRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -101,9 +100,9 @@ public class InvadeTown {
 		//Save to db
         SiegeController.saveSiege(siege);
 		defendingTown.save();
-		TownyUniverse.getInstance().getDataSource().saveNation(attackingNation);
+		attackingNation.save();
 		if(nationTown && !nationDefeated) {
-			TownyUniverse.getInstance().getDataSource().saveNation(nationOfDefendingTown);
+			nationOfDefendingTown.save();
 		}
 		
 		//Messaging
