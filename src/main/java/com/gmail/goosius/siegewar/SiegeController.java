@@ -21,7 +21,6 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
