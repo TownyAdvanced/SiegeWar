@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -134,23 +135,26 @@ public class PlayerDeath {
 			// apply siege point penalty for the nearest one, and keep inventory
 			if(confirmedCandidateSiege != null) {
 
-				if(confirmedCandidateSiegePlayerSide == SiegeSide.DEFENDERS) {
-					SiegeWarPointsUtil.awardPenaltyPoints(
-						false,
-						deadPlayer,
-						deadResident,
-						confirmedCandidateSiege,
-						Translation.of("msg_siege_war_defender_death"));
-
-				} else {
-					SiegeWarPointsUtil.awardPenaltyPoints(
-						true,
-						deadPlayer,
-						deadResident,
-						confirmedCandidateSiege,
-						Translation.of("msg_siege_war_attacker_death"));
+				//Award penalty points w/ notification if siege is in progress
+				if(confirmedCandidateSiege.getStatus() == SiegeStatus.IN_PROGRESS) {
+					if (confirmedCandidateSiegePlayerSide == SiegeSide.DEFENDERS) {
+						SiegeWarPointsUtil.awardPenaltyPoints(
+								false,
+								deadPlayer,
+								deadResident,
+								confirmedCandidateSiege,
+								Translation.of("msg_siege_war_defender_death"));
+					} else {
+						SiegeWarPointsUtil.awardPenaltyPoints(
+								true,
+								deadPlayer,
+								deadResident,
+								confirmedCandidateSiege,
+								Translation.of("msg_siege_war_attacker_death"));
+					}
 				}
 
+				//Keep and degrade inventory
 				degradeInventory(playerDeathEvent);
 				keepInventory(playerDeathEvent);
 				SiegeHUDManager.updateHUDs();
