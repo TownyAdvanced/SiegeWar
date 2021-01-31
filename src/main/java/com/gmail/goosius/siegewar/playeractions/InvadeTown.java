@@ -11,6 +11,7 @@ import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 
 /**
  * This class is responsible for processing requests to invade towns
@@ -95,7 +96,9 @@ public class InvadeTown {
         
         //Set flags to indicate success
 		siege.setTownInvaded(true);
-        defendingTown.setConquered(true);
+		defendingTown.setConquered(true);
+		
+		SiegeWarTownUtil.disableNationPerms(defendingTown);
 
 		//Save to db
         SiegeController.saveSiege(siege);
