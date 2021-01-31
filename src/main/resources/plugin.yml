@@ -70,6 +70,10 @@ permissions:
         children:
             siegewar.town.siege.points: true
             siegewar.town.siege.surrender: true
+
+    siegewar.command.siegewar.guide:
+        description: User is able to read guide book.
+        default: true
             
     siegewar.immune.to.war.nausea:
         description: User is immune to war nausea.
