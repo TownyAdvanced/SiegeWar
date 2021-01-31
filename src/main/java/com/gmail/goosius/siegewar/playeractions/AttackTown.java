@@ -143,7 +143,6 @@ public class AttackTown {
 		SiegeController.saveSiege(siege);
 		SiegeController.addSiegedTown(siege);
 		attackingNation.save();
-		defendingTown.save();
 
 		//Send global message;
 		if (siege.getDefendingTown().hasNation()) {

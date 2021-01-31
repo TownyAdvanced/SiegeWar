@@ -195,8 +195,7 @@ public class SiegeController {
 		removeSiegedTown(siege);
 
 		SiegeWarTownUtil.setTownFlags(town, false);
-		//Save town & attacking nation
-		town.save();
+		//Save attacking nation
 		siege.getAttackingNation().save();
 		siege = null;
 	}
