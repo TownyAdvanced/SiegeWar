@@ -21,22 +21,23 @@ public class ResidentMetaDataController {
 	}
 	
 	public static int getNationRefundAmount(Resident resident) {
-		int nationRefundAmount = 0;
 		IntegerDataField idf = (IntegerDataField) refundAmount.clone();
 		if (resident.hasMeta(idf.getKey())) {
 			CustomDataField<?> cdf = resident.getMetadata(idf.getKey());
 			if (cdf instanceof IntegerDataField) {
 				IntegerDataField amount = (IntegerDataField) cdf; 
-				nationRefundAmount = amount.getValue();
+				return amount.getValue();
 			}
 		}
-		return nationRefundAmount;
+		return 0;
 	}
 
 	public static void setNationRefundAmount(Resident resident, int nationRefundAmount) {
 		IntegerDataField idf = (IntegerDataField) refundAmount.clone();
 		if (resident.hasMeta(idf.getKey())) {
 			resident.removeMetaData(idf);
+			if (nationRefundAmount != 0)
+				resident.addMetaData(new IntegerDataField("siegewar_nationrefund", nationRefundAmount, "Nation Refund"));
 		} else {
 			resident.addMetaData(new IntegerDataField("siegewar_nationrefund", nationRefundAmount, "Nation Refund"));			
 		}
