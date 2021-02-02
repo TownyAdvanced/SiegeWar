@@ -1,12 +1,7 @@
 package com.gmail.goosius.siegewar.settings;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 
@@ -14,7 +9,7 @@ import com.gmail.goosius.siegewar.utils.FileMgmt;
 
 public class Settings {
 	private static CommentedConfiguration config, newConfig;
-	private static File fireAndSwordsIconFile;
+	private static File battleIconFile;
 
 	public static boolean loadSettingsAndLang() {
 		SiegeWar sw = SiegeWar.getSiegeWar();
@@ -40,7 +35,7 @@ public class Settings {
 
 		//Extract images
 		try {
-			fireAndSwordsIconFile = FileMgmt.extractImageFile("fireandswords.png");
+			battleIconFile = FileMgmt.extractImageFile("crossedswords.png");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(SiegeWar.prefix + "Could not load images! Disabling!");
@@ -161,7 +156,7 @@ public class Settings {
 		config.save();
 	}
 
-	public static File getFireAndSwordsIconFile() {
-		return fireAndSwordsIconFile;
+	public static File getBattleIconFile() {
+		return battleIconFile;
 	}
 }
