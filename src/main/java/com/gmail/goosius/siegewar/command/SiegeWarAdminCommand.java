@@ -15,6 +15,7 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -32,10 +33,11 @@ import com.palmergames.util.TimeMgmt;
 
 public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
-	private static final List<String> siegewaradminTabCompletes = Arrays.asList("immunity","reload","siege","town");
+	private static final List<String> siegewaradminTabCompletes = Arrays.asList("immunity","reload","siege","town","nation");
 	private static final List<String> siegewaradminImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setpoints","end","setplundered","remove");
 	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setcaptured");
+	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setwins","setlosses","setnationdefeats");
 
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
@@ -82,6 +84,12 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			if (args.length == 4)
 				if (args[2].equalsIgnoreCase("setcaptured"))
 					return Arrays.asList("true","false");
+		case "nation":
+			if (args.length == 2)
+				return getTownyStartingWith(args[1], "n");
+			
+			if (args.length == 3)
+				return NameUtil.filterByStart(siegewaradminNationTabCompletes, args[2]);
 		default:
 			if (args.length == 1)
 				return NameUtil.filterByStart(siegewaradminTabCompletes, args[0]);
@@ -116,6 +124,9 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 				break;
 			case "town":
 				parseSiegeWarTownCommand(sender, StringMgmt.remFirstArg(args));
+				break;
+			case "nation":
+				parseSiegeWarNationCommand(sender, StringMgmt.remFirstArg(args));
 				break;
 
 			/*
@@ -165,6 +176,13 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	private void showTownHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/swa town"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setcaptured [true/false]", ""));
+	}
+
+	private void showNationHelp(CommandSender sender) {
+		sender.sendMessage(ChatTools.formatTitle("/swa nation"));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setwins [amount]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setlosses [amount]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setnationdefeats [amount]", ""));
 	}
 
 	private void parseSiegeWarReloadCommand(CommandSender sender) {
@@ -317,6 +335,43 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			showTownHelp(sender);
 	}
 
+	private void parseSiegeWarNationCommand(CommandSender sender, String[] args) {
+		if (args.length >= 3) {
+			Nation nation = TownyUniverse.getInstance().getNation(args[0]);
+			if (nation == null) {
+				Messaging.sendErrorMsg(sender, Translation.of("msg_err_nation_not_registered", args[0]));
+				return;
+			}
+
+			int amount = 0;
+			try {
+				amount = Integer.parseInt(args[2]);
+			} catch (NumberFormatException e) {
+				Messaging.sendMsg(sender, Translation.of("msg_error_must_be_num"));
+				showNationHelp(sender);
+				return;
+			}
+
+			switch(args[1].toLowerCase()) {
+				case "setwins":
+					NationMetaDataController.setLifetimeWins(nation, amount);
+					Messaging.sendMsg(sender, Translation.of("msg_swa_set_wins_success", amount, nation.getName()));
+					return;
+				case "setlosses":
+					NationMetaDataController.setLifetimeLosses(nation, amount);
+					Messaging.sendMsg(sender, Translation.of("msg_swa_set_losses_success", amount, nation.getName()));
+					return;
+				case "setnationdefeats":
+					NationMetaDataController.setNationsDefeated(nation, amount);
+					Messaging.sendMsg(sender, Translation.of("msg_swa_set_nationdefeats_success", amount, nation.getName()));
+					return;
+				default:
+					showNationHelp(sender);
+					return;
+			}
+		} else
+			showNationHelp(sender);
+	}
 
 	/**
 	 * Returns a List<String> containing strings of resident, town, and/or nation names that match with arg.
