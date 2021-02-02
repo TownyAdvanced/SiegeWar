@@ -19,6 +19,8 @@ import com.gmail.goosius.siegewar.listeners.SiegeWarPlotEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 
+import java.io.File;
+
 public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
@@ -28,6 +30,10 @@ public class SiegeWar extends JavaPlugin {
 
 	public static SiegeWar getSiegeWar() {
 		return plugin;
+	}
+
+	public File getSiegeWarJarFile() {
+		return getFile();
 	}
 
 	public static SiegeHUDManager getSiegeHUDManager() {
@@ -62,7 +68,7 @@ public class SiegeWar extends JavaPlugin {
         Plugin dynmap = Bukkit.getPluginManager().getPlugin("dynmap");
         if (dynmap != null) {
         	System.out.println(prefix + "SiegeWar found Dynmap, enabling Dynmap support.");
-        	DynmapTask.setDynmapAPI((DynmapAPI) dynmap);
+        	DynmapTask.setupDynmapAPI((DynmapAPI) dynmap);
         } else {
         	System.out.println(prefix + "Dynmap not found.");
         }

@@ -9,9 +9,12 @@ import com.gmail.goosius.siegewar.utils.FileMgmt;
 
 public class Settings {
 	private static CommentedConfiguration config, newConfig;
+	private static File battleIconFile;
+	public static final String BATTLE_BANNER_FILE_NAME = "crossedswords.png";
 
 	public static boolean loadSettingsAndLang() {
 		SiegeWar sw = SiegeWar.getSiegeWar();
+
 		try {
 			Settings.loadConfig(sw.getDataFolder().getPath() + File.separator + "config.yml", sw.getVersion());
 		} catch (IOException e) {
@@ -30,6 +33,16 @@ public class Settings {
 	        System.err.println(SiegeWar.prefix + "Language file failed to load! Disabling!");
 	        return false;
 	    }
+
+		//Extract images
+		try {
+			battleIconFile = FileMgmt.extractImageFile(BATTLE_BANNER_FILE_NAME);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(SiegeWar.prefix + "Could not load images! Disabling!");
+			return false;
+		}
+
 		return true;
 	}
 	
@@ -144,4 +157,7 @@ public class Settings {
 		config.save();
 	}
 
+	public static File getBattleIconFile() {
+		return battleIconFile;
+	}
 }

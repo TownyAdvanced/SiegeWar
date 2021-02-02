@@ -1,9 +1,10 @@
 package com.gmail.goosius.siegewar.tasks;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.InputStream;
+import java.util.*;
+
+import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.settings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -31,8 +32,10 @@ public class DynmapTask {
     static boolean stop;
     static MarkerSet set;
     static Map<String, Marker> markerMap = new HashMap<String, Marker>();
+    final static String PEACEFUL_BANNER_ICON_ID = "fire";
+    final static String BATTLE_BANNER_ICON_ID = "siegewar.battle";
 
-    public static void setDynmapAPI(DynmapAPI _api) {
+    public static void setupDynmapAPI(DynmapAPI _api) {
         api = _api;
         markerapi = api.getMarkerAPI();
         if (markerapi == null) {
@@ -41,14 +44,19 @@ public class DynmapTask {
         }
 
         set = markerapi.getMarkerSet("siegewar.markerset");
-        if (set == null)
+        if (set == null) {
             set = markerapi.createMarkerSet("siegewar.markerset", "SiegeWar", null, false);
-        else
+        } else
             set.setMarkerSetLabel("SiegeWar");
+
         if (set == null) {
             System.err.println(SiegeWar.prefix + "Error creating dynmap marker set");
             return;
         }
+
+        //Create battle banner marker icon
+        InputStream png = SiegeWar.getSiegeWar().getResource(Settings.BATTLE_BANNER_FILE_NAME);
+        markerapi.createMarkerIcon(BATTLE_BANNER_ICON_ID, "BattleBanner", png);
 
         startDynmapTask();
         System.out.println(SiegeWar.prefix + "Dynmap support enabled.");
@@ -68,23 +76,48 @@ public class DynmapTask {
         stop = true;
     }
 
+    /**
+     * Remove markers belonging to sieges that have ended
+     * Also change any icons if required (between peaceful icon & battle icon)
+     */
     private static void displaySieges() {
-        for (Marker marker : markerMap.values()) { //Remove markers belonging to sieges that have ended
+        for (Marker marker : markerMap.values()) {
             try {
-                if (!SiegeController.hasActiveSiege(SiegeController.getSiege(marker.getLabel().replaceAll(".+: ", "").replaceAll(" ", "#")).getDefendingTown())) {
+                Siege siege = SiegeController.getSiege(marker.getLabel().replaceAll(".+: ", "").replaceAll(" ", "#"));
+
+                if (!SiegeController.hasActiveSiege(siege.getDefendingTown())) {
+                    //Delete marker if siege is over
                     marker.deleteMarker();
                     markerMap.remove(marker.getMarkerID());
+                } else if (marker.getMarkerIcon().getMarkerIconID().equals(PEACEFUL_BANNER_ICON_ID)
+                        && (siege.getBannerControllingSide() != SiegeSide.NOBODY || siege.getBannerControlSessions().size() > 0)) {
+                    //Ensure icon is battle icon if players are fighting
+                    marker.setMarkerIcon(markerapi.getMarkerIcon(BATTLE_BANNER_ICON_ID));
+                } else if (marker.getMarkerIcon().getMarkerIconID().equals(BATTLE_BANNER_ICON_ID)
+                        && siege.getBannerControllingSide() == SiegeSide.NOBODY
+                        && siege.getBannerControlSessions().size() == 0) {
+                    //Ensure icon is peaceful icon if nobody is fighting
+                    marker.setMarkerIcon(markerapi.getMarkerIcon(PEACEFUL_BANNER_ICON_ID));
                 }
             } catch (NotRegisteredException e) {
                 marker.deleteMarker();
                 markerMap.remove(marker.getMarkerID());
-            }            
+            }
         }
+
         for (Siege siege : SiegeController.getSieges()) {
             String name = Translation.of("dynmap_siege_title", siege.getName().replace("#", " "));
             try {
                 if (siege.getStatus().isActive()) {
-                    MarkerIcon siegeIcon = markerapi.getMarkerIcon("fire");
+                    //If anyone is in a BC session or on the BC list, it is a fire & swords icon
+                    //otherwise just fire
+                    MarkerIcon siegeIcon;
+                    if(siege.getBannerControllingSide() == SiegeSide.NOBODY
+                            && siege.getBannerControlSessions().size() == 0) {
+                        siegeIcon = markerapi.getMarkerIcon(PEACEFUL_BANNER_ICON_ID);
+                    } else {
+                        siegeIcon = markerapi.getMarkerIcon(BATTLE_BANNER_ICON_ID);
+                    }
                     List<String> lines = new ArrayList<>();
                     lines.add(Translation.of("dynmap_siege_attacker", siege.getAttackingNation().getName()));
                     lines.add(Translation.of("dynmap_siege_defender", siege.getDefendingTown().getName()));
@@ -111,8 +144,7 @@ public class DynmapTask {
                     } else {
                         siegeMarker.setLabel(name);
                         siegeMarker.setDescription(desc);
-                    }                  
-
+                    }
                     markerMap.put(siegeMarkerId, siegeMarker);
                 }
             } catch (Exception ex) {

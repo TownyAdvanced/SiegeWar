@@ -1,5 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.SiegeWar;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +14,9 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class FileMgmt {
 
@@ -170,4 +175,39 @@ public class FileMgmt {
 
 	}
 
+	public static File extractImageFile(String fileName) throws Exception {
+		/*
+		* Open JAR as ZIP
+		* I copied this closely from what dynmap was doing for its image files,
+		* because the above unpackResourceFile() corrupts .png files if used for them.
+		*/
+		File jarfile = SiegeWar.getSiegeWar().getSiegeWarJarFile();
+
+		int len;
+		ZipFile zipFile;
+		String candidateFileNameInZip;
+		FileOutputStream fileOutputStream;
+		InputStream inputStream;
+		byte[] buffer = new byte[2048];
+		File fileOnServer= null;
+
+		zipFile = new ZipFile(jarfile);
+		Enumeration<? extends ZipEntry> e = zipFile.entries();
+		while (e.hasMoreElements()) {
+			ZipEntry zipEntry = e.nextElement();
+			candidateFileNameInZip = zipEntry.getName();
+
+			if (candidateFileNameInZip.equalsIgnoreCase(fileName)) {
+				inputStream = zipFile.getInputStream(zipEntry);
+				fileOnServer = new File(SiegeWar.getSiegeWar().getDataFolder().getPath() + File.separator + fileName);
+				fileOutputStream = new FileOutputStream(fileOnServer);
+				while ((len = inputStream.read(buffer)) >= 0) {
+					fileOutputStream.write(buffer, 0, len);
+				}
+				inputStream.close();
+				fileOutputStream.close();
+			}
+		}
+		return fileOnServer;
+	}
 }
