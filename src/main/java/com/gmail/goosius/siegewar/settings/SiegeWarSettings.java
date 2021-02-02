@@ -359,4 +359,8 @@ public class SiegeWarSettings {
 	public static boolean getWarCommonPeacefulTownsPublicSpawning() {
 		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_PUBLIC_SPAWNING);
 	}
+
+	public static boolean getWarSiegeNationStatisticsEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_NATION_STATISTICS_ENABLED);
+	}
 }

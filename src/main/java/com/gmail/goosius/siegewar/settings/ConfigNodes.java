@@ -149,6 +149,11 @@ public enum ConfigNodes {
 			"# The attacking side population consists of the residents of the attacking nation, and allies.",
 			"# The defending side population consists of the residents of the defending town, and nation + allies if applicable.",
 			"# The level of the boost is configured in separate configs. See the scoring section of this file."),
+	WAR_SIEGE_NATION_STATISTICS_ENABLED(
+			"war.siege.switches.nation_statistics_enabled",
+			"true",
+			"",
+			"# If this setting is true, then Siegewar statistics will be shown on nation status screens."),
 
 	//Monetary Values
 	WAR_SIEGE_ATTACKER_COST_UPFRONT_PER_PLOT(
