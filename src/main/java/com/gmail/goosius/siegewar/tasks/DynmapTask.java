@@ -46,7 +46,9 @@ public class DynmapTask {
         set = markerapi.getMarkerSet("siegewar.markerset");
         if (set == null) {
             InputStream png = SiegeWar.getSiegeWar().getResource(Settings.BATTLE_BANNER_FILE_NAME);
-            markerapi.createMarkerIcon(BATTLE_BANNER_ICON_ID, "Siege and Battle", png);
+            MarkerIcon mi = markerapi.createMarkerIcon(BATTLE_BANNER_ICON_ID, "Battle Banner", png);
+            System.out.println("ssssdds" + mi.getMarkerIconID());
+
             set = markerapi.createMarkerSet("siegewar.markerset", "SiegeWar", null, false);
         } else
             set.setMarkerSetLabel("SiegeWar");
@@ -90,6 +92,11 @@ public class DynmapTask {
                 } else if (marker.getMarkerIcon().getMarkerIconID().equals(PEACEFUL_BANNER_ICON_ID)
                         && (siege.getBannerControllingSide() != SiegeSide.NOBODY || siege.getBannerControlSessions().size() > 0)) {
                     //Ensure icon is battle icon if players are fighting
+
+                    InputStream png = SiegeWar.getSiegeWar().getResource(Settings.BATTLE_BANNER_FILE_NAME);
+                    MarkerIcon mi = markerapi.createMarkerIcon(BATTLE_BANNER_ICON_ID, "Battle Banner", png);
+                    System.out.println("xxx" + mi.getMarkerIconID());
+
                     marker.setMarkerIcon(markerapi.getMarkerIcon(BATTLE_BANNER_ICON_ID));
                 } else if (marker.getMarkerIcon().getMarkerIconID().equals(BATTLE_BANNER_ICON_ID)
                         && siege.getBannerControllingSide() == SiegeSide.NOBODY
