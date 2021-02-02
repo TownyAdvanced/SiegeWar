@@ -176,7 +176,11 @@ public class FileMgmt {
 	}
 
 	public static File extractImageFile(String fileName) throws Exception {
-		/* Open JAR as ZIP */
+		/*
+		* Open JAR as ZIP
+		* I copied this closely from what dynmap was doing for its image files,
+		* because the above unpackResourceFile() corrupts .png files if used for them.
+		*/
 		File jarfile = SiegeWar.getSiegeWar().getSiegeWarJarFile();
 
 		int len;
@@ -192,8 +196,6 @@ public class FileMgmt {
 		while (e.hasMoreElements()) {
 			ZipEntry zipEntry = e.nextElement();
 			candidateFileNameInZip = zipEntry.getName();
-
-			System.out.println("File Name in zip: " + candidateFileNameInZip);
 
 			if (candidateFileNameInZip.equalsIgnoreCase(fileName)) {
 				inputStream = zipFile.getInputStream(zipEntry);
