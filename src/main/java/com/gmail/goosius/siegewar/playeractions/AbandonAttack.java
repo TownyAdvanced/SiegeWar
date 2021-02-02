@@ -5,10 +5,12 @@ import org.bukkit.block.Block;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.gmail.goosius.siegewar.settings.Translation;
@@ -53,6 +55,12 @@ public class AbandonAttack {
 
     private static void attackerAbandon(Siege siege) {
 		long timeUntilOfficialAbandon = siege.getTimeUntilAbandonConfirmationMillis();
+
+		NationMetaDataController.addWinOrLoss(siege.getAttackingNation(), false);
+		if (siege.getDefendingTown().hasNation())
+			try {
+				NationMetaDataController.addWinOrLoss(siege.getDefendingTown().getNation(), true);
+			} catch (NotRegisteredException ignored) {}
 
 		if(timeUntilOfficialAbandon > 0) {
 			//Pending abandon

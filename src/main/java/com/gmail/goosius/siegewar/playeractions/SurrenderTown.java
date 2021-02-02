@@ -3,10 +3,12 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.util.TimeMgmt;
 
 /**
@@ -19,6 +21,12 @@ public class SurrenderTown {
     public static void defenderSurrender(Siege siege) {
 
 		long timeUntilSurrenderConfirmation = siege.getTimeUntilSurrenderConfirmationMillis();
+
+		NationMetaDataController.addWinOrLoss(siege.getAttackingNation(), true);
+		if (siege.getDefendingTown().hasNation())
+			try {
+				NationMetaDataController.addWinOrLoss(siege.getDefendingTown().getNation(), false);
+			} catch (NotRegisteredException ignored) {}
 
 		if(timeUntilSurrenderConfirmation > 0) {
 			//Pending surrender
