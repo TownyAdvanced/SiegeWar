@@ -10,6 +10,7 @@ import com.gmail.goosius.siegewar.utils.FileMgmt;
 public class Settings {
 	private static CommentedConfiguration config, newConfig;
 	private static File battleIconFile;
+	public static final String BATTLE_BANNER_FILE_NAME = "crossedswords.png";
 
 	public static boolean loadSettingsAndLang() {
 		SiegeWar sw = SiegeWar.getSiegeWar();
@@ -35,7 +36,7 @@ public class Settings {
 
 		//Extract images
 		try {
-			battleIconFile = FileMgmt.extractImageFile("crossedswords.png");
+			battleIconFile = FileMgmt.extractImageFile(BATTLE_BANNER_FILE_NAME);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(SiegeWar.prefix + "Could not load images! Disabling!");
