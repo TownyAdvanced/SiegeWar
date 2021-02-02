@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,6 +11,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -209,6 +211,11 @@ public class SiegeWarNationEventListener implements Listener {
 	        out.addAll(ChatTools.listArr(formattedSiegeDefences, Translation.of("status_nation_siege_defences", siegeDefences.size())));
 	        
 	        event.addLines(out);
+
+			if (SiegeWarSettings.getWarSiegeNationStatisticsEnabled()) {
+				event.addLines(Arrays.asList(Translation.of("status_nation_wins_losses", NationMetaDataController.getLifetimeWins(nation), NationMetaDataController.getLifetimeLosses(nation)),
+											Translation.of("status_nation_enemy_nations_defeated", NationMetaDataController.getNationsDefeated(nation))));
+			}	
 		}
 	}
     
