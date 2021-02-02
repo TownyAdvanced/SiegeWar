@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 
 /**
  * This class contains utility functions related to completing sieges
@@ -26,10 +27,9 @@ public class SiegeWarSiegeCompletionUtil {
 		if (siegeStatus == SiegeStatus.DEFENDER_SURRENDER || siegeStatus == SiegeStatus.ATTACKER_WIN) {
 			SiegeWarTimeUtil.activateRevoltImmunityTimer(siege.getDefendingTown()); //Prevent immediate revolt
 		}
-		SiegeController.setTownFlags(siege.getDefendingTown(), false);
+		SiegeWarTownUtil.setTownFlags(siege.getDefendingTown(), false);
 
 		//Save to db
 		SiegeController.saveSiege(siege);
-		siege.getDefendingTown().save();
 	}
 }
