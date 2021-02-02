@@ -32,6 +32,7 @@ permissions:
             siegewar.command.siegewaradmin.reload: true
             siegewar.command.siegewaradmin.siege: true
             siegewar.command.siegewaradmin.town: true
+            siegewar.command.siegewaradmin.nation: true
 
     siegewar.command.siegewar.*:
         description: User is able to do all /siegewar commands.
