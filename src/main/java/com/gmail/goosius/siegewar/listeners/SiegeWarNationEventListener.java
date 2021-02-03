@@ -266,7 +266,7 @@ public class SiegeWarNationEventListener implements Listener {
 		for (Siege siege : SiegeController.getSieges(nation)) {
 			if (enemyTownsUnderSiege.contains(siege.getDefendingTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("msg_err_cannot_remove_enemy"));
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_remove_enemy"));
 			}
 		}
 	}
