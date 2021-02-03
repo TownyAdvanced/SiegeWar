@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.exceptions.AlreadyRegisteredException;
@@ -82,7 +83,8 @@ public class InvadeTown {
 
             // This will delete the Nation when it loses its last town, mark them defeated.
             if(nationOfDefendingTown.getTowns().size() == 1) {
-               	nationDefeated = true;
+				nationDefeated = true;
+				NationMetaDataController.incrementDefeatedNations(attackingNation);   
             }
             
 			//Remove town from nation (and nation itself if empty)
