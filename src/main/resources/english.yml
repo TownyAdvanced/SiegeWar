@@ -264,3 +264,5 @@ msg_swa_set_wins_success: '&bSuccessfully set wins to %d for %s.'
 msg_swa_set_losses_success: '&bSuccessfully set losses to %d for %s.'
 msg_swa_set_nationdefeats_success: '&bSuccessfully set nation defeats to %d for %s.'
 msg_err_nation_not_registered: '&cNation %s is not registered.'
+
+msg_err_cannot_remove_enemy: '&cYou cannot remove a nation as enemy if you have an active siege against them!'

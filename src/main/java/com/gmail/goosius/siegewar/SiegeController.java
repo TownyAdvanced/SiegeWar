@@ -304,4 +304,24 @@ public class SiegeController {
 		}
 		return siegesAtLocation;
 	}
+
+	/**
+	 * Gets a list of towns with an active siege that have a certain nation
+	 * 
+	 * @param nation The nation that the town must be in.
+	 * @return The list of towns that are under siege in that nation.
+	 */
+	public static List<Town> getSiegedTowns(Nation nation) {
+		List<Town> siegedTowns = new ArrayList<Town>();
+		for (Town town : getSiegedTowns()) {
+			if (!town.hasNation() || !getSiege(town).getStatus().isActive())
+				continue;
+			try {
+				if (town.getNation().equals(nation));
+					siegedTowns.add(town);
+			} catch (NotRegisteredException ignored) {}
+			
+		}
+		return siegedTowns;
+	}
 }
