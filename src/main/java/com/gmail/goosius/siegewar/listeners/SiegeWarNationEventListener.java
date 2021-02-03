@@ -25,6 +25,7 @@ import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.DeleteNationEvent;
 import com.palmergames.bukkit.towny.event.NationPreAddTownEvent;
+import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
 import com.palmergames.bukkit.towny.event.PreDeleteNationEvent;
 import com.palmergames.bukkit.towny.event.RenameNationEvent;
 import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
@@ -252,5 +253,21 @@ public class SiegeWarNationEventListener implements Listener {
 		}
 	}
 
+	@EventHandler
+	public void onPreNationEnemyRemove(NationPreRemoveEnemyEvent event) {
+		Nation nation = event.getNation();
+		Nation enemyNation = event.getEnemy();
 
+		if (!SiegeController.hasSieges(nation))	
+			return;
+		
+		List<Town> enemyTownsUnderSiege = SiegeController.getSiegedTowns(enemyNation);
+
+		for (Siege siege : SiegeController.getSieges(nation)) {
+			if (enemyTownsUnderSiege.contains(siege.getDefendingTown())) {
+				event.setCancelled(true);
+				event.setCancelMessage(Translation.of("msg_err_cannot_remove_enemy"));
+			}
+		}
+	}
 }
