@@ -208,6 +208,7 @@ public class FileMgmt {
 				fileOutputStream.close();
 			}
 		}
+		zipFile.close();
 		return fileOnServer;
 	}
 }
