@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.metadata;
 
-import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
@@ -94,22 +93,6 @@ class MetaDataUtil {
 			DecimalDataField value = (DecimalDataField) cdf;
 			value.setValue(num);
 			town.save();
-		}
-	}
-
-	static int getInt(Nation nation, IntegerDataField idf) {
-		CustomDataField<?> cdf = nation.getMetadata(idf.getKey());
-		if (cdf instanceof IntegerDataField) 
-			return ((IntegerDataField) cdf).getValue();
-		return 0;	
-	}
-
-	static void setInt(Nation nation, IntegerDataField idf, int num) {
-		CustomDataField<?> cdf = nation.getMetadata(idf.getKey());
-		if (cdf instanceof IntegerDataField) {
-			IntegerDataField value = (IntegerDataField) cdf;
-			value.setValue(num);
-			nation.save();
 		}
 	}
 }
