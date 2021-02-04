@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
@@ -11,6 +12,7 @@ import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -89,6 +91,12 @@ public class PlunderTown {
 			if(town.getAccount().canPayFromHoldings(plunderAmount)) {
 				//Town can afford plunder			
 				town.getAccount().payTo(plunderAmount, nation, "Plunder");
+
+				NationMetaDataController.setTotalPlunderGained(nation, NationMetaDataController.getTotalPlunderGained(nation) + (int) plunderAmount);
+				if (town.hasNation())
+					try {
+						NationMetaDataController.setTotalPlunderLost(town.getNation(), NationMetaDataController.getTotalPlunderLost(town.getNation()) + (int) plunderAmount);
+					} catch (NotRegisteredException ignored) {}
 			} else {
 				//Town cannot afford plunder
 				
