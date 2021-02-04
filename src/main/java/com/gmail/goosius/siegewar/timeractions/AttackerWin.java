@@ -2,11 +2,9 @@ package com.gmail.goosius.siegewar.timeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.gmail.goosius.siegewar.settings.Translation;
 
@@ -26,12 +24,6 @@ public class AttackerWin {
 	public static void attackerWin(Siege siege, Nation winnerNation) {
 		SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.ATTACKER_WIN);
 		
-		NationMetaDataController.addWinOrLoss(winnerNation, true);
-		if (siege.getDefendingTown().hasNation())
-			try {
-				NationMetaDataController.addWinOrLoss(siege.getDefendingTown().getNation(), false);
-			} catch (NotRegisteredException ignored) {}
-
 		Messaging.sendGlobalMessage(Translation.of("msg_siege_war_attacker_win", 
 		    winnerNation.getFormattedName(),
 			siege.getDefendingTown().getFormattedName()

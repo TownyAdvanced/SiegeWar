@@ -85,7 +85,8 @@ public class InvadeTown {
             if(nationOfDefendingTown.getTowns().size() == 1) {
 				nationDefeated = true;
 				NationMetaDataController.incrementDefeatedNations(attackingNation);   
-            }
+			} else
+				NationMetaDataController.setTotalTownsLost(nationOfDefendingTown, NationMetaDataController.getTotalTownsLost(nationOfDefendingTown) + 1);
             
 			//Remove town from nation (and nation itself if empty)
             defendingTown.removeNation();
@@ -101,6 +102,8 @@ public class InvadeTown {
 		defendingTown.setConquered(true);
 		
 		SiegeWarTownUtil.disableNationPerms(defendingTown);
+
+		NationMetaDataController.setTotalTownsGained(attackingNation, NationMetaDataController.getTotalTownsGained(attackingNation) + 1);
 
 		//Save to db
         SiegeController.saveSiege(siege);

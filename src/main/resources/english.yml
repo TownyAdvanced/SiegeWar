@@ -257,11 +257,14 @@ msg_you_will_get_sickness: '&c&cYou are not a participant of this siege and cann
 msg_war_siege_peaceful_town_cannot_revolt_zero_or_one_unsieged_guardian_towns_nearby:  '&cYou cannot revolt at this time, because there are less than 2 unsieged guardian towns nearby (within %d chunks). A guardian town is a non-peaceful town in an open nation, with at least %d plots.'
 
 #Added in 0.08:
-status_nation_wins_losses: '&2Siege Wins/Losses: &a%d&2/&a%d'
+status_nation_town_stats: '&2Towns Captured/Lost: &a%d&2/&a%d'
+status_nation_plunder_stats: '&2Plunder Gains/Losses: &a%d&2/&a%d'
 status_nation_enemy_nations_defeated: '&2Enemy Nations Defeated: &a%d'
 
-msg_swa_set_wins_success: '&bSuccessfully set wins to %d for %s.'
-msg_swa_set_losses_success: '&bSuccessfully set losses to %d for %s.'
+msg_swa_set_towns_gained_success: '&bSuccessfully set towns gained to %d for %s.'
+msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
+msg_swa_set_plunder_gained_success: '&bSuccessfully set plunder gained to %d for %s.'
+msg_swa_set_plunder_lost_success: '&bSuccessfully set plunder lost to %d for %s.'
 msg_swa_set_nationdefeats_success: '&bSuccessfully set nation defeats to %d for %s.'
 msg_err_nation_not_registered: '&cNation %s is not registered.'
 
