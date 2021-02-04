@@ -37,7 +37,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	private static final List<String> siegewaradminImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setpoints","end","setplundered","remove");
 	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setcaptured");
-	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setwins","setlosses","setnationdefeats");
+	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost","setnationdefeats");
 
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
@@ -180,8 +180,10 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
 	private void showNationHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/swa nation"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setwins [amount]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setlosses [amount]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplundergained [amount]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplunderlost [amount]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownsgained [amount]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownslost [amount]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setnationdefeats [amount]", ""));
 	}
 
@@ -353,13 +355,21 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			}
 
 			switch(args[1].toLowerCase()) {
-				case "setwins":
-					NationMetaDataController.setLifetimeWins(nation, amount);
-					Messaging.sendMsg(sender, Translation.of("msg_swa_set_wins_success", amount, nation.getName()));
+				case "setplundergained":
+					NationMetaDataController.setTotalPlunderGained(nation, amount);
+					Messaging.sendMsg(sender, Translation.of("msg_swa_set_plunder_gained_success", amount, nation.getName()));
 					return;
-				case "setlosses":
-					NationMetaDataController.setLifetimeLosses(nation, amount);
-					Messaging.sendMsg(sender, Translation.of("msg_swa_set_losses_success", amount, nation.getName()));
+				case "setplunderlost":
+					NationMetaDataController.setTotalPlunderLost(nation, amount);
+					Messaging.sendMsg(sender, Translation.of("msg_swa_set_plunder_lost_success", amount, nation.getName()));
+					return;
+				case "settownsgained":
+					NationMetaDataController.setTotalTownsGained(nation, amount);
+					Messaging.sendMsg(sender, Translation.of("msg_swa_set_towns_gained_success", amount, nation.getName()));
+					return;
+				case "settownslost":
+					NationMetaDataController.setTotalTownsLost(nation, amount);
+					Messaging.sendMsg(sender, Translation.of("msg_swa_set_towns_lost_success", amount, nation.getName()));
 					return;
 				case "setnationdefeats":
 					NationMetaDataController.setNationsDefeated(nation, amount);
