@@ -271,7 +271,7 @@ public class Siege {
 				timeLeft = (SiegeWarSettings.getWarSiegeMinSiegeDurationBeforeSurrenderHours() * ONE_HOUR_IN_MILLIS) - getDurationMillis();
 				break;
 			default:
-				timeLeft = System.currentTimeMillis();
+				timeLeft = 0;
 		}
 		return TimeMgmt.getFormattedTimeValue(timeLeft);
 	}
