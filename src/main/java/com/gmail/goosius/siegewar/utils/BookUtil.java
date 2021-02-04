@@ -52,10 +52,13 @@ public class BookUtil {
 		boolean bankruptcy = TownySettings.isTownBankruptcyEnabled();
 		boolean ruins = TownRuinSettings.getTownRuinsEnabled();
 		boolean peaceful = SiegeWarSettings.getWarCommonPeacefulTownsEnabled();
+		String bannerCost = "zero";
+		if (TownyEconomyHandler.isActive())
+			bannerCost = TownyEconomyHandler.getFormattedBalance(SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot());
 		
 		text += "Sieges are between nations - who attack, and towns - who defend.\n\n";
 		text += "A nation starts a siege when the king (or a general) places a coloured banner (known as the 'siege banner') just outside the target town.\n\n";
-		text += "The cost to begin a siege is " + TownyEconomyHandler.getFormattedBalance(SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()) + " per plot owned by the Town which would be sieged.\n\n";
+		text += "The cost to begin a siege is " + bannerCost  + " per plot owned by the Town which would be sieged.\n\n";
 		text += "Each nation can have a maximum of " + SiegeWarSettings.getWarSiegeMaxActiveSiegeAttacksPerNation() + " attack sieges at any one time.\n\n";
 
 		text += "Recently besieged towns" + (peaceful ? ", and Peaceful towns" : "") +  " cannot be attacked.\n\n";
@@ -89,9 +92,9 @@ public class BookUtil {
 		if (SiegeWarSettings.getWarSiegeInvadeEnabled())
 			text += "Towns can be captured after being defeated in a siege (adding the town to the victorious nation, with no change of mayor).\n\n";
 		if (SiegeWarSettings.getWarSiegeRevoltEnabled())
-			text += "An occupied town can revolt after " + occupationtime + ", freeing themselves from the occupying nation./n/n";
+			text += "An occupied town can revolt after " + occupationtime + ", freeing themselves from the occupying nation.\n\n";
 		if (SiegeWarSettings.getWarSiegePlunderEnabled()) {
-			text += "Towns can be plundered after being defeated in a siege (transferring money from the town to the victorious nation)./n";
+			text += "Towns can be plundered after being defeated in a siege (transferring money from the town to the victorious nation).\n";
 			if (bankruptcy)
 				text += "If it runs out of money it will not be destroyed, but rather set to a 'bankrupt' state, where the town cannot recruit, claim, or build until the debt is repaid.\n";
 			else 
@@ -101,7 +104,7 @@ public class BookUtil {
 			else 
 				text += "If a town is ultimately destroyed, that town will be deleted with no Ruined period.\n\n";		}
 		if (peaceful)
-			text += "Peaceful towns can opt out of war (by toggling peaceful, a town receives immunity from siege attacks & taxes. In return, its nation choice is more restricted, and its residents suffer from 'war allergy' if they approach a siege zone)./n/n";
+			text += "Peaceful towns can opt out of war (by toggling peaceful, a town receives immunity from siege attacks & taxes. In return, its nation choice is more restricted, and its residents suffer from 'war allergy' if they approach a siege zone).\n\n";
 		return text;
 	}
 
