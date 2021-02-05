@@ -62,20 +62,20 @@ public class BookUtil {
 			text += "The cost to siege a nation's capital city is " + SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage() + "% more than non-capital towns.\n\n";
 		// Immunity
 		text += "Each nation can have a maximum of " + SiegeWarSettings.getWarSiegeMaxActiveSiegeAttacksPerNation() + " attack sieges at any one time.\n\n";
-		text += "Recently besieged towns have temporary 'siege immunity', and cannot be sieged.";
+		text += "Recently besieged towns have temporary 'siege immunity', and cannot be sieged.\n\n";
 		if(SiegeWarSettings.getWarSiegeSiegeImmunityTimeNewTownsHours() > 0)
 			text += "New towns also have siege immunity, and cannot be sieged for " + SiegeWarSettings.getWarSiegeSiegeImmunityTimeNewTownsHours() + " hours after creation.\n\n";
 		if(peaceful)
-			text += "Peaceful towns cannot be sieged at all.";
+			text += "Peaceful towns cannot be sieged at all.\n\n";
 
 		/*
 		 * Siege participants info
 		 */
-		text += "SIEGE PARTICIPANTS\n\n";
-		text += "There are 2 official military sides in every siege, the attackers, and the defenders.";
-		text += "Attackers: Soldiers from the nation who started the siege, and their allies\n\n";
-		text += "Defenders: Guards from the besieged town, as well as soldiers from the town's nation (if any) and from that nation's allies.\n\n";
-		text += "All participants from each side can contribute fully to scoring.";
+		text += "\nSIEGE PARTICIPANTS\n\n";
+		text += "There are 2 official military sides in every siege, the attackers, and the defenders:\n\n";
+		text += "Attackers: Soldiers from the nation who started the siege, and their allies.\n";
+		text += "Defenders: Guards from the besieged town, as well as soldiers from the town's nation (if any) and from that nation's allies.\n";
+		text += "All participants from each side can contribute fully to scoring.\n";
 		if (SiegeWarSettings.getWarSiegeDeathPenaltyKeepInventoryEnabled()) {
 			text += "If a participant dies in the siege zone, their items are kept";
 			if (SiegeWarSettings.getWarSiegeDeathPenaltyDegradeInventoryEnabled())
@@ -87,15 +87,15 @@ public class BookUtil {
 		/*
 		 * Scoring info
 		 */
-		text += "SIEGE SCORING\n\n";
+		text += "\nSIEGE SCORING\n\n";
 		text += "Players win sieges by holding the ground within " + SiegeWarSettings.getBannerControlHorizontalDistanceBlocks() + " blocks of the siege banner (the 'timed point zone'), and/or by killing enemy soldiers within " + SiegeWarSettings.getWarSiegeZoneRadiusBlocks() + " blocks of the siege banner (the 'siege zone').\n\n";
 		text += "Attackers gain " + SiegeWarSettings.getWarSiegePointsForAttackerOccupation() + " base points every 20 seconds for holding the banner. ";
 		text += "Defenders gain " + SiegeWarSettings.getWarSiegePointsForDefenderOccupation() + " base points every 20 seconds for holding the banner. ";
 		text += "Attackers gain " + SiegeWarSettings.getWarSiegePointsForAttackerDeath() + " base points if an attacker is killed in the siege zone. ";
 		text += "Defenders gain " + SiegeWarSettings.getWarSiegePointsForDefenderDeath() + " base points if an defender is killed in the siege zone.\n\n";
 		if (!SiegeWarSettings.isWarSiegeCounterattackBoosterDisabled() && counterPercent > 0) {
-			text += "If one siege-side has banner control, then the other side will receive a kill point bonus of " + counterPercent + " % for each player on the banner control list.";
-			text += "For example, if there are 3 players on the banner control list and one is killed, the enemy side will receive " + (3 * counterPercent) + "% more death points than normal.";
+			text += "If one siege-side has banner control, then the other side will receive a kill point bonus of " + counterPercent + " % for each player on the banner control list. ";
+			text += "For example, if there are 3 players on the banner control list and one is killed, the enemy side will receive " + (3 * counterPercent) + "% more death points than normal.\n\n";
 		}
 		if (SiegeWarSettings.getWarSiegePopulationBasedPointBoostsEnabled())
 			text += "The side of the siege which has a lower population will receive extra siege points.\n\n";
@@ -133,7 +133,7 @@ public class BookUtil {
 		if (surrender || abandon) {
 			text += "A siege can also end early,";
 			if (abandon)
-				text += " if the attacking king (or a general) abandons the attack, by placing a white banner outside the town";
+				text += " if the attacking king (or a general) abandons the attack, by placing  white banner outside the town";
 			if (surrender && abandon)
 				text += ", or";
 			if (surrender)
@@ -148,21 +148,21 @@ public class BookUtil {
 
 		// Plundering
 		if (SiegeWarSettings.getWarSiegePlunderEnabled()) {
-			text += "\nPOST-SIEGE ACTION - TOWN PLUNDER\n\n";
-			text += "A town can be plundered after being defeated in a siege, by the attacking king (or a general) placing a chest just outside the town.";
-			text += "This action will take money from the defeated town (" + plunderCost + " per townblock, and transfer it to the victorious nation.";
+			text += "\nPOST-SIEGE ACTION: TOWN PLUNDER\n\n";
+			text += "A town can be plundered after being defeated in a siege, by the attacking king (or a general) placing a chest just outside the town. ";
+			text += "This action will take money from the defeated town (" + plunderCost + " per townblock,) and transfer it to the victorious nation.\n";
 			if (bankruptcy)
 				text += "If the town runs out of money it will not be destroyed, but rather set to a 'bankrupt' state, where the town cannot recruit, claim, or build until the debt is repaid.\n";
 			else
-				text += "If the town runs out of money it will be destroyed.";
+				text += "If the town runs out of money it will be destroyed.\n";
 			if (ruins)
-				text += "If a town is ultimately destroyed, the town will be placed into a Ruined state, where town structures can be destroyed and items stolen from chests. \n\n";
+				text += "If a town is ultimately destroyed, the town will be placed into a Ruined state, where town structures can be destroyed and items stolen from chests.\n\n";
 			else
 				text += "If a town is ultimately destroyed, that town will be deleted immediately.\n\n";
 		}
 
 		// Capturing
-		text += "\nPOST-SIEGE ACTION - TOWN CAPTURE\n\n";
+		text += "\nPOST-SIEGE ACTION: TOWN CAPTURE\n\n";
 		if (SiegeWarSettings.getWarSiegeInvadeEnabled()) {
 			text += "If the attacker has won the siege, the king (or a general) of the attacking nation may place a second coloured banner outside the town. This will capture the town, and forcibly add it to the victorious nation (which it cannot leave for " + occupationtime + ").\n\n";
 
@@ -191,15 +191,15 @@ public class BookUtil {
 
 		//Nation Refund
 		if (SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete()) {
-			text += "MISCELLANEOUS FEATURE - NATION REFUNDS:\n\n";
+			text += "\nMISCELLANEOUS FEATURE: \nNATION REFUNDS\n\n";
 			text += "Nations which are disbanded for any reason (upkeep, plunder, capture) will be refunded " + SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() + "% of the nation cost, collected using '/sw nation refund'.\n";
 		}
 
 		// Map Sneaking
 		if (SiegeWarSettings.getWarSiegeMapSneakingEnabled()) {
-			text += "MISCELLANEOUS FEATURE - MAP SNEAKING:\n\n";
-			text += "\nMap Sneaking is a tactical system used to hide players from being seen on the server Dynmap website. ";
-			text += "Players who are on the Banner Control list cannot map sneak. ";
+			text += "\nMISCELLANEOUS FEATURE: \nMAP SNEAKING\n\n";
+			text += "Map Sneaking is a tactical system used to hide players from being seen on the server Dynmap website.\n";
+			text += "Players who are on the Banner Control list cannot map sneak.\n";
 			text += "To map sneak the player must be holding a combination of items in their hands, which are: \n";
 			for (HeldItemsCombination combo : SiegeWarSettings.getWarSiegeMapSneakingItems()) {
 				text += " - " + combo.getMainHandItemType().name() + " & " + combo.getOffHandItemType().name() + "\n";
@@ -209,7 +209,7 @@ public class BookUtil {
 
 		//Battle sessions
 		if(SiegeWarSettings.isWarSiegeBattleSessionsEnabled()) {
-			text += "MISCELLANEOUS FEATURE - BATTLE SESSIONS:\n\n";
+			text += "\nMISCELLANEOUS FEATURE: \nBATTLE SESSIONS\n\n";
 			text += "Fighting is organised into " + activeSession + " 'battle sessions' for each player. After each session, the player gets a " + restSession + " enforced break from combat (moderating fatigue.)\n\n";
 		}
 
