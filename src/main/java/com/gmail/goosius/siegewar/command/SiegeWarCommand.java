@@ -14,6 +14,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.BookUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Town;
@@ -23,7 +24,7 @@ import com.palmergames.util.StringMgmt;
 
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
-	private static final List<String> siegewarTabCompletes = Arrays.asList("nation", "hud");
+	private static final List<String> siegewarTabCompletes = Arrays.asList("nation", "hud", "guide");
 	
 	private static final List<String> siegewarNationTabCompletes = Arrays.asList("refund");
 	
@@ -45,6 +46,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "refund", Translation.of("nation_help_11")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw guide", "", ""));
 	}
 	
 	private void showNationHelp(CommandSender sender) {
@@ -76,9 +78,17 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		case "hud":
 			parseSiegeWarHudCommand(player, StringMgmt.remFirstArg(args));
 			break;
+		case "guide":
+			parseSiegeWarGuideCommand(player);
+			break;
 		default:
 			showSiegeWarHelp(player);
 		}
+	}
+
+	private void parseSiegeWarGuideCommand(Player player) {
+		BookUtil.buildBook(player);
+		
 	}
 
 	private void parseSiegeWarNationCommand(Player player, String[] args) {
