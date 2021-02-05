@@ -487,7 +487,7 @@ public enum ConfigNodes {
 			"war.siege.death.spawn_firework",
 			"true",
 			"",
-			"# If enabled, a firework will get spawned whenever a siege participant dies."),
+			"# If enabled, a firework will get spawned whenever a player dies inside a siege zone."),
 
 	PEACEFUL_TOWNS(
 		"peaceful_towns",
