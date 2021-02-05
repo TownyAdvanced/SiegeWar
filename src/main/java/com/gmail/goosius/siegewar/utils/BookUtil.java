@@ -57,7 +57,7 @@ public class BookUtil {
 		text += "\nSTARTING A SIEGE\n\n";
 		text += "A nation starts a siege when the king (or a general) places a coloured banner (known as the 'siege banner') just outside the target town.\n\n";
 		text += "Town structures & stored items remain safe during the siege (because town perm protections are unaffected.)\n\n";
-		text += "The cost to begin a siege is " + bannerCost  + " per plot owned by the Town which would be sieged, paid by the sieging nation. This war chest is eventually won by the siege winner.\n\n";
+		text += "The cost to begin a siege is " + bannerCost  + " per plot owned by the sieged town. This money is deposited by the sieging nation into a 'war chest', which will be awarded later to the siege winner.\n\n";
 		if (SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage() > 0)
 			text += "The cost to siege a nation's capital city is " + SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage() + "% more than non-capital towns.\n\n";
 		// Immunity
