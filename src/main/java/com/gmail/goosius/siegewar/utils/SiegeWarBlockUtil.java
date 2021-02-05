@@ -160,13 +160,29 @@ public class SiegeWarBlockUtil {
 			case JUNGLE_LOG:
 			case OAK_LOG:
 			case SPRUCE_LOG:
+			case CRIMSON_STEM:
+			case WARPED_STEM:
+			case CRIMSON_HYPHAE:
+			case WARPED_HYPHAE:
 			case STRIPPED_ACACIA_LOG:
 			case STRIPPED_BIRCH_LOG:
 			case STRIPPED_DARK_OAK_LOG:
 			case STRIPPED_JUNGLE_LOG:
 			case STRIPPED_OAK_LOG:
 			case STRIPPED_SPRUCE_LOG:
+			case STRIPPED_CRIMSON_STEM:
+			case STRIPPED_WARPED_STEM:
+			case STRIPPED_CRIMSON_HYPHAE:
+			case STRIPPED_WARPED_HYPHAE:
 			case CACTUS:
+			case OAK_LEAVES:
+			case SPRUCE_LEAVES:
+			case BIRCH_LEAVES:
+			case ACACIA_LEAVES:
+			case DARK_OAK_LEAVES:
+			case JUNGLE_LEAVES:
+			case NETHER_WART_BLOCK:
+			case WARPED_WART_BLOCK:
 				return true;
 			default:
 				return false;
