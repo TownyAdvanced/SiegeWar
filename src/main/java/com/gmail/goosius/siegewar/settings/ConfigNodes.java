@@ -483,6 +483,11 @@ public enum ConfigNodes {
 			"# A low value will keep battles fast paced.",
 			"# A high value will slow down battles (as players take time to repair items),",
 			"# and will also exclude some casual players from war (as they cannot afford to keep repairing/replacing/mending degraded items)"),
+	WAR_SIEGE_DEATH_SPAWN_FIREWORK(
+			"war.siege.death.spawn_firework",
+			"true",
+			"",
+			"# If enabled, a firework will get spawned whenever a player dies inside a siege zone."),
 
 	PEACEFUL_TOWNS(
 		"peaceful_towns",

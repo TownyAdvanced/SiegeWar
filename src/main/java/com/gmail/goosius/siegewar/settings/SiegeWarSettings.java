@@ -363,4 +363,8 @@ public class SiegeWarSettings {
 	public static boolean getWarSiegeNationStatisticsEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_NATION_STATISTICS_ENABLED);
 	}
+
+	public static boolean getWarSiegeDeathSpawnFireworkEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_DEATH_SPAWN_FIREWORK);
+	}
 }
