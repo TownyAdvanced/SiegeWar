@@ -16,10 +16,15 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.permissions.TownyPermissionSource;
 import com.gmail.goosius.siegewar.settings.Translation;
 
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
+import org.bukkit.block.Banner;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -137,6 +142,15 @@ public class PlayerDeath {
 
 				//Award penalty points w/ notification if siege is in progress
 				if(confirmedCandidateSiege.getStatus() == SiegeStatus.IN_PROGRESS) {
+					if (SiegeWarSettings.getWarSiegeDeathSpawnFireworkEnabled()) {
+						Firework redFirework = deadPlayer.getWorld().spawn(deadPlayer.getLocation().add(0, 2, 0), Firework.class);
+						FireworkMeta fireworkMeta = (FireworkMeta) redFirework.getFireworkMeta();
+						Color bannerColor = ((Banner) confirmedCandidateSiege.getFlagLocation().getBlock().getState()).getBaseColor().getColor();
+						fireworkMeta.addEffects(FireworkEffect.builder().withColor(Color.RED).withFade(bannerColor).build());
+						redFirework.setFireworkMeta(fireworkMeta);
+						redFirework.detonate();
+					}
+
 					if (confirmedCandidateSiegePlayerSide == SiegeSide.DEFENDERS) {
 						SiegeWarPointsUtil.awardPenaltyPoints(
 								false,
