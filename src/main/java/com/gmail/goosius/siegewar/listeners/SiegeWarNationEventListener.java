@@ -3,6 +3,8 @@ package com.gmail.goosius.siegewar.listeners;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -245,7 +247,11 @@ public class SiegeWarNationEventListener implements Listener {
 	 */
 	@EventHandler
 	public void onDeleteNation(DeleteNationEvent event) {
-		Resident king = TownyUniverse.getInstance().getResident(event.getNationKing());
+		UUID kingUUID = event.getNationKing();
+		if (kingUUID == null)
+			return;
+		
+		Resident king = TownyUniverse.getInstance().getResident(kingUUID);
 		if (king != null)
 			SiegeWarMoneyUtil.makeNationRefundAvailable(king);
 		
