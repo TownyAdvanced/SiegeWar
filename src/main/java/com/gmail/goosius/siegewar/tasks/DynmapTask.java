@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.*;
 
 import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.settings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -89,15 +90,20 @@ public class DynmapTask {
                     //Delete marker if siege is over
                     marker.deleteMarker();
                     markerMap.remove(marker.getMarkerID());
-                } else if (marker.getMarkerIcon().getMarkerIconID().equals(PEACEFUL_BANNER_ICON_ID)
-                        && (siege.getBannerControllingSide() != SiegeSide.NOBODY || siege.getBannerControlSessions().size() > 0)) {
-                    //Ensure icon is battle icon if players are fighting
-                    marker.setMarkerIcon(markerapi.getMarkerIcon(BATTLE_BANNER_ICON_ID));
-                } else if (marker.getMarkerIcon().getMarkerIconID().equals(BATTLE_BANNER_ICON_ID)
-                        && siege.getBannerControllingSide() == SiegeSide.NOBODY
-                        && siege.getBannerControlSessions().size() == 0) {
-                    //Ensure icon is peaceful icon if nobody is fighting
-                    marker.setMarkerIcon(markerapi.getMarkerIcon(PEACEFUL_BANNER_ICON_ID));
+
+                } else if (marker.getMarkerIcon().getMarkerIconID().equals(PEACEFUL_BANNER_ICON_ID)) {
+                    //Change to battle icon if players are fighting
+                    if (siege.getStatus() == SiegeStatus.IN_PROGRESS
+                            && (siege.getBannerControllingSide() != SiegeSide.NOBODY || siege.getBannerControlSessions().size() > 0)) {
+                        marker.setMarkerIcon(markerapi.getMarkerIcon(BATTLE_BANNER_ICON_ID));
+                    }
+
+                } else if (marker.getMarkerIcon().getMarkerIconID().equals(BATTLE_BANNER_ICON_ID)) {
+                    //Change to peaceful icon if nobody is fighting
+                    if (siege.getStatus() != SiegeStatus.IN_PROGRESS
+                            || (siege.getBannerControllingSide() == SiegeSide.NOBODY && siege.getBannerControlSessions().size() == 0)) {
+                        marker.setMarkerIcon(markerapi.getMarkerIcon(PEACEFUL_BANNER_ICON_ID));
+                    }
                 }
             } catch (NotRegisteredException e) {
                 marker.deleteMarker();
