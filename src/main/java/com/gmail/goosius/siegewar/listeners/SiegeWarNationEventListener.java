@@ -22,7 +22,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyFormatter;
-import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.event.NationPreAddTownEvent;
 import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
 import com.palmergames.bukkit.towny.event.PreDeleteNationEvent;
@@ -230,14 +229,20 @@ public class SiegeWarNationEventListener implements Listener {
 	 */
 	@EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
 	public void onDeleteNation(PreDeleteNationEvent event) {
-		//If nation refund is enabled, warn the player that they will get a refund (and indicate how to claim it,) and then make it available.
-		if (TownyEconomyHandler.isActive() && SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete() && event.getNation().getKing() != null) {
-			String refund = TownyEconomyHandler.getFormattedBalance(TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
-			Messaging.sendMsg(event.getNation().getKing().getPlayer(), Translation.of("msg_err_siege_war_delete_nation_warning", refund));
+		/*
+		 * If SiegeWar and the Economy are enabled, give the player a nation refund if it is non-zero & enabled.
+		 */
+		if (SiegeWarSettings.getWarSiegeEnabled() 
+				&& TownyEconomyHandler.isActive()
+				&& SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete() 
+				&& SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() > 0 
+				&& event.getNation().getKing() != null) {
 			SiegeWarMoneyUtil.makeNationRefundAvailable(event.getNation().getKing());
 		}
 		
-		// Remove any sieges that the nation had.
+		/*
+		 * Remove any siege if the nation is deleted, regardless of whether SW is currently enabled.
+		 */
 		for (Siege siege : SiegeController.getSiegesByNationUUID(event.getNation().getUUID())) {
 			SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
 		}
