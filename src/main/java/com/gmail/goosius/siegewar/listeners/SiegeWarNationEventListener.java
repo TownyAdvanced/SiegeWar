@@ -3,9 +3,8 @@ package com.gmail.goosius.siegewar.listeners;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
-
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import com.gmail.goosius.siegewar.Messaging;
@@ -23,9 +22,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyFormatter;
-import com.palmergames.bukkit.towny.TownySettings;
-import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.event.DeleteNationEvent;
 import com.palmergames.bukkit.towny.event.NationPreAddTownEvent;
 import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
 import com.palmergames.bukkit.towny.event.PreDeleteNationEvent;
@@ -38,7 +34,6 @@ import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.util.ChatTools;
@@ -87,20 +82,6 @@ public class SiegeWarNationEventListener implements Listener {
 			} else 
 				Messaging.sendMsg(event.getTown().getMayor().getPlayer(), Translation.of("msg_war_siege_warning_peaceful_town_should_not_create_nation"));
 		}
-	}
-	
-	/*
-	 * SW will warn a nation about to delete itself that it can claim a refund after the fact.
-	 */
-	@EventHandler
-	public void onNationDeleteEvent(PreDeleteNationEvent event) {
-		//If nation refund is enabled, warn the player that they will get a refund (and indicate how to claim it).
-		if (SiegeWarSettings.getWarSiegeEnabled() && TownySettings.isUsingEconomy()
-				&& SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete()) {
-			int amountToRefund = (int)(TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
-			Messaging.sendMsg(event.getNation().getKing().getPlayer(), Translation.of("msg_err_siege_war_delete_nation_warning", TownyEconomyHandler.getFormattedBalance(amountToRefund)));
-		}
-
 	}
 	
 	/*
@@ -243,19 +224,26 @@ public class SiegeWarNationEventListener implements Listener {
 	}
 	
 	/*
-	 * A nation being deleted with a siege means the siege ends.
+	 * A nation being deleted with a siege means the siege ends,
+	 * and a king may receive a refund.
 	 */
-	@EventHandler
-	public void onDeleteNation(DeleteNationEvent event) {
-		UUID kingUUID = event.getNationKing();
-		if (kingUUID == null)
-			return;
+	@EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+	public void onDeleteNation(PreDeleteNationEvent event) {
+		/*
+		 * If SiegeWar and the Economy are enabled, give the player a nation refund if it is non-zero & enabled.
+		 */
+		if (SiegeWarSettings.getWarSiegeEnabled() 
+				&& TownyEconomyHandler.isActive()
+				&& SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete() 
+				&& SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() > 0 
+				&& event.getNation().getKing() != null) {
+			SiegeWarMoneyUtil.makeNationRefundAvailable(event.getNation().getKing());
+		}
 		
-		Resident king = TownyUniverse.getInstance().getResident(kingUUID);
-		if (king != null)
-			SiegeWarMoneyUtil.makeNationRefundAvailable(king);
-		
-		for (Siege siege : SiegeController.getSiegesByNationUUID(event.getNationUUID())) {
+		/*
+		 * Remove any siege if the nation is deleted, regardless of whether SW is currently enabled.
+		 */
+		for (Siege siege : SiegeController.getSiegesByNationUUID(event.getNation().getUUID())) {
 			SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
 		}
 	}

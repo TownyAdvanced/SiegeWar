@@ -112,23 +112,19 @@ public class SiegeWarMoneyUtil {
 		}
 	}
 
+	/**
+	 * Refund some of the initial setup cost to the king
+	 * 
+	 * @param king Resident to grant the refund to.
+	 */
 	public static void makeNationRefundAvailable(Resident king) {
-		//Refund some of the initial setup cost to the king
-		if (SiegeWarSettings.getWarSiegeEnabled()
-			&& TownySettings.isUsingEconomy()
-			&& SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete()) {
+		int amountToRefund = (int)(TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
+		
+		// Makes the nation refund available. Player can do "/sw nation refund" later to claim money.
+		ResidentMetaDataController.setNationRefundAmount(king, amountToRefund);
 
-			//Make the nation refund available
-			//The player can later do "/n claim refund" to receive the money
-			int amountToRefund = (int)(TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
-			ResidentMetaDataController.setNationRefundAmount(king, amountToRefund);
-
-			Messaging.sendMsg(
-				king.getPlayer(),
-				String.format(
-					Translation.of("msg_siege_war_nation_refund_available"),
-					TownyEconomyHandler.getFormattedBalance(amountToRefund)));
-		}
+		Messaging.sendMsg(king.getPlayer(),
+				Translation.of("msg_siege_war_nation_refund_available", TownyEconomyHandler.getFormattedBalance(amountToRefund)));
 	}
 	
 	public static double getSiegeCost(Town town) {
