@@ -17,19 +17,12 @@ public class SiegeWarTownUtil {
 				town.setPVP(false);
 
 		for (TownBlock plot : town.getTownBlocks()) {
-			if (plot.hasPlotObjectGroup()) {
-				TownyPermission groupPermissions = plot.getPlotObjectGroup().getPermissions();
-				if (groupPermissions.pvp) {
-					groupPermissions.pvp = false;
-					plot.getPlotObjectGroup().setPermissions(groupPermissions);
-				}
-			} 	
 			if (plot.getPermissions().pvp) {
 				if (plot.getType() == TownBlockType.ARENA)
 					plot.setType(TownBlockType.RESIDENTIAL);
 			
 				plot.getPermissions().pvp = false;
-				plot.setChanged(true);
+				plot.save();
 			}
 		}
 		town.save();
