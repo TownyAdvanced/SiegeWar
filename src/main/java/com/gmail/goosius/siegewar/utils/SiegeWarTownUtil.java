@@ -5,6 +5,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownBlockType;
 import com.palmergames.bukkit.towny.object.TownyPermission;
+import com.palmergames.bukkit.towny.object.TownyPermission.ActionType;
 import com.palmergames.bukkit.towny.object.TownyPermission.PermLevel;
 import com.palmergames.bukkit.towny.object.TownyPermissionChange.Action;
 
@@ -35,15 +36,13 @@ public class SiegeWarTownUtil {
             if (plot.hasResident())
                 continue;
 
-            if (plot.hasPlotObjectGroup()) {
-                TownyPermission groupPermission = plot.getPlotObjectGroup().getPermissions();
-                groupPermission.change(Action.PERM_LEVEL, false, PermLevel.NATION);
-				plot.getPlotObjectGroup().setPermissions(groupPermission);
-				plot.getPlotObjectGroup().save();
-            }
-
-            plot.getPermissions().change(Action.PERM_LEVEL, false, PermLevel.NATION);
-            plot.save();
+			TownyPermission plotPerm = plot.getPermissions();
+			if (plotPerm.getNationPerm(ActionType.BUILD) || plotPerm.getNationPerm(ActionType.DESTROY)
+				|| plotPerm.getNationPerm(ActionType.ITEM_USE) || plotPerm.getNationPerm(ActionType.SWITCH)) {
+			
+				plot.getPermissions().change(Action.PERM_LEVEL, false, PermLevel.NATION);
+				plot.save();
+			}
         }
         town.save();
     }
