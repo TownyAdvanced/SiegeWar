@@ -242,7 +242,22 @@ public class SiegeWarMoneyUtil {
 			* getMoneyMultiplier(town);
 	}
 
-	public static void distributeMoneyAmongSoldiers(double totalAmountForSoldiers, Town town, Nation nation, String reason, boolean removeMoneyFromTownBank) throws EconomyException {
+	/**
+	 *
+	 * @param totalAmountForSoldiers
+	 * @param town
+	 * @param nation
+	 * @param reason
+	 * @param removeMoneyFromTownBank
+	 * @return true if money was paid. False if there were no soldiers
+	 * @throws EconomyException
+	 * @throws TownyException
+	 */
+	public static boolean distributeMoneyAmongSoldiers(double totalAmountForSoldiers,
+													Town town,
+													Nation nation,
+													String reason,
+													boolean removeMoneyFromTownBank) throws EconomyException {
 		//Withdraw money from town if needed
 		if (removeMoneyFromTownBank) {
 			town.getAccount().withdraw(totalAmountForSoldiers, reason);
@@ -263,6 +278,9 @@ public class SiegeWarMoneyUtil {
 			}
 		}
 
+		if(soldierShareMap.size() == 0)
+			return false;
+
 		//Calculate how much 1 share is worth
 		int amountValueOfOneShare = (int)((totalAmountForSoldiers / totalArmyShares) + 0.5);
 
@@ -281,5 +299,6 @@ public class SiegeWarMoneyUtil {
 					throw new RuntimeException("Unknown Income Type");
 			}
 		}
+		return true;
 	}
 }

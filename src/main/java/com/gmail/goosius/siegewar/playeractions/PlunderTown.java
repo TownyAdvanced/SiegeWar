@@ -196,11 +196,20 @@ public class PlunderTown {
 		}
 
 		//Pay soldiers
-		SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
+		boolean soldiersPaid = SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
 				totalPlunderForSoldiers,
 				town,
 				nation,
 				"Plunder",
 				removeMoneyFromTownBank);
+
+		//If there were no soldiers, give money to nation
+		if(!soldiersPaid) {
+			if(removeMoneyFromTownBank) {
+				town.getAccount().payTo(totalPlunderForSoldiers, nation, "Plunder");
+			} else {
+				nation.getAccount().deposit(totalPlunderForSoldiers, "Plunder of " + town.getName());
+			}
+		}
 	}
 }

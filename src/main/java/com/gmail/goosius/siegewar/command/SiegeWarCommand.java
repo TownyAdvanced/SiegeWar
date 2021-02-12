@@ -5,12 +5,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
+import net.md_5.bungee.chat.SelectorComponentSerializer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -51,14 +54,15 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 	private void showSiegeWarHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw collect", "refund", Translation.of("nation_help_11")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw guide", "", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw collect", "", Translation.of("nation_help_11")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers", Translation.of("nation_help_12")));
 	}
 	
 	private void showNationHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar nation"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "refund", Translation.of("nation_help_11")));			
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers", Translation.of("nation_help_11")));
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -193,13 +197,24 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 						return;
 					}
 
-					//Pay soldiers
-					SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
+					if(amount == 0) {
+						showNationHelp(player);
+						return;
+					}
+
+						//Pay soldiers
+					boolean soldiersPaid =
+							SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
 							amount,
 							null,
 							nation,
 							"Military Salary",
 							false);
+
+					if(soldiersPaid)
+						TownyMessaging.sendPrefixedNationMessage(nation, String.format(Translation.of("msg_siege_war_soldiers_paid"), TownyEconomyHandler.getFormattedBalance(amount)));
+					else
+						throw new TownyException(Translation.of("msg_err_siege_war_no_soldiers_to_pay"));
 
 				} catch (TownyException te) {
 					Messaging.sendErrorMsg(player, te.getMessage());
