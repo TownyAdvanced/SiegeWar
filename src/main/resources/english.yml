@@ -270,7 +270,7 @@ msg_siege_war_plunder_available: "Plunder of %s is now available to you. It can 
 msg_siege_war_military_salary_available: "A Military Salary of of %s is now available to you. It can be collected using '/sw collect'."
 msg_siege_war_nation_refund_collected: "You have collected the nation refund of %s."
 msg_siege_war_plunder_collected: "You have collected the plunder of %s."
-msg_siege_military_salary_collected: "You have collected the military salary of %s."
+msg_siege_war_military_salary_collected: "You have collected the military salary of %s."
 msg_err_siege_war_collect_unavailable: "There is no income due to you from either plunder, military salary, or nation refunds."
 msg_err_siege_war_no_soldiers_to_pay: "There were no soldiers to pay."
 msg_siege_war_soldiers_paid: "The soldiers of the nation were paid a total of %s, which was distributed according to rank."
