@@ -57,12 +57,12 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw guide", "", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw collect", "", Translation.of("nation_help_11")));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers", Translation.of("nation_help_12")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
 	}
 	
 	private void showNationHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar nation"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers", Translation.of("nation_help_12")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -152,13 +152,13 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	}
 
 	private void parseSiegeWarNationCommand(Player player, String[] args) {
-		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION.getNode(args[0]))) {
-			player.sendMessage(Translation.of("msg_err_command_disable"));
+		if (args.length < 2) {
+			showNationHelp(player);
 			return;
 		}
 
-		if (args.length < 2) {
-			showNationHelp(player);
+		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION.getNode(args[0]))) {
+			player.sendMessage(Translation.of("msg_err_command_disable"));
 			return;
 		}
 
