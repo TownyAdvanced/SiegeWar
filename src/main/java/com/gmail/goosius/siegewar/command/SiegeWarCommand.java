@@ -161,7 +161,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		switch (args[0]) {
 			case "paysoldiers":
 				try {
-					if (!SiegeWarSettings.getWarSiegeMilitarySalaryEnabled())) {
+					if (!SiegeWarSettings.getWarSiegeMilitarySalaryEnabled()) {
 						player.sendMessage(Translation.of("msg_err_command_disable"));
 						return;
 					}
