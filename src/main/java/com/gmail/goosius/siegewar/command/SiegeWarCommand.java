@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -159,6 +161,11 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		switch (args[0]) {
 			case "paysoldiers":
 				try {
+					if (!SiegeWarSettings.getWarSiegeMilitarySalaryEnabled())) {
+						player.sendMessage(Translation.of("msg_err_command_disable"));
+						return;
+					}
+
 					if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_PAYSOLDIERS.getNode())) {
 						player.sendMessage(Translation.of("msg_err_command_disable"));
 						return;
