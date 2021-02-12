@@ -206,7 +206,10 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 						return;
 					}
 
-						//Pay soldiers
+					//Deduct from nation bank
+					nation.getAccount().withdraw(amount, "Military Salaries");
+
+					//Pay soldiers
 					boolean soldiersPaid =
 							SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
 							amount,

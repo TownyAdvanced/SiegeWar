@@ -282,12 +282,12 @@ public class SiegeWarMoneyUtil {
 			return false;
 
 		//Calculate how much 1 share is worth
-		int amountValueOfOneShare = (int)((totalAmountForSoldiers / totalArmyShares) + 0.5);
+		double amountValueOfOneShare = totalAmountForSoldiers / totalArmyShares;
 
 		//Pay each soldier
 		int amountToPaySoldier;
 		for(Map.Entry<Resident,Integer> entry: soldierShareMap.entrySet()) {
-			amountToPaySoldier = amountValueOfOneShare * entry.getValue();
+			amountToPaySoldier = (int)((amountValueOfOneShare * entry.getValue()) + 0.5);
 			switch(reason.toLowerCase()) {
 				case "plunder":
 					makePlunderAvailable(entry.getKey(), amountToPaySoldier);
