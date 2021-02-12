@@ -34,9 +34,9 @@ import com.palmergames.util.StringMgmt;
 
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
-	private static final List<String> siegewarTabCompletes = Arrays.asList("nation", "hud", "guide");
+	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "nation", "hud", "guide");
 	
-	private static final List<String> siegewarNationTabCompletes = Arrays.asList("refund");
+	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers");
 	
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
@@ -62,7 +62,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
 	private void showNationHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar nation"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers", Translation.of("nation_help_11")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers", Translation.of("nation_help_12")));
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
