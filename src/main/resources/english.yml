@@ -54,8 +54,6 @@ msg_siege_war_banner_control_session_started: '&bBanner control session started.
 msg_siege_war_banner_control_session_success: '&bBanner control session succeeded!. You have been added to the banner control list.'
 msg_siege_war_banner_control_gained_by_attacker: '&bSiege on %s > The attackers have gained banner control.'
 msg_siege_war_banner_control_gained_by_defender: '&bSiege on %s > The defenders have gained banner control.'
-msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw collect'"
-msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
 msg_town_destroyed_by_nation_tax: '&b%s couldn''t pay taxes and has fallen.'
 msg_town_destroyed_by_nation_tax_multiple:  '&bThe following towns could not afford the nation tax and have fallen: '
 
@@ -71,8 +69,6 @@ msg_err_siege_claim_too_near_siege_zone: "&cThe claim is too close to a siege."
 msg_err_siege_besieged_town_cannot_claim: "&cBesieged towns cannot claim new land."
 msg_err_siege_besieged_town_cannot_unclaim: "&cBesieged towns (or towns which recently lost a siege) cannot un-claim land."
 msg_err_war_common_occupied_town_cannot_unclaim: "&cOccupied towns cannot un-claim land."
-#Nation Delete
-msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
 #Revolt
 msg_err_siege_war_town_voluntary_leave_impossible: "&cTowns cannot leave nations without agreement. To leave your nation, persuade the king (or an assistant) to kick your town."
 msg_err_siege_war_revolt_immunity_active: "&cYour town has revolt immunity. It cannot revolt until the revolt immunity expires."
@@ -186,9 +182,6 @@ msg_war_siege_battle_session_ended: '&2Battle session ended. The next time you e
 msg_war_siege_zone_block_placement_forbidden: '&cYou cannot place this type of block in the wilderness area of a siege zone.'
 msg_war_siege_zone_bucket_emptying_forbidden: '&cYou cannot use this type of bucket in the wilderness area of a siege zone.'
 
-#Nation Refund
-nation_help_11 : 'Claim all your nation refunds.'
-
 #Added in 0.02:
 admin_help_1: 'Reload the config and language file.'
 config_and_lang_file_reloaded_successfully: 'Config and Language file reloaded successfully.'
@@ -270,4 +263,9 @@ msg_err_nation_not_registered: '&cNation %s is not registered.'
 msg_err_cannot_remove_enemy: '&cYou cannot remove a nation as enemy if you have an active siege against them!'
 
 #Added in 0.09
-msg_siege_war_plunder_available: "Plunder of %s is now available to you. It can be claimed using '/sw collect'"
+nation_help_11 : 'Collect any income due to you from: plunder or nation refunds.'
+msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be collected using '/sw collect'"
+msg_siege_war_plunder_available: "Plunder of %s is now available to you. It can be collected using '/sw collect'"
+msg_siege_war_nation_refund_collected: "You have collected the nation refund of %s."
+msg_siege_war_plunder_collected: "You have collected the plunder of %s."
+msg_err_siege_war_collect_unavailable: "There is no income due to you from either plunder or nation refunds."

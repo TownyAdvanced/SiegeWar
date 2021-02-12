@@ -180,7 +180,7 @@ public class PlunderTown {
 	private static void transferPlunderToNation(Town town, Nation nation, double totalPlunderAmount, boolean removeMoneyFromTownBank) throws EconomyException {
 		String distributionRatio = SiegeWarSettings.getWarSiegeAttackerPlunderDistributionRatio();
 
-		//Calculate amount for nation & soldiers
+		//Calculate total plunder for nation & soldiers
 		String[] nationSoldierRatios = distributionRatio.split(":");
 		int nationRatio = Integer.parseInt(nationSoldierRatios[0]);
 		int soldierRatio = Integer.parseInt(nationSoldierRatios[1]);
@@ -212,7 +212,8 @@ public class PlunderTown {
 			//Pay soldiers
 			for(Map.Entry<Resident,Integer> entry: soldierPlunderShareMap.entrySet()) {
 				plunderForSoldierAmount = onePlunderShareAmount * entry.getValue();
-				town.getAccount().payTo(plunderForSoldierAmount, entry.getKey(), "Plunder");
+				town.getAccount().withdraw(plunderForSoldierAmount, "Plunder");
+				SiegeWarMoneyUtil.makePlunderAvailable(entry.getKey(), plunderForSoldierAmount);
 			}
 		} else {
 			//Pay nation
@@ -220,7 +221,7 @@ public class PlunderTown {
 			//Pay soldiers
 			for(Map.Entry<Resident,Integer> entry: soldierPlunderShareMap.entrySet()) {
 				plunderForSoldierAmount = onePlunderShareAmount * entry.getValue();
-				entry.getKey().getAccount().deposit(plunderForSoldierAmount, "Plunder of " + town.getName());
+				SiegeWarMoneyUtil.makePlunderAvailable(entry.getKey(), plunderForSoldierAmount);
 			}
 		}
 	}

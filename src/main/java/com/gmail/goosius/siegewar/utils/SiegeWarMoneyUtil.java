@@ -90,25 +90,54 @@ public class SiegeWarMoneyUtil {
 	/**
 	 * If the player is due a nation refund, pays the refund to the player
 	 *
-	 * @param player claiming the nation refund.
-	 * @throws Exception when payment cannot be made for various reasons.
+	 * @param player collecting the nation refund.
+	 * @return true if payment is made
+	 * @return false if payment cannot be made for various reasons.
 	 */
-	public static void claimNationRefund(Player player) throws Exception {
+	public static boolean collectNationRefund(Player player) throws Exception {
 		if(!(SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete())) {
-			throw new TownyException(Translation.of("msg_err_command_disable"));
+			return false;
 		}
 
 		Resident formerKing = TownyUniverse.getInstance().getResident(player.getUniqueId());
 		if (formerKing == null)
-        	throw new TownyException(Translation.of("msg_err_not_registered_1", player.getName()));
-		
+			return false;
+
 		if(ResidentMetaDataController.getNationRefundAmount(formerKing) != 0) {
 			int refundAmount = ResidentMetaDataController.getNationRefundAmount(formerKing);
 			formerKing.getAccount().deposit(refundAmount, "Nation Refund");
 			ResidentMetaDataController.clearNationRefund(formerKing);
-			Messaging.sendMsg(player, Translation.of("msg_siege_war_nation_refund_claimed", TownyEconomyHandler.getFormattedBalance(refundAmount)));
+			Messaging.sendMsg(player, Translation.of("msg_siege_war_nation_refund_collected", TownyEconomyHandler.getFormattedBalance(refundAmount)));
+			return true;
 		} else {
-			throw new TownyException(Translation.of("msg_err_siege_war_nation_refund_unavailable"));
+			return false;
+		}
+	}
+
+	/**
+	 * If the player is due plunder, pays the plunder to the player
+	 *
+	 * @param player collecting the plunder
+	 * @return true if payment is made
+	 * @return false if payment cannot be made for various reasons.
+	 */
+	public static boolean collectPlunder(Player player) throws Exception {
+		if(!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.getWarSiegePlunderEnabled()) {
+			return false;
+		}
+
+		Resident soldier = TownyUniverse.getInstance().getResident(player.getUniqueId());
+		if (soldier == null)
+			return false;
+
+		int plunderAmount = ResidentMetaDataController.getPlunderAmount(soldier);
+		if(plunderAmount != 0) {
+			soldier.getAccount().deposit(plunderAmount, "Plunder");
+			ResidentMetaDataController.clearPlunder(soldier);
+			Messaging.sendMsg(player, Translation.of("msg_siege_war_plunder_collected", TownyEconomyHandler.getFormattedBalance(plunderAmount)));
+			return true;
+		} else {
+			return false;
 		}
 	}
 

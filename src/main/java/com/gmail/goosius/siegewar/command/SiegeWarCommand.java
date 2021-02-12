@@ -44,7 +44,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 	private void showSiegeWarHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "refund", Translation.of("nation_help_11")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw collect", "refund", Translation.of("nation_help_11")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw guide", "", ""));
 	}
@@ -71,8 +71,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		}
 			
 		switch (args[0]) {
-		case "nation":
-			parseSiegeWarNationCommand(player, StringMgmt.remFirstArg(args));
+		case "collect":
+			parseSiegeWarCollectCommand(player);
 			break;
 		case "focus":
 		case "hud":
@@ -91,25 +91,27 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		
 	}
 
-	private void parseSiegeWarNationCommand(Player player, String[] args) {
-		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION.getNode(args[0]))) {
+	private void parseSiegeWarCollectCommand(Player player) {
+		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_COLLECT.getNode())) {
 			player.sendMessage(Translation.of("msg_err_command_disable"));
 			return;
 		}
-		
-		if (args.length == 0)
-			showNationHelp(player);
-		
-		switch (args[0]) {
-		case "refund":
-			try {
-				SiegeWarMoneyUtil.claimNationRefund(player);
-			} catch (Exception e) {
-				player.sendMessage(e.getMessage());
-			}
-			break;
-		default:
-			showNationHelp(player);
+
+		boolean moneyCollected = false;
+		try {
+			moneyCollected = SiegeWarMoneyUtil.collectNationRefund(player);
+		} catch (Exception e) {
+			player.sendMessage(e.getMessage());
+		}
+
+		try {
+			moneyCollected = SiegeWarMoneyUtil.collectPlunder(player);
+		} catch (Exception e) {
+			player.sendMessage(e.getMessage());
+		}
+
+		if(!moneyCollected)	{
+			Messaging.sendErrorMsg(player, Translation.of("msg_err_siege_war_collect_unavailable"));
 		}
 	}
 

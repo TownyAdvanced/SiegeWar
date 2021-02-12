@@ -54,8 +54,6 @@ msg_siege_war_banner_control_session_started: "&bLa session de contrôle de bann
 msg_siege_war_banner_control_session_success: "&bLa session de contrôle de bannière a réussi ! Vous avez été ajouté à la liste de contrôle des bannières."
 msg_siege_war_banner_control_gained_by_attacker: "&bSiège sur %s > Les attaquants ont acquis le contrôle de la bannière."
 msg_siege_war_banner_control_gained_by_defender: "&bSiège sur %s > Les défenseurs ont acquis le contrôle de la bannière."
-msg_siege_war_nation_refund_available: "Un remboursement national de %s est maintenant disponible pour vous. Il peut être réclamé en utilisant '/sw nation refund'"
-msg_siege_war_nation_refund_claimed: "Vous avez demandé le remboursement de la nation de %s."
 msg_town_destroyed_by_nation_tax: "&b%s ne pouvait pas payer de taxes et est ruiné."
 msg_town_destroyed_by_nation_tax_multiple: "&bLes villes suivantes ne pouvaient pas payer les taxes national et sont ruinées : "
 
@@ -71,8 +69,6 @@ msg_err_siege_claim_too_near_siege_zone: "&cLe claim est trop proche d'un siège
 msg_err_siege_besieged_town_cannot_claim: "&cLes villes assiégées ne peuvent pas claim de nouvelles terres."
 msg_err_siege_besieged_town_cannot_unclaim: "&cLes villes assiégées (ou les villes qui ont récemment perdu un siège) ne peuvent pas claim des terres."
 msg_err_war_common_occupied_town_cannot_unclaim: "&cLes villes occupées ne peuvent pas claim des terres."
-#Nation Delete
-msg_err_siege_war_nation_refund_unavailable: "Aucun remboursement de nation n'est disponible pour vous."
 #Revolt
 msg_err_siege_war_town_voluntary_leave_impossible: "&cLes villes ne peuvent pas quitter les nations sans accord. Pour quitter votre nation, persuadez le roi (ou un assistant) d'expulser votre ville."
 msg_err_siege_war_revolt_immunity_active: "&cVotre ville bénéficie d'une immunité à la révolte. Elle ne peut pas se révolter tant que l'immunité à la révolte n'est pas expirée."
@@ -186,9 +182,6 @@ msg_war_siege_battle_session_ended: "&2La session de combat est terminée. La pr
 msg_war_siege_zone_block_placement_forbidden: "&cVous ne pouvez pas placer ce type de bloc dans la zone naturelle d'une zone de siège."
 msg_war_siege_zone_bucket_emptying_forbidden: "&cVous ne pouvez pas utiliser ce type de seau dans la zone naturelle d'une zone de siège."
 
-#Nation Refund
-nation_help_11: "Réclamez tous les remboursements de votre nation."
-
 #Added in 0.02:
 admin_help_1: "Rechargez le fichier de configuration et de langue."
 config_and_lang_file_reloaded_successfully: "Le fichier de configuration et de langue a été rechargé avec succès."
@@ -254,3 +247,25 @@ msg_you_will_get_sickness: '&c&cYou are not a participant of this siege and cann
 
 #Added in 0.07:
 msg_war_siege_peaceful_town_cannot_revolt_zero_or_one_unsieged_guardian_towns_nearby:  '&cYou cannot revolt at this time, because there are less than 2 unsieged guardian towns nearby (within %d chunks). A guardian town is a non-peaceful town in an open nation, with at least %d plots.'
+
+#Added in 0.08:
+status_nation_town_stats: '&2Towns Captured/Lost: &a%d&2/&a%d'
+status_nation_plunder_stats: '&2Plunder Gains/Losses: &a%d&2/&a%d'
+status_nation_enemy_nations_defeated: '&2Enemy Nations Defeated: &a%d'
+
+msg_swa_set_towns_gained_success: '&bSuccessfully set towns gained to %d for %s.'
+msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
+msg_swa_set_plunder_gained_success: '&bSuccessfully set plunder gained to %d for %s.'
+msg_swa_set_plunder_lost_success: '&bSuccessfully set plunder lost to %d for %s.'
+msg_swa_set_nationdefeats_success: '&bSuccessfully set nation defeats to %d for %s.'
+msg_err_nation_not_registered: '&cNation %s is not registered.'
+
+msg_err_cannot_remove_enemy: '&cYou cannot remove a nation as enemy if you have an active siege against them!'
+
+#Added in 0.09
+nation_help_11 : 'Collect any income due to you from: plunder or nation refunds.'
+msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be collected using '/sw collect'"
+msg_siege_war_plunder_available: "Plunder of %s is now available to you. It can be collected using '/sw collect'"
+msg_siege_war_nation_refund_collected: "You have collected the nation refund of %s."
+msg_siege_war_plunder_collected: "You have collected the plunder of %s."
+msg_err_siege_war_collect_unavailable: "There is no income due to you from either plunder or nation refunds."
