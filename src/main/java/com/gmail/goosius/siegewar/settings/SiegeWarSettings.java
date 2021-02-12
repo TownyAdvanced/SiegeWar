@@ -57,6 +57,10 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_PLUNDER_ENABLED);
 	}
 
+	public static boolean getWarSiegeMilitarySalaryEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MILITARY_SALARY_ENABLED);
+	}
+
 	public static boolean getWarSiegeRevoltEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_REVOLT_ENABLED);
 	}

@@ -15,7 +15,11 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.gmail.goosius.siegewar.settings.Translation;
 
+import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SiegeWarMoneyUtil {
 
@@ -92,26 +96,14 @@ public class SiegeWarMoneyUtil {
 	 *
 	 * @param player collecting the nation refund.
 	 * @return true if payment is made
-	 * @return false if payment cannot be made for various reasons.
+	 *        false if payment cannot be made for various reasons.
 	 */
 	public static boolean collectNationRefund(Player player) throws Exception {
-		if(!(SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete())) {
+		if (!(SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete())) {
 			return false;
 		}
-
-		Resident formerKing = TownyUniverse.getInstance().getResident(player.getUniqueId());
-		if (formerKing == null)
-			return false;
-
-		if(ResidentMetaDataController.getNationRefundAmount(formerKing) != 0) {
-			int refundAmount = ResidentMetaDataController.getNationRefundAmount(formerKing);
-			formerKing.getAccount().deposit(refundAmount, "Nation Refund");
-			ResidentMetaDataController.clearNationRefund(formerKing);
-			Messaging.sendMsg(player, Translation.of("msg_siege_war_nation_refund_collected", TownyEconomyHandler.getFormattedBalance(refundAmount)));
-			return true;
-		} else {
-			return false;
-		}
+		return collectIncome(player, "Nation Refund",
+				"msg_siege_war_nation_refund_collected");
 	}
 
 	/**
@@ -119,22 +111,78 @@ public class SiegeWarMoneyUtil {
 	 *
 	 * @param player collecting the plunder
 	 * @return true if payment is made
-	 * @return false if payment cannot be made for various reasons.
+	 *         false if payment cannot be made for various reasons.
 	 */
 	public static boolean collectPlunder(Player player) throws Exception {
 		if(!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.getWarSiegePlunderEnabled()) {
 			return false;
 		}
+		return collectIncome(player, "Plunder",
+				"msg_siege_war_nation_plunder_collected");
+	}
 
-		Resident soldier = TownyUniverse.getInstance().getResident(player.getUniqueId());
-		if (soldier == null)
+	/**
+	 * If the player is due military salary, pays it to the player
+	 *
+	 * @param player collecting the military salary
+	 * @return true if payment is made
+	 *         false if payment cannot be made for various reasons.
+	 */
+	public static boolean collectMilitarySalary(Player player) throws Exception {
+		if(!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.getWarSiegeMilitarySalaryEnabled()) {
+			return false;
+		}
+		return collectIncome(player, "Military Salary",
+				"msg_siege_war_military_salary_collected");
+	}
+
+	/**
+	 * If the player is due an income, pays it to the player
+	 *
+	 * @param player collecting the military salary
+	 * @param reason reason for payment
+	 * @param successMessageLangId relevant lang string id
+	 * @return true if payment is made
+	 *         false if payment cannot be made for various reasons.
+	 */
+	private static boolean collectIncome(Player player,
+										 String reason,
+										 String successMessageLangId) throws Exception {
+		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
+		if (resident == null)
 			return false;
 
-		int plunderAmount = ResidentMetaDataController.getPlunderAmount(soldier);
-		if(plunderAmount != 0) {
-			soldier.getAccount().deposit(plunderAmount, "Plunder");
-			ResidentMetaDataController.clearPlunder(soldier);
-			Messaging.sendMsg(player, Translation.of("msg_siege_war_plunder_collected", TownyEconomyHandler.getFormattedBalance(plunderAmount)));
+		int incomeAmount;
+		switch(reason.toLowerCase()) {
+			case "nation refund":
+				incomeAmount = ResidentMetaDataController.getNationRefundAmount(resident);
+				break;
+			case "plunder":
+				incomeAmount = ResidentMetaDataController.getPlunderAmount(resident);
+				break;
+			case "military salary":
+				incomeAmount = ResidentMetaDataController.getMilitarySalaryAmount(resident);
+				break;
+			default:
+				throw new TownyException("Unknown income type");
+		}
+
+		if(incomeAmount != 0) {
+			resident.getAccount().deposit(incomeAmount, reason);
+			switch(reason.toLowerCase()) {
+				case "nation refund":
+					ResidentMetaDataController.clearNationRefund(resident);
+				break;
+				case "plunder":
+					ResidentMetaDataController.clearPlunder(resident);
+				break;
+				case "military salary":
+					ResidentMetaDataController.clearMilitarySalary(resident);
+				break;
+				default:
+					throw new TownyException("Unknown income type");
+			}
+			Messaging.sendMsg(player, Translation.of(successMessageLangId, TownyEconomyHandler.getFormattedBalance(incomeAmount)));
 			return true;
 		} else {
 			return false;
@@ -169,6 +217,19 @@ public class SiegeWarMoneyUtil {
 				Translation.of("msg_siege_war_nation_refund_available", TownyEconomyHandler.getFormattedBalance(plunderAmount)));
 	}
 
+	/**
+	 * Make some military salary money available to a resident
+	 *
+	 * @param soldier the resident to grant the amount to.
+	 * @param militarySalaryAmount the amount
+	 */
+	public static void makeMilitarySalaryAvailable(Resident soldier, int militarySalaryAmount) {
+		// Makes the plunder available. Player can do "/sw collect" later to claim money.
+		ResidentMetaDataController.addMilitarySalaryAmount(soldier, militarySalaryAmount);
+		Messaging.sendMsg(soldier.getPlayer(),
+				Translation.of("msg_siege_military_salary_available", TownyEconomyHandler.getFormattedBalance(militarySalaryAmount)));
+	}
+
 	public static double getSiegeCost(Town town) {
 		if (town.isCapital())
 			return SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
@@ -179,5 +240,46 @@ public class SiegeWarMoneyUtil {
 			return SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
 			* town.getTownBlocks().size()
 			* getMoneyMultiplier(town);
-	} 
+	}
+
+	public static void distributeMoneyAmongSoldiers(double totalAmountForSoldiers, Town town, Nation nation, String reason, boolean removeMoneyFromTownBank) throws EconomyException {
+		//Withdraw money from town if needed
+		if (removeMoneyFromTownBank) {
+			town.getAccount().withdraw(totalAmountForSoldiers, reason);
+		}
+
+		//Identify soldiers who need to be paid
+		int totalArmyShares = 0;
+		int soldierShare;
+		Map<Resident, Integer> soldierShareMap = new HashMap<>();
+		for(Resident resident: nation.getResidents()) {
+			for (String perm : TownyPerms.getResidentPerms(resident).keySet()) {
+				if (perm.startsWith("towny.nation.siege.pay.grade.")) {
+					soldierShare = Integer.parseInt(perm.replace("towny.nation.siege.pay.grade.", ""));
+					soldierShareMap.put(resident, soldierShare);
+					totalArmyShares += soldierShare;
+					break; //Next resident please
+				}
+			}
+		}
+
+		//Calculate how much 1 share is worth
+		int amountValueOfOneShare = (int)((totalAmountForSoldiers / totalArmyShares) + 0.5);
+
+		//Pay each soldier
+		int amountToPaySoldier;
+		for(Map.Entry<Resident,Integer> entry: soldierShareMap.entrySet()) {
+			amountToPaySoldier = amountValueOfOneShare * entry.getValue();
+			switch(reason.toLowerCase()) {
+				case "plunder":
+					makePlunderAvailable(entry.getKey(), amountToPaySoldier);
+				break;
+				case "military salary":
+					makeMilitarySalaryAvailable(entry.getKey(), amountToPaySoldier);
+				break;
+				default:
+					throw new RuntimeException("Unknown Income Type");
+			}
+		}
+	}
 }

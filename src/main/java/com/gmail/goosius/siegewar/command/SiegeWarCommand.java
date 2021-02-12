@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.palmergames.bukkit.towny.exceptions.EconomyException;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -82,7 +87,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			parseSiegeWarGuideCommand(player);
 			break;
 		case "nation":
-			parseSiegeWarNationCommand(player);
+			parseSiegeWarNationCommand(player, StringMgmt.remFirstArg(args));
 		break;
 
 		default:
@@ -96,11 +101,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	}
 
 	private void parseSiegeWarCollectCommand(Player player) {
-		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_COLLECT.getNode())) {
-			player.sendMessage(Translation.of("msg_err_command_disable"));
-			return;
-		}
-
 		boolean moneyCollected = false;
 		try {
 			moneyCollected = SiegeWarMoneyUtil.collectNationRefund(player);
@@ -110,6 +110,12 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 		try {
 			moneyCollected = SiegeWarMoneyUtil.collectPlunder(player);
+		} catch (Exception e) {
+			player.sendMessage(e.getMessage());
+		}
+
+		try {
+			moneyCollected = SiegeWarMoneyUtil.collectMilitarySalary(player);
 		} catch (Exception e) {
 			player.sendMessage(e.getMessage());
 		}
@@ -136,6 +142,66 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			}
 		} catch (Exception e) {
 			Messaging.sendErrorMsg(player, e.getMessage());
+		}
+	}
+
+	private void parseSiegeWarNationCommand(Player player, String[] args) {
+		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION.getNode(args[0]))) {
+			player.sendMessage(Translation.of("msg_err_command_disable"));
+			return;
+		}
+
+		if (args.length < 2) {
+			showNationHelp(player);
+			return;
+		}
+
+		switch (args[0]) {
+			case "paysoldiers":
+				try {
+					if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_PAYSOLDIERS.getNode())) {
+						player.sendMessage(Translation.of("msg_err_command_disable"));
+						return;
+					}
+
+					//Ensure resident has a town & nation
+					Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
+					if (resident == null || !resident.hasTown() || !resident.getTown().hasNation())
+						throw new TownyException(Translation.of("msg_err_command_disable"));
+
+					Town town;
+					Nation nation = null;
+					try {
+						town = resident.getTown();
+						nation = town.getNation();
+					} catch (NotRegisteredException ignored) {
+					}
+
+					//Get the integer amount
+					int amount;
+					try {
+						amount = Integer.parseInt(args[1]);
+					} catch (Exception e) {
+						showNationHelp(player);
+						return;
+					}
+
+					//Pay soldiers
+					SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
+							amount,
+							null,
+							nation,
+							"Military Salary",
+							false);
+
+				} catch (TownyException te) {
+					Messaging.sendErrorMsg(player, te.getMessage());
+				} catch (EconomyException ee) {
+					Messaging.sendErrorMsg(player, ee.getMessage());
+				}
+				break;
+			default:
+				showNationHelp(player);
 		}
 	}
 }

@@ -8,7 +8,6 @@ package com.gmail.goosius.siegewar.enums;
 public enum SiegeWarPermissionNodes {
 
 	SIEGEWAR_NATION_SIEGE_POINTS("siegewar.nation.siege.points"),
-	SIEGEWAR_NATION_SIEGE_PAY_GRADE_100("siegewar.nation.siege.pay.grade.100"),
 	SIEGEWAR_NATION_SIEGE_LEADERSHIP("siegewar.nation.siege.leadership"),
 	SIEGEWAR_NATION_SIEGE_ATTACK("siegewar.nation.siege.attack"),
 	SIEGEWAR_NATION_SIEGE_ABANDON("siegewar.nation.siege.abandon"),
@@ -25,7 +24,7 @@ public enum SiegeWarPermissionNodes {
 		SIEGEWAR_COMMAND_SIEGEWAR_HUD("siegewar.command.siegewar.hud"),
 		SIEGEWAR_COMMAND_SIEGEWAR_GUIDE("siegewar.command.siegewar.guide"),
 		SIEGEWAR_COMMAND_SIEGEWAR_NATION("siegewar.command.siegewar.nation.*"),
-		SIEGEWAR_COMMAND_SIEGEWAR_NATION_SETSALARY("siegewar.command.siegewar.nation.setbasesalary"),
+		SIEGEWAR_COMMAND_SIEGEWAR_NATION_PAYSOLDIERS("siegewar.command.siegewar.nation.paysoldiers"),
 
 	SIEGEWAR_COMMAND_SIEGEWARADMIN("siegewar.command.siegewaradmin.*"),
 		SIEGEWAR_COMMAND_SIEGEWARADMIN_IMMUNITY("siegewar.command.siegewaradmin.immunity"),

@@ -188,41 +188,19 @@ public class PlunderTown {
 		double totalPlunderForNation = totalPlunderAmount / totalRatio * nationRatio;
 		double totalPlunderForSoldiers = totalPlunderAmount - totalPlunderForNation;
 
-		//Identify soldiers who need to be paid
-		int totalArmyShares = 0;
-		int residentShare;
-		Map<Resident, Integer> soldierPlunderShareMap = new HashMap<>();
-		for(Resident resident: nation.getResidents()) {
-			for (String perm : TownyPerms.getResidentPerms(resident).keySet()) {
-				if (perm.startsWith("towny.nation.siege.pay.grade.")) {
-					residentShare = Integer.parseInt(perm.replace("towny.nation.siege.pay.grade.", ""));
-					soldierPlunderShareMap.put(resident, residentShare);
-					totalArmyShares += residentShare;
-					break; //Next resident please
-				}
-			}
+		//Pay nation
+		if(removeMoneyFromTownBank) {
+			town.getAccount().payTo(totalPlunderForNation, nation, "Plunder");
+		} else {
+			nation.getAccount().deposit(totalPlunderForNation, "Plunder of " + town.getName());
 		}
 
-		//Pay soldiers and nation
-		int plunderForSoldierAmount;
-		int onePlunderShareAmount = (int)((totalPlunderForSoldiers / totalArmyShares) + 0.5);
-		if(removeMoneyFromTownBank) {
-			//Pay nation
-			town.getAccount().payTo(totalPlunderForNation, nation, "Plunder");
-			//Pay soldiers
-			for(Map.Entry<Resident,Integer> entry: soldierPlunderShareMap.entrySet()) {
-				plunderForSoldierAmount = onePlunderShareAmount * entry.getValue();
-				town.getAccount().withdraw(plunderForSoldierAmount, "Plunder");
-				SiegeWarMoneyUtil.makePlunderAvailable(entry.getKey(), plunderForSoldierAmount);
-			}
-		} else {
-			//Pay nation
-			nation.getAccount().deposit(totalPlunderForNation, "Plunder of " + town.getName());
-			//Pay soldiers
-			for(Map.Entry<Resident,Integer> entry: soldierPlunderShareMap.entrySet()) {
-				plunderForSoldierAmount = onePlunderShareAmount * entry.getValue();
-				SiegeWarMoneyUtil.makePlunderAvailable(entry.getKey(), plunderForSoldierAmount);
-			}
-		}
+		//Pay soldiers
+		SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
+				totalPlunderForSoldiers,
+				town,
+				nation,
+				"Plunder",
+				removeMoneyFromTownBank);
 	}
 }
