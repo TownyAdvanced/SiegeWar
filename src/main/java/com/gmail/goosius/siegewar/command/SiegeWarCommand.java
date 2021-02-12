@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.command;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -42,13 +43,16 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 		switch (args[0].toLowerCase()) {
 		case "nation":
-			if (args.length > 1)
+			if (args.length == 2)
 				return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
 		case "hud":
-			if (args.length > 1)
+			if (args.length == 2)
 				return NameUtil.filterByStart(new ArrayList<String>(SiegeController.getSiegedTownNames()), args[1]);
 		default:
-			return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
+			if (args.length == 1)
+				return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
+			else
+				return Collections.emptyList();
 		}
 	}
 
