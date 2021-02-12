@@ -264,10 +264,10 @@ msg_err_cannot_remove_enemy: '&cYou cannot remove a nation as enemy if you have 
 
 #Added in 0.09
 nation_help_11 : 'Collect any income due to you from: plunder or nation refunds.'
-msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be collected using '/sw collect'"
-msg_siege_war_plunder_available: "Plunder of %s is now available to you. It can be collected using '/sw collect'"
-msg_siege_war_military_salary_available: "A Military Salary of of %s is now available to you. It can be collected using '/sw collect'"
+msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be collected using '/sw collect'."
+msg_siege_war_plunder_available: "Plunder of %s is now available to you. It can be collected using '/sw collect'."
+msg_siege_war_military_salary_available: "A Military Salary of of %s is now available to you. It can be collected using '/sw collect'."
 msg_siege_war_nation_refund_collected: "You have collected the nation refund of %s."
 msg_siege_war_plunder_collected: "You have collected the plunder of %s."
 msg_siege_military_salary_collected: "You have collected the military salary of %s."
-msg_err_siege_war_collect_unavailable: "There is no income due to you from either plunder or nation refunds."
+msg_err_siege_war_collect_unavailable: "There is no income due to you from either plunder, military salary, or nation refunds."
