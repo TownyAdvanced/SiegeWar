@@ -8,6 +8,7 @@ package com.gmail.goosius.siegewar.enums;
 public enum SiegeWarPermissionNodes {
 
 	SIEGEWAR_NATION_SIEGE_POINTS("siegewar.nation.siege.points"),
+	SIEGEWAR_NATION_SIEGE_PAY_GRADE_100("siegewar.nation.siege.pay.grade.100"),
 	SIEGEWAR_NATION_SIEGE_LEADERSHIP("siegewar.nation.siege.leadership"),
 	SIEGEWAR_NATION_SIEGE_ATTACK("siegewar.nation.siege.attack"),
 	SIEGEWAR_NATION_SIEGE_ABANDON("siegewar.nation.siege.abandon"),

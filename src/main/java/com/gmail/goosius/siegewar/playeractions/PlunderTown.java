@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
@@ -18,9 +19,14 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.permissions.TownyPermissionSource;
+import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import com.palmergames.bukkit.towny.utils.MoneyUtil;
 
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class is responsible for processing requests to plunder towns
@@ -81,21 +87,21 @@ public class PlunderTown {
 		boolean townNewlyBankrupted = false;
 		boolean townDestroyed = false;
 
-		double plunderAmount =
+		double totalPlunderAmount =
 				SiegeWarSettings.getWarSiegeAttackerPlunderAmountPerPlot()
 				* town.getTownBlocks().size()
 				* SiegeWarMoneyUtil.getMoneyMultiplier(town);
 		
 		try {
 			//Redistribute money
-			if(town.getAccount().canPayFromHoldings(plunderAmount)) {
-				//Town can afford plunder			
-				town.getAccount().payTo(plunderAmount, nation, "Plunder");
+			if(town.getAccount().canPayFromHoldings(totalPlunderAmount)) {
+				//Town can afford plunder
+				transferPlunderToNation(town, nation, totalPlunderAmount, true);
 
-				NationMetaDataController.setTotalPlunderGained(nation, NationMetaDataController.getTotalPlunderGained(nation) + (int) plunderAmount);
+				NationMetaDataController.setTotalPlunderGained(nation, NationMetaDataController.getTotalPlunderGained(nation) + (int) totalPlunderAmount);
 				if (town.hasNation())
 					try {
-						NationMetaDataController.setTotalPlunderLost(town.getNation(), NationMetaDataController.getTotalPlunderLost(town.getNation()) + (int) plunderAmount);
+						NationMetaDataController.setTotalPlunderLost(town.getNation(), NationMetaDataController.getTotalPlunderLost(town.getNation()) + (int) totalPlunderAmount);
 					} catch (NotRegisteredException ignored) {}
 			} else {
 				//Town cannot afford plunder
@@ -111,18 +117,18 @@ public class PlunderTown {
 
 					// This will drop their actualPlunder amount to what the town's debt cap will allow. 
 					// Enabling a town to go only so far into debt to pay the plunder cost.
-					if (town.getAccount().getHoldingBalance() - plunderAmount < town.getAccount().getDebtCap() * -1)
-						plunderAmount = town.getAccount().getDebtCap() - Math.abs(town.getAccount().getHoldingBalance());
+					if (town.getAccount().getHoldingBalance() - totalPlunderAmount < town.getAccount().getDebtCap() * -1)
+						totalPlunderAmount = town.getAccount().getDebtCap() - Math.abs(town.getAccount().getHoldingBalance());
 						
 					// Charge the town (using .withdraw() which will allow for going into bankruptcy.)
-					town.getAccount().withdraw(plunderAmount, "Plunder by " + nation.getName());
+					town.getAccount().withdraw(totalPlunderAmount, "Plunder by " + nation.getName());
 					// And deposit it into the nation.
-					nation.getAccount().deposit(plunderAmount, "Plunder of " + town.getName());
-					
+					transferPlunderToNation(town, nation, totalPlunderAmount, false);
+
 				} else {
 					// Not able to go bankrupt, they are destroyed, pay what they can.
-					plunderAmount = town.getAccount().getHoldingBalance();
-					town.getAccount().payTo(plunderAmount, nation, "Plunder");
+					totalPlunderAmount = town.getAccount().getHoldingBalance();
+					transferPlunderToNation(town, nation, totalPlunderAmount, true);
 					townDestroyed = true;
 				}
 			}
@@ -145,14 +151,14 @@ public class PlunderTown {
 			Messaging.sendGlobalMessage(
 				Translation.of("msg_siege_war_nation_town_plundered",
 				town.getFormattedName(),
-				TownyEconomyHandler.getFormattedBalance(plunderAmount),
+				TownyEconomyHandler.getFormattedBalance(totalPlunderAmount),
 				nation.getFormattedName()
 			));
 		} else {
 			Messaging.sendGlobalMessage(
 				Translation.of("msg_siege_war_neutral_town_plundered",
 				town.getFormattedName(),
-				TownyEconomyHandler.getFormattedBalance(plunderAmount),
+				TownyEconomyHandler.getFormattedBalance(totalPlunderAmount),
 				nation.getFormattedName()
 			));
 		}
@@ -168,6 +174,54 @@ public class PlunderTown {
 				Translation.of("msg_siege_war_town_ruined_from_plunder",
 				town,
 				nation.getFormattedName()));
+		}
+	}
+
+	private static void transferPlunderToNation(Town town, Nation nation, double totalPlunderAmount, boolean removeMoneyFromTownBank) throws EconomyException {
+		String distributionRatio = SiegeWarSettings.getWarSiegeAttackerPlunderDistributionRatio();
+
+		//Calculate amount for nation & soldiers
+		String[] nationSoldierRatios = distributionRatio.split(":");
+		int nationRatio = Integer.parseInt(nationSoldierRatios[0]);
+		int soldierRatio = Integer.parseInt(nationSoldierRatios[1]);
+		int totalRatio = nationRatio + soldierRatio;
+		double totalPlunderForNation = totalPlunderAmount / totalRatio * nationRatio;
+		double totalPlunderForSoldiers = totalPlunderAmount - totalPlunderForNation;
+
+		//Identify soldiers who need to be paid
+		int totalArmyShares = 0;
+		int residentShare;
+		Map<Resident, Integer> soldierPlunderShareMap = new HashMap<>();
+		for(Resident resident: nation.getResidents()) {
+			for (String perm : TownyPerms.getResidentPerms(resident).keySet()) {
+				if (perm.startsWith("towny.nation.siege.pay.grade.")) {
+					residentShare = Integer.parseInt(perm.replace("towny.nation.siege.pay.grade.", ""));
+					soldierPlunderShareMap.put(resident, residentShare);
+					totalArmyShares += residentShare;
+					break; //Next resident please
+				}
+			}
+		}
+
+		//Pay soldiers and nation
+		int plunderForSoldierAmount;
+		int onePlunderShareAmount = (int)((totalPlunderForSoldiers / totalArmyShares) + 0.5);
+		if(removeMoneyFromTownBank) {
+			//Pay nation
+			town.getAccount().payTo(totalPlunderForNation, nation, "Plunder");
+			//Pay soldiers
+			for(Map.Entry<Resident,Integer> entry: soldierPlunderShareMap.entrySet()) {
+				plunderForSoldierAmount = onePlunderShareAmount * entry.getValue();
+				town.getAccount().payTo(plunderForSoldierAmount, entry.getKey(), "Plunder");
+			}
+		} else {
+			//Pay nation
+			nation.getAccount().deposit(totalPlunderForNation, "Plunder of " + town.getName());
+			//Pay soldiers
+			for(Map.Entry<Resident,Integer> entry: soldierPlunderShareMap.entrySet()) {
+				plunderForSoldierAmount = onePlunderShareAmount * entry.getValue();
+				entry.getKey().getAccount().deposit(plunderForSoldierAmount, "Plunder of " + town.getName());
+			}
 		}
 	}
 }

@@ -105,7 +105,7 @@ public class SiegeWarMoneyUtil {
 		if(ResidentMetaDataController.getNationRefundAmount(formerKing) != 0) {
 			int refundAmount = ResidentMetaDataController.getNationRefundAmount(formerKing);
 			formerKing.getAccount().deposit(refundAmount, "Nation Refund");
-			ResidentMetaDataController.setNationRefundAmount(formerKing, 0);
+			ResidentMetaDataController.clearNationRefund(formerKing);
 			Messaging.sendMsg(player, Translation.of("msg_siege_war_nation_refund_claimed", TownyEconomyHandler.getFormattedBalance(refundAmount)));
 		} else {
 			throw new TownyException(Translation.of("msg_err_siege_war_nation_refund_unavailable"));
@@ -120,13 +120,26 @@ public class SiegeWarMoneyUtil {
 	public static void makeNationRefundAvailable(Resident king) {
 		int amountToRefund = (int)(TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
 		
-		// Makes the nation refund available. Player can do "/sw nation refund" later to claim money.
-		ResidentMetaDataController.setNationRefundAmount(king, amountToRefund);
+		// Makes the nation refund available. Player can do "/sw collect" later to claim money.
+		ResidentMetaDataController.addNationRefundAmount(king, amountToRefund);
 
 		Messaging.sendMsg(king.getPlayer(),
 				Translation.of("msg_siege_war_nation_refund_available", TownyEconomyHandler.getFormattedBalance(amountToRefund)));
 	}
-	
+
+	/**
+	 * Make some plunder money available to a resident
+	 *
+	 * @param soldier the resident to grant the plunder to.
+	 * @param plunderAmount the plunder amount
+	 */
+	public static void makePlunderAvailable(Resident soldier, int plunderAmount) {
+		// Makes the plunder available. Player can do "/sw collect" later to claim money.
+		ResidentMetaDataController.addPlunderAmount(soldier, plunderAmount);
+		Messaging.sendMsg(soldier.getPlayer(),
+				Translation.of("msg_siege_war_nation_refund_available", TownyEconomyHandler.getFormattedBalance(plunderAmount)));
+	}
+
 	public static double getSiegeCost(Town town) {
 		if (town.isCapital())
 			return SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
