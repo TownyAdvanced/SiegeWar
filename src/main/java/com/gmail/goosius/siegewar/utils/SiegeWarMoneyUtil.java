@@ -214,7 +214,7 @@ public class SiegeWarMoneyUtil {
 		// Makes the plunder available. Player can do "/sw collect" later to claim money.
 		ResidentMetaDataController.addPlunderAmount(soldier, plunderAmount);
 		Messaging.sendMsg(soldier.getPlayer(),
-				Translation.of("msg_siege_war_nation_refund_available", TownyEconomyHandler.getFormattedBalance(plunderAmount)));
+				Translation.of("msg_siege_war_plunder_available", TownyEconomyHandler.getFormattedBalance(plunderAmount)));
 	}
 
 	/**
@@ -227,7 +227,7 @@ public class SiegeWarMoneyUtil {
 		// Makes the plunder available. Player can do "/sw collect" later to claim money.
 		ResidentMetaDataController.addMilitarySalaryAmount(soldier, militarySalaryAmount);
 		Messaging.sendMsg(soldier.getPlayer(),
-				Translation.of("msg_siege_military_salary_available", TownyEconomyHandler.getFormattedBalance(militarySalaryAmount)));
+				Translation.of("msg_siege_war_military_salary_available", TownyEconomyHandler.getFormattedBalance(militarySalaryAmount)));
 	}
 
 	public static double getSiegeCost(Town town) {
