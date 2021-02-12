@@ -81,6 +81,10 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		case "guide":
 			parseSiegeWarGuideCommand(player);
 			break;
+		case "nation":
+			parseSiegeWarNationCommand(player);
+		break;
+
 		default:
 			showSiegeWarHelp(player);
 		}

@@ -38,6 +38,7 @@ permissions:
         description: User is able to do all /siegewar commands.
         default: false
         children:
+            siegewar.command.siegewar.collect: true
             siegewar.command.siegewar.hud.*: true
             siegewar.command.siegewar.nation.*: true
 
@@ -47,12 +48,11 @@ permissions:
         children:
             siegewar.command.siegewar.hud: true
 
-
     siegewar.command.siegewar.nation.*:
         description: User is able to do all /siegewar nation commands.
         default: false
         children:
-            siegewar.command.siegewar.nation.refund: true
+            siegewar.command.siegewar.nation.set_salary: true
 
     siegewar.nation:
         description: User holds all of the siegewar nation nodes.
