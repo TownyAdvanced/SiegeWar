@@ -47,12 +47,11 @@ permissions:
         children:
             siegewar.command.siegewar.hud: true
 
-
     siegewar.command.siegewar.nation.*:
         description: User is able to do all /siegewar nation commands.
         default: false
         children:
-            siegewar.command.siegewar.nation.refund: true
+            siegewar.command.siegewar.nation.paysoldiers: true
 
     siegewar.nation:
         description: User holds all of the siegewar nation nodes.
@@ -75,7 +74,11 @@ permissions:
     siegewar.command.siegewar.guide:
         description: User is able to read guide book.
         default: true
-            
+
+    siegewar.command.siegewar.collect:
+        description: User is able to do the /siegewar collect command.
+        default: true
+
     siegewar.immune.to.war.nausea:
         description: User is immune to war nausea.
         default: false

@@ -57,6 +57,10 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_PLUNDER_ENABLED);
 	}
 
+	public static boolean getWarSiegeMilitarySalaryEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MILITARY_SALARY_ENABLED);
+	}
+
 	public static boolean getWarSiegeRevoltEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_REVOLT_ENABLED);
 	}
@@ -99,6 +103,10 @@ public class SiegeWarSettings {
 
 	public static double getWarSiegeAttackerPlunderAmountPerPlot() {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_ATTACKER_PLUNDER_AMOUNT_PER_PLOT);
+	}
+
+	public static String getWarSiegeAttackerPlunderDistributionRatio() {
+		return Settings.getString(ConfigNodes.WAR_SIEGE_ATTACKER_PLUNDER_DISTRIBUTION_RATIO);
 	}
 
 	public static double getWarSiegeMaxHoldoutTimeHours() {
