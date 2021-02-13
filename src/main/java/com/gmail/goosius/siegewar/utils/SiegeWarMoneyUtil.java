@@ -287,7 +287,7 @@ public class SiegeWarMoneyUtil {
 		//Pay each soldier
 		int amountToPaySoldier;
 		for(Map.Entry<Resident,Integer> entry: soldierShareMap.entrySet()) {
-			amountToPaySoldier = (int)((amountValueOfOneShare * entry.getValue()) + 0.5);
+			amountToPaySoldier = (int)((amountValueOfOneShare * entry.getValue())); //Round down to avoid exploits for making extra money
 			switch(reason.toLowerCase()) {
 				case "plunder":
 					makePlunderAvailable(entry.getKey(), amountToPaySoldier);
