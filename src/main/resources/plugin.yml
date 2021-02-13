@@ -38,7 +38,6 @@ permissions:
         description: User is able to do all /siegewar commands.
         default: false
         children:
-            siegewar.command.siegewar.collect: true
             siegewar.command.siegewar.hud.*: true
             siegewar.command.siegewar.nation.*: true
 
@@ -75,7 +74,11 @@ permissions:
     siegewar.command.siegewar.guide:
         description: User is able to read guide book.
         default: true
-            
+
+    siegewar.command.siegewar.collect:
+        description: User is able to do the /siegewar collect command.
+        default: true
+
     siegewar.immune.to.war.nausea:
         description: User is immune to war nausea.
         default: false

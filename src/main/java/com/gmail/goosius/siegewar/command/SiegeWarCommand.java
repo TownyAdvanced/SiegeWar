@@ -109,6 +109,9 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	}
 
 	private void parseSiegeWarCollectCommand(Player player) {
+		if(!TownyEconomyHandler.isActive())
+			return;
+
 		int incomeTypesCollected = 0;
 		boolean error = false;
 		try {
@@ -174,12 +177,10 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		switch (args[0]) {
 			case "paysoldiers":
 				try {
-					if (!SiegeWarSettings.getWarSiegeMilitarySalaryEnabled()) {
-						player.sendMessage(Translation.of("msg_err_command_disable"));
+					if(!TownyEconomyHandler.isActive())
 						return;
-					}
 
-					if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_PAYSOLDIERS.getNode())) {
+					if (!SiegeWarSettings.getWarSiegeMilitarySalaryEnabled()) {
 						player.sendMessage(Translation.of("msg_err_command_disable"));
 						return;
 					}
