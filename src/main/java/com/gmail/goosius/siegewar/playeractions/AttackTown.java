@@ -122,7 +122,7 @@ public class AttackTown {
 		SiegeWarTownUtil.setTownFlags(defendingTown, true);
 		
 		//Pay into warchest
-		if (TownySettings.isUsingEconomy()) {
+		if (TownyEconomyHandler.isActive()) {
 			try {
 				//Pay upfront cost into warchest now
 				attackingNation.getAccount().withdraw(siege.getWarChestAmount(), "Cost of starting a siege.");
