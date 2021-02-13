@@ -112,25 +112,29 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 	private void parseSiegeWarCollectCommand(Player player) {
 		boolean moneyCollected = false;
+		boolean error = false;
 		try {
 			moneyCollected = SiegeWarMoneyUtil.collectNationRefund(player);
 		} catch (Exception e) {
+			error = true;
 			player.sendMessage(e.getMessage());
 		}
 
 		try {
 			moneyCollected = SiegeWarMoneyUtil.collectPlunder(player);
 		} catch (Exception e) {
+			error = true;
 			player.sendMessage(e.getMessage());
 		}
 
 		try {
 			moneyCollected = SiegeWarMoneyUtil.collectMilitarySalary(player);
 		} catch (Exception e) {
+			error = true;
 			player.sendMessage(e.getMessage());
 		}
 
-		if(!moneyCollected)	{
+		if(!error && !moneyCollected)	{
 			Messaging.sendErrorMsg(player, Translation.of("msg_err_siege_war_collect_unavailable"));
 		}
 	}
@@ -201,7 +205,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 						return;
 					}
 
-					if(amount == 0) {
+					if(amount < 1) {
 						showNationHelp(player);
 						return;
 					}

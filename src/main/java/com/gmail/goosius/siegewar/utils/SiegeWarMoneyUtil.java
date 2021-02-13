@@ -118,7 +118,7 @@ public class SiegeWarMoneyUtil {
 			return false;
 		}
 		return collectIncome(player, "Plunder",
-				"msg_siege_war_nation_plunder_collected");
+				"msg_siege_war_plunder_collected");
 	}
 
 	/**
