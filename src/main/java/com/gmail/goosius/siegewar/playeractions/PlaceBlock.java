@@ -10,7 +10,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownySettings;
+import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
@@ -244,7 +244,7 @@ public class PlaceBlock {
 				throw new TownyException(Translation.of("msg_err_command_disable"));
 			
 	        try {
-				if (TownySettings.isUsingEconomy() && !nation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.getSiegeCost(town)))
+				if (TownyEconomyHandler.isActive() && !nation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.getSiegeCost(town)))
 					throw new TownyException(Translation.of("msg_err_no_money"));
 			} catch (EconomyException ignored) {}
 	        
@@ -276,7 +276,7 @@ public class PlaceBlock {
 		if (!SiegeWarSettings.getWarSiegePlunderEnabled() || !TownyAPI.getInstance().isWilderness(block))
 			return;
 		
-		if(!TownySettings.isUsingEconomy())
+		if(!TownyEconomyHandler.isActive())
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_economy"));
 		
 		List<TownBlock> nearbyTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
