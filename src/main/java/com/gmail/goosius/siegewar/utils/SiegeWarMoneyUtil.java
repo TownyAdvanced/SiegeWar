@@ -30,7 +30,7 @@ public class SiegeWarMoneyUtil {
 	 */
 	public static void giveWarChestToAttackingNation(Siege siege) {
 		Nation winnerNation = siege.getAttackingNation();
-		if (TownySettings.isUsingEconomy()) {
+		if (TownyEconomyHandler.isActive()) {
 			try {
 				winnerNation.getAccount().deposit(siege.getWarChestAmount(), "War Chest Captured/Returned");
 				String message =
@@ -56,7 +56,7 @@ public class SiegeWarMoneyUtil {
 	 */
 	public static void giveWarChestToDefendingTown(Siege siege) {
 		Town winnerTown= siege.getDefendingTown();
-		if(TownySettings.isUsingEconomy()) {
+		if(TownyEconomyHandler.isActive()) {
 			try {
 				winnerTown.getAccount().deposit(siege.getWarChestAmount(), "War Chest Captured");
 				String message =
