@@ -206,6 +206,9 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 						return;
 					}
 
+					if(!nation.getAccount().canPayFromHoldings(amount))
+						throw new TownyException("msg_err_siege_war_not_enough_nation_funds_to_pay");
+
 					//Deduct from nation bank
 					nation.getAccount().withdraw(amount, "Military Salaries");
 
