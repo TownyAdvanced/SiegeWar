@@ -52,7 +52,7 @@ permissions:
         description: User is able to do all /siegewar nation commands.
         default: false
         children:
-            siegewar.command.siegewar.nation.set_salary: true
+            siegewar.command.siegewar.nation.paysoldiers: true
 
     siegewar.nation:
         description: User holds all of the siegewar nation nodes.
