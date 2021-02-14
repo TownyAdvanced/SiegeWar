@@ -206,10 +206,9 @@ public class SiegeWarNationEventListener implements Listener {
     
 	public static List<Town> getTownsUnderSiegeAttack(Nation nation) {
 		List<Town> result = new ArrayList<>();
-		for(Siege siege : SiegeController.getSieges()) {
-			if(siege.getAttackingNation().equals(nation)) {				
+		for(Siege siege : SiegeController.getSieges(nation)) {
+			if(siege.getStatus().isActive())
 				result.add(siege.getDefendingTown());
-			}
 		}
 		return result;
 	}
