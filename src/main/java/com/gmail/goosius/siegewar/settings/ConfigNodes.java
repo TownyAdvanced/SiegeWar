@@ -496,7 +496,7 @@ public enum ConfigNodes {
 			"# If this setting is false, battles will be more 'arcade-like', with low death cost."),
 	WAR_SIEGE_DEATH_PENALTY_DEGRADE_INVENTORY_PERCENTAGE(
 			"war.siege.death_penalty.degrade_inventory.percentage",
-			"10.0",
+			"20.0",
 			"",
 			"# This values specifies the percentage equipment degradation that occurs to a soldiers equipment,",
 			"# when they die in a siege zone.",
