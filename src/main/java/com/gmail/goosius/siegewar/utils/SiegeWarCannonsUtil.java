@@ -111,7 +111,7 @@ public class SiegeWarCannonsUtil {
 		}
 		return townsWhereCannonIsLocated;
 	}
-	
+
 	public static void decrementAllCannonsEnabledCounters() {
 		List<Siege> sieges = SiegeController.getSieges();
 		for(Siege siege: sieges) {

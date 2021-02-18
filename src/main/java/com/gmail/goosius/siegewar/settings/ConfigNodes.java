@@ -642,6 +642,28 @@ public enum ConfigNodes {
 			"",
 			"# This is how many seconds a player has to leave the siege zone before he gets war sickness",
 			"# If this is set to 0, no warn will be given and non-participants will receive war sickness instantly, if enabled"
+	),
+
+	CANNONS_INTEGRATION("cannons_integration",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |              Cannons Integration                     | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	CANNONS_INTEGRATION_ENABLED (
+			"cannons_integration.enabled",
+			"true",
+			"",
+			"# If this value is true, then the integration with the Cannons plugin is enabled.",
+			"# Blah."),
+	CANNONS_INTEGRATION_MAX_COUNTER_VALUE(
+			"cannons_integration.max_counter_value",
+			"15",
+			"# This value determines how long cannons remain enabled with respect to a besieged town,",
+			"# After a ranked town member has given permission for them to be used.",
+			"# The duration is 'in short ticks', typically there are 20 seconds per short tick."
 	);
 
 	private final String Root;

@@ -377,10 +377,10 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean isCannonsIntegrationEnabled() {
-		return true;
+		return Settings.getBoolean(ConfigNodes.CANNONS_INTEGRATION_ENABLED);
 	}
 
 	public static int getCannonsEnabledCounterValue() {
-		return 15;
+		return Settings.getInt(ConfigNodes.CANNONS_INTEGRATION_MAX_COUNTER_VALUE);
 	}
 }
