@@ -103,4 +103,12 @@ public class TownMetaDataController {
 			town.addMetaData(new LongDataField("siegewar_siegeImmunityEndTime", time));
 		}
 	}
+
+	public static int getCannonsEnabledCounter(Town town) {
+		return 3;
+	}
+
+	public static void setCannonsEnabledCounter(Town town, int counter) {
+
+	}
 }

@@ -24,6 +24,10 @@
       <id>dynmap-repo</id>
       <url>http://repo.mikeprimm.com/</url>
     </repository>
+    <repository>
+      <id>cannons-repo</id>
+      <url>https://github.com/DerPavlov/mvn-repo/raw/master/</url>
+    </repository>
   </repositories>
   
   <dependencies>
@@ -49,6 +53,12 @@
       <groupId>us.dynmap</groupId>
       <artifactId>dynmap-api</artifactId>
       <version>2.5</version>
+    </dependency>
+    <dependency>
+      <groupId>at.pavlov</groupId>
+      <artifactId>Cannons</artifactId>
+      <version>2.5.5</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

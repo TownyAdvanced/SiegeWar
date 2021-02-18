@@ -1,5 +1,7 @@
 package com.gmail.goosius.siegewar;
 
+import com.gmail.goosius.siegewar.listeners.*;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -12,12 +14,6 @@ import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
-import com.gmail.goosius.siegewar.listeners.SiegeWarActionListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarBukkitEventListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarNationEventListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarPlotEventListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 
 import java.io.File;
 
@@ -102,6 +98,7 @@ public class SiegeWar extends JavaPlugin {
 		pm.registerEvents(new SiegeWarNationEventListener(this), this);
 		pm.registerEvents(new SiegeWarTownEventListener(this), this);
 		pm.registerEvents(new SiegeWarPlotEventListener(this), this);
+		pm.registerEvents(new SiegeWarCannonsListener(this), this);
 	}
 	
 	private void registerCommands() {

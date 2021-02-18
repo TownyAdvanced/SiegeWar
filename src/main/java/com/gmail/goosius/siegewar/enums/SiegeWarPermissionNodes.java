@@ -18,6 +18,8 @@ public enum SiegeWarPermissionNodes {
 	// Siegewar related war sickness immunities
 	SIEGEWAR_IMMUNE_TO_WAR_NAUSEA("siegewar.immune.to.war.nausea"),
 	SIEGEWAR_IMMUNE_TO_BATTLE_FATIGUE("siegewar.immune.to.battle.fatigue"),
+	// Town cannon key (if resident fires a cannon they temporarily enable all outgoing/incoming cannon fire)
+	SIEGEWAR_TOWN_CANNON_KEY("siegewar.town.cannon.key"),
 	// Command Nodes:
 	SIEGEWAR_COMMAND_SIEGEWAR("siegewar.command.siegewar.*"),
 		SIEGEWAR_COMMAND_SIEGEWAR_NATION("siegewar.command.siegewar.nation.*"),

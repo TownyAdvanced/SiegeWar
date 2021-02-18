@@ -375,4 +375,12 @@ public class SiegeWarSettings {
 	public static boolean getWarSiegeDeathSpawnFireworkEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_DEATH_SPAWN_FIREWORK);
 	}
+
+	public static boolean isCannonsIntegrationEnabled() {
+		return true;
+	}
+
+	public static int getCannonsEnabledCounterValue() {
+		return 15;
+	}
 }

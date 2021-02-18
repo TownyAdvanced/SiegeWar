@@ -60,4 +60,12 @@ public class SiegeWarTownUtil {
 			town.getPermissions().explosion = desiredSetting;
 		town.save();
 	}
+
+	public static void setTownExplosionFlags(Town town, boolean desiredSetting) {
+		//Set it in the town
+		if (town.getPermissions().explosion != desiredSetting)
+			town.getPermissions().explosion = desiredSetting;
+		//Set it in all plots (TODO)
+		town.save();
+	}
 }
