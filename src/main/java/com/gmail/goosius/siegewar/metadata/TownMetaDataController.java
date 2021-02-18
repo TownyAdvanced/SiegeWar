@@ -104,10 +104,6 @@ public class TownMetaDataController {
 		}
 	}
 
-	public static int getCannonsEnabledCounter(Town town) {
-		return 3;
-	}
-
 	public static void setCannonsEnabledCounter(Town town, int counter) {
 
 	}
