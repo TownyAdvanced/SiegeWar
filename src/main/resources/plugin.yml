@@ -70,7 +70,7 @@ permissions:
         children:
             siegewar.town.siege.points: true
             siegewar.town.siege.surrender: true
-            siegewar.town.siege.start.cannon.session: true
+            siegewar.town.siege.startcannonsession: true
 
     siegewar.command.siegewar.guide:
         description: User is able to read guide book.
