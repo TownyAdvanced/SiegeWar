@@ -95,6 +95,7 @@ public class SiegeWarTownEventListener implements Listener {
 	@EventHandler
 	public void onTownToggleExplosion(TownToggleExplosionEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()
+				&& SiegeWarSettings.isCannonsIntegrationEnabled()
 				&& SiegeController.hasActiveSiege(event.getTown())
 				&& SiegeController.getSiege(event.getTown()).getCannonSessionRemainingShortTicks() > 0) {
 			event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_toggle_explosions_due_to_cannon_session"));

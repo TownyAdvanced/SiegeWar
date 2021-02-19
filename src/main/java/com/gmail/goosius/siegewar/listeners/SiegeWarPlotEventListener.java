@@ -48,13 +48,12 @@ public class SiegeWarPlotEventListener implements Listener {
      */
     @EventHandler
     public void onPlotToggleExplosion(PlotToggleExplosionEvent event) {
-        if (SiegeWarSettings.getWarSiegeEnabled()) {
-            if (SiegeWarSettings.getWarSiegeEnabled()
-                    && SiegeController.hasActiveSiege(event.getTown())
-                    && SiegeController.getSiege(event.getTown()).getCannonSessionRemainingShortTicks() > 0) {
-                event.setCancellationMsg(Translation.of("msg_err_cannot_toggle_explosions_due_to_cannon_session"));
-                event.setCancelled(true);
-            }
+        if (SiegeWarSettings.getWarSiegeEnabled()
+                && SiegeWarSettings.isCannonsIntegrationEnabled()
+                && SiegeController.hasActiveSiege(event.getTown())
+                && SiegeController.getSiege(event.getTown()).getCannonSessionRemainingShortTicks() > 0) {
+            event.setCancellationMsg(Translation.of("msg_err_cannot_toggle_explosions_due_to_cannon_session"));
+            event.setCancelled(true);
         }
     }
 
