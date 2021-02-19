@@ -171,6 +171,6 @@ public class AttackTown {
 		}
 
 		//Call event
-		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(block, attackingNation, attackingTown, defendingTown));
+		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, attackingTown, block));
     }
 }

@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.events;
 
+import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.block.Block;
@@ -10,24 +11,28 @@ import org.jetbrains.annotations.NotNull;
 public class SiegeWarStartEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
+    private final Siege siege;
     private final Nation attackerNation;
     private final Town attackerTown;
     private final Town defenderTown;
     private final Block flag;
 
-    public SiegeWarStartEvent(Block flag, Nation attackerNation, Town attackerTown, Town defenderTown){
-
+    public SiegeWarStartEvent(Siege siege, Town town, Block flag) {
+        this.siege = siege;
+        this.attackerNation = siege.getAttackingNation();
+        this.attackerTown = town;
+        this.defenderTown = siege.getDefendingTown();
         this.flag = flag;
-        this.attackerNation = attackerNation;
-        this.attackerTown = attackerTown;
-        this.defenderTown = defenderTown;
-
     }
 
     @NotNull
     @Override
     public HandlerList getHandlers() {
         return handlers;
+    }
+
+    public Siege getSiege() {
+        return siege;
     }
 
     public Nation getAttackerNation() {
