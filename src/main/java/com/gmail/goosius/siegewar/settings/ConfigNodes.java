@@ -658,7 +658,7 @@ public enum ConfigNodes {
 			"#    - The town session usually lasts just a few minutes. The max duration is configured below.",
 			"# ",
 			"# WARNING: ",
-			"# Do not enable this feature until the following issue is resolved",
+			"# Do not enable this feature unless the following issue is resolved",
 			"# (Either in the Cannons plugin, Towny plugin, or your own custom branch of either) - ",
 			"# https://github.com/DerPavlov/Cannons/pull/37."),
 	CANNONS_INTEGRATION_MAX_CANNON_SESSION_DURATION(
