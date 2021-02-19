@@ -649,16 +649,23 @@ public enum ConfigNodes {
 			"false",
 			"",
 			"# If this value is true, then the integration with the Cannons plugin is enabled.",
+			"# The integration works as follows:",
+			"# 1. When a town is not under siege: Normal Towny mechanics apply.",
+			"# 2. When a town is under siege:",
+			"#    - Town cannons cannot be fired unless there is a 'cannon session' in effect.",
+			"#    - A cannon session starts/refreshes when a town resident with the 'siegewar.town.siege.startcannonsession' fires a town cannon.",
+			"#    - While a cannon session is in effect, town cannons can be fired, and town explosion perm protections are forced off.",
+			"#    - The town session usually lasts just a few minutes. The max duration is configured below.",
+			"# ",
 			"# WARNING: ",
 			"# Do not enable this feature until the following issue is resolved",
-			"# (Either in the Cannons plugin, Towny plugin, or on a custom branch of either)",
+			"# (Either in the Cannons plugin, Towny plugin, or your own custom branch of either) - ",
 			"# https://github.com/DerPavlov/Cannons/pull/37."),
 	CANNONS_INTEGRATION_MAX_CANNON_SESSION_DURATION(
 			"cannons_integration.max_cannon_session_duration",
 			"9",
-			"# This value determines how long cannons remain enabled with respect to a besieged town,",
-			"# After a ranked town member has given permission for them to be used.",
-			"# The duration is 'in short ticks', typically there are 20 seconds per short tick."
+			"# This value determines the max duration of each cannon session,",
+			"# The duration is 'in short ticks', typically a short tick is 20 seconds."
 	);
 
 	private final String Root;
