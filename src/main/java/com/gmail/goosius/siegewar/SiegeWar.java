@@ -61,7 +61,7 @@ public class SiegeWar extends JavaPlugin {
 
         Plugin dynmap = Bukkit.getPluginManager().getPlugin("dynmap");
         if (dynmap != null) {
-        	System.out.println(prefix + "SiegeWar found Dynmap plugin, enabling Dynmap integration.");
+        	System.out.println(prefix + "SiegeWar found Dynmap plugin, enabling Dynmap support.");
         	DynmapTask.setupDynmapAPI((DynmapAPI) dynmap);
         } else {
         	System.out.println(prefix + "Dynmap plugin not found.");
@@ -71,11 +71,12 @@ public class SiegeWar extends JavaPlugin {
 		if (cannons != null) {
 			cannonsPluginDetected = true;
 			if(SiegeWarSettings.isCannonsIntegrationEnabled()) {
-				System.out.println(prefix + "SiegeWar found Cannons plugin, enabling Cannons integration.");
+				System.out.println(prefix + "SiegeWar found Cannons plugin, enabling Cannons support.");
+				System.out.println(prefix + "Cannons support enabled.");
 			}
 		} else {
 			cannonsPluginDetected = false;
-			System.out.println(prefix + "Cannons not found.");
+			System.out.println(prefix + "Cannons plugin not found.");
 		}
 
 		registerListeners();
