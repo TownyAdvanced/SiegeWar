@@ -44,14 +44,15 @@ public class SiegeWarCannonsUtil {
 			return;
 
 		//Find the town where the cannon is located
-		Town townWhereCannonIsLocated;
+		Town townWhereCannonIsLocated = null;
 		Set<Town> cannonTowns = getTownsWhereCannonIsLocated(cannon);
 		if(cannonTowns.size() == 0) {
 			return; //Cannon not in a town
 		} else if (cannonTowns.size() > 1) {
 			throw new TownyException(Translation.of("msg_err_cannon_in_two_towns"));
 		} else {
-			townWhereCannonIsLocated = (Town)cannonTowns.toArray()[0];
+			for(Town town: cannonTowns)
+				townWhereCannonIsLocated = town;
 		}
 
 		//Find the siege

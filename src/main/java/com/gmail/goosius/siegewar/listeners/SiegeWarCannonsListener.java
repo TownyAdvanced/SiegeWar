@@ -71,7 +71,7 @@ public class SiegeWarCannonsListener implements Listener {
 	@EventHandler
 	public void cannonRedstoneEvent(CannonRedstoneEvent event) {
 		try {
-			Town townWhereCannonIsLocated;
+			Town townWhereCannonIsLocated = null;
 			Set<Town> cannonTowns = SiegeWarCannonsUtil.getTownsWhereCannonIsLocated(event.getCannon());
 			if(cannonTowns.size() == 0) {
 				return; //cannon is not in a town
@@ -79,7 +79,8 @@ public class SiegeWarCannonsListener implements Listener {
 				event.setCancelled(true); //too many towns
 				return;
 			} else {
-				townWhereCannonIsLocated = (Town)cannonTowns.toArray()[0];
+				for(Town town: cannonTowns)
+					townWhereCannonIsLocated = town;
 			}
 
 			if(townWhereCannonIsLocated != null
