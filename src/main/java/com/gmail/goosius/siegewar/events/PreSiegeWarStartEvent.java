@@ -21,11 +21,13 @@ public class PreSiegeWarStartEvent extends Event implements Cancellable {
     private String cancellationMsg;
 
     public PreSiegeWarStartEvent(Town townOfAttackingPlayer, Nation nationOfAttackingPlayer, Block block, TownBlock townBlock, Town defendingTown){
+
         this.townOfAttackingPlayer = townOfAttackingPlayer;
         this.nationOfAttackingPlayer = nationOfAttackingPlayer;
         this.block = block;
         this.townBlock = townBlock;
         this.defendingTown = defendingTown;
+
     }
 
     @NotNull
