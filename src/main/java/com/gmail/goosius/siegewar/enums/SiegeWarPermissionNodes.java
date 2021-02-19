@@ -15,11 +15,10 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_NATION_SIEGE_PLUNDER("siegewar.nation.siege.plunder"),
 	SIEGEWAR_TOWN_SIEGE_POINTS("siegewar.town.siege.points"),
 	SIEGEWAR_TOWN_SIEGE_SURRENDER("siegewar.town.siege.surrender"),
+	SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION("siegewar.town.siege.start.cannon.session"),
 	// Siegewar related war sickness immunities
 	SIEGEWAR_IMMUNE_TO_WAR_NAUSEA("siegewar.immune.to.war.nausea"),
 	SIEGEWAR_IMMUNE_TO_BATTLE_FATIGUE("siegewar.immune.to.battle.fatigue"),
-	// Town cannon key (if resident fires a cannon they temporarily enable all outgoing/incoming cannon fire)
-	SIEGEWAR_TOWN_CANNON_KEY("siegewar.town.cannon.key"),
 	// Command Nodes:
 	SIEGEWAR_COMMAND_SIEGEWAR("siegewar.command.siegewar.*"),
 		SIEGEWAR_COMMAND_SIEGEWAR_NATION("siegewar.command.siegewar.nation.*"),

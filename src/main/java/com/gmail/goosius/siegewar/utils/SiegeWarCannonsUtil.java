@@ -70,7 +70,7 @@ public class SiegeWarCannonsUtil {
 			 * Allow the event
 			 * Also If the resident is a member of the town, refresh cannons-enabled duration
 			 */
-			if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_CANNON_KEY.getNode())) {
+			if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION.getNode())) {
 				resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 				if (resident.hasTown() && resident.getTown() == townWhereCannonIsLocated) {
 					siege.setCannonSessionRemainingShortTicks(SiegeWarSettings.getMaxCannonSessionDuration());
@@ -88,7 +88,7 @@ public class SiegeWarCannonsUtil {
 			 *
 			 * If the resident is not a ranked member of the town, do not allow the firing
 			 */
-			if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_CANNON_KEY.getNode())) {
+			if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION.getNode())) {
 				resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 				if (resident.hasTown() && resident.getTown() == townWhereCannonIsLocated) {
 					SiegeWarTownUtil.setTownExplosionFlags(townWhereCannonIsLocated, true);
