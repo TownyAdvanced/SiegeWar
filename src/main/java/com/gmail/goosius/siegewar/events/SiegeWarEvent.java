@@ -23,8 +23,8 @@ public abstract class SiegeWarEvent extends Event implements Cancellable {
         this.attackerNation = attackerNation;
         this.attackerTown = attackerTown;
         this.defenderTown = defenderTown;
-
         this.attackedTownBlock = attackedTownBlock;
+
     }
 
     @NotNull
