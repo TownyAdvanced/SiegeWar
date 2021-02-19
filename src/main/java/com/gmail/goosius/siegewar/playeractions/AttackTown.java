@@ -4,6 +4,7 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.events.SiegeWarPreAttackEvent;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -21,6 +22,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 
 /**
@@ -88,8 +90,13 @@ public class AttackTown {
 			}
 		}
 
-        //Setup attack
-        attackTown(block, nationOfAttackingPlayer, defendingTown);
+		//Call attack event
+		SiegeWarPreAttackEvent siegeWarPreAttackEvent = new SiegeWarPreAttackEvent(nationOfAttackingPlayer, townOfAttackingPlayer, defendingTown, townBlock);
+		Bukkit.getPluginManager().callEvent(siegeWarPreAttackEvent);
+
+		//Setup attack
+		if (!siegeWarPreAttackEvent.isCancelled())
+			attackTown(block, nationOfAttackingPlayer, defendingTown);
 
 
     }
