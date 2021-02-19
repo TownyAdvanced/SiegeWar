@@ -53,7 +53,7 @@ permissions:
         children:
             siegewar.command.siegewar.nation.paysoldiers: true
 
-    siegewar.nation:
+    siegewar.nation.siege.*:
         description: User holds all of the siegewar nation nodes.
         default: false
         children:
@@ -64,7 +64,7 @@ permissions:
             siegewar.nation.siege.invade: true
             siegewar.nation.siege.plunder: true
 
-    siegewar.town:
+    siegewar.town.siege.*:
         description: User holds all of the siegewar town nodes.
         default: false
         children:
