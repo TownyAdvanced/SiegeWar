@@ -123,8 +123,8 @@ public class SiegeWarBannerControlUtil {
 
 		//Notify Player
 		Messaging.sendMsg(player, String.format(
-			Translation.of("msg_siege_war_banner_control_session_started"), 
-			SiegeWarSettings.getBannerControlHorizontalDistanceBlocks(),
+			Translation.of("msg_siege_war_banner_control_session_started"),
+			TownySettings.getTownBlockSize(),
 			SiegeWarSettings.getBannerControlVerticalDistanceBlocks(),
 			TimeMgmt.getFormattedTimeValue(sessionDurationMillis)));
 

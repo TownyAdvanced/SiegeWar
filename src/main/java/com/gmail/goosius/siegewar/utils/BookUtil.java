@@ -88,7 +88,7 @@ public class BookUtil {
 		 * Scoring info
 		 */
 		text += "\nSIEGE SCORING\n\n";
-		text += "Players win sieges by holding the ground within " + SiegeWarSettings.getBannerControlHorizontalDistanceBlocks() + " blocks of the siege banner (the 'timed point zone'), and/or by killing enemy soldiers within " + SiegeWarSettings.getWarSiegeZoneRadiusBlocks() + " blocks of the siege banner (the 'siege zone').\n\n";
+		text += "Players win sieges by holding the ground within " + TownySettings.getTownBlockSize() + " blocks of the siege banner (the 'timed point zone'), and/or by killing enemy soldiers within " + SiegeWarSettings.getWarSiegeZoneRadiusBlocks() + " blocks of the siege banner (the 'siege zone').\n\n";
 		text += "Attackers gain " + SiegeWarSettings.getWarSiegePointsForAttackerOccupation() + " base points every 20 seconds for holding the banner. ";
 		text += "Defenders gain " + SiegeWarSettings.getWarSiegePointsForDefenderOccupation() + " base points every 20 seconds for holding the banner. ";
 		text += "Attackers gain " + SiegeWarSettings.getWarSiegePointsForAttackerDeath() + " base points if an attacker is killed in the siege zone. ";
