@@ -49,7 +49,7 @@ public class SiegeWarCannonsListener implements Listener {
 			Player player = null;
 			try {
 				player = Towny.getPlugin().getServer().getPlayer(event.getPlayer());
-				SiegeWarCannonsUtil.processPlayerCannonInteraction(player, event.getCannon(), Translation.of("msg_err_cannon_fire_not_permitted_yet"));
+				SiegeWarCannonsUtil.processPlayerCannonInteraction(player, event.getCannon(), Translation.of("msg_err_cannot_fire_no_cannon_session"));
 			} catch (Exception e) {
 				event.setCancelled(true);
 				if(player != null) {
