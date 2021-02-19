@@ -658,9 +658,9 @@ public enum ConfigNodes {
 			"",
 			"# If this value is true, then the integration with the Cannons plugin is enabled.",
 			"# Blah."),
-	CANNONS_INTEGRATION_MAX_COUNTER_VALUE(
-			"cannons_integration.max_counter_value",
-			"15",
+	CANNONS_INTEGRATION_MAX_CANNON_SESSION_DURATION(
+			"cannons_integration.max_cannon_session_duration",
+			"9",
 			"# This value determines how long cannons remain enabled with respect to a besieged town,",
 			"# After a ranked town member has given permission for them to be used.",
 			"# The duration is 'in short ticks', typically there are 20 seconds per short tick."

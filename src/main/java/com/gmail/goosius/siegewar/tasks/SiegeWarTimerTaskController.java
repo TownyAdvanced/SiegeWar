@@ -120,9 +120,9 @@ public class SiegeWarTimerTaskController {
 		}
 	}
 
-	public static void evaluateCannonEnablers() {
+	public static void evaluateCannonSessions() {
 		if(SiegeWarSettings.isCannonsIntegrationEnabled()) {
-			SiegeWarCannonsUtil.decrementAllCannonsEnabledCounters();
+			SiegeWarCannonsUtil.evaluateCannonSessions();
 		}
 	}
 }

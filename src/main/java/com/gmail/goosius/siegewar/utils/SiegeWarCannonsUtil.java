@@ -28,12 +28,12 @@ public class SiegeWarCannonsUtil {
 	/**
 	 * If any block of the cannon is located in the town
 	 * And the town is under active siege
-	 * And the cannons enabled counter is 0
-	 * then the event is generally prevented
+	 * And there is no cannon session in progress
+	 * then the event is prevented
 	 *
-	 * However if the player has the siegewar.town.cannons.key permission,
-	 * then the event is allowed
-	 * and the counter is activated/refreshed (e.g. to last maybe 5 mins)
+	 * However if the player has the siegewar.siege.town.start.cannon.session permission,
+	 * then a cannon session starts
+	 * and the event is allowed
 	 *
 	 * @param player the player interacting with the cannon
 	 * @param cannon the cannon
@@ -63,7 +63,7 @@ public class SiegeWarCannonsUtil {
 		}
 
 		Resident resident;
-		if (siege.getCannonsEnabledCounter() > 0) {
+		if (siege.getCannonSessionRemainingShortTicks() > 0) {
 			/*
 			 * Cannons are enabled.
 			 * Allow the event
@@ -72,7 +72,7 @@ public class SiegeWarCannonsUtil {
 			if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_CANNON_KEY.getNode())) {
 				resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 				if (resident.hasTown() && resident.getTown() == townWhereCannonIsLocated) {
-					siege.setCannonsEnabledCounter(SiegeWarSettings.getCannonsEnabledCounterValue());
+					siege.setCannonSessionRemainingShortTicks(SiegeWarSettings.getMaxCannonSessionDuration());
 				}
 			}
 			return;
@@ -81,7 +81,7 @@ public class SiegeWarCannonsUtil {
 			 * Cannons are disabled
 			 *
 			 * If the resident is a ranked member of the town:
-			 * - Start counter, turning on cannons for the town
+			 * - Start cannon session, turning on cannons for the town
 			 * - Turn on explosions in the town
 			 * - Return true, allowing the event
 			 *
@@ -91,7 +91,7 @@ public class SiegeWarCannonsUtil {
 				resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 				if (resident.hasTown() && resident.getTown() == townWhereCannonIsLocated) {
 					SiegeWarTownUtil.setTownExplosionFlags(townWhereCannonIsLocated, true);
-					siege.setCannonsEnabledCounter(SiegeWarSettings.getCannonsEnabledCounterValue());
+					siege.setCannonSessionRemainingShortTicks(SiegeWarSettings.getMaxCannonSessionDuration());
 					return;
 				}
 			}
@@ -112,12 +112,12 @@ public class SiegeWarCannonsUtil {
 		return townsWhereCannonIsLocated;
 	}
 
-	public static void decrementAllCannonsEnabledCounters() {
+	public static void evaluateCannonSessions() {
 		List<Siege> sieges = SiegeController.getSieges();
 		for(Siege siege: sieges) {
 			if(siege.getStatus().isActive()) {
-				siege.decrementCannonsEnabledCounter();
-				if(siege.getCannonsEnabledCounter() < 1) {
+				siege.decrementCannonSessionRemainingShortTicks();
+				if(siege.getCannonSessionRemainingShortTicks() < 1) {
 					//Turn explosions off in the town
 					SiegeWarTownUtil.setTownExplosionFlags(siege.getDefendingTown(), false);
 				}

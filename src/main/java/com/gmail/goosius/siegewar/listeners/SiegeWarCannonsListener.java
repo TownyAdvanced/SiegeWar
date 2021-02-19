@@ -31,6 +31,18 @@ public class SiegeWarCannonsListener implements Listener {
 		plugin = instance;
 	}
 
+	/**
+	 * If any block of the cannon is located in the town
+	 * And the town is under active siege
+	 * And there is no cannon session in progress
+	 * then the event is prevented
+	 *
+	 * However if the player has the siegewar.siege.town.start.cannon.session permission,
+	 * then a cannon session starts
+	 * and the event is allowed
+	 *
+	 * @param event the event
+	 */
 	@EventHandler
 	public void cannonFireEvent(CannonFireEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
@@ -49,28 +61,10 @@ public class SiegeWarCannonsListener implements Listener {
 		}
 	}
 
-	@EventHandler
-	public void cannonUseEvent(CannonUseEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
-			Player player = null;
-			try {
-				player = Towny.getPlugin().getServer().getPlayer(event.getPlayer());
-				SiegeWarCannonsUtil.processPlayerCannonInteraction(player, event.getCannon(), Translation.of("msg_err_cannon_use_not_permitted_yet"));
-			} catch (Exception e) {
-				event.setCancelled(true);
-				if(player != null) {
-					Messaging.sendErrorMsg(player, e.getMessage());
-				} else {
-					System.out.println("Problem Processing use cannon event: " + e.getMessage());
-				}
-			}
-		}
-	}
-
 	/**
 	 * If any block of the cannon is located in the town
 	 * And the town is under active siege
-	 * And the cannons enabled counter is 0
+	 * And there is no cannon session in progress
 	 * then the event is prevented
 	 * @param event the event
 	 */
@@ -90,7 +84,7 @@ public class SiegeWarCannonsListener implements Listener {
 
 			if(townWhereCannonIsLocated != null
 					&& SiegeController.hasActiveSiege(townWhereCannonIsLocated)
-					&& SiegeController.getSiege(townWhereCannonIsLocated).getCannonsEnabledCounter() == 0) {
+					&& SiegeController.getSiege(townWhereCannonIsLocated).getCannonSessionRemainingShortTicks() == 0) {
 				event.setCancelled(true);
 			}
 		} catch (Exception e) {
