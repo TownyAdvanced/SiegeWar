@@ -96,12 +96,16 @@ public class AttackTown {
 		Bukkit.getPluginManager().callEvent(preSiegeWarStartEvent);
 
 		//Setup attack
-		if (!preSiegeWarStartEvent.isCancelled())
-			attackTown(block, nationOfAttackingPlayer, defendingTown);
+		if (!preSiegeWarStartEvent.isCancelled()){
+			attackTown(block, nationOfAttackingPlayer, townOfAttackingPlayer, defendingTown);
+		} else {
+			throw new TownyException(preSiegeWarStartEvent.getCancellationMsg());
+		}
+
     }
 
 
-    private static void attackTown(Block block, Nation attackingNation, Town defendingTown) throws TownyException {
+    private static void attackTown(Block block, Nation attackingNation, Town attackingTown, Town defendingTown) throws TownyException {
 		//Create Siege
 		String siegeName = attackingNation.getName() + "#vs#" + defendingTown.getName();
 		SiegeController.newSiege(siegeName);
@@ -167,6 +171,6 @@ public class AttackTown {
 		}
 
 		//Call event
-		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(block, attackingNation, defendingTown));
+		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(block, attackingNation, attackingTown, defendingTown));
     }
 }

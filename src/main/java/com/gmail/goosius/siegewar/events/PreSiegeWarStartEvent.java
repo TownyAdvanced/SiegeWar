@@ -1,5 +1,7 @@
 package com.gmail.goosius.siegewar.events;
 
+import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
@@ -18,7 +20,7 @@ public class PreSiegeWarStartEvent extends Event implements Cancellable {
     private final TownBlock townBlock;
     private final Town defendingTown;
     private boolean isCancelled;
-    private String cancellationMsg;
+    private String cancellationMsg = SiegeWar.prefix+"Siege prevented by another plugin.";
 
     public PreSiegeWarStartEvent(Town townOfAttackingPlayer, Nation nationOfAttackingPlayer, Block flag, TownBlock townBlock, Town defendingTown){
 

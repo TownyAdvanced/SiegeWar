@@ -11,13 +11,15 @@ public class SiegeWarStartEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
     private final Nation attackerNation;
+    private final Town attackerTown;
     private final Town defenderTown;
     private final Block flag;
 
-    public SiegeWarStartEvent(Block flag, Nation attackerNation, Town defenderTown){
+    public SiegeWarStartEvent(Block flag, Nation attackerNation, Town attackerTown, Town defenderTown){
 
         this.flag = flag;
         this.attackerNation = attackerNation;
+        this.attackerTown = attackerTown;
         this.defenderTown = defenderTown;
 
     }
@@ -30,6 +32,10 @@ public class SiegeWarStartEvent extends Event {
 
     public Nation getAttackerNation() {
         return attackerNation;
+    }
+
+    public Town getAttackerTown() {
+        return attackerTown;
     }
 
     public Town getDefenderTown() {
