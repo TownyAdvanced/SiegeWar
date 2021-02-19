@@ -646,10 +646,13 @@ public enum ConfigNodes {
 			""),
 	CANNONS_INTEGRATION_ENABLED (
 			"cannons_integration.enabled",
-			"true",
+			"false",
 			"",
 			"# If this value is true, then the integration with the Cannons plugin is enabled.",
-			"# Blah."),
+			"# WARNING: ",
+			"# Do not enable this feature until the following issue is resolved",
+			"# (Either in the Cannons plugin, Towny plugin, or on a custom branch of either)",
+			"# https://github.com/DerPavlov/Cannons/pull/37."),
 	CANNONS_INTEGRATION_MAX_CANNON_SESSION_DURATION(
 			"cannons_integration.max_cannon_session_duration",
 			"9",

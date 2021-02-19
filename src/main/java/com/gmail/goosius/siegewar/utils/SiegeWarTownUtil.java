@@ -1,10 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.TownBlock;
-import com.palmergames.bukkit.towny.object.TownBlockType;
-import com.palmergames.bukkit.towny.object.TownyPermission;
+import com.palmergames.bukkit.towny.object.*;
 import com.palmergames.bukkit.towny.object.TownyPermission.ActionType;
 import com.palmergames.bukkit.towny.object.TownyPermission.PermLevel;
 import com.palmergames.bukkit.towny.object.TownyPermissionChange.Action;
@@ -69,7 +66,18 @@ public class SiegeWarTownUtil {
 		//Set it in the town
 		if (town.getPermissions().explosion != desiredSetting)
 			town.getPermissions().explosion = desiredSetting;
-		//Set it in all plots (TODO)
+		//Set it in all plots
+		for(TownBlock townBlock: town.getTownBlocks()) {
+			if (townBlock.getPermissions().explosion != desiredSetting)
+				townBlock.getPermissions().explosion = desiredSetting;
+		}
+		//Set it in all plot groups
+		if(town.getPlotGroups() != null) {
+			for (PlotGroup plotGroup : town.getPlotGroups()) {
+				if (plotGroup.getPermissions().explosion != desiredSetting)
+					plotGroup.getPermissions().explosion = desiredSetting;
+			}
+		}
 		town.save();
 	}
 }
