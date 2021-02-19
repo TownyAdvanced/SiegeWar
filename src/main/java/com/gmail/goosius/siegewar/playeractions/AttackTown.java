@@ -4,7 +4,8 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.events.SiegeWarPreAttackEvent;
+import com.gmail.goosius.siegewar.events.PreSiegeWarStartEvent;
+import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -91,14 +92,12 @@ public class AttackTown {
 		}
 
 		//Call event
-		SiegeWarPreAttackEvent siegeWarPreAttackEvent = new SiegeWarPreAttackEvent(nationOfAttackingPlayer, townOfAttackingPlayer, defendingTown, townBlock);
-		Bukkit.getPluginManager().callEvent(siegeWarPreAttackEvent);
+		PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(townOfAttackingPlayer, nationOfAttackingPlayer, block, townBlock, defendingTown);
+		Bukkit.getPluginManager().callEvent(preSiegeWarStartEvent);
 
 		//Setup attack
-		if (!siegeWarPreAttackEvent.isCancelled())
+		if (!preSiegeWarStartEvent.isCancelled())
 			attackTown(block, nationOfAttackingPlayer, defendingTown);
-
-
     }
 
 
@@ -166,5 +165,8 @@ public class AttackTown {
 				defendingTown.getFormattedName()
 			));
 		}
+
+		//Call event
+		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(block, attackingNation, defendingTown));
     }
 }
