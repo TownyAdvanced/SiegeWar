@@ -95,6 +95,7 @@ public class SiegeWarTownEventListener implements Listener {
 	@EventHandler
 	public void onTownToggleExplosion(TownToggleExplosionEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()
+				&& SiegeWar.getCannonsPluginDetected()
 				&& SiegeWarSettings.isCannonsIntegrationEnabled()
 				&& SiegeController.hasActiveSiege(event.getTown())
 				&& SiegeController.getSiege(event.getTown()).getCannonSessionRemainingShortTicks() > 0) {

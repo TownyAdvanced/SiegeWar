@@ -70,27 +70,29 @@ public class SiegeWarCannonsListener implements Listener {
 	 */
 	@EventHandler
 	public void cannonRedstoneEvent(CannonRedstoneEvent event) {
-		try {
-			Town townWhereCannonIsLocated = null;
-			Set<Town> cannonTowns = SiegeWarCannonsUtil.getTownsWhereCannonIsLocated(event.getCannon());
-			if(cannonTowns.size() == 0) {
-				return; //cannon is not in a town
-			} else if (cannonTowns.size() > 1) {
-				event.setCancelled(true); //too many towns
-				return;
-			} else {
-				for(Town town: cannonTowns)
-					townWhereCannonIsLocated = town;
-			}
+		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
+			try {
+				Town townWhereCannonIsLocated = null;
+				Set<Town> cannonTowns = SiegeWarCannonsUtil.getTownsWhereCannonIsLocated(event.getCannon());
+				if (cannonTowns.size() == 0) {
+					return; //cannon is not in a town
+				} else if (cannonTowns.size() > 1) {
+					event.setCancelled(true); //too many towns
+					return;
+				} else {
+					for (Town town : cannonTowns)
+						townWhereCannonIsLocated = town;
+				}
 
-			if(townWhereCannonIsLocated != null
-					&& SiegeController.hasActiveSiege(townWhereCannonIsLocated)
-					&& SiegeController.getSiege(townWhereCannonIsLocated).getCannonSessionRemainingShortTicks() == 0) {
+				if (townWhereCannonIsLocated != null
+						&& SiegeController.hasActiveSiege(townWhereCannonIsLocated)
+						&& SiegeController.getSiege(townWhereCannonIsLocated).getCannonSessionRemainingShortTicks() == 0) {
+					event.setCancelled(true);
+				}
+			} catch (Exception e) {
 				event.setCancelled(true);
+				System.out.println("Error processing cannon redstone event. Cannon fire prevented: " + e.getMessage());
 			}
-		} catch (Exception e) {
-			event.setCancelled(true);
-			System.out.println("Error processing cannon redstone event. Cannon fire prevented: " + e.getMessage());
 		}
 	}
 }

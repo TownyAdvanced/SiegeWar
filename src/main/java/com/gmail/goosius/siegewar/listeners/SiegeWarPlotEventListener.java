@@ -49,6 +49,7 @@ public class SiegeWarPlotEventListener implements Listener {
     @EventHandler
     public void onPlotToggleExplosion(PlotToggleExplosionEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled()
+                && SiegeWar.getCannonsPluginDetected()
                 && SiegeWarSettings.isCannonsIntegrationEnabled()
                 && SiegeController.hasActiveSiege(event.getTown())
                 && SiegeController.getSiege(event.getTown()).getCannonSessionRemainingShortTicks() > 0) {
