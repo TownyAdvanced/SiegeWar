@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.tasks;
 
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -120,4 +121,9 @@ public class SiegeWarTimerTaskController {
 		}
 	}
 
+	public static void evaluateCannonSessions() {
+		if(SiegeWar.getCannonsPluginDetected() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
+			SiegeWarCannonsUtil.evaluateCannonSessions();
+		}
+	}
 }

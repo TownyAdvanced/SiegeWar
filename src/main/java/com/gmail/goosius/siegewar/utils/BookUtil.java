@@ -117,8 +117,6 @@ public class BookUtil {
 			text += "Besieged towns cannot recruit new members.\n";
 		if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns())
 			text += "PVP is forced on in besieged towns.\n";
-		if (SiegeWarSettings.getWarSiegeExplosionsAlwaysOnInBesiegedTowns())
-			text += "Explosions are forced on in besieged towns.\n";
 
 		/*
 		 * End Game info

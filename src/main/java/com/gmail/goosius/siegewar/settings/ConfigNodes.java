@@ -91,14 +91,6 @@ public enum ConfigNodes {
 			"",
 			"# If true, then town pvp is always set to on during sieges.",
 			"# The town pvp flag returns to its previous value when the siege ends."),
-	WAR_SIEGE_EXPLOSIONS_ALWAYS_ON_IN_BESIEGED_TOWNS(
-			"war.siege.switches.explosions_always_on_in_besieged_towns",
-			"false",
-			"",
-			"# If true, then town explosions are always set to on during sieges.",
-			"# The town explosions flag returns to its previous value when the siege ends.",
-			"# The setting is false by default, because SiegeWar is designed to be minimally-destructive.",
-			"# The setting is only recommended for use in combination with a block regeneration feature."),
 	WAR_SIEGE_CLAIMING_DISABLED_NEAR_SIEGE_ZONES(
 			"war.siege.switches.claiming_disabled_near_siege_zones",
 			"true",
@@ -642,6 +634,39 @@ public enum ConfigNodes {
 			"",
 			"# This is how many seconds a player has to leave the siege zone before he gets war sickness",
 			"# If this is set to 0, no warn will be given and non-participants will receive war sickness instantly, if enabled"
+	),
+
+	CANNONS_INTEGRATION("cannons_integration",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |              Cannons Integration                     | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	CANNONS_INTEGRATION_ENABLED (
+			"cannons_integration.enabled",
+			"false",
+			"",
+			"# If this value is true, then the integration with the Cannons plugin is enabled.",
+			"# The integration works as follows:",
+			"# 1. While a town is not under siege: Normal Towny mechanics apply.",
+			"# 2. While a town is under siege:",
+			"#    - Town cannons cannot be fired unless there is a 'cannon session' in effect.",
+			"#    - A cannon session starts/refreshes when a town resident with the 'siegewar.town.siege.startcannonsession' fires a town cannon.",
+			"#    - While a cannon session is in effect, town cannons can be fired, and town explosion perm protections are forced off.",
+			"#    - The cannon session usually lasts just a few minutes (don't make it too long or the defender will often be too scared to fire).",
+			"#    - The max duration is configured below.",
+			"# ",
+			"# WARNING: ",
+			"# Do not enable this feature unless the following issue is resolved",
+			"# (Either in the Cannons plugin, Towny plugin, or your own custom branch of either) - ",
+			"# https://github.com/DerPavlov/Cannons/pull/37."),
+	CANNONS_INTEGRATION_MAX_CANNON_SESSION_DURATION(
+			"cannons_integration.max_cannon_session_duration",
+			"9",
+			"# This value determines the max duration of each cannon session,",
+			"# The duration is 'in short ticks', typically a short tick is 20 seconds."
 	);
 
 	private final String Root;

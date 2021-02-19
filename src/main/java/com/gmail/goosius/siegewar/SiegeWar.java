@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar;
 
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -18,6 +19,8 @@ import com.gmail.goosius.siegewar.listeners.SiegeWarNationEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarPlotEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
+import com.gmail.goosius.siegewar.listeners.SiegeWarCannonsListener;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 
 import java.io.File;
 
@@ -27,6 +30,7 @@ public class SiegeWar extends JavaPlugin {
 	public static String prefix = "[SiegeWar] ";
 	private static Version requiredTownyVersion = Version.fromString("0.96.7.0");
 	private final static SiegeHUDManager SiegeHudManager = new SiegeHUDManager(plugin);
+	private static boolean cannonsPluginDetected;
 
 	public static SiegeWar getSiegeWar() {
 		return plugin;
@@ -57,23 +61,34 @@ public class SiegeWar extends JavaPlugin {
         if (!Settings.loadSettingsAndLang())
         	onDisable();
 
-        
-        registerListeners();
-        
         registerCommands();
         
         if (Bukkit.getPluginManager().getPlugin("Towny").isEnabled())
         	SiegeController.loadAll();
-        
+
         Plugin dynmap = Bukkit.getPluginManager().getPlugin("dynmap");
         if (dynmap != null) {
-        	System.out.println(prefix + "SiegeWar found Dynmap, enabling Dynmap support.");
+        	System.out.println(prefix + "SiegeWar found Dynmap plugin, enabling Dynmap support.");
         	DynmapTask.setupDynmapAPI((DynmapAPI) dynmap);
         } else {
-        	System.out.println(prefix + "Dynmap not found.");
+        	System.out.println(prefix + "Dynmap plugin not found.");
         }
-        
-        System.out.println(prefix + "SiegeWar loaded successfully.");
+
+		Plugin cannons = Bukkit.getPluginManager().getPlugin("Cannons");
+		if (cannons != null) {
+			cannonsPluginDetected = true;
+			if(SiegeWarSettings.isCannonsIntegrationEnabled()) {
+				System.out.println(prefix + "SiegeWar found Cannons plugin, enabling Cannons support.");
+				System.out.println(prefix + "Cannons support enabled.");
+			}
+		} else {
+			cannonsPluginDetected = false;
+			System.out.println(prefix + "Cannons plugin not found.");
+		}
+
+		registerListeners();
+
+		System.out.println(prefix + "SiegeWar loaded successfully.");
     }
     
     @Override
@@ -102,6 +117,9 @@ public class SiegeWar extends JavaPlugin {
 		pm.registerEvents(new SiegeWarNationEventListener(this), this);
 		pm.registerEvents(new SiegeWarTownEventListener(this), this);
 		pm.registerEvents(new SiegeWarPlotEventListener(this), this);
+		if(cannonsPluginDetected) {
+			pm.registerEvents(new SiegeWarCannonsListener(this), this);
+		}
 	}
 	
 	private void registerCommands() {
@@ -124,5 +142,9 @@ public class SiegeWar extends JavaPlugin {
 		System.out.println("             \\/        \\/                ");
 		System.out.println("          By Goosius & LlmDl          ");
 		System.out.println("                                      ");
+	}
+
+	public static boolean getCannonsPluginDetected() {
+		return cannonsPluginDetected;
 	}
 }

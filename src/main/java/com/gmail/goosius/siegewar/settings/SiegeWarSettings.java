@@ -73,10 +73,6 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_PVP_ALWAYS_ON_IN_BESIEGED_TOWNS);
 	}
 
-	public static boolean getWarSiegeExplosionsAlwaysOnInBesiegedTowns() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_EXPLOSIONS_ALWAYS_ON_IN_BESIEGED_TOWNS);
-	}
-
 	public static boolean getWarSiegeClaimingDisabledNearSiegeZones() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_CLAIMING_DISABLED_NEAR_SIEGE_ZONES);
 	}
@@ -374,5 +370,13 @@ public class SiegeWarSettings {
 
 	public static boolean getWarSiegeDeathSpawnFireworkEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_DEATH_SPAWN_FIREWORK);
+	}
+
+	public static boolean isCannonsIntegrationEnabled() {
+		return Settings.getBoolean(ConfigNodes.CANNONS_INTEGRATION_ENABLED);
+	}
+
+	public static int getMaxCannonSessionDuration() {
+		return Settings.getInt(ConfigNodes.CANNONS_INTEGRATION_MAX_CANNON_SESSION_DURATION);
 	}
 }

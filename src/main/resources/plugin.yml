@@ -6,7 +6,7 @@ author: [Goosius,LlmDl]
 website: 'townyadvanced.github.io'
 prefix: ${project.artifactId}
 depend: [Towny]
-softdepend: [TownyCultures,dynmap]
+softdepend: [TownyCultures,dynmap,Cannons]
 
 description: A war system made by Goosius for Towny.
 
@@ -53,7 +53,7 @@ permissions:
         children:
             siegewar.command.siegewar.nation.paysoldiers: true
 
-    siegewar.nation:
+    siegewar.nation.siege.*:
         description: User holds all of the siegewar nation nodes.
         default: false
         children:
@@ -64,12 +64,13 @@ permissions:
             siegewar.nation.siege.invade: true
             siegewar.nation.siege.plunder: true
 
-    siegewar.town:
+    siegewar.town.siege.*:
         description: User holds all of the siegewar town nodes.
         default: false
         children:
             siegewar.town.siege.points: true
             siegewar.town.siege.surrender: true
+            siegewar.town.siege.startcannonsession: true
 
     siegewar.command.siegewar.guide:
         description: User is able to read guide book.

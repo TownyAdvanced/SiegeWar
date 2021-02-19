@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.listeners;
 
+import com.palmergames.bukkit.towny.event.plot.toggle.PlotToggleExplosionEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -21,7 +22,7 @@ public class SiegeWarPlotEventListener implements Listener {
     }
     
     /*
-    * SW will stop plot pvp being toggled in besieged or peaceful towns.
+    * SW will stop plot pvp being toggled in peaceful & besieged towns.
     */
     @EventHandler
 	public void onPlotTogglePVP(PlotTogglePvpEvent event) {
@@ -29,14 +30,32 @@ public class SiegeWarPlotEventListener implements Listener {
 			if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns() && SiegeController.hasActiveSiege(event.getTown()))  {
 				event.setCancellationMsg(Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
 				event.setCancelled(true);
+				return;
 			}
             if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
                     && !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()
                     && event.getTown().isNeutral()) {
 				event.setCancellationMsg(Translation.of("msg_err_peaceful_town_pvp_forced_off"));
 				event.setCancelled(true);
+				return;
 			}
 		}	
+    }
+
+    /*
+     * SW will stop plot explosions being toggled
+     * in towns with an active cannon session
+     */
+    @EventHandler
+    public void onPlotToggleExplosion(PlotToggleExplosionEvent event) {
+        if (SiegeWarSettings.getWarSiegeEnabled()
+                && SiegeWar.getCannonsPluginDetected()
+                && SiegeWarSettings.isCannonsIntegrationEnabled()
+                && SiegeController.hasActiveSiege(event.getTown())
+                && SiegeController.getSiege(event.getTown()).getCannonSessionRemainingShortTicks() > 0) {
+            event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_toggle_explosions_due_to_cannon_session"));
+            event.setCancelled(true);
+        }
     }
 
     /*

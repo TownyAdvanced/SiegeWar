@@ -103,4 +103,5 @@ public class TownMetaDataController {
 			town.addMetaData(new LongDataField("siegewar_siegeImmunityEndTime", time));
 		}
 	}
+
 }

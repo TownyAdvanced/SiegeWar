@@ -50,6 +50,7 @@ public class Siege {
 	private Map<Player, BannerControlSession> bannerControlSessions;
 	private boolean attackerHasLowestPopulation;
 	private double siegePointModifierForSideWithLowestPopulation;
+	private int cannonSessionRemainingShortTicks;  //Short ticks remaining until standard cannon protections are restored
 
 	public Siege(String name) {
         this.name = name;
@@ -63,6 +64,7 @@ public class Siege {
 		bannerControlSessions = new HashMap<>();
 		attackerHasLowestPopulation = false;
 		siegePointModifierForSideWithLowestPopulation = 0;  //0 is the special starting value
+		cannonSessionRemainingShortTicks = 0;
     }
 
 	public Nation getAttackingNation() {
@@ -276,4 +278,15 @@ public class Siege {
 		return TimeMgmt.getFormattedTimeValue(timeLeft);
 	}
 
+	public int getCannonSessionRemainingShortTicks() {
+		return cannonSessionRemainingShortTicks;
+	}
+
+	public void setCannonSessionRemainingShortTicks(int val) {
+		cannonSessionRemainingShortTicks = val;
+	}
+
+	public void decrementCannonSessionRemainingShortTicks(){
+		cannonSessionRemainingShortTicks--;
+	}
 }
