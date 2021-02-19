@@ -14,17 +14,17 @@ public class PreSiegeWarStartEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private final Town townOfAttackingPlayer;
     private final Nation nationOfAttackingPlayer;
-    private final Block block;
+    private final Block flag;
     private final TownBlock townBlock;
     private final Town defendingTown;
     private boolean isCancelled;
     private String cancellationMsg;
 
-    public PreSiegeWarStartEvent(Town townOfAttackingPlayer, Nation nationOfAttackingPlayer, Block block, TownBlock townBlock, Town defendingTown){
+    public PreSiegeWarStartEvent(Town townOfAttackingPlayer, Nation nationOfAttackingPlayer, Block flag, TownBlock townBlock, Town defendingTown){
 
         this.townOfAttackingPlayer = townOfAttackingPlayer;
         this.nationOfAttackingPlayer = nationOfAttackingPlayer;
-        this.block = block;
+        this.flag = flag;
         this.townBlock = townBlock;
         this.defendingTown = defendingTown;
 
@@ -44,8 +44,8 @@ public class PreSiegeWarStartEvent extends Event implements Cancellable {
         return nationOfAttackingPlayer;
     }
 
-    public Block getBlock() {
-        return block;
+    public Block getFlag() {
+        return flag;
     }
 
     public TownBlock getTownBlock() {
