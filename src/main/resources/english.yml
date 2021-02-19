@@ -60,7 +60,6 @@ msg_town_destroyed_by_nation_tax_multiple:  '&bThe following towns could not aff
 #Siege war error message
 #Town Toggling
 msg_err_siege_besieged_town_cannot_toggle_pvp: "&cBesieged towns have PVP forced ON."
-msg_err_siege_besieged_town_cannot_toggle_explosions: "&cBesieged towns have Explosions forced ON."
 #Recruiting
 msg_err_siege_besieged_town_cannot_toggle_open_off: "&cBesieged towns cannot open their doors to new residents."
 msg_err_siege_besieged_town_cannot_recruit: "&cBesieged towns cannot recruit new residents."
@@ -279,4 +278,5 @@ msg_siege_war_soldiers_paid: "The soldiers of the nation were paid a total of %s
 #Added in 0.10
 msg_err_cannot_fire_no_cannon_session: "You cannot fire any cannons in this town until a ranked town member starts a cannon session."
 msg_err_cannon_in_two_towns: "Your cannon blocks are split between two towns. Please ensure your cannon is in just one town."
+msg_err_cannot_toggle_explosions_due_to_cannon_session: "You cannot toggle explosions in the town until the current cannon session ends."
 

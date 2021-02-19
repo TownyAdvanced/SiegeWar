@@ -90,21 +90,20 @@ public class SiegeWarTownEventListener implements Listener {
 	}
 	
 	/*
-	 * On toggle explosions, SW will stop a town toggling explosions off.
+	 * On toggle explosions, SW can stop a town toggling explosions off.
 	 */
 	@EventHandler
 	public void onTownToggleExplosion(TownToggleExplosionEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWarSettings.getWarSiegeExplosionsAlwaysOnInBesiegedTowns()
 				&& SiegeController.hasActiveSiege(event.getTown())
-				&& event.getFutureState() == false)  {
-			event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_explosions"));
+				&& SiegeController.getSiege(event.getTown()).getCannonSessionRemainingShortTicks() > 0) {
+			event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_toggle_explosions_due_to_cannon_session"));
 			event.setCancelled(true);
 		}
 	}
 	
 	/*
-	 * On toggle pvp, SW will stop a town toggling pvp.
+	 * On toggle pvp, SW can stop a town toggling pvp.
 	 */
 	@EventHandler
 	public void onTownTogglePVP(TownTogglePVPEvent event) {
@@ -112,6 +111,7 @@ public class SiegeWarTownEventListener implements Listener {
 			if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns() && SiegeController.hasActiveSiege(event.getTown()))  {
 				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
 				event.setCancelled(true);
+				return;
 			}
 			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
 					&& !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()
@@ -119,6 +119,7 @@ public class SiegeWarTownEventListener implements Listener {
 					&& !event.getTown().isPVP()) {
 				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_pvp_forced_off"));
 				event.setCancelled(true);
+				return;
 			}
 		}
 	}

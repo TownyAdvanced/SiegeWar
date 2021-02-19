@@ -115,7 +115,7 @@ public class SiegeWarCannonsUtil {
 	public static void evaluateCannonSessions() {
 		List<Siege> sieges = SiegeController.getSieges();
 		for(Siege siege: sieges) {
-			if(siege.getStatus().isActive()) {
+			if(siege.getStatus().isActive() && siege.getCannonSessionRemainingShortTicks() > 0) {
 				siege.decrementCannonSessionRemainingShortTicks();
 				if(siege.getCannonSessionRemainingShortTicks() < 1) {
 					//Turn explosions off in the town

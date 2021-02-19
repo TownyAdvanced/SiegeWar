@@ -73,10 +73,6 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_PVP_ALWAYS_ON_IN_BESIEGED_TOWNS);
 	}
 
-	public static boolean getWarSiegeExplosionsAlwaysOnInBesiegedTowns() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_EXPLOSIONS_ALWAYS_ON_IN_BESIEGED_TOWNS);
-	}
-
 	public static boolean getWarSiegeClaimingDisabledNearSiegeZones() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_CLAIMING_DISABLED_NEAR_SIEGE_ZONES);
 	}

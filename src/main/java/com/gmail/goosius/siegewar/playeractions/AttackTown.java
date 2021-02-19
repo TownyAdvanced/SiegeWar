@@ -119,7 +119,7 @@ public class AttackTown {
 		SiegeController.putTownInSiegeMap(defendingTown, siege);
 
 		//Set town pvp and explosions to true.
-		SiegeWarTownUtil.setTownFlags(defendingTown, true);
+		SiegeWarTownUtil.setTownPvpFlags(defendingTown, true);
 		
 		//Pay into warchest
 		if (TownyEconomyHandler.isActive()) {

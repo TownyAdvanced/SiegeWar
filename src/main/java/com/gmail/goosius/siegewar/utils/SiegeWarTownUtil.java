@@ -48,19 +48,23 @@ public class SiegeWarTownUtil {
     }
 
     /**
-	 * Sets pvp and explosions in a town to the desired setting, if enabled in the config.
+	 * Sets pvp flags in a town to the desired setting.
 	 * 
 	 * @param town The town to set the flags for.
 	 * @param desiredSetting The value to set pvp and explosions to.
 	 */
-	public static void setTownFlags(Town town, boolean desiredSetting) {
+	public static void setTownPvpFlags(Town town, boolean desiredSetting) {
 		if (town.getPermissions().pvp != desiredSetting && SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns())
 			town.getPermissions().pvp = desiredSetting;
-		if (town.getPermissions().explosion != desiredSetting && SiegeWarSettings.getWarSiegeExplosionsAlwaysOnInBesiegedTowns())
-			town.getPermissions().explosion = desiredSetting;
 		town.save();
 	}
 
+	/**
+	 * Sets explosion flags in a town to the desired setting.
+	 *
+	 * @param town The town to set the flags for.
+	 * @param desiredSetting The value to set pvp and explosions to.
+	 */
 	public static void setTownExplosionFlags(Town town, boolean desiredSetting) {
 		//Set it in the town
 		if (town.getPermissions().explosion != desiredSetting)
