@@ -90,7 +90,7 @@ public class AttackTown {
 			}
 		}
 
-		//Call attack event
+		//Call event
 		SiegeWarPreAttackEvent siegeWarPreAttackEvent = new SiegeWarPreAttackEvent(nationOfAttackingPlayer, townOfAttackingPlayer, defendingTown, townBlock);
 		Bukkit.getPluginManager().callEvent(siegeWarPreAttackEvent);
 
