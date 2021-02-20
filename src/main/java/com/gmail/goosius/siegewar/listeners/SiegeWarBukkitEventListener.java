@@ -141,7 +141,11 @@ public class SiegeWarBukkitEventListener implements Listener {
 	
 	@EventHandler(ignoreCancelled = true)
 	public void onPlayerTeleport(PlayerTeleportEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled()) {
+		if (SiegeWarSettings.getWarSiegeEnabled()
+			&& SiegeWarSettings.getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled()
+			&& !(event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL)
+			&& !(event.getCause() == PlayerTeleportEvent.TeleportCause.CHORUS_FRUIT)
+		) {
 			if (TownyAPI.getInstance().isWilderness(event.getTo())) { // The teleport destination is in the wilderness.
 				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
 					Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
