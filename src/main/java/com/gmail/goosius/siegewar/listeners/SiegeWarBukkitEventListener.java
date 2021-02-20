@@ -12,6 +12,7 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
@@ -143,9 +144,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 	public void onPlayerTeleport(PlayerTeleportEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()
 			&& SiegeWarSettings.getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled()
-			&& !(event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL)
-			&& !(event.getCause() == PlayerTeleportEvent.TeleportCause.CHORUS_FRUIT)
-		) {
+			&& (event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND)) {
 			if (TownyAPI.getInstance().isWilderness(event.getTo())) { // The teleport destination is in the wilderness.
 				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
 					Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
