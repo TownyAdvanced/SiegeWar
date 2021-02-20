@@ -124,7 +124,7 @@ public class SiegeWarDistanceUtil {
 	}
 
 	public static boolean isInTimedPointZone(Entity entity, Siege siege) {
-		return areLocationsClose(entity.getLocation(), siege.getFlagLocation(), SiegeWarSettings.getBannerControlHorizontalDistanceBlocks(), SiegeWarSettings.getBannerControlVerticalDistanceBlocks());
+		return areLocationsClose(entity.getLocation(), siege.getFlagLocation(), TownySettings.getTownBlockSize(), SiegeWarSettings.getBannerControlVerticalDistanceBlocks());
 	}
 
 	public static boolean areTownsClose(Town town1, Town town2, int radiusTownblocks) {

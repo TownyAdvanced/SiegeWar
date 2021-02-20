@@ -288,16 +288,12 @@ public enum ConfigNodes {
 			"# The radius of the 'siege zone'.",
 			"# This radius applies only horizontally, so players can never get above a siegezone (e.g. to place lava there or something).",
 			"# Various siege related effects can apply in this zone e.g. lose points on death, keep inv on death, cannot claim here."),
-	WAR_SIEGE_BANNER_CONTROL_HORIZONTAL_DISTANCE_BLOCKS(
-			"war.siege.distances.banner_control_horizontal_distance_blocks",
-			"16",
-			"",
-			"# This is the horizontal distance a soldier must be from the banner to get banner control."),
 	WAR_SIEGE_BANNER_CONTROL_VERTICAL_DISTANCE_BLOCKS(
 			"war.siege.distances.banner_control_vertical_distance_blocks",
 			"16",
 			"",
-			"# This is the vertical distance a soldier must be from the banner to get banner control."),
+			"# This is the vertical distance a soldier must be from the banner to get banner control.",
+			"# Note that the horizontal distance is always the same as the Towny townblock size."),
 
 	//Siege points
 	WAR_SIEGE_POINTS_FOR_ATTACKER_OCCUPATION(
