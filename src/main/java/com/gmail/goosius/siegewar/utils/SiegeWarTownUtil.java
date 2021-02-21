@@ -76,13 +76,6 @@ public class SiegeWarTownUtil {
 				if (townBlock.getPermissions().explosion != desiredSetting)
 					townBlock.getPermissions().explosion = desiredSetting;
 			}
-			//Set it in all plot groups
-			if (town.getPlotGroups() != null) {
-				for (PlotGroup plotGroup : town.getPlotGroups()) {
-					if (plotGroup.getPermissions().explosion != desiredSetting)
-						plotGroup.getPermissions().explosion = desiredSetting;
-				}
-			}
 			town.save();
 		}
 	}
