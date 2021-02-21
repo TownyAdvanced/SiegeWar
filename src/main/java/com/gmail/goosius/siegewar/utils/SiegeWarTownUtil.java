@@ -71,10 +71,12 @@ public class SiegeWarTownUtil {
 			//Set it in the town
 			if (town.getPermissions().explosion != desiredSetting)
 				town.getPermissions().explosion = desiredSetting;
-			//Set it in all plots
+			//Set it in all townblocks
 			for (TownBlock townBlock : town.getTownBlocks()) {
-				if (townBlock.getPermissions().explosion != desiredSetting)
+				if (townBlock.getPermissions().explosion != desiredSetting) {
 					townBlock.getPermissions().explosion = desiredSetting;
+					townBlock.save();
+				}
 			}
 			town.save();
 		}
