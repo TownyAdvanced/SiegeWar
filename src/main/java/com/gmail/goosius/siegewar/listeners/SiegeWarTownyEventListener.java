@@ -169,12 +169,14 @@ public class SiegeWarTownyEventListener implements Listener {
      * @param event the TownyExplosionDamagesEntityEvent event
      */
     public void onExplosionDamageEntity(TownyExplosionDamagesEntityEvent event) {
-        if(event.isCancelled()) {
-            Town town = TownyAPI.getInstance().getTown(event.getLocation());
-            if (town != null
-                && SiegeController.hasActiveSiege(town)
-                && SiegeController.getSiege(town).getCannonSessionRemainingShortTicks() > 0) {
-                event.setCancelled(false);
+        if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginDetected()) {
+            if (event.isCancelled()) {
+                Town town = TownyAPI.getInstance().getTown(event.getLocation());
+                if (town != null
+                        && SiegeController.hasActiveSiege(town)
+                        && SiegeController.getSiege(town).getCannonSessionRemainingShortTicks() > 0) {
+                    event.setCancelled(false);
+                }
             }
         }
     }
