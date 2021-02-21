@@ -2,7 +2,6 @@ package com.gmail.goosius.siegewar.listeners;
 
 import at.pavlov.cannons.event.CannonFireEvent;
 import at.pavlov.cannons.event.CannonRedstoneEvent;
-import at.pavlov.cannons.event.CannonUseEvent;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;

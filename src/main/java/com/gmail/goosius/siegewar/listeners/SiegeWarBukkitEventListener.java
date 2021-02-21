@@ -142,6 +142,11 @@ public class SiegeWarBukkitEventListener implements Listener {
 	
 	@EventHandler(ignoreCancelled = true)
 	public void onPlayerTeleport(PlayerTeleportEvent event) {
+		
+		// Don't stop admins/ops. towny.admin.spawn is part of towny.admin.
+		if (event.getPlayer().hasPermission("towny.admin.spawn") || event.getPlayer().isOp())
+			return;
+		
 		if (SiegeWarSettings.getWarSiegeEnabled()
 			&& SiegeWarSettings.getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled()
 			&& (event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND)) {
