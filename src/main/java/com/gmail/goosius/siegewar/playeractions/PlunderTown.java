@@ -6,7 +6,6 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
@@ -19,14 +18,9 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.gmail.goosius.siegewar.settings.Translation;
-import com.palmergames.bukkit.towny.permissions.TownyPermissionSource;
-import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import com.palmergames.bukkit.towny.utils.MoneyUtil;
 
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class is responsible for processing requests to plunder towns

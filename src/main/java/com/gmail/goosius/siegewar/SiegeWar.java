@@ -20,8 +20,6 @@ import com.gmail.goosius.siegewar.listeners.SiegeWarPlotEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarCannonsListener;
-import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-
 import java.io.File;
 
 public class SiegeWar extends JavaPlugin {
