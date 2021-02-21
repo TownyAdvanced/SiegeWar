@@ -1,6 +1,10 @@
 package com.gmail.goosius.siegewar;
 
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
+import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -77,6 +81,13 @@ public class SiegeWar extends JavaPlugin {
 			cannonsPluginDetected = true;
 			if(SiegeWarSettings.isCannonsIntegrationEnabled()) {
 				System.out.println(prefix + "SiegeWar found Cannons plugin, enabling Cannons support.");
+				/*
+				 * Turn off explosions in all towns, in case the server shut down while towns had active cannon sessions
+				 * This includes towns without active sieges, in case a server manually adjusted data before startup
+				 */
+				for(Town town: TownyUniverse.getInstance().getTowns()) {
+					SiegeWarTownUtil.setTownExplosionFlags(town, false);
+				}
 				System.out.println(prefix + "Cannons support enabled.");
 			}
 		} else {
