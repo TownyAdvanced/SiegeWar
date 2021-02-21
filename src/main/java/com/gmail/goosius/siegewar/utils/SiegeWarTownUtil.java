@@ -59,24 +59,4 @@ public class SiegeWarTownUtil {
 			town.getPermissions().pvp = desiredSetting;
 		town.save();
 	}
-
-	/**
-	 * Sets explosion flags in a town to the desired setting.
-	 *
-	 * @param town The town to set the flags for.
-	 * @param desiredSetting The value to set pvp and explosions to.
-	 */
-	public static void setTownExplosionFlags(Town town, boolean desiredSetting) {
-		if (SiegeWarSettings.isCannonsIntegrationEnabled()) {
-			//Set it in the town
-			if (town.getPermissions().explosion != desiredSetting)
-				town.getPermissions().explosion = desiredSetting;
-			//Set it in all plots
-			for (TownBlock townBlock : town.getTownBlocks()) {
-				if (townBlock.getPermissions().explosion != desiredSetting)
-					townBlock.getPermissions().explosion = desiredSetting;
-			}
-			town.save();
-		}
-	}
 }

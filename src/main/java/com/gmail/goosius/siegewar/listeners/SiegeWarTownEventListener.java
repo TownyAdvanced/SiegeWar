@@ -88,22 +88,7 @@ public class SiegeWarTownEventListener implements Listener {
 			town.save();
 		}
 	}
-	
-	/*
-	 * On toggle explosions, SW can stop a town toggling explosions off.
-	 */
-	@EventHandler
-	public void onTownToggleExplosion(TownToggleExplosionEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWar.getCannonsPluginDetected()
-				&& SiegeWarSettings.isCannonsIntegrationEnabled()
-				&& SiegeController.hasActiveSiege(event.getTown())
-				&& SiegeController.getSiege(event.getTown()).getCannonSessionRemainingShortTicks() > 0) {
-			event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_toggle_explosions_due_to_cannon_session"));
-			event.setCancelled(true);
-		}
-	}
-	
+
 	/*
 	 * On toggle pvp, SW can stop a town toggling pvp.
 	 */

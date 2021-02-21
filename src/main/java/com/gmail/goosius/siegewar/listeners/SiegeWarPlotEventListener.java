@@ -43,22 +43,6 @@ public class SiegeWarPlotEventListener implements Listener {
     }
 
     /*
-     * SW will stop plot explosions being toggled
-     * in towns with an active cannon session
-     */
-    @EventHandler
-    public void onPlotToggleExplosion(PlotToggleExplosionEvent event) {
-        if (SiegeWarSettings.getWarSiegeEnabled()
-                && SiegeWar.getCannonsPluginDetected()
-                && SiegeWarSettings.isCannonsIntegrationEnabled()
-                && SiegeController.hasActiveSiege(event.getTown())
-                && SiegeController.getSiege(event.getTown()).getCannonSessionRemainingShortTicks() > 0) {
-            event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_toggle_explosions_due_to_cannon_session"));
-            event.setCancelled(true);
-        }
-    }
-
-    /*
     * SW will stop peaceful towns from setting a plot to arena.
     */    
     @EventHandler

@@ -90,7 +90,8 @@ public class SiegeWarCannonsUtil {
 			if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION.getNode())) {
 				resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 				if (resident.hasTown() && resident.getTown() == townWhereCannonIsLocated) {
-					SiegeWarTownUtil.setTownExplosionFlags(townWhereCannonIsLocated, true);
+					//
+					// SiegeWarTownUtil.setTownExplosionFlags(townWhereCannonIsLocated, true);
 					siege.setCannonSessionRemainingShortTicks(SiegeWarSettings.getMaxCannonSessionDuration());
 					return;
 				}
@@ -117,10 +118,6 @@ public class SiegeWarCannonsUtil {
 		for(Siege siege: sieges) {
 			if(siege.getStatus().isActive() && siege.getCannonSessionRemainingShortTicks() > 0) {
 				siege.decrementCannonSessionRemainingShortTicks();
-				if(siege.getCannonSessionRemainingShortTicks() < 1) {
-					//Turn explosions off in the town
-					SiegeWarTownUtil.setTownExplosionFlags(siege.getDefendingTown(), false);
-				}
 			}
 		}
 	}

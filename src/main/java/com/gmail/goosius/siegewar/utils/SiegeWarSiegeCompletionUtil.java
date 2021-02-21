@@ -27,7 +27,6 @@ public class SiegeWarSiegeCompletionUtil {
 			SiegeWarTimeUtil.activateRevoltImmunityTimer(siege.getDefendingTown()); //Prevent immediate revolt
 		}
 		SiegeWarTownUtil.setTownPvpFlags(siege.getDefendingTown(), false);
-		SiegeWarTownUtil.setTownExplosionFlags(siege.getDefendingTown(), false);
 
 		//Save to db
 		SiegeController.saveSiege(siege);
