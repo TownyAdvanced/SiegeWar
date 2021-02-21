@@ -51,7 +51,7 @@ public class AttackTown {
 		if (SiegeController.hasActiveSiege(defendingTown))
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_join_siege"));
 
-		if (defendingTown.isNeutral())
+		if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && defendingTown.isNeutral())
 			throw new TownyException(Translation.of("msg_war_siege_err_cannot_attack_peaceful_town"));
 
 		if (!(SiegeController.hasActiveSiege(defendingTown))
