@@ -86,11 +86,11 @@ public class CosmeticUtil {
 	 */
     public static Material getGlassColor(Player player, Siege siege) {
 		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
+		if (siege.getBannerControlSessions().containsKey(player))
+			return Material.YELLOW_STAINED_GLASS;
+		
 		if (siege.getBannerControllingSide() != getSiegeSide(resident, siege) && siege.getBannerControllingSide() != SiegeSide.NOBODY)
 			return Material.RED_STAINED_GLASS;
-
-        if (siege.getBannerControlSessions().containsKey(player))
-			return Material.YELLOW_STAINED_GLASS;
 		
 		if (siege.getBannerControllingResidents().contains(resident) || siege.getBannerControllingSide() == getSiegeSide(resident, siege))
 			return Material.GREEN_STAINED_GLASS;
