@@ -1,6 +1,8 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import java.util.List;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -11,8 +13,10 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.potion.PotionEffectType;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
@@ -167,6 +171,18 @@ public class SiegeWarBukkitEventListener implements Listener {
 					event.setCancelled(true);
 				}
 			}
+		}
+	}
+
+	@EventHandler
+	public void onPlayerQuit(PlayerQuitEvent event) {
+		if (SiegeController.getPlayersInBannerControlSessions().contains(event.getPlayer()) && event.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
+			Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+				@Override
+				public void run() {
+					event.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
+				}
+			});
 		}
 	}
 }
