@@ -375,4 +375,8 @@ public class SiegeWarSettings {
 	public static int getMaxCannonSessionDuration() {
 		return Settings.getInt(ConfigNodes.CANNONS_INTEGRATION_MAX_CANNON_SESSION_DURATION);
 	}
+
+	public static boolean getWarSiegeBeaconsEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BEACONS_ENABLED);
+	}
 }

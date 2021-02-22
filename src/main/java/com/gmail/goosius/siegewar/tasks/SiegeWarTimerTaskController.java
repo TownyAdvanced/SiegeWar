@@ -126,4 +126,9 @@ public class SiegeWarTimerTaskController {
 			SiegeWarCannonsUtil.evaluateCannonSessions();
 		}
 	}
+
+	public static void evaluateBeacons() {
+		if (SiegeWarSettings.getWarSiegeBeaconsEnabled())
+			CosmeticUtil.evaluateBeacons();
+	}
 }

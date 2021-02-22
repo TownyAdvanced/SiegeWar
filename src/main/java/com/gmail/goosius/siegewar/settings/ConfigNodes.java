@@ -154,6 +154,10 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If this setting is true, then Siegewar statistics will be shown on nation status screens."),
+	WAR_SIEGE_BEACONS_ENABLED(
+			"war.siege.switches.beacons_enabled",
+			"true",
+			"# If enabled, client-side beacons will be shown for players while they are in a siege zone."),
 
 	//Monetary Values
 	WAR_SIEGE_ATTACKER_COST_UPFRONT_PER_PLOT(
