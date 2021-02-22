@@ -78,7 +78,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 	private void showPreferenceHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar preference"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference capturecolor [color", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference capturecolor [color]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference allycolor [color]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference enemycolor [color]", ""));
 	}
