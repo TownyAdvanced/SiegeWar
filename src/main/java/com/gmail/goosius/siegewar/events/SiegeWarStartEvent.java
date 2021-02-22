@@ -31,6 +31,10 @@ public class SiegeWarStartEvent extends Event {
         return handlers;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     public Siege getSiege() {
         return siege;
     }

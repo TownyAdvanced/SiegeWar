@@ -36,6 +36,10 @@ public class PreSiegeWarStartEvent extends Event implements Cancellable {
         return handlers;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     public Town getTownOfAttackingPlayer() {
         return townOfAttackingPlayer;
     }
