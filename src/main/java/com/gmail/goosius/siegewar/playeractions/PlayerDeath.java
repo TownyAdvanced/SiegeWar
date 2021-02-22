@@ -142,7 +142,7 @@ public class PlayerDeath {
 				if(confirmedCandidateSiege.getStatus() == SiegeStatus.IN_PROGRESS) {
 					if (SiegeWarSettings.getWarSiegeDeathSpawnFireworkEnabled()) {
 						Color bannerColor = ((Banner) confirmedCandidateSiege.getFlagLocation().getBlock().getState()).getBaseColor().getColor();
-						CosmeticUtil.spawnFirework(deadPlayer.getLocation().add(0, 2, 0), bannerColor, Color.RED, true);
+						CosmeticUtil.spawnFirework(deadPlayer.getLocation().add(0, 2, 0), Color.RED, bannerColor, true);
 					}
 
 					if (confirmedCandidateSiegePlayerSide == SiegeSide.DEFENDERS) {
