@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
+import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 
 /**
  * 
@@ -17,6 +18,11 @@ public class ResidentMetaDataController {
 	private static IntegerDataField refundAmount = new IntegerDataField("siegewar_nationrefund", 0, "Nation Refund");
 	private static IntegerDataField plunderAmount = new IntegerDataField("siegewar_plunder", 0, "Plunder");
 	private static IntegerDataField militarySalaryAmount = new IntegerDataField("siegewar_militarysalary", 0, "Military Salary");
+
+	static String
+		captureColorPreference = "siegewar_capturecolor",
+		allyColorPreference = "siegewar_allycolor",
+		enemyColorPreference = "siegewar_enemycolor";
 
 
 	public ResidentMetaDataController(SiegeWar plugin) {
@@ -117,5 +123,54 @@ public class ResidentMetaDataController {
 				resident.addMetaData(new IntegerDataField("siegewar_militarysalary", amountToAdd, "Military Salary"));
 			}
 		}
+	}
+
+	public static void setString(Resident resident, String key, String string) {
+		if (resident.hasMeta(key)) {
+			if (string.equals(""))
+				resident.removeMetaData(resident.getMetadata(key));
+			else {
+				CustomDataField<?> cdf = resident.getMetadata(key);
+				if (cdf instanceof StringDataField) {
+					((StringDataField) cdf).setValue(string);
+					resident.save();
+				}
+				return;
+			}
+		} else if (!string.equals(""))
+			resident.addMetaData(new StringDataField(key, string));
+	}
+
+	public static String getString(Resident resident, String key) {
+		if (resident.hasMeta(key)) {
+			CustomDataField<?> cdf = resident.getMetadata(key);
+			if (cdf instanceof StringDataField)
+				return ((StringDataField) cdf).getValue();
+		}
+		return "";
+	}
+
+	public static void setCaptureColorPreference(Resident resident, String materialName) {
+		setString(resident, captureColorPreference, materialName);
+	}
+
+	public static void setAllyColorPreference(Resident resident, String materialName) {
+		setString(resident, allyColorPreference, materialName);
+	}
+
+	public static void setEnemyColorPreference(Resident resident, String materialName) {
+		setString(resident, enemyColorPreference, materialName);
+	}
+
+	public static String getCaptureColorPreference(Resident resident) {
+		return getString(resident, captureColorPreference);
+	}
+
+	public static String getAllyColorPreference(Resident resident) {
+		return getString(resident, allyColorPreference);
+	}
+
+	public static String getEnemyColorPreference(Resident resident) {
+		return getString(resident, enemyColorPreference);
 	}
 }

@@ -21,7 +21,9 @@ import org.bukkit.entity.Player;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.enums.GlassColor;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.BookUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
@@ -33,9 +35,11 @@ import com.palmergames.util.StringMgmt;
 
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
-	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "nation", "hud", "guide");
+	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "nation", "hud", "guide", "preference");
 	
 	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers");
+
+	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("capturecolor", "allycolor", "enemycolor");
 	
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
@@ -46,6 +50,11 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		case "hud":
 			if (args.length == 2)
 				return NameUtil.filterByStart(new ArrayList<String>(SiegeController.getSiegedTownNames()), args[1]);
+		case "preference":
+			if (args.length == 2)
+				return NameUtil.filterByStart(siegewarPreferenceTabCompletes, args[1]);
+			if (args.length == 3)
+				return NameUtil.filterByStart(GlassColor.getNamesArray(), args[2]);
 		default:
 			if (args.length == 1)
 				return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
@@ -65,6 +74,13 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void showNationHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar nation"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
+	}
+
+	private void showPreferenceHelp(CommandSender sender) {
+		sender.sendMessage(ChatTools.formatTitle("/siegewar preference"));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference capturecolor [color", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference allycolor [color]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference enemycolor [color]", ""));
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -96,8 +112,10 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			break;
 		case "nation":
 			parseSiegeWarNationCommand(player, StringMgmt.remFirstArg(args));
-		break;
-
+			break;
+		case "preference":
+			parseSiegewarPreferenceCommand(player, StringMgmt.remFirstArg(args));
+			break;
 		default:
 			showSiegeWarHelp(player);
 		}
@@ -241,5 +259,39 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			default:
 				showNationHelp(player);
 		}
+	}
+
+	private void parseSiegewarPreferenceCommand(Player player, String[] args) {
+		if (args.length >= 2) {
+			if (!GlassColor.getNamesArray().contains(args[1].toLowerCase())) {
+				Messaging.sendErrorMsg(player, Translation.of("msg_err_invalid_color"));
+				return;
+			}
+
+			Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
+			switch(args[0].toLowerCase()) {
+				case "capturecolor": {
+					ResidentMetaDataController.setCaptureColorPreference(resident, args[1].toLowerCase());
+					String glassColorName = GlassColor.valueOf(args[1].toUpperCase()).getName();
+					Messaging.sendMsg(player, Translation.of("msg_color_preference_set", glassColorName));
+					break;
+				}
+				case "allycolor": {
+					ResidentMetaDataController.setAllyColorPreference(resident, args[1].toLowerCase());
+					String glassColorName = GlassColor.valueOf(args[1].toUpperCase()).getName();
+					Messaging.sendMsg(player, Translation.of("msg_color_preference_set", glassColorName));
+					break;
+				}
+				case "enemycolor": {
+					ResidentMetaDataController.setEnemyColorPreference(resident, args[1].toLowerCase());
+					String glassColorName = GlassColor.valueOf(args[1].toUpperCase()).getName();
+					Messaging.sendMsg(player, Translation.of("msg_color_preference_set", glassColorName));
+					break;
+				}
+				default:
+					showPreferenceHelp(player);
+			}
+		} else
+			showPreferenceHelp(player);
 	}
 }

@@ -1,7 +1,9 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.enums.GlassColor;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -97,15 +99,15 @@ public class CosmeticUtil {
     public static Material getGlassColor(Player player, Siege siege) {
 		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 		if (siege.getBannerControlSessions().containsKey(player))
-			return Material.YELLOW_STAINED_GLASS;
+			return getCaptureColorPreference(resident);
 
 		if (getSiegeSide(resident, siege) == SiegeSide.NOBODY || siege.getBannerControllingSide() == SiegeSide.NOBODY)
 			return Material.GLASS;
 		
 		if (siege.getBannerControllingSide() != getSiegeSide(resident, siege))
-			return Material.RED_STAINED_GLASS;
+			return getEnemyColorPreference(resident);
 		else
-			return Material.GREEN_STAINED_GLASS;
+			return getAllyColorPreference(resident);
     }
     
     /**
@@ -142,5 +144,47 @@ public class CosmeticUtil {
 			return SiegeSide.ATTACKERS;
 		else
 			return SiegeSide.NOBODY;
+	}
+
+	public static Material getCaptureColorPreference(Resident resident) {
+		String materialName = ResidentMetaDataController.getCaptureColorPreference(resident);
+		if (materialName.equals(""))
+			return Material.YELLOW_STAINED_GLASS;
+		
+		Material material;
+		try {
+			material = GlassColor.valueOf(materialName.toUpperCase()).getMaterial();
+		} catch (IllegalArgumentException e) {
+			material = Material.YELLOW_STAINED_GLASS;
+		}
+		return material;
+	}
+
+	public static Material getAllyColorPreference(Resident resident) {
+		String materialName = ResidentMetaDataController.getAllyColorPreference(resident);
+		if (materialName.equals(""))
+			return Material.GREEN_STAINED_GLASS;
+		
+		Material material;
+		try {
+			material = GlassColor.valueOf(materialName.toUpperCase()).getMaterial();
+		} catch (IllegalArgumentException e) {
+			material = Material.GREEN_STAINED_GLASS;
+		}
+		return material;
+	}
+
+	public static Material getEnemyColorPreference(Resident resident) {
+		String materialName = ResidentMetaDataController.getEnemyColorPreference(resident);
+		if (materialName.equals(""))
+			return Material.RED_STAINED_GLASS;
+		
+		Material material;
+		try {
+			material = GlassColor.valueOf(materialName.toUpperCase()).getMaterial();
+		} catch (IllegalArgumentException e) {
+			material = Material.RED_STAINED_GLASS;
+		}
+		return material;
 	}
 }
