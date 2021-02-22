@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -195,6 +196,7 @@ public class SiegeController {
 		removeSiegedTown(siege);
 
 		SiegeWarTownUtil.setTownPvpFlags(town, false);
+		CosmeticUtil.removeFakeBeacons(siege);
 
 		//Save attacking nation
 		siege.getAttackingNation().save();

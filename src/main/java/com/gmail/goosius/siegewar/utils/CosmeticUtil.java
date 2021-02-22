@@ -29,10 +29,20 @@ public class CosmeticUtil {
 	public static void evaluateBeacons() {
 		for (Player player : Bukkit.getOnlinePlayers()) {
             for (Siege siege : SiegeController.getSieges()) {
+				if (!siege.getStatus().isActive())
+					continue;
+				
                 if (SiegeWarDistanceUtil.isInSiegeZone((Entity) player, siege))
                     evaluateBeacon(player, siege);
             }
         }
+	}
+
+	public static void removeFakeBeacons(Siege siege) {
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			if (SiegeWarDistanceUtil.isInSiegeZone((Entity) player, siege))
+                removeFakeBeacon(player, siege.getFlagLocation());
+		}
 	}
 
     public static void evaluateBeacon(Player player, Siege siege) {
@@ -88,14 +98,14 @@ public class CosmeticUtil {
 		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 		if (siege.getBannerControlSessions().containsKey(player))
 			return Material.YELLOW_STAINED_GLASS;
-		
-		if (siege.getBannerControllingSide() != getSiegeSide(resident, siege) && siege.getBannerControllingSide() != SiegeSide.NOBODY)
-			return Material.RED_STAINED_GLASS;
-		
-		if (siege.getBannerControllingResidents().contains(resident) || siege.getBannerControllingSide() == getSiegeSide(resident, siege))
-			return Material.GREEN_STAINED_GLASS;
 
-        return Material.GLASS;
+		if (getSiegeSide(resident, siege) == SiegeSide.NOBODY || siege.getBannerControllingSide() == SiegeSide.NOBODY)
+			return Material.GLASS;
+		
+		if (siege.getBannerControllingSide() != getSiegeSide(resident, siege))
+			return Material.RED_STAINED_GLASS;
+		else
+			return Material.GREEN_STAINED_GLASS;
     }
     
     /**
@@ -128,7 +138,9 @@ public class CosmeticUtil {
 		
 		if (town.isAlliedWith(siege.getDefendingTown()))
 			return SiegeSide.DEFENDERS;
-		else
+		else if (town.isAlliedWith(siege.getAttackingNation().getCapital()))
 			return SiegeSide.ATTACKERS;
+		else
+			return SiegeSide.NOBODY;
 	}
 }
