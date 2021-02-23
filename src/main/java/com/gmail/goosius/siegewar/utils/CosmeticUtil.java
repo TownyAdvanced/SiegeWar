@@ -119,11 +119,13 @@ public class CosmeticUtil {
      * @param instantDetonate Whether the firework should detonate instantly.
      */
     public static void spawnFirework(Location location, Color primaryColor, Color fadeColor, boolean instantDetonate) {
-        Firework firework = location.getWorld().spawn(location, Firework.class);
-		FireworkMeta fireworkMeta = (FireworkMeta) firework.getFireworkMeta();
-		fireworkMeta.addEffects(FireworkEffect.builder().withColor(primaryColor).withFade(fadeColor).build());
-		firework.setFireworkMeta(fireworkMeta);
-		firework.detonate();
+        location.getWorld().spawn(location, Firework.class, fw -> {
+			FireworkMeta fireworkMeta = (FireworkMeta) fw.getFireworkMeta();
+			fireworkMeta.addEffects(FireworkEffect.builder().withColor(primaryColor).withFade(fadeColor).build());
+			fw.setFireworkMeta(fireworkMeta);
+			if (instantDetonate)
+				fw.detonate();
+		});
     }
 
 	public static SiegeSide getSiegeSide(Resident resident, Siege siege) {
