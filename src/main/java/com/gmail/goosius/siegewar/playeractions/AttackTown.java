@@ -4,6 +4,8 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.events.PreSiegeWarStartEvent;
+import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -21,6 +23,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 
 /**
@@ -88,14 +91,21 @@ public class AttackTown {
 			}
 		}
 
-        //Setup attack
-        attackTown(block, nationOfAttackingPlayer, defendingTown);
+		//Call event
+		PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(townOfAttackingPlayer, nationOfAttackingPlayer, block, townBlock, defendingTown);
+		Bukkit.getPluginManager().callEvent(preSiegeWarStartEvent);
 
+		//Setup attack
+		if (!preSiegeWarStartEvent.isCancelled()){
+			attackTown(block, nationOfAttackingPlayer, townOfAttackingPlayer, defendingTown);
+		} else {
+			throw new TownyException(preSiegeWarStartEvent.getCancellationMsg());
+		}
 
     }
 
 
-    private static void attackTown(Block block, Nation attackingNation, Town defendingTown) throws TownyException {
+    private static void attackTown(Block block, Nation attackingNation, Town attackingTown, Town defendingTown) throws TownyException {
 		//Create Siege
 		String siegeName = attackingNation.getName() + "#vs#" + defendingTown.getName();
 		SiegeController.newSiege(siegeName);
@@ -159,5 +169,8 @@ public class AttackTown {
 				defendingTown.getFormattedName()
 			));
 		}
+
+		//Call event
+		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, attackingTown, block));
     }
 }
