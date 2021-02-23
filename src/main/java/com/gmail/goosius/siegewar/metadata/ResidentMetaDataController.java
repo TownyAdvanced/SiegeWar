@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.metadata;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 
@@ -17,6 +18,9 @@ public class ResidentMetaDataController {
 	private static IntegerDataField refundAmount = new IntegerDataField("siegewar_nationrefund", 0, "Nation Refund");
 	private static IntegerDataField plunderAmount = new IntegerDataField("siegewar_plunder", 0, "Plunder");
 	private static IntegerDataField militarySalaryAmount = new IntegerDataField("siegewar_militarysalary", 0, "Military Salary");
+
+	static String
+		beaconsDisabled = "siegewar_beaconsdisabled";
 
 
 	public ResidentMetaDataController(SiegeWar plugin) {
@@ -117,5 +121,38 @@ public class ResidentMetaDataController {
 				resident.addMetaData(new IntegerDataField("siegewar_militarysalary", amountToAdd, "Military Salary"));
 			}
 		}
+	}
+
+	public static void setBoolean(Resident resident, String key, boolean bool) {
+		if (resident.hasMeta(key)) {
+			if (bool == false)
+				resident.removeMetaData(resident.getMetadata(key));
+			else {
+				CustomDataField<?> cdf = resident.getMetadata(key);
+				if (cdf instanceof BooleanDataField) {
+					((BooleanDataField) cdf).setValue(bool);
+					resident.save();
+				}
+				return;
+			}
+		} else if (bool)
+			resident.addMetaData(new BooleanDataField(key, bool));
+	}
+
+	public static boolean getBoolean(Resident resident, String key) {
+		if (resident.hasMeta(key)) {
+			CustomDataField<?> cdf = resident.getMetadata(key);
+			if (cdf instanceof BooleanDataField)
+				return ((BooleanDataField) cdf).getValue();
+		}
+		return false;
+	}
+
+	public static void setBeaconsDisabled(Resident resident, boolean disabled) {
+		setBoolean(resident, beaconsDisabled, disabled);
+	}
+
+	public static boolean getBeaconsDisabled(Resident resident) {
+		return getBoolean(resident, beaconsDisabled);
 	}
 }

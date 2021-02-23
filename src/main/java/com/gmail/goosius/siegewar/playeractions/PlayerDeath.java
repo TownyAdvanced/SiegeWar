@@ -8,6 +8,7 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarPointsUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -17,14 +18,11 @@ import com.palmergames.bukkit.towny.permissions.TownyPermissionSource;
 import com.gmail.goosius.siegewar.settings.Translation;
 
 import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
 import org.bukkit.block.Banner;
-import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -143,12 +141,8 @@ public class PlayerDeath {
 				//Award penalty points w/ notification if siege is in progress
 				if(confirmedCandidateSiege.getStatus() == SiegeStatus.IN_PROGRESS) {
 					if (SiegeWarSettings.getWarSiegeDeathSpawnFireworkEnabled()) {
-						Firework redFirework = deadPlayer.getWorld().spawn(deadPlayer.getLocation().add(0, 2, 0), Firework.class);
-						FireworkMeta fireworkMeta = (FireworkMeta) redFirework.getFireworkMeta();
 						Color bannerColor = ((Banner) confirmedCandidateSiege.getFlagLocation().getBlock().getState()).getBaseColor().getColor();
-						fireworkMeta.addEffects(FireworkEffect.builder().withColor(Color.RED).withFade(bannerColor).build());
-						redFirework.setFireworkMeta(fireworkMeta);
-						redFirework.detonate();
+						CosmeticUtil.spawnFirework(deadPlayer.getLocation().add(0, 2, 0), Color.RED, bannerColor, true);
 					}
 
 					if (confirmedCandidateSiegePlayerSide == SiegeSide.DEFENDERS) {

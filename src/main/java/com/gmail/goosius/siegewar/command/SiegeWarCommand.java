@@ -22,8 +22,10 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.BookUtil;
+import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Town;
@@ -33,9 +35,11 @@ import com.palmergames.util.StringMgmt;
 
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
-	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "nation", "hud", "guide");
+	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "nation", "hud", "guide", "preference");
 	
 	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers");
+
+	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("beacons");
 	
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
@@ -46,6 +50,11 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		case "hud":
 			if (args.length == 2)
 				return NameUtil.filterByStart(new ArrayList<String>(SiegeController.getSiegedTownNames()), args[1]);
+		case "preference":
+			if (args.length == 2)
+				return NameUtil.filterByStart(siegewarPreferenceTabCompletes, args[1]);
+			if (args.length == 3)
+				return NameUtil.filterByStart(Arrays.asList("on", "off"), args[2]);
 		default:
 			if (args.length == 1)
 				return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
@@ -65,6 +74,11 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void showNationHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar nation"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
+	}
+
+	private void showPreferenceHelp(CommandSender sender) {
+		sender.sendMessage(ChatTools.formatTitle("/siegewar preference"));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference beacons [on/off]", ""));
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -96,8 +110,10 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			break;
 		case "nation":
 			parseSiegeWarNationCommand(player, StringMgmt.remFirstArg(args));
-		break;
-
+			break;
+		case "preference":
+			parseSiegewarPreferenceCommand(player, StringMgmt.remFirstArg(args));
+			break;
 		default:
 			showSiegeWarHelp(player);
 		}
@@ -241,5 +257,29 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			default:
 				showNationHelp(player);
 		}
+	}
+
+	private void parseSiegewarPreferenceCommand(Player player, String[] args) {
+		if (args.length >= 2) {
+			Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
+			switch(args[0].toLowerCase()) {
+				case "beacons": {
+					if (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off")) {
+						Messaging.sendMsg(player, Translation.of("msg_err_invalid_bool"));
+						return;
+					}
+					boolean current = ResidentMetaDataController.getBeaconsDisabled(resident);
+					boolean disabled = args[1].equalsIgnoreCase("off");
+					ResidentMetaDataController.setBeaconsDisabled(resident, disabled);
+					if (current != disabled)
+						CosmeticUtil.removeFakeBeacons(player);
+					Messaging.sendMsg(player, Translation.of("msg_beacon_preference_set", args[1].toUpperCase()));
+					break;
+				}
+				default:
+					showPreferenceHelp(player);
+			}
+		} else
+			showPreferenceHelp(player);
 	}
 }

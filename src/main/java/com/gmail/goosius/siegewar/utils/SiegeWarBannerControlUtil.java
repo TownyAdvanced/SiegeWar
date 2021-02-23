@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
@@ -128,10 +129,12 @@ public class SiegeWarBannerControlUtil {
 			SiegeWarSettings.getBannerControlVerticalDistanceBlocks(),
 			TimeMgmt.getFormattedTimeValue(sessionDurationMillis)));
 
+		CosmeticUtil.evaluateBeacon(player, siege);
+
 		//Make player glow (which also shows them a timer)
 		int effectDurationSeconds = (SiegeWarSettings.getWarSiegeBannerControlSessionDurationMinutes() * 60) + (int)TownySettings.getShortInterval(); 
 		final int effectDurationTicks = (int)(TimeTools.convertToTicks(effectDurationSeconds));
-		Towny.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(Towny.getPlugin(), new Runnable() {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
 			public void run() {
 				List<PotionEffect> potionEffects = new ArrayList<>();
 				potionEffects.add(new PotionEffect(PotionEffectType.GLOWING, effectDurationTicks, 0));
@@ -196,6 +199,7 @@ public class SiegeWarBannerControlUtil {
 				if (!doesPlayerMeetBasicSessionRequirements(siege, bannerControlSession.getPlayer(), bannerControlSession.getResident())) {
 					siege.removeBannerControlSession(bannerControlSession);
 					Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_failure"));
+					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
 
 					if (bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
 						Towny.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(Towny.getPlugin(), new Runnable() {
@@ -230,6 +234,7 @@ public class SiegeWarBannerControlUtil {
 							message = Translation.of("msg_siege_war_banner_control_gained_by_defender", siege.getDefendingTown().getFormattedName());
 						}
 						SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
+						CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
 					}
 				}
 			} catch (Exception e) {

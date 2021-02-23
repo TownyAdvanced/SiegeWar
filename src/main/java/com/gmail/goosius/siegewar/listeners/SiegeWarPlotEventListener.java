@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.listeners;
 
-import com.palmergames.bukkit.towny.event.plot.toggle.PlotToggleExplosionEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 

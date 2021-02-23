@@ -662,8 +662,43 @@ public enum ConfigNodes {
 			"cannons_integration.max_cannon_session_duration",
 			"9",
 			"# This value determines the max duration of each cannon session,",
-			"# The duration is 'in short ticks', typically a short tick is 20 seconds."
-	);
+			"# The duration is 'in short ticks', typically a short tick is 20 seconds."),
+	
+	BEACON_MARKERS(
+			"beacon_markers",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                   Beacon Markers                     | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	BEACON_MARKERS_ENABLED(
+			"beacon_markers.enabled",
+			"true",
+			"",
+			"# If enabled, client-side beacons will be shown for players at the siege banner while they are in a siege zone."),
+	BEACON_MARKERS_CAPTURE_COLOR(
+			"beacon_markers.capture_color",
+			"yellow",
+			"",
+			"# The color that the beacon will be while a player is capturing it. Only visible to the player.",
+			"# Accepts any of the following colors (case insensitive): White, Orange, Magenta, LightBlue, Yellow, Lime, Pink, Gray, LightGray, Cyan, Purple, Blue, Brown, Green, Red & Black.",
+			"# Defaults to yellow if no valid color is entered."),
+	BEACON_MARKERS_CAPTURED_COLOR(
+			"beacon_markers.captured_color",
+			"green",
+			"",
+			"# The color that the beacon will be for a player when their side has control of the banner.",
+			"# See above for valid colors.",
+			"# Defaults to green if no valid color is entered."),
+	BEACON_MARKERS_ENEMY_COLOR(
+			"beacon_markers.enemy_color",
+			"red",
+			"",
+			"# The color that the beacon will be for a player when the enemy side has control of the banner.",
+			"# See above for valid colors.",
+			"# Defaults to red if no valid color is entered.");
 
 	private final String Root;
 	private final String Default;
