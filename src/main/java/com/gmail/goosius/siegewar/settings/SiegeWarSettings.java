@@ -376,7 +376,19 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.CANNONS_INTEGRATION_MAX_CANNON_SESSION_DURATION);
 	}
 
-	public static boolean getWarSiegeBeaconsEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BEACONS_ENABLED);
+	public static boolean getBeaconsEnabled() {
+		return Settings.getBoolean(ConfigNodes.BEACON_MARKERS_ENABLED);
+	}
+
+	public static String getBeaconCaptureColor() {
+		return Settings.getString(ConfigNodes.BEACON_MARKERS_CAPTURE_COLOR);
+	}
+
+	public static String getBeaconCapturedColor() {
+		return Settings.getString(ConfigNodes.BEACON_MARKERS_CAPTURED_COLOR);
+	}
+
+	public static String getBeaconEnemyColor() {
+		return Settings.getString(ConfigNodes.BEACON_MARKERS_ENEMY_COLOR);
 	}
 }

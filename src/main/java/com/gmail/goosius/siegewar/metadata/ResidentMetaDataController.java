@@ -2,9 +2,9 @@ package com.gmail.goosius.siegewar.metadata;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
-import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 
 /**
  * 
@@ -20,9 +20,7 @@ public class ResidentMetaDataController {
 	private static IntegerDataField militarySalaryAmount = new IntegerDataField("siegewar_militarysalary", 0, "Military Salary");
 
 	static String
-		captureColorPreference = "siegewar_capturecolor",
-		allyColorPreference = "siegewar_allycolor",
-		enemyColorPreference = "siegewar_enemycolor";
+		beaconsDisabled = "siegewar_beaconsdisabled";
 
 
 	public ResidentMetaDataController(SiegeWar plugin) {
@@ -125,52 +123,36 @@ public class ResidentMetaDataController {
 		}
 	}
 
-	public static void setString(Resident resident, String key, String string) {
+	public static void setBoolean(Resident resident, String key, boolean bool) {
 		if (resident.hasMeta(key)) {
-			if (string.equals(""))
+			if (bool == false)
 				resident.removeMetaData(resident.getMetadata(key));
 			else {
 				CustomDataField<?> cdf = resident.getMetadata(key);
-				if (cdf instanceof StringDataField) {
-					((StringDataField) cdf).setValue(string);
+				if (cdf instanceof BooleanDataField) {
+					((BooleanDataField) cdf).setValue(bool);
 					resident.save();
 				}
 				return;
 			}
-		} else if (!string.equals(""))
-			resident.addMetaData(new StringDataField(key, string));
+		} else if (bool)
+			resident.addMetaData(new BooleanDataField(key, bool));
 	}
 
-	public static String getString(Resident resident, String key) {
+	public static boolean getBoolean(Resident resident, String key) {
 		if (resident.hasMeta(key)) {
 			CustomDataField<?> cdf = resident.getMetadata(key);
-			if (cdf instanceof StringDataField)
-				return ((StringDataField) cdf).getValue();
+			if (cdf instanceof BooleanDataField)
+				return ((BooleanDataField) cdf).getValue();
 		}
-		return "";
+		return false;
 	}
 
-	public static void setCaptureColorPreference(Resident resident, String materialName) {
-		setString(resident, captureColorPreference, materialName);
+	public static void setBeaconsDisabled(Resident resident, boolean disabled) {
+		setBoolean(resident, beaconsDisabled, disabled);
 	}
 
-	public static void setAllyColorPreference(Resident resident, String materialName) {
-		setString(resident, allyColorPreference, materialName);
-	}
-
-	public static void setEnemyColorPreference(Resident resident, String materialName) {
-		setString(resident, enemyColorPreference, materialName);
-	}
-
-	public static String getCaptureColorPreference(Resident resident) {
-		return getString(resident, captureColorPreference);
-	}
-
-	public static String getAllyColorPreference(Resident resident) {
-		return getString(resident, allyColorPreference);
-	}
-
-	public static String getEnemyColorPreference(Resident resident) {
-		return getString(resident, enemyColorPreference);
+	public static boolean getBeaconsDisabled(Resident resident) {
+		return getBoolean(resident, beaconsDisabled);
 	}
 }

@@ -281,5 +281,5 @@ msg_err_cannon_in_two_towns: "&cYour cannon blocks are split between two towns. 
 msg_err_cannot_toggle_explosions_due_to_cannon_session: "&cYou cannot toggle explosions in the town until the current cannon session ends."
 
 #Added in 0.11
-msg_err_invalid_color: "&cInvalid color. Valid colors are: White, Orange, Magenta, Light Blue, Yellow, Lime, Pink, Gray, Light Gray, Cyan, Purple, Blue, Brown, Green, Red & Black."
-msg_color_preference_set: "&bColor preference set to %s."
+msg_err_invalid_bool: "&cInvalid option. Options: on/off"
+msg_beacon_preference_set: "&bBeacon preference set to %s."

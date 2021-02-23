@@ -21,11 +21,11 @@ import org.bukkit.entity.Player;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.enums.GlassColor;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.BookUtil;
+import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Town;
@@ -39,7 +39,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
 	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers");
 
-	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("capturecolor", "allycolor", "enemycolor");
+	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("beacons");
 	
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
@@ -54,7 +54,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			if (args.length == 2)
 				return NameUtil.filterByStart(siegewarPreferenceTabCompletes, args[1]);
 			if (args.length == 3)
-				return NameUtil.filterByStart(GlassColor.getNamesArray(), args[2]);
+				return NameUtil.filterByStart(Arrays.asList("on", "off"), args[2]);
 		default:
 			if (args.length == 1)
 				return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
@@ -78,9 +78,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 	private void showPreferenceHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar preference"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference capturecolor [color]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference allycolor [color]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference enemycolor [color]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference beacons [on/off]", ""));
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -263,29 +261,19 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 	private void parseSiegewarPreferenceCommand(Player player, String[] args) {
 		if (args.length >= 2) {
-			if (!GlassColor.getNamesArray().contains(args[1].toLowerCase())) {
-				Messaging.sendErrorMsg(player, Translation.of("msg_err_invalid_color"));
-				return;
-			}
-
 			Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 			switch(args[0].toLowerCase()) {
-				case "capturecolor": {
-					ResidentMetaDataController.setCaptureColorPreference(resident, args[1].toLowerCase());
-					String glassColorName = GlassColor.valueOf(args[1].toUpperCase()).getName();
-					Messaging.sendMsg(player, Translation.of("msg_color_preference_set", glassColorName));
-					break;
-				}
-				case "allycolor": {
-					ResidentMetaDataController.setAllyColorPreference(resident, args[1].toLowerCase());
-					String glassColorName = GlassColor.valueOf(args[1].toUpperCase()).getName();
-					Messaging.sendMsg(player, Translation.of("msg_color_preference_set", glassColorName));
-					break;
-				}
-				case "enemycolor": {
-					ResidentMetaDataController.setEnemyColorPreference(resident, args[1].toLowerCase());
-					String glassColorName = GlassColor.valueOf(args[1].toUpperCase()).getName();
-					Messaging.sendMsg(player, Translation.of("msg_color_preference_set", glassColorName));
+				case "beacons": {
+					if (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off")) {
+						Messaging.sendMsg(player, Translation.of("msg_err_invalid_bool"));
+						return;
+					}
+					boolean current = ResidentMetaDataController.getBeaconsDisabled(resident);
+					boolean disabled = args[1].equalsIgnoreCase("off");
+					ResidentMetaDataController.setBeaconsDisabled(resident, disabled);
+					if (current != disabled)
+						CosmeticUtil.removeFakeBeacons(player);
+					Messaging.sendMsg(player, Translation.of("msg_beacon_preference_set", args[1].toUpperCase()));
 					break;
 				}
 				default:

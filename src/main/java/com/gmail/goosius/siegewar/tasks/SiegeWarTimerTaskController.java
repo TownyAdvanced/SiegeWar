@@ -128,7 +128,7 @@ public class SiegeWarTimerTaskController {
 	}
 
 	public static void evaluateBeacons() {
-		if (SiegeWarSettings.getWarSiegeBeaconsEnabled())
+		if (SiegeWarSettings.getBeaconsEnabled())
 			CosmeticUtil.evaluateBeacons();
 	}
 }

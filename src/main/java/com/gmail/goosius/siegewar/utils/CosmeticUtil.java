@@ -47,8 +47,16 @@ public class CosmeticUtil {
 		}
 	}
 
+	public static void removeFakeBeacons(Player player) {
+		for (Siege siege : SiegeController.getSieges()) {
+			if (SiegeWarDistanceUtil.isInSiegeZone((Entity) player, siege))
+				removeFakeBeacon(player, siege.getFlagLocation());
+		}
+	}
+
     public static void evaluateBeacon(Player player, Siege siege) {
-		if (SiegeWarSettings.getWarSiegeBeaconsEnabled())
+		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
+		if (SiegeWarSettings.getBeaconsEnabled() && !ResidentMetaDataController.getBeaconsDisabled(resident))
 			createFakeBeacon(player, siege.getFlagLocation(), getGlassColor(player, siege));
     }
 
@@ -99,15 +107,15 @@ public class CosmeticUtil {
     public static Material getGlassColor(Player player, Siege siege) {
 		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 		if (siege.getBannerControlSessions().containsKey(player))
-			return getCaptureColorPreference(resident);
+			return getCaptureColor();
 
 		if (getSiegeSide(resident, siege) == SiegeSide.NOBODY || siege.getBannerControllingSide() == SiegeSide.NOBODY)
 			return Material.GLASS;
 		
 		if (siege.getBannerControllingSide() != getSiegeSide(resident, siege))
-			return getEnemyColorPreference(resident);
+			return getEnemyColor();
 		else
-			return getAllyColorPreference(resident);
+			return getCapturedColor();
     }
     
     /**
@@ -148,11 +156,8 @@ public class CosmeticUtil {
 			return SiegeSide.NOBODY;
 	}
 
-	public static Material getCaptureColorPreference(Resident resident) {
-		String materialName = ResidentMetaDataController.getCaptureColorPreference(resident);
-		if (materialName.equals(""))
-			return Material.YELLOW_STAINED_GLASS;
-		
+	public static Material getCaptureColor() {
+		String materialName = SiegeWarSettings.getBeaconCaptureColor();	
 		Material material;
 		try {
 			material = GlassColor.valueOf(materialName.toUpperCase()).getMaterial();
@@ -162,11 +167,8 @@ public class CosmeticUtil {
 		return material;
 	}
 
-	public static Material getAllyColorPreference(Resident resident) {
-		String materialName = ResidentMetaDataController.getAllyColorPreference(resident);
-		if (materialName.equals(""))
-			return Material.GREEN_STAINED_GLASS;
-		
+	public static Material getCapturedColor() {
+		String materialName = SiegeWarSettings.getBeaconCapturedColor();
 		Material material;
 		try {
 			material = GlassColor.valueOf(materialName.toUpperCase()).getMaterial();
@@ -176,11 +178,8 @@ public class CosmeticUtil {
 		return material;
 	}
 
-	public static Material getEnemyColorPreference(Resident resident) {
-		String materialName = ResidentMetaDataController.getEnemyColorPreference(resident);
-		if (materialName.equals(""))
-			return Material.RED_STAINED_GLASS;
-		
+	public static Material getEnemyColor() {
+		String materialName = SiegeWarSettings.getBeaconEnemyColor();
 		Material material;
 		try {
 			material = GlassColor.valueOf(materialName.toUpperCase()).getMaterial();
