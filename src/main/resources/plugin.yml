@@ -80,6 +80,10 @@ permissions:
         description: User is able to do the /siegewar collect command.
         default: true
 
+    siegewar.command.siegewar.preference:
+        description: User is able to do the /siegewar preference command.
+        default: true
+
     siegewar.immune.to.war.nausea:
         description: User is immune to war nausea.
         default: false
