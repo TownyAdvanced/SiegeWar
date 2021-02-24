@@ -44,6 +44,9 @@ public class Siege {
     private long actualEndTime;       //Actual end time of siege
 	private Location siegeBannerLocation;
 	private int siegePoints;
+	private int battlesWonDefender;
+	private int battlesWonAttacker;
+	private List<Resident> battleBannerControllers; //All residents who gained BC during a battle
 	private double warChestAmount;
 	private List<Resident> bannerControllingResidents;
 	private SiegeSide bannerControllingSide;
@@ -57,6 +60,9 @@ public class Siege {
         status = SiegeStatus.IN_PROGRESS;
 		attackingNation = null;
 		siegePoints = 0;
+		battlesWonDefender = 0;
+		battlesWonAttacker = 0;
+		battleBannerControllers = new ArrayList<>();
 		siegeBannerLocation = null;
 		warChestAmount = 0;
 		bannerControllingResidents = new ArrayList<>();

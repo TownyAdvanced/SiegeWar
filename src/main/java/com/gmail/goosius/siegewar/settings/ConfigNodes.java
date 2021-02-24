@@ -370,43 +370,23 @@ public enum ConfigNodes {
 			"# 3. In this example, if the siege defender scores any siege points, the points will be multiplied by 2.",
 			"# 4. In this example, the siege attacker will not get any points boosts."),
 
-	//Battle Sessions
-	WAR_SIEGE_BATTLE_SESSIONS_ENABLED(
-			"war.siege.battle_sessions.enabled",
-			"true",
+	//Battle
+	WAR_SIEGE_BATTLE_SESSION_START_CLIP(
+			"war.siege.battle_session.start_clip",
+			"hour",
+			"# This value determines when each battle session will start.",
+			"# Possible values:",
+			"# 'hour' --- Each battle session starts on the hour.",
+			"# 'halfhour' --- Each battle session starts on the half hour.",
+			"# 'evenhour' --- Each battle session starts on the even hour e.g. 10:00, 12:00, etc.",
+			"# 'oddhour' --- Each battle session starts on the odd hour e.g. 9:00, 11:00, etc."),
+	WAR_SIEGE_BATTLE_SESSION_DURATION_MINUTES(
+			"war.siege.battle_session.duration_minutes",
+			"50",
 			"",
-			"# If this setting is true, then battle sessions are enabled.",
-			"# Battle sessions have 2 functions:",
-			"# 1. They automatically moderate the time each player spends siege-fighting.",
-			"# 2. They prevent certain blocks (e.g. obsidian) being placed while siege-fighting.",
-			"# ",
-			"# This feature is recommended to reduce stress and combat-fatigue.",
-			"# ",
-			"# A battle session starts when a player steps into a siege zone (unless they are in their own town).",
-			"# A battle session has 2 main phases:",
-			"# * phase 1 - active - In this phase, the player can attend any siege.",
-			"# * phase 2 - expired - In this phase the player cannot attend any siege (without getting 'battle fatigue' - poisoned/slowed/weakened).",
-			"# The durations of these phases are configured below."),
-	WAR_SIEGE_BATTLE_SESSIONS_ACTIVE_PHASE_DURATION_MINUTES(
-			"war.siege.battle_sessions.active_phase_duration_minutes",
-			"60",
-			"",
-			"# This value determines the duration of the battle session active phase."),
-	WAR_SIEGE_BATTLE_SESSIONS_EXPIRED_PHASE_DURATION_MINUTES(
-			"war.siege.battle_sessions.expired_phase_duration_minutes",
-			"10",
-			"",
-			"# This value determines the duration of the battle session expired phase."),
-	WAR_SIEGE_BATTLE_SESSIONS_FIRST_WARNING_MINUTES_TO_EXPIRY(
-			"war.siege.battle_sessions.first_warning_minutes_to_expiry",
-			"5",
-			"",
-			"# This value determines the number of minutes between first warning and expiry."),
-	WAR_SIEGE_BATTLE_SESSIONS_SECOND_WARNING_MINUTES_TO_EXPIRY(
-			"war.siege.battle_sessions.second_warning_minutes_to_expiry",
-			"1",
-			"",
-			"# This value determines the number of minutes between second warning and expiry."),
+			"# This value determines the duration of each battle session.",
+			"# After a battle session ends,",
+			"# the time period until the next battle session starts, is defined as a 'break'"),
 
 	//Siege zone block/use restrictions
 	WAR_SIEGE_ZONE_BLOCK_PLACEMENT_RESTRICTIONS_ENABLED(

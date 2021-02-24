@@ -24,9 +24,19 @@ import java.util.List;
 
 public class SiegeWarBattleSessionUtil {
 
+
 	public static final String METADATA_TAG_NAME= "towny.siegewar.battle.session";
 	
 	public static void evaluateBattleSessions() {
+		//Todo -
+		//If session is not started, determine whether to start one
+
+		//If session starts, send a notification (er global???)
+
+		//If sesion is started, determines whether to end it
+
+		//If session ends, do all that good notifying stuff (methink global)
+		//& plunder etc.
 		for(final Player player: BukkitTools.getOnlinePlayers()) {
 			//Don't apply to towny admins
 			if(TownyUniverse.getInstance().getPermissionSource().isTownyAdmin(player))

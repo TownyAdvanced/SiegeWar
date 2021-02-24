@@ -268,24 +268,12 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE);
 	}
 
-	public static boolean isWarSiegeBattleSessionsEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_ENABLED);
+	public static String getWarSiegeBattleSessionStartClip() {
+		return Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_START_CLIP);
 	}
 
-	public static int getWarSiegeBattleSessionsActivePhaseDurationMinutes() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_ACTIVE_PHASE_DURATION_MINUTES);
-	}
-
-	public static int getWarSiegeBattleSessionsFirstWarningMinutesToExpiry() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_FIRST_WARNING_MINUTES_TO_EXPIRY);
-	}
-
-	public static int getWarSiegeBattleSessionsSecondWarningMinutesToExpiry() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_SECOND_WARNING_MINUTES_TO_EXPIRY);
-	}
-
-	public static int getWarSiegeBattleSessionsExpiredPhaseDurationMinutes() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_EXPIRED_PHASE_DURATION_MINUTES);
+	public static String getWarSiegeBattleSessionDurationMinutes() {
+		return Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_DURATION_MINUTES);
 	}
 
 	public static boolean isWarSiegeZoneBlockPlacementRestrictionsEnabled() {
