@@ -156,30 +156,45 @@ public enum ConfigNodes {
 			"# If this setting is true, then Siegewar statistics will be shown on nation status screens."),
 
 	//Monetary Values
+
+	//Plunder
 	WAR_SIEGE_ATTACKER_COST_UPFRONT_PER_PLOT(
 			"war.siege.money.attacker_cost_upfront_per_plot",
 			"20.0",
 			"",
-			"# This value represents the siege deposit paid by the attacker (aka warchest).",
-			"# This value is recovered by the siege winner, whether attack or defender."),
+			"# This value is a 'deposit' paid by an attacking nation to start a siege.",
+			"# The money goes into the 'warchest' (a money-account, not a real chest).",
+			"# Some of this money gets plundered by defending soldiers each time they win a battle at the siege.",
+			"# This 'minor plunder' is distributed evenly (ranks do not apply).",
+			"# If the attacker wins the siege, the remainder of the chest is returned to them.",
+			"# If the attacker loses the siege, the remainder of the chest is recovered by the town."),
 	WAR_SIEGE_ATTACKER_PLUNDER_AMOUNT_PER_PLOT(
 			"war.siege.money.attacker_plunder_amount_per_plot",
 			"40.0",
 			"",
-			"# This is the amount plundered by the attacker is a siege is successful.",
-			"# It is recommended that the 'attack-cost:plunder-reward' ratio be about 1:2 ."),
-	WAR_SIEGE_ATTACKER_PLUNDER_DISTRIBUTION_RATIO(
-			"war.siege.money.attacker_plunder_distribution_ratio",
+			"# This value is the total amount which can be plundered by an attacker during a siege.",
+			"# Some of the value gets plundered by attacking soldiers time they win a battle at the siege.",
+			"# This 'minor plunder' is distributed evenly (ranks do not apply).",
+			"# If the attacker wins the siege, they can choose to do a 'major plunder' for the remainder of the amount."),
+	WAR_SIEGE_PLUNDER_DISTRIBUTION_RATIO(
+			"war.siege.money.plunder_distribution_ratio",
 			"1:3",
 			"",
-			"# This ratio affects how plunder is distributed within the plundering nation",
-			"# The value on the left is the ratio which will go to the nation bank.",
-			"# The value on the right is the ratio which will go to the nation soldiers",
-			"# The share each soldier receives depends on their rank.",
-			"# Plunder can be collected later using /sw collect.",
-			"# The rank permission which affects is towny.nation.siege.pay.grade.x",
-			"# X can be any integer value.",
-			"# Usually a value of 100 is a normal share, and a value of 200 is a double share"),
+			"# This ratio comes into effect each time an attacking or defending team wins a battle session",
+			"# This ratio affects how plunder is distributed.",
+			"# The value on the left is the ratio which will go to the nation/town bank.",
+			"# The value on the right is the ratio which will go to any soldiers who got banner control",
+			"# The share for the soldiers is distributed evenly (ranks do not apply)",
+			"# Soldiers can collect their shares later using using '/sw collect.'"),
+	WAR_SIEGE_NUM_BATTLE_WINS_FOR_MAX_PLUNDER(
+			"war.siege.money.num_battle_wins_for_max_plunder",
+			"30",
+			"",
+			"# This value determines how many battle wins are needed,",
+			"# by either attacker or defender",
+			"# to gain the maximium plunder amount from the enemy",
+			"# After this maximum is reached, a team cannot steal any more plunder"),
+
 	WAR_SIEGE_CAPITAL_SIEGE_COST_INCREASE_PERCENTAGE(
 			"war.siege.money.capital_siege_cost_increase_percentage",
 			"0",
@@ -371,15 +386,16 @@ public enum ConfigNodes {
 			"# 4. In this example, the siege attacker will not get any points boosts."),
 
 	//Battle
-	WAR_SIEGE_BATTLE_SESSION_START_CLIP(
-			"war.siege.battle_session.start_clip",
-			"0",
-			"# This value determines when each battle session will start.",
-			"# Examples:",
-			"# '0' --- Each battle session starts on the hour.",
-			"# '0.25' --- Each battle session starts at a quarter past the hour.",
-			"# '0.5' --- Each battle session on the half hour."),
-	WAR_SIEGE_BATTLE_SESSION_DURATION_MINUTES(
+	WAR_SIEGE_BATTLE_SESSIONS_START_TIMES_UTC(
+			"war.siege.battle_session.start_times_utc",
+			"0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23",
+			"# This value determines the times (in UTC) when each battle session will start.",
+			"# The default is once per hour, on the hour.",
+			"# To use different times use e.g. 4:20.",
+			"# In addition to controlling routine session start times,",
+			"# this config can also be used to prevent time-point sieging at unusual times e.g. night-time sieges.",
+			"# But be careful with this, as it also restricts sieging by cross-timezone players."),
+	WAR_SIEGE_BATTLE_SESSIONS_DURATION_MINUTES(
 			"war.siege.battle_session.duration_minutes",
 			"50",
 			"",

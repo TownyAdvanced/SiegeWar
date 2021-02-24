@@ -102,7 +102,7 @@ public class SiegeWarSettings {
 	}
 
 	public static String getWarSiegeAttackerPlunderDistributionRatio() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_ATTACKER_PLUNDER_DISTRIBUTION_RATIO);
+		return Settings.getString(ConfigNodes.WAR_SIEGE_PLUNDER_DISTRIBUTION_RATIO);
 	}
 
 	public static double getWarSiegeMaxHoldoutTimeHours() {
@@ -268,12 +268,17 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE);
 	}
 
-	public static int getWarSiegeBattleSessionStartClip() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_START_CLIP);
+	public static List<String> getWarSiegeBattleSessionsStartTimesUtc() {
+		List<String> timesAsList = new ArrayList<>();
+		String timesAsString = Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_START_TIMES_UTC);
+			for(String time: timesAsString.split(",")) {
+				timesAsList.add(time.trim());
+			}
+		return timesAsList;
 	}
 
-	public static int getWarSiegeBattleSessionDurationMinutes() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_DURATION_MINUTES);
+	public static int getWarSiegeBattleSessionsDurationMinutes() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_DURATION_MINUTES);
 	}
 
 	public static boolean isWarSiegeZoneBlockPlacementRestrictionsEnabled() {

@@ -5,21 +5,13 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.BattleResult;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleHistory;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
-import com.palmergames.bukkit.towny.TownyEconomyHandler;
-import com.palmergames.bukkit.towny.TownySettings;
-import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.EconomyException;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.utils.MoneyUtil;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,13 +71,22 @@ public class SiegeWarBattleSessionsUtil {
 
 		} else {
 			//Battle session is inactive. Check to see if it starts
-			long currentSystemClockMinutes = System.currentTimeMillis() % 60000;
-			if(currentSystemClockMinutes == SiegeWarSettings.getWarSiegeBattleSessionStartClip()) {
-				//Start battle session
-				battleSession.setActive(false);
-				battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionDurationMinutes() * 60000));
-				//Send global message to let the server know that "it is on"
-				Messaging.sendGlobalMessage("Battle Session started.");
+			long currentHourOfDay = LocalDateTime.now(Clock.systemUTC()).getHour();
+			long currentMinuteOfHour = LocalDateTime.now(Clock.systemUTC()).getMinute();
+			String currentTimeAsString;
+			if(currentMinuteOfHour == 0)
+				currentTimeAsString = "" + currentHourOfDay;
+			else
+				currentTimeAsString = "" + currentHourOfDay + ":" + currentMinuteOfHour;
+
+			for(String startTime: SiegeWarSettings.getWarSiegeBattleSessionsStartTimesUtc()) {
+				if(startTime.equals(currentTimeAsString)) {
+					//Start battle session
+					battleSession.setActive(false);
+					battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * 60000));
+					//Send global message to let the server know that "it is on"
+					Messaging.sendGlobalMessage("Battle Session started.");
+				}
 			}
 		}
 	}
