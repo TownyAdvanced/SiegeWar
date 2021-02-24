@@ -8,11 +8,11 @@ import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -93,10 +93,10 @@ public class PlunderTown {
 				transferPlunderToNation(town, nation, totalPlunderAmount, true);
 
 				NationMetaDataController.setTotalPlunderGained(nation, NationMetaDataController.getTotalPlunderGained(nation) + (int) totalPlunderAmount);
-				if (town.hasNation())
-					try {
-						NationMetaDataController.setTotalPlunderLost(town.getNation(), NationMetaDataController.getTotalPlunderLost(town.getNation()) + (int) totalPlunderAmount);
-					} catch (NotRegisteredException ignored) {}
+				if (town.hasNation()) {
+					Nation townNation = TownyAPI.getInstance().getTownNationOrNull(town);
+					NationMetaDataController.setTotalPlunderLost(townNation, NationMetaDataController.getTotalPlunderLost(townNation) + (int) totalPlunderAmount);
+				}
 			} else {
 				//Town cannot afford plunder
 				

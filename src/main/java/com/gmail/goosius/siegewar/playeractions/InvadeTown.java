@@ -4,9 +4,9 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.exceptions.AlreadyRegisteredException;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -77,9 +77,7 @@ public class InvadeTown {
         if(defendingTown.hasNation()) {
 			nationTown = true;
 			
-            try {
-                nationOfDefendingTown = defendingTown.getNation();
-            } catch (NotRegisteredException x) {}
+            nationOfDefendingTown = TownyAPI.getInstance().getTownNationOrNull(defendingTown);
 
             // This will delete the Nation when it loses its last town, mark them defeated.
             if(nationOfDefendingTown.getTowns().size() == 1) {
