@@ -41,35 +41,39 @@ public class Siege {
     private long actualEndTime;       //Actual end time of siege
 	private Location siegeBannerLocation;
 	private int siegePoints;
-	private int attackerBattleWins;
-	private int defenderBattleWins;
 	private double warChestAmount;
 	private List<Resident> bannerControllingResidents;  //Soldiers currently controlling the banner
-	private Set<Resident> bannerControllingAttackersHistory;  //Attackers who gained control in the current battle
-	private Set<Resident> bannerControllingDefendersHistory;  //Attackers who gained control in the current battle
 	private SiegeSide bannerControllingSide;
 	private Map<Player, BannerControlSession> bannerControlSessions;
 	private boolean attackerHasLowestPopulation;
 	private double siegePointModifierForSideWithLowestPopulation;
 	private int cannonSessionRemainingShortTicks;  //Short ticks remaining until standard cannon protections are restored
+	private int attackerBattleWins;
+	private int defenderBattleWins;
+	private Set<Resident> attackerBannerControlBattleHistory;   //Attackers who gained bc this battle
+	private Set<Resident> defenderBannerControlBattleHistory;   //Defenders who gained bc this battle
+	private Map<Resident, Integer> attackerBannerControlSiegeHistory;  //Attackers who gained banner control over the course of the siege
+	private Map<Resident, Integer> defenderBannerControlSiegeHistory;  //Defenders who gained banner control over the course of the siege
 
 	public Siege(String name) {
         this.name = name;
         status = SiegeStatus.IN_PROGRESS;
 		attackingNation = null;
 		siegePoints = 0;
-		attackerBattleWins = 0;
-		defenderBattleWins = 0;
 		siegeBannerLocation = null;
 		warChestAmount = 0;
 		bannerControllingResidents = new ArrayList<>();
-		bannerControllingAttackersHistory = new HashSet<>();
-		bannerControllingDefendersHistory = new HashSet<>();
 		bannerControllingSide = SiegeSide.NOBODY;
 		bannerControlSessions = new HashMap<>();
 		attackerHasLowestPopulation = false;
 		siegePointModifierForSideWithLowestPopulation = 0;  //0 is the special starting value
 		cannonSessionRemainingShortTicks = 0;
+		attackerBattleWins = 0;
+		defenderBattleWins = 0;
+		attackerBannerControlBattleHistory = new HashSet<>();
+		defenderBannerControlBattleHistory = new HashSet<>();
+		attackerBannerControlSiegeHistory = new HashMap<>();
+		defenderBannerControlSiegeHistory = new HashMap<>();
     }
 
 	public Nation getAttackingNation() {
@@ -205,8 +209,12 @@ public class Siege {
 		return new ArrayList<>(bannerControllingResidents);
 	}
 
-	public Set<Resident> getBannerControllingAttackersHistory() {
-		return new HashSet<>(bannerControllingAttackersHistory);
+	public Map<Resident,Integer> getAttackerBannerControlSiegeHistory() {
+		return new HashMap<>(attackerBannerControlSiegeHistory);
+	}
+
+	public void setAttackerBannerControlSiegeHistory(Map<Resident,Integer> map) {
+		this.attackerBannerControlSiegeHistory = map;
 	}
 
 	public void addBannerControllingResident(Resident resident) {
@@ -219,10 +227,6 @@ public class Siege {
 
 	public void clearBannerControllingResidents() {
 		bannerControllingResidents.clear();
-	}
-
-	public void clearBannerControllingAttackersHistory() {
-		bannerControllingAttackersHistory.clear();
 	}
 
 	public void clearBannerControlSessions() {
@@ -323,16 +327,55 @@ public class Siege {
 		this.defenderBattleWins = defenderBattleWins;
 	}
 
-	public Set<Resident> getBannerControllingDefendersHistory() {
-		return new HashSet<>(bannerControllingDefendersHistory);
+	public Map<Resident, Integer> getDefenderBannerControlSiegeHistory() {
+		return new HashMap<>(defenderBannerControlSiegeHistory);
 	}
 
-	public void setBannerControllingDefendersHistory(Set<Resident> bannerControllingDefendersHistory) {
-		this.bannerControllingDefendersHistory = bannerControllingDefendersHistory;
+	public void setDefenderBannerControlSiegeHistory(Map<Resident,Integer> map) {
+		this.defenderBannerControlSiegeHistory = map;
 	}
 
-	public void clearBannerControllingDefendersHistory() {
-		bannerControllingDefendersHistory.clear();
+
+	public void addContributionToDefenderBannerControlSiegeHistory(Resident resident) {
+		if(defenderBannerControlSiegeHistory.containsKey(resident)) {
+			int updatedValue = defenderBannerControlSiegeHistory.get(resident) + 1;
+			defenderBannerControlSiegeHistory.put(resident, updatedValue);
+		} else {
+			defenderBannerControlSiegeHistory.put(resident, 1);
+		}
+	}
+
+	public void addContributionToAttackerBannerControlSiegeHistory(Resident resident) {
+		if(attackerBannerControlSiegeHistory.containsKey(resident)) {
+			int updatedValue = attackerBannerControlSiegeHistory.get(resident) + 1;
+			attackerBannerControlSiegeHistory.put(resident, updatedValue);
+		} else {
+			attackerBannerControlSiegeHistory.put(resident, 1);
+		}
+	}
+
+	public Set<Resident> getAttackerBannerControlBattleHistory() {
+		return attackerBannerControlBattleHistory;
+	}
+
+	public void setAttackerBannerControlBattleHistory(Set<Resident> attackerBannerControlBattleHistory) {
+		this.attackerBannerControlBattleHistory = attackerBannerControlBattleHistory;
+	}
+
+	public void clearAttackerBannerControlBattleHistory() {
+		attackerBannerControlBattleHistory.clear();
+	}
+
+	public Set<Resident> getDefenderBannerControlBattleHistory() {
+		return defenderBannerControlBattleHistory;
+	}
+
+	public void setDefenderBannerControlBattleHistory(Set<Resident> defenderBannerControlBattleHistory) {
+		this.defenderBannerControlBattleHistory = defenderBannerControlBattleHistory;
+	}
+
+	public void clearDefenderBannerControlBattleHistory() {
+		defenderBannerControlBattleHistory.clear();
 	}
 
 }

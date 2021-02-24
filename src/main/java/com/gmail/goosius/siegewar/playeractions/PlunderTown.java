@@ -172,7 +172,7 @@ public class PlunderTown {
 	}
 
 	private static void transferPlunderToNation(Town town, Nation nation, double totalPlunderAmount, boolean removeMoneyFromTownBank) throws EconomyException {
-		String distributionRatio = SiegeWarSettings.getWarSiegeAttackerPlunderDistributionRatio();
+		String distributionRatio = SiegeWarSettings.getWarSiegeSpoilsDistributionRatio();
 
 		//Calculate total plunder for nation & soldiers
 		String[] nationSoldierRatios = distributionRatio.split(":");

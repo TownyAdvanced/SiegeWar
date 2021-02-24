@@ -5,15 +5,15 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.BattleResult;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.objects.BattleHistory;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.object.Resident;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SiegeWarBattleSessionsUtil {
 	
@@ -28,11 +28,11 @@ public class SiegeWarBattleSessionsUtil {
 				battleSession.setActive(false);
 
 				//Gather the results of all active battles, then end them
-				List<BattleHistory> battleHistories = new ArrayList<>();
+				Map<Siege, BattleResult> battleResults = new HashMap<>();
 				for(Siege siege: SiegeController.getSieges()) {
 
 					if (siege.getStatus() == SiegeStatus.IN_PROGRESS
-						&& (siege.getSiegePoints() > 0 || siege.getBannerControllingAttackersHistory().size() > 0)) {
+						&& (siege.getSiegePoints() > 0 || siege.getAttackerBannerControlSiegeHistory().size() > 0)) {
 						//Calculate result
 						BattleResult battleResult;
 						if (siege.getSiegePoints() > 0) {
@@ -42,21 +42,34 @@ public class SiegeWarBattleSessionsUtil {
 						} else {
 							battleResult = BattleResult.DRAW;
 						}
-						//Distribute plunder to nation/town, plus any soldiers who got BC during the sesh
-						int totalPlunder = 999;
+
+						//Add to results
+						battleResults.put(siege, battleResult);
+
+						//Add resident BC contributions to siege history
 						if(battleResult == BattleResult.ATTACKER_WIN) {
-							SiegeWarPlunderUtil.attackerPlundersTown(siege, totalPlunder);
+							for(Resident resident: siege.getAttackerBannerControlBattleHistory()) {
+								siege.addContributionToAttackerBannerControlSiegeHistory(resident);
+							}
 						} else if (battleResult == BattleResult.DEFENDER_WIN) {
-							SiegeWarPlunderUtil.defenderPlundersWarchest(siege, totalPlunder);
+							for(Resident resident: siege.getDefenderBannerControlBattleHistory()) {
+								siege.addContributionToDefenderBannerControlSiegeHistory(resident);
+							}
+						} else {
+							//Draw - count all contributions:
+							for(Resident resident: siege.getAttackerBannerControlBattleHistory()) {
+								siege.addContributionToAttackerBannerControlSiegeHistory(resident);
+							}
+							for(Resident resident: siege.getDefenderBannerControlBattleHistory()) {
+								siege.addContributionToDefenderBannerControlSiegeHistory(resident);
+							}
 						}
 
-						//Add to history
-						battleHistories.add(new BattleHistory(siege, battleResult, totalPlunder));
 						//Clear battle related stats from the siege
 						siege.setBannerControllingSide(SiegeSide.NOBODY);
 						siege.clearBannerControllingResidents();
-						siege.clearBannerControllingAttackersHistory();
-						siege.clearBannerControllingDefendersHistory();
+						siege.clearAttackerBannerControlBattleHistory();
+						siege.clearDefenderBannerControlBattleHistory();
 						siege.clearBannerControlSessions();
 						siege.setSiegePoints(0);
 					}

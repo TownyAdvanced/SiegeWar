@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.metadata;
 
+import com.palmergames.bukkit.towny.object.Resident;
 import org.jetbrains.annotations.Nullable;
 
 import com.gmail.goosius.siegewar.SiegeWar;
@@ -9,6 +10,9 @@ import com.palmergames.bukkit.towny.object.metadata.DecimalDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -27,16 +31,17 @@ public class SiegeMetaDataController {
 	private static StringDataField siegeTownUUID = new StringDataField("siegewar_townUUID", "");
 	private static StringDataField siegeFlagLocation = new StringDataField("siegewar_flagLocation", "");
 	private static StringDataField siegeStatus = new StringDataField("siegewar_status", "");
-	private static IntegerDataField attackerBattleWins = new IntegerDataField("siegewar_attackerBattleWins", 0);
-	private static IntegerDataField defenderBattleWins = new IntegerDataField("siegewar_defenderBattleWins", 0);
 	private static DecimalDataField siegeWarChestAmount = new DecimalDataField("siegewar_warChestAmount", 0.0);
 	private static BooleanDataField townPlundered = new BooleanDataField("siegewar_townPlundered", false);
 	private static BooleanDataField townInvaded = new BooleanDataField("siegewar_townInvaded", false);
 	private static LongDataField startTime = new LongDataField("siegewar_startTime", 0l);
 	private static LongDataField endTime = new LongDataField("siegewar_endTime", 0l);
 	private static LongDataField actualEndTime = new LongDataField("siegewar_actualEndTime", 0l);
-	
-	
+	private static IntegerDataField attackerBattleWins = new IntegerDataField("siegewar_attackerBattleWins", 0);
+	private static IntegerDataField defenderBattleWins = new IntegerDataField("siegewar_defenderBattleWins", 0);
+	private static StringDataField attackerBannerControlSiegeHistory = new StringDataField("siegewar_attackerBannerControlSiegeHistory", "");
+	private static StringDataField defenderBannerControlSiegeHistory = new StringDataField("siegewar_defenderBannerControlSiegeHistory", "");
+
 	public SiegeMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
 	}
@@ -305,5 +310,26 @@ public class SiegeMetaDataController {
 		ldf = (LongDataField) actualEndTime.clone();
 		if (town.hasMeta(ldf.getKey()))
 			town.removeMetaData(ldf);
+	}
+
+	public static Map<String, Integer> getAttackerBannerControlSiegeHistory(Town town) {
+		StringDataField sdf = (StringDataField) attackerBannerControlSiegeHistory.clone();
+
+		String dataAsString = null;
+		if (town.hasMeta(sdf.getKey()))
+			dataAsString = MetaDataUtil.getString(town, sdf);
+
+		if(dataAsString == null) {
+			return new HashMap<>();
+		} else {
+			Map<String, Integer> residentUuidToTallyMap = new HashMap<>();
+			String[] entries = dataAsString.split(",");
+			String[] residentAndPoints;
+			for(String entry: entries) {
+				residentAndPoints = entry.split(":");
+				residentUuidToTallyMap.put(residentAndPoints[0], Integer.parseInt(residentAndPoints[1]));
+			}
+			return residentUuidToTallyMap;
+		}
 	}
 }

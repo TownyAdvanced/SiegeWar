@@ -1,17 +1,11 @@
 package com.gmail.goosius.siegewar;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.palmergames.bukkit.towny.object.Resident;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -157,9 +151,6 @@ public class SiegeController {
 			return false;
 		siege.setStatus(SiegeStatus.parseString(SiegeMetaDataController.getStatus(town)));		
 
-		siege.setAttackerBattleWins(SiegeMetaDataController.getAttackerBattleWins(town));
-		siege.setDefenderBattleWins(SiegeMetaDataController.getDefenderBattleWins(town));
-
 		siege.setWarChestAmount(SiegeMetaDataController.getWarChestAmount(town));
 		siege.setTownPlundered(SiegeMetaDataController.townPlundered(town));
 		siege.setTownInvaded(SiegeMetaDataController.townInvaded(town));
@@ -173,6 +164,29 @@ public class SiegeController {
 		siege.setScheduledEndTime(SiegeMetaDataController.getEndTime(town));
 
 		siege.setActualEndTime(SiegeMetaDataController.getActualEndTime(town));
+
+		siege.setAttackerBattleWins(SiegeMetaDataController.getAttackerBattleWins(town));
+		siege.setDefenderBattleWins(SiegeMetaDataController.getDefenderBattleWins(town));
+
+		Map<String, Integer> uuidBasedSiegeHistoryMap = SiegeMetaDataController.getAttackerBannerControlSiegeHistory(town);
+		Map<Resident, Integer> siegeHistoryMap = new HashMap<>();
+		Resident resident;
+		for(Map.Entry<String, Integer> siegeHistoryEntry: uuidBasedSiegeHistoryMap.entrySet()) {
+			resident = TownyUniverse.getInstance().getResident(UUID.fromString(siegeHistoryEntry.getKey()));
+			if(resident != null)
+				siegeHistoryMap.put(resident, siegeHistoryEntry.getValue());
+		}
+		siege.setAttackerBannerControlSiegeHistory(siegeHistoryMap);
+
+
+
+
+			nation = TownyUniverse.getInstance().getDataSource().getNation(UUID.fromString(SiegeMetaDataController.getNationUUID(town)));
+		} catch (NotRegisteredException ignored) {}
+
+		siege.setAttackerBannerControlSiegeHistory();
+		siege.setDefenderBannerControlSiegeHistory(SiegeMetaDataController.getDefenderBannerControlSiegeHistory(town));
+
 		return true;
 	}
 

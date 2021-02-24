@@ -6,7 +6,6 @@ import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
-import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
@@ -17,7 +16,6 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.utils.MoneyUtil;
 
-import java.util.List;
 import java.util.Set;
 
 public class SiegeWarPlunderUtil {
@@ -26,7 +24,7 @@ public class SiegeWarPlunderUtil {
         //Take from town
         double actualPlunderAmount = takePlunderFromTown(siege, siege.getDefendingTown(), siege.getAttackingNation(), totalPlunderAmount);
         //Distribute to nation & attacking soldiers
-        givePlunderTo(siege.getAttackingNation(), siege.getBannerControllingAttackersHistory(), totalPlunderAmount);
+        givePlunderTo(siege.getAttackingNation(), siege.getAttackerBannerControlSiegeHistory(), totalPlunderAmount);
         return actualPlunderAmount;
     }
 
@@ -34,7 +32,7 @@ public class SiegeWarPlunderUtil {
         //Take from war chest
         siege.setWarChestAmount(siege.getWarChestAmount() - amountToPlunder);
         //Distribute to town & defending soldiers
-        givePlunderTo(siege.getDefendingTown(), siege.getBannerControllingDefendersHistory(), amountToPlunder);
+        givePlunderTo(siege.getDefendingTown(), siege.getDefenderBannerControlSiegeHistory(), amountToPlunder);
         return amountToPlunder;
     }
 
@@ -106,7 +104,7 @@ public class SiegeWarPlunderUtil {
 
 
     private static void givePlunderTo(Government receivingGovernment, Set<Resident> receivingPlayers, double amountToPlunder) {
-        String distributionRatio = SiegeWarSettings.getWarSiegeAttackerPlunderDistributionRatio();
+        String distributionRatio = SiegeWarSettings.getWarSiegeSpoilsDistributionRatio();
 
         //Calculate total plunder for nation & soldiers
         String[] nationSoldierRatios = distributionRatio.split(":");
