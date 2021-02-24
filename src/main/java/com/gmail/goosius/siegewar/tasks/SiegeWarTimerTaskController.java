@@ -104,7 +104,7 @@ public class SiegeWarTimerTaskController {
 	}
 
 	public static void evaluateBattleSessions() {
-		SiegeWarBattleSessionUtil.evaluateBattleSessions();
+		SiegeWarBattleSessionsUtil.evaluateBattleSessions();
 	}
 
 	public static void punishPeacefulPlayersInActiveSiegeZones() {

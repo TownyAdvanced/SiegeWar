@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.10
+version: 0.12
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -170,12 +170,6 @@ msg_war_siege_peaceful_towns_cannot_make_nations: "&cLes villes pacifiques ne pe
 msg_set_siege_immunities_town: "L'immunité au siège de la ville %s est définie sur %s heures."
 msg_set_siege_immunities_nation: "Les immunités de siège pour toutes les villes de la nation %s sont fixées à %s heures."
 msg_set_siege_immunities_all: "Les immunités de siège pour toutes les villes sont fixées à %s heures."
-
-#Battle sessions
-msg_war_siege_battle_session_started: "&2La session de combat a commencé. Vous êtes libre d'entrer dans n'importe quelle zone de siège pour le prochain %s. Après cela, vous aurez un temps de repos de %s de bataille."
-msg_war_siege_battle_session_warning: "&cVotre session de combat expirera dans %s. Pour éviter la fatigue au combat, quittez toute zone de siège dans laquelle vous vous trouvez (et/ou retournez dans votre propre ville)."
-msg_war_siege_battle_session_expired: "&cLa session de combat a expiré. Fatigue de combat active. Pour supprimer cet effet, quittez la zone de siège (et/ou retournez dans votre propre ville). Vous pouvez revenir dans %s."
-msg_war_siege_battle_session_ended: "&2La session de combat est terminée. La prochaine fois que vous entrerez dans une zone de siège, une nouvelle session de combat commencera."
 
 #Siege-zone block placement restrictions
 msg_war_siege_zone_block_placement_forbidden: "&cVous ne pouvez pas placer ce type de bloc dans la zone naturelle d'une zone de siège."

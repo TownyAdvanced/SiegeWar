@@ -268,12 +268,12 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE);
 	}
 
-	public static String getWarSiegeBattleSessionStartClip() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_START_CLIP);
+	public static int getWarSiegeBattleSessionStartClip() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_START_CLIP);
 	}
 
-	public static String getWarSiegeBattleSessionDurationMinutes() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_DURATION_MINUTES);
+	public static int getWarSiegeBattleSessionDurationMinutes() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_DURATION_MINUTES);
 	}
 
 	public static boolean isWarSiegeZoneBlockPlacementRestrictionsEnabled() {

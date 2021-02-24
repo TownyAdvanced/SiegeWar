@@ -373,13 +373,12 @@ public enum ConfigNodes {
 	//Battle
 	WAR_SIEGE_BATTLE_SESSION_START_CLIP(
 			"war.siege.battle_session.start_clip",
-			"hour",
+			"0",
 			"# This value determines when each battle session will start.",
-			"# Possible values:",
-			"# 'hour' --- Each battle session starts on the hour.",
-			"# 'halfhour' --- Each battle session starts on the half hour.",
-			"# 'evenhour' --- Each battle session starts on the even hour e.g. 10:00, 12:00, etc.",
-			"# 'oddhour' --- Each battle session starts on the odd hour e.g. 9:00, 11:00, etc."),
+			"# Examples:",
+			"# '0' --- Each battle session starts on the hour.",
+			"# '0.25' --- Each battle session starts at a quarter past the hour.",
+			"# '0.5' --- Each battle session on the half hour."),
 	WAR_SIEGE_BATTLE_SESSION_DURATION_MINUTES(
 			"war.siege.battle_session.duration_minutes",
 			"50",

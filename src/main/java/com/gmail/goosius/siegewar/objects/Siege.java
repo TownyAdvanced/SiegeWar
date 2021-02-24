@@ -10,10 +10,7 @@ import com.palmergames.util.TimeMgmt;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
 
@@ -44,11 +41,12 @@ public class Siege {
     private long actualEndTime;       //Actual end time of siege
 	private Location siegeBannerLocation;
 	private int siegePoints;
-	private int battlesWonDefender;
-	private int battlesWonAttacker;
-	private List<Resident> battleBannerControllers; //All residents who gained BC during a battle
+	private int attackerBattleWins;
+	private int defenderBattleWins;
 	private double warChestAmount;
-	private List<Resident> bannerControllingResidents;
+	private List<Resident> bannerControllingResidents;  //Soldiers currently controlling the banner
+	private Set<Resident> bannerControllingAttackersHistory;  //Attackers who gained control in the current battle
+	private Set<Resident> bannerControllingDefendersHistory;  //Attackers who gained control in the current battle
 	private SiegeSide bannerControllingSide;
 	private Map<Player, BannerControlSession> bannerControlSessions;
 	private boolean attackerHasLowestPopulation;
@@ -60,12 +58,13 @@ public class Siege {
         status = SiegeStatus.IN_PROGRESS;
 		attackingNation = null;
 		siegePoints = 0;
-		battlesWonDefender = 0;
-		battlesWonAttacker = 0;
-		battleBannerControllers = new ArrayList<>();
+		attackerBattleWins = 0;
+		defenderBattleWins = 0;
 		siegeBannerLocation = null;
 		warChestAmount = 0;
 		bannerControllingResidents = new ArrayList<>();
+		bannerControllingAttackersHistory = new HashSet<>();
+		bannerControllingDefendersHistory = new HashSet<>();
 		bannerControllingSide = SiegeSide.NOBODY;
 		bannerControlSessions = new HashMap<>();
 		attackerHasLowestPopulation = false;
@@ -206,6 +205,10 @@ public class Siege {
 		return new ArrayList<>(bannerControllingResidents);
 	}
 
+	public Set<Resident> getBannerControllingAttackersHistory() {
+		return new HashSet<>(bannerControllingAttackersHistory);
+	}
+
 	public void addBannerControllingResident(Resident resident) {
 		bannerControllingResidents.add(resident);
 	}
@@ -216,6 +219,14 @@ public class Siege {
 
 	public void clearBannerControllingResidents() {
 		bannerControllingResidents.clear();
+	}
+
+	public void clearBannerControllingAttackersHistory() {
+		bannerControllingAttackersHistory.clear();
+	}
+
+	public void clearBannerControlSessions() {
+		bannerControlSessions.clear();
 	}
 
 	public SiegeSide getBannerControllingSide() {
@@ -295,4 +306,33 @@ public class Siege {
 	public void decrementCannonSessionRemainingShortTicks(){
 		cannonSessionRemainingShortTicks--;
 	}
+
+	public int getAttackerBattleWins() {
+		return attackerBattleWins;
+	}
+
+	public void setAttackerBattleWins(int attackerBattleWins) {
+		this.attackerBattleWins = attackerBattleWins;
+	}
+
+	public int getDefenderBattleWins() {
+		return defenderBattleWins;
+	}
+
+	public void setDefenderBattleWins(int defenderBattleWins) {
+		this.defenderBattleWins = defenderBattleWins;
+	}
+
+	public Set<Resident> getBannerControllingDefendersHistory() {
+		return new HashSet<>(bannerControllingDefendersHistory);
+	}
+
+	public void setBannerControllingDefendersHistory(Set<Resident> bannerControllingDefendersHistory) {
+		this.bannerControllingDefendersHistory = bannerControllingDefendersHistory;
+	}
+
+	public void clearBannerControllingDefendersHistory() {
+		bannerControllingDefendersHistory.clear();
+	}
+
 }

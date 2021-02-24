@@ -82,7 +82,8 @@ public class SiegeController {
 			+ "!" + siege.getFlagLocation().getY()
 			+ "!" + siege.getFlagLocation().getZ());
 		SiegeMetaDataController.setStatus(town, siege.getStatus().toString());
-		SiegeMetaDataController.setPoints(town, siege.getSiegePoints());
+		SiegeMetaDataController.setAttackerBattleWins(town, siege.getAttackerBattleWins());
+		SiegeMetaDataController.setDefenderBattleWins(town, siege.getDefenderBattleWins());
 		SiegeMetaDataController.setWarChestAmount(town, siege.getWarChestAmount());
 		SiegeMetaDataController.setTownPlundered(town, siege.getTownPlundered());
 		SiegeMetaDataController.setTownInvaded(town, siege.getTownInvaded());
@@ -156,7 +157,9 @@ public class SiegeController {
 			return false;
 		siege.setStatus(SiegeStatus.parseString(SiegeMetaDataController.getStatus(town)));		
 
-		siege.setSiegePoints(SiegeMetaDataController.getPoints(town));
+		siege.setAttackerBattleWins(SiegeMetaDataController.getAttackerBattleWins(town));
+		siege.setDefenderBattleWins(SiegeMetaDataController.getDefenderBattleWins(town));
+
 		siege.setWarChestAmount(SiegeMetaDataController.getWarChestAmount(town));
 		siege.setTownPlundered(SiegeMetaDataController.townPlundered(town));
 		siege.setTownInvaded(SiegeMetaDataController.townInvaded(town));

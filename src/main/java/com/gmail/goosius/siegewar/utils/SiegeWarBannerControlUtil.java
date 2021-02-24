@@ -7,6 +7,7 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.Towny;
@@ -66,6 +67,19 @@ public class SiegeWarBannerControlUtil {
 	            
 				if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
 					continue;
+
+				if(!BattleSession.getBattleSession().isActive()) {
+					String message =
+						SiegeWarSettings.getWarSiegeBattleSessionStartClip() == 0 ?
+							Translation.of("msg_war_siege_battle_session_break_cannot_get_siege_points")
+							+ Translation.of("msg_war_siege_battle_sessions_start_on_the_hour")
+							:
+							Translation.of("msg_war_siege_battle_session_break_cannot_get_siege_points")
+							+ String.format(Translation.of("msg_war_siege_battle_sessions_start_not_on_the_hour"),
+								SiegeWarBattleSessionsUtil.getMinutesUntilNextBattleSessionStarts());
+					Messaging.sendErrorMsg(player, message);
+					continue;
+				}
 
 				if(siege.getBannerControlSessions().containsKey(player))
 					continue; // Player already has a control session

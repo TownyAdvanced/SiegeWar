@@ -1,7 +1,5 @@
 package com.gmail.goosius.siegewar.objects;
 
-import java.util.List;
-import java.util.Map;
 
 /**
  * This class represents a "Battle Session".
@@ -9,10 +7,10 @@ import java.util.Map;
  * A battle session is period of time, typically 50 minutes,
  * in which individual "battles" take place at each siege.
  *
- * During a battle session, siege points can be gained/lost in every battle.
+ * During a battle, siege points can be gained/lost.
  *
- * At the end of each battle session:
- * - The winner of every battle is declared
+ * At the end of a battle session:
+ * - The winner of each battle is declared
  *    - either the "Attacker" or the "Defender", or "Draw"
  *    - If nobody contested a battle, no winner is declared.
  * - All scoreboards will show that the winner won +1 "battle".
@@ -25,7 +23,7 @@ import java.util.Map;
  * - This period is known as a "break", and typically lasts 10 minutes.
  * - During this period, siege points remain at 0, and banner control is not possible.
  *
- * At the normal end of a siege, whoever has won the most "battles", wins the siege.
+ * At the normal end of a siege, whoever has won the most battles, wins the siege.
  *
  * @author Goosius
  */
@@ -45,5 +43,21 @@ public class BattleSession {
 			battleSession = new BattleSession();
 		}
 		return battleSession;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public long getScheduledEndTime() {
+		return scheduledEndTIme;
+	}
+
+	public void setScheduledEndTime(long t) {
+		scheduledEndTIme = t;
 	}
 }

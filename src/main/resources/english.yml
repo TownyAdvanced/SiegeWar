@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.11
+version: 0.12
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -171,12 +171,6 @@ msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s hours.'
 msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s hours.'
 msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s hours.'
 
-#Battle sessions
-msg_war_siege_battle_session_started: '&2Battle session started. You are free to enter any siege-zone for the next %s. After that you will get a %s rest from battle.'
-msg_war_siege_battle_session_warning: '&cYour battle session will expire in %s. To avoid battle-fatigue, exit any siege zone you are in (and/or return to your own town).'
-msg_war_siege_battle_session_expired: '&cBattle session expired. Battle-fatigue active. To remove this effect, leave the siege-zone (and/or return to your own town). You can return in %s.'
-msg_war_siege_battle_session_ended: '&2Battle session ended. The next time you enter a siege-zone, a new battle session will begin.'
-
 #Siege-zone block placement restrictions
 msg_war_siege_zone_block_placement_forbidden: '&cYou cannot place this type of block in the wilderness area of a siege zone.'
 msg_war_siege_zone_bucket_emptying_forbidden: '&cYou cannot use this type of bucket in the wilderness area of a siege zone.'
@@ -283,3 +277,12 @@ msg_err_cannot_toggle_explosions_due_to_cannon_session: "&cYou cannot toggle exp
 #Added in 0.11
 msg_err_invalid_bool: "&cInvalid option. Options: on/off"
 msg_beacon_preference_set: "&bBeacon preference set to %s."
+
+#Added in 0.12
+
+#Battle sessions
+msg_war_siege_battle_session_started: "&bA battle session started."
+msg_war_siege_battle_session_ended: "&bA battle session ended."
+msg_war_siege_battle_session_break_cannot_get_siege_points: "&cNo siege points can be gained until the next battle session starts. "
+msg_war_siege_battle_sessions_start_on_the_hour: "Battle sessions start regularly, on the hour."
+msg_war_siege_battle_sessions_start_not_on_the_hour: "Battle sessions start regularly, at %d minutes past the hour."
