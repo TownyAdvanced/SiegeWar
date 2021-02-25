@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.metadata;
 import org.jetbrains.annotations.Nullable;
 
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.metadata.MetaDataUtil;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.DecimalDataField;
@@ -11,8 +12,8 @@ import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 
 /**
- * 
- * 
+ *
+ *
  * @author LlmDl
  *
  */
@@ -27,6 +28,7 @@ public class SiegeMetaDataController {
 	private static StringDataField siegeTownUUID = new StringDataField("siegewar_townUUID", "");
 	private static StringDataField siegeFlagLocation = new StringDataField("siegewar_flagLocation", "");
 	private static StringDataField siegeStatus = new StringDataField("siegewar_status", "");
+	private static IntegerDataField siegePoints = new IntegerDataField("siegewar_points", 0);
 	private static DecimalDataField siegeWarChestAmount = new DecimalDataField("siegewar_warChestAmount", 0.0);
 	private static BooleanDataField townPlundered = new BooleanDataField("siegewar_townPlundered", false);
 	private static BooleanDataField townInvaded = new BooleanDataField("siegewar_townInvaded", false);
@@ -34,14 +36,15 @@ public class SiegeMetaDataController {
 	private static LongDataField endTime = new LongDataField("siegewar_endTime", 0l);
 	private static LongDataField actualEndTime = new LongDataField("siegewar_actualEndTime", 0l);
 
+
 	public SiegeMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
 	}
-	
+
 	public static SiegeMetaDataController getSiegeMeta() {
 		return siegeMetaDataController;
 	}
-	
+
 	public static boolean hasSiege(Town town) {
 		BooleanDataField bdf = (BooleanDataField) hasSiege.clone();
 		if (town.hasMeta(bdf.getKey())) {
@@ -49,7 +52,7 @@ public class SiegeMetaDataController {
 		}
 		return false;
 	}
-	
+
 	public static void setSiege(Town town, boolean bool) {
 		BooleanDataField bdf = (BooleanDataField) hasSiege.clone();
 		if (town.hasMeta(bdf.getKey()))
@@ -65,7 +68,7 @@ public class SiegeMetaDataController {
 			return MetaDataUtil.getString(town, sdf);
 		return null;
 	}
-	
+
 	public static void setSiegeName(Town town, String name) {
 		StringDataField sdf = (StringDataField) siegeName.clone();
 		if (town.hasMeta(sdf.getKey()))
@@ -73,7 +76,7 @@ public class SiegeMetaDataController {
 		else
 			town.addMetaData(new StringDataField("siegewar_name", name));
 	}
-	
+
 	@Nullable
 	public static String getNationUUID(Town town) {
 		StringDataField sdf = (StringDataField) siegeNationUUID.clone();
@@ -81,7 +84,7 @@ public class SiegeMetaDataController {
 			return MetaDataUtil.getString(town, sdf);
 		return null;
 	}
-	
+
 	public static void setNationUUID(Town town, String uuid) {
 		StringDataField sdf = (StringDataField) siegeNationUUID.clone();
 		if (town.hasMeta(sdf.getKey()))
@@ -89,7 +92,7 @@ public class SiegeMetaDataController {
 		else
 			town.addMetaData(new StringDataField("siegewar_nationUUID", uuid));
 	}
-	
+
 	@Nullable
 	public static String getTownUUID(Town town) {
 		StringDataField sdf = (StringDataField) siegeTownUUID.clone();
@@ -97,7 +100,7 @@ public class SiegeMetaDataController {
 			return MetaDataUtil.getString(town, sdf);
 		return null;
 	}
-	
+
 	public static void setTownUUID(Town town, String uuid) {
 		StringDataField sdf = (StringDataField) siegeTownUUID.clone();
 		if (town.hasMeta(sdf.getKey()))
@@ -113,7 +116,7 @@ public class SiegeMetaDataController {
 			return MetaDataUtil.getString(town, sdf);
 		return null;
 	}
-	
+
 	public static void setFlagLocation(Town town, String loc) {
 		StringDataField sdf = (StringDataField) siegeFlagLocation.clone();
 		if (town.hasMeta(sdf.getKey()))
@@ -121,7 +124,7 @@ public class SiegeMetaDataController {
 		else
 			town.addMetaData(new StringDataField("siegewar_flagLocation", loc));
 	}
-	
+
 	@Nullable
 	public static String getStatus(Town town) {
 		StringDataField sdf = (StringDataField) siegeStatus.clone();
@@ -129,7 +132,7 @@ public class SiegeMetaDataController {
 			return MetaDataUtil.getString(town, sdf);
 		return null;
 	}
-	
+
 	public static void setStatus(Town town, String status) {
 		StringDataField sdf = (StringDataField) siegeStatus.clone();
 		if (town.hasMeta(sdf.getKey()))
@@ -138,13 +141,28 @@ public class SiegeMetaDataController {
 			town.addMetaData(new StringDataField("siegewar_status", status));
 	}
 
+	public static int getPoints(Town town) {
+		IntegerDataField idf = (IntegerDataField) siegePoints.clone();
+		if (town.hasMeta(idf.getKey()))
+			return MetaDataUtil.getInt(town, idf);
+		return 0;
+	}
+
+	public static void setPoints(Town town, int num) {
+		IntegerDataField idf = (IntegerDataField) siegePoints.clone();
+		if (town.hasMeta(idf.getKey()))
+			MetaDataUtil.setInt(town, idf, num);
+		else
+			town.addMetaData(new IntegerDataField("siegewar_points", num));
+	}
+
 	public static double getWarChestAmount(Town town) {
 		DecimalDataField ddf = (DecimalDataField) siegeWarChestAmount.clone();
 		if (town.hasMeta(ddf.getKey()))
 			return MetaDataUtil.getDouble(town, ddf);
 		return 0.0;
 	}
-	
+
 	public static void setWarChestAmount(Town town, double num) {
 		DecimalDataField ddf = (DecimalDataField) siegeWarChestAmount.clone();
 		if (town.hasMeta(ddf.getKey()))
@@ -152,14 +170,14 @@ public class SiegeMetaDataController {
 		else
 			town.addMetaData(new DecimalDataField("siegewar_warChestAmount", num));
 	}
-	
+
 	public static boolean townPlundered(Town town) {
 		BooleanDataField bdf = (BooleanDataField) townPlundered.clone();
 		if (town.hasMeta(bdf.getKey()))
 			return MetaDataUtil.getBoolean(town, bdf);
 		return false;
 	}
-	
+
 	public static void setTownPlundered(Town town, boolean bool) {
 		BooleanDataField bdf = (BooleanDataField) townPlundered.clone();
 		if (town.hasMeta(bdf.getKey()))
@@ -167,14 +185,14 @@ public class SiegeMetaDataController {
 		else
 			town.addMetaData(new BooleanDataField("siegewar_townPlundered", bool));
 	}
-	
+
 	public static boolean townInvaded(Town town) {
 		BooleanDataField bdf = (BooleanDataField) townInvaded.clone();
 		if (town.hasMeta(bdf.getKey()))
 			return MetaDataUtil.getBoolean(town, bdf);
 		return false;
 	}
-	
+
 	public static void setTownInvaded(Town town, boolean bool) {
 		BooleanDataField bdf = (BooleanDataField) townInvaded.clone();
 		if (town.hasMeta(bdf.getKey()))
@@ -182,7 +200,7 @@ public class SiegeMetaDataController {
 		else
 			town.addMetaData(new BooleanDataField("siegewar_townInvaded", bool));
 	}
-	
+
 	public static long getStartTime(Town town) {
 		LongDataField ldf = (LongDataField) startTime.clone();
 		if (town.hasMeta(ldf.getKey()))
@@ -197,7 +215,7 @@ public class SiegeMetaDataController {
 		else
 			town.addMetaData(new LongDataField("siegewar_startTime", num));
 	}
-	
+
 	public static long getEndTime(Town town) {
 		LongDataField ldf = (LongDataField) endTime.clone();
 		if (town.hasMeta(ldf.getKey()))
@@ -212,7 +230,7 @@ public class SiegeMetaDataController {
 		else
 			town.addMetaData(new LongDataField("siegewar_endTime", num));
 	}
-	
+
 	public static long getActualEndTime(Town town) {
 		LongDataField ldf = (LongDataField) actualEndTime.clone();
 		if (town.hasMeta(ldf.getKey()))
@@ -245,17 +263,21 @@ public class SiegeMetaDataController {
 		if (town.hasMeta(sdf.getKey()))
 			town.removeMetaData(sdf);
 
+		IntegerDataField idf = (IntegerDataField) siegePoints.clone();
+		if (town.hasMeta(idf.getKey()))
+			town.removeMetaData(idf);
+
 		DecimalDataField ddf = (DecimalDataField) siegeWarChestAmount.clone();
 		if (town.hasMeta(ddf.getKey()))
 			town.removeMetaData(ddf);
-		
+
 		BooleanDataField bdf = (BooleanDataField) townPlundered.clone();
 		if (town.hasMeta(bdf.getKey()))
 			town.removeMetaData(bdf);
 		bdf = (BooleanDataField) townInvaded.clone();
 		if (town.hasMeta(bdf.getKey()))
 			town.removeMetaData(bdf);
-		
+
 		LongDataField ldf = (LongDataField) startTime.clone();
 		if (town.hasMeta(ldf.getKey()))
 			town.removeMetaData(ldf);
