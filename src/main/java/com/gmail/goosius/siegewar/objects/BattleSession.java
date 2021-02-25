@@ -118,6 +118,6 @@ public class BattleSession {
 			}
 
 		//Return closest duration
-		return closestDuration.getSeconds() * 10000;
+		return closestDuration.getSeconds() * 1000;
 	}
 }
