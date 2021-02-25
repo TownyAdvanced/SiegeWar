@@ -196,7 +196,6 @@ hud_title: "Siège"
 hud_siegestatus: "Statut du siège"
 hud_attackers: "ATQ: "
 hud_defenders: "DEF: "
-hud_points: "Points: "
 hud_banner_control: "Ctrl bannière: "
 hud_time_remaining: "Temps restant: "
 
@@ -270,6 +269,7 @@ msg_err_cannot_fire_no_cannon_session: "You cannot fire any cannons in this town
 msg_err_cannon_in_two_towns: "&cYour cannon blocks are split between two towns. Please ensure your cannon is in just one town."
 msg_err_cannot_toggle_explosions_due_to_cannon_session: "&cYou cannot toggle explosions in the town until the current cannon session ends."
 
+
 #Added in 0.12
 # Misc
 msg_na: 'N/A'
@@ -287,14 +287,14 @@ status_town_siege_battle: '&2Battle'
 status_town_siege_battle_time_remaining: '&2 > Time Remaining: &a%s'
 status_town_siege_battle_score: '&2 > Score: &a%s &2/ &a%s'
 msg_war_siege_battle_session_started: "&bA new battle session has started."
-msg_war_siege_battle_session_ended_with_battles: "&bThe current battle session has ended. The following teams have won their battles:"
+msg_war_siege_battle_session_ended_with_battles: "&bThe current battle session has ended. The following teams won their battles:"
 msg_war_siege_battle_session_ended_without_battles: "&bThe current battle session has ended. There were no battles."
-msg_war_siege_battle_session_ended_attacker_result: "%s - Attackers (%s)"
-msg_war_siege_battle_session_ended_defender_result: "%s - Defenders (%s)"
-msg_war_siege_battle_session_ended_draw_result: "%s - Draw (0)"
+msg_war_siege_battle_session_ended_attacker_result: "&b * Attackers @ %s (%s)"
+msg_war_siege_battle_session_ended_defender_result: "&b * Defenders @ %s (%s)"
 msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts. The next battle session will start in %s."
 
 #Scoreboard
+hud_points: 'Siege Points: '
 hud_battle_attacker_score: 'BAT ATK Score: '
 hud_battle_defender_score: 'BAT DEF Score: '
 hud_battle_time_remaining: 'BAT Time Left: '
