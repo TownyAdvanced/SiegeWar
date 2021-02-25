@@ -81,12 +81,12 @@ public class SiegeWarPointsUtil {
 			battleScore = SiegeWarSettings.getWarSiegePointsForAttackerDeath();
 			battleScore = adjustSiegePointPenaltyForBannerControl(true, battleScore, siege);
 			battleScore = adjustSiegePointsForPopulationQuotient(false, battleScore, siege);
-			siege.adjustAttackerBattleScore(battleScore);
+			siege.adjustDefenderBattleScore(battleScore);
 		} else {
 			battleScore = SiegeWarSettings.getWarSiegePointsForDefenderDeath();
 			battleScore = adjustSiegePointPenaltyForBannerControl(false, battleScore, siege);
 			battleScore = adjustSiegePointsForPopulationQuotient(true, battleScore, siege);
-			siege.adjustDefenderBattleScore(battleScore);
+			siege.adjustAttackerBattleScore(battleScore);
 		}
 
 		//Send messages to siege participants

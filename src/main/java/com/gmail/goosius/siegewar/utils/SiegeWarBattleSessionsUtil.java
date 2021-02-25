@@ -17,9 +17,11 @@ import java.util.List;
 import java.util.Map;
 
 public class SiegeWarBattleSessionsUtil {
+	private static long scheduledStartTimeOfNextBattleSession;
 
-	//Schedule first battle session
-	private static long scheduledStartTimeOfNextBattleSession = System.currentTimeMillis() + getTimeUntilNextBattleSessionMillis();
+	public static void scheduleNextBattleSession() {
+		scheduledStartTimeOfNextBattleSession = System.currentTimeMillis() + getTimeUntilNextBattleSessionMillis();
+	}
 
 	public static void evaluateBattleSessions() {
 		BattleSession battleSession = BattleSession.getBattleSession();
@@ -67,7 +69,7 @@ public class SiegeWarBattleSessionsUtil {
 				sendBattleSessionEndedMessage(battleResults);
 
 				//Schedule next session
-				scheduledStartTimeOfNextBattleSession = System.currentTimeMillis() + getTimeUntilNextBattleSessionMillis();
+				scheduleNextBattleSession();
 			}
 
 		} else {
