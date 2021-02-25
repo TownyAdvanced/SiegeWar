@@ -76,28 +76,26 @@ public class SiegeWarPointsUtil {
 		if(!BattleSession.getBattleSession().isActive())
 			return;
 
-		//Give siege points to opposing side
-		int siegePoints;
+		//Give battle points to opposing side
+		int battlePoints;
 		if (residentIsAttacker) {
-			siegePoints = -SiegeWarSettings.getWarSiegePointsForAttackerDeath();
-			siegePoints = adjustSiegePointPenaltyForBannerControl(true, siegePoints, siege);
-			siegePoints = adjustSiegePointsForPopulationQuotient(false, siegePoints, siege);
-			siege.adjustSiegePoints(siegePoints);
+			battlePoints = SiegeWarSettings.getWarSiegePointsForAttackerDeath();
+			battlePoints = adjustSiegePointPenaltyForBannerControl(true, battlePoints, siege);
+			battlePoints = adjustSiegePointsForPopulationQuotient(false, battlePoints, siege);
+			siege.adjustAttackerBattlePoints(battlePoints);
 		} else {
-			siegePoints = SiegeWarSettings.getWarSiegePointsForDefenderDeath();
-			siegePoints = adjustSiegePointPenaltyForBannerControl(false, siegePoints, siege);
-			siegePoints = adjustSiegePointsForPopulationQuotient(true, siegePoints, siege);
-			siege.adjustSiegePoints(siegePoints);
+			battlePoints = SiegeWarSettings.getWarSiegePointsForDefenderDeath();
+			battlePoints = adjustSiegePointPenaltyForBannerControl(false, battlePoints, siege);
+			battlePoints = adjustSiegePointsForPopulationQuotient(true, battlePoints, siege);
+			siege.adjustDefenderBattlePoints(battlePoints);
 		}
-
-		SiegeController.saveSiege(siege);
 
 		//Send messages to siege participants
 		String message = String.format(
 			unformattedErrorMessage,
 			siege.getDefendingTown().getName(),
 			resident.getName(),
-			Math.abs(siegePoints));
+			Math.abs(battlePoints));
 
 		SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
 	}

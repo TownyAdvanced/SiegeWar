@@ -57,6 +57,7 @@ public class SiegeWarBattleSessionsUtil {
 
 						//Apply the result to the siege points
 						siege.adjustSiegePoints(battleResult);
+						SiegeController.saveSiege(siege);
 					}
 				}
 

@@ -256,24 +256,20 @@ public class SiegeWarBannerControlUtil {
 		if(siege.getStatus() != SiegeStatus.IN_PROGRESS)
 			return;
 
-		//Award siege points and pillage
-		int siegePoints;
+		//Award battle points
+		int battlePoints;
 		switch(siege.getBannerControllingSide()) {
 			case ATTACKERS:
-				//Adjust siege points
-				siegePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForAttackerOccupation();
-				siegePoints = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(true, siegePoints, siege);
-				siege.adjustSiegePoints(siegePoints);
-				//Save siege zone
-				SiegeController.saveSiege(siege);
+				//Adjust battle points
+				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForAttackerOccupation();
+				battlePoints = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(true, battlePoints, siege);
+				siege.adjustAttackerBattlePoints(battlePoints);
 			break;
 			case DEFENDERS:
-				//Adjust siege points
-				siegePoints = -(siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForDefenderOccupation());
-				siegePoints = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(false, siegePoints, siege);
-				siege.adjustSiegePoints(siegePoints);
-				//Save siege zone
-				SiegeController.saveSiege(siege);
+				//Adjust battle points
+				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForDefenderOccupation();
+				battlePoints = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(false, battlePoints, siege);
+				siege.adjustDefenderBattlePoints(battlePoints);
 			break;
 			default:
 			return;

@@ -310,4 +310,12 @@ public class Siege {
 	public void setDefenderBattlePoints(int defenderBattlePoints) {
 		this.defenderBattlePoints = defenderBattlePoints;
 	}
+
+	public void adjustAttackerBattlePoints(int battlePoints) {
+		attackerBattlePoints += battlePoints;
+	}
+
+	public void adjustDefenderBattlePoints(int battlePoints) {
+		defenderBattlePoints += battlePoints;
+	}
 }
