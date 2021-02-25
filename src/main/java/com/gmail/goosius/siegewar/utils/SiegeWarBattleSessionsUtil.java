@@ -32,7 +32,7 @@ public class SiegeWarBattleSessionsUtil {
 				for(Siege siege: SiegeController.getSieges()) {
 
 					if (siege.getStatus() == SiegeStatus.IN_PROGRESS
-						&& (siege.getSiegePoints() > 0 || siege.getAttackerBannerControlSiegeHistory().size() > 0)) {
+						&& (siege.getSiegePoints() > 0 || siege.getAttackerSiegeContributionHistory().size() > 0)) {
 						//Calculate result
 						BattleResult battleResult;
 						if (siege.getSiegePoints() > 0) {
@@ -48,19 +48,19 @@ public class SiegeWarBattleSessionsUtil {
 
 						//Add resident BC contributions to siege history
 						if(battleResult == BattleResult.ATTACKER_WIN) {
-							for(Resident resident: siege.getAttackerBannerControlBattleHistory()) {
+							for(Resident resident: siege.getAttackerBattleContributionHistory()) {
 								siege.addContributionToAttackerBannerControlSiegeHistory(resident);
 							}
 						} else if (battleResult == BattleResult.DEFENDER_WIN) {
-							for(Resident resident: siege.getDefenderBannerControlBattleHistory()) {
+							for(Resident resident: siege.getDefenderBattleContributionHistory()) {
 								siege.addContributionToDefenderBannerControlSiegeHistory(resident);
 							}
 						} else {
 							//Draw - count all contributions:
-							for(Resident resident: siege.getAttackerBannerControlBattleHistory()) {
+							for(Resident resident: siege.getAttackerBattleContributionHistory()) {
 								siege.addContributionToAttackerBannerControlSiegeHistory(resident);
 							}
-							for(Resident resident: siege.getDefenderBannerControlBattleHistory()) {
+							for(Resident resident: siege.getDefenderBattleContributionHistory()) {
 								siege.addContributionToDefenderBannerControlSiegeHistory(resident);
 							}
 						}

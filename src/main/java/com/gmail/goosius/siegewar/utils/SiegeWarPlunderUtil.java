@@ -24,7 +24,7 @@ public class SiegeWarPlunderUtil {
         //Take from town
         double actualPlunderAmount = takePlunderFromTown(siege, siege.getDefendingTown(), siege.getAttackingNation(), totalPlunderAmount);
         //Distribute to nation & attacking soldiers
-        givePlunderTo(siege.getAttackingNation(), siege.getAttackerBannerControlSiegeHistory(), totalPlunderAmount);
+        givePlunderTo(siege.getAttackingNation(), siege.getAttackerSiegeContributionHistory(), totalPlunderAmount);
         return actualPlunderAmount;
     }
 
@@ -32,7 +32,7 @@ public class SiegeWarPlunderUtil {
         //Take from war chest
         siege.setWarChestAmount(siege.getWarChestAmount() - amountToPlunder);
         //Distribute to town & defending soldiers
-        givePlunderTo(siege.getDefendingTown(), siege.getDefenderBannerControlSiegeHistory(), amountToPlunder);
+        givePlunderTo(siege.getDefendingTown(), siege.getDefenderSiegeContributionHistory(), amountToPlunder);
         return amountToPlunder;
     }
 

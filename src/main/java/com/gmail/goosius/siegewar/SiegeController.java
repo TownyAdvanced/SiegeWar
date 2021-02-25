@@ -176,7 +176,7 @@ public class SiegeController {
 			if(resident != null)
 				siegeHistoryMap.put(resident, siegeHistoryEntry.getValue());
 		}
-		siege.setAttackerBannerControlSiegeHistory(siegeHistoryMap);
+		siege.setAttackerSiegeContributionHistory(siegeHistoryMap);
 
 
 

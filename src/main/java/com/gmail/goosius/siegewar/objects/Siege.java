@@ -48,12 +48,10 @@ public class Siege {
 	private boolean attackerHasLowestPopulation;
 	private double siegePointModifierForSideWithLowestPopulation;
 	private int cannonSessionRemainingShortTicks;  //Short ticks remaining until standard cannon protections are restored
-	private int attackerBattleWins;
-	private int defenderBattleWins;
-	private Set<Resident> attackerBannerControlBattleHistory;   //Attackers who gained bc this battle
-	private Set<Resident> defenderBannerControlBattleHistory;   //Defenders who gained bc this battle
-	private Map<Resident, Integer> attackerBannerControlSiegeHistory;  //Attackers who gained banner control over the course of the siege
-	private Map<Resident, Integer> defenderBannerControlSiegeHistory;  //Defenders who gained banner control over the course of the siege
+	private Set<Resident> attackerBattleContributionHistory;   //Attackers who helped at this battle
+	private Set<Resident> defenderBattleContributionHistory;   //Defenders who helped at this battle
+	private Map<Resident, Integer> attackerSiegeContributionHistory;  //Attackers who helped during the siege
+	private Map<Resident, Integer> defenderSiegeContributionHistory;  //Defenders who helped during the siege
 
 	public Siege(String name) {
         this.name = name;
@@ -68,12 +66,10 @@ public class Siege {
 		attackerHasLowestPopulation = false;
 		siegePointModifierForSideWithLowestPopulation = 0;  //0 is the special starting value
 		cannonSessionRemainingShortTicks = 0;
-		attackerBattleWins = 0;
-		defenderBattleWins = 0;
-		attackerBannerControlBattleHistory = new HashSet<>();
-		defenderBannerControlBattleHistory = new HashSet<>();
-		attackerBannerControlSiegeHistory = new HashMap<>();
-		defenderBannerControlSiegeHistory = new HashMap<>();
+		attackerBattleContributionHistory = new HashSet<>();
+		defenderBattleContributionHistory = new HashSet<>();
+		attackerSiegeContributionHistory = new HashMap<>();
+		defenderSiegeContributionHistory = new HashMap<>();
     }
 
 	public Nation getAttackingNation() {
@@ -209,12 +205,12 @@ public class Siege {
 		return new ArrayList<>(bannerControllingResidents);
 	}
 
-	public Map<Resident,Integer> getAttackerBannerControlSiegeHistory() {
-		return new HashMap<>(attackerBannerControlSiegeHistory);
+	public Map<Resident,Integer> getAttackerSiegeContributionHistory() {
+		return new HashMap<>(attackerSiegeContributionHistory);
 	}
 
-	public void setAttackerBannerControlSiegeHistory(Map<Resident,Integer> map) {
-		this.attackerBannerControlSiegeHistory = map;
+	public void setAttackerSiegeContributionHistory(Map<Resident,Integer> map) {
+		this.attackerSiegeContributionHistory = map;
 	}
 
 	public void addBannerControllingResident(Resident resident) {
@@ -327,55 +323,55 @@ public class Siege {
 		this.defenderBattleWins = defenderBattleWins;
 	}
 
-	public Map<Resident, Integer> getDefenderBannerControlSiegeHistory() {
-		return new HashMap<>(defenderBannerControlSiegeHistory);
+	public Map<Resident, Integer> getDefenderSiegeContributionHistory() {
+		return new HashMap<>(defenderSiegeContributionHistory);
 	}
 
-	public void setDefenderBannerControlSiegeHistory(Map<Resident,Integer> map) {
-		this.defenderBannerControlSiegeHistory = map;
+	public void setDefenderSiegeContributionHistory(Map<Resident,Integer> map) {
+		this.defenderSiegeContributionHistory = map;
 	}
 
 
 	public void addContributionToDefenderBannerControlSiegeHistory(Resident resident) {
-		if(defenderBannerControlSiegeHistory.containsKey(resident)) {
-			int updatedValue = defenderBannerControlSiegeHistory.get(resident) + 1;
-			defenderBannerControlSiegeHistory.put(resident, updatedValue);
+		if(defenderSiegeContributionHistory.containsKey(resident)) {
+			int updatedValue = defenderSiegeContributionHistory.get(resident) + 1;
+			defenderSiegeContributionHistory.put(resident, updatedValue);
 		} else {
-			defenderBannerControlSiegeHistory.put(resident, 1);
+			defenderSiegeContributionHistory.put(resident, 1);
 		}
 	}
 
 	public void addContributionToAttackerBannerControlSiegeHistory(Resident resident) {
-		if(attackerBannerControlSiegeHistory.containsKey(resident)) {
-			int updatedValue = attackerBannerControlSiegeHistory.get(resident) + 1;
-			attackerBannerControlSiegeHistory.put(resident, updatedValue);
+		if(attackerSiegeContributionHistory.containsKey(resident)) {
+			int updatedValue = attackerSiegeContributionHistory.get(resident) + 1;
+			attackerSiegeContributionHistory.put(resident, updatedValue);
 		} else {
-			attackerBannerControlSiegeHistory.put(resident, 1);
+			attackerSiegeContributionHistory.put(resident, 1);
 		}
 	}
 
-	public Set<Resident> getAttackerBannerControlBattleHistory() {
-		return attackerBannerControlBattleHistory;
+	public Set<Resident> getAttackerBattleContributionHistory() {
+		return attackerBattleContributionHistory;
 	}
 
-	public void setAttackerBannerControlBattleHistory(Set<Resident> attackerBannerControlBattleHistory) {
-		this.attackerBannerControlBattleHistory = attackerBannerControlBattleHistory;
+	public void setAttackerBattleContributionHistory(Set<Resident> attackerBattleContributionHistory) {
+		this.attackerBattleContributionHistory = attackerBattleContributionHistory;
 	}
 
 	public void clearAttackerBannerControlBattleHistory() {
-		attackerBannerControlBattleHistory.clear();
+		attackerBattleContributionHistory.clear();
 	}
 
-	public Set<Resident> getDefenderBannerControlBattleHistory() {
-		return defenderBannerControlBattleHistory;
+	public Set<Resident> getDefenderBattleContributionHistory() {
+		return defenderBattleContributionHistory;
 	}
 
-	public void setDefenderBannerControlBattleHistory(Set<Resident> defenderBannerControlBattleHistory) {
-		this.defenderBannerControlBattleHistory = defenderBannerControlBattleHistory;
+	public void setDefenderBattleContributionHistory(Set<Resident> defenderBattleContributionHistory) {
+		this.defenderBattleContributionHistory = defenderBattleContributionHistory;
 	}
 
 	public void clearDefenderBannerControlBattleHistory() {
-		defenderBannerControlBattleHistory.clear();
+		defenderBattleContributionHistory.clear();
 	}
 
 }
