@@ -66,8 +66,8 @@ public class SiegeWarHud {
         objective.getScore(attackers_entry).setScore(8);
         objective.getScore(defenders_entry).setScore(7);
         objective.getScore(points_entry).setScore(6);
-        objective.getScore(bannerControl_entry).setScore(5);
-        objective.getScore(timeRemaining_entry).setScore(4);
+        objective.getScore(timeRemaining_entry).setScore(5);
+        objective.getScore(bannerControl_entry).setScore(4);
         objective.getScore(battleAttackerScore_entry).setScore(3);
         objective.getScore(battleDefenderScore_entry).setScore(2);
         objective.getScore(battleTimeRemaining_entry).setScore(1);

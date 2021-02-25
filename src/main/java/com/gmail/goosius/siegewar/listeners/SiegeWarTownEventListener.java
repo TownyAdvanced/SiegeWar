@@ -359,7 +359,7 @@ public class SiegeWarTownEventListener implements Listener {
 							}
 
 							// > Score: +90 / -220
-							out.add(Translation.of("status_town_siege_battle_score", siege.getFormattedDefenderBattleScore(), siege.getFormattedAttackerBattleScore()));
+							out.add(Translation.of("status_town_siege_battle_score", siege.getFormattedAttackerBattleScore(), siege.getFormattedDefenderBattleScore()));
 
 							// > Time Remaining: 22 minutes
 							out.add(Translation.of("status_town_siege_battle_time_remaining", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
