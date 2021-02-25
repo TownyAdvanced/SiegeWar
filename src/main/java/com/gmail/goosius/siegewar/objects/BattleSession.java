@@ -69,7 +69,10 @@ public class BattleSession {
 
 	public String getFormattedTimeRemainingUntilBattleSessionEnds() {
 		double timeLeftMillis = scheduledEndTIme - System.currentTimeMillis();
-		return TimeMgmt.getFormattedTimeValue(timeLeftMillis);
-
+		if(timeLeftMillis > 0) {
+			return TimeMgmt.getFormattedTimeValue(timeLeftMillis);
+		} else {
+			return "N/A";
+		}
 	}
 }

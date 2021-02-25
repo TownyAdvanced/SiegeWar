@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.hud;
 
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.util.Colors;
@@ -22,8 +23,11 @@ public class SiegeWarHud {
         board.getTeam("attackers").setSuffix(SiegeHUDManager.checkLength(siege.getAttackingNation().getName()));
         board.getTeam("defenders").setSuffix(SiegeHUDManager.checkLength(siege.getDefendingTown().getName()));
         board.getTeam("points").setSuffix(siege.getSiegePoints().toString());
-        board.getTeam("bannerControl").setSuffix(siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase());
         board.getTeam("timeRemaining").setSuffix(siege.getTimeRemaining());
+        board.getTeam("bannerControl").setSuffix(siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase());
+        board.getTeam("battleAttackerScore").setSuffix(Integer.toString(siege.getAttackerBattleScore()));
+        board.getTeam("battleDefenderScore").setSuffix(Integer.toString(siege.getDefenderBattleScore()));
+        board.getTeam("battleTimeRemaining").setSuffix(BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds());
     }
 
     public static void toggleOn(Player p, Siege siege) {
@@ -31,29 +35,42 @@ public class SiegeWarHud {
         Objective objective = board.registerNewObjective("WAR_HUD_OBJ", "", Translation.of("hud_title"));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
+
         Team attackers = board.registerNewTeam("attackers"),
             defenders = board.registerNewTeam("defenders"),
             points = board.registerNewTeam("points"),
+            timeRemaining = board.registerNewTeam("timeRemaining"),
             bannerControl = board.registerNewTeam("bannerControl"),
-            timeRemaining = board.registerNewTeam("timeRemaining");
+            battleAttackerScore = board.registerNewTeam("battleAttackerScore"),
+            battleDefenderScore = board.registerNewTeam("battleDefenderScore"),
+            battleTimeRemaining = board.registerNewTeam("battleTimeRemaining");
 
         String attackers_entry = Colors.LightGray + Translation.of("hud_attackers"),
             defenders_entry = Colors.LightGray + Translation.of("hud_defenders"),
             points_entry = Colors.LightGray + Translation.of("hud_points"),
+            timeRemaining_entry = Colors.LightGray + Translation.of("hud_time_remaining"),
             bannerControl_entry = Colors.LightGray + Translation.of("hud_banner_control"),
-            timeRemaining_entry = Colors.LightGray + Translation.of("hud_time_remaining");
+            battleAttackerScore_entry = Colors.LightGray + Translation.of("hud_battle_attacker_score"),
+            battleDefenderScore_entry = Colors.LightGray + Translation.of("hud_battle_defender_score"),
+            battleTimeRemaining_entry = Colors.LightGray + Translation.of("hud_battle_time_remaining");
 
         attackers.addEntry(attackers_entry);
         defenders.addEntry(defenders_entry);
         points.addEntry(points_entry);
         bannerControl.addEntry(bannerControl_entry);
         timeRemaining.addEntry(timeRemaining_entry);
+        battleAttackerScore.addEntry(battleAttackerScore_entry);
+        battleDefenderScore.addEntry(battleDefenderScore_entry);
+        battleTimeRemaining.addEntry(battleTimeRemaining_entry);
 
-        objective.getScore(attackers_entry).setScore(5);
-        objective.getScore(defenders_entry).setScore(4);
-        objective.getScore(points_entry).setScore(3);
-        objective.getScore(bannerControl_entry).setScore(2);
-        objective.getScore(timeRemaining_entry).setScore(1);
+        objective.getScore(attackers_entry).setScore(8);
+        objective.getScore(defenders_entry).setScore(7);
+        objective.getScore(points_entry).setScore(6);
+        objective.getScore(bannerControl_entry).setScore(5);
+        objective.getScore(timeRemaining_entry).setScore(4);
+        objective.getScore(battleAttackerScore_entry).setScore(3);
+        objective.getScore(battleDefenderScore_entry).setScore(2);
+        objective.getScore(battleTimeRemaining_entry).setScore(1);
 
         p.setScoreboard(board);
         updateInfo(p, siege);

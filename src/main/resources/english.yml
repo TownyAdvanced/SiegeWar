@@ -198,7 +198,6 @@ hud_siegestatus: 'Siege Status'
 hud_attackers: 'ATK: '
 hud_defenders: 'DEF: '
 hud_points: 'Points: '
-hud_banner_control: 'Banner Ctrl: '
 hud_time_remaining: 'Time Left: '
 
 msg_err_peaceful_town_pvp_forced_off: '&cPeaceful towns have PVP forced OFF.'
@@ -297,3 +296,7 @@ msg_war_siege_battle_session_ended_defender_result: "%s - Defenders (-%d)"
 msg_war_siege_battle_session_ended_draw_result: "%s - Draw (0)"
 msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts."
 
+#Scoreboard
+hud_battle_attacker_score: 'Battle Attacker Score: '
+hud_battle_defender_score: 'Battle Defender Score: '
+hud_battle_time_remaining: 'Battle Time Remaining: '
