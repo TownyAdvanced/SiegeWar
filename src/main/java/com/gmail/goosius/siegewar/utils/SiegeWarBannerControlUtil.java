@@ -68,7 +68,8 @@ public class SiegeWarBannerControlUtil {
 					continue;
 
 				if(!BattleSession.getBattleSession().isActive()) {
-					String message = Translation.of("msg_war_siege_battle_session_break_cannot_get_banner_control");
+					String message = Translation.of("msg_war_siege_battle_session_break_cannot_get_banner_control",
+													BattleSession.getBattleSession().getFormattedTimeUntilNextBattleSessionStarts());
 					Messaging.sendErrorMsg(player, message);
 					continue;
 				}

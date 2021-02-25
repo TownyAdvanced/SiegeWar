@@ -5,6 +5,7 @@ import java.util.*;
 
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.settings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -126,10 +127,13 @@ public class DynmapTask {
                     List<String> lines = new ArrayList<>();
                     lines.add(Translation.of("dynmap_siege_attacker", siege.getAttackingNation().getName()));
                     lines.add(Translation.of("dynmap_siege_defender", siege.getDefendingTown().getName()));
-                    lines.add(Translation.of("dynmap_siege_points", siege.getSiegePoints()));
-                    lines.add(Translation.of("dynmap_siege_banner_control", siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase()));
                     lines.add(Translation.of("dynmap_siege_status", siege.getStatus().getName()));
+                    lines.add(Translation.of("dynmap_siege_points", siege.getSiegePoints()));
                     lines.add(Translation.of("dynmap_siege_time_left", siege.getTimeRemaining()));
+                    lines.add(Translation.of("dynmap_siege_banner_control", siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase()));
+                    lines.add(Translation.of("dynmap_siege_battle_score", siege.getDefenderBattleScore(), siege.getAttackerBattleScore()));
+                    lines.add(Translation.of("dynmap_siege_battle_time_left", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
+
 
                     if (TownyEconomyHandler.isActive())
                         lines.add(Translation.of("dynmap_siege_war_chest", TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount())));

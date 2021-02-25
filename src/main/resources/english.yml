@@ -294,9 +294,13 @@ msg_war_siege_battle_session_ended_without_battles: "&bThe current battle sessio
 msg_war_siege_battle_session_ended_attacker_result: "%s - Attackers (+%d)"
 msg_war_siege_battle_session_ended_defender_result: "%s - Defenders (-%d)"
 msg_war_siege_battle_session_ended_draw_result: "%s - Draw (0)"
-msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts."
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts. The next battle session will start in %s."
 
 #Scoreboard
 hud_battle_attacker_score: 'Battle Attacker Score: '
 hud_battle_defender_score: 'Battle Defender Score: '
 hud_battle_time_remaining: 'Battle Time Remaining: '
+
+#Dynmap
+dynmap_siege_battle_score: 'Battle Score: -%d / +%d'
+dynmap_siege_battle_time_left: 'Battle Time Left: %s'
