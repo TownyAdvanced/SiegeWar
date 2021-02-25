@@ -291,6 +291,7 @@ msg_war_siege_battle_session_ended_with_battles: "&bThe current battle session h
 msg_war_siege_battle_session_ended_without_battles: "&bThe current battle session has ended. There were no battles."
 msg_war_siege_battle_session_ended_attacker_result: "&b * Attackers @ %s (%s)"
 msg_war_siege_battle_session_ended_defender_result: "&b * Defenders @ %s (%s)"
+msg_war_siege_battle_session_ended_draw_result: "&b * Draw @ %s (0)"
 msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts. The next battle session will start in %s."
 
 #Scoreboard
