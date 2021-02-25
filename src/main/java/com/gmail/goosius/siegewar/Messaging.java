@@ -31,7 +31,7 @@ public class Messaging {
 		Bukkit.getOnlinePlayers().stream()
 				.filter(p -> p != null)
 				.filter(p -> TownyAPI.getInstance().isTownyWorld(p.getLocation().getWorld()))
-				.forEach(p -> sendMsg(p, prefix + message));
+				.forEach(p -> sendMsg(p, message));
 	}
 
 	public static void sendGlobalMessage(String header, List<String> lines) {
