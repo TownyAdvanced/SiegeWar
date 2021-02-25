@@ -6,10 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -206,13 +206,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					if (resident == null || !resident.hasTown() || !resident.getTown().hasNation())
 						throw new TownyException(Translation.of("msg_err_command_disable"));
 
-					Town town;
-					Nation nation = null;
-					try {
-						town = resident.getTown();
-						nation = town.getNation();
-					} catch (NotRegisteredException ignored) {
-					}
+					Town town = TownyAPI.getInstance().getResidentTownOrNull(resident);
+					Nation nation = TownyAPI.getInstance().getTownNationOrNull(town);
 
 					//Get the integer amount
 					int amount;

@@ -1,13 +1,10 @@
 package com.gmail.goosius.siegewar;
 
-import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.util.Colors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import com.gmail.goosius.siegewar.settings.Translation;
 
 public class Messaging {
@@ -28,14 +25,9 @@ public class Messaging {
 	
 	public static void sendGlobalMessage(String message) {
         System.out.println(prefix + message);
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            if (player != null)
-                try {
-                    if (TownyUniverse.getInstance().getDataSource().getWorld(player.getLocation().getWorld().getName()).isUsingTowny())
-                        sendMsg(player, message);
-                } catch (NotRegisteredException e) {
-                    e.printStackTrace();
-                }
-        }
+        Bukkit.getOnlinePlayers().stream()
+        	.filter(p -> p != null)
+        	.filter(p -> TownyAPI.getInstance().isTownyWorld(p.getLocation().getWorld()))
+        	.forEach(p -> sendMsg(p, prefix + message));
 	}
 }

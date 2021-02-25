@@ -122,13 +122,8 @@ public class PlaceBlock {
 			if (!resident.hasNation())
 				throw new TownyException(Translation.of("msg_err_siege_war_action_not_a_nation_member"));
 
-			Town town = null;
-			Nation nation = null;
-			try {
-				town = resident.getTown();
-				nation = town.getNation();
-			} catch (NotRegisteredException ignored) {
-			}
+			Town town = TownyAPI.getInstance().getResidentTownOrNull(resident);
+			Nation nation = TownyAPI.getInstance().getTownNationOrNull(town);
 
 			if (isWhiteBanner(block)) {
 				// Nation abandoning the siege.

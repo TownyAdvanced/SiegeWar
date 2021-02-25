@@ -107,7 +107,6 @@ msg_err_siege_war_cannot_surrender_not_your_town: '&cYou cannot surrender becaus
 msg_err_siege_war_cannot_surrender_siege_finished: '&cYou cannot surrender because the siege is over.'
 #Block change
 msg_err_siege_war_cannot_destroy_siege_banner: "&cWhile the siege is in progress you cannot destroy the siege banner or the block it is attached to."
-msg_err_siege_war_nation_zone_this_area_protected_but_besieged: '&cThis part of the %s is under the protection of %s, and also cannot be altered while the nearby town is under siege.'
 msg_err_siege_war_banner_support_block_not_stable: "&cYou cannot place the banner on unstable ground e.g. sand or gravel."
 # Spawn
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone (unless the target town is peaceful).'
