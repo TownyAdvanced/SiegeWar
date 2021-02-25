@@ -9,9 +9,9 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyMessaging;
+import com.palmergames.util.TimeMgmt;
 
-import java.time.Clock;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,23 +66,16 @@ public class SiegeWarBattleSessionsUtil {
 			}
 
 		} else {
-			//Battle session is inactive. Check to see if it starts
-			long currentHourOfDay = LocalDateTime.now(Clock.systemUTC()).getHour();
-			long currentMinuteOfHour = LocalDateTime.now(Clock.systemUTC()).getMinute();
-			String currentTimeAsString;
-			if(currentMinuteOfHour == 0)
-				currentTimeAsString = "" + currentHourOfDay;
-			else
-				currentTimeAsString = "" + currentHourOfDay + ":" + currentMinuteOfHour;
-
-			for(String startTime: SiegeWarSettings.getWarSiegeBattleSessionsStartTimesUtc()) {
-				if(startTime.equals(currentTimeAsString)) {
-					//Start battle session
-					battleSession.setActive(true);
-					battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * 60000));
-					//Send global message to let the server know that "it is on"
-					Messaging.sendGlobalMessage(Translation.of("msg_war_siege_battle_session_started"));
-				}
+			/*
+			 * Battle session is inactive. Check to see if it starts
+			 * If the time remaining is less than a minute, start it
+			 */
+			if (getTimeUntilNextBattleSessionMillis() < 60000) {
+				//Start battle session
+				battleSession.setActive(true);
+				battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * 60000));
+				//Send global message to let the server know that "it is on"
+				Messaging.sendGlobalMessage(Translation.of("msg_war_siege_battle_session_started"));
 			}
 		}
 	}
@@ -122,5 +115,45 @@ public class SiegeWarBattleSessionsUtil {
 		}
 		//Send message
 		TownyMessaging.sendGlobalMessage(lines);
+	}
+
+	public static String getFormattedTimeUntilNextBattleSessionStarts() {
+		return TimeMgmt.getFormattedTimeValue(getTimeUntilNextBattleSessionMillis());
+	}
+
+	public static long getTimeUntilNextBattleSessionMillis() {
+		LocalDateTime currentDateTime = LocalDateTime.now(Clock.systemUTC());
+		Duration closestDuration = null;
+		Duration candidateDuration;
+		LocalTime candidateTime;
+		LocalDate candidateDate;
+		LocalDateTime candidateDateTime;
+		String[] startTimeHourMinutePair;
+		for (String startTime : SiegeWarSettings.getWarSiegeBattleSessionsStartTimesUtc()) {
+			if (startTime.contains(":")) {
+				startTimeHourMinutePair = startTime.split(":");
+				candidateTime = LocalTime.of(Integer.parseInt(startTimeHourMinutePair[0]), Integer.parseInt(startTimeHourMinutePair[1]));
+			} else {
+				candidateTime = LocalTime.of(Integer.parseInt(startTime), 0);
+			}
+
+			//Convert candidate to local date time
+			if (candidateTime.isAfter(currentDateTime.toLocalTime())) {
+				candidateDate = LocalDate.now(Clock.systemUTC());
+			} else {
+				candidateDate = LocalDate.now(Clock.systemUTC()).plusDays(1);
+			}
+			candidateDateTime = LocalDateTime.of(candidateDate, candidateTime);
+
+			//Make this candidate our favourite if it is closer
+			candidateDuration = Duration.between(currentDateTime, candidateDateTime);
+			if (closestDuration == null) {
+				closestDuration = candidateDuration;
+			} else if (candidateDuration.getSeconds() < closestDuration.getSeconds())
+				closestDuration = candidateDuration;
+		}
+
+		//Return closest duration
+		return closestDuration.getSeconds() * 1000;
 	}
 }

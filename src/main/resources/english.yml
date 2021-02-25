@@ -196,7 +196,6 @@ hud_title: 'Siege'
 hud_siegestatus: 'Siege Status'
 hud_attackers: 'ATK: '
 hud_defenders: 'DEF: '
-hud_points: 'Points: '
 hud_banner_control: "Banner Control: "
 hud_time_remaining: 'Time Left: '
 
@@ -219,7 +218,6 @@ siege_status_unknown: 'Unknown'
 dynmap_siege_title: 'Siege: %s'
 dynmap_siege_attacker: 'Attacker: %s'
 dynmap_siege_defender: 'Defender: %s'
-dynmap_siege_points: 'Points: %d'
 dynmap_siege_banner_control: 'Banner Control: %s'
 dynmap_siege_status: 'Status: %s'
 dynmap_siege_status_in_progress: 'In Progress'
@@ -276,6 +274,9 @@ msg_err_invalid_bool: "&cInvalid option. Options: on/off"
 msg_beacon_preference_set: "&bBeacon preference set to %s."
 
 #Added in 0.12
+# Misc
+msg_na: 'N/A'
+
 #Town screen
 status_town_siege_status_points: '&2 > Points: &a%s'
 status_town_siege_status_warchest: '&2 > War Chest: &a%s'
@@ -297,10 +298,12 @@ msg_war_siege_battle_session_ended_draw_result: "%s - Draw (0)"
 msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts. The next battle session will start in %s."
 
 #Scoreboard
+hud_points: 'Siege Points: '
 hud_battle_attacker_score: 'BAT ATK Score: '
 hud_battle_defender_score: 'BAT DEF Score: '
 hud_battle_time_remaining: 'BAT Time Left: '
 
 #Dynmap
+dynmap_siege_points: 'Siege Points: %d'
 dynmap_siege_battle_score: 'Battle Score: %s / %s'
 dynmap_siege_battle_time_left: 'Battle Time Left: %s'

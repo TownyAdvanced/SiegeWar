@@ -1,15 +1,11 @@
 package com.gmail.goosius.siegewar.objects;
 
 
-import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
 
 import java.time.*;
-import java.time.temporal.TemporalField;
-
-import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
 
 /**
  * This class represents a "Battle Session".
@@ -72,52 +68,12 @@ public class BattleSession {
 		scheduledEndTIme = t;
 	}
 
-	public String getFormattedTimeRemainingUntilBattleSessionEnds() {
-		double timeLeftMillis = scheduledEndTIme - System.currentTimeMillis();
-		if(timeLeftMillis > 0) {
-			return TimeMgmt.getFormattedTimeValue(timeLeftMillis);
+	public long getTimeRemainingUntilBattleSessionEnds() {
+		long timeLeftMillis = scheduledEndTIme - System.currentTimeMillis();
+		if (timeLeftMillis > 0) {
+			return timeLeftMillis;
 		} else {
-			return "N/A";
+			return 0;
 		}
-	}
-
-	public String getFormattedTimeUntilNextBattleSessionStarts() {
-		return TimeMgmt.getFormattedTimeValue(getTimeOfNextBattleSessionMillis());
-	}
-
-	public static long getTimeOfNextBattleSessionMillis() {
-		LocalDateTime currentDateTime = LocalDateTime.now(Clock.systemUTC());
-		Duration closestDuration = null;
-		Duration candidateDuration;
-		LocalTime candidateTime;
-		LocalDate candidateDate;
-		LocalDateTime candidateDateTime;
-		String[] startTimeHourMinutePair;
-		for (String startTime : SiegeWarSettings.getWarSiegeBattleSessionsStartTimesUtc()) {
-			if (startTime.contains(":")) {
-				startTimeHourMinutePair = startTime.split(":");
-				candidateTime = LocalTime.of(Integer.parseInt(startTimeHourMinutePair[0]), Integer.parseInt(startTimeHourMinutePair[1]));
-			} else {
-				candidateTime = LocalTime.of(Integer.parseInt(startTime), 0);
-			}
-
-			//Convert candidate to local date time
-			if (candidateTime.isAfter(currentDateTime.toLocalTime())) {
-				candidateDate = LocalDate.now(Clock.systemUTC());
-			} else {
-				candidateDate = LocalDate.now(Clock.systemUTC()).plusDays(1);
-			}
-			candidateDateTime = LocalDateTime.of(candidateDate, candidateTime);
-
-			//Make this candidate our favourite if it is closer
-			candidateDuration = Duration.between(currentDateTime, candidateDateTime);
-			if (closestDuration == null) {
-				closestDuration = candidateDuration;
-			} else if (candidateDuration.getSeconds() < closestDuration.getSeconds())
-				closestDuration = candidateDuration;
-			}
-
-		//Return closest duration
-		return closestDuration.getSeconds() * 1000;
 	}
 }

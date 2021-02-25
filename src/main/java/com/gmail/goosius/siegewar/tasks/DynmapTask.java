@@ -140,7 +140,7 @@ public class DynmapTask {
                         lines.add(Translation.of("dynmap_siege_war_chest", TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount())));
                     lines.add(Translation.of("dynmap_siege_banner_control", siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase()));
                     lines.add(Translation.of("dynmap_siege_battle_score", siege.getFormattedDefenderBattleScore(), siege.getFormattedAttackerBattleScore()));
-                    lines.add(Translation.of("dynmap_siege_battle_time_left", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
+                    lines.add(Translation.of("dynmap_siege_battle_time_left", siege.getFormattedBattleTimeRemaining()));
 
                     String desc = "<b>" + name + "</b><hr>" + StringMgmt.join(lines, "<br>");
                     Location siegeLoc = siege.getFlagLocation();

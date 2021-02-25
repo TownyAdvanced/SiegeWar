@@ -27,7 +27,7 @@ public class SiegeWarHud {
         board.getTeam("bannerControl").setSuffix(siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase());
         board.getTeam("batAttackerScore").setSuffix(siege.getFormattedAttackerBattleScore());
         board.getTeam("batDefenderScore").setSuffix(siege.getFormattedDefenderBattleScore());
-        board.getTeam("batTimeRemaining").setSuffix(BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds());
+        board.getTeam("batTimeRemaining").setSuffix(siege.getFormattedBattleTimeRemaining());
     }
 
     public static void toggleOn(Player p, Siege siege) {

@@ -219,7 +219,6 @@ siege_status_unknown: "Inconnu"
 dynmap_siege_title: "Siège: %s"
 dynmap_siege_attacker: "Attaquant: %s"
 dynmap_siege_defender: "Défenseur: %s"
-dynmap_siege_points: "Points: %d"
 dynmap_siege_banner_control: "Contrôle de la bannière: %s"
 dynmap_siege_status: "Statut: %s"
 dynmap_siege_status_in_progress: "En cours"
@@ -272,6 +271,9 @@ msg_err_cannon_in_two_towns: "&cYour cannon blocks are split between two towns. 
 msg_err_cannot_toggle_explosions_due_to_cannon_session: "&cYou cannot toggle explosions in the town until the current cannon session ends."
 
 #Added in 0.12
+# Misc
+msg_na: 'N/A'
+
 #Town screen
 status_town_siege_status_points: '&2 > Points: &a%s'
 status_town_siege_status_warchest: '&2 > War Chest: &a%s'
@@ -298,5 +300,6 @@ hud_battle_defender_score: 'BAT DEF Score: '
 hud_battle_time_remaining: 'BAT Time Left: '
 
 #Dynmap
+dynmap_siege_points: 'Siege Points: %d'
 dynmap_siege_battle_score: 'Battle Score: %s / %s'
 dynmap_siege_battle_time_left: 'Battle Time Left: %s'

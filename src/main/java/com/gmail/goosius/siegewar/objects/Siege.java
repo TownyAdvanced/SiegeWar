@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.objects;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -333,5 +334,19 @@ public class Siege {
 
 	public void adjustDefenderBattleScore(int battleScore) {
 		defenderBattleScore += battleScore;
+	}
+
+	public String getFormattedBattleTimeRemaining() {
+		long battleSessionTimeRemaining = BattleSession.getBattleSession().getTimeRemainingUntilBattleSessionEnds();
+		if (battleSessionTimeRemaining > 0
+			&& status == SiegeStatus.IN_PROGRESS
+			&& (getAttackerBattleScore() > 0
+				|| getDefenderBattleScore() > 0
+				|| getBannerControllingSide() != SiegeSide.NOBODY
+				|| getBannerControlSessions().size() > 0)) {
+			return TimeMgmt.getFormattedTimeValue(battleSessionTimeRemaining);
+		} else {
+			return Translation.of("msg_na");
+		}
 	}
 }
