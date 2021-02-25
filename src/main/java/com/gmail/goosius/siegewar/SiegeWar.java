@@ -126,19 +126,12 @@ public class SiegeWar extends JavaPlugin {
 	}
 
 	private void printSickASCIIArt() {
-		System.out.println("    _________.__                      ");
-		System.out.println("   /   _____/|__| ____   ____   ____  ");
-		System.out.println("   \\_____  \\ |  |/ __ \\ / ___\\_/ __ \\ ");
-		System.out.println("   /        \\|  \\  ___// /_/  >  ___/ ");
-		System.out.println("  /_______  /|__|\\___  >___  / \\___  >");
-		System.out.println("          \\/         \\/_____/      \\/ ");
-		System.out.println("       __      __                        ");
-		System.out.println("      /  \\    /  \\_____ _______          ");
-		System.out.println("      \\   \\/\\/   /\\__  \\\\_  __ \\         ");
-		System.out.println("       \\        /  / __ \\|  | \\/         ");
-		System.out.println("        \\__/\\  /  (____  /__|            ");
-		System.out.println("             \\/        \\/                ");
-		System.out.println("          By Goosius & LlmDl          ");
+		System.out.println("  / ____|                        | |  \\ \\        / /        ");
+		System.out.println(" | |     _ __ _   _ ___  __ _  __| | __\\ \\  /\\  / /_ _ _ __   ");
+		System.out.println(" | |    | '__| | | / __|/ _` |/ _` |/ _ \\ \\/  \\/ / _` | '__| ");
+		System.out.println(" | |____| |  | |_| \\__ \\ (_| | (_| |  __/\\  /\\  / (_| | |    ");
+		System.out.println("  \\_____|_|   \\__,_|___/\\__,_|\\__,_|\\___| \\/  \\/ \\__,_|_|   ");
+		System.out.println("          By Goosius & LlmDl & reoost         ");
 		System.out.println("                                      ");
 	}
 

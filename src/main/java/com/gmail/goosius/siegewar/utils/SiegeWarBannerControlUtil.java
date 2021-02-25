@@ -189,8 +189,19 @@ public class SiegeWarBannerControlUtil {
 		if(!SiegeWarPointsUtil.isPlayerInTimedPointZone(player, siege))
 			return false; //player is not in the timed point zone
 
+		player.removePotionEffect(PotionEffectType.INVISIBILITY); //Remove invis in banner zone
+
 		return true;
 	}
+
+/*
+	private static boolean makePlayerMeetRequirements(Player player)
+	{
+		player.setGlowing(true);
+		player.setInvisible(false);
+		return true;
+	}
+*/
 
 	private static void evaluateExistingBannerControlSessions(Siege siege) {
 		for(BannerControlSession bannerControlSession: siege.getBannerControlSessions().values()) {
