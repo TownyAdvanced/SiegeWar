@@ -312,6 +312,11 @@ public class SiegeWarTownEventListener implements Listener {
 	                    String siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
 	                    out.add(siegeStatus);
 
+						// > Attacker: Land of Empire (Nation) {+30}
+						int pointsInt = siege.getSiegePoints();
+						String pointsString = pointsInt > 0 ? "+" + pointsInt : "" + pointsInt;
+						out.add(Translation.of("status_town_siege_status_besieger", siege.getAttackingNation().getFormattedName(), pointsString));
+
 						// > Banner XYZ: {2223,82,9877}
 	                    out.add(
 	                            Translation.of("status_town_siege_status_banner_xyz",
@@ -324,11 +329,6 @@ public class SiegeWarTownEventListener implements Listener {
 						String victoryTimer = Translation.of("status_town_siege_victory_timer", siege.getFormattedHoursUntilScheduledCompletion());
 						out.add(victoryTimer);
 
-						// > Attacker: Land of Empire (Nation) {+30}
-						int pointsInt = siege.getSiegePoints();
-						String pointsString = pointsInt > 0 ? "+" + pointsInt : "" + pointsInt;
-						out.add(Translation.of("status_town_siege_status_besieger", siege.getAttackingNation().getFormattedName(), pointsString));
-
 						// >  War Chest: $12,800
 						String warChest = TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount());
 						out.add(Translation.of("status_town_siege_status_warchest", warChest));
@@ -339,11 +339,11 @@ public class SiegeWarTownEventListener implements Listener {
 							String battle = Translation.of("status_town_siege_battle");
 							out.add(battle);
 
-							// > Time Remaining: 22 minutes
-							out.add(Translation.of("status_town_siege_battle_time_remaining", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
-
 							// > Points: +90 / -220
 							out.add(Translation.of("status_town_siege_battle_points", siege.getAttackerBattlePoints(), Math.abs(siege.getDefenderBattlePoints())));
+
+							// > Time Remaining: 22 minutes
+							out.add(Translation.of("status_town_siege_battle_time_remaining", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
 
 							// > Banner Control: Attackers [4] Killbot401x, NerfeyMcNerferson, WarCriminal80372
 							if (siege.getBannerControllingSide() == SiegeSide.NOBODY) {
