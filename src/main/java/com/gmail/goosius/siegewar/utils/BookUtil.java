@@ -27,8 +27,7 @@ public class BookUtil {
 		/*
 		 * Local variables
 		 */
-		String activeSession = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getWarSiegeBattleSessionsActivePhaseDurationMinutes() * TimeMgmt.ONE_MINUTE_IN_MILLIS);
-		String restSession = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getWarSiegeBattleSessionsExpiredPhaseDurationMinutes() * TimeMgmt.ONE_MINUTE_IN_MILLIS);
+		String activeSession = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * TimeMgmt.ONE_MINUTE_IN_MILLIS);
 		String maxSiege = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getWarSiegeMaxHoldoutTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS);
 		String occupationtime = TimeMgmt.getFormattedTimeValue((long) SiegeWarSettings.getWarSiegeRevoltImmunityTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS);
 		double counterPercent = SiegeWarSettings.getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercentage();
@@ -206,11 +205,8 @@ public class BookUtil {
 		}
 
 		//Battle sessions
-		if(SiegeWarSettings.isWarSiegeBattleSessionsEnabled()) {
-			text += "\nMISCELLANEOUS FEATURE: \nBATTLE SESSIONS\n\n";
-			text += "Fighting is organised into " + activeSession + " 'battle sessions' for each player. After each session, the player gets a " + restSession + " enforced break from combat (moderating fatigue.)\n\n";
-		}
-
+		text += "\nBATTLE SESSIONS\n\n";
+		text += "Fighting is organised into " + activeSession + " 'battle sessions'. During a battle session, each team (attackers/defenders) competes in 'battles' at each siege. Killing or banner control will give them 'battle points'. When the battle session ends, the team with the most battle points at each battle will win the battle, and convert their team points into siege points. After a battle session ends, there is typically a break until the next battle session. In this break, nobody can gain battle points.\n\n";
 
 		return text;
 	}
