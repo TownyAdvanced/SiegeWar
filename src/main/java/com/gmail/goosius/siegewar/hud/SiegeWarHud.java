@@ -25,9 +25,9 @@ public class SiegeWarHud {
         board.getTeam("points").setSuffix(siege.getSiegePoints().toString());
         board.getTeam("timeRemaining").setSuffix(siege.getTimeRemaining());
         board.getTeam("bannerControl").setSuffix(siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase());
-        board.getTeam("battleAttackerScore").setSuffix(Integer.toString(siege.getAttackerBattleScore()));
-        board.getTeam("battleDefenderScore").setSuffix(Integer.toString(siege.getDefenderBattleScore()));
-        board.getTeam("battleTimeRemaining").setSuffix(BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds());
+        board.getTeam("batAttackerScore").setSuffix(Integer.toString(siege.getAttackerBattleScore()));
+        board.getTeam("batDefenderScore").setSuffix(Integer.toString(siege.getDefenderBattleScore()));
+        board.getTeam("batTimeRemaining").setSuffix(BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds());
     }
 
     public static void toggleOn(Player p, Siege siege) {
@@ -41,15 +41,15 @@ public class SiegeWarHud {
             points = board.registerNewTeam("points"),
             timeRemaining = board.registerNewTeam("timeRemaining"),
             bannerControl = board.registerNewTeam("bannerControl"),
-            battleAttackerScore = board.registerNewTeam("battleAttackerScore"),
-            battleDefenderScore = board.registerNewTeam("battleDefenderScore"),
-            battleTimeRemaining = board.registerNewTeam("battleTimeRemaining");
+            battleAttackerScore = board.registerNewTeam("batAttackerScore"),
+            battleDefenderScore = board.registerNewTeam("batDefenderScore"),
+            battleTimeRemaining = board.registerNewTeam("batTimeRemaining");
 
         String attackers_entry = Colors.LightGray + Translation.of("hud_attackers"),
             defenders_entry = Colors.LightGray + Translation.of("hud_defenders"),
             points_entry = Colors.LightGray + Translation.of("hud_points"),
             timeRemaining_entry = Colors.LightGray + Translation.of("hud_time_remaining"),
-            bannerControl_entry = Colors.LightGray + Translation.of("hud_banner_control"),
+            bannerControl_entry = Colors.LightGray + Translation.of("hud_bannerControl"),
             battleAttackerScore_entry = Colors.LightGray + Translation.of("hud_battle_attacker_score"),
             battleDefenderScore_entry = Colors.LightGray + Translation.of("hud_battle_defender_score"),
             battleTimeRemaining_entry = Colors.LightGray + Translation.of("hud_battle_time_remaining");
