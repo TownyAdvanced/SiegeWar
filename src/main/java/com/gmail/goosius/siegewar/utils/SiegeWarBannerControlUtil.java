@@ -69,14 +69,7 @@ public class SiegeWarBannerControlUtil {
 					continue;
 
 				if(!BattleSession.getBattleSession().isActive()) {
-					String message =
-						SiegeWarSettings.getWarSiegeBattleSessionStartClip() == 0 ?
-							Translation.of("msg_war_siege_battle_session_break_cannot_get_siege_points")
-							+ Translation.of("msg_war_siege_battle_sessions_start_on_the_hour")
-							:
-							Translation.of("msg_war_siege_battle_session_break_cannot_get_siege_points")
-							+ String.format(Translation.of("msg_war_siege_battle_sessions_start_not_on_the_hour"),
-								SiegeWarBattleSessionsUtil.getMinutesUntilNextBattleSessionStarts());
+					String message = Translation.of("msg_war_siege_battle_session_break_cannot_get_siege_points");
 					Messaging.sendErrorMsg(player, message);
 					continue;
 				}

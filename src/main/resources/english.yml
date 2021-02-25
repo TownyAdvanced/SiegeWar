@@ -279,13 +279,17 @@ msg_err_invalid_bool: "&cInvalid option. Options: on/off"
 msg_beacon_preference_set: "&bBeacon preference set to %s."
 
 #Added in 0.12
+#Town screen
+status_town_siege_status_warchest: '&2 > War Chest: &a%s'
 
 #Battle sessions
+status_town_siege_battle: '&2Battle'
+status_town_siege_battle_time_remaining: '&2 > Time Remaining: &a%s'
+status_town_siege_battle_points: '&2 > Points: &a+%d &2/ &a-%d'
 msg_war_siege_battle_session_started: "&bA battle session started."
 msg_war_siege_battle_session_ended: "&bThe current battle session has ended. The following teams have won their battles:"
 msg_war_siege_battle_session_ended_attacker_result: "%s - Attackers (+%d)"
 msg_war_siege_battle_session_ended_defender_result: "%s - Defenders (-%d)"
 msg_war_siege_battle_session_ended_draw_result: "%s - Draw (0)"
 msg_war_siege_battle_session_break_cannot_get_siege_points: "&cNo siege points can be gained until the next battle session starts. "
-msg_war_siege_battle_sessions_start_on_the_hour: "Battle sessions start regularly, on the hour."
-msg_war_siege_battle_sessions_start_not_on_the_hour: "Battle sessions start regularly, at %d minutes past the hour."
+

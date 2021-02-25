@@ -1,6 +1,11 @@
 package com.gmail.goosius.siegewar.objects;
 
 
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.util.TimeMgmt;
+
+import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
+
 /**
  * This class represents a "Battle Session".
  *
@@ -59,5 +64,11 @@ public class BattleSession {
 
 	public void setScheduledEndTime(long t) {
 		scheduledEndTIme = t;
+	}
+
+	public String getFormattedTimeRemainingUntilBattleSessionEnds() {
+		double timeLeftMillis = scheduledEndTIme - System.currentTimeMillis();
+		return TimeMgmt.getFormattedTimeValue(timeLeftMillis);
+
 	}
 }
