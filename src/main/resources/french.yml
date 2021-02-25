@@ -33,8 +33,6 @@ msg_siege_war_siege_started_neutral_town: "&bUne armée appartenant à %s attaqu
 msg_siege_war_siege_started_nation_town: "&bUne armée appartenant à %s attaque %s de %s. Un siège a commencé !"
 msg_siege_war_attack_pay_war_chest: "&bUn coffre de guerre a été préparé par %s, avec une valeur de %s. Celui qui remporte le siège recevra cet argent."
 msg_siege_war_attack_recover_war_chest: "&bLe coffre de guerre a été récupéré par %s, avec une valeur de %s."
-msg_siege_war_attacker_death: "&bSiège de %s > Attaquant mort > %s > Points de siège -%d"
-msg_siege_war_defender_death: "&bSiège de %s > Défenseur mort > %s > Points de siège +%d"
 msg_siege_war_defender_win: "&bLes défenseurs de %s ont réussi à chasser toutes les armées attaquantes. Le siège a échoué !"
 msg_siege_war_attacker_win: "&bUne armée appartenant à %s a réussi à traverser les défenses de %s. Le siège est fini !"
 msg_siege_war_attacker_abandon: "&bUne armée appartenant à %s a abandonné son attaque sur %s. Les défenseurs ont gagné !"
@@ -278,13 +276,19 @@ msg_err_cannot_toggle_explosions_due_to_cannon_session: "&cYou cannot toggle exp
 #Town screen
 status_town_siege_status_warchest: '&2 > War Chest: &a%s'
 
+#Death points
+msg_siege_war_attacker_death: "&bSiège de %s > Attaquant mort > %s > Points de BATTLE -%d"
+msg_siege_war_defender_death: "&bSiège de %s > Défenseur mort > %s > Points de BATTLE +%d"
+
 #Battle sessions
 status_town_siege_battle: '&2Battle'
 status_town_siege_battle_time_remaining: '&2 > Time Remaining: &a%s'
-status_town_siege_battle_points: '&2 > Points: &a+%d &2/ &a-%d'
-msg_war_siege_battle_session_started: "&bA battle session started."
-msg_war_siege_battle_session_ended: "&bThe current battle session has ended. The following teams have won their battles:"
+status_town_siege_battle_points: '&2 > Points: &a-%d &2/ &a+%d'
+msg_war_siege_battle_session_started: "&bA new battle session has started."
+msg_war_siege_battle_session_ended_with_battles: "&bThe current battle session has ended. The following teams have won their battles:"
+msg_war_siege_battle_session_ended_without_battles: "&bThe current battle session has ended. There were no battles."
 msg_war_siege_battle_session_ended_attacker_result: "%s - Attackers (+%d)"
 msg_war_siege_battle_session_ended_defender_result: "%s - Defenders (-%d)"
 msg_war_siege_battle_session_ended_draw_result: "%s - Draw (0)"
-msg_war_siege_battle_session_break_cannot_get_siege_points: "&cNo siege points can be gained until the next battle session starts. "
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts."
+

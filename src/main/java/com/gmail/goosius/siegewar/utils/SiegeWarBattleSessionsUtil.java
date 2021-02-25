@@ -78,7 +78,7 @@ public class SiegeWarBattleSessionsUtil {
 			for(String startTime: SiegeWarSettings.getWarSiegeBattleSessionsStartTimesUtc()) {
 				if(startTime.equals(currentTimeAsString)) {
 					//Start battle session
-					battleSession.setActive(false);
+					battleSession.setActive(true);
 					battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * 60000));
 					//Send global message to let the server know that "it is on"
 					Messaging.sendGlobalMessage(Translation.of("msg_war_siege_battle_session_started"));
@@ -93,27 +93,34 @@ public class SiegeWarBattleSessionsUtil {
 	 */
 	private static void sendBattleSessionEndedMessage(Map<Siege, Integer> battleResults) {
 		List<String> lines = new ArrayList<>();
-		lines.add(Translation.of("msg_war_siege_battle_session_ended"));
 
-		String resultLine;
-		for(Map.Entry<Siege, Integer> battleResultEntry: battleResults.entrySet()) {
-			if(battleResultEntry.getValue() > 0) {
-				resultLine =
-						Translation.of("msg_war_siege_battle_session_ended_attacker_result",
-								battleResultEntry.getKey().getDefendingTown().getName(),
-								Math.abs(battleResultEntry.getValue()));
-			} else if (battleResultEntry.getValue() < 0) {
-				resultLine =
-						Translation.of("msg_war_siege_battle_session_ended_defender_result",
-								battleResultEntry.getKey().getDefendingTown().getName(),
-								Math.abs(battleResultEntry.getValue()));
-			} else {
-				resultLine =
-						Translation.of("msg_war_siege_battle_session_ended_draw_result",
-								battleResultEntry.getKey().getDefendingTown().getName());
+		//Compile message
+		if(battleResults.size() == 0) {
+			lines.add(Translation.of("msg_war_siege_battle_session_ended_without_battles"));
+		} else {
+			lines.add(Translation.of("msg_war_siege_battle_session_ended_with_battles"));
+
+			String resultLine;
+			for (Map.Entry<Siege, Integer> battleResultEntry : battleResults.entrySet()) {
+				if (battleResultEntry.getValue() > 0) {
+					resultLine =
+							Translation.of("msg_war_siege_battle_session_ended_attacker_result",
+									battleResultEntry.getKey().getDefendingTown().getName(),
+									Math.abs(battleResultEntry.getValue()));
+				} else if (battleResultEntry.getValue() < 0) {
+					resultLine =
+							Translation.of("msg_war_siege_battle_session_ended_defender_result",
+									battleResultEntry.getKey().getDefendingTown().getName(),
+									Math.abs(battleResultEntry.getValue()));
+				} else {
+					resultLine =
+							Translation.of("msg_war_siege_battle_session_ended_draw_result",
+									battleResultEntry.getKey().getDefendingTown().getName());
+				}
+				lines.add(resultLine);
 			}
-			lines.add(resultLine);
 		}
+		//Send message
 		TownyMessaging.sendGlobalMessage(lines);
 	}
 }
