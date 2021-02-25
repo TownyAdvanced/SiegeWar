@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.metadata;
 
-import com.palmergames.bukkit.towny.object.Resident;
 import org.jetbrains.annotations.Nullable;
 
 import com.gmail.goosius.siegewar.SiegeWar;
@@ -10,9 +9,6 @@ import com.palmergames.bukkit.towny.object.metadata.DecimalDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 
@@ -37,10 +33,6 @@ public class SiegeMetaDataController {
 	private static LongDataField startTime = new LongDataField("siegewar_startTime", 0l);
 	private static LongDataField endTime = new LongDataField("siegewar_endTime", 0l);
 	private static LongDataField actualEndTime = new LongDataField("siegewar_actualEndTime", 0l);
-	private static IntegerDataField attackerBattleWins = new IntegerDataField("siegewar_attackerBattleWins", 0);
-	private static IntegerDataField defenderBattleWins = new IntegerDataField("siegewar_defenderBattleWins", 0);
-	private static StringDataField attackerBannerControlSiegeHistory = new StringDataField("siegewar_attackerBannerControlSiegeHistory", "");
-	private static StringDataField defenderBannerControlSiegeHistory = new StringDataField("siegewar_defenderBannerControlSiegeHistory", "");
 
 	public SiegeMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
@@ -144,36 +136,6 @@ public class SiegeMetaDataController {
 			MetaDataUtil.setString(town, sdf, status);
 		else
 			town.addMetaData(new StringDataField("siegewar_status", status));
-	}
-
-	public static void setAttackerBattleWins(Town town, int num) {
-		IntegerDataField idf = (IntegerDataField) attackerBattleWins.clone();
-		if (town.hasMeta(idf.getKey()))
-			MetaDataUtil.setInt(town, idf, num);
-		else
-			town.addMetaData(new IntegerDataField("siegewar_attackerBattleWins", num));
-	}
-
-	public static int getAttackerBattleWins(Town town) {
-		IntegerDataField idf = (IntegerDataField) attackerBattleWins.clone();
-		if (town.hasMeta(idf.getKey()))
-			return MetaDataUtil.getInt(town, idf);
-		return 0;
-	}
-
-	public static void setDefenderBattleWins(Town town, int num) {
-		IntegerDataField idf = (IntegerDataField) defenderBattleWins.clone();
-		if (town.hasMeta(idf.getKey()))
-			MetaDataUtil.setInt(town, idf, num);
-		else
-			town.addMetaData(new IntegerDataField("siegewar_defenderBattleWins", num));
-	}
-
-	public static int getDefenderBattleWins(Town town) {
-		IntegerDataField idf = (IntegerDataField) defenderBattleWins.clone();
-		if (town.hasMeta(idf.getKey()))
-			return MetaDataUtil.getInt(town, idf);
-		return 0;
 	}
 
 	public static double getWarChestAmount(Town town) {
@@ -282,13 +244,6 @@ public class SiegeMetaDataController {
 		sdf = (StringDataField) siegeStatus.clone();
 		if (town.hasMeta(sdf.getKey()))
 			town.removeMetaData(sdf);
-		
-		IntegerDataField idf = (IntegerDataField) attackerBattleWins.clone();
-		if (town.hasMeta(idf.getKey()))
-			town.removeMetaData(idf);
-		idf = (IntegerDataField) defenderBattleWins.clone();
-		if (town.hasMeta(idf.getKey()))
-			town.removeMetaData(idf);
 
 		DecimalDataField ddf = (DecimalDataField) siegeWarChestAmount.clone();
 		if (town.hasMeta(ddf.getKey()))
@@ -310,26 +265,5 @@ public class SiegeMetaDataController {
 		ldf = (LongDataField) actualEndTime.clone();
 		if (town.hasMeta(ldf.getKey()))
 			town.removeMetaData(ldf);
-	}
-
-	public static Map<String, Integer> getAttackerBannerControlSiegeHistory(Town town) {
-		StringDataField sdf = (StringDataField) attackerBannerControlSiegeHistory.clone();
-
-		String dataAsString = null;
-		if (town.hasMeta(sdf.getKey()))
-			dataAsString = MetaDataUtil.getString(town, sdf);
-
-		if(dataAsString == null) {
-			return new HashMap<>();
-		} else {
-			Map<String, Integer> residentUuidToTallyMap = new HashMap<>();
-			String[] entries = dataAsString.split(",");
-			String[] residentAndPoints;
-			for(String entry: entries) {
-				residentAndPoints = entry.split(":");
-				residentUuidToTallyMap.put(residentAndPoints[0], Integer.parseInt(residentAndPoints[1]));
-			}
-			return residentUuidToTallyMap;
-		}
 	}
 }

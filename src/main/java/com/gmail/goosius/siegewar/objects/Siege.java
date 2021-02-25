@@ -48,10 +48,8 @@ public class Siege {
 	private boolean attackerHasLowestPopulation;
 	private double siegePointModifierForSideWithLowestPopulation;
 	private int cannonSessionRemainingShortTicks;  //Short ticks remaining until standard cannon protections are restored
-	private Set<Resident> attackerBattleContributionHistory;   //Attackers who helped at this battle
-	private Set<Resident> defenderBattleContributionHistory;   //Defenders who helped at this battle
-	private Map<Resident, Integer> attackerSiegeContributionHistory;  //Attackers who helped during the siege
-	private Map<Resident, Integer> defenderSiegeContributionHistory;  //Defenders who helped during the siege
+	private int attackerBattlePoints;
+	private int defenderBattlePoints;
 
 	public Siege(String name) {
         this.name = name;
@@ -66,10 +64,8 @@ public class Siege {
 		attackerHasLowestPopulation = false;
 		siegePointModifierForSideWithLowestPopulation = 0;  //0 is the special starting value
 		cannonSessionRemainingShortTicks = 0;
-		attackerBattleContributionHistory = new HashSet<>();
-		defenderBattleContributionHistory = new HashSet<>();
-		attackerSiegeContributionHistory = new HashMap<>();
-		defenderSiegeContributionHistory = new HashMap<>();
+		attackerBattlePoints = 0;
+		defenderBattlePoints = 0;
     }
 
 	public Nation getAttackingNation() {
@@ -205,14 +201,6 @@ public class Siege {
 		return new ArrayList<>(bannerControllingResidents);
 	}
 
-	public Map<Resident,Integer> getAttackerSiegeContributionHistory() {
-		return new HashMap<>(attackerSiegeContributionHistory);
-	}
-
-	public void setAttackerSiegeContributionHistory(Map<Resident,Integer> map) {
-		this.attackerSiegeContributionHistory = map;
-	}
-
 	public void addBannerControllingResident(Resident resident) {
 		bannerControllingResidents.add(resident);
 	}
@@ -307,71 +295,19 @@ public class Siege {
 		cannonSessionRemainingShortTicks--;
 	}
 
-	public int getAttackerBattleWins() {
-		return attackerBattleWins;
+	public int getAttackerBattlePoints() {
+		return attackerBattlePoints;
 	}
 
-	public void setAttackerBattleWins(int attackerBattleWins) {
-		this.attackerBattleWins = attackerBattleWins;
+	public void setAttackerBattlePoints(int attackerBattlePoints) {
+		this.attackerBattlePoints = attackerBattlePoints;
 	}
 
-	public int getDefenderBattleWins() {
-		return defenderBattleWins;
+	public int getDefenderBattlePoints() {
+		return defenderBattlePoints;
 	}
 
-	public void setDefenderBattleWins(int defenderBattleWins) {
-		this.defenderBattleWins = defenderBattleWins;
+	public void setDefenderBattlePoints(int defenderBattlePoints) {
+		this.defenderBattlePoints = defenderBattlePoints;
 	}
-
-	public Map<Resident, Integer> getDefenderSiegeContributionHistory() {
-		return new HashMap<>(defenderSiegeContributionHistory);
-	}
-
-	public void setDefenderSiegeContributionHistory(Map<Resident,Integer> map) {
-		this.defenderSiegeContributionHistory = map;
-	}
-
-
-	public void addContributionToDefenderBannerControlSiegeHistory(Resident resident) {
-		if(defenderSiegeContributionHistory.containsKey(resident)) {
-			int updatedValue = defenderSiegeContributionHistory.get(resident) + 1;
-			defenderSiegeContributionHistory.put(resident, updatedValue);
-		} else {
-			defenderSiegeContributionHistory.put(resident, 1);
-		}
-	}
-
-	public void addContributionToAttackerBannerControlSiegeHistory(Resident resident) {
-		if(attackerSiegeContributionHistory.containsKey(resident)) {
-			int updatedValue = attackerSiegeContributionHistory.get(resident) + 1;
-			attackerSiegeContributionHistory.put(resident, updatedValue);
-		} else {
-			attackerSiegeContributionHistory.put(resident, 1);
-		}
-	}
-
-	public Set<Resident> getAttackerBattleContributionHistory() {
-		return attackerBattleContributionHistory;
-	}
-
-	public void setAttackerBattleContributionHistory(Set<Resident> attackerBattleContributionHistory) {
-		this.attackerBattleContributionHistory = attackerBattleContributionHistory;
-	}
-
-	public void clearAttackerBannerControlBattleHistory() {
-		attackerBattleContributionHistory.clear();
-	}
-
-	public Set<Resident> getDefenderBattleContributionHistory() {
-		return defenderBattleContributionHistory;
-	}
-
-	public void setDefenderBattleContributionHistory(Set<Resident> defenderBattleContributionHistory) {
-		this.defenderBattleContributionHistory = defenderBattleContributionHistory;
-	}
-
-	public void clearDefenderBannerControlBattleHistory() {
-		defenderBattleContributionHistory.clear();
-	}
-
 }

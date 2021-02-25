@@ -76,8 +76,6 @@ public class SiegeController {
 			+ "!" + siege.getFlagLocation().getY()
 			+ "!" + siege.getFlagLocation().getZ());
 		SiegeMetaDataController.setStatus(town, siege.getStatus().toString());
-		SiegeMetaDataController.setAttackerBattleWins(town, siege.getAttackerBattleWins());
-		SiegeMetaDataController.setDefenderBattleWins(town, siege.getDefenderBattleWins());
 		SiegeMetaDataController.setWarChestAmount(town, siege.getWarChestAmount());
 		SiegeMetaDataController.setTownPlundered(town, siege.getTownPlundered());
 		SiegeMetaDataController.setTownInvaded(town, siege.getTownInvaded());
@@ -164,28 +162,6 @@ public class SiegeController {
 		siege.setScheduledEndTime(SiegeMetaDataController.getEndTime(town));
 
 		siege.setActualEndTime(SiegeMetaDataController.getActualEndTime(town));
-
-		siege.setAttackerBattleWins(SiegeMetaDataController.getAttackerBattleWins(town));
-		siege.setDefenderBattleWins(SiegeMetaDataController.getDefenderBattleWins(town));
-
-		Map<String, Integer> uuidBasedSiegeHistoryMap = SiegeMetaDataController.getAttackerBannerControlSiegeHistory(town);
-		Map<Resident, Integer> siegeHistoryMap = new HashMap<>();
-		Resident resident;
-		for(Map.Entry<String, Integer> siegeHistoryEntry: uuidBasedSiegeHistoryMap.entrySet()) {
-			resident = TownyUniverse.getInstance().getResident(UUID.fromString(siegeHistoryEntry.getKey()));
-			if(resident != null)
-				siegeHistoryMap.put(resident, siegeHistoryEntry.getValue());
-		}
-		siege.setAttackerSiegeContributionHistory(siegeHistoryMap);
-
-
-
-
-			nation = TownyUniverse.getInstance().getDataSource().getNation(UUID.fromString(SiegeMetaDataController.getNationUUID(town)));
-		} catch (NotRegisteredException ignored) {}
-
-		siege.setAttackerBannerControlSiegeHistory();
-		siege.setDefenderBannerControlSiegeHistory(SiegeMetaDataController.getDefenderBannerControlSiegeHistory(town));
 
 		return true;
 	}
