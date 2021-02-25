@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gmail.goosius.siegewar.objects.BattleSession;
-import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
-import com.palmergames.bukkit.towny.utils.MoneyUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
@@ -312,10 +310,13 @@ public class SiegeWarTownEventListener implements Listener {
 	                    String siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
 	                    out.add(siegeStatus);
 
-						// > Attacker: Land of Empire (Nation) {+30}
+						// > Attacker: Land of Empire (Nation)
+						out.add(Translation.of("status_town_siege_status_besieger", siege.getAttackingNation().getFormattedName()));
+
+						// > Points: +530
 						int pointsInt = siege.getSiegePoints();
 						String pointsString = pointsInt > 0 ? "+" + pointsInt : "" + pointsInt;
-						out.add(Translation.of("status_town_siege_status_besieger", siege.getAttackingNation().getFormattedName(), pointsString));
+						out.add(Translation.of("status_town_siege_status_points", pointsString));
 
 						// > Banner XYZ: {2223,82,9877}
 	                    out.add(
@@ -333,17 +334,11 @@ public class SiegeWarTownEventListener implements Listener {
 						String warChest = TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount());
 						out.add(Translation.of("status_town_siege_status_warchest", warChest));
 
-						if(siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0) {
+						if(siege.getAttackerBattleScore() > 0 || siege.getDefenderBattleScore() > 0) {
 
 							//Battle:
 							String battle = Translation.of("status_town_siege_battle");
 							out.add(battle);
-
-							// > Points: +90 / -220
-							out.add(Translation.of("status_town_siege_battle_points", siege.getAttackerBattlePoints(), Math.abs(siege.getDefenderBattlePoints())));
-
-							// > Time Remaining: 22 minutes
-							out.add(Translation.of("status_town_siege_battle_time_remaining", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
 
 							// > Banner Control: Attackers [4] Killbot401x, NerfeyMcNerferson, WarCriminal80372
 							if (siege.getBannerControllingSide() == SiegeSide.NOBODY) {
@@ -357,7 +352,14 @@ public class SiegeWarTownEventListener implements Listener {
 									bannerControllingResidents[35] = Translation.of("status_town_reslist_overlength");
 								}
 								out.addAll(ChatTools.listArr(bannerControllingResidents, Translation.of("status_town_banner_control", siege.getBannerControllingSide().getFormattedName(), siege.getBannerControllingResidents().size())));
-							}						}
+							}
+
+							// > Score: +90 / -220
+							out.add(Translation.of("status_town_siege_battle_score", siege.getAttackerBattleScore(), Math.abs(siege.getDefenderBattleScore())));
+
+							// > Time Remaining: 22 minutes
+							out.add(Translation.of("status_town_siege_battle_time_remaining", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
+						}
 	                    break;
 
 	                    

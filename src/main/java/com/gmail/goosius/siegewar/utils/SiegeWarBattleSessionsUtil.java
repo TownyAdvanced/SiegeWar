@@ -34,13 +34,13 @@ public class SiegeWarBattleSessionsUtil {
 				for(Siege siege: SiegeController.getSieges()) {
 
 					if (siege.getStatus() == SiegeStatus.IN_PROGRESS
-						&& (siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0)) {
+						&& (siege.getAttackerBattleScore() > 0 || siege.getDefenderBattleScore() > 0)) {
 						//Calculate result
 						int battleResult;
-						if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()) {
-							battleResult = siege.getAttackerBattlePoints();
-						} else if (siege.getAttackerBattlePoints() < siege.getDefenderBattlePoints()) {
-							battleResult = -siege.getDefenderBattlePoints();
+						if (siege.getAttackerBattleScore() > siege.getDefenderBattleScore()) {
+							battleResult = siege.getAttackerBattleScore();
+						} else if (siege.getAttackerBattleScore() < siege.getDefenderBattleScore()) {
+							battleResult = -siege.getDefenderBattleScore();
 						} else {
 							battleResult = 0;
 						}
@@ -52,8 +52,8 @@ public class SiegeWarBattleSessionsUtil {
 						siege.setBannerControllingSide(SiegeSide.NOBODY);
 						siege.clearBannerControllingResidents();
 						siege.clearBannerControlSessions();
-						siege.setAttackerBattlePoints(0);
-						siege.setDefenderBattlePoints(0);
+						siege.setAttackerBattleScore(0);
+						siege.setDefenderBattleScore(0);
 
 						//Apply the result to the siege points
 						siege.adjustSiegePoints(battleResult);

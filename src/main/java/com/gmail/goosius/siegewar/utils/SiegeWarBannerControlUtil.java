@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
@@ -256,20 +255,18 @@ public class SiegeWarBannerControlUtil {
 		if(siege.getStatus() != SiegeStatus.IN_PROGRESS)
 			return;
 
-		//Award battle points
-		int battlePoints;
+		//Award battle score
+		int battleScore;
 		switch(siege.getBannerControllingSide()) {
 			case ATTACKERS:
-				//Adjust battle points
-				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForAttackerOccupation();
-				battlePoints = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(true, battlePoints, siege);
-				siege.adjustAttackerBattlePoints(battlePoints);
+				battleScore = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForAttackerOccupation();
+				battleScore = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(true, battleScore, siege);
+				siege.adjustAttackerBattleScore(battleScore);
 			break;
 			case DEFENDERS:
-				//Adjust battle points
-				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForDefenderOccupation();
-				battlePoints = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(false, battlePoints, siege);
-				siege.adjustDefenderBattlePoints(battlePoints);
+				battleScore = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForDefenderOccupation();
+				battleScore = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(false, battleScore, siege);
+				siege.adjustDefenderBattleScore(battleScore);
 			break;
 			default:
 			return;

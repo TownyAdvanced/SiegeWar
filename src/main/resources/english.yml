@@ -124,7 +124,7 @@ status_town_siege_status_defender_surrender: 'Town Surrender - to %s'
 status_town_siege_status_pending_attacker_abandon: 'Attacker Retreat Pending, in %s'
 status_town_siege_status_pending_defender_surrender: 'Town Surrender Pending, in %s'
 
-status_town_siege_status_besieger: '&2 > Besieger: &a%s {%s}'
+status_town_siege_status_besieger: '&2 > Besieger: &a%s'
 status_town_siege_status_banner_xyz: '&2 > Banner XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > Immunity Timer: &a%s'
 status_town_siege_victory_timer: '&2 > Victory Timer: &a%s'
@@ -278,16 +278,17 @@ msg_beacon_preference_set: "&bBeacon preference set to %s."
 
 #Added in 0.12
 #Town screen
+status_town_siege_status_points: '&2 > Points: &a%s'
 status_town_siege_status_warchest: '&2 > War Chest: &a%s'
 
 #Death points
-msg_siege_war_attacker_death: '&bSiege of %s > Attacker died > %s > Battle points -%d'
-msg_siege_war_defender_death: '&bSiege of %s > Defender died > %s > Battle points +%d'
+msg_siege_war_attacker_death: '&bSiege of %s > Attacker died > %s > Battle score -%d'
+msg_siege_war_defender_death: '&bSiege of %s > Defender died > %s > Battle score +%d'
 
 #Battle sessions
 status_town_siege_battle: '&2Battle'
 status_town_siege_battle_time_remaining: '&2 > Time Remaining: &a%s'
-status_town_siege_battle_points: '&2 > Points: &a+%d &2/ &a-%d'
+status_town_siege_battle_score: '&2 > Score: &a-%d &2/ &a+%d'
 msg_war_siege_battle_session_started: "&bA new battle session has started."
 msg_war_siege_battle_session_ended_with_battles: "&bThe current battle session has ended. The following teams have won their battles:"
 msg_war_siege_battle_session_ended_without_battles: "&bThe current battle session has ended. There were no battles."

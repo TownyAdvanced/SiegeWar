@@ -48,8 +48,8 @@ public class Siege {
 	private boolean attackerHasLowestPopulation;
 	private double siegePointModifierForSideWithLowestPopulation;
 	private int cannonSessionRemainingShortTicks;  //Short ticks remaining until standard cannon protections are restored
-	private int attackerBattlePoints;
-	private int defenderBattlePoints;
+	private int attackerBattleScore;
+	private int defenderBattleScore;
 
 	public Siege(String name) {
         this.name = name;
@@ -64,8 +64,8 @@ public class Siege {
 		attackerHasLowestPopulation = false;
 		siegePointModifierForSideWithLowestPopulation = 0;  //0 is the special starting value
 		cannonSessionRemainingShortTicks = 0;
-		attackerBattlePoints = 0;
-		defenderBattlePoints = 0;
+		attackerBattleScore = 0;
+		defenderBattleScore = 0;
     }
 
 	public Nation getAttackingNation() {
@@ -295,27 +295,27 @@ public class Siege {
 		cannonSessionRemainingShortTicks--;
 	}
 
-	public int getAttackerBattlePoints() {
-		return attackerBattlePoints;
+	public int getAttackerBattleScore() {
+		return attackerBattleScore;
 	}
 
-	public void setAttackerBattlePoints(int attackerBattlePoints) {
-		this.attackerBattlePoints = attackerBattlePoints;
+	public void setAttackerBattleScore(int attackerBattleScore) {
+		this.attackerBattleScore = attackerBattleScore;
 	}
 
-	public int getDefenderBattlePoints() {
-		return defenderBattlePoints;
+	public int getDefenderBattleScore() {
+		return defenderBattleScore;
 	}
 
-	public void setDefenderBattlePoints(int defenderBattlePoints) {
-		this.defenderBattlePoints = defenderBattlePoints;
+	public void setDefenderBattleScore(int defenderBattleScore) {
+		this.defenderBattleScore = defenderBattleScore;
 	}
 
-	public void adjustAttackerBattlePoints(int battlePoints) {
-		attackerBattlePoints += battlePoints;
+	public void adjustAttackerBattleScore(int battleScore) {
+		attackerBattleScore += battleScore;
 	}
 
-	public void adjustDefenderBattlePoints(int battlePoints) {
-		defenderBattlePoints += battlePoints;
+	public void adjustDefenderBattleScore(int battleScore) {
+		defenderBattleScore += battleScore;
 	}
 }
