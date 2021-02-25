@@ -92,16 +92,22 @@ public class DynmapTask {
                     markerMap.remove(marker.getMarkerID());
 
                 } else if (marker.getMarkerIcon().getMarkerIconID().equals(PEACEFUL_BANNER_ICON_ID)) {
-                    //Change to battle icon if players are fighting
+                    //Change to battle icon if a battle is in progress
                     if (siege.getStatus() == SiegeStatus.IN_PROGRESS
-                            && (siege.getBannerControllingSide() != SiegeSide.NOBODY || siege.getBannerControlSessions().size() > 0)) {
+                        && (siege.getAttackerBattleScore() > 0
+                            || siege.getDefenderBattleScore() > 0
+                            || siege.getBannerControllingSide() != SiegeSide.NOBODY
+                            || siege.getBannerControlSessions().size() > 0)) {
                         marker.setMarkerIcon(markerapi.getMarkerIcon(BATTLE_BANNER_ICON_ID));
                     }
 
                 } else if (marker.getMarkerIcon().getMarkerIconID().equals(BATTLE_BANNER_ICON_ID)) {
                     //Change to peaceful icon if nobody is fighting
                     if (siege.getStatus() != SiegeStatus.IN_PROGRESS
-                            || (siege.getBannerControllingSide() == SiegeSide.NOBODY && siege.getBannerControlSessions().size() == 0)) {
+                            || (siege.getAttackerBattleScore() == 0
+                                && siege.getDefenderBattleScore() == 0
+                                && siege.getBannerControllingSide() == SiegeSide.NOBODY
+                                && siege.getBannerControlSessions().size() == 0)) {
                         marker.setMarkerIcon(markerapi.getMarkerIcon(PEACEFUL_BANNER_ICON_ID));
                     }
                 }
@@ -130,13 +136,12 @@ public class DynmapTask {
                     lines.add(Translation.of("dynmap_siege_status", siege.getStatus().getName()));
                     lines.add(Translation.of("dynmap_siege_points", siege.getSiegePoints()));
                     lines.add(Translation.of("dynmap_siege_time_left", siege.getTimeRemaining()));
-                    lines.add(Translation.of("dynmap_siege_banner_control", siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase()));
-                    lines.add(Translation.of("dynmap_siege_battle_score", siege.getDefenderBattleScore(), siege.getAttackerBattleScore()));
-                    lines.add(Translation.of("dynmap_siege_battle_time_left", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
-
-
                     if (TownyEconomyHandler.isActive())
                         lines.add(Translation.of("dynmap_siege_war_chest", TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount())));
+                    lines.add(Translation.of("dynmap_siege_banner_control", siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase()));
+                    lines.add(Translation.of("dynmap_siege_battle_score", siege.getFormattedDefenderBattleScore(), siege.getFormattedAttackerBattleScore()));
+                    lines.add(Translation.of("dynmap_siege_battle_time_left", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
+
                     String desc = "<b>" + name + "</b><hr>" + StringMgmt.join(lines, "<br>");
                     Location siegeLoc = siege.getFlagLocation();
                     double siegeX = siegeLoc.getX();

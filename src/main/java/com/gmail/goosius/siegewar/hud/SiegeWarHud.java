@@ -25,8 +25,8 @@ public class SiegeWarHud {
         board.getTeam("points").setSuffix(siege.getSiegePoints().toString());
         board.getTeam("timeRemaining").setSuffix(siege.getTimeRemaining());
         board.getTeam("bannerControl").setSuffix(siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase());
-        board.getTeam("batAttackerScore").setSuffix(Integer.toString(siege.getAttackerBattleScore()));
-        board.getTeam("batDefenderScore").setSuffix(Integer.toString(siege.getDefenderBattleScore()));
+        board.getTeam("batAttackerScore").setSuffix(siege.getFormattedAttackerBattleScore());
+        board.getTeam("batDefenderScore").setSuffix(siege.getFormattedDefenderBattleScore());
         board.getTeam("batTimeRemaining").setSuffix(BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds());
     }
 
@@ -49,7 +49,7 @@ public class SiegeWarHud {
             defenders_entry = Colors.LightGray + Translation.of("hud_defenders"),
             points_entry = Colors.LightGray + Translation.of("hud_points"),
             timeRemaining_entry = Colors.LightGray + Translation.of("hud_time_remaining"),
-            bannerControl_entry = Colors.LightGray + Translation.of("hud_bannerControl"),
+            bannerControl_entry = Colors.LightGray + Translation.of("hud_banner_control"),
             battleAttackerScore_entry = Colors.LightGray + Translation.of("hud_battle_attacker_score"),
             battleDefenderScore_entry = Colors.LightGray + Translation.of("hud_battle_defender_score"),
             battleTimeRemaining_entry = Colors.LightGray + Translation.of("hud_battle_time_remaining");
@@ -59,8 +59,8 @@ public class SiegeWarHud {
         points.addEntry(points_entry);
         bannerControl.addEntry(bannerControl_entry);
         timeRemaining.addEntry(timeRemaining_entry);
-        battleAttackerScore.addEntry(battleAttackerScore_entry);
         battleDefenderScore.addEntry(battleDefenderScore_entry);
+        battleAttackerScore.addEntry(battleAttackerScore_entry);
         battleTimeRemaining.addEntry(battleTimeRemaining_entry);
 
         objective.getScore(attackers_entry).setScore(8);

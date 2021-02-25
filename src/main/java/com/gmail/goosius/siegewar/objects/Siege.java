@@ -303,12 +303,28 @@ public class Siege {
 		this.attackerBattleScore = attackerBattleScore;
 	}
 
+	public String getFormattedAttackerBattleScore() {
+		if(attackerBattleScore == 0) {
+			return "0";
+		} else {
+			return "+" + attackerBattleScore;
+		}
+	}
+
 	public int getDefenderBattleScore() {
 		return defenderBattleScore;
 	}
 
 	public void setDefenderBattleScore(int defenderBattleScore) {
 		this.defenderBattleScore = defenderBattleScore;
+	}
+
+	public String getFormattedDefenderBattleScore() {
+		if(defenderBattleScore == 0) {
+			return "0";
+		} else {
+			return "-" + defenderBattleScore;
+		}
 	}
 
 	public void adjustAttackerBattleScore(int battleScore) {

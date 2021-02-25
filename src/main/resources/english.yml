@@ -287,20 +287,20 @@ msg_siege_war_defender_death: '&bSiege of %s > Defender died > %s > Battle score
 #Battle sessions
 status_town_siege_battle: '&2Battle'
 status_town_siege_battle_time_remaining: '&2 > Time Remaining: &a%s'
-status_town_siege_battle_score: '&2 > Score: &a-%d &2/ &a+%d'
+status_town_siege_battle_score: '&2 > Score: &a%s &2/ &a%s'
 msg_war_siege_battle_session_started: "&bA new battle session has started."
 msg_war_siege_battle_session_ended_with_battles: "&bThe current battle session has ended. The following teams have won their battles:"
 msg_war_siege_battle_session_ended_without_battles: "&bThe current battle session has ended. There were no battles."
-msg_war_siege_battle_session_ended_attacker_result: "%s - Attackers (+%d)"
-msg_war_siege_battle_session_ended_defender_result: "%s - Defenders (-%d)"
+msg_war_siege_battle_session_ended_attacker_result: "%s - Attackers (%s)"
+msg_war_siege_battle_session_ended_defender_result: "%s - Defenders (%s)"
 msg_war_siege_battle_session_ended_draw_result: "%s - Draw (0)"
 msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts. The next battle session will start in %s."
 
 #Scoreboard
-hud_battle_attacker_score: 'Battle Attacker Score: '
-hud_battle_defender_score: 'Battle Defender Score: '
-hud_battle_time_remaining: 'Battle Time Remaining: '
+hud_battle_attacker_score: 'BAT ATK Score: '
+hud_battle_defender_score: 'BAT DEF Score: '
+hud_battle_time_remaining: 'BAT Time Left: '
 
 #Dynmap
-dynmap_siege_battle_score: 'Battle Score: -%d / +%d'
+dynmap_siege_battle_score: 'Battle Score: %s / %s'
 dynmap_siege_battle_time_left: 'Battle Time Left: %s'
