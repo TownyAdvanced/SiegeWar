@@ -82,7 +82,7 @@ public class DynmapTask {
      * Also change any icons if required (between peaceful icon & battle icon)
      */
     private static void displaySieges() {
-        for (Marker marker : markerMap.values()) {
+        for (Marker marker : new ArrayList<Marker>(markerMap.values())) {
             try {
                 Siege siege = SiegeController.getSiege(marker.getLabel().replaceAll(".+: ", "").replaceAll(" ", "#"));
 

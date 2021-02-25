@@ -6,8 +6,8 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 
@@ -140,10 +140,7 @@ public class CosmeticUtil {
 		if (!resident.hasTown())
 			return SiegeSide.NOBODY;
 		
-		Town town = null;
-		try {
-			town = resident.getTown();
-		} catch (NotRegisteredException ignored) {}
+		Town town = TownyAPI.getInstance().getResidentTownOrNull(resident);
 		
 		if (town.isAlliedWith(siege.getDefendingTown()) && town.isAlliedWith(siege.getAttackingNation().getCapital()))
 			return SiegeSide.NOBODY;

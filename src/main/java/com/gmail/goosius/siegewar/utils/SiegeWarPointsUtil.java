@@ -6,7 +6,6 @@ import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.TownyObject;
@@ -114,10 +113,8 @@ public class SiegeWarPointsUtil {
 
 		//Calculate defender population
 		if(siege.getDefendingTown().hasNation()) {
-			try {
-				nation = siege.getDefendingTown().getNation();
-			} catch (NotRegisteredException e) {
-			}
+			nation = TownyAPI.getInstance().getTownNationOrNull(siege.getDefendingTown());
+			
 			if(nationSidePopulationsCache != null && nationSidePopulationsCache.containsKey(nation)) {
 				defenderPopulation = nationSidePopulationsCache.get(nation);
 			} else {

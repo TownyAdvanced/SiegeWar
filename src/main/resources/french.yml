@@ -105,7 +105,6 @@ msg_err_siege_war_cannot_surrender_not_your_town: "&cVous ne pouvez pas vous ren
 msg_err_siege_war_cannot_surrender_siege_finished: "&cVous ne pouvez pas vous rendre parce que le siège est terminé."
 #Block change
 msg_err_siege_war_cannot_destroy_siege_banner: "&cPendant que le siège est en cours, vous ne pouvez pas détruire la bannière de siège ou le bloc auquel elle est attachée."
-msg_err_siege_war_nation_zone_this_area_protected_but_besieged: "&cCette partie de %s est sous la protection de %s et ne peut pas non plus être modifiée tant que la ville voisine est assiégée."
 msg_err_siege_war_banner_support_block_not_stable: "&cVous ne pouvez pas placer la bannière sur un sol instable, par ex. sable ou gravier."
 # Spawn
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: "&cSeuls les habitants de la ville peuvent spawn dans une ville assiégée ou une zone de siège (sauf si la ville cible est paisible)."

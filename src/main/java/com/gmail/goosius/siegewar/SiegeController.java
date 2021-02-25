@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
@@ -19,6 +20,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -308,16 +310,11 @@ public class SiegeController {
 	 * @return The list of towns that are under siege in that nation.
 	 */
 	public static List<Town> getSiegedTowns(Nation nation) {
-		List<Town> siegedTowns = new ArrayList<Town>();
-		for (Town town : getSiegedTowns()) {
-			if (!town.hasNation() || !getSiege(town).getStatus().isActive())
-				continue;
-			try {
-				if (town.getNation().equals(nation));
-					siegedTowns.add(town);
-			} catch (NotRegisteredException ignored) {}
-			
-		}
-		return siegedTowns;
+		return getSiegedTowns().stream()
+				.filter(t -> t.hasNation())
+				.filter(t -> getSiege(t).getStatus().isActive())
+				.filter(t -> TownyAPI.getInstance().getTownNationOrNull(t).equals(nation))
+				.collect(Collectors.toList());
+		
 	}
 }

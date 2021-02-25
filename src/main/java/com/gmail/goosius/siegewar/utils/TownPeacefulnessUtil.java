@@ -11,7 +11,6 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -228,10 +227,7 @@ public class TownPeacefulnessUtil {
 				return false;
 			} else {
 				//Remove town from nation
-				Nation previousNation = null;
-				try {
-					previousNation = peacefulTown.getNation();
-				} catch (NotRegisteredException e) {}
+				Nation previousNation = TownyAPI.getInstance().getTownNationOrNull(peacefulTown);
 				TownyMessaging.sendPrefixedNationMessage(previousNation, Translation.of("msg_war_siege_peaceful_town_left_nation", peacefulTown.getFormattedName(), previousNation.getFormattedName()));
 				peacefulTown.removeNation();
 				return true;
@@ -276,22 +272,13 @@ public class TownPeacefulnessUtil {
 	public static boolean canPeacefulTownJoinNation(Town peacefulTown, Nation nation)  {
 		Set<Town> guardianTowns = getValidGuardianTowns(peacefulTown);
 
-		if(guardianTowns.size() == 0) {
+		if(guardianTowns.size() == 0)
 			//If there are no guardian towns nearby, town can choose
 			return true;
-		} else {
+		else
 			//If 1 or more guardian towns are NOT under siege - Town can join any of those
-			List<Town> guardianTownsNotUnderSiege = getGuardianTownsNotUnderSiege(guardianTowns);
-			for(Town guardianTownNotUnderSiege: guardianTownsNotUnderSiege) {
-				try {
-					if(nation == guardianTownNotUnderSiege.getNation())
-						return true;
-				} catch (NotRegisteredException e) {}
-			}
-
-			//There were guardian towns, but all were under siege - Town cannot join any nation
-			return false;
-		}
+			return getGuardianTownsNotUnderSiege(guardianTowns).stream()
+				.anyMatch(t -> nation.equals(TownyAPI.getInstance().getTownNationOrNull(t)));
 	}
 
 	public static boolean canPeacefulTownLeaveNation(Town peacefulTown)  {
@@ -303,11 +290,9 @@ public class TownPeacefulnessUtil {
 		} else {
 			//If there is just 1 gt not under siege, and town is already in its nation, town cannot leave
 			List<Town> guardianTownsNotUnderSiege = getGuardianTownsNotUnderSiege(guardianTowns);
-			try {
-				if(guardianTownsNotUnderSiege.size() == 1 && guardianTownsNotUnderSiege.get(0).getNation() == peacefulTown.getNation())
-					return false;
-			} catch (NotRegisteredException e) {
-			}
+			if(guardianTownsNotUnderSiege.size() == 1 
+				&& TownyAPI.getInstance().getTownNationOrNull(guardianTownsNotUnderSiege.get(0)).equals(TownyAPI.getInstance().getTownNationOrNull(peacefulTown)))
+				return false;
 
 			//Otherwise town can leave
 			return true;
