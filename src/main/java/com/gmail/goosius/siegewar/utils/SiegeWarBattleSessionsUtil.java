@@ -8,7 +8,6 @@ import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
-import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.util.TimeMgmt;
 
 import java.time.*;
@@ -18,7 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 public class SiegeWarBattleSessionsUtil {
-	
+
+	//Schedule first battle session
+	private static long scheduledStartTimeOfNextBattleSession = System.currentTimeMillis() + getTimeUntilNextBattleSessionMillis();
+
 	public static void evaluateBattleSessions() {
 		BattleSession battleSession = BattleSession.getBattleSession();
 
@@ -63,6 +65,9 @@ public class SiegeWarBattleSessionsUtil {
 
 				//Send message
 				sendBattleSessionEndedMessage(battleResults);
+
+				//Schedule next session
+				scheduledStartTimeOfNextBattleSession = System.currentTimeMillis() + getTimeUntilNextBattleSessionMillis();
 			}
 
 		} else {
@@ -70,7 +75,7 @@ public class SiegeWarBattleSessionsUtil {
 			 * Battle session is inactive. Check to see if it starts
 			 * If the time remaining is less than a minute, start it
 			 */
-			if (getTimeUntilNextBattleSessionMillis() < 60000) {
+			if (System.currentTimeMillis() > scheduledStartTimeOfNextBattleSession) {
 				//Start battle session
 				battleSession.setActive(true);
 				battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * 60000));
@@ -85,13 +90,14 @@ public class SiegeWarBattleSessionsUtil {
 	 * with a brief summary of who won any battles which were fought
 	 */
 	private static void sendBattleSessionEndedMessage(Map<Siege, Integer> battleResults) {
+		String header;
 		List<String> lines = new ArrayList<>();
 
 		//Compile message
 		if(battleResults.size() == 0) {
-			lines.add(Translation.of("msg_war_siege_battle_session_ended_without_battles"));
+			header = Translation.of("msg_war_siege_battle_session_ended_without_battles");
 		} else {
-			lines.add(Translation.of("msg_war_siege_battle_session_ended_with_battles"));
+			header = Translation.of("msg_war_siege_battle_session_ended_with_battles");
 
 			String resultLine;
 			for (Map.Entry<Siege, Integer> battleResultEntry : battleResults.entrySet()) {
@@ -114,14 +120,19 @@ public class SiegeWarBattleSessionsUtil {
 			}
 		}
 		//Send message
-		TownyMessaging.sendGlobalMessage(lines);
+		Messaging.sendGlobalMessage(header, lines);
 	}
 
 	public static String getFormattedTimeUntilNextBattleSessionStarts() {
-		return TimeMgmt.getFormattedTimeValue(getTimeUntilNextBattleSessionMillis());
+		long timeRemaining = scheduledStartTimeOfNextBattleSession - System.currentTimeMillis();
+		if(timeRemaining > 0) {
+			return TimeMgmt.getFormattedTimeValue(timeRemaining);
+		} else {
+			return "0";
+		}
 	}
 
-	public static long getTimeUntilNextBattleSessionMillis() {
+	private static long getTimeUntilNextBattleSessionMillis() {
 		LocalDateTime currentDateTime = LocalDateTime.now(Clock.systemUTC());
 		Duration closestDuration = null;
 		Duration candidateDuration;

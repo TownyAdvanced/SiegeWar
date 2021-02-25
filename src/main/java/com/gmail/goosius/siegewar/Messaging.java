@@ -6,6 +6,9 @@ import com.palmergames.bukkit.util.Colors;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import com.gmail.goosius.siegewar.settings.Translation;
+import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class Messaging {
 
@@ -24,10 +27,25 @@ public class Messaging {
 	}
 	
 	public static void sendGlobalMessage(String message) {
-        System.out.println(prefix + message);
-        Bukkit.getOnlinePlayers().stream()
-        	.filter(p -> p != null)
-        	.filter(p -> TownyAPI.getInstance().isTownyWorld(p.getLocation().getWorld()))
-        	.forEach(p -> sendMsg(p, prefix + message));
+		System.out.println(prefix + message);
+		Bukkit.getOnlinePlayers().stream()
+				.filter(p -> p != null)
+				.filter(p -> TownyAPI.getInstance().isTownyWorld(p.getLocation().getWorld()))
+				.forEach(p -> sendMsg(p, prefix + message));
+	}
+
+	public static void sendGlobalMessage(String header, List<String> lines) {
+		System.out.println(prefix + header);
+		for(String line: lines) {
+			System.out.println(line);
+		}
+		for(Player player: Bukkit.getOnlinePlayers()) {
+			if(player != null && TownyAPI.getInstance().isTownyWorld(player.getLocation().getWorld())) {
+				player.sendMessage(prefix + header);
+				for(String line: lines) {
+					player.sendMessage(line);
+				}
+			}
+		}
 	}
 }

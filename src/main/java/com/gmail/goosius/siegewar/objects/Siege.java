@@ -337,14 +337,13 @@ public class Siege {
 	}
 
 	public String getFormattedBattleTimeRemaining() {
-		long battleSessionTimeRemaining = BattleSession.getBattleSession().getTimeRemainingUntilBattleSessionEnds();
-		if (battleSessionTimeRemaining > 0
+		if (BattleSession.getBattleSession().isActive()
 			&& status == SiegeStatus.IN_PROGRESS
 			&& (getAttackerBattleScore() > 0
 				|| getDefenderBattleScore() > 0
 				|| getBannerControllingSide() != SiegeSide.NOBODY
 				|| getBannerControlSessions().size() > 0)) {
-			return TimeMgmt.getFormattedTimeValue(battleSessionTimeRemaining);
+			return BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds();
 		} else {
 			return Translation.of("msg_na");
 		}

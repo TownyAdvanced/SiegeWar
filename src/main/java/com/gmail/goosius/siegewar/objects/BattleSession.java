@@ -68,6 +68,10 @@ public class BattleSession {
 		scheduledEndTIme = t;
 	}
 
+	public String getFormattedTimeRemainingUntilBattleSessionEnds() {
+		return TimeMgmt.getFormattedTimeValue(getTimeRemainingUntilBattleSessionEnds());
+	}
+
 	public long getTimeRemainingUntilBattleSessionEnds() {
 		long timeLeftMillis = scheduledEndTIme - System.currentTimeMillis();
 		if (timeLeftMillis > 0) {

@@ -334,8 +334,7 @@ public class SiegeWarTownEventListener implements Listener {
 						String warChest = TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount());
 						out.add(Translation.of("status_town_siege_status_warchest", warChest));
 
-						long timeRemainingUntilBattleSessionEnds = BattleSession.getBattleSession().getTimeRemainingUntilBattleSessionEnds();
-						if(timeRemainingUntilBattleSessionEnds > 0
+						if(BattleSession.getBattleSession().isActive()
 							&& (siege.getAttackerBattleScore() > 0
 								|| siege.getDefenderBattleScore() > 0
 								|| siege.getBannerControllingSide() != SiegeSide.NOBODY
@@ -363,7 +362,7 @@ public class SiegeWarTownEventListener implements Listener {
 							out.add(Translation.of("status_town_siege_battle_score", siege.getFormattedDefenderBattleScore(), siege.getFormattedAttackerBattleScore()));
 
 							// > Time Remaining: 22 minutes
-							out.add(Translation.of("status_town_siege_battle_time_remaining",TimeMgmt.getFormattedTimeValue(timeRemainingUntilBattleSessionEnds)));
+							out.add(Translation.of("status_town_siege_battle_time_remaining", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
 						}
 	                    break;
 
