@@ -212,11 +212,9 @@ public class SiegeWarMoneyUtil {
 	 */
 	public static void makePlunderAvailable(Resident soldier, int plunderAmount) {
 		// Makes the plunder available. Player can do "/sw collect" later to claim money.
-		if(soldier != null) {
 			ResidentMetaDataController.addPlunderAmount(soldier, plunderAmount);
 			Messaging.sendMsg(soldier.getPlayer(),
 					Translation.of("msg_siege_war_plunder_available", TownyEconomyHandler.getFormattedBalance(plunderAmount)));
-		}
 	}
 
 	/**
