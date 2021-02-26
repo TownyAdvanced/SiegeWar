@@ -263,6 +263,7 @@ public class SiegeWarBannerControlUtil {
 				battleScore = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForAttackerOccupation();
 				battleScore = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(true, battleScore, siege);
 				siege.adjustAttackerBattleScore(battleScore);
+				siege.registerAttackerBattleContributorsFromBannerControl();
 			break;
 			case DEFENDERS:
 				battleScore = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForDefenderOccupation();

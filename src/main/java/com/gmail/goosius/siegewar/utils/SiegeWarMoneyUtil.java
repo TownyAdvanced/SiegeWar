@@ -212,9 +212,9 @@ public class SiegeWarMoneyUtil {
 	 */
 	public static void makePlunderAvailable(Resident soldier, int plunderAmount) {
 		// Makes the plunder available. Player can do "/sw collect" later to claim money.
-		ResidentMetaDataController.addPlunderAmount(soldier, plunderAmount);
-		Messaging.sendMsg(soldier.getPlayer(),
-				Translation.of("msg_siege_war_plunder_available", TownyEconomyHandler.getFormattedBalance(plunderAmount)));
+			ResidentMetaDataController.addPlunderAmount(soldier, plunderAmount);
+			Messaging.sendMsg(soldier.getPlayer(),
+					Translation.of("msg_siege_war_plunder_available", TownyEconomyHandler.getFormattedBalance(plunderAmount)));
 	}
 
 	/**
@@ -244,56 +244,46 @@ public class SiegeWarMoneyUtil {
 
 	/**
 	 *
-	 * @param totalAmountForSoldiers
-	 * @param town
-	 * @param nation
-	 * @param reason
-	 * @param removeMoneyFromTownBank
+	 * @param totalAmountForSoldiers total amount
+	 * @param town the town which pays
+	 * @param soldierSharesMap the shares of soldiers
+	 * @param reason reason for payment
+	 * @param removeMoneyFromTownBank if true, remove money from town
 	 * @return true if money was paid. False if there were no soldiers
 	 * @throws EconomyException
-	 * @throws TownyException
 	 */
 	public static boolean distributeMoneyAmongSoldiers(double totalAmountForSoldiers,
 													Town town,
-													Nation nation,
+													Map<Resident, Integer> soldierSharesMap,
 													String reason,
 													boolean removeMoneyFromTownBank) throws EconomyException {
+		if(soldierSharesMap.size() == 0)
+			return false;
+
 		//Withdraw money from town if needed
 		if (removeMoneyFromTownBank) {
 			town.getAccount().withdraw(totalAmountForSoldiers, reason);
 		}
 
-		//Identify soldiers who need to be paid
+		//Find out total shares within the army
 		int totalArmyShares = 0;
-		int soldierShare;
-		Map<Resident, Integer> soldierShareMap = new HashMap<>();
-		for(Resident resident: nation.getResidents()) {
-			for (String perm : TownyPerms.getResidentPerms(resident).keySet()) {
-				if (perm.startsWith("towny.nation.siege.pay.grade.")) {
-					soldierShare = Integer.parseInt(perm.replace("towny.nation.siege.pay.grade.", ""));
-					soldierShareMap.put(resident, soldierShare);
-					totalArmyShares += soldierShare;
-					break; //Next resident please
-				}
-			}
+		for(Integer share: soldierSharesMap.values()) {
+			totalArmyShares += share;
 		}
-
-		if(soldierShareMap.size() == 0)
-			return false;
 
 		//Calculate how much 1 share is worth
 		double amountValueOfOneShare = totalAmountForSoldiers / totalArmyShares;
 
 		//Pay each soldier
 		int amountToPaySoldier;
-		for(Map.Entry<Resident,Integer> entry: soldierShareMap.entrySet()) {
-			amountToPaySoldier = (int)((amountValueOfOneShare * entry.getValue())); //Round down to avoid exploits for making extra money
+		for(Map.Entry<Resident,Integer> soldierShareEntry: soldierSharesMap.entrySet()) {
+			amountToPaySoldier = (int)((amountValueOfOneShare * soldierShareEntry.getValue())); //Round down to avoid exploits for making extra money
 			switch(reason.toLowerCase()) {
 				case "plunder":
-					makePlunderAvailable(entry.getKey(), amountToPaySoldier);
+					makePlunderAvailable(soldierShareEntry.getKey(), amountToPaySoldier);
 				break;
 				case "military salary":
-					makeMilitarySalaryAvailable(entry.getKey(), amountToPaySoldier);
+					makeMilitarySalaryAvailable(soldierShareEntry.getKey(), amountToPaySoldier);
 				break;
 				default:
 					throw new RuntimeException("Unknown Income Type");

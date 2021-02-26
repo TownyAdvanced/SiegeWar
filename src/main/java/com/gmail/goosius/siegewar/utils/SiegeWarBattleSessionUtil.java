@@ -49,7 +49,13 @@ public class SiegeWarBattleSessionUtil {
 							battleResult = 0;
 						}
 
-						//Add to results
+						//Apply the result to the siege points
+						siege.adjustSiegePoints(battleResult);
+
+						//Propagate attacker battle contributions to siege history
+						siege.propagateAttackerBattleContributorsToAttackerSiegeContributors();
+
+						//Prepare result for messaging
 						battleResults.put(siege, battleResult);
 
 						//Clear battle related stats from the siege
@@ -58,9 +64,9 @@ public class SiegeWarBattleSessionUtil {
 						siege.clearBannerControlSessions();
 						siege.setAttackerBattleScore(0);
 						siege.setDefenderBattleScore(0);
+						siege.clearAttackerBattleContributors();
 
-						//Apply the result to the siege points
-						siege.adjustSiegePoints(battleResult);
+						//Save siege
 						SiegeController.saveSiege(siege);
 					}
 				}

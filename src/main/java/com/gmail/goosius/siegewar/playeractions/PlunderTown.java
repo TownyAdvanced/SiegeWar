@@ -22,6 +22,9 @@ import com.palmergames.bukkit.towny.utils.MoneyUtil;
 
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * This class is responsible for processing requests to plunder towns
  *
@@ -90,7 +93,7 @@ public class PlunderTown {
 			//Redistribute money
 			if(town.getAccount().canPayFromHoldings(totalPlunderAmount)) {
 				//Town can afford plunder
-				transferPlunderToNation(town, nation, totalPlunderAmount, true);
+				transferPlunderToSiegeAttackers(siege, totalPlunderAmount, true);
 
 				NationMetaDataController.setTotalPlunderGained(nation, NationMetaDataController.getTotalPlunderGained(nation) + (int) totalPlunderAmount);
 				if (town.hasNation()) {
@@ -117,12 +120,12 @@ public class PlunderTown {
 					// Charge the town (using .withdraw() which will allow for going into bankruptcy.)
 					town.getAccount().withdraw(totalPlunderAmount, "Plunder by " + nation.getName());
 					// And deposit it into the nation.
-					transferPlunderToNation(town, nation, totalPlunderAmount, false);
+					transferPlunderToSiegeAttackers(siege, totalPlunderAmount, false);
 
 				} else {
 					// Not able to go bankrupt, they are destroyed, pay what they can.
 					totalPlunderAmount = town.getAccount().getHoldingBalance();
-					transferPlunderToNation(town, nation, totalPlunderAmount, true);
+					transferPlunderToSiegeAttackers(siege, totalPlunderAmount, true);
 					townDestroyed = true;
 				}
 			}
@@ -171,7 +174,10 @@ public class PlunderTown {
 		}
 	}
 
-	private static void transferPlunderToNation(Town town, Nation nation, double totalPlunderAmount, boolean removeMoneyFromTownBank) throws EconomyException {
+	private static void transferPlunderToSiegeAttackers(Siege siege, double totalPlunderAmount, boolean removeMoneyFromTownBank) throws EconomyException {
+		Town town = siege.getDefendingTown();
+		Nation nation = siege.getAttackingNation();
+
 		String distributionRatio = SiegeWarSettings.getWarSiegePlunderDistributionRatio();
 
 		//Calculate total plunder for nation & soldiers
@@ -190,10 +196,18 @@ public class PlunderTown {
 		}
 
 		//Pay soldiers
+		Resident resident;
+		Map<Resident, Integer> residentSharesMap = new HashMap<>();
+		for(Map.Entry<String, Integer> uuidShareMapEntry: siege.getAttackerSiegeContributors().entrySet()) {
+			resident = TownyUniverse.getInstance().getResident(uuidShareMapEntry.getKey());
+			if(resident != null) {
+				residentSharesMap.put(resident, uuidShareMapEntry.getValue());
+			}
+		}
 		boolean soldiersPaid = SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
 				totalPlunderForSoldiers,
 				town,
-				nation,
+				residentSharesMap,
 				"Plunder",
 				removeMoneyFromTownBank);
 
