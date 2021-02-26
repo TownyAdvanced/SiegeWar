@@ -6,7 +6,7 @@ import java.io.IOException;
 import com.gmail.goosius.siegewar.SiegeWar;
 
 import com.gmail.goosius.siegewar.utils.FileMgmt;
-import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionsUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 
 public class Settings {
 	private static CommentedConfiguration config, newConfig;
@@ -45,7 +45,7 @@ public class Settings {
 		}
 
 		//Schedule next battle session
-		SiegeWarBattleSessionsUtil.scheduleNextBattleSession();
+		SiegeWarBattleSessionUtil.scheduleNextBattleSession();
 
 		return true;
 	}

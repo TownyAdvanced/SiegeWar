@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SiegeWarBattleSessionsUtil {
+public class SiegeWarBattleSessionUtil {
 	private static long scheduledStartTimeOfNextBattleSession;
 
 	public static void scheduleNextBattleSession() {
