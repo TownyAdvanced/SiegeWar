@@ -405,7 +405,7 @@ public enum ConfigNodes {
 	WAR_SIEGE_BANNER_CONTROL_REVERSAL_BONUS_MULTIPLIER(
 			"war.siege.banner_control_reversal_bonus.multiplier",
 			"2",
-			"The setting determines the strength of the bonus multiplier.",
+			"# This setting determines the strength of the bonus multiplier.",
 			"# Example: Assuming this value is 2,",
 			"# then if team A has gained a battle score of 420 from banner control,",
 			"# and banner control is then reversed by Team B,",
