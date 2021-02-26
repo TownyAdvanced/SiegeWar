@@ -270,23 +270,6 @@ public class SiegeWarBannerControlUtil {
 				siege.adjustDefenderBattleScore(battleScore);
 			break;
 			default:
-			return;
-		}
-
-		//Remove banner control if 
-		//1. All players on the list are logged out, or
-		//2. The list is now empty
-		boolean bannerControlLost = true;
-		for(Resident resident: siege.getBannerControllingResidents()) {
-			Player player = TownyAPI.getInstance().getPlayer(resident);
-			if(player != null) {
-				bannerControlLost = false;
-				break;
-			}
-		}
-		if(bannerControlLost) {
-			siege.setBannerControllingSide(SiegeSide.NOBODY);
-			siege.clearBannerControllingResidents();
 		}
 	}
 }
