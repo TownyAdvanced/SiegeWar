@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * This class is responsible for processing requests to plunder towns
@@ -199,7 +200,7 @@ public class PlunderTown {
 		Resident resident;
 		Map<Resident, Integer> residentSharesMap = new HashMap<>();
 		for(Map.Entry<String, Integer> uuidShareMapEntry: siege.getAttackerSiegeContributors().entrySet()) {
-			resident = TownyUniverse.getInstance().getResident(uuidShareMapEntry.getKey());
+			resident = TownyUniverse.getInstance().getResident(UUID.fromString(uuidShareMapEntry.getKey()));
 			if(resident != null) {
 				residentSharesMap.put(resident, uuidShareMapEntry.getValue());
 			}
