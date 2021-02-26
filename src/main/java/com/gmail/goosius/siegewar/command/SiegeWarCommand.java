@@ -10,6 +10,7 @@ import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -227,21 +228,22 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					nation.getAccount().withdraw(amount, "Military Salaries");
 
 					//Pay soldiers
-					Map<Resident, Integer> residentSharesMap = new HashMap<>();
-					for(Resident soldier: nation.getResidents()) {
-						
-						residentSharesMap.put(resident)
-					}
-
-						resident = TownyUniverse.getInstance().getResident(uuidShareMapEntry.getKey());
-						if(resident != null) {
-							residentSharesMap.put(resident, uuidShareMapEntry.getValue());
+					int soldierShare;
+					Map<Resident, Integer> soldierShareMap = new HashMap<>();
+					for(Resident possibleSoldier: nation.getResidents()) {
+						for (String perm : TownyPerms.getResidentPerms(possibleSoldier).keySet()) {
+							if (perm.startsWith("towny.nation.siege.pay.grade.")) {
+								soldierShare = Integer.parseInt(perm.replace("towny.nation.siege.pay.grade.", ""));
+								soldierShareMap.put(resident, soldierShare);
+								break; //Next resident please
+							}
 						}
 					}
 					boolean soldiersPaid =
 							SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
 							amount,
 							null,
+							soldierShareMap,
 							"Military Salary",
 							false);
 
