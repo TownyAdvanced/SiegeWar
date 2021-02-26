@@ -301,7 +301,7 @@ public class SiegeMetaDataController {
 		if (town.hasMeta(sdf.getKey()))
 			dataAsString = MetaDataUtil.getString(town, sdf);
 
-		if(dataAsString == null) {
+		if(dataAsString == null || dataAsString.length() == 0) {
 			return new HashMap<>();
 		} else {
 			Map<String, Integer> residentContributionsMap = new HashMap<>();
