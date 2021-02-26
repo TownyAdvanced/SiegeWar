@@ -379,9 +379,9 @@ public enum ConfigNodes {
 			"0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23",
 			"# This value determines the times (in UTC) when each battle session will start.",
 			"# The default is once per hour, on the hour.",
-			"# To use different times use e.g. 4:20.",
-			"# In addition to controlling routine session start times,",
-			"# this config can also be used to prevent time-point sieging at unusual times e.g. night-time sieges.",
+			"# To use times with minutes, use e.g. 4:20,5:20,6:35 etc.",
+			"# In addition to controlling routine battle session start times,",
+			"# this config can also be used to prevent afk sieging at unusual times e.g. night-time sieges.",
 			"# But be careful with this, as it also restricts sieging by cross-timezone players."),
 	WAR_SIEGE_BATTLE_SESSIONS_DURATION_MINUTES(
 			"war.siege.battle_session.duration_minutes",
