@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
 
 import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
 
@@ -54,6 +56,8 @@ public class Siege {
 	private int cannonSessionRemainingShortTicks;  //Short ticks remaining until standard cannon protections are restored
 	private int attackerBattleScore;
 	private int defenderBattleScore;
+	private Set<String> attackerBattleContributors;   //UUID's of attackers who contributed during the current battle
+	private Map<String, Integer> attackerSiegeContributors;  //UUID:numContributions map of attackers who contributed during current siege
 
 	public Siege(String name) {
         this.name = name;
@@ -70,6 +74,8 @@ public class Siege {
 		cannonSessionRemainingShortTicks = 0;
 		attackerBattleScore = 0;
 		defenderBattleScore = 0;
+		attackerBattleContributors = new HashSet<>();
+		attackerSiegeContributors = new HashMap<>();
     }
 
 	public Nation getAttackingNation() {
@@ -350,5 +356,21 @@ public class Siege {
 		} else {
 			return Translation.of("msg_na");
 		}
+	}
+
+	public Set<String> getAttackerBattleContributors() {
+		return attackerBattleContributors;
+	}
+
+	public void setAttackerBattleContributors(Set<String> attackerBattleContributors) {
+		this.attackerBattleContributors = attackerBattleContributors;
+	}
+
+	public Map<String, Integer> getAttackerSiegeContributors() {
+		return attackerSiegeContributors;
+	}
+
+	public void setAttackerSiegeContributors(Map<String, Integer> attackerSiegeContributors) {
+		this.attackerSiegeContributors = attackerSiegeContributors;
 	}
 }

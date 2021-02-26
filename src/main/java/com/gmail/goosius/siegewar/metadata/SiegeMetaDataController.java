@@ -3,13 +3,15 @@ package com.gmail.goosius.siegewar.metadata;
 import org.jetbrains.annotations.Nullable;
 
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.metadata.MetaDataUtil;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.DecimalDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -35,7 +37,7 @@ public class SiegeMetaDataController {
 	private static LongDataField startTime = new LongDataField("siegewar_startTime", 0l);
 	private static LongDataField endTime = new LongDataField("siegewar_endTime", 0l);
 	private static LongDataField actualEndTime = new LongDataField("siegewar_actualEndTime", 0l);
-	
+	private static StringDataField attackerSiegeContributors = new StringDataField("siegewar_attackerSiegeContributors", "");
 	
 	public SiegeMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
@@ -262,7 +264,10 @@ public class SiegeMetaDataController {
 		sdf = (StringDataField) siegeStatus.clone();
 		if (town.hasMeta(sdf.getKey()))
 			town.removeMetaData(sdf);
-		
+		sdf = (StringDataField) attackerSiegeContributors.clone();
+		if (town.hasMeta(sdf.getKey()))
+			town.removeMetaData(sdf);
+
 		IntegerDataField idf = (IntegerDataField) siegePoints.clone();
 		if (town.hasMeta(idf.getKey()))
 			town.removeMetaData(idf);
@@ -287,5 +292,26 @@ public class SiegeMetaDataController {
 		ldf = (LongDataField) actualEndTime.clone();
 		if (town.hasMeta(ldf.getKey()))
 			town.removeMetaData(ldf);
+	}
+
+	public static Map<String, Integer> getAttackerSiegeContributors(Town town) {
+		StringDataField sdf = (StringDataField) attackerSiegeContributors .clone();
+
+		String dataAsString = null;
+		if (town.hasMeta(sdf.getKey()))
+			dataAsString = MetaDataUtil.getString(town, sdf);
+
+		if(dataAsString == null) {
+			return new HashMap<>();
+		} else {
+			Map<String, Integer> residentContributionsMap = new HashMap<>();
+			String[] residentContributionDataEntries = dataAsString.split(",");
+			String[] residentContributionDataPair;
+			for(String residentContributionDataEntry: residentContributionDataEntries) {
+				residentContributionDataPair = residentContributionDataEntry.split(":");
+				residentContributionsMap.put(residentContributionDataPair[0], Integer.parseInt(residentContributionDataPair[1]));
+			}
+			return residentContributionsMap;
+		}
 	}
 }

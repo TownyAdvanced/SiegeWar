@@ -172,6 +172,8 @@ public class SiegeController {
 		siege.setScheduledEndTime(SiegeMetaDataController.getEndTime(town));
 
 		siege.setActualEndTime(SiegeMetaDataController.getActualEndTime(town));
+
+		siege.setAttackerSiegeContributors(SiegeMetaDataController.getAttackerSiegeContributors(town));
 		return true;
 	}
 
