@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.10
+version: 0.12
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -33,8 +33,6 @@ msg_siege_war_siege_started_neutral_town: "&bUne armée appartenant à %s attaqu
 msg_siege_war_siege_started_nation_town: "&bUne armée appartenant à %s attaque %s de %s. Un siège a commencé !"
 msg_siege_war_attack_pay_war_chest: "&bUn coffre de guerre a été préparé par %s, avec une valeur de %s. Celui qui remporte le siège recevra cet argent."
 msg_siege_war_attack_recover_war_chest: "&bLe coffre de guerre a été récupéré par %s, avec une valeur de %s."
-msg_siege_war_attacker_death: "&bSiège de %s > Attaquant mort > %s > Points de siège -%d"
-msg_siege_war_defender_death: "&bSiège de %s > Défenseur mort > %s > Points de siège +%d"
 msg_siege_war_defender_win: "&bLes défenseurs de %s ont réussi à chasser toutes les armées attaquantes. Le siège a échoué !"
 msg_siege_war_attacker_win: "&bUne armée appartenant à %s a réussi à traverser les défenses de %s. Le siège est fini !"
 msg_siege_war_attacker_abandon: "&bUne armée appartenant à %s a abandonné son attaque sur %s. Les défenseurs ont gagné !"
@@ -170,12 +168,6 @@ msg_set_siege_immunities_town: "L'immunité au siège de la ville %s est défini
 msg_set_siege_immunities_nation: "Les immunités de siège pour toutes les villes de la nation %s sont fixées à %s heures."
 msg_set_siege_immunities_all: "Les immunités de siège pour toutes les villes sont fixées à %s heures."
 
-#Battle sessions
-msg_war_siege_battle_session_started: "&2La session de combat a commencé. Vous êtes libre d'entrer dans n'importe quelle zone de siège pour le prochain %s. Après cela, vous aurez un temps de repos de %s de bataille."
-msg_war_siege_battle_session_warning: "&cVotre session de combat expirera dans %s. Pour éviter la fatigue au combat, quittez toute zone de siège dans laquelle vous vous trouvez (et/ou retournez dans votre propre ville)."
-msg_war_siege_battle_session_expired: "&cLa session de combat a expiré. Fatigue de combat active. Pour supprimer cet effet, quittez la zone de siège (et/ou retournez dans votre propre ville). Vous pouvez revenir dans %s."
-msg_war_siege_battle_session_ended: "&2La session de combat est terminée. La prochaine fois que vous entrerez dans une zone de siège, une nouvelle session de combat commencera."
-
 #Siege-zone block placement restrictions
 msg_war_siege_zone_block_placement_forbidden: "&cVous ne pouvez pas placer ce type de bloc dans la zone naturelle d'une zone de siège."
 msg_war_siege_zone_bucket_emptying_forbidden: "&cVous ne pouvez pas utiliser ce type de seau dans la zone naturelle d'une zone de siège."
@@ -204,7 +196,6 @@ hud_title: "Siège"
 hud_siegestatus: "Statut du siège"
 hud_attackers: "ATQ: "
 hud_defenders: "DEF: "
-hud_points: "Points: "
 hud_banner_control: "Ctrl bannière: "
 hud_time_remaining: "Temps restant: "
 
@@ -227,7 +218,6 @@ siege_status_unknown: "Inconnu"
 dynmap_siege_title: "Siège: %s"
 dynmap_siege_attacker: "Attaquant: %s"
 dynmap_siege_defender: "Défenseur: %s"
-dynmap_siege_points: "Points: %d"
 dynmap_siege_banner_control: "Contrôle de la bannière: %s"
 dynmap_siege_status: "Statut: %s"
 dynmap_siege_status_in_progress: "En cours"
@@ -279,3 +269,40 @@ msg_err_cannot_fire_no_cannon_session: "You cannot fire any cannons in this town
 msg_err_cannon_in_two_towns: "&cYour cannon blocks are split between two towns. Please ensure your cannon is in just one town."
 msg_err_cannot_toggle_explosions_due_to_cannon_session: "&cYou cannot toggle explosions in the town until the current cannon session ends."
 
+#Added in 0.11
+msg_err_invalid_bool: "&cInvalid option. Options: on/off"
+msg_beacon_preference_set: "&bBeacon preference set to %s."
+
+# Misc
+msg_na: 'N/A'
+
+#Town screen
+status_town_siege_status_points: '&2 > Points: &a%s'
+status_town_siege_status_warchest: '&2 > War Chest: &a%s'
+
+#Death points
+msg_siege_war_attacker_death: '&bSiege of %s > Attacker died > %s > Battle score -%d'
+msg_siege_war_defender_death: '&bSiege of %s > Defender died > %s > Battle score +%d'
+
+#Battle sessions
+status_town_siege_battle: '&2Battle'
+status_town_siege_battle_time_remaining: '&2 > Time Remaining: &a%s'
+status_town_siege_battle_score: '&2 > Score: &a%s &2/ &a%s'
+msg_war_siege_battle_session_started: "&bA new battle session has started."
+msg_war_siege_battle_session_ended_with_battles: "&bThe current battle session has ended. The following teams won their battles:"
+msg_war_siege_battle_session_ended_without_battles: "&bThe current battle session has ended. There were no battles."
+msg_war_siege_battle_session_ended_attacker_result: "&b * Attackers @ %s (%s)"
+msg_war_siege_battle_session_ended_defender_result: "&b * Defenders @ %s (%s)"
+msg_war_siege_battle_session_ended_draw_result: "&b * Draw @ %s (0)"
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts. The next battle session will start in %s."
+
+#Scoreboard
+hud_points: 'Siege Points: '
+hud_battle_attacker_score: 'BAT ATK Score: '
+hud_battle_defender_score: 'BAT DEF Score: '
+hud_battle_time_remaining: 'BAT Time Left: '
+
+#Dynmap
+dynmap_siege_points: 'Siege Points: %d'
+dynmap_siege_battle_score: 'Battle Score: %s / %s'
+dynmap_siege_battle_time_left: 'Battle Time Left: %s'

@@ -156,30 +156,33 @@ public enum ConfigNodes {
 			"# If this setting is true, then Siegewar statistics will be shown on nation status screens."),
 
 	//Monetary Values
+
+	//Plunder
 	WAR_SIEGE_ATTACKER_COST_UPFRONT_PER_PLOT(
 			"war.siege.money.attacker_cost_upfront_per_plot",
 			"20.0",
 			"",
-			"# This value represents the siege deposit paid by the attacker (aka warchest).",
-			"# This value is recovered by the siege winner, whether attack or defender."),
+			"# This value represents the siege deposit paid by the attacker",
+			"# This is the 'warchest' (a money-account, not an actual chest object).",
+			"# If the attacking nation wins the siege, the warchest is returned to the nation bank.",
+			"# If the defending town wins the siege, the warchest is recovered by the defenders.",
+			"# See below for more details on how the warchest is distributed among the defenders."),
 	WAR_SIEGE_ATTACKER_PLUNDER_AMOUNT_PER_PLOT(
 			"war.siege.money.attacker_plunder_amount_per_plot",
 			"40.0",
 			"",
-			"# This is the amount plundered by the attacker is a siege is successful.",
-			"# It is recommended that the 'attack-cost:plunder-reward' ratio be about 1:2 ."),
-	WAR_SIEGE_ATTACKER_PLUNDER_DISTRIBUTION_RATIO(
-			"war.siege.money.attacker_plunder_distribution_ratio",
+			"# This is the amount which an attacking nation will plunder if they choose to do so after a siege victory.",
+			"# See below for more details on how the plunder is distributed."),
+	WAR_SIEGE_PLUNDER_DISTRIBUTION_RATIO(
+			"war.siege.money.plunder_distribution_ratio",
 			"1:3",
 			"",
-			"# This ratio affects how plunder is distributed within the plundering nation",
-			"# The value on the left is the ratio which will go to the nation bank.",
-			"# The value on the right is the ratio which will go to the nation soldiers",
-			"# The share each soldier receives depends on their rank.",
-			"# Plunder can be collected later using /sw collect.",
-			"# The rank permission which affects is towny.nation.siege.pay.grade.x",
-			"# X can be any integer value.",
-			"# Usually a value of 100 is a normal share, and a value of 200 is a double share"),
+			"# This ratio affects how plunder is distributed among the winning team.",
+			"# The value on the left is the ratio which will go to the government bank (town or nation).",
+			"# The value on the right is the ratio which will go to the contributing soldiers",
+			"# For each battle in which a soldier gained banner control at least once, that soldier receives 1 share.",
+			"# The total soldiers' share is distributed accordingly among the army."),
+
 	WAR_SIEGE_CAPITAL_SIEGE_COST_INCREASE_PERCENTAGE(
 			"war.siege.money.capital_siege_cost_increase_percentage",
 			"0",
@@ -370,43 +373,23 @@ public enum ConfigNodes {
 			"# 3. In this example, if the siege defender scores any siege points, the points will be multiplied by 2.",
 			"# 4. In this example, the siege attacker will not get any points boosts."),
 
-	//Battle Sessions
-	WAR_SIEGE_BATTLE_SESSIONS_ENABLED(
-			"war.siege.battle_sessions.enabled",
-			"true",
+	//Battle
+	WAR_SIEGE_BATTLE_SESSIONS_START_TIMES_UTC(
+			"war.siege.battle_session.start_times_utc",
+			"0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23",
+			"# This value determines the times (in UTC) when each battle session will start.",
+			"# The default is once per hour, on the hour.",
+			"# To use times with minutes, use e.g. 4:20,5:20,6:35 etc.",
+			"# In addition to controlling routine battle session start times,",
+			"# this config can also be used to prevent afk sieging at unusual times e.g. night-time sieges.",
+			"# But be careful with this, as it also restricts sieging by cross-timezone players."),
+	WAR_SIEGE_BATTLE_SESSIONS_DURATION_MINUTES(
+			"war.siege.battle_session.duration_minutes",
+			"50",
 			"",
-			"# If this setting is true, then battle sessions are enabled.",
-			"# Battle sessions have 2 functions:",
-			"# 1. They automatically moderate the time each player spends siege-fighting.",
-			"# 2. They prevent certain blocks (e.g. obsidian) being placed while siege-fighting.",
-			"# ",
-			"# This feature is recommended to reduce stress and combat-fatigue.",
-			"# ",
-			"# A battle session starts when a player steps into a siege zone (unless they are in their own town).",
-			"# A battle session has 2 main phases:",
-			"# * phase 1 - active - In this phase, the player can attend any siege.",
-			"# * phase 2 - expired - In this phase the player cannot attend any siege (without getting 'battle fatigue' - poisoned/slowed/weakened).",
-			"# The durations of these phases are configured below."),
-	WAR_SIEGE_BATTLE_SESSIONS_ACTIVE_PHASE_DURATION_MINUTES(
-			"war.siege.battle_sessions.active_phase_duration_minutes",
-			"60",
-			"",
-			"# This value determines the duration of the battle session active phase."),
-	WAR_SIEGE_BATTLE_SESSIONS_EXPIRED_PHASE_DURATION_MINUTES(
-			"war.siege.battle_sessions.expired_phase_duration_minutes",
-			"10",
-			"",
-			"# This value determines the duration of the battle session expired phase."),
-	WAR_SIEGE_BATTLE_SESSIONS_FIRST_WARNING_MINUTES_TO_EXPIRY(
-			"war.siege.battle_sessions.first_warning_minutes_to_expiry",
-			"5",
-			"",
-			"# This value determines the number of minutes between first warning and expiry."),
-	WAR_SIEGE_BATTLE_SESSIONS_SECOND_WARNING_MINUTES_TO_EXPIRY(
-			"war.siege.battle_sessions.second_warning_minutes_to_expiry",
-			"1",
-			"",
-			"# This value determines the number of minutes between second warning and expiry."),
+			"# This value determines the duration of each battle session.",
+			"# After a battle session ends,",
+			"# the time period until the next battle session starts, is defined as a 'break'"),
 
 	//Siege zone block/use restrictions
 	WAR_SIEGE_ZONE_BLOCK_PLACEMENT_RESTRICTIONS_ENABLED(

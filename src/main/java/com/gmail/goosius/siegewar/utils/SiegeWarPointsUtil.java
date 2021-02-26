@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -70,28 +71,30 @@ public class SiegeWarPointsUtil {
 											 Resident resident,
 											 Siege siege,
 											 String unformattedErrorMessage) {
-		//Give siege points to opposing side
-		int siegePoints;
-		if (residentIsAttacker) {
-			siegePoints = -SiegeWarSettings.getWarSiegePointsForAttackerDeath();
-			siegePoints = adjustSiegePointPenaltyForBannerControl(true, siegePoints, siege);
-			siegePoints = adjustSiegePointsForPopulationQuotient(false, siegePoints, siege);
-			siege.adjustSiegePoints(siegePoints);
-		} else {
-			siegePoints = SiegeWarSettings.getWarSiegePointsForDefenderDeath();
-			siegePoints = adjustSiegePointPenaltyForBannerControl(false, siegePoints, siege);
-			siegePoints = adjustSiegePointsForPopulationQuotient(true, siegePoints, siege);
-			siege.adjustSiegePoints(siegePoints);
-		}
+		//No penalty points without an active battle session
+		if(!BattleSession.getBattleSession().isActive())
+			return;
 
-		SiegeController.saveSiege(siege);
+		//Give battle score to opposing side
+		int battleScore;
+		if (residentIsAttacker) {
+			battleScore = SiegeWarSettings.getWarSiegePointsForAttackerDeath();
+			battleScore = adjustSiegePointPenaltyForBannerControl(true, battleScore, siege);
+			battleScore = adjustSiegePointsForPopulationQuotient(false, battleScore, siege);
+			siege.adjustDefenderBattleScore(battleScore);
+		} else {
+			battleScore = SiegeWarSettings.getWarSiegePointsForDefenderDeath();
+			battleScore = adjustSiegePointPenaltyForBannerControl(false, battleScore, siege);
+			battleScore = adjustSiegePointsForPopulationQuotient(true, battleScore, siege);
+			siege.adjustAttackerBattleScore(battleScore);
+		}
 
 		//Send messages to siege participants
 		String message = String.format(
 			unformattedErrorMessage,
 			siege.getDefendingTown().getName(),
 			resident.getName(),
-			Math.abs(siegePoints));
+			Math.abs(battleScore));
 
 		SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
 	}

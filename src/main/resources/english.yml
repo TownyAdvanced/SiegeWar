@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.11
+version: 0.12
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -33,8 +33,6 @@ msg_siege_war_siege_started_neutral_town: '&bAn army belonging to %s has attacke
 msg_siege_war_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A siege has begun!'
 msg_siege_war_attack_pay_war_chest: '&bA war-chest has been prepared by %s, with a value of %s. Whoever wins the siege will get this money.'
 msg_siege_war_attack_recover_war_chest: '&bThe war chest has been recovered by %s, with a value of %s.'
-msg_siege_war_attacker_death: '&bSiege of %s > Attacker died > %s > Siege points -%d'
-msg_siege_war_defender_death: '&bSiege of %s > Defender died > %s > Siege points +%d'
 msg_siege_war_defender_win: '&bThe defenders of %s have successfully driven off all attacking armies. The siege has failed!'
 msg_siege_war_attacker_win: '&bAn army belonging to %s has successfully breached the defences of %s. The siege is over!'
 msg_siege_war_attacker_abandon: '&bAn army belonging to %s has abandoned its attack on %s. The defenders are victorious!'
@@ -125,7 +123,7 @@ status_town_siege_status_defender_surrender: 'Town Surrender - to %s'
 status_town_siege_status_pending_attacker_abandon: 'Attacker Retreat Pending, in %s'
 status_town_siege_status_pending_defender_surrender: 'Town Surrender Pending, in %s'
 
-status_town_siege_status_besieger: '&2 > Besieger: &a%s {%s}'
+status_town_siege_status_besieger: '&2 > Besieger: &a%s'
 status_town_siege_status_banner_xyz: '&2 > Banner XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > Immunity Timer: &a%s'
 status_town_siege_victory_timer: '&2 > Victory Timer: &a%s'
@@ -170,12 +168,6 @@ msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s hours.'
 msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s hours.'
 msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s hours.'
 
-#Battle sessions
-msg_war_siege_battle_session_started: '&2Battle session started. You are free to enter any siege-zone for the next %s. After that you will get a %s rest from battle.'
-msg_war_siege_battle_session_warning: '&cYour battle session will expire in %s. To avoid battle-fatigue, exit any siege zone you are in (and/or return to your own town).'
-msg_war_siege_battle_session_expired: '&cBattle session expired. Battle-fatigue active. To remove this effect, leave the siege-zone (and/or return to your own town). You can return in %s.'
-msg_war_siege_battle_session_ended: '&2Battle session ended. The next time you enter a siege-zone, a new battle session will begin.'
-
 #Siege-zone block placement restrictions
 msg_war_siege_zone_block_placement_forbidden: '&cYou cannot place this type of block in the wilderness area of a siege zone.'
 msg_war_siege_zone_bucket_emptying_forbidden: '&cYou cannot use this type of bucket in the wilderness area of a siege zone.'
@@ -204,8 +196,7 @@ hud_title: 'Siege'
 hud_siegestatus: 'Siege Status'
 hud_attackers: 'ATK: '
 hud_defenders: 'DEF: '
-hud_points: 'Points: '
-hud_banner_control: 'Banner Ctrl: '
+hud_banner_control: "Banner Control: "
 hud_time_remaining: 'Time Left: '
 
 msg_err_peaceful_town_pvp_forced_off: '&cPeaceful towns have PVP forced OFF.'
@@ -227,7 +218,6 @@ siege_status_unknown: 'Unknown'
 dynmap_siege_title: 'Siege: %s'
 dynmap_siege_attacker: 'Attacker: %s'
 dynmap_siege_defender: 'Defender: %s'
-dynmap_siege_points: 'Points: %d'
 dynmap_siege_banner_control: 'Banner Control: %s'
 dynmap_siege_status: 'Status: %s'
 dynmap_siege_status_in_progress: 'In Progress'
@@ -282,3 +272,37 @@ msg_err_cannot_toggle_explosions_due_to_cannon_session: "&cYou cannot toggle exp
 #Added in 0.11
 msg_err_invalid_bool: "&cInvalid option. Options: on/off"
 msg_beacon_preference_set: "&bBeacon preference set to %s."
+
+# Misc
+msg_na: 'N/A'
+
+#Town screen
+status_town_siege_status_points: '&2 > Points: &a%s'
+status_town_siege_status_warchest: '&2 > War Chest: &a%s'
+
+#Death points
+msg_siege_war_attacker_death: '&bSiege of %s > Attacker died > %s > Battle score -%d'
+msg_siege_war_defender_death: '&bSiege of %s > Defender died > %s > Battle score +%d'
+
+#Battle sessions
+status_town_siege_battle: '&2Battle'
+status_town_siege_battle_time_remaining: '&2 > Time Remaining: &a%s'
+status_town_siege_battle_score: '&2 > Score: &a%s &2/ &a%s'
+msg_war_siege_battle_session_started: "&bA new battle session has started."
+msg_war_siege_battle_session_ended_with_battles: "&bThe current battle session has ended. The following teams won their battles:"
+msg_war_siege_battle_session_ended_witmsg_war_siege_battle_session_ended_draw_resulthout_battles: "&bThe current battle session has ended. There were no battles."
+msg_war_siege_battle_session_ended_attacker_result: "&b * Attackers @ %s (%s)"
+msg_war_siege_battle_session_ended_defender_result: "&b * Defenders @ %s (%s)"
+msg_war_siege_battle_session_ended_draw_result: "&b * Draw @ %s (0)"
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts. The next battle session will start in %s."
+
+#Scoreboard
+hud_points: 'Siege Points: '
+hud_battle_attacker_score: 'BAT ATK Score: '
+hud_battle_defender_score: 'BAT DEF Score: '
+hud_battle_time_remaining: 'BAT Time Left: '
+
+#Dynmap
+dynmap_siege_points: 'Siege Points: %d'
+dynmap_siege_battle_score: 'Battle Score: %s / %s'
+dynmap_siege_battle_time_left: 'Battle Time Left: %s'

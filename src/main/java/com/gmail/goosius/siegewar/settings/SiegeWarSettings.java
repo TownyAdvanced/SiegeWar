@@ -101,8 +101,8 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_ATTACKER_PLUNDER_AMOUNT_PER_PLOT);
 	}
 
-	public static String getWarSiegeAttackerPlunderDistributionRatio() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_ATTACKER_PLUNDER_DISTRIBUTION_RATIO);
+	public static String getWarSiegePlunderDistributionRatio() {
+		return Settings.getString(ConfigNodes.WAR_SIEGE_PLUNDER_DISTRIBUTION_RATIO);
 	}
 
 	public static double getWarSiegeMaxHoldoutTimeHours() {
@@ -268,24 +268,17 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE);
 	}
 
-	public static boolean isWarSiegeBattleSessionsEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_ENABLED);
+	public static List<String> getWarSiegeBattleSessionsStartTimesUtc() {
+		List<String> timesAsList = new ArrayList<>();
+		String timesAsString = Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_START_TIMES_UTC);
+			for(String time: timesAsString.split(",")) {
+				timesAsList.add(time.trim());
+			}
+		return timesAsList;
 	}
 
-	public static int getWarSiegeBattleSessionsActivePhaseDurationMinutes() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_ACTIVE_PHASE_DURATION_MINUTES);
-	}
-
-	public static int getWarSiegeBattleSessionsFirstWarningMinutesToExpiry() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_FIRST_WARNING_MINUTES_TO_EXPIRY);
-	}
-
-	public static int getWarSiegeBattleSessionsSecondWarningMinutesToExpiry() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_SECOND_WARNING_MINUTES_TO_EXPIRY);
-	}
-
-	public static int getWarSiegeBattleSessionsExpiredPhaseDurationMinutes() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_EXPIRED_PHASE_DURATION_MINUTES);
+	public static int getWarSiegeBattleSessionsDurationMinutes() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_DURATION_MINUTES);
 	}
 
 	public static boolean isWarSiegeZoneBlockPlacementRestrictionsEnabled() {

@@ -1,98 +1,79 @@
 package com.gmail.goosius.siegewar.objects;
 
+
+import com.palmergames.util.TimeMgmt;
+
 /**
  * This class represents a "Battle Session".
  *
- * A battle session represents a period of time,
- * in which a player's siege-fighting-time is being automatically moderated.
- * 
- * A session has a number of phases
- * phase 1 - active  (default 55 mins)
- * phase 2 - active but first warning given  (default 4 mins)
- * phase 3 - active but second warning given (default 1 min)
- * phase 4 - expired (default 15 mins)
- * 
- * This mechanic is useful to control the amount of time players are spending fighting during a siege.
- * This can be expected to generally reduce stress and exhaustion for players.
- * This is particularly important as sieges are generally moderately long (e.g. 3 days).
- * 
- * The feature enable switch, and duration of the phases, are set in the configuration file.
- **
+ * A battle session is period of time, typically 50 minutes,
+ * in which individual "battles" take place at each siege.
+ *
+ * During a battle, siege points can be gained/lost.
+ *
+ * At the end of a battle session:
+ * - The winner of each battle is declared
+ *    - either the "Attacker" or the "Defender", or "Draw"
+ *    - If nobody contested a battle, no winner is declared.
+ * - All scoreboards will show that the winner won +1 "battle".
+ * - Siege points are reset to 0
+ * - Plunder is awarded to any soldiers on the winning side,
+ *   who gained banner control during the battle.
+ *   (Attackers steal from the town, defenders steals from the war chest)
+ *
+ * Until the next battle session starts:
+ * - This period is known as a "break", and typically lasts 10 minutes.
+ * - During this period, siege points remain at 0, and banner control is not possible.
+ *
+ * At the normal end of a siege, whoever has won the most battles, wins the siege.
+ *
  * @author Goosius
  */
 public class BattleSession {
 
-	private long firstWarningTime;
-	private boolean firstWarningGiven;
-	private long secondWarningTime;
-	private boolean secondWarningGiven;
-	private long expiryTime;
-	private boolean expired;
-	private long deletionTime;
-	
+	private static BattleSession battleSession = null;  //The singleton instance
+	private boolean active; 			//Is the session active, or is it on break ?
+	private long scheduledEndTIme;	//The time this battle session is scheduled to end
+
 	public BattleSession() {
-		firstWarningTime = 0;
-		firstWarningGiven = false;
-		secondWarningTime = 0;
-		secondWarningGiven = false;
-		expired = false;
-		expiryTime = 0;
-		deletionTime = 0;
+		active = false;
+		scheduledEndTIme = 0;
 	}
 
-	public boolean isExpired() {
-		return expired;
+	//Singleton
+	public static BattleSession getBattleSession() {
+		if(battleSession == null) {
+			battleSession = new BattleSession();
+		}
+		return battleSession;
 	}
 
-	public void setExpired(boolean expired) {
-		this.expired = expired;
+	public boolean isActive() {
+		return active;
 	}
 
-	public boolean isFirstWarningGiven() {
-		return firstWarningGiven;
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
-	public void setFirstWarningGiven(boolean firstWarningGiven) {
-		this.firstWarningGiven = firstWarningGiven;
+	public long getScheduledEndTime() {
+		return scheduledEndTIme;
 	}
 
-	public long getExpiryTime() {
-		return expiryTime;
+	public void setScheduledEndTime(long t) {
+		scheduledEndTIme = t;
 	}
 
-	public void setExpiryTime(long expiryTime) {
-		this.expiryTime = expiryTime;
+	public String getFormattedTimeRemainingUntilBattleSessionEnds() {
+		return TimeMgmt.getFormattedTimeValue(getTimeRemainingUntilBattleSessionEnds());
 	}
 
-	public long getDeletionTime() {
-		return deletionTime;
-	}
-
-	public void setDeletionTime(long deletionTime) {
-		this.deletionTime = deletionTime;
-	}
-
-	public long getFirstWarningTime() {
-		return firstWarningTime;
-	}
-
-	public void setFirstWarningTime(long firstWarningTime) {
-		this.firstWarningTime = firstWarningTime;
-	}
-
-	public long getSecondWarningTime() {
-		return secondWarningTime;
-	}
-
-	public void setSecondWarningTime(long secondWarningTime) {
-		this.secondWarningTime = secondWarningTime;
-	}
-
-	public boolean isSecondWarningGiven() {
-		return secondWarningGiven;
-	}
-
-	public void setSecondWarningGiven(boolean secondWarningGiven) {
-		this.secondWarningGiven = secondWarningGiven;
+	public long getTimeRemainingUntilBattleSessionEnds() {
+		long timeLeftMillis = scheduledEndTIme - System.currentTimeMillis();
+		if (timeLeftMillis > 0) {
+			return timeLeftMillis;
+		} else {
+			return 0;
+		}
 	}
 }

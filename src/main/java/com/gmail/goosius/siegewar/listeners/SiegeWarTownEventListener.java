@@ -3,6 +3,8 @@ package com.gmail.goosius.siegewar.listeners;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.goosius.siegewar.objects.BattleSession;
+import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
@@ -308,7 +310,15 @@ public class SiegeWarTownEventListener implements Listener {
 	                    String siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
 	                    out.add(siegeStatus);
 
-	                    // > Banner XYZ: {2223,82,9877}
+						// > Attacker: Land of Empire (Nation)
+						out.add(Translation.of("status_town_siege_status_besieger", siege.getAttackingNation().getFormattedName()));
+
+						// > Points: +530
+						int pointsInt = siege.getSiegePoints();
+						String pointsString = pointsInt > 0 ? "+" + pointsInt : "" + pointsInt;
+						out.add(Translation.of("status_town_siege_status_points", pointsString));
+
+						// > Banner XYZ: {2223,82,9877}
 	                    out.add(
 	                            Translation.of("status_town_siege_status_banner_xyz",
 	                            siege.getFlagLocation().getBlockX(),
@@ -316,31 +326,46 @@ public class SiegeWarTownEventListener implements Listener {
 	                            siege.getFlagLocation().getBlockZ())
 	                    );
 
-	                    // > Attacker: Land of Empire (Nation) {+30}
-	                    int pointsInt = siege.getSiegePoints();
-	                    String pointsString = pointsInt > 0 ? "+" + pointsInt : "" + pointsInt;
-	                    out.add(Translation.of("status_town_siege_status_besieger", siege.getAttackingNation().getFormattedName(), pointsString));
+						// >  Victory Timer: 5.3 hours
+						String victoryTimer = Translation.of("status_town_siege_victory_timer", siege.getFormattedHoursUntilScheduledCompletion());
+						out.add(victoryTimer);
 
-	                    // >  Victory Timer: 5.3 hours
-	                    String victoryTimer = Translation.of("status_town_siege_victory_timer", siege.getFormattedHoursUntilScheduledCompletion());
-	                    out.add(victoryTimer);
+						// >  War Chest: $12,800
+						String warChest = TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount());
+						out.add(Translation.of("status_town_siege_status_warchest", warChest));
 
-	                    // > Banner Control: Attackers [4] Killbot401x, NerfeyMcNerferson, WarCriminal80372
-	                    if (siege.getBannerControllingSide() == SiegeSide.NOBODY) {
-	                        out.add(Translation.of("status_town_banner_control_nobody", siege.getBannerControllingSide().getFormattedName()));
-	                    } else {
-	                        String[] bannerControllingResidents = TownyFormatter.getFormattedNames(siege.getBannerControllingResidents());
-	                        if (bannerControllingResidents.length > 34) {
-	                            String[] entire = bannerControllingResidents;
-	                            bannerControllingResidents = new String[36];
-	                            System.arraycopy(entire, 0, bannerControllingResidents, 0, 35);
-	                            bannerControllingResidents[35] = Translation.of("status_town_reslist_overlength");
-	                        }
-	                        out.addAll(ChatTools.listArr(bannerControllingResidents, Translation.of("status_town_banner_control", siege.getBannerControllingSide().getFormattedName(), siege.getBannerControllingResidents().size())));
-	                    }
+						if(BattleSession.getBattleSession().isActive()
+							&& (siege.getAttackerBattleScore() > 0
+								|| siege.getDefenderBattleScore() > 0
+								|| siege.getBannerControllingSide() != SiegeSide.NOBODY
+								|| siege.getBannerControlSessions().size() > 0)) {
+
+							//Battle:
+							String battle = Translation.of("status_town_siege_battle");
+							out.add(battle);
+
+							// > Banner Control: Attackers [4] Killbot401x, NerfeyMcNerferson, WarCriminal80372
+							if (siege.getBannerControllingSide() == SiegeSide.NOBODY) {
+								out.add(Translation.of("status_town_banner_control_nobody", siege.getBannerControllingSide().getFormattedName()));
+							} else {
+								String[] bannerControllingResidents = TownyFormatter.getFormattedNames(siege.getBannerControllingResidents());
+								if (bannerControllingResidents.length > 34) {
+									String[] entire = bannerControllingResidents;
+									bannerControllingResidents = new String[36];
+									System.arraycopy(entire, 0, bannerControllingResidents, 0, 35);
+									bannerControllingResidents[35] = Translation.of("status_town_reslist_overlength");
+								}
+								out.addAll(ChatTools.listArr(bannerControllingResidents, Translation.of("status_town_banner_control", siege.getBannerControllingSide().getFormattedName(), siege.getBannerControllingResidents().size())));
+							}
+
+							// > Score: +90 / -220
+							out.add(Translation.of("status_town_siege_battle_score", siege.getFormattedAttackerBattleScore(), siege.getFormattedDefenderBattleScore()));
+
+							// > Time Remaining: 22 minutes
+							out.add(Translation.of("status_town_siege_battle_time_remaining", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
+						}
 	                    break;
 
-	                    
 	                case ATTACKER_WIN:
 	                case DEFENDER_SURRENDER:
 	                    siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));

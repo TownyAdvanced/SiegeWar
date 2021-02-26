@@ -6,6 +6,7 @@ import java.io.IOException;
 import com.gmail.goosius.siegewar.SiegeWar;
 
 import com.gmail.goosius.siegewar.utils.FileMgmt;
+import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 
 public class Settings {
 	private static CommentedConfiguration config, newConfig;
@@ -42,6 +43,9 @@ public class Settings {
 			System.err.println(SiegeWar.prefix + "Could not load images! Disabling!");
 			return false;
 		}
+
+		//Schedule next battle session
+		SiegeWarBattleSessionUtil.scheduleNextBattleSession();
 
 		return true;
 	}

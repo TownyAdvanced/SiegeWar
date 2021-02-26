@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.objects;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -45,12 +46,14 @@ public class Siege {
 	private Location siegeBannerLocation;
 	private int siegePoints;
 	private double warChestAmount;
-	private List<Resident> bannerControllingResidents;
+	private List<Resident> bannerControllingResidents;  //Soldiers currently controlling the banner
 	private SiegeSide bannerControllingSide;
 	private Map<Player, BannerControlSession> bannerControlSessions;
 	private boolean attackerHasLowestPopulation;
 	private double siegePointModifierForSideWithLowestPopulation;
 	private int cannonSessionRemainingShortTicks;  //Short ticks remaining until standard cannon protections are restored
+	private int attackerBattleScore;
+	private int defenderBattleScore;
 
 	public Siege(String name) {
         this.name = name;
@@ -65,6 +68,8 @@ public class Siege {
 		attackerHasLowestPopulation = false;
 		siegePointModifierForSideWithLowestPopulation = 0;  //0 is the special starting value
 		cannonSessionRemainingShortTicks = 0;
+		attackerBattleScore = 0;
+		defenderBattleScore = 0;
     }
 
 	public Nation getAttackingNation() {
@@ -212,6 +217,10 @@ public class Siege {
 		bannerControllingResidents.clear();
 	}
 
+	public void clearBannerControlSessions() {
+		bannerControlSessions.clear();
+	}
+
 	public SiegeSide getBannerControllingSide() {
 		return bannerControllingSide;
 	}
@@ -288,5 +297,58 @@ public class Siege {
 
 	public void decrementCannonSessionRemainingShortTicks(){
 		cannonSessionRemainingShortTicks--;
+	}
+
+	public int getAttackerBattleScore() {
+		return attackerBattleScore;
+	}
+
+	public void setAttackerBattleScore(int attackerBattleScore) {
+		this.attackerBattleScore = attackerBattleScore;
+	}
+
+	public String getFormattedAttackerBattleScore() {
+		if(attackerBattleScore == 0) {
+			return "0";
+		} else {
+			return "+" + attackerBattleScore;
+		}
+	}
+
+	public int getDefenderBattleScore() {
+		return defenderBattleScore;
+	}
+
+	public void setDefenderBattleScore(int defenderBattleScore) {
+		this.defenderBattleScore = defenderBattleScore;
+	}
+
+	public String getFormattedDefenderBattleScore() {
+		if(defenderBattleScore == 0) {
+			return "0";
+		} else {
+			return "-" + defenderBattleScore;
+		}
+	}
+
+	public void adjustAttackerBattleScore(int battleScore) {
+		attackerBattleScore += battleScore;
+	}
+
+	public void adjustDefenderBattleScore(int battleScore) {
+		defenderBattleScore += battleScore;
+	}
+
+	public String getFormattedBattleTimeRemaining() {
+		if (BattleSession.getBattleSession().isActive()
+			&& status == SiegeStatus.IN_PROGRESS
+			&& (getAttackerBattleScore() > 0
+				|| getDefenderBattleScore() > 0
+				|| getBannerControllingSide() != SiegeSide.NOBODY
+				|| getBannerControlSessions().size() > 0)) {
+			return BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds();
+		} else {
+			return Translation.of("msg_na");
+		}
 	}
 }

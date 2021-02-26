@@ -18,7 +18,6 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION("siegewar.town.siege.startcannonsession"),
 	// Siegewar related war sickness immunities
 	SIEGEWAR_IMMUNE_TO_WAR_NAUSEA("siegewar.immune.to.war.nausea"),
-	SIEGEWAR_IMMUNE_TO_BATTLE_FATIGUE("siegewar.immune.to.battle.fatigue"),
 	// Command Nodes:
 	SIEGEWAR_COMMAND_SIEGEWAR("siegewar.command.siegewar.*"),
 		SIEGEWAR_COMMAND_SIEGEWAR_NATION("siegewar.command.siegewar.nation.*"),

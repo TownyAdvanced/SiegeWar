@@ -1,12 +1,12 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.Towny;
@@ -66,6 +66,13 @@ public class SiegeWarBannerControlUtil {
 	            
 				if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
 					continue;
+
+				if(!BattleSession.getBattleSession().isActive()) {
+					String message = Translation.of("msg_war_siege_battle_session_break_cannot_get_banner_control",
+													SiegeWarBattleSessionUtil.getFormattedTimeUntilNextBattleSessionStarts());
+					Messaging.sendErrorMsg(player, message);
+					continue;
+				}
 
 				if(siege.getBannerControlSessions().containsKey(player))
 					continue; // Player already has a control session
@@ -249,24 +256,18 @@ public class SiegeWarBannerControlUtil {
 		if(siege.getStatus() != SiegeStatus.IN_PROGRESS)
 			return;
 
-		//Award siege points and pillage
-		int siegePoints;
+		//Award battle score
+		int battleScore;
 		switch(siege.getBannerControllingSide()) {
 			case ATTACKERS:
-				//Adjust siege points
-				siegePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForAttackerOccupation();
-				siegePoints = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(true, siegePoints, siege);
-				siege.adjustSiegePoints(siegePoints);
-				//Save siege zone
-				SiegeController.saveSiege(siege);
+				battleScore = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForAttackerOccupation();
+				battleScore = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(true, battleScore, siege);
+				siege.adjustAttackerBattleScore(battleScore);
 			break;
 			case DEFENDERS:
-				//Adjust siege points
-				siegePoints = -(siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForDefenderOccupation());
-				siegePoints = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(false, siegePoints, siege);
-				siege.adjustSiegePoints(siegePoints);
-				//Save siege zone
-				SiegeController.saveSiege(siege);
+				battleScore = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForDefenderOccupation();
+				battleScore = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(false, battleScore, siege);
+				siege.adjustDefenderBattleScore(battleScore);
 			break;
 			default:
 			return;
