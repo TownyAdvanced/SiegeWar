@@ -273,7 +273,6 @@ msg_err_cannot_toggle_explosions_due_to_cannon_session: "&cYou cannot toggle exp
 msg_err_invalid_bool: "&cInvalid option. Options: on/off"
 msg_beacon_preference_set: "&bBeacon preference set to %s."
 
-#Added in 0.12
 # Misc
 msg_na: 'N/A'
 

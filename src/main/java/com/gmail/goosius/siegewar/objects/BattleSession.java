@@ -1,11 +1,7 @@
 package com.gmail.goosius.siegewar.objects;
 
 
-import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
-
-import java.time.*;
 
 /**
  * This class represents a "Battle Session".

@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.hud;
 
-import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.util.Colors;
@@ -34,7 +33,6 @@ public class SiegeWarHud {
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective objective = board.registerNewObjective("WAR_HUD_OBJ", "", Translation.of("hud_title"));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-
 
         Team attackers = board.registerNewTeam("attackers"),
             defenders = board.registerNewTeam("defenders"),
