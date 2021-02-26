@@ -101,8 +101,8 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_ATTACKER_PLUNDER_AMOUNT_PER_PLOT);
 	}
 
-	public static String getWarSiegeSpoilsDistributionRatio() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_SPOILS_DISTRIBUTION_RATIO);
+	public static String getWarSiegePlunderDistributionRatio() {
+		return Settings.getString(ConfigNodes.WAR_SIEGE_PLUNDER_DISTRIBUTION_RATIO);
 	}
 
 	public static double getWarSiegeMaxHoldoutTimeHours() {

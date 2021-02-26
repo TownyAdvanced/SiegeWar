@@ -173,8 +173,8 @@ public enum ConfigNodes {
 			"",
 			"# This is the amount which an attacking nation will plunder if they choose to do so after a siege victory.",
 			"# See below for more details on how the plunder is distributed."),
-	WAR_SIEGE_SPOILS_DISTRIBUTION_RATIO(
-			"war.siege.money.spoils_distribution_ratio",
+	WAR_SIEGE_PLUNDER_DISTRIBUTION_RATIO(
+			"war.siege.money.plunder_distribution_ratio",
 			"1:3",
 			"",
 			"# This ratio affects how plunder is distributed among the winning team.",
