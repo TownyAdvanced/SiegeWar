@@ -92,7 +92,7 @@ public class BookUtil {
 		text += "Defenders gain " + SiegeWarSettings.getWarSiegePointsForDefenderOccupation() + " base points every 20 seconds for holding the banner. ";
 		text += "Attackers gain " + SiegeWarSettings.getWarSiegePointsForAttackerDeath() + " base points if an attacker is killed in the siege zone. ";
 		text += "Defenders gain " + SiegeWarSettings.getWarSiegePointsForDefenderDeath() + " base points if an defender is killed in the siege zone.\n\n";
-		if (!SiegeWarSettings.isWarSiegeCounterattackBoosterDisabled() && counterPercent > 0) {
+		if (SiegeWarSettings.isWarSiegeCounterattackBoosterEnabled() && counterPercent > 0) {
 			text += "If one siege-side has banner control, then the other side will receive a kill point bonus of " + counterPercent + " % for each player on the banner control list. ";
 			text += "For example, if there are 3 players on the banner control list and one is killed, the enemy side will receive " + (3 * counterPercent) + "% more death points than normal.\n\n";
 		}

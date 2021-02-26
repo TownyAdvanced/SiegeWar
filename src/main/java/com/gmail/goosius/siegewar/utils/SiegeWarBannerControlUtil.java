@@ -10,7 +10,6 @@ import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.Towny;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -228,17 +227,46 @@ public class SiegeWarBannerControlUtil {
 						Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_success"));
 					} else {
 						//The player gains banner control for their side
+						boolean reversal = false;
+						int reversalBonusScore = 0;
+						if(siege.getBannerControllingSide() != SiegeSide.NOBODY
+							&& bannerControlSession.getSiegeSide() != siege.getBannerControllingSide()) {
+							reversal = true;
+							//Apply reversal bonus if required setting is enabled
+							if(SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled()) {
+								reversalBonusScore = (int)((siege.getBattleScoreEarnedFromCurrentBannerControl() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor()) + 0.5);
+								if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
+									siege.adjustAttackerBattleScore(reversalBonusScore);
+								} else {
+									siege.adjustDefenderBattleScore(reversalBonusScore);
+								}
+							}
+						}
 						siege.clearBannerControllingResidents();
+						siege.setBattleScoreEarnedFromCurrentBannerControl(0);
 						siege.setBannerControllingSide(bannerControlSession.getSiegeSide());
 						siege.addBannerControllingResident(bannerControlSession.getResident());
+
 						//Inform player
 						Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_success"));
 						//Inform town/nation participants
 						String message;
-						if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
-							message = Translation.of("msg_siege_war_banner_control_gained_by_attacker", siege.getDefendingTown().getFormattedName());
+						if(reversal) {
+							if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
+								message = Translation.of("msg_siege_war_banner_control_reversed_by_attacker", siege.getDefendingTown().getFormattedName());
+							} else {
+								message = Translation.of("msg_siege_war_banner_control_reversed_by_defender", siege.getDefendingTown().getFormattedName());
+							}
+							if(SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled()) {
+								String sign = bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS ? "+" : "-";
+								message += Translation.of("msg_siege_war_banner_control_reversal_bonus", sign, reversalBonusScore);
+							}
 						} else {
-							message = Translation.of("msg_siege_war_banner_control_gained_by_defender", siege.getDefendingTown().getFormattedName());
+							if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
+								message = Translation.of("msg_siege_war_banner_control_gained_by_attacker", siege.getDefendingTown().getFormattedName());
+							} else {
+								message = Translation.of("msg_siege_war_banner_control_gained_by_defender", siege.getDefendingTown().getFormattedName());
+							}
 						}
 						SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
 						CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
@@ -250,14 +278,13 @@ public class SiegeWarBannerControlUtil {
 		}
 	}
 
-
 	private static void evaluateBannerControlEffects(Siege siege) {
 		//Evaluate the siege zone only if the siege is 'in progress'.
 		if(siege.getStatus() != SiegeStatus.IN_PROGRESS)
 			return;
 
 		//Award battle score
-		int battleScore;
+		int battleScore = 0;
 		switch(siege.getBannerControllingSide()) {
 			case ATTACKERS:
 				battleScore = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForAttackerOccupation();
@@ -272,5 +299,8 @@ public class SiegeWarBannerControlUtil {
 			break;
 			default:
 		}
+
+		//Record score for use by the 'Banner Control Reversal Bonus' feature
+		siege.adjustBattleScoreEarnedFromCurrentBannerControl(battleScore);
 	}
 }

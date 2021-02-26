@@ -51,6 +51,7 @@ public class Siege {
 	private List<Resident> bannerControllingResidents;  //Soldiers currently controlling the banner
 	private SiegeSide bannerControllingSide;
 	private Map<Player, BannerControlSession> bannerControlSessions;
+	private int battleScoreEarnedFromCurrentBannerControl;
 	private boolean attackerHasLowestPopulation;
 	private double siegePointModifierForSideWithLowestPopulation;
 	private int cannonSessionRemainingShortTicks;  //Short ticks remaining until standard cannon protections are restored
@@ -391,5 +392,17 @@ public class Siege {
 				attackerSiegeContributors.put(playerUuid, 1);
 			}
 		}
+	}
+
+	public int getBattleScoreEarnedFromCurrentBannerControl() {
+		return battleScoreEarnedFromCurrentBannerControl;
+	}
+
+	public void setBattleScoreEarnedFromCurrentBannerControl(int battleScoreEarnedFromCurrentBannerControl) {
+		this.battleScoreEarnedFromCurrentBannerControl = battleScoreEarnedFromCurrentBannerControl;
+	}
+
+	public void adjustBattleScoreEarnedFromCurrentBannerControl(int timedBattleScore) {
+		battleScoreEarnedFromCurrentBannerControl += timedBattleScore;
 	}
 }

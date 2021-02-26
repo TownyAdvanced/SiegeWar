@@ -197,7 +197,7 @@ public class SiegeWarPointsUtil {
 	}
 
 	public static int adjustSiegePointPenaltyForBannerControl(boolean residentIsAttacker, int siegePoints, Siege siege) {
-		if(SiegeWarSettings.isWarSiegeCounterattackBoosterDisabled())
+		if(!SiegeWarSettings.isWarSiegeCounterattackBoosterEnabled())
 			return siegePoints;
 
 		if(
