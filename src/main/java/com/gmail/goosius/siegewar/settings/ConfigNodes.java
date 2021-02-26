@@ -272,7 +272,7 @@ public enum ConfigNodes {
 			"# If the value is too low, nations will find it difficult to hold territory due to constant revolts."),
 	WAR_SIEGE_BANNER_CONTROL_SESSION_DURATION_MINUTES (
 			"war.siege.times.banner_control_session_duration_minutes",
-			"10",
+			"5",
 			"",
 			"# This value determines the duration of each banner control session."),
 
