@@ -1,9 +1,6 @@
 package com.gmail.goosius.siegewar.command;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -230,11 +227,21 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					nation.getAccount().withdraw(amount, "Military Salaries");
 
 					//Pay soldiers
+					Map<Resident, Integer> residentSharesMap = new HashMap<>();
+					for(Resident soldier: nation.getResidents()) {
+						
+						residentSharesMap.put(resident)
+					}
+
+						resident = TownyUniverse.getInstance().getResident(uuidShareMapEntry.getKey());
+						if(resident != null) {
+							residentSharesMap.put(resident, uuidShareMapEntry.getValue());
+						}
+					}
 					boolean soldiersPaid =
 							SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
 							amount,
 							null,
-							nation,
 							"Military Salary",
 							false);
 

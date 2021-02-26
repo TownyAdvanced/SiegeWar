@@ -92,6 +92,7 @@ public class SiegeController {
 		SiegeMetaDataController.setEndTime(town, siege.getScheduledEndTime());
 		SiegeMetaDataController.setActualEndTime(town, siege.getActualEndTime());
 		SiegeMetaDataController.setSiegeName(town, siege.getAttackingNation().getName() + "#vs#" + siege.getDefendingTown().getName());
+		SiegeMetaDataController.setAttackerSiegeContributors(town, siege.getAttackerSiegeContributors());
 	}
 
 	public static void loadAll() {

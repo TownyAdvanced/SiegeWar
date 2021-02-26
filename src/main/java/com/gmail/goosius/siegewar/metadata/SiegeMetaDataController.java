@@ -314,4 +314,23 @@ public class SiegeMetaDataController {
 			return residentContributionsMap;
 		}
 	}
+
+	public static void setAttackerSiegeContributors(Town town, Map<String,Integer> contributorsMap) {
+		StringBuilder mapAsStringBuilder = new StringBuilder();
+		boolean firstEntry = true;
+		for(Map.Entry<String,Integer> contributorEntry: contributorsMap.entrySet()) {
+			if(firstEntry) {
+				firstEntry = false;
+			} else {
+				mapAsStringBuilder.append(",");
+			}
+			mapAsStringBuilder.append(contributorEntry.getKey()).append(":").append(contributorEntry.getValue());
+		}
+
+		StringDataField sdf = (StringDataField) attackerSiegeContributors .clone();
+		if (town.hasMeta(sdf.getKey()))
+			MetaDataUtil.setString(town, sdf, mapAsStringBuilder.toString());
+		else
+			town.addMetaData(new StringDataField("siegewar_attackerSiegeContributors", mapAsStringBuilder.toString()));
+	}
 }

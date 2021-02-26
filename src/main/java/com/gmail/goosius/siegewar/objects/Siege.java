@@ -366,11 +366,30 @@ public class Siege {
 		this.attackerBattleContributors = attackerBattleContributors;
 	}
 
+	public void clearAttackerBattleContributors() {
+		attackerBattleContributors.clear();
+	}
 	public Map<String, Integer> getAttackerSiegeContributors() {
 		return attackerSiegeContributors;
 	}
 
 	public void setAttackerSiegeContributors(Map<String, Integer> attackerSiegeContributors) {
 		this.attackerSiegeContributors = attackerSiegeContributors;
+	}
+
+	public void registerAttackerBattleContributorsFromBannerControl() {
+		for(Resident resident: bannerControllingResidents) {
+			attackerBattleContributors.add(resident.getUUID().toString());
+		}
+	}
+
+	public void propagateAttackerBattleContributorsToAttackerSiegeContributors() {
+		for(String playerUuid: attackerBattleContributors) {
+			if(attackerSiegeContributors.containsKey(playerUuid)) {
+				attackerSiegeContributors.put(playerUuid, attackerSiegeContributors.get(playerUuid) + 1);
+			} else {
+				attackerSiegeContributors.put(playerUuid, 1);
+			}
+		}
 	}
 }
