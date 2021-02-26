@@ -94,6 +94,7 @@ public class DynmapTask {
                 } else if (marker.getMarkerIcon().getMarkerIconID().equals(PEACEFUL_BANNER_ICON_ID)) {
                     //Change to battle icon if a battle is in progress
                     if (siege.getStatus() == SiegeStatus.IN_PROGRESS
+                        && BattleSession.getBattleSession().isActive()
                         && (siege.getAttackerBattleScore() > 0
                             || siege.getDefenderBattleScore() > 0
                             || siege.getBannerControllingSide() != SiegeSide.NOBODY
@@ -102,12 +103,9 @@ public class DynmapTask {
                     }
 
                 } else if (marker.getMarkerIcon().getMarkerIconID().equals(BATTLE_BANNER_ICON_ID)) {
-                    //Change to peaceful icon if nobody is fighting
+                    //Change to peaceful icon if siege is no longer in progress or battle is over
                     if (siege.getStatus() != SiegeStatus.IN_PROGRESS
-                            || (siege.getAttackerBattleScore() == 0
-                                && siege.getDefenderBattleScore() == 0
-                                && siege.getBannerControllingSide() == SiegeSide.NOBODY
-                                && siege.getBannerControlSessions().size() == 0)) {
+                        || !BattleSession.getBattleSession().isActive()) {
                         marker.setMarkerIcon(markerapi.getMarkerIcon(PEACEFUL_BANNER_ICON_ID));
                     }
                 }
