@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.metadata;
 
-import com.palmergames.bukkit.towny.object.Resident;
 import org.jetbrains.annotations.Nullable;
 
 import com.gmail.goosius.siegewar.SiegeWar;
