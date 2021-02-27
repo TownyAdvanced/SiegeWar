@@ -296,7 +296,7 @@ msg_war_siege_battle_session_ended_draw_result: "&b * Draw @ %s (0)"
 msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts. The next battle session will start in %s."
 
 #Hud
-hud_points: 'Siege Balance: '
+hud_siege_balance: 'Siege Balance: '
 hud_battle_attacker_points: 'BAT ATK Points: '
 hud_battle_defender_points: 'BAT DEF Points: '
 hud_battle_time_remaining: 'BAT Time Left: '

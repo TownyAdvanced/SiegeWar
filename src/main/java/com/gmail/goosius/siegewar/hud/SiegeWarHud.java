@@ -45,7 +45,7 @@ public class SiegeWarHud {
 
         String attackers_entry = Colors.LightGray + Translation.of("hud_attackers"),
             defenders_entry = Colors.LightGray + Translation.of("hud_defenders"),
-            balance_entry = Colors.LightGray + Translation.of("hud_balance"),
+            balance_entry = Colors.LightGray + Translation.of("hud_siege_balance"),
             timeRemaining_entry = Colors.LightGray + Translation.of("hud_time_remaining"),
             bannerControl_entry = Colors.LightGray + Translation.of("hud_banner_control"),
             battleAttackerScore_entry = Colors.LightGray + Translation.of("hud_battle_attacker_points"),
