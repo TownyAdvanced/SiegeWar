@@ -9,6 +9,7 @@ import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
+import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarScoringUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -69,9 +70,9 @@ public class PlayerDeath {
 			 * it could never return a proper SiegeSide.
 			 */			
 			if (!tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_BATTLE_POINTS.getNode())
-				&& !hasTownMilitaryRank(deadResident)
+				&& !PermissionUtil.hasTownMilitaryRank(deadResident)
 				&& !tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS.getNode())
-				&& !hasNationMilitaryRank(deadResident))
+				&& !PermissionUtil.hasNationMilitaryRank(deadResident))
 				return;
 
 			Town deadResidentTown = deadResident.getTown();
@@ -98,7 +99,7 @@ public class PlayerDeath {
 				if (SiegeController.hasActiveSiege(deadResidentTown)
 					&& SiegeController.getSiege(deadResidentTown) == candidateSiege
 					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_BATTLE_POINTS.getNode())
-						|| hasTownMilitaryRank(deadResident))
+						|| PermissionUtil.hasTownMilitaryRank(deadResident))
 				) {
 					candidateSiegePlayerSide = SiegeSide.DEFENDERS; //Candidate siege has player defending own-town
 
@@ -106,7 +107,7 @@ public class PlayerDeath {
 					&& candidateSiege.getDefendingTown().hasNation()
 					&& candidateSiege.getStatus().isActive()
 					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS.getNode())
-						|| hasNationMilitaryRank(deadResident))
+						|| PermissionUtil.hasNationMilitaryRank(deadResident))
 					&& (deadResidentTown.getNation() == candidateSiege.getDefendingTown().getNation()
 						|| deadResidentTown.getNation().hasMutualAlly(candidateSiege.getDefendingTown().getNation()))) {
 
@@ -115,8 +116,8 @@ public class PlayerDeath {
 				} else if (deadResidentTown.hasNation()
 					&& candidateSiege.getStatus().isActive()
 					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS.getNode())
-						|| hasNationMilitaryRank(deadResident))
-					&& (deadResidentTown.getNation() == candidateSiege.getAttackingNation() 
+						|| PermissionUtil.hasNationMilitaryRank(deadResident))
+					&& (deadResidentTown.getNation() == candidateSiege.getAttackingNation()
 						|| deadResidentTown.getNation().hasMutualAlly(candidateSiege.getAttackingNation()))) {
 
 					candidateSiegePlayerSide = SiegeSide.ATTACKERS; //Candidate siege has player attacking
@@ -217,19 +218,5 @@ public class PlayerDeath {
 			playerDeathEvent.setKeepInventory(true);
 			playerDeathEvent.getDrops().clear();
 		}
-	}
-
-	//LP Glitch mitigation (TODO - remove this pattern by resolving on the lp config side)
-	private static boolean hasTownMilitaryRank(Resident resident) {
-		return resident.isMayor()
-			|| resident.getTownRanks().contains("guard")
-			|| resident.getTownRanks().contains("sheriff");
-	}
-
-	private static boolean hasNationMilitaryRank(Resident resident) {
-		return resident.isKing()
-			|| resident.getNationRanks().contains("soldier")
-			|| resident.getNationRanks().contains("captain")
-			|| resident.getNationRanks().contains("general");
 	}
 }

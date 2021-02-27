@@ -45,9 +45,6 @@ public class PlunderTown {
     public static void processPlunderTownRequest(Player player,
 												 Town townToBePlundered) throws TownyException {
 
-		if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && townToBePlundered.isNeutral())
-			throw new TownyException(Translation.of("msg_war_siege_err_cannot_plunder_peaceful_town"));
-		
 		TownyUniverse universe = TownyUniverse.getInstance();
 		Resident resident = universe.getResident(player.getUniqueId());
         if (resident == null)

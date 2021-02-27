@@ -19,7 +19,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarPermissionUtil;
+import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 import com.palmergames.bukkit.towny.TownyFormatter;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -170,7 +170,7 @@ public class SiegeWarTownEventListener implements Listener {
 				//Remove any military nation ranks of residents
 				for(Resident peacefulTownResident: town.getResidents()) {
 					for (String nationRank : new ArrayList<>(peacefulTownResident.getNationRanks())) {
-						if (SiegeWarPermissionUtil.doesNationRankAllowPermissionNode(nationRank, SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS)) {
+						if (PermissionUtil.doesNationRankAllowPermissionNode(nationRank, SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS)) {
 							try {
 								peacefulTownResident.removeNationRank(nationRank);
 							} catch (NotRegisteredException ignored) {}
