@@ -15,10 +15,8 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.gmail.goosius.siegewar.settings.Translation;
 
-import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class SiegeWarMoneyUtil {
