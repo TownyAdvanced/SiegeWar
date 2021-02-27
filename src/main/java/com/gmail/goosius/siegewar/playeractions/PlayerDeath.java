@@ -228,8 +228,12 @@ public class PlayerDeath {
 
 	private static boolean hasNationMilitaryRank(Resident resident) {
 		return resident.isKing()
-			|| resident.getNationRanks().contains("soldier")
+			|| resident.getNationRanks().contains("private")
+			|| resident.getNationRanks().contains("sergeant")
+			|| resident.getNationRanks().contains("lieutenant")
 			|| resident.getNationRanks().contains("captain")
+			|| resident.getNationRanks().contains("major")
+			|| resident.getNationRanks().contains("colonel")
 			|| resident.getNationRanks().contains("general");
 	}
 }
