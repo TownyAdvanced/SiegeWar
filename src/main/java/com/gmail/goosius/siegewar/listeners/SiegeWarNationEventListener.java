@@ -17,7 +17,7 @@ import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarPermissionUtil;
+import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -146,7 +146,7 @@ public class SiegeWarNationEventListener implements Listener {
 		//In Siegewar, if target town is peaceful, can't add military rank
 		if(SiegeWarSettings.getWarSiegeEnabled()
 			&& SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
-			&& SiegeWarPermissionUtil.doesNationRankAllowPermissionNode(event.getRank(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_POINTS)
+			&& PermissionUtil.doesNationRankAllowPermissionNode(event.getRank(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_POINTS)
 			&& TownyAPI.getInstance().getResidentTownOrNull(event.getResident()).isNeutral()) { // We know that the resident's town will not be null based on the tests already done.
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident"));
