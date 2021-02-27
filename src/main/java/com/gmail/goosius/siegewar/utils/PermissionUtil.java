@@ -21,11 +21,7 @@ public class PermissionUtil {
 	 * @return true if the rank allows the permission node
 	 */
 	public static boolean doesNationRankAllowPermissionNode(String nationRank, SiegeWarPermissionNodes permissionNode) {
-		List<String> allPermissionNodesAllowedByRank = TownyPerms.getNationRank(nationRank);
-		String permissionNodeString = permissionNode.getNode();
-		String permissionNodeWildCardString = permissionNodeString.replaceFirst("[\\w]*$", "*");
-		return (allPermissionNodesAllowedByRank.contains(permissionNodeString) 
-			|| allPermissionNodesAllowedByRank.contains(permissionNodeWildCardString));
+		return doesRankAllowPermissionNode(TownyPerms.getNationRank(nationRank), permissionNode);
 	}
 
 	/**
@@ -36,11 +32,22 @@ public class PermissionUtil {
 	 * @return true if the rank allows the permission node
 	 */
 	public static boolean doesTownRankAllowPermissionNode(String townRank, SiegeWarPermissionNodes permissionNode) {
-		List<String> allPermissionNodesAllowedByRank = TownyPerms.getTownRank(townRank);
-		String permissionNodeString = permissionNode.getNode();
+		return doesRankAllowPermissionNode(TownyPerms.getTownRank(townRank), permissionNode);
+	}
+	
+	/**
+	 * This method checks if a list of permission nodes contains a node.
+	 *
+	 * @param nodesAllowedByRank The List of nodes.
+	 * @param node The SiegeWarPermissionNode to check for.
+	 * @return true if the node is in the List.
+	 */
+	private static boolean doesRankAllowPermissionNode(List<String> nodesAllowedByRank, SiegeWarPermissionNodes node) {
+		String permissionNodeString = node.getNode();
 		String permissionNodeWildCardString = permissionNodeString.replaceFirst("[\\w]*$", "*");
-		return (allPermissionNodesAllowedByRank.contains(permissionNodeString) 
-			|| allPermissionNodesAllowedByRank.contains(permissionNodeWildCardString));
+		return (nodesAllowedByRank.contains(permissionNodeString) 
+			|| nodesAllowedByRank.contains(permissionNodeWildCardString));
+
 	}
 	
 	public static boolean hasNationMilitaryRank(Resident resident) {
