@@ -10,7 +10,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarPointsUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarScoringUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -29,7 +29,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  * This class intercepts 'player death' events coming from the TownyPlayerListener class.
  *
  * This class evaluates the death, and determines if the player is involved in any nearby sieges.
- * If so, their opponents gain siege points, and the player keeps inventory.
+ * If so, the opposing team gains battle points, and the player keeps inventory.
  *
  * @author Goosius
  */
@@ -39,15 +39,15 @@ public class PlayerDeath {
 	 * Evaluates a siege death event.
 	 *
 	 * If the dead player is officially involved in a nearby siege, 
-	 * - Their side loses siege points 
+	 * - The opposing team gains battle points
 	 * - Their inventory items degrade a little (e.g. 10%)
 	 *
 	 * This mechanic allows for a wide range of siege-kill-tactics.
 	 * Examples:
-	 * - Players without towns can contribute to siege points
-	 * - Players from non-nation towns can contribute to siege points
-	 * - Players from secretly-allied nations can contribute to siege points
-	 * - Devices (cannons, traps, bombs etc.) can be used to gain siege points
+	 * - Players without towns can contribute to battle points
+	 * - Players from non-nation towns can contribute to battle points
+	 * - Players from secretly-allied nations can contribute to battle points
+	 * - Devices (cannons, traps, bombs etc.) can be used to gain battle points
 	 *
 	 * @param deadPlayer The player who died
 	 * @param playerDeathEvent The player death event
@@ -68,15 +68,15 @@ public class PlayerDeath {
 			 * Do an early permission test to avoid hitting the sieges list if
 			 * it could never return a proper SiegeSide.
 			 */			
-			if (!tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_POINTS.getNode())
+			if (!tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_BATTLE_POINTS.getNode())
 				&& !hasTownMilitaryRank(deadResident)
-				&& !tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_POINTS.getNode())
+				&& !tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS.getNode())
 				&& !hasNationMilitaryRank(deadResident))
 				return;
 
 			Town deadResidentTown = deadResident.getTown();
 
-			//Residents of occupied towns do not give siege points if killed
+			//Residents of occupied towns do not give battle points if killed
 			if (deadResidentTown.isConquered())
 				return;
 
@@ -97,7 +97,7 @@ public class PlayerDeath {
 				//Is player eligible ?
 				if (SiegeController.hasActiveSiege(deadResidentTown)
 					&& SiegeController.getSiege(deadResidentTown) == candidateSiege
-					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_POINTS.getNode())
+					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_BATTLE_POINTS.getNode())
 						|| hasTownMilitaryRank(deadResident))
 				) {
 					candidateSiegePlayerSide = SiegeSide.DEFENDERS; //Candidate siege has player defending own-town
@@ -105,7 +105,7 @@ public class PlayerDeath {
 				} else if (deadResidentTown.hasNation()
 					&& candidateSiege.getDefendingTown().hasNation()
 					&& candidateSiege.getStatus().isActive()
-					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_POINTS.getNode())
+					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS.getNode())
 						|| hasNationMilitaryRank(deadResident))
 					&& (deadResidentTown.getNation() == candidateSiege.getDefendingTown().getNation()
 						|| deadResidentTown.getNation().hasMutualAlly(candidateSiege.getDefendingTown().getNation()))) {
@@ -114,7 +114,7 @@ public class PlayerDeath {
 
 				} else if (deadResidentTown.hasNation()
 					&& candidateSiege.getStatus().isActive()
-					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_POINTS.getNode())
+					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS.getNode())
 						|| hasNationMilitaryRank(deadResident))
 					&& (deadResidentTown.getNation() == candidateSiege.getAttackingNation() 
 						|| deadResidentTown.getNation().hasMutualAlly(candidateSiege.getAttackingNation()))) {
@@ -146,14 +146,14 @@ public class PlayerDeath {
 					}
 
 					if (confirmedCandidateSiegePlayerSide == SiegeSide.DEFENDERS) {
-						SiegeWarPointsUtil.awardPenaltyPoints(
+						SiegeWarScoringUtil.awardPenaltyPoints(
 								false,
 								deadPlayer,
 								deadResident,
 								confirmedCandidateSiege,
 								Translation.of("msg_siege_war_defender_death"));
 					} else {
-						SiegeWarPointsUtil.awardPenaltyPoints(
+						SiegeWarScoringUtil.awardPenaltyPoints(
 								true,
 								deadPlayer,
 								deadResident,

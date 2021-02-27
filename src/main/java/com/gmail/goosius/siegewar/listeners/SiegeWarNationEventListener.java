@@ -146,7 +146,7 @@ public class SiegeWarNationEventListener implements Listener {
 		//In Siegewar, if target town is peaceful, can't add military rank
 		if(SiegeWarSettings.getWarSiegeEnabled()
 			&& SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
-			&& SiegeWarPermissionUtil.doesNationRankAllowPermissionNode(event.getRank(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_POINTS)
+			&& SiegeWarPermissionUtil.doesNationRankAllowPermissionNode(event.getRank(), SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS)
 			&& TownyAPI.getInstance().getResidentTownOrNull(event.getResident()).isNeutral()) { // We know that the resident's town will not be null based on the tests already done.
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident"));

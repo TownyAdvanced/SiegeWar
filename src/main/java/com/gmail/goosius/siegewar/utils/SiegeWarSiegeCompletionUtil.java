@@ -22,8 +22,8 @@ public class SiegeWarSiegeCompletionUtil {
 												   SiegeStatus siegeStatus) {
 		//Update values
 		siege.setStatus(siegeStatus);
-		siege.setAttackerBattleScore(0);
-		siege.setDefenderBattleScore(0);
+		siege.setAttackerBattlePoints(0);
+		siege.setDefenderBattlePoints(0);
 		siege.setBannerControllingSide(SiegeSide.NOBODY);
 		siege.clearBannerControllingResidents();
 		siege.clearBannerControlSessions();

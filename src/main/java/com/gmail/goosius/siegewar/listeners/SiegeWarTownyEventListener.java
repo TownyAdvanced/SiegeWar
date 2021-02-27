@@ -69,7 +69,7 @@ public class SiegeWarTownyEventListener implements Listener {
     @EventHandler
     public void onNewHour(NewHourEvent event) {
         if(SiegeWarSettings.getWarSiegeEnabled()) {
-            SiegeWarTimerTaskController.updatePopulationBasedSiegePointModifiers();
+            SiegeWarTimerTaskController.updatePopulationBasedBattlePointModifiers();
         }
     }
 

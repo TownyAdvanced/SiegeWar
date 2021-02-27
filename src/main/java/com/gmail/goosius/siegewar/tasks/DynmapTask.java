@@ -95,8 +95,8 @@ public class DynmapTask {
                     //Change to battle icon if a battle is in progress
                     if (siege.getStatus() == SiegeStatus.IN_PROGRESS
                         && BattleSession.getBattleSession().isActive()
-                        && (siege.getAttackerBattleScore() > 0
-                            || siege.getDefenderBattleScore() > 0
+                        && (siege.getAttackerBattlePoints() > 0
+                            || siege.getDefenderBattlePoints() > 0
                             || siege.getBannerControllingSide() != SiegeSide.NOBODY
                             || siege.getBannerControlSessions().size() > 0)) {
                         marker.setMarkerIcon(markerapi.getMarkerIcon(BATTLE_BANNER_ICON_ID));
@@ -132,12 +132,12 @@ public class DynmapTask {
                     lines.add(Translation.of("dynmap_siege_attacker", siege.getAttackingNation().getName()));
                     lines.add(Translation.of("dynmap_siege_defender", siege.getDefendingTown().getName()));
                     lines.add(Translation.of("dynmap_siege_status", siege.getStatus().getName()));
-                    lines.add(Translation.of("dynmap_siege_points", siege.getSiegePoints()));
+                    lines.add(Translation.of("dynmap_battle_points", siege.getSiegeBalance()));
                     lines.add(Translation.of("dynmap_siege_time_left", siege.getTimeRemaining()));
                     if (TownyEconomyHandler.isActive())
                         lines.add(Translation.of("dynmap_siege_war_chest", TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount())));
                     lines.add(Translation.of("dynmap_siege_banner_control", siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase()));
-                    lines.add(Translation.of("dynmap_siege_battle_score", siege.getFormattedAttackerBattleScore(), siege.getFormattedDefenderBattleScore()));
+                    lines.add(Translation.of("dynmap_siege_battle_score", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
                     lines.add(Translation.of("dynmap_siege_battle_time_left", siege.getFormattedBattleTimeRemaining()));
 
                     String desc = "<b>" + name + "</b><hr>" + StringMgmt.join(lines, "<br>");

@@ -35,7 +35,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
 	private static final List<String> siegewaradminTabCompletes = Arrays.asList("immunity","reload","siege","town","nation");
 	private static final List<String> siegewaradminImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
-	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setpoints","end","setplundered","remove");
+	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","remove");
 	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setcaptured");
 	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost","setnationdefeats");
 
@@ -151,7 +151,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity town [town_name] [hours]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity nation [nation_name] [hours]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity alltowns [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setpoints [points]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setbalance [points]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
@@ -167,7 +167,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
 	private void showSiegeHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/swa siege"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setpoints [points]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setbalance [points]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
@@ -268,7 +268,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			}
 
 			switch(args[1].toLowerCase()) {
-				case "setpoints":
+				case "setbalance":
 					if (args.length < 3) {
 						showSiegeHelp(sender);
 					}
@@ -280,13 +280,13 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 					}
 
 					int newPoints = Integer.parseInt(args[2]);
-					siege.setSiegePoints(newPoints);
+					siege.setSiegeBalance(newPoints);
 					SiegeController.saveSiege(siege);
-					Messaging.sendMsg(sender, Translation.of("msg_swa_set_points_success", newPoints, town.getName()));
+					Messaging.sendMsg(sender, Translation.of("msg_swa_set_siege_balance_success", newPoints, town.getName()));
 					return;
 
 				case "end":
-					if (siege.getSiegePoints() < 1)
+					if (siege.getSiegeBalance() < 1)
 						DefenderWin.defenderWin(siege, siege.getDefendingTown());
 					else
 						AttackerWin.attackerWin(siege, siege.getAttackingNation());

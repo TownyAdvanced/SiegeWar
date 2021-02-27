@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.hud.SiegeWarHud;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -40,7 +39,7 @@ public class SiegeHUDManager {
 
     public static void updateHUDs() {
         for (Entry<Player, Siege> entry : warHudUsers.entrySet()) {
-            if (entry.getKey().getScoreboard().getTeam("points") == null) {
+            if (entry.getKey().getScoreboard().getTeam("balance") == null) {
                 warHudUsers.remove(entry.getKey());
                 continue;
             } else

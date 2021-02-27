@@ -78,7 +78,7 @@ public class SiegeWarBannerControlUtil {
 
 				residentTown = resident.getTown();
 				if(residentTown == siege.getDefendingTown()
-					&& universe.getPermissionSource().testPermission(resident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_POINTS.getNode())) {
+					&& universe.getPermissionSource().testPermission(resident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_TOWN_BATTLE_POINTS.getNode())) {
 					//Player is defending their own town
 
 					if(siege.getBannerControllingSide() == SiegeSide.DEFENDERS && siege.getBannerControllingResidents().contains(resident))
@@ -88,7 +88,7 @@ public class SiegeWarBannerControlUtil {
 					continue;
 
 				} else if (residentTown.hasNation()
-					&& universe.getPermissionSource().testPermission(resident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_POINTS.getNode())) {
+					&& universe.getPermissionSource().testPermission(resident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS.getNode())) {
 
 					if (defendingTown.hasNation()
 						&& (defendingTown.getNation() == residentTown.getNation()
@@ -192,7 +192,7 @@ public class SiegeWarBannerControlUtil {
 		if(player.isFlying() || player.isGliding())
 			return false;   // Player is flying
 
-		if(!SiegeWarPointsUtil.isPlayerInTimedPointZone(player, siege))
+		if(!SiegeWarScoringUtil.isPlayerInTimedPointZone(player, siege))
 			return false; //player is not in the timed point zone
 
 		return true;
@@ -234,16 +234,16 @@ public class SiegeWarBannerControlUtil {
 							reversal = true;
 							//Apply reversal bonus if required setting is enabled
 							if(SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled()) {
-								reversalBonusScore = (int)((siege.getBattleScoreEarnedFromCurrentBannerControl() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor()) + 0.5);
+								reversalBonusScore = (int)((siege.getTimedBattlePointsEarnedFromCurrentBannerControl() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor()) + 0.5);
 								if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
-									siege.adjustAttackerBattleScore(reversalBonusScore);
+									siege.adjustAttackerBattlePoints(reversalBonusScore);
 								} else {
-									siege.adjustDefenderBattleScore(reversalBonusScore);
+									siege.adjustDefenderBattlePoints(reversalBonusScore);
 								}
 							}
 						}
 						siege.clearBannerControllingResidents();
-						siege.setBattleScoreEarnedFromCurrentBannerControl(0);
+						siege.setTimedBattlePointsEarnedFromCurrentBannerControl(0);
 						siege.setBannerControllingSide(bannerControlSession.getSiegeSide());
 						siege.addBannerControllingResident(bannerControlSession.getResident());
 
@@ -283,24 +283,24 @@ public class SiegeWarBannerControlUtil {
 		if(siege.getStatus() != SiegeStatus.IN_PROGRESS)
 			return;
 
-		//Award battle score
-		int battleScore = 0;
+		//Award battle points
+		int battlePoints = 0;
 		switch(siege.getBannerControllingSide()) {
 			case ATTACKERS:
-				battleScore = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForAttackerOccupation();
-				battleScore = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(true, battleScore, siege);
-				siege.adjustAttackerBattleScore(battleScore);
+				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarBattlePointsForAttackerOccupation();
+				battlePoints = SiegeWarScoringUtil.applyBattlePointsAdjustmentForPopulationQuotient(true, battlePoints, siege);
+				siege.adjustAttackerBattlePoints(battlePoints);
 				siege.registerAttackerBattleContributorsFromBannerControl();
 			break;
 			case DEFENDERS:
-				battleScore = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarSiegePointsForDefenderOccupation();
-				battleScore = SiegeWarPointsUtil.adjustSiegePointsForPopulationQuotient(false, battleScore, siege);
-				siege.adjustDefenderBattleScore(battleScore);
+				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarBattlePointsForDefenderOccupation();
+				battlePoints = SiegeWarScoringUtil.applyBattlePointsAdjustmentForPopulationQuotient(false, battlePoints, siege);
+				siege.adjustDefenderBattlePoints(battlePoints);
 			break;
 			default:
 		}
 
 		//Record score for use by the 'Banner Control Reversal Bonus' feature
-		siege.adjustBattleScoreEarnedFromCurrentBannerControl(battleScore);
+		siege.adjustBattlePointsEarnedFromCurrentBannerControl(battlePoints);
 	}
 }

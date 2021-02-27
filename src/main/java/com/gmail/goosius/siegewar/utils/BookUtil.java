@@ -88,16 +88,16 @@ public class BookUtil {
 		 */
 		text += "\nSIEGE SCORING\n\n";
 		text += "Players win sieges by holding the ground within " + TownySettings.getTownBlockSize() + " blocks of the siege banner (the 'timed point zone'), and/or by killing enemy soldiers within " + SiegeWarSettings.getWarSiegeZoneRadiusBlocks() + " blocks of the siege banner (the 'siege zone').\n\n";
-		text += "Attackers gain " + SiegeWarSettings.getWarSiegePointsForAttackerOccupation() + " base points every 20 seconds for holding the banner. ";
-		text += "Defenders gain " + SiegeWarSettings.getWarSiegePointsForDefenderOccupation() + " base points every 20 seconds for holding the banner. ";
-		text += "Attackers gain " + SiegeWarSettings.getWarSiegePointsForAttackerDeath() + " base points if an attacker is killed in the siege zone. ";
-		text += "Defenders gain " + SiegeWarSettings.getWarSiegePointsForDefenderDeath() + " base points if an defender is killed in the siege zone.\n\n";
+		text += "Attackers gain " + SiegeWarSettings.getWarBattlePointsForAttackerOccupation() + " base points every 20 seconds for holding the banner. ";
+		text += "Defenders gain " + SiegeWarSettings.getWarBattlePointsForDefenderOccupation() + " base points every 20 seconds for holding the banner. ";
+		text += "Attackers gain " + SiegeWarSettings.getWarBattlePointsForAttackerDeath() + " base points if an attacker is killed in the siege zone. ";
+		text += "Defenders gain " + SiegeWarSettings.getWarBattlePointsForDefenderDeath() + " base points if an defender is killed in the siege zone.\n\n";
 		if (SiegeWarSettings.isWarSiegeCounterattackBoosterEnabled() && counterPercent > 0) {
 			text += "If one siege-side has banner control, then the other side will receive a kill point bonus of " + counterPercent + " % for each player on the banner control list. ";
 			text += "For example, if there are 3 players on the banner control list and one is killed, the enemy side will receive " + (3 * counterPercent) + "% more death points than normal.\n\n";
 		}
 		if (SiegeWarSettings.getWarSiegePopulationBasedPointBoostsEnabled())
-			text += "The side of the siege which has a lower population will receive extra siege points.\n\n";
+			text += "The side of the siege which has a lower population will receive extra battle points.\n\n";
 
 
 		/*
@@ -122,7 +122,7 @@ public class BookUtil {
 		 */
 		text += "\nHOW A SIEGE ENDS\n\n";
 		text += "Maximum siege duration is " + maxSiege + " (this is important to allow players enough time to respond to siege attacks, especially casual & cross-timezone players.)\n\n";
-		text += "At the end of the max siege duration, a winner is chosen based on the points (positive points mean the attacker wins, negative points mean the defender wins).\n\n";
+		text += "At the end of the max siege duration, a winner is chosen based on the siege balance (positive means the attacker wins, negative means the defender wins).\n\n";
 
 		/*
 		 * Abandon & Surrender
@@ -206,7 +206,7 @@ public class BookUtil {
 
 		//Battle sessions
 		text += "\nBATTLE SESSIONS\n\n";
-		text += "Fighting is organised into " + activeSession + " 'battle sessions'. During a battle session, each team (attackers/defenders) competes in 'battles' at each siege. Killing or banner control will give them a 'battle score'. When the battle session ends, at each battle, the team with the highest battle score wins the battle, and their battle score is converted into siege points. After a battle session ends, there is typically a break until the next battle session. In this break, nobody can gain battle scores.\n\n";
+		text += "Fighting is organised into " + activeSession + " 'battle sessions'. During a battle session, each team (attackers/defenders) competes in 'battles' at each siege. Killing or banner control will give them a 'battle score'. When the battle session ends, at each battle, the team with the highest battle score wins the battle, and their battle score is applied to the siege balance. After a battle session ends, there is typically a break until the next battle session. In this break, nobody can gain battle points.\n\n";
 
 		return text;
 	}
