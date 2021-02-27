@@ -298,26 +298,26 @@ public enum ConfigNodes {
 			"# This is the vertical distance a soldier must be from the banner to get banner control.",
 			"# Note that the horizontal distance is always the same as the Towny townblock size."),
 
-	//Siege points
-	WAR_SIEGE_POINTS_FOR_ATTACKER_OCCUPATION(
+	//Battle points
+	WAR_BATTLE_POINTS_FOR_ATTACKER_OCCUPATION(
 			"war.siege.scoring.points_for_attacker_occupation",
 			"10",
 			"",
-			"# This setting determines the number of siege points awarded to an occupying attacker.",
+			"# This setting determines the number of battle points awarded to an occupying attacker.",
 			"# The points are awarded if a player remains within a town-block length of the siege banner for: ",
 			"# 10 minutes (default configuration)."),
-	WAR_SIEGE_POINTS_FOR_DEFENDER_OCCUPATION(
+	WAR_BATTLE_POINTS_FOR_DEFENDER_OCCUPATION(
 			"war.siege.scoring.points_for_defender_occupation",
 			"10",
 			"",
-			"# This setting determines the number of siege points awarded to an occupying defender.",
+			"# This setting determines the number of battle points awarded to an occupying defender.",
 			"# The points are awarded if a player remains within a town-block length of the siege banner for ",
 			"# 10 minutes (default configuration)."),
-	WAR_SIEGE_POINTS_FOR_ATTACKER_DEATH(
+	WAR_BATTLE_POINTS_FOR_ATTACKER_DEATH(
 			"war.siege.scoring.points_for_attacker_death",
 			"150",
 			"",
-			"# This setting determines the number of siege points awarded if an attacker dies.",
+			"# This setting determines the number of battle points awarded if an attacker dies.",
 			"# The points are awarded if the player dies within the configured siege zone death radius.",
 			"# The points are given to the defending town.",
 			"# ",
@@ -329,11 +329,11 @@ public enum ConfigNodes {
 			"# Configuration Outcomes:",
 		    "# Value HIGH --> If the value is high, then PVP will be DISCOURAGED",
 			"# Value LOW --> If the value is low, then PVP will be ENCOURAGED"),
-	WAR_SIEGE_POINTS_FOR_DEFENDER_DEATH(
+	WAR_BATTLE_POINTS_FOR_DEFENDER_DEATH(
 			"war.siege.scoring.points_for_defender_death",
 			"150",
 			"",
-			"# This setting determines the number of siege points awarded if a defender dies.",
+			"# This setting determines the number of battle points awarded if a defender dies.",
 			"# The points are awarded if the player dies within the configured siege zone death radius.",
 			"# The points are given to the attacking nation.",
 			"# ",	
@@ -360,7 +360,7 @@ public enum ConfigNodes {
 			"# Example:",
 			"# 1. Assume this value is set to 3.0.",
 		    "# 2. Assume a siege attacker has 3 times the population of a siege defender (counting allied populations too).",
-			"# 3. In this example, if the siege defender scores any siege points, the points will be boosted by the (separately configured) maximum.",
+			"# 3. In this example, if the siege defender scores any battle points, the points will be boosted by the (separately configured) maximum.",
             "# 4. In this example, the siege attacker will not get any points boosts."),
 	WAR_SIEGE_MAX_POPULATION_BASED_POINTS_BOOST(
 			"war.siege.scoring.max_population_based_points_boost",
@@ -370,7 +370,7 @@ public enum ConfigNodes {
 			"# Example:",
 			"# 1. Assume this value is set to 2.0.",
 			"# 2. Assume that a siege attacker greatly outnumbers a siege defender in population. (also counting allies)",
-			"# 3. In this example, if the siege defender scores any siege points, the points will be multiplied by 2.",
+			"# 3. In this example, if the siege defender scores any battle points, the points will be multiplied by 2.",
 			"# 4. In this example, the siege attacker will not get any points boosts."),
 
 	//Battle Sessions

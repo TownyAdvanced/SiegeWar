@@ -117,20 +117,20 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_MIN_SIEGE_DURATION_BEFORE_ABANDON_HOURS);
 	}
 
-	public static int getWarSiegePointsForAttackerOccupation() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_FOR_ATTACKER_OCCUPATION);
+	public static int getWarBattlePointsForAttackerOccupation() {
+		return Settings.getInt(ConfigNodes.WAR_BATTLE_POINTS_FOR_ATTACKER_OCCUPATION);
 	}
 
-	public static int getWarSiegePointsForDefenderOccupation() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_FOR_DEFENDER_OCCUPATION);
+	public static int getWarBattlePointsForDefenderOccupation() {
+		return Settings.getInt(ConfigNodes.WAR_BATTLE_POINTS_FOR_DEFENDER_OCCUPATION);
 	}
 
-	public static int getWarSiegePointsForAttackerDeath() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_FOR_ATTACKER_DEATH);
+	public static int getWarBattlePointsForAttackerDeath() {
+		return Settings.getInt(ConfigNodes.WAR_BATTLE_POINTS_FOR_ATTACKER_DEATH);
 	}
 
-	public static int getWarSiegePointsForDefenderDeath() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_FOR_DEFENDER_DEATH);
+	public static int getWarBattlePointsForDefenderDeath() {
+		return Settings.getInt(ConfigNodes.WAR_BATTLE_POINTS_FOR_DEFENDER_DEATH);
 	}
 	
 	public static int getWarSiegeZoneRadiusBlocks() {

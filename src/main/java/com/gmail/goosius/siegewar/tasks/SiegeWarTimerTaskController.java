@@ -43,7 +43,7 @@ public class SiegeWarTimerTaskController {
 			case IN_PROGRESS:
 				//If scheduled end time has arrived, choose winner
 				if (System.currentTimeMillis() > siege.getScheduledEndTime()) {
-					TownyObject siegeWinner = SiegeWarPointsUtil.calculateSiegeWinner(siege);
+					TownyObject siegeWinner = SiegeWarScoringUtil.calculateSiegeWinner(siege);
 					if (siegeWinner instanceof Town) {
 						DefenderWin.defenderWin(siege, (Town) siegeWinner);
 					} else {
@@ -97,9 +97,9 @@ public class SiegeWarTimerTaskController {
 		}
 	}
 
-	public static void updatePopulationBasedSiegePointModifiers() {
+	public static void updatePopulationBasedBattlePointModifiers() {
 		if(SiegeWarSettings.getWarSiegePopulationBasedPointBoostsEnabled()) {
-			SiegeWarPointsUtil.updatePopulationBasedSiegePointModifiers();
+			SiegeWarScoringUtil.updatePopulationBasedBattlePointModifiers();
 		}
 	}
 

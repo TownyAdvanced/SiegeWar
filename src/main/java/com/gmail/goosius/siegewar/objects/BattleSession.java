@@ -9,23 +9,23 @@ import com.palmergames.util.TimeMgmt;
  * A battle session is period of time, typically 50 minutes,
  * in which individual "battles" take place at each siege.
  *
- * During a battle, siege points can be gained/lost.
+ * During a battle, battle points can be gained/lost by either side.
  *
- * At the end of a battle session:
- * - The winner of each battle is declared
- *    - either the "Attacker" or the "Defender", or "Draw"
- *    - If nobody contested a battle, no winner is declared.
- * - All scoreboards will show that the winner won +1 "battle".
- * - Siege points are reset to 0
- * - Plunder is awarded to any soldiers on the winning side,
- *   who gained banner control during the battle.
- *   (Attackers steal from the town, defenders steals from the war chest)
+ * When a battle ends:
+ * - The winner depends on who scores the most battle points.
+ * - It will be Attacker, Defender, or a Draw
+ * - If nobody contested a battle, no winner is declared.
+ * - If there is a winner, their battle points are applied to the siege balance.
  *
- * Until the next battle session starts:
- * - This period is known as a "break", and typically lasts 10 minutes.
- * - During this period, siege points remain at 0, and banner control is not possible.
+ * After a battle ends
+ * - Battle points are reset to 0
+ * - All banner control is wiped
+ * - There is a break (defualt 10 mins) until the next battle session starts
+ *   ... during the break, no battle points gains or banner control are possible.
  *
- * At the normal end of a siege, whoever has won the most battles, wins the siege.
+ * FYI
+ * In the context of the overall Siege, the siege balance determines the winner
+ * (not the battle points)
  *
  * @author Goosius
  */

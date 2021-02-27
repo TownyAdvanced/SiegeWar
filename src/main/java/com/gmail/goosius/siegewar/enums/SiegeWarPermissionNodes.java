@@ -7,13 +7,15 @@ package com.gmail.goosius.siegewar.enums;
  */
 public enum SiegeWarPermissionNodes {
 
-	SIEGEWAR_NATION_SIEGE_POINTS("siegewar.nation.siege.points"),
+	//This permission affects battle points, but the perm currently has the older name of siege points
+	SIEGEWAR_NATION_BATTLE_POINTS("siegewar.nation.siege.points"),
 	SIEGEWAR_NATION_SIEGE_LEADERSHIP("siegewar.nation.siege.leadership"),
 	SIEGEWAR_NATION_SIEGE_ATTACK("siegewar.nation.siege.attack"),
 	SIEGEWAR_NATION_SIEGE_ABANDON("siegewar.nation.siege.abandon"),
 	SIEGEWAR_NATION_SIEGE_INVADE("siegewar.nation.siege.invade"),
 	SIEGEWAR_NATION_SIEGE_PLUNDER("siegewar.nation.siege.plunder"),
-	SIEGEWAR_TOWN_SIEGE_POINTS("siegewar.town.siege.points"),
+	//This permission affects battle points, but the perm currently has the older name of siege points
+	SIEGEWAR_TOWN_BATTLE_POINTS("siegewar.town.siege.points"),
 	SIEGEWAR_TOWN_SIEGE_SURRENDER("siegewar.town.siege.surrender"),
 	SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION("siegewar.town.siege.startcannonsession"),
 	// Siegewar related war sickness immunities

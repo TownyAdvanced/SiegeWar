@@ -38,32 +38,32 @@ public class SiegeWarBattleSessionUtil {
 				for(Siege siege: SiegeController.getSieges()) {
 
 					if (siege.getStatus() == SiegeStatus.IN_PROGRESS
-						&& (siege.getAttackerBattleScore() > 0 || siege.getDefenderBattleScore() > 0)) {
+						&& (siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0)) {
 						//Calculate result
-						int battleResult;
-						if (siege.getAttackerBattleScore() > siege.getDefenderBattleScore()) {
-							battleResult = siege.getAttackerBattleScore();
-						} else if (siege.getAttackerBattleScore() < siege.getDefenderBattleScore()) {
-							battleResult = -siege.getDefenderBattleScore();
+						int battlePointsOfWinner;
+						if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()) {
+							battlePointsOfWinner = siege.getAttackerBattlePoints();
+						} else if (siege.getAttackerBattlePoints() < siege.getDefenderBattlePoints()) {
+							battlePointsOfWinner = -siege.getDefenderBattlePoints();
 						} else {
-							battleResult = 0;
+							battlePointsOfWinner = 0;
 						}
 
-						//Apply the result to the siege points
-						siege.adjustSiegePoints(battleResult);
+						//Apply the battle points of the winner to the siege balance
+						siege.adjustSiegeBalance(battlePointsOfWinner);
 
 						//Propagate attacker battle contributions to siege history
 						siege.propagateAttackerBattleContributorsToAttackerSiegeContributors();
 
 						//Prepare result for messaging
-						battleResults.put(siege, battleResult);
+						battleResults.put(siege, battlePointsOfWinner);
 
 						//Clear battle related stats from the siege
 						siege.setBannerControllingSide(SiegeSide.NOBODY);
 						siege.clearBannerControllingResidents();
 						siege.clearBannerControlSessions();
-						siege.setAttackerBattleScore(0);
-						siege.setDefenderBattleScore(0);
+						siege.setAttackerBattlePoints(0);
+						siege.setDefenderBattlePoints(0);
 						siege.clearAttackerBattleContributors();
 
 						//Save siege

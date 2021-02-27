@@ -27,7 +27,7 @@ import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
  * 
  * A siege is initiated by a nation leader with appropriate permissions,
  * It typically lasts for a moderate duration (e.g. hours or days),
- * and can be ended n a number of ways, including abandon, surrender, or points victory.
+ * and can be ended n a number of ways, including when siege victory timer reaches 0, or abandon, or surrender.
  * 
  * After a siege ends, it enters an aftermath phase where the status is no longer "In Progress",
  * During this phase, the town cannot be attacked again,
@@ -46,17 +46,17 @@ public class Siege {
     private long scheduledEndTime;    //Scheduled end of siege
     private long actualEndTime;       //Actual end time of siege
 	private Location siegeBannerLocation;
-	private int siegePoints;
+	private int siegeBalance;
 	private double warChestAmount;
 	private List<Resident> bannerControllingResidents;  //Soldiers currently controlling the banner
 	private SiegeSide bannerControllingSide;
 	private Map<Player, BannerControlSession> bannerControlSessions;
-	private int battleScoreEarnedFromCurrentBannerControl;
+	private int timedBattlePointsEarnedFromCurrentBannerControl;
 	private boolean attackerHasLowestPopulation;
-	private double siegePointModifierForSideWithLowestPopulation;
+	private double battlePointstModifierForSideWithLowestPopulation;
 	private int cannonSessionRemainingShortTicks;  //Short ticks remaining until standard cannon protections are restored
-	private int attackerBattleScore;
-	private int defenderBattleScore;
+	private int attackerBattlePoints;
+	private int defenderBattlePoints;
 	private Set<String> attackerBattleContributors;   //UUID's of attackers who contributed during the current battle
 	private Map<String, Integer> attackerSiegeContributors;  //UUID:numContributions map of attackers who contributed during current siege
 
@@ -64,17 +64,17 @@ public class Siege {
         this.name = name;
         status = SiegeStatus.IN_PROGRESS;
 		attackingNation = null;
-		siegePoints = 0;
+		siegeBalance = 0;
 		siegeBannerLocation = null;
 		warChestAmount = 0;
 		bannerControllingResidents = new ArrayList<>();
 		bannerControllingSide = SiegeSide.NOBODY;
 		bannerControlSessions = new HashMap<>();
 		attackerHasLowestPopulation = false;
-		siegePointModifierForSideWithLowestPopulation = 0;  //0 is the special starting value
+		battlePointstModifierForSideWithLowestPopulation = 0;  //0 is the special starting value
 		cannonSessionRemainingShortTicks = 0;
-		attackerBattleScore = 0;
-		defenderBattleScore = 0;
+		attackerBattlePoints = 0;
+		defenderBattlePoints = 0;
 		attackerBattleContributors = new HashSet<>();
 		attackerSiegeContributors = new HashMap<>();
     }
@@ -188,16 +188,16 @@ public class Siege {
 		this.siegeBannerLocation = location;
 	}
 
-	public Integer getSiegePoints() {
-		return siegePoints;
+	public Integer getSiegeBalance() {
+		return siegeBalance;
 	}
 
-	public void setSiegePoints(int siegePoints) {
-		this.siegePoints = siegePoints;
+	public void setSiegeBalance(int siegeBalance) {
+		this.siegeBalance = siegeBalance;
 	}
 
-	public void adjustSiegePoints(int adjustment) {
-		siegePoints += adjustment;
+	public void adjustSiegeBalance(int adjustment) {
+		siegeBalance += adjustment;
 	}
 
 	public double getWarChestAmount() {
@@ -257,12 +257,12 @@ public class Siege {
 		return name;
 	}
 
-	public double getSiegePointModifierForSideWithLowestPopulation() {
-		return siegePointModifierForSideWithLowestPopulation;
+	public double getBattlePointsModifierForSideWithLowestPopulation() {
+		return battlePointstModifierForSideWithLowestPopulation;
 	}
 
-	public void setSiegePointModifierForSideWithLowestPopulation(double siegePointModifierForSideWithLowestPopulation) {
-		this.siegePointModifierForSideWithLowestPopulation = siegePointModifierForSideWithLowestPopulation;
+	public void setBattlePointsModifierForSideWithLowestPopulation(double battlePointsModifierForSideWithLowestPopulation) {
+		this.battlePointstModifierForSideWithLowestPopulation = battlePointsModifierForSideWithLowestPopulation;
 	}
 
 	public boolean isAttackerHasLowestPopulation() {
@@ -306,51 +306,51 @@ public class Siege {
 		cannonSessionRemainingShortTicks--;
 	}
 
-	public int getAttackerBattleScore() {
-		return attackerBattleScore;
+	public int getAttackerBattlePoints() {
+		return attackerBattlePoints;
 	}
 
-	public void setAttackerBattleScore(int attackerBattleScore) {
-		this.attackerBattleScore = attackerBattleScore;
+	public void setAttackerBattlePoints(int attackerBattlePoints) {
+		this.attackerBattlePoints = attackerBattlePoints;
 	}
 
-	public String getFormattedAttackerBattleScore() {
-		if(attackerBattleScore == 0) {
+	public String getFormattedAttackerBattlePoints() {
+		if(attackerBattlePoints == 0) {
 			return "0";
 		} else {
-			return "+" + attackerBattleScore;
+			return "+" + attackerBattlePoints;
 		}
 	}
 
-	public int getDefenderBattleScore() {
-		return defenderBattleScore;
+	public int getDefenderBattlePoints() {
+		return defenderBattlePoints;
 	}
 
-	public void setDefenderBattleScore(int defenderBattleScore) {
-		this.defenderBattleScore = defenderBattleScore;
+	public void setDefenderBattlePoints(int defenderBattlePoints) {
+		this.defenderBattlePoints = defenderBattlePoints;
 	}
 
-	public String getFormattedDefenderBattleScore() {
-		if(defenderBattleScore == 0) {
+	public String getFormattedDefenderBattlePoints() {
+		if(defenderBattlePoints == 0) {
 			return "0";
 		} else {
-			return "-" + defenderBattleScore;
+			return "-" + defenderBattlePoints;
 		}
 	}
 
-	public void adjustAttackerBattleScore(int battleScore) {
-		attackerBattleScore += battleScore;
+	public void adjustAttackerBattlePoints(int battleScore) {
+		attackerBattlePoints += battleScore;
 	}
 
-	public void adjustDefenderBattleScore(int battleScore) {
-		defenderBattleScore += battleScore;
+	public void adjustDefenderBattlePoints(int battleScore) {
+		defenderBattlePoints += battleScore;
 	}
 
 	public String getFormattedBattleTimeRemaining() {
 		if (BattleSession.getBattleSession().isActive()
 			&& status == SiegeStatus.IN_PROGRESS
-			&& (getAttackerBattleScore() > 0
-				|| getDefenderBattleScore() > 0
+			&& (getAttackerBattlePoints() > 0
+				|| getDefenderBattlePoints() > 0
 				|| getBannerControllingSide() != SiegeSide.NOBODY
 				|| getBannerControlSessions().size() > 0)) {
 			return BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds();
@@ -394,15 +394,15 @@ public class Siege {
 		}
 	}
 
-	public int getBattleScoreEarnedFromCurrentBannerControl() {
-		return battleScoreEarnedFromCurrentBannerControl;
+	public int getTimedBattlePointsEarnedFromCurrentBannerControl() {
+		return timedBattlePointsEarnedFromCurrentBannerControl;
 	}
 
-	public void setBattleScoreEarnedFromCurrentBannerControl(int battleScoreEarnedFromCurrentBannerControl) {
-		this.battleScoreEarnedFromCurrentBannerControl = battleScoreEarnedFromCurrentBannerControl;
+	public void setTimedBattlePointsEarnedFromCurrentBannerControl(int timedBattlePointsEarnedFromCurrentBannerControl) {
+		this.timedBattlePointsEarnedFromCurrentBannerControl = timedBattlePointsEarnedFromCurrentBannerControl;
 	}
 
-	public void adjustBattleScoreEarnedFromCurrentBannerControl(int timedBattleScore) {
-		battleScoreEarnedFromCurrentBannerControl += timedBattleScore;
+	public void adjustBattlePointsEarnedFromCurrentBannerControl(int timedBattlePoints) {
+		timedBattlePointsEarnedFromCurrentBannerControl += timedBattlePoints;
 	}
 }

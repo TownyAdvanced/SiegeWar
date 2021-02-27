@@ -30,7 +30,8 @@ public class SiegeMetaDataController {
 	private static StringDataField siegeTownUUID = new StringDataField("siegewar_townUUID", "");
 	private static StringDataField siegeFlagLocation = new StringDataField("siegewar_flagLocation", "");
 	private static StringDataField siegeStatus = new StringDataField("siegewar_status", "");
-	private static IntegerDataField siegePoints = new IntegerDataField("siegewar_points", 0);
+	//In metadata, siegeBalance still uses the old name of points
+	private static IntegerDataField siegeBalance = new IntegerDataField("siegewar_points", 0);
 	private static DecimalDataField siegeWarChestAmount = new DecimalDataField("siegewar_warChestAmount", 0.0);
 	private static BooleanDataField townPlundered = new BooleanDataField("siegewar_townPlundered", false);
 	private static BooleanDataField townInvaded = new BooleanDataField("siegewar_townInvaded", false);
@@ -128,14 +129,14 @@ public class SiegeMetaDataController {
 	}
 	
 	@Nullable
-	public static String getStatus(Town town) {
+	public static String getSiegeStatus(Town town) {
 		StringDataField sdf = (StringDataField) siegeStatus.clone();
 		if (town.hasMeta(sdf.getKey()))
 			return MetaDataUtil.getString(town, sdf);
 		return null;
 	}
 	
-	public static void setStatus(Town town, String status) {
+	public static void setSiegeStatus(Town town, String status) {
 		StringDataField sdf = (StringDataField) siegeStatus.clone();
 		if (town.hasMeta(sdf.getKey()))
 			MetaDataUtil.setString(town, sdf, status);
@@ -143,15 +144,15 @@ public class SiegeMetaDataController {
 			town.addMetaData(new StringDataField("siegewar_status", status));
 	}
 	
-	public static int getPoints(Town town) {
-		IntegerDataField idf = (IntegerDataField) siegePoints.clone();
+	public static int getSiegeBalance(Town town) {
+		IntegerDataField idf = (IntegerDataField) siegeBalance.clone();
 		if (town.hasMeta(idf.getKey()))
 			return MetaDataUtil.getInt(town, idf);
 		return 0;
 	}
 	
-	public static void setPoints(Town town, int num) {
-		IntegerDataField idf = (IntegerDataField) siegePoints.clone();
+	public static void setSiegeBalance(Town town, int num) {
+		IntegerDataField idf = (IntegerDataField) siegeBalance.clone();
 		if (town.hasMeta(idf.getKey()))
 			MetaDataUtil.setInt(town, idf, num);
 		else
@@ -268,7 +269,7 @@ public class SiegeMetaDataController {
 		if (town.hasMeta(sdf.getKey()))
 			town.removeMetaData(sdf);
 
-		IntegerDataField idf = (IntegerDataField) siegePoints.clone();
+		IntegerDataField idf = (IntegerDataField) siegeBalance.clone();
 		if (town.hasMeta(idf.getKey()))
 			town.removeMetaData(idf);
 		

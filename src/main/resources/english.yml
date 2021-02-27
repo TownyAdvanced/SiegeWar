@@ -200,7 +200,6 @@ hud_banner_control: "Banner Control: "
 hud_time_remaining: 'Time Left: '
 
 msg_err_peaceful_town_pvp_forced_off: '&cPeaceful towns have PVP forced OFF.'
-msg_swa_set_points_success: '&bSuccessfully set siege points to %d for %s.'
 msg_swa_resident_already_has_control: '&cResident %s already has control.'
 msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
 msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
@@ -277,12 +276,12 @@ msg_beacon_preference_set: "&bBeacon preference set to %s."
 msg_na: 'N/A'
 
 #Town screen
-status_town_siege_status_points: '&2 > Points: &a%s'
+status_town_siege_status_siege_balance: '&2 > Balance: &a%s'
 status_town_siege_status_warchest: '&2 > War Chest: &a%s'
 
 #Death points
-msg_siege_war_attacker_death: '&bSiege of %s > Attacker died > %s > Battle score -%d'
-msg_siege_war_defender_death: '&bSiege of %s > Defender died > %s > Battle score +%d'
+msg_siege_war_attacker_death: '&bSiege of %s > Attacker died > %s > Battle Points -%d'
+msg_siege_war_defender_death: '&bSiege of %s > Defender died > %s > Battle Points +%d'
 
 #Battle sessions
 status_town_siege_battle: '&2Battle'
@@ -296,14 +295,14 @@ msg_war_siege_battle_session_ended_defender_result: "&b * Defenders @ %s (%s)"
 msg_war_siege_battle_session_ended_draw_result: "&b * Draw @ %s (0)"
 msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts. The next battle session will start in %s."
 
-#Scoreboard
-hud_points: 'Siege Points: '
-hud_battle_attacker_score: 'BAT ATK Score: '
-hud_battle_defender_score: 'BAT DEF Score: '
+#Hud
+hud_siege_balance: 'Siege Balance: '
+hud_battle_attacker_points: 'BAT ATK Points: '
+hud_battle_defender_points: 'BAT DEF Points: '
 hud_battle_time_remaining: 'BAT Time Left: '
 
 #Dynmap
-dynmap_siege_points: 'Siege Points: %d'
+dynmap_battle_points: 'Siege Balance: %d'
 dynmap_siege_battle_score: 'Battle Score: %s / %s'
 dynmap_siege_battle_time_left: 'Battle Time Left: %s'
 
@@ -311,3 +310,6 @@ dynmap_siege_battle_time_left: 'Battle Time Left: %s'
 msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > The attackers have stolen banner control from the defenders!.'
 msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > The defenders have stolen banner control from the attackers!.'
 msg_siege_war_banner_control_reversal_bonus: ' Reversal Bonus: %s%d'
+
+#Admin
+msg_swa_set_siege_balance_success: '&bSuccessfully set siege balance to %d for %s.'

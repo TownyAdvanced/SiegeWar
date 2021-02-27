@@ -170,7 +170,7 @@ public class SiegeWarTownEventListener implements Listener {
 				//Remove any military nation ranks of residents
 				for(Resident peacefulTownResident: town.getResidents()) {
 					for (String nationRank : new ArrayList<>(peacefulTownResident.getNationRanks())) {
-						if (PermissionUtil.doesNationRankAllowPermissionNode(nationRank, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_POINTS)) {
+						if (PermissionUtil.doesNationRankAllowPermissionNode(nationRank, SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS)) {
 							try {
 								peacefulTownResident.removeNationRank(nationRank);
 							} catch (NotRegisteredException ignored) {}
@@ -314,9 +314,9 @@ public class SiegeWarTownEventListener implements Listener {
 						out.add(Translation.of("status_town_siege_status_besieger", siege.getAttackingNation().getFormattedName()));
 
 						// > Points: +530
-						int pointsInt = siege.getSiegePoints();
+						int pointsInt = siege.getSiegeBalance();
 						String pointsString = pointsInt > 0 ? "+" + pointsInt : "" + pointsInt;
-						out.add(Translation.of("status_town_siege_status_points", pointsString));
+						out.add(Translation.of("status_town_siege_status_siege_balance", pointsString));
 
 						// > Banner XYZ: {2223,82,9877}
 	                    out.add(
@@ -335,8 +335,8 @@ public class SiegeWarTownEventListener implements Listener {
 						out.add(Translation.of("status_town_siege_status_warchest", warChest));
 
 						if(BattleSession.getBattleSession().isActive()
-							&& (siege.getAttackerBattleScore() > 0
-								|| siege.getDefenderBattleScore() > 0
+							&& (siege.getAttackerBattlePoints() > 0
+								|| siege.getDefenderBattlePoints() > 0
 								|| siege.getBannerControllingSide() != SiegeSide.NOBODY
 								|| siege.getBannerControlSessions().size() > 0)) {
 
@@ -359,7 +359,7 @@ public class SiegeWarTownEventListener implements Listener {
 							}
 
 							// > Score: +90 / -220
-							out.add(Translation.of("status_town_siege_battle_score", siege.getFormattedAttackerBattleScore(), siege.getFormattedDefenderBattleScore()));
+							out.add(Translation.of("status_town_siege_battle_score", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
 
 							// > Time Remaining: 22 minutes
 							out.add(Translation.of("status_town_siege_battle_time_remaining", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
