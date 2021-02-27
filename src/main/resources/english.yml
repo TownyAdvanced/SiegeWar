@@ -297,8 +297,8 @@ msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control 
 
 #Hud
 hud_points: 'Siege Balance: '
-hud_battle_attacker_score: 'BAT ATK Points: '
-hud_battle_defender_score: 'BAT DEF Points: '
+hud_battle_attacker_points: 'BAT ATK Points: '
+hud_battle_defender_points: 'BAT DEF Points: '
 hud_battle_time_remaining: 'BAT Time Left: '
 
 #Dynmap
