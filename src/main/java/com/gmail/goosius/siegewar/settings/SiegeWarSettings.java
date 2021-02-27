@@ -260,8 +260,8 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.OCCUPIED_TOWN_UNCLAIMING_DISABLED);
 	}
 
-	public static boolean isWarSiegeCounterattackBoosterDisabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_DISABLED);
+	public static boolean isWarSiegeCounterattackBoosterEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_ENABLED);
 	}
 
 	public static double getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercentage() {
@@ -383,5 +383,13 @@ public class SiegeWarSettings {
 
 	public static String getBeaconEnemyColor() {
 		return Settings.getString(ConfigNodes.BEACON_MARKERS_ENEMY_COLOR);
+	}
+
+	public static boolean isWarSiegeBannerControlReversalBonusEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BANNER_CONTROL_REVERSAL_BONUS_ENABLED);
+	}
+
+	public static double getWarSiegeBannerControlReversalBonusFactor() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_BANNER_CONTROL_REVERSAL_BONUS_MULTIPLIER);
 	}
 }

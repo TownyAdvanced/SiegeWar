@@ -132,8 +132,8 @@ public enum ConfigNodes {
 			"",
 			"# If this value is true, then a town under active siege cannot unclaim.",
 			"#  This setting is recommended if invasion/occupation is enabled, to avoid occupation escape exploits."),
-	WAR_SIEGE_COUNTERATTACK_BOOSTER_DISABLED(
-			"war.siege.switches.counterattack_booster_disabled",
+	WAR_SIEGE_COUNTERATTACK_BOOSTER_ENABLED(
+			"war.siege.switches.counterattack_booster_enabled",
 			"false",
 			"",
 			"# This feature is an essential feature for a good server experience, ",
@@ -272,7 +272,7 @@ public enum ConfigNodes {
 			"# If the value is too low, nations will find it difficult to hold territory due to constant revolts."),
 	WAR_SIEGE_BANNER_CONTROL_SESSION_DURATION_MINUTES (
 			"war.siege.times.banner_control_session_duration_minutes",
-			"5",
+			"10",
 			"",
 			"# This value determines the duration of each banner control session."),
 
@@ -373,13 +373,14 @@ public enum ConfigNodes {
 			"# 3. In this example, if the siege defender scores any siege points, the points will be multiplied by 2.",
 			"# 4. In this example, the siege attacker will not get any points boosts."),
 
-	//Battle
+	//Battle Sessions
 	WAR_SIEGE_BATTLE_SESSIONS_START_TIMES_UTC(
 			"war.siege.battle_session.start_times_utc",
-			"0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23",
+			"0:10,1:10,2:10,3:10,4:10,5:10,6:10,7:10,8:10,9:10,10:10,11:10,12:10,13:10,14:10,15:10,16:10,17:10,18:10,19:10,20:10,21:10,22:10,23:10",
 			"# This value determines the times (in UTC) when each battle session will start.",
-			"# The default is once per hour, on the hour.",
-			"# To use times with minutes, use e.g. 4:20,5:20,6:35 etc.",
+			"# Integers can be used to signify hours, and minutes are used as follows: 4:20,5:20,6:35 etc.",
+			"# The default is every hour, at ten past the hour.",
+			"# The ten-past is so the critical point of the battle (the final minutes), will fall on the hour.",
 			"# In addition to controlling routine battle session start times,",
 			"# this config can also be used to prevent afk sieging at unusual times e.g. night-time sieges.",
 			"# But be careful with this, as it also restricts sieging by cross-timezone players."),
@@ -390,6 +391,25 @@ public enum ConfigNodes {
 			"# This value determines the duration of each battle session.",
 			"# After a battle session ends,",
 			"# the time period until the next battle session starts, is defined as a 'break'"),
+
+	//Banner Control Reversal Bonus
+	WAR_SIEGE_BANNER_CONTROL_REVERSAL_BONUS_ENABLED(
+			"war.siege.banner_control_reversal_bonus.enabled",
+			"true",
+			"# This setting determines if the banner control reversal bonus is enabled.",
+			"# If enabled, then whenever a team reverses banner control during a battle,",
+			"# that team receives a bonus, equal to a multiplier of the timed points which that control had previously granted to the opposing team.",
+            "# This feature is particularly important to prevent 'AFK sieging',",
+			"# because the more timed points a team gains while its opponent is away,",
+			"# the more that team stands to lose if its opponent reappears and reverses banner control."),
+	WAR_SIEGE_BANNER_CONTROL_REVERSAL_BONUS_MULTIPLIER(
+			"war.siege.banner_control_reversal_bonus.multiplier",
+			"2",
+			"# This setting determines the strength of the bonus multiplier.",
+			"# Example: Assuming this value is 2,",
+			"# then if team A has gained a battle score of 420 from banner control,",
+			"# and banner control is then reversed by Team B,",
+			"# then Team B will get a reversal bonus to their battle score, of 840."),
 
 	//Siege zone block/use restrictions
 	WAR_SIEGE_ZONE_BLOCK_PLACEMENT_RESTRICTIONS_ENABLED(

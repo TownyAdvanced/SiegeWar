@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.metadata;
 
+import com.palmergames.bukkit.towny.object.Resident;
 import org.jetbrains.annotations.Nullable;
 
 import com.gmail.goosius.siegewar.SiegeWar;
@@ -301,7 +302,7 @@ public class SiegeMetaDataController {
 		if (town.hasMeta(sdf.getKey()))
 			dataAsString = MetaDataUtil.getString(town, sdf);
 
-		if(dataAsString == null) {
+		if(dataAsString == null || dataAsString.length() == 0) {
 			return new HashMap<>();
 		} else {
 			Map<String, Integer> residentContributionsMap = new HashMap<>();

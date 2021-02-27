@@ -306,3 +306,8 @@ hud_battle_time_remaining: 'BAT Time Left: '
 dynmap_siege_points: 'Siege Points: %d'
 dynmap_siege_battle_score: 'Battle Score: %s / %s'
 dynmap_siege_battle_time_left: 'Battle Time Left: %s'
+
+#Banner control
+msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > The attackers have stolen banner control from the defenders!.'
+msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > The defenders have stolen banner control from the attackers!.'
+msg_siege_war_banner_control_reversal_bonus: ' Reversal Bonus: %s%d'
