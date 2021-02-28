@@ -182,6 +182,10 @@ public class TownPeacefulnessUtil {
 				if (!peacefulTown.isNeutral())
 					continue;
 
+				//Skip if town is ruined
+				if(peacefulTown.isRuined())
+					continue;
+
 				//Find guardian towns
 				Set<Town> guardianTowns = getValidGuardianTowns(peacefulTown);
 
