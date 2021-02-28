@@ -701,7 +701,22 @@ public enum ConfigNodes {
 			"",
 			"# The color that the beacon will be for a player when the enemy side has control of the banner.",
 			"# See above for valid colors.",
-			"# Defaults to red if no valid color is entered.");
+			"# Defaults to red if no valid color is entered."),
+
+	BANNER_XYZ_TEXT(
+			"banner_xyz_text",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                   Banner XYZ Text                    | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	BANNER_XYZ_TEXT_ENABLED(
+			"banner_xyz_text.enabled",
+			"false",
+			"The banner xyz text is an alternative to beacon markers for siege banners (but they can also be used together).",
+			"# If enabled, besieged towns will show the XYZ of the siege banner on their town screens.");
 
 	private final String Root;
 	private final String Default;
