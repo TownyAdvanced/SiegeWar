@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.BattleSession;
@@ -9,6 +10,9 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 import java.time.*;
 import java.util.ArrayList;
@@ -57,6 +61,18 @@ public class SiegeWarBattleSessionUtil {
 
 						//Prepare result for messaging
 						battleResults.put(siege, battlePointsOfWinner);
+
+						//Remove glowing effects from players in bc sessions
+						for(Player player: siege.getBannerControlSessions().keySet()) {
+							if(player.isOnline() && player.hasPotionEffect(PotionEffectType.GLOWING)) {
+								Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+									@Override
+									public void run() {
+										player.removePotionEffect(PotionEffectType.GLOWING);
+									}
+								});
+							}
+						}
 
 						//Clear battle related stats from the siege
 						siege.setBannerControllingSide(SiegeSide.NOBODY);
