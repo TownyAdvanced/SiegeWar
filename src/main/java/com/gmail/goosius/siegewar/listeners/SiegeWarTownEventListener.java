@@ -313,7 +313,7 @@ public class SiegeWarTownEventListener implements Listener {
 						// > Attacker: Land of Empire (Nation)
 						out.add(Translation.of("status_town_siege_status_besieger", siege.getAttackingNation().getFormattedName()));
 
-						// > Points: +530
+						// > Balance: +530
 						int pointsInt = siege.getSiegeBalance();
 						String pointsString = pointsInt > 0 ? "+" + pointsInt : "" + pointsInt;
 						out.add(Translation.of("status_town_siege_status_siege_balance", pointsString));
