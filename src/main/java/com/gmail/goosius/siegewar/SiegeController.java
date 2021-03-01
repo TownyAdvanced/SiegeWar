@@ -105,19 +105,23 @@ public class SiegeController {
 	}
 	
 	public static void loadSiegeList() {
-		for (Town town : TownyUniverse.getInstance().getTowns())
-			if (SiegeMetaDataController.hasSiege(town)) {
+		TownyUniverse.getInstance().getTowns().stream()
+			.filter(town -> SiegeMetaDataController.hasSiege(town))
+			.forEach(town -> {
 				System.out.println(SiegeWar.prefix + "Found siege in Town " + town.getName());
 				String name = getSiegeName(town);
-				if (name != null) {
-					System.out.println(SiegeWar.prefix + "Loading siege " + name.replace("#", " "));
-					newSiege(name);
-					setSiege(town, true);
-					townSiegeMap.put(town.getUUID(), sieges.get(name.toLowerCase()));
-					siegedTowns.add(town);
-					siegedTownNames.add(town.getName());
-				}
-			}
+				if (name != null)
+					loadSiegeName(name, town);
+			});
+	}
+	
+	public static void loadSiegeName(String name, Town town) {
+		System.out.println(SiegeWar.prefix + "Loading siege " + name.replace("#", " "));
+		newSiege(name);
+		setSiege(town, true);
+		townSiegeMap.put(town.getUUID(), sieges.get(name.toLowerCase()));
+		siegedTowns.add(town);
+		siegedTownNames.add(town.getName());
 	}
 
 	public static boolean loadSieges() {
@@ -253,12 +257,9 @@ public class SiegeController {
 	
 	@Nullable
 	public static List<Siege> getSieges(Nation nation) {
-		List<Siege> siegeList = new ArrayList<>();
-		for (Siege siege : sieges.values()) {
-			if (siege.getAttackingNation().equals(nation))
-				siegeList.add(siege);			
-		}
-		return siegeList;
+		return sieges.values().stream()
+			.filter(siege -> siege.getAttackingNation().equals(nation))
+			.collect(Collectors.toList());
 	}
 	
 	@Nullable
@@ -277,13 +278,9 @@ public class SiegeController {
 	
 	@Nullable
 	public static List<Siege> getSiegesByNationUUID(UUID uuid) {
-		List<Siege> siegeList = new ArrayList<>();
-		for (Siege siege : sieges.values()) {
-			Town town = siege.getDefendingTown();
-			if (UUID.fromString(SiegeMetaDataController.getNationUUID(town)).equals(uuid))
-				siegeList.add(siege);
-		}
-		return siegeList;
+		return sieges.values().stream()
+			.filter(siege -> UUID.fromString(SiegeMetaDataController.getNationUUID(siege.getDefendingTown())).equals(uuid))
+			.collect(Collectors.toList());
 	}
 	
 	@Nullable
@@ -304,13 +301,10 @@ public class SiegeController {
 	}
 
 	public static List<Siege> getActiveSiegesAt(Location location) {
-		List<Siege> siegesAtLocation = new ArrayList<>();
-		for (Siege siege : sieges.values()) {
-			if (SiegeWarDistanceUtil.isInSiegeZone(location, siege) && siege.getStatus().isActive()) {
-				siegesAtLocation.add(siege);
-			}
-		}
-		return siegesAtLocation;
+		return sieges.values().stream()
+			.filter(siege -> siege.getStatus().isActive())
+			.filter(siege -> SiegeWarDistanceUtil.isInSiegeZone(location, siege))
+			.collect(Collectors.toList());
 	}
 
 	/**

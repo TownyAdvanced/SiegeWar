@@ -15,9 +15,9 @@ public class ResidentMetaDataController {
 
 	@SuppressWarnings("unused")
 	private SiegeWar plugin;
-	private static IntegerDataField refundAmount = new IntegerDataField("siegewar_nationrefund", 0, "Nation Refund");
-	private static IntegerDataField plunderAmount = new IntegerDataField("siegewar_plunder", 0, "Plunder");
-	private static IntegerDataField militarySalaryAmount = new IntegerDataField("siegewar_militarysalary", 0, "Military Salary");
+	private static IntegerDataField refundAmount = new IntegerDataField("siegewar_nationrefund", 0);
+	private static IntegerDataField plunderAmount = new IntegerDataField("siegewar_plunder", 0);
+	private static IntegerDataField militarySalaryAmount = new IntegerDataField("siegewar_militarysalary", 0);
 
 	static String
 		beaconsDisabled = "siegewar_beaconsdisabled";
@@ -52,9 +52,9 @@ public class ResidentMetaDataController {
 			if (resident.hasMeta(idf.getKey())) {
 				int updatedRefundAmount = getNationRefundAmount(resident) + nationRefundAmount;
 				resident.removeMetaData(idf);
-				resident.addMetaData(new IntegerDataField("siegewar_nationrefund", updatedRefundAmount, "Nation Refund"));
+				resident.addMetaData(new IntegerDataField("siegewar_nationrefund", updatedRefundAmount));
 			} else {
-				resident.addMetaData(new IntegerDataField("siegewar_nationrefund", nationRefundAmount, "Nation Refund"));
+				resident.addMetaData(new IntegerDataField("siegewar_nationrefund", nationRefundAmount));
 			}
 		}
 	}
@@ -84,9 +84,9 @@ public class ResidentMetaDataController {
 			if (resident.hasMeta(idf.getKey())) {
 				int updatedAmount = getPlunderAmount(resident) + amountToAdd;
 				resident.removeMetaData(idf);
-				resident.addMetaData(new IntegerDataField("siegewar_plunder", updatedAmount, "Plunder"));
+				resident.addMetaData(new IntegerDataField("siegewar_plunder", updatedAmount));
 			} else {
-				resident.addMetaData(new IntegerDataField("siegewar_plunder", amountToAdd, "Plunder"));
+				resident.addMetaData(new IntegerDataField("siegewar_plunder", amountToAdd));
 			}
 		}
 	}
@@ -116,9 +116,9 @@ public class ResidentMetaDataController {
 			if (resident.hasMeta(idf.getKey())) {
 				int updatedAmount = getMilitarySalaryAmount(resident) + amountToAdd;
 				resident.removeMetaData(idf);
-				resident.addMetaData(new IntegerDataField("siegewar_militarysalary", updatedAmount, "Military Salary"));
+				resident.addMetaData(new IntegerDataField("siegewar_militarysalary", updatedAmount));
 			} else {
-				resident.addMetaData(new IntegerDataField("siegewar_militarysalary", amountToAdd, "Military Salary"));
+				resident.addMetaData(new IntegerDataField("siegewar_militarysalary", amountToAdd));
 			}
 		}
 	}

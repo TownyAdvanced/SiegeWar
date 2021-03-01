@@ -295,6 +295,10 @@ public class SiegeWarTownEventListener implements Listener {
 			List<String> out = new ArrayList<>();
 			Town town = event.getTown();
 			
+			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && TownMetaDataController.getPeacefulnessChangeConfirmationCounterDays(town) != 0) {
+				out.add("Days To Peacefulness Status Change: " + TownMetaDataController.getPeacefulnessChangeConfirmationCounterDays(town));
+			}
+			
 	        //Revolt Immunity Timer: 71.8 hours
 	        if (SiegeWarSettings.getWarSiegeRevoltEnabled() && System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(town)) {        	
 	        	String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getRevoltImmunityEndTime(town)- System.currentTimeMillis());        	

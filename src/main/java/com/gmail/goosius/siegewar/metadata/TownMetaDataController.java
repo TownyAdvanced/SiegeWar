@@ -15,7 +15,7 @@ public class TownMetaDataController {
 
 	@SuppressWarnings("unused")
 	private SiegeWar plugin;
-	private static IntegerDataField peacefulnessChangeConfirmationCounterDays = new IntegerDataField("siegewar_peacefuldays", 0, "Days To Peacefulness Status Change");
+	private static IntegerDataField peacefulnessChangeConfirmationCounterDays = new IntegerDataField("siegewar_peacefuldays", 0);
 	private static BooleanDataField desiredPeacefulness = new BooleanDataField("siegewar_desiredPeaceSetting", false);
 	private static LongDataField revoltImmunityEndTime = new LongDataField("siegewar_revoltImmunityEndTime", 0l);
 	private static LongDataField siegeImmunityEndTime = new LongDataField("siegewar_siegeImmunityEndTime", 0l);
@@ -41,7 +41,7 @@ public class TownMetaDataController {
 			}
 			MetaDataUtil.setInt(town, idf, days);
 		} else if (days != 0) {
-			town.addMetaData(new IntegerDataField("siegewar_peacefuldays", days, "Days To Peacefulness Status Change"));			
+			town.addMetaData(new IntegerDataField("siegewar_peacefuldays", days));			
 		}
 	}
 	
