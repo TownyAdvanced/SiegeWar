@@ -199,6 +199,7 @@ public class SiegeWarBannerControlUtil {
 	}
 
 	private static void evaluateExistingBannerControlSessions(Siege siege) {
+		BANNER_CONTROL_SESSIONS_LOOP:
 		for(BannerControlSession bannerControlSession: siege.getBannerControlSessions().values()) {
 			try {
 				//Check if session failed
@@ -219,6 +220,32 @@ public class SiegeWarBannerControlUtil {
 
 				//Check if session succeeded
 				if(System.currentTimeMillis() > bannerControlSession.getSessionEndTime()) {
+
+					//Pause success if there are enemy soldiers nearby.
+					for(BannerControlSession bcSession: siege.getBannerControlSessions().values()) {
+						if(bcSession.getSiegeSide() != bannerControlSession.getSiegeSide()) {
+							//Reapply glow for 1 short tick
+							long effectDurationSeconds = TownySettings.getShortInterval();
+							final int effectDurationTicks = (int)(TimeTools.convertToTicks(effectDurationSeconds));
+							Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+								public void run() {
+									List<PotionEffect> potionEffects = new ArrayList<>();
+									potionEffects.add(new PotionEffect(PotionEffectType.GLOWING, effectDurationTicks, 0));
+									bannerControlSession.getPlayer().addPotionEffects(potionEffects);
+								}
+							});
+							//Send message to player every 9 ticks (ie 3 minutes)
+							if(bannerControlSession.getShortTicksUntilNextPauseWarning() < 1) {
+								Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_paused"));
+								bannerControlSession.setShortTicksUntilNextPauseWarning(9);
+							}
+							bannerControlSession.decrementShortTicksUntilNextPauseWarning();
+
+							continue BANNER_CONTROL_SESSIONS_LOOP;
+						}
+					}
+
+					//Session success
 					siege.removeBannerControlSession(bannerControlSession);
 
 					if(bannerControlSession.getSiegeSide() == siege.getBannerControllingSide()) {

@@ -10,12 +10,14 @@ public class BannerControlSession {
 	private Resident resident;
 	private SiegeSide siegeSide;
 	private long sessionEndTime;
+	int shortTicksUntilNextPauseWarning;
 
 	public BannerControlSession(Resident resident, Player player, SiegeSide siegeSide, long sessionEndTime) {
 		this.resident = resident;
 		this.player = player;
 		this.siegeSide = siegeSide;
 		this.sessionEndTime = sessionEndTime;
+		this.shortTicksUntilNextPauseWarning = 0;
 	}
 
 	public Player getPlayer() {
@@ -32,5 +34,17 @@ public class BannerControlSession {
 
 	public Resident getResident() {
 		return resident;
+	}
+
+	public int getShortTicksUntilNextPauseWarning() {
+		return shortTicksUntilNextPauseWarning;
+	}
+
+	public void setShortTicksUntilNextPauseWarning(int i) {
+		shortTicksUntilNextPauseWarning = i;
+	}
+
+	public void decrementShortTicksUntilNextPauseWarning() {
+		shortTicksUntilNextPauseWarning--;
 	}
 }
