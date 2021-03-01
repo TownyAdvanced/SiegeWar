@@ -715,7 +715,7 @@ public enum ConfigNodes {
 	BANNER_XYZ_TEXT_ENABLED(
 			"banner_xyz_text.enabled",
 			"false",
-			"The banner xyz text is an alternative to beacon markers for siege banners (but they can also be used together).",
+			"# The banner xyz text is an alternative to beacon markers for siege banners (but they can also be used together).",
 			"# If enabled, besieged towns will show the XYZ of the siege banner on their town screens.");
 
 	private final String Root;
