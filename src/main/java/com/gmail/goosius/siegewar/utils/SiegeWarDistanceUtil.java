@@ -12,7 +12,6 @@ import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyWorld;
 import com.palmergames.bukkit.towny.object.WorldCoord;
 
-import java.util.Comparator;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -74,11 +73,30 @@ public class SiegeWarDistanceUtil {
 	@Nullable
 	public static Siege findNearestSiegeForNation(Block block, Nation nation) {
 		//Find the nearest siege zone to the given block within the given radius belonging to the given nation.
-		return SiegeController.getSieges(nation).stream()
-			.filter(siege -> block.getWorld().getName().equalsIgnoreCase(siege.getFlagLocation().getWorld().getName()))
-			.filter(siege -> block.getLocation().distance(siege.getFlagLocation()) < TOWNBLOCKSIZE)			
-			.min(Comparator.comparingDouble(siege -> block.getLocation().distance(siege.getFlagLocation())))
-			.get();
+		Siege nearestSiege = null;
+		double distanceToNearestSiegeZone = -1;
+		for(Siege siege: SiegeController.getSieges(nation)) {
+
+			if(!block.getLocation().getWorld().getName().equalsIgnoreCase(siege.getFlagLocation().getWorld().getName())) {
+				continue;
+			}
+			
+			if(block.getLocation().distance(siege.getFlagLocation()) > TOWNBLOCKSIZE)
+				continue;
+
+			if (nearestSiege == null) {
+				nearestSiege = siege;
+				distanceToNearestSiegeZone = block.getLocation().distance(nearestSiege.getFlagLocation());
+			} else {
+				double distanceToNewTarget = block.getLocation().distance(siege.getFlagLocation());
+				if(distanceToNewTarget < distanceToNearestSiegeZone) {
+					nearestSiege = siege;
+					distanceToNearestSiegeZone = distanceToNewTarget;
+				}
+			}
+		}
+	
+		return nearestSiege;
 	}
 
 	/**
@@ -88,10 +106,13 @@ public class SiegeWarDistanceUtil {
 	 * @return true is location is in an active siegezone
 	 */
 	public static boolean isLocationInActiveSiegeZone(Location location) {
-		
-		return SiegeController.getSieges().stream()
-			.filter(siege -> siege.getStatus().isActive())
-			.anyMatch(siege -> isInSiegeZone(location, siege));
+		for(Siege siege: SiegeController.getSieges()) {
+			if(siege.getStatus().isActive()
+				&& SiegeWarDistanceUtil.isInSiegeZone(location, siege)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static boolean isInSiegeZone(Location location, Siege siege) {

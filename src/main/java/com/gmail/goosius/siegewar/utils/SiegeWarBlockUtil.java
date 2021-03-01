@@ -56,7 +56,6 @@ public class SiegeWarBlockUtil {
 	}
 
 	private static List<TownBlock> getTownBlocks(List<WorldCoord> coOrdinatesToSearch) {
-
 		List<TownBlock> townBlocks = new ArrayList<>();
 
 		for(WorldCoord nearbyCoord: coOrdinatesToSearch){
