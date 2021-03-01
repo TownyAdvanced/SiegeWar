@@ -78,7 +78,7 @@ public class SiegeWarBannerControlUtil {
 
 				residentTown = resident.getTown();
 				if(residentTown == siege.getDefendingTown()
-					&& universe.getPermissionSource().testPermission(resident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_TOWN_BATTLE_POINTS.getNode())) {
+					&& universe.getPermissionSource().testPermission(resident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS.getNode())) {
 					//Player is defending their own town
 
 					if(siege.getBannerControllingSide() == SiegeSide.DEFENDERS && siege.getBannerControllingResidents().contains(resident))
@@ -88,7 +88,7 @@ public class SiegeWarBannerControlUtil {
 					continue;
 
 				} else if (residentTown.hasNation()
-					&& universe.getPermissionSource().testPermission(resident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS.getNode())) {
+					&& universe.getPermissionSource().testPermission(resident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode())) {
 
 					if (defendingTown.hasNation()
 						&& (defendingTown.getNation() == residentTown.getNation()

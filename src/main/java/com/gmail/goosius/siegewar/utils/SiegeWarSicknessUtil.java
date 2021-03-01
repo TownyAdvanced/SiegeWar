@@ -124,21 +124,21 @@ public class SiegeWarSicknessUtil {
         	
 
         if (residentTown.equals(defendingTown) && resident.getPlayer()
-                .hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_BATTLE_POINTS.getNode())) {
+                .hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS.getNode())) {
             // Player is defending their own town
             return true;
         }
 
         if (residentNation != null
         		&& (attackingNation.equals(TownyAPI.getInstance().getTownNationOrNull(residentTown)) || attackingNation.hasMutualAlly(TownyAPI.getInstance().getTownNationOrNull(residentTown)))
-                && resident.getPlayer().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS.getNode())) {
+                && resident.getPlayer().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode())) {
             // Player is attacking
             return true;
         }
 
         if (defendingNation != null && residentNation != null 
                 && (defendingNation.equals(residentNation) || defendingNation.hasMutualAlly(residentNation))
-                && resident.getPlayer().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS.getNode())) {
+                && resident.getPlayer().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode())) {
             // Player is defending another town in the nation
             return true;
         }

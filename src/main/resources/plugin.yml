@@ -57,7 +57,7 @@ permissions:
         description: User holds all of the siegewar nation nodes.
         default: false
         children:
-            siegewar.nation.battle.points: true
+            siegewar.nation.siege.battle.points: true
             siegewar.nation.siege.attack: true
             siegewar.nation.siege.abandon: true
             siegewar.nation.siege.invade: true
@@ -67,7 +67,7 @@ permissions:
         description: User holds all of the siegewar town nodes.
         default: false
         children:
-            siegewar.town.battle.points: true
+            siegewar.town.siege.battle.points: true
             siegewar.town.siege.surrender: true
             siegewar.town.siege.startcannonsession: true
 
