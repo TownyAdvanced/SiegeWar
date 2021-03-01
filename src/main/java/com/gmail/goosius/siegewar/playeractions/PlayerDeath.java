@@ -69,9 +69,9 @@ public class PlayerDeath {
 			 * Do an early permission test to avoid hitting the sieges list if
 			 * it could never return a proper SiegeSide.
 			 */			
-			if (!tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_BATTLE_POINTS.getNode())
+			if (!tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS.getNode())
 				&& !PermissionUtil.hasTownMilitaryRank(deadResident)
-				&& !tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS.getNode())
+				&& !tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode())
 				&& !PermissionUtil.hasNationMilitaryRank(deadResident))
 				return;
 
@@ -98,7 +98,7 @@ public class PlayerDeath {
 				//Is player eligible ?
 				if (SiegeController.hasActiveSiege(deadResidentTown)
 					&& SiegeController.getSiege(deadResidentTown) == candidateSiege
-					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_BATTLE_POINTS.getNode())
+					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS.getNode())
 						|| PermissionUtil.hasTownMilitaryRank(deadResident))
 				) {
 					candidateSiegePlayerSide = SiegeSide.DEFENDERS; //Candidate siege has player defending own-town
@@ -106,7 +106,7 @@ public class PlayerDeath {
 				} else if (deadResidentTown.hasNation()
 					&& candidateSiege.getDefendingTown().hasNation()
 					&& candidateSiege.getStatus().isActive()
-					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS.getNode())
+					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode())
 						|| PermissionUtil.hasNationMilitaryRank(deadResident))
 					&& (deadResidentTown.getNation() == candidateSiege.getDefendingTown().getNation()
 						|| deadResidentTown.getNation().hasMutualAlly(candidateSiege.getDefendingTown().getNation()))) {
@@ -115,7 +115,7 @@ public class PlayerDeath {
 
 				} else if (deadResidentTown.hasNation()
 					&& candidateSiege.getStatus().isActive()
-					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS.getNode())
+					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode())
 						|| PermissionUtil.hasNationMilitaryRank(deadResident))
 					&& (deadResidentTown.getNation() == candidateSiege.getAttackingNation()
 						|| deadResidentTown.getNation().hasMutualAlly(candidateSiege.getAttackingNation()))) {

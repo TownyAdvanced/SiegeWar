@@ -170,7 +170,7 @@ public class SiegeWarTownEventListener implements Listener {
 				//Remove any military nation ranks of residents
 				for(Resident peacefulTownResident: town.getResidents()) {
 					for (String nationRank : new ArrayList<>(peacefulTownResident.getNationRanks())) {
-						if (PermissionUtil.doesNationRankAllowPermissionNode(nationRank, SiegeWarPermissionNodes.SIEGEWAR_NATION_BATTLE_POINTS)) {
+						if (PermissionUtil.doesNationRankAllowPermissionNode(nationRank, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS)) {
 							try {
 								peacefulTownResident.removeNationRank(nationRank);
 							} catch (NotRegisteredException ignored) {}
