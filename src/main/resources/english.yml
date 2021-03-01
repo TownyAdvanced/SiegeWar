@@ -276,7 +276,7 @@ msg_beacon_preference_set: "&bBeacon preference set to %s."
 msg_na: 'N/A'
 
 #Town screen
-status_town_siege_status_siege_balance: '&2 > Balance: &a%s'
+status_town_siege_status_siege_balance: '&2 > Balance: &a%d'
 status_town_siege_status_warchest: '&2 > War Chest: &a%s'
 
 #Death points
