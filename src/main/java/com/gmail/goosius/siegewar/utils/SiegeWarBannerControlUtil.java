@@ -223,8 +223,7 @@ public class SiegeWarBannerControlUtil {
 
 					//Pause success if there are enemy soldiers nearby.
 					for(BannerControlSession bcSession: siege.getBannerControlSessions().values()) {
-						if(bcSession != bannerControlSession
-							&& bcSession.getSiegeSide() != bannerControlSession.getSiegeSide()) {
+						if(bcSession.getSiegeSide() != bannerControlSession.getSiegeSide()) {
 							//Reapply glow for 1 short tick
 							long effectDurationSeconds = TownySettings.getShortInterval();
 							final int effectDurationTicks = (int)(TimeTools.convertToTicks(effectDurationSeconds));
