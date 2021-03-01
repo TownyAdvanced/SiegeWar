@@ -234,6 +234,13 @@ public class SiegeWarBannerControlUtil {
 									bannerControlSession.getPlayer().addPotionEffects(potionEffects);
 								}
 							});
+							//Send message to player every 9 ticks (ie 3 minutes)
+							if(bannerControlSession.getShortTicksUntilNextPauseWarning() < 1) {
+								Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_paused"));
+								bannerControlSession.setShortTicksUntilNextPauseWarning(9);
+							}
+							bannerControlSession.decrementShortTicksUntilNextPauseWarning();
+
 							continue BANNER_CONTROL_SESSIONS_LOOP;
 						}
 					}
