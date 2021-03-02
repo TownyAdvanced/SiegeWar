@@ -1,17 +1,11 @@
 package com.gmail.goosius.siegewar.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.permissions.TownyPerms;
 
 public class PermissionUtil {
-	
-	private static final List<String> nationMilitaryRanks = new ArrayList<>(Arrays.asList("private","sergeant","lieutenant","captain","major","colonel","general"));
-	private static final List<String> townMilitaryRanks = new ArrayList<>(Arrays.asList("guard", "sheriff"));
 
 	/**
 	 * This method checks if the given nation rank, will allow the given permission node
@@ -48,14 +42,6 @@ public class PermissionUtil {
 		return (nodesAllowedByRank.contains(permissionNodeString) 
 			|| nodesAllowedByRank.contains(permissionNodeWildCardString));
 
-	}
-	
-	public static boolean hasNationMilitaryRank(Resident resident) {
-		return resident.isKing() || nationMilitaryRanks.stream().anyMatch(rank -> resident.getNationRanks().contains(rank));
-	}
-
-	public static boolean hasTownMilitaryRank(Resident resident) {
-		return resident.isMayor() || townMilitaryRanks.stream().anyMatch(rank -> resident.getTownRanks().contains(rank));
 	}
 }
 
