@@ -391,6 +391,8 @@ public class SiegeWarTownEventListener implements Listener {
 	                    siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
 	                    out.add(siegeStatus);
 	                    break;
+					case UNKNOWN:
+						break;
 	            }
 	        } else {
 	            if (SiegeWarSettings.getWarSiegeAttackEnabled() 

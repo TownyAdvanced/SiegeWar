@@ -316,3 +316,4 @@ msg_swa_set_siege_balance_success: '&bSuccessfully set siege balance to %d for %
 
 #Added in 0.13
 msg_siege_war_banner_control_session_paused: '&cYour banner control session is paused because there are enemy soldiers near the banner. To complete your session, remove the enemy soldiers.'
+msg_siege_war_version: '&bThe current SiegeWar version is: %s.'

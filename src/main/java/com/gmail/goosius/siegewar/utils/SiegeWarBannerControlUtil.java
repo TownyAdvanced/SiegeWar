@@ -19,6 +19,7 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -191,6 +192,9 @@ public class SiegeWarBannerControlUtil {
 
 		if(player.isFlying() || player.isGliding())
 			return false;   // Player is flying
+
+		if (player.getGameMode() == GameMode.SPECTATOR)
+			return false; // Player is spectating
 
 		if(!SiegeWarScoringUtil.isPlayerInTimedPointZone(player, siege))
 			return false; //player is not in the timed point zone
