@@ -54,7 +54,6 @@ public class PermissionUtil {
 		return resident.isKing() || nationMilitaryRanks.stream().anyMatch(rank -> resident.getNationRanks().contains(rank));
 	}
 
-	//LP Glitch mitigation (TODO - remove this pattern by resolving on the lp config side)
 	public static boolean hasTownMilitaryRank(Resident resident) {
 		return resident.isMayor() || townMilitaryRanks.stream().anyMatch(rank -> resident.getTownRanks().contains(rank));
 	}

@@ -38,7 +38,7 @@ import com.palmergames.util.StringMgmt;
 
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
-	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "nation", "hud", "guide", "preference");
+	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "nation", "hud", "guide", "preference", "version");
 	
 	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers");
 
@@ -73,6 +73,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw collect", "", Translation.of("nation_help_11")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw version", ""));
 	}
 	
 	private void showNationHelp(CommandSender sender) {
@@ -117,6 +118,10 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			break;
 		case "preference":
 			parseSiegewarPreferenceCommand(player, StringMgmt.remFirstArg(args));
+			break;
+		case "v":
+		case "version":
+			parseSiegewarVersionCommand(player);
 			break;
 		default:
 			showSiegeWarHelp(player);
@@ -291,5 +296,10 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			}
 		} else
 			showPreferenceHelp(player);
+	}
+
+	private void parseSiegewarVersionCommand(Player player) {
+		Messaging.sendMsg(player, Translation.of("msg_siege_war_version", SiegeWar.getSiegeWar().getVersion()));
+		return;
 	}
 }
