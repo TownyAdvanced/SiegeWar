@@ -331,7 +331,7 @@ public class SiegeWarBannerControlUtil {
 			default:
 		}
 
-		//Record score for use by the 'Banner Control Reversal Bonus' feature
+		//Record gained battle points for use by the 'Banner Control Reversal Bonus' feature
 		siege.adjustBattlePointsEarnedFromCurrentBannerControl(battlePoints);
 	}
 

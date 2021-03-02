@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.13
+version: 0.14
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -286,7 +286,7 @@ msg_siege_war_defender_death: '&bSiege of %s > Defender died > %s > Battle Point
 #Battle sessions
 status_town_siege_battle: '&2Battle'
 status_town_siege_battle_time_remaining: '&2 > Time Remaining: &a%s'
-status_town_siege_battle_score: '&2 > Score: &a%s &2/ &a%s'
+status_town_siege_battle_score: '&2 > Points: &a%s &2/ &a%s'
 msg_war_siege_battle_session_started: "&bA new battle session has started."
 msg_war_siege_battle_session_ended_with_battles: "&bThe current battle session has ended. The following teams won their battles:"
 msg_war_siege_battle_session_ended_without_battles: "&bThe current battle session has ended. There were no battles."
@@ -303,7 +303,7 @@ hud_battle_time_remaining: 'BAT Time Left: '
 
 #Dynmap
 dynmap_battle_points: 'Siege Balance: %d'
-dynmap_siege_battle_score: 'Battle Score: %s / %s'
+dynmap_siege_battle_score: 'Battle Points: %s / %s'
 dynmap_siege_battle_time_left: 'Battle Time Left: %s'
 
 #Banner control

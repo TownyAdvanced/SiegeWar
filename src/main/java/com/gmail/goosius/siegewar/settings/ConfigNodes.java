@@ -407,9 +407,9 @@ public enum ConfigNodes {
 			"2",
 			"# This setting determines the strength of the bonus multiplier.",
 			"# Example: Assuming this value is 2,",
-			"# then if team A has gained a battle score of 420 from banner control,",
+			"# then if team A has gained 420 battle points from banner control,",
 			"# and banner control is then reversed by Team B,",
-			"# then Team B will get a reversal bonus to their battle score, of 840."),
+			"# then Team B will get an instant bonus of 840 battle points."),
 
 	//Siege zone block/use restrictions
 	WAR_SIEGE_ZONE_BLOCK_PLACEMENT_RESTRICTIONS_ENABLED(

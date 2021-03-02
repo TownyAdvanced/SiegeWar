@@ -358,7 +358,7 @@ public class SiegeWarTownEventListener implements Listener {
 								out.addAll(ChatTools.listArr(bannerControllingResidents, Translation.of("status_town_banner_control", siege.getBannerControllingSide().getFormattedName(), siege.getBannerControllingResidents().size())));
 							}
 
-							// > Score: +90 / -220
+							// > Points: +90 / -220
 							out.add(Translation.of("status_town_siege_battle_score", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
 
 							// > Time Remaining: 22 minutes
