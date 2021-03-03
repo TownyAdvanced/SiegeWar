@@ -30,7 +30,7 @@ public class SiegeWar extends JavaPlugin {
 	private static Version requiredTownyVersion = Version.fromString("0.96.7.4");
 	private final static SiegeHUDManager SiegeHudManager = new SiegeHUDManager(plugin);
 	private static boolean cannonsPluginDetected;
-	private static boolean isInSafeMode;  //Indicates if plugin got an error on startup and is in safe mode
+	private static boolean isError;  //Indicates if plugin got an error on startup and is in safe mode
 
 	public static SiegeWar getSiegeWar() {
 		return plugin;
@@ -53,20 +53,20 @@ public class SiegeWar extends JavaPlugin {
     	
         if (!townyVersionCheck(getTownyVersion())) {
             System.err.println(prefix + "Towny version does not meet required minimum version: " + requiredTownyVersion.toString());
-            isInSafeMode = true;
+            isError = true;
         } else {
             System.out.println(prefix + "Towny version " + getTownyVersion() + " found.");
         }
         
         if (!Settings.loadSettingsAndLang())
-        	isInSafeMode = true;
+        	isError = true;
 
 		registerCommands();
 
         if (Bukkit.getPluginManager().getPlugin("Towny").isEnabled())
         	SiegeController.loadAll();
 
-		if(isInSafeMode) {
+		if(isError) {
 			System.err.println(prefix + "SiegeWar is in safe mode. Dynmap integration disabled.");
 		} else {
 			Plugin dynmap = Bukkit.getPluginManager().getPlugin("dynmap");
@@ -78,7 +78,7 @@ public class SiegeWar extends JavaPlugin {
 			}
 		}
 
-		if(isInSafeMode) {
+		if(isError) {
 			System.err.println(prefix + "SiegeWar is in safe mode. Cannons integration disabled.");
 		} else {
 			Plugin cannons = Bukkit.getPluginManager().getPlugin("Cannons");
@@ -96,7 +96,7 @@ public class SiegeWar extends JavaPlugin {
 
 		registerListeners();
 
-		if(isInSafeMode) {
+		if(isError) {
 			System.err.println(prefix + "SiegeWar did not load successfully, and is now in safe mode.");
 		} else {
 			System.out.println(prefix + "SiegeWar loaded successfully.");
@@ -124,7 +124,7 @@ public class SiegeWar extends JavaPlugin {
 	private void registerListeners() {
 		PluginManager pm = Bukkit.getServer().getPluginManager();
 		
-		if (isInSafeMode)
+		if (isError)
 			pm.registerEvents(new SiegeWarSafeModeListener(), this);
 		else {
 			pm.registerEvents(new SiegeWarActionListener(this), this);
@@ -139,7 +139,7 @@ public class SiegeWar extends JavaPlugin {
 	}
 
 	private void registerCommands() {
-		if(isInSafeMode) {
+		if(isError) {
 			System.err.println(prefix + "SiegeWar is in safe mode. SiegeWar commands not registered");
 		} else {
 			getCommand("siegewar").setExecutor(new SiegeWarCommand());
@@ -169,6 +169,6 @@ public class SiegeWar extends JavaPlugin {
 	}
 	
 	public static boolean isError() {
-		return isInSafeMode;
+		return isError;
 	}
 }
