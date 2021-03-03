@@ -96,12 +96,15 @@ public class SiegeController {
 	}
 
 	public static void loadAll() {
-	    System.out.println(SiegeWar.prefix + "Loading SiegeList...");
-		clearSieges();
-		loadSiegeList();
-		loadSieges();
-		System.out.println(SiegeWar.prefix + SiegeController.getSieges().size() + " siege(s) loaded.");
-
+		try {
+			System.out.println(SiegeWar.prefix + "Loading SiegeList...");
+			clearSieges();
+			loadSiegeList();
+			loadSieges();
+			System.out.println(SiegeWar.prefix + SiegeController.getSieges().size() + " siege(s) loaded.");
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public static void loadSiegeList() {
