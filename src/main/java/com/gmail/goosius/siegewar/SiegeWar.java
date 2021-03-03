@@ -17,6 +17,7 @@ import com.gmail.goosius.siegewar.listeners.SiegeWarActionListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarBukkitEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarNationEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarPlotEventListener;
+import com.gmail.goosius.siegewar.listeners.SiegeWarSafeModeListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarCannonsListener;
@@ -29,6 +30,7 @@ public class SiegeWar extends JavaPlugin {
 	private static Version requiredTownyVersion = Version.fromString("0.96.7.4");
 	private final static SiegeHUDManager SiegeHudManager = new SiegeHUDManager(plugin);
 	private static boolean cannonsPluginDetected;
+	private static boolean isError;
 
 	public static SiegeWar getSiegeWar() {
 		return plugin;
@@ -51,13 +53,13 @@ public class SiegeWar extends JavaPlugin {
     	
         if (!townyVersionCheck(getTownyVersion())) {
             System.err.println(prefix + "Towny version does not meet required minimum version: " + requiredTownyVersion.toString());
-            onDisable();
+            isError = true;
         } else {
             System.out.println(prefix + "Towny version " + getTownyVersion() + " found.");
         }
         
         if (!Settings.loadSettingsAndLang())
-        	onDisable();
+        	isError = true;
 
         registerCommands();
         
@@ -109,14 +111,18 @@ public class SiegeWar extends JavaPlugin {
 	
 	private void registerListeners() {
 		PluginManager pm = Bukkit.getServer().getPluginManager();
-		pm.registerEvents(new SiegeWarActionListener(this), this);
-		pm.registerEvents(new SiegeWarBukkitEventListener(this), this);		
-		pm.registerEvents(new SiegeWarTownyEventListener(this), this);
-		pm.registerEvents(new SiegeWarNationEventListener(this), this);
-		pm.registerEvents(new SiegeWarTownEventListener(this), this);
-		pm.registerEvents(new SiegeWarPlotEventListener(this), this);
-		if(cannonsPluginDetected) {
-			pm.registerEvents(new SiegeWarCannonsListener(this), this);
+		
+		if (isError)
+			pm.registerEvents(new SiegeWarSafeModeListener(), this);
+		else {
+			pm.registerEvents(new SiegeWarActionListener(this), this);
+			pm.registerEvents(new SiegeWarBukkitEventListener(this), this);		
+			pm.registerEvents(new SiegeWarTownyEventListener(this), this);
+			pm.registerEvents(new SiegeWarNationEventListener(this), this);
+			pm.registerEvents(new SiegeWarTownEventListener(this), this);
+			pm.registerEvents(new SiegeWarPlotEventListener(this), this);
+			if(cannonsPluginDetected)
+				pm.registerEvents(new SiegeWarCannonsListener(this), this);
 		}
 	}
 	
@@ -144,5 +150,9 @@ public class SiegeWar extends JavaPlugin {
 
 	public static boolean getCannonsPluginDetected() {
 		return cannonsPluginDetected;
+	}
+	
+	public static boolean isError() {
+		return isError;
 	}
 }
