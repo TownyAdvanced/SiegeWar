@@ -2,7 +2,6 @@ package com.gmail.goosius.siegewar.listeners;
 
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
