@@ -56,20 +56,17 @@ public class Settings {
 	}
 	
 	public static void loadConfig(String filepath, String version) throws Exception {
-		boolean loadSuccessFlag = true;
 		if (FileMgmt.checkOrCreateFile(filepath)) {
 			File file = new File(filepath);
 
 			// read the config.yml into memory
 			config = new CommentedConfiguration(file);
 			if (!config.load()) {
-				loadSuccessFlag = false;
+				throw new IOException("Failed to load Config!");
 			}
 			setDefaults(version, file);
 			config.save();
 		}
-		if(!loadSuccessFlag)
-			throw new IOException("Failed to load Config!");
 	}
 
 	public static void addComment(String root, String... comments) {
