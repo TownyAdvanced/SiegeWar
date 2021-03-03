@@ -18,7 +18,7 @@ public class Settings {
 
 		try {
 			Settings.loadConfig(sw.getDataFolder().getPath() + File.separator + "config.yml", sw.getVersion());
-		} catch (IOException e) {
+		} catch (Exception e) {
             e.printStackTrace();
             System.err.println(SiegeWar.prefix + "Config.yml failed to load! Disabling!");
             return false;
@@ -29,7 +29,7 @@ public class Settings {
 		
 		try {
 			Translation.loadLanguage(sw.getDataFolder().getPath() + File.separator, "english.yml");
-		} catch (IOException e) {
+		} catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(SiegeWar.prefix + "Language file failed to load! Disabling!");
 	        return false;
@@ -45,19 +45,27 @@ public class Settings {
 		}
 
 		//Schedule next battle session
-		SiegeWarBattleSessionUtil.scheduleNextBattleSession();
+		try {
+			SiegeWarBattleSessionUtil.scheduleNextBattleSession();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(SiegeWar.prefix + "Problem Scheduling Battle Session! Disabling!");
+			return false;
+		}
 
 		return true;
 	}
 	
-	public static void loadConfig(String filepath, String version) throws IOException {
+	public static void loadConfig(String filepath, String version) throws Exception {
 		if (FileMgmt.checkOrCreateFile(filepath)) {
 			File file = new File(filepath);
 
 			// read the config.yml into memory
 			config = new CommentedConfiguration(file);
-			if (!config.load())
+			if (!config.load()) {
 				System.out.print("Failed to load Config!");
+				throw new IOException("Failed to load Config!");
+			}
 
 			setDefaults(version, file);
 			config.save();

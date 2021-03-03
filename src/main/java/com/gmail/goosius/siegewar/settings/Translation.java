@@ -22,7 +22,7 @@ public final class Translation {
 	// This will read the language entry in the config.yml to attempt to load
 	// custom languages
 	// if the file is not found it will load the default from resource
-	public static void loadLanguage(String filepath, String defaultRes) throws IOException {
+	public static void loadLanguage(String filepath, String defaultRes) throws Exception {
 
 		String res = Settings.getString(ConfigNodes.LANGUAGE.getRoot(), defaultRes);
 		String fullPath = filepath + File.separator + res;
@@ -42,6 +42,7 @@ public final class Translation {
 			return;
 		} catch (InvalidConfigurationException e) {
 			System.err.println(SiegeWar.prefix + "Invalid Configuration in language file detected.");
+			throw e;
 		}
 		
 		String resVersion = newLanguage.getString("version");

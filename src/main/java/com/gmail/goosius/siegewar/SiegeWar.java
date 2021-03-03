@@ -67,7 +67,7 @@ public class SiegeWar extends JavaPlugin {
         	SiegeController.loadAll();
 
 		if(isInSafeMode) {
-			System.out.println("SiegeWar is in safe mode. Dynmap integration disabled.");
+			System.err.println("SiegeWar is in safe mode. Dynmap integration disabled.");
 		} else {
 			Plugin dynmap = Bukkit.getPluginManager().getPlugin("dynmap");
 			if (dynmap != null) {
@@ -79,7 +79,7 @@ public class SiegeWar extends JavaPlugin {
 		}
 
 		if(isInSafeMode) {
-			System.out.println("SiegeWar is in safe mode. Cannons integration disabled.");
+			System.err.println("SiegeWar is in safe mode. Cannons integration disabled.");
 		} else {
 			Plugin cannons = Bukkit.getPluginManager().getPlugin("Cannons");
 			if (cannons != null) {
@@ -97,7 +97,7 @@ public class SiegeWar extends JavaPlugin {
 		registerListeners();
 
 		if(isInSafeMode) {
-			System.out.println(prefix + "SiegeWar did not load successfully, and is now in safe mode.");
+			System.err.println(prefix + "SiegeWar did not load successfully, and is now in safe mode.");
 		} else {
 			System.out.println(prefix + "SiegeWar loaded successfully.");
 		}
