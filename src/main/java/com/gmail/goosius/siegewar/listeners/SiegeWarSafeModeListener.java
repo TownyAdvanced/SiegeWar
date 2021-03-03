@@ -63,7 +63,6 @@ public class SiegeWarSafeModeListener implements Listener {
 	public void onShortTime(NewShortTimeEvent event) {
 		if (!SiegeWar.isError())
 			return;
-		System.err.println(getShortTickErrMsg());
 		Messaging.sendGlobalMessage("&c" + getShortTickErrMsg());
 	}
 
