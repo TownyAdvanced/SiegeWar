@@ -62,7 +62,7 @@ public class SiegeWar extends JavaPlugin {
         	isError = true;
 
         registerCommands();
-
+        
         if (Bukkit.getPluginManager().getPlugin("Towny").isEnabled())
         	SiegeController.loadAll();
 
