@@ -1,6 +1,11 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
+
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,15 +14,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
 import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
 
 public class SiegeWarSafeModeListener implements Listener {
 
-	private void sendErrorMessage(Player player) {
-		Messaging.sendErrorMsg(player, getActionErrMsg());
+	private void sendErrorMessage(Player player, String message) {
+		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + message));
 	}
 	
 	private String getActionErrMsg() {
@@ -32,7 +37,7 @@ public class SiegeWarSafeModeListener implements Listener {
 	public void onPlayerBreakDuringSafemode (BlockBreakEvent event) {
 		if (!SiegeWar.isError())
 			return;
-		sendErrorMessage(event.getPlayer());
+		sendErrorMessage(event.getPlayer(), getActionErrMsg());
 		event.setCancelled(true);
 	}
 	
@@ -40,7 +45,7 @@ public class SiegeWarSafeModeListener implements Listener {
 	public void onPlayerBuildDuringSafemode (BlockPlaceEvent event) {
 		if (!SiegeWar.isError())
 			return;
-		sendErrorMessage(event.getPlayer());
+		sendErrorMessage(event.getPlayer(), getActionErrMsg());
 		event.setCancelled(true);
 	}
 	
@@ -64,7 +69,10 @@ public class SiegeWarSafeModeListener implements Listener {
 	public void onShortTime(NewShortTimeEvent event) {
 		if (!SiegeWar.isError())
 			return;
-		Messaging.sendGlobalMessage(ChatColor.DARK_RED + getShortTickErrMsg());
+		
+		Bukkit.getServer().getOnlinePlayers().stream()
+		.filter(player -> player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN.getNode()))
+		.forEach(player -> sendErrorMessage(player, getShortTickErrMsg()));
 	}
 
 }
