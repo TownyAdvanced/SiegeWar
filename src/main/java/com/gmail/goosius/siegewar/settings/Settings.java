@@ -15,13 +15,13 @@ public class Settings {
 
 	public static boolean loadSettingsAndLang() {
 		SiegeWar sw = SiegeWar.getSiegeWar();
+		boolean loadSuccessFlag = true;
 
 		try {
 			Settings.loadConfig(sw.getDataFolder().getPath() + File.separator + "config.yml", sw.getVersion());
 		} catch (Exception e) {
-            e.printStackTrace();
             System.err.println(SiegeWar.prefix + "Config.yml failed to load! Disabling!");
-            return false;
+			loadSuccessFlag = false;
         }
 
 		// Some list variables do not reload upon loadConfig.
@@ -30,9 +30,8 @@ public class Settings {
 		try {
 			Translation.loadLanguage(sw.getDataFolder().getPath() + File.separator, "english.yml");
 		} catch (Exception e) {
-	        e.printStackTrace();
 	        System.err.println(SiegeWar.prefix + "Language file failed to load! Disabling!");
-	        return false;
+			loadSuccessFlag = false;
 	    }
 
 		//Extract images
@@ -41,7 +40,7 @@ public class Settings {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(SiegeWar.prefix + "Could not load images! Disabling!");
-			return false;
+			loadSuccessFlag = false;
 		}
 
 		//Schedule next battle session
@@ -50,26 +49,27 @@ public class Settings {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(SiegeWar.prefix + "Problem Scheduling Battle Session! Disabling!");
-			return false;
+			loadSuccessFlag = false;
 		}
 
-		return true;
+		return loadSuccessFlag;
 	}
 	
 	public static void loadConfig(String filepath, String version) throws Exception {
+		boolean loadSuccessFlag = true;
 		if (FileMgmt.checkOrCreateFile(filepath)) {
 			File file = new File(filepath);
 
 			// read the config.yml into memory
 			config = new CommentedConfiguration(file);
 			if (!config.load()) {
-				System.out.print("Failed to load Config!");
-				throw new IOException("Failed to load Config!");
+				loadSuccessFlag = false;
 			}
-
 			setDefaults(version, file);
 			config.save();
 		}
+		if(!loadSuccessFlag)
+			throw new IOException("Failed to load Config!");
 	}
 
 	public static void addComment(String root, String... comments) {
