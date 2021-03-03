@@ -61,9 +61,9 @@ public class Settings {
 
 			// read the config.yml into memory
 			config = new CommentedConfiguration(file);
-			if (!config.load()) {
+			if (!config.load())
 				throw new IOException("Failed to load Config!");
-			}
+
 			setDefaults(version, file);
 			config.save();
 		}
