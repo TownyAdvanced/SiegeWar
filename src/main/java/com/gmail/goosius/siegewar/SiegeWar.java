@@ -140,7 +140,7 @@ public class SiegeWar extends JavaPlugin {
 
 	private void registerCommands() {
 		if(isInSafeMode) {
-			System.out.println("SiegeWar is in safe mode. SiegeWar commands not registered");
+			System.out.println(prefix + "SiegeWar is in safe mode. SiegeWar commands not registered");
 		} else {
 			getCommand("siegewar").setExecutor(new SiegeWarCommand());
 			getCommand("siegewaradmin").setExecutor(new SiegeWarAdminCommand());
