@@ -30,7 +30,7 @@ public class SiegeWar extends JavaPlugin {
 	private static Version requiredTownyVersion = Version.fromString("0.96.7.4");
 	private final static SiegeHUDManager SiegeHudManager = new SiegeHUDManager(plugin);
 	private static boolean cannonsPluginDetected;
-	private static boolean isError;
+	private static boolean isInSafeMode;  //Indicates if plugin got an error on startup and is in safe mode
 
 	public static SiegeWar getSiegeWar() {
 		return plugin;
@@ -53,42 +53,54 @@ public class SiegeWar extends JavaPlugin {
     	
         if (!townyVersionCheck(getTownyVersion())) {
             System.err.println(prefix + "Towny version does not meet required minimum version: " + requiredTownyVersion.toString());
-            isError = true;
+            isInSafeMode = true;
         } else {
             System.out.println(prefix + "Towny version " + getTownyVersion() + " found.");
         }
         
         if (!Settings.loadSettingsAndLang())
-        	isError = true;
+        	isInSafeMode = true;
 
-        registerCommands();
-        
+		registerCommands();
+
         if (Bukkit.getPluginManager().getPlugin("Towny").isEnabled())
         	SiegeController.loadAll();
 
-        Plugin dynmap = Bukkit.getPluginManager().getPlugin("dynmap");
-        if (dynmap != null) {
-        	System.out.println(prefix + "SiegeWar found Dynmap plugin, enabling Dynmap support.");
-        	DynmapTask.setupDynmapAPI((DynmapAPI) dynmap);
-        } else {
-        	System.out.println(prefix + "Dynmap plugin not found.");
-        }
-
-		Plugin cannons = Bukkit.getPluginManager().getPlugin("Cannons");
-		if (cannons != null) {
-			cannonsPluginDetected = true;
-			if(SiegeWarSettings.isCannonsIntegrationEnabled()) {
-				System.out.println(prefix + "SiegeWar found Cannons plugin, enabling Cannons support.");
-				System.out.println(prefix + "Cannons support enabled.");
-			}
+		if(isInSafeMode) {
+			System.out.println("SiegeWar is in safe mode. Dynmap integration disabled.");
 		} else {
-			cannonsPluginDetected = false;
-			System.out.println(prefix + "Cannons plugin not found.");
+			Plugin dynmap = Bukkit.getPluginManager().getPlugin("dynmap");
+			if (dynmap != null) {
+				System.out.println(prefix + "SiegeWar found Dynmap plugin, enabling Dynmap support.");
+				DynmapTask.setupDynmapAPI((DynmapAPI) dynmap);
+			} else {
+				System.out.println(prefix + "Dynmap plugin not found.");
+			}
+		}
+
+		if(isInSafeMode) {
+			System.out.println("SiegeWar is in safe mode. Cannons integration disabled.");
+		} else {
+			Plugin cannons = Bukkit.getPluginManager().getPlugin("Cannons");
+			if (cannons != null) {
+				cannonsPluginDetected = true;
+				if (SiegeWarSettings.isCannonsIntegrationEnabled()) {
+					System.out.println(prefix + "SiegeWar found Cannons plugin, enabling Cannons support.");
+					System.out.println(prefix + "Cannons support enabled.");
+				}
+			} else {
+				cannonsPluginDetected = false;
+				System.out.println(prefix + "Cannons plugin not found.");
+			}
 		}
 
 		registerListeners();
 
-		System.out.println(prefix + "SiegeWar loaded successfully.");
+		if(isInSafeMode) {
+			System.out.println(prefix + "SiegeWar did not load successfully, and is now in safe mode.");
+		} else {
+			System.out.println(prefix + "SiegeWar loaded successfully.");
+		}
     }
     
     @Override
@@ -112,7 +124,7 @@ public class SiegeWar extends JavaPlugin {
 	private void registerListeners() {
 		PluginManager pm = Bukkit.getServer().getPluginManager();
 		
-		if (isError)
+		if (isInSafeMode)
 			pm.registerEvents(new SiegeWarSafeModeListener(), this);
 		else {
 			pm.registerEvents(new SiegeWarActionListener(this), this);
@@ -125,10 +137,14 @@ public class SiegeWar extends JavaPlugin {
 				pm.registerEvents(new SiegeWarCannonsListener(this), this);
 		}
 	}
-	
+
 	private void registerCommands() {
-		getCommand("siegewar").setExecutor(new SiegeWarCommand());
-		getCommand("siegewaradmin").setExecutor(new SiegeWarAdminCommand());
+		if(isInSafeMode) {
+			System.out.println("SiegeWar is in safe mode. SiegeWar commands not registered");
+		} else {
+			getCommand("siegewar").setExecutor(new SiegeWarCommand());
+			getCommand("siegewaradmin").setExecutor(new SiegeWarAdminCommand());
+		}
 	}
 
 	private void printSickASCIIArt() {
@@ -153,6 +169,6 @@ public class SiegeWar extends JavaPlugin {
 	}
 	
 	public static boolean isError() {
-		return isError;
+		return isInSafeMode;
 	}
 }

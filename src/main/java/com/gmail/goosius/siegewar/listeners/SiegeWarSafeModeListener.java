@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.listeners;
 
+import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,13 +16,17 @@ import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
 public class SiegeWarSafeModeListener implements Listener {
 
 	private void sendErrorMessage(Player player) {
-		Messaging.sendErrorMsg(player, getErrMsg());
+		Messaging.sendErrorMsg(player, getActionErrMsg());
 	}
 	
-	private String getErrMsg() {
+	private String getActionErrMsg() {
 		return "SiegeWar could not load and is in safe mode, action declined.";
 	}
-	
+
+	private String getShortTickErrMsg() {
+		return "SiegeWar could not load and is in safe mode.";
+	}
+
 	@EventHandler (priority=EventPriority.HIGHEST, ignoreCancelled=true)
 	public void onPlayerBreakDuringSafemode (BlockBreakEvent event) {
 		if (!SiegeWar.isError())
@@ -42,8 +47,7 @@ public class SiegeWarSafeModeListener implements Listener {
 	public void onTownClaimDuringSafemode (TownPreClaimEvent event) {
 		if (!SiegeWar.isError())
 			return;
-		
-		event.setCancelMessage(getErrMsg());
+		event.setCancelMessage(getActionErrMsg());
 		event.setCancelled(true);
 	}
 
@@ -51,9 +55,16 @@ public class SiegeWarSafeModeListener implements Listener {
 	public void onTownLeaveNationDuringSafemode (NationPreTownLeaveEvent event) {
 		if (!SiegeWar.isError())
 			return;
-		
-		event.setCancelMessage(getErrMsg());
+		event.setCancelMessage(getActionErrMsg());
 		event.setCancelled(true);
-	}	
-	
+	}
+
+	@EventHandler
+	public void onShortTime(NewShortTimeEvent event) {
+		if (!SiegeWar.isError())
+			return;
+		System.out.println(getShortTickErrMsg());
+		Messaging.sendGlobalMessage("&c" + getShortTickErrMsg());
+	}
+
 }
