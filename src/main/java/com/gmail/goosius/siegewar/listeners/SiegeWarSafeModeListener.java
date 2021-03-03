@@ -1,6 +1,8 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
+import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -63,7 +65,7 @@ public class SiegeWarSafeModeListener implements Listener {
 	public void onShortTime(NewShortTimeEvent event) {
 		if (!SiegeWar.isError())
 			return;
-		Messaging.sendGlobalMessage("&c" + getShortTickErrMsg());
+		Messaging.sendGlobalMessage(ChatColor.DARK_RED + getShortTickErrMsg());
 	}
 
 }
