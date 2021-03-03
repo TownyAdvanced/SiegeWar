@@ -15,13 +15,13 @@ public class Settings {
 
 	public static boolean loadSettingsAndLang() {
 		SiegeWar sw = SiegeWar.getSiegeWar();
+		boolean loadSuccessFlag = true;
 
 		try {
 			Settings.loadConfig(sw.getDataFolder().getPath() + File.separator + "config.yml", sw.getVersion());
-		} catch (IOException e) {
-            e.printStackTrace();
+		} catch (Exception e) {
             System.err.println(SiegeWar.prefix + "Config.yml failed to load! Disabling!");
-            return false;
+			loadSuccessFlag = false;
         }
 
 		// Some list variables do not reload upon loadConfig.
@@ -29,10 +29,9 @@ public class Settings {
 		
 		try {
 			Translation.loadLanguage(sw.getDataFolder().getPath() + File.separator, "english.yml");
-		} catch (IOException e) {
-	        e.printStackTrace();
+		} catch (Exception e) {
 	        System.err.println(SiegeWar.prefix + "Language file failed to load! Disabling!");
-	        return false;
+			loadSuccessFlag = false;
 	    }
 
 		//Extract images
@@ -41,23 +40,29 @@ public class Settings {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(SiegeWar.prefix + "Could not load images! Disabling!");
-			return false;
+			loadSuccessFlag = false;
 		}
 
 		//Schedule next battle session
-		SiegeWarBattleSessionUtil.scheduleNextBattleSession();
+		try {
+			SiegeWarBattleSessionUtil.scheduleNextBattleSession();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(SiegeWar.prefix + "Problem Scheduling Battle Session! Disabling!");
+			loadSuccessFlag = false;
+		}
 
-		return true;
+		return loadSuccessFlag;
 	}
 	
-	public static void loadConfig(String filepath, String version) throws IOException {
+	public static void loadConfig(String filepath, String version) throws Exception {
 		if (FileMgmt.checkOrCreateFile(filepath)) {
 			File file = new File(filepath);
 
 			// read the config.yml into memory
 			config = new CommentedConfiguration(file);
 			if (!config.load())
-				System.out.print("Failed to load Config!");
+				throw new IOException("Failed to load Config!");
 
 			setDefaults(version, file);
 			config.save();
