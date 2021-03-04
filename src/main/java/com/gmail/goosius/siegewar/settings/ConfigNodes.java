@@ -156,10 +156,13 @@ public enum ConfigNodes {
 			"# If this setting is true, then Siegewar statistics will be shown on nation status screens."),
 	WAR_SIEGE_SWITCHES_TRAP_WARFARE_MITIGATION_ENABLED(
 			"war.siege.switches.trap_warfare_mitigation_enabled",
-			"true",
+			"false",
 			"# If this setting is true, then ",
 			"# 1. Players cannot build/destroy blocks in the timed point zone below the siege banner altitude, and",
-			"# 2. Banner control cannot be gained if the player is below the siege banner altitude"),
+			"# 2. Banner control cannot be gained if the player is below the siege banner altitude",
+			"# NOTE: ",
+			"# If you enable this feature, ",
+			"# make sure to also have a server rule preventing traps being created in the timed-point-zone BEFORE the banner is placed"),
 
 	//Monetary Values
 
