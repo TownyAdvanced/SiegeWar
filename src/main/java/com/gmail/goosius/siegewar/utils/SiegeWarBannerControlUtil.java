@@ -199,6 +199,10 @@ public class SiegeWarBannerControlUtil {
 		if(!SiegeWarScoringUtil.isPlayerInTimedPointZone(player, siege))
 			return false; //player is not in the timed point zone
 
+		if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
+			&& SiegeWarDistanceUtil.isBelowSiegeBannerAltitude(player.getLocation(), siege))
+			return false; //Player is below the siege banner
+
 		return true;
 	}
 
@@ -209,7 +213,9 @@ public class SiegeWarBannerControlUtil {
 				//Check if session failed
 				if (!doesPlayerMeetBasicSessionRequirements(siege, bannerControlSession.getPlayer(), bannerControlSession.getResident())) {
 					siege.removeBannerControlSession(bannerControlSession);
-					Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_failure"));
+
+					String errorMessage = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? Translation.of("msg_siege_war_banner_control_session_failure_with_altitude") : Translation.of("msg_siege_war_banner_control_session_failure");
+					Messaging.sendMsg(bannerControlSession.getPlayer(), errorMessage);
 					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
 
 					if (bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {

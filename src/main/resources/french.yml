@@ -109,7 +109,6 @@ msg_err_siege_war_banner_support_block_not_stable: "&cVous ne pouvez pas placer 
 # Spawn
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: "&cSeuls les habitants de la ville peuvent spawn dans une ville assiégée ou une zone de siège (sauf si la ville cible est paisible)."
 #Banner control
-msg_siege_war_banner_control_session_failure: "&cLa session de contrôle de bannière a échoué ! Les causes courantes de ceci incluent: Entrer dans la ville, trop loin de la bannière, ou voler."
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: "Vous ne pouvez pas utiliser cet item pendant une session de contrôle de bannière."
 
 #Town Info Siege Section
@@ -319,3 +318,5 @@ msg_siege_war_banner_control_session_paused: '&cYour banner control session is p
 
 #Added in 0.14
 msg_err_cannot_alter_blocks_below_banner_in_timed_point_zone: 'You cannot place/destroy blocks below banner altitude in the timed point zone.'
+msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: dying, entering the town, going too far from the banner, or flying.'
+msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, entering the town, going too far from the banner, going above the altitude of the banner, or flying.'

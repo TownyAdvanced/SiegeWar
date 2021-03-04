@@ -164,7 +164,8 @@ public class PlayerDeath {
 
 				if (confirmedCandidateSiege.getBannerControlSessions().containsKey(deadPlayer)) { //If the player that died had an ongoing session, remove it.
 					confirmedCandidateSiege.removeBannerControlSession(confirmedCandidateSiege.getBannerControlSessions().get(deadPlayer));
-					Messaging.sendMsg(deadPlayer, Translation.of("msg_siege_war_banner_control_session_failure"));
+					String errorMessage = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? Translation.of("msg_siege_war_banner_control_session_failure_with_altitude") : Translation.of("msg_siege_war_banner_control_session_failure");
+					Messaging.sendMsg(deadPlayer, errorMessage);
 				}
 			}
 		} catch (Exception e) {

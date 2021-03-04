@@ -206,7 +206,7 @@ public class SiegeWarDistanceUtil {
 		return false;
 	}
 
-	private static boolean isBelowSiegeBannerAltitude(Location location, Siege siege) {
+	public static boolean isBelowSiegeBannerAltitude(Location location, Siege siege) {
 		return location.getY() < siege.getFlagLocation().getY();
 	}
 }
