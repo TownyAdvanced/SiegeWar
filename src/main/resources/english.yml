@@ -109,7 +109,6 @@ msg_err_siege_war_banner_support_block_not_stable: "&cYou cannot place the banne
 # Spawn
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone (unless the target town is peaceful).'
 #Banner control
-msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: Going into the town, too far from the banner, or flying.'
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'You cannot use this item while in a banner control session.'
 
 #Town Info Siege Section
@@ -317,3 +316,8 @@ msg_swa_set_siege_balance_success: '&bSuccessfully set siege balance to %d for %
 #Added in 0.13
 msg_siege_war_banner_control_session_paused: '&cYour banner control session is paused because there are enemy soldiers near the banner. To complete your session, remove the enemy soldiers.'
 msg_siege_war_version: '&bThe current SiegeWar version is: %s.'
+
+#Added in 0.14
+msg_err_cannot_alter_blocks_below_banner_in_timed_point_zone: 'You cannot place/destroy blocks below banner altitude in the timed point zone.'
+msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going into the town, or flying.'
+msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going below the altitude of the banner, going into the town, or flying.'

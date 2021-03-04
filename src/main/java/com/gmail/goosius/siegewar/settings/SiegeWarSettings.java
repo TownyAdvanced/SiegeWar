@@ -397,4 +397,7 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.BANNER_XYZ_TEXT_ENABLED);
 	}
 
+	public static boolean isTrapWarfareMitigationEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_SWITCHES_TRAP_WARFARE_MITIGATION_ENABLED);
+	}
 }

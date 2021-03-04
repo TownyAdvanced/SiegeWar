@@ -22,6 +22,9 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Nation;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Banner;
@@ -60,6 +63,14 @@ public class PlaceBlock {
 	public static void evaluateSiegeWarPlaceBlockRequest(Player player, Block block, TownyBuildEvent event) {
 		
 		try {
+			//Enforce Anti-Trap warfare build block if below siege banner altitude.
+			if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
+					&& SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(event.getBlock().getLocation())) {
+				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + Translation.of("msg_err_cannot_alter_blocks_below_banner_in_timed_point_zone")));
+				event.setCancelled(true);
+				return;
+			}
+
 			Material mat = block.getType();
 
 			//Standing Banner placement
@@ -82,7 +93,7 @@ public class PlaceBlock {
 					return;
 				}
 	
-			//Check for forbidden block placement
+			//Check for forbidden siegezone block placement
 			if(SiegeWarSettings.isWarSiegeZoneBlockPlacementRestrictionsEnabled() 
 					&& TownyAPI.getInstance().isWilderness(block) 
 					&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(block.getLocation())
