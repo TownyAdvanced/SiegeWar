@@ -157,6 +157,7 @@ public enum ConfigNodes {
 	WAR_SIEGE_SWITCHES_TRAP_WARFARE_MITIGATION_ENABLED(
 			"war.siege.switches.trap_warfare_mitigation_enabled",
 			"false",
+			"",
 			"# If this setting is true, then ",
 			"# 1. Players cannot build/destroy blocks in the timed point zone below the siege banner altitude, and",
 			"# 2. Banner control cannot be gained if the player is below the siege banner altitude",

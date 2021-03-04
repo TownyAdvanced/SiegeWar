@@ -14,7 +14,6 @@ import com.palmergames.bukkit.towny.object.WorldCoord;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.Nullable;
 
@@ -210,6 +209,3 @@ public class SiegeWarDistanceUtil {
 		return location.getY() < siege.getFlagLocation().getY();
 	}
 }
-
-
-
