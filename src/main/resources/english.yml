@@ -319,4 +319,4 @@ msg_siege_war_banner_control_session_paused: '&cYour banner control session is p
 msg_siege_war_version: '&bThe current SiegeWar version is: %s.'
 
 #Added in 0.14
-msg_err_cannot_alter_blocks_below_banner_in_timed_point_zone: 'You cannot place/destroy blocks below the banner altitude in the timed point zone.'
+msg_err_cannot_alter_blocks_below_banner_in_timed_point_zone: 'You cannot place/destroy blocks below banner altitude in the timed point zone.'
