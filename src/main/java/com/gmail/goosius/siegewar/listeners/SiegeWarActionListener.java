@@ -68,10 +68,10 @@ public class SiegeWarActionListener implements Listener {
 	@EventHandler
 	public void onBurn(TownyBurnEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(event.getBlock())) {
-			event.setCancelled(true);	
+			event.setCancelled(true);
 		}
 	}
-
+	
 	/*
 	 * SW will prevent an explosion from altering an area around a banner.
 	 */
