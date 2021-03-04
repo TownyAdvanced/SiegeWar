@@ -14,6 +14,7 @@ import com.palmergames.bukkit.towny.object.WorldCoord;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.Nullable;
 
@@ -123,8 +124,8 @@ public class SiegeWarDistanceUtil {
 		return areLocationsCloseHorizontally(entity.getLocation(), siege.getFlagLocation(), SiegeWarSettings.getWarSiegeZoneRadiusBlocks());
 	}
 
-	public static boolean isInTimedPointZone(Entity entity, Siege siege) {
-		return areLocationsClose(entity.getLocation(), siege.getFlagLocation(), TownySettings.getTownBlockSize(), SiegeWarSettings.getBannerControlVerticalDistanceBlocks());
+	public static boolean isInTimedPointZone(Location location, Siege siege) {
+		return areLocationsClose(location, siege.getFlagLocation(), TownySettings.getTownBlockSize(), SiegeWarSettings.getBannerControlVerticalDistanceBlocks());
 	}
 
 	public static boolean areTownsClose(Town town1, Town town2, int radiusTownblocks) {
@@ -186,4 +187,29 @@ public class SiegeWarDistanceUtil {
 		int locZ = worldCoord.getZ() * TOWNBLOCKSIZE;
 		return new Location(worldCoord.getBukkitWorld(), locX, 255, locZ);
 	}
+
+	/**
+	 * This method is used in Anti-trap warfare mitigation
+	 *
+	 * @param location
+	 * @return true of the location is in an active timed point zone AND below siege banner altitude
+	 */
+	public static boolean isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(Location location) {
+		//Look through all sieges
+		for (Siege siege : SiegeController.getSieges()) {
+			if (siege.getStatus().isActive()
+				&& isInTimedPointZone(location, siege)
+				&& isBelowSiegeBannerAltitude(location, siege))
+				return true;
+		}
+		//Location does not meet the criteria
+		return false;
+	}
+
+	private static boolean isBelowSiegeBannerAltitude(Location location, Siege siege) {
+		return location.getY() < siege.getFlagLocation().getY();
+	}
 }
+
+
+

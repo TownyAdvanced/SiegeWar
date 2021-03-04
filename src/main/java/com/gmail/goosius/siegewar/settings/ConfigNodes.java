@@ -154,6 +154,12 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If this setting is true, then Siegewar statistics will be shown on nation status screens."),
+	WAR_SIEGE_SWITCHES_TRAP_WARFARE_MITIGATION_ENABLED(
+			"war.siege.switches.trap_warfare_mitigation_enabled",
+			"true",
+			"# If this setting is true, ",
+			"# then within the timed point zones of active sieges,",
+			"# players cannot build/destroy blocks below the siege banner altitude."),
 
 	//Monetary Values
 
