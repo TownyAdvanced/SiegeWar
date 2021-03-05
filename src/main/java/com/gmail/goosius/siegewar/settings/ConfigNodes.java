@@ -315,14 +315,14 @@ public enum ConfigNodes {
 			"",
 			"# This setting determines the number of battle points awarded to an occupying attacker.",
 			"# The points are awarded if a player remains within a town-block length of the siege banner for: ",
-			"# 10 minutes (default configuration)."),
+			"# 7 minutes (default configuration)."),
 	WAR_BATTLE_POINTS_FOR_DEFENDER_OCCUPATION(
 			"war.siege.scoring.points_for_defender_occupation",
 			"10",
 			"",
 			"# This setting determines the number of battle points awarded to an occupying defender.",
 			"# The points are awarded if a player remains within a town-block length of the siege banner for ",
-			"# 10 minutes (default configuration)."),
+			"# 7 minutes (default configuration)."),
 	WAR_BATTLE_POINTS_FOR_ATTACKER_DEATH(
 			"war.siege.scoring.points_for_attacker_death",
 			"150",

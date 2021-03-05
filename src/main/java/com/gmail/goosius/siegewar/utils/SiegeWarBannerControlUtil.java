@@ -130,8 +130,9 @@ public class SiegeWarBannerControlUtil {
 		siege.addBannerControlSession(player, bannerControlSession);
 
 		//Notify Player
+		String messageKey = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? "msg_siege_war_banner_control_session_started_with_altitude" : "msg_siege_war_banner_control_session_started";
 		Messaging.sendMsg(player, String.format(
-			Translation.of("msg_siege_war_banner_control_session_started"),
+			Translation.of(messageKey),
 			TownySettings.getTownBlockSize(),
 			SiegeWarSettings.getBannerControlVerticalDistanceBlocks(),
 			TimeMgmt.getFormattedTimeValue(sessionDurationMillis)));
