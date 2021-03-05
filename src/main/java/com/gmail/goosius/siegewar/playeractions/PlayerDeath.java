@@ -181,9 +181,7 @@ public class PlayerDeath {
 	private static void degradeInventory(PlayerDeathEvent playerDeathEvent) {
 		Damageable damageable;
 		double maxDurability;
-		int currentDurability;
-		int damageToInflict;
-		int newDurability;
+		int currentDurability, damageToInflict, newDurability, durabilityWarning;
 		Boolean closeToBreaking = false;
 		if (SiegeWarSettings.getWarSiegeDeathPenaltyDegradeInventoryEnabled()) {
 			for (ItemStack itemStack : playerDeathEvent.getEntity().getInventory().getContents()) {
@@ -194,11 +192,14 @@ public class PlayerDeath {
 					damageToInflict = (int)(maxDurability / 100 * SiegeWarSettings.getWarSiegeDeathPenaltyDegradeInventoryPercentage());
 					newDurability = currentDurability + damageToInflict;
 					if (newDurability >= maxDurability) {
-						damageable.setDamage(Math.max((int)maxDurability-10, currentDurability));
+						damageable.setDamage(Math.max((int)maxDurability-25, currentDurability));
 						closeToBreaking = true;
 					}
 					else {
 						damageable.setDamage(newDurability);
+						durabilityWarning = damageToInflict * 2 + currentDurability;
+						if (durabilityWarning >= maxDurability)
+							closeToBreaking = true;
 					}
 					itemStack.setItemMeta((ItemMeta)damageable);
 				}
