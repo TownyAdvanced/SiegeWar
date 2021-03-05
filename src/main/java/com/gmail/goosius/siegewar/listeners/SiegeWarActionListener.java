@@ -71,28 +71,7 @@ public class SiegeWarActionListener implements Listener {
 			event.setCancelled(true);
 		}
 	}
-	
-	/*
-	 * SW will prevent an explosion from altering an area around a banner.
-	 */
-	@EventHandler
-	public void onBlockExplode(TownyExplodingBlocksEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			List<Block> blockList = event.getTownyFilteredBlockList();
-			List<Block> filteredList = new ArrayList<>();
-			for (Block block : blockList) {
-				if (
-					(!SiegeWarSettings.isTrapWarfareMitigationEnabled() || !SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(block.getLocation()))
-					&&
-					!SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(block)
-				) {
-					filteredList.add(block);
-				}
-			}
-			event.setBlockList(filteredList);
-		}
-	}
-	
+
 	/*
 	 * SW can affect the emptying of buckets, which could affect a banner.
 	 */

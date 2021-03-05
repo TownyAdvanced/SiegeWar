@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
+import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -124,28 +125,39 @@ public class SiegeWarTownyEventListener implements Listener {
     }
 
     /**
-     * If the cannons integration is active,
-     * SiegeWar will override Towny's explode protection,
-     *  for blocks within a town which has an active cannon session.
+     * Do not explode the siege banner or its supporting block
      *
-     * The method works as follows:
-     * 1. Create a final explode list, and add the blocks towny has already allowed.
-     * 2. Cycle through the original unfiltered list of blocks which were set to explode.
-     * 3. If any block is in a town with an active cannon session,
-     *    add it to the final explode-allowed list (if it is not already there).
+     * If trap mitigation is active,
+     *  do not explode blocks below the siege banner altitude
+     *
+     * If the cannons integration is active,
+     *  override any Towny protections of blocks which are within towns with active cannon sessions,
+     *  and allow their explosion.
      *
      * @param event the TownyExplodingBlocksEvent event
      */
     @EventHandler(priority = EventPriority.HIGH)
     public void onBlockExploding(TownyExplodingBlocksEvent event) {
+        List<Block> finalExplodeList = new ArrayList<>();
+
+        //Do not add to final explode list: Blocks near banner or protected by trap mitigation
+        List<Block> townyExplodeList = event.getTownyFilteredBlockList();
+        if(townyExplodeList != null) {
+            for(Block block: townyExplodeList) {
+                if ((SiegeWarSettings.isTrapWarfareMitigationEnabled() && SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(block.getLocation()))
+                    ||
+                    SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(block)) {
+                    //Do not add block to final explode list
+                } else {
+                    //Add to final explode list
+                    finalExplodeList.add(block);
+                }
+            }
+        }
+
+        //Add to final explode list: town blocks if there is a cannon session in progress
         if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginDetected()) {
             List<Block> vanillaExplodeList = event.getVanillaBlockList(); //original list of exploding blocks
-            List<Block> townyFilteredExplodeList = event.getTownyFilteredBlockList(); //the list of exploding blocks Towny has allowed
-            List<Block> finalExplodeList = new ArrayList<>();
-            if(townyFilteredExplodeList != null)
-                finalExplodeList.addAll(townyFilteredExplodeList);
-
-            //Override Towny's protections if there is a cannon session in progress
             Town town;
             for (Block block : vanillaExplodeList) {
                 if(!finalExplodeList.contains(block)) {
