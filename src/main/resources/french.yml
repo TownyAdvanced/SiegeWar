@@ -48,7 +48,6 @@ msg_siege_war_town_bankrupted_from_plunder: "&b%s a été mis en faillite par %s
 msg_siege_war_nation_defeated: "&b%s a été vaincu !."
 msg_siege_war_attacking_troops_at_siege_banner: "&bSiège sur %s > Les attaquants sont à la bannière de siège."
 msg_siege_war_defending_troops_at_siege_banner: "&bSiège sur %s > Les défenseurs de la ville sont à la bannière de siège."
-msg_siege_war_banner_control_session_started: "&bLa session de contrôle de bannière a commencé. Restez près de la bannière de siège (%d blocs horizontalement,%d blocs verticalement), en dehors de la ville, et ne volez pas, pendant %s. Si votre session réussit, vous obtiendrez le contrôle de la bannière de votre côté (ou serez ajouté à la liste de contrôle des bannières)."
 msg_siege_war_banner_control_session_success: "&bLa session de contrôle de bannière a réussi ! Vous avez été ajouté à la liste de contrôle des bannières."
 msg_siege_war_banner_control_gained_by_attacker: "&bSiège sur %s > Les attaquants ont acquis le contrôle de la bannière."
 msg_siege_war_banner_control_gained_by_defender: "&bSiège sur %s > Les défenseurs ont acquis le contrôle de la bannière."
@@ -318,5 +317,7 @@ msg_siege_war_banner_control_session_paused: '&cYour banner control session is p
 
 #Added in 0.14
 msg_err_cannot_alter_blocks_below_banner_in_timed_point_zone: 'You cannot place/destroy blocks below banner altitude in the timed point zone.'
+msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain close to the siege-banner (%d blocks horizonally, %d blocks vertically), not in the town, and not flying, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
+msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control session started. Remain close to the siege-banner (%d blocks horizonally, %d blocks vertically), not below its altitude, not in the town, and not flying, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
 msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going into the town, or flying.'
 msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going below the altitude of the banner, going into the town, or flying.'
