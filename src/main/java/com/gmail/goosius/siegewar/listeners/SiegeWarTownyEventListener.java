@@ -125,14 +125,14 @@ public class SiegeWarTownyEventListener implements Listener {
     }
 
     /**
-     * Do not explode the siege banner or or supporting block
+     * Do not explode the siege banner or its supporting block
      *
      * If trap mitigation is active,
-     *  do not explode blocks below the siege banner
+     *  do not explode blocks below the siege banner altitude
      *
      * If the cannons integration is active,
-     *  override Towny's explode protection,
-     *  for blocks within a town which has an active cannon session.
+     *  override any Towny protections of blocks which are within towns with active cannon sessions,
+     *  and allow their explosion.
      *
      * @param event the TownyExplodingBlocksEvent event
      */
