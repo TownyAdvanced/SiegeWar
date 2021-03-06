@@ -9,6 +9,7 @@ import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarScoringUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -18,7 +19,11 @@ import com.palmergames.bukkit.towny.permissions.TownyPermissionSource;
 import com.gmail.goosius.siegewar.settings.Translation;
 
 import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Banner;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
@@ -136,6 +141,8 @@ public class PlayerDeath {
 				//Award penalty points w/ notification if siege is in progress
 				if(confirmedCandidateSiege.getStatus() == SiegeStatus.IN_PROGRESS) {
 					if (SiegeWarSettings.getWarSiegeDeathSpawnFireworkEnabled()) {
+						if (isBannerMissing(confirmedCandidateSiege.getFlagLocation()))
+							replaceMissingBanner(confirmedCandidateSiege.getFlagLocation());
 						Color bannerColor = ((Banner) confirmedCandidateSiege.getFlagLocation().getBlock().getState()).getBaseColor().getColor();
 						CosmeticUtil.spawnFirework(deadPlayer.getLocation().add(0, 2, 0), Color.RED, bannerColor, true);
 					}
@@ -214,5 +221,16 @@ public class PlayerDeath {
 			playerDeathEvent.setKeepInventory(true);
 			playerDeathEvent.getDrops().clear();
 		}
+	}
+
+	private static boolean isBannerMissing(Location location) {
+		return !Tag.BANNERS.isTagged(location.getBlock().getType());
+	}
+
+	private static void replaceMissingBanner(Location location) {
+		if (SiegeWarBlockUtil.isSupportBlockUnstable(location.getBlock()))
+			location.getBlock().getRelative(BlockFace.DOWN).setType(Material.STONE);
+		
+		location.getBlock().setType(Material.BLACK_BANNER);
 	}
 }

@@ -9,6 +9,8 @@ import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.WorldCoord;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -145,44 +147,28 @@ public class SiegeWarBlockUtil {
 	 * @return true if support block is unstable
 	 */
 	public static boolean isSupportBlockUnstable(Block block) {
-		Block blockBelowBanner = block.getRelative(BlockFace.DOWN);
-		switch(blockBelowBanner.getType()){
+		Material blockBelowBanner = block.getRelative(BlockFace.DOWN).getType();
+		if (Tag.BANNERS.isTagged(blockBelowBanner) || Tag.SIGNS.isTagged(blockBelowBanner) || Tag.WALL_SIGNS.isTagged(blockBelowBanner)
+			|| Tag.LOGS.isTagged(blockBelowBanner) || Tag.LEAVES.isTagged(blockBelowBanner) || Tag.ANVIL.isTagged(blockBelowBanner)
+			|| Tag.DOORS.isTagged(blockBelowBanner))
+			return true;
+		switch(blockBelowBanner) {
 			case AIR:
 			case CAVE_AIR:
 			case VOID_AIR:
 			case GRAVEL:
 			case SAND:
-			case SOUL_SAND:
 			case RED_SAND:
-			case ACACIA_LOG:
-			case BIRCH_LOG:
-			case DARK_OAK_LOG:
-			case JUNGLE_LOG:
-			case OAK_LOG:
-			case SPRUCE_LOG:
-			case CRIMSON_STEM:
-			case WARPED_STEM:
-			case CRIMSON_HYPHAE:
-			case WARPED_HYPHAE:
-			case STRIPPED_ACACIA_LOG:
-			case STRIPPED_BIRCH_LOG:
-			case STRIPPED_DARK_OAK_LOG:
-			case STRIPPED_JUNGLE_LOG:
-			case STRIPPED_OAK_LOG:
-			case STRIPPED_SPRUCE_LOG:
-			case STRIPPED_CRIMSON_STEM:
-			case STRIPPED_WARPED_STEM:
-			case STRIPPED_CRIMSON_HYPHAE:
-			case STRIPPED_WARPED_HYPHAE:
 			case CACTUS:
-			case OAK_LEAVES:
-			case SPRUCE_LEAVES:
-			case BIRCH_LEAVES:
-			case ACACIA_LEAVES:
-			case DARK_OAK_LEAVES:
-			case JUNGLE_LEAVES:
 			case NETHER_WART_BLOCK:
 			case WARPED_WART_BLOCK:
+			case LANTERN:
+			case SOUL_LANTERN:
+			case MUSHROOM_STEM:
+			case RED_MUSHROOM_BLOCK:
+			case BROWN_MUSHROOM_BLOCK:
+			case BAMBOO:
+			case TURTLE_EGG:
 				return true;
 			default:
 				return false;
