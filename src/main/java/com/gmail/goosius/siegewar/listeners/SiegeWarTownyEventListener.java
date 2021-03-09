@@ -169,9 +169,9 @@ public class SiegeWarTownyEventListener implements Listener {
                     }
                 }
             }
-
-            event.setBlockList(finalExplodeList);
         }
+
+        event.setBlockList(finalExplodeList);
     }
 
     /**
