@@ -15,7 +15,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
-import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -133,20 +132,15 @@ public class AttackTown {
 		
 		//Pay into warchest
 		if (TownyEconomyHandler.isActive()) {
-			try {
-				//Pay upfront cost into warchest now
-				attackingNation.getAccount().withdraw(siege.getWarChestAmount(), "Cost of starting a siege.");
-				String moneyMessage =
-					Translation.of("msg_siege_war_attack_pay_war_chest",
-					attackingNation.getFormattedName(),
-					TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
+			//Pay upfront cost into warchest now
+			attackingNation.getAccount().withdraw(siege.getWarChestAmount(), "Cost of starting a siege.");
+			String moneyMessage =
+				Translation.of("msg_siege_war_attack_pay_war_chest",
+				attackingNation.getFormattedName(),
+				TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
 
-				TownyMessaging.sendPrefixedNationMessage(attackingNation, moneyMessage);
-				TownyMessaging.sendPrefixedTownMessage(defendingTown, moneyMessage);
-			} catch (EconomyException e) {
-				System.out.println("Problem paying into war chest");
-				e.printStackTrace();
-			}
+			TownyMessaging.sendPrefixedNationMessage(attackingNation, moneyMessage);
+			TownyMessaging.sendPrefixedTownMessage(defendingTown, moneyMessage);
 		}
 
 		//Save to DB

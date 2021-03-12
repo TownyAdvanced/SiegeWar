@@ -27,7 +27,7 @@ public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
 	public static String prefix = "[SiegeWar] ";
-	private static Version requiredTownyVersion = Version.fromString("0.96.7.4");
+	private static Version requiredTownyVersion = Version.fromString("0.96.7.6");
 	private final static SiegeHUDManager SiegeHudManager = new SiegeHUDManager(plugin);
 	private static boolean cannonsPluginDetected;
 	private static boolean isError;  //Indicates if plugin got an error on startup and is in safe mode
@@ -106,7 +106,7 @@ public class SiegeWar extends JavaPlugin {
     @Override
     public void onDisable() {
     	DynmapTask.endDynmapTask();
-    	System.err.println(prefix + "Shutting down....");
+    	System.out.println(prefix + "Shutting down...");
     }
 
 	public String getVersion() {
