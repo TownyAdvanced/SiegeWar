@@ -13,7 +13,6 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
-import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.TownBlock;
@@ -249,10 +248,8 @@ public class PlaceBlock {
 			if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ATTACK.getNode()))
 				throw new TownyException(Translation.of("msg_err_command_disable"));
 			
-	        try {
-				if (TownyEconomyHandler.isActive() && !nation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.getSiegeCost(town)))
-					throw new TownyException(Translation.of("msg_err_no_money"));
-			} catch (EconomyException ignored) {}
+			if (TownyEconomyHandler.isActive() && !nation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.getSiegeCost(town)))
+				throw new TownyException(Translation.of("msg_err_no_money"));
 	        
 	        if(getNumActiveAttackSieges(nation) >= SiegeWarSettings.getWarSiegeMaxActiveSiegeAttacksPerNation())
 				throw new TownyException(Translation.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));

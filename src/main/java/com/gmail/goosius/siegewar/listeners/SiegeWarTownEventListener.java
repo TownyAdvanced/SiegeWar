@@ -31,6 +31,7 @@ import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.TownStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.time.dailytaxes.PreTownPaysNationTaxEvent;
+import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
 import com.palmergames.bukkit.towny.event.town.TownUnconquerEvent;
@@ -435,4 +436,12 @@ public class SiegeWarTownEventListener implements Listener {
     	if (SiegeWarSettings.getWarSiegeEnabled())
     		event.setCancelled(true);
     }
+
+	@EventHandler
+	public void onTownMerge(TownPreMergeEvent event) {
+		if (SiegeController.hasSiege(event.getSuccumbingTown())) {
+			event.setCancelMessage(Translation.of("msg_err_cannot_merge_towns"));
+			event.setCancelled(true);
+		}
+	}
 }

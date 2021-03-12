@@ -55,21 +55,16 @@ public class SiegeWarMoneyUtil {
 	public static void giveWarChestToDefendingTown(Siege siege) {
 		Town winnerTown= siege.getDefendingTown();
 		if(TownyEconomyHandler.isActive()) {
-			try {
-				winnerTown.getAccount().deposit(siege.getWarChestAmount(), "War Chest Captured");
-				String message =
-					Translation.of("msg_siege_war_attack_recover_war_chest",
-					winnerTown.getFormattedName(),
-					TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
+			winnerTown.getAccount().deposit(siege.getWarChestAmount(), "War Chest Captured");
+			String message =
+				Translation.of("msg_siege_war_attack_recover_war_chest",
+				winnerTown.getFormattedName(),
+				TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
 
-				//Send message to nation
-				TownyMessaging.sendPrefixedNationMessage(siege.getAttackingNation(), message);
-				//Send message to town
-				TownyMessaging.sendPrefixedTownMessage(winnerTown, message);
-			} catch (EconomyException e) {
-				System.out.println("Problem paying war chest(s) to winner town");
-				e.printStackTrace();
-			}
+			//Send message to nation
+			TownyMessaging.sendPrefixedNationMessage(siege.getAttackingNation(), message);
+			//Send message to town
+			TownyMessaging.sendPrefixedTownMessage(winnerTown, message);
 		}
 	}
 
