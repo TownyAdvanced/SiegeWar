@@ -1,18 +1,13 @@
 package com.gmail.goosius.siegewar;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.palmergames.bukkit.towny.Towny;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -43,7 +38,8 @@ public class SiegeController {
 	private static Map<UUID, Siege> townSiegeMap = new ConcurrentHashMap<>();
 	private static List<Town> siegedTowns = new ArrayList<>();
 	private static List<String> siegedTownNames = new ArrayList<>();
-	
+	private static Map<Nation, List<Town>> nationTownsOccupationMap = new HashMap<>();
+
 	public static void newSiege(String siegeName) {
 		Siege siege = new Siege(siegeName);		
 
@@ -52,6 +48,16 @@ public class SiegeController {
 
 	public static List<Siege> getSieges() {
 		return new ArrayList<>(sieges.values());
+	}
+
+	public static List<Town> getTownsOccupiedByNation(Nation nation) {
+		Map<Nation, List<Town>> nationTownsOccupationMapCopy = new HashMap<>(nationTownsOccupationMap);
+
+		if(nationTownsOccupationMapCopy.containsKey(nation)) {
+			return new ArrayList<>(nationTownsOccupationMapCopy.get(nation));
+		} else {
+			return new ArrayList<>();
+		}
 	}
 
 	public static Siege getSiege(String siegeName) throws NotRegisteredException {
@@ -97,11 +103,13 @@ public class SiegeController {
 
 	public static void loadAll() {
 		try {
-			System.out.println(SiegeWar.prefix + "Loading SiegeList...");
+			System.out.println(SiegeWar.prefix + "Loading data...");
 			clearSieges();
 			loadSiegeList();
 			loadSieges();
+			loadTownOccupationData();
 			System.out.println(SiegeWar.prefix + SiegeController.getSieges().size() + " siege(s) loaded.");
+			System.out.println(SiegeWar.prefix + "Data loaded.");
 		} catch (Exception e){
 			e.printStackTrace();
 		}
@@ -121,6 +129,45 @@ public class SiegeController {
 					siegedTownNames.add(town.getName());
 				}
 			}
+	}
+
+	public static void loadTownOccupationData() {
+		String occupyingNationUUID;
+		Nation occupyingNation = null;
+		List<Town> occupiedTowns;
+
+		for (Town town : TownyUniverse.getInstance().getTowns()) {
+			//Load occupying nation data
+			occupyingNationUUID = TownMetaDataController.getOccupyingNationUUID(town);
+			if (occupyingNationUUID != null) {
+				try {
+					occupyingNation = TownyUniverse.getInstance().getDataSource().getNation(UUID.fromString(SiegeMetaDataController.getNationUUID(town)));
+				} catch (NotRegisteredException e) {
+					//Fix data - no occupier, so conquered must be false
+					town.setConquered(false);
+					town.save();
+					continue; //Next town
+				}
+			} else {
+				if (town.isConquered()) {
+					//Fix data - no occupier, so conquered must be false
+					town.setConquered(false);
+					town.save();
+					continue; //Next town
+				}
+			}
+
+			//At this point, valid occupier data has been found
+			//Populate the map
+			if (nationTownsOccupationMap.containsKey(occupyingNation)) {
+				occupiedTowns = new ArrayList<>();
+				occupiedTowns.add(town);
+			} else {
+				occupiedTowns = nationTownsOccupationMap.get(occupyingNation);
+				occupiedTowns.add(town);
+			}
+			nationTownsOccupationMap.put(occupyingNation, occupiedTowns);
+		}
 	}
 
 	public static boolean loadSieges() {

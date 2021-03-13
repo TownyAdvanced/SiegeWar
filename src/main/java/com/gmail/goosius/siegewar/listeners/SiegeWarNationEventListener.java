@@ -3,6 +3,11 @@ package com.gmail.goosius.siegewar.listeners;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+
+import com.gmail.goosius.siegewar.utils.*;
+import com.palmergames.bukkit.towny.TownySettings;
+import com.palmergames.bukkit.towny.event.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,17 +21,9 @@ import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.PermissionUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyFormatter;
-import com.palmergames.bukkit.towny.event.NationPreAddTownEvent;
-import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
-import com.palmergames.bukkit.towny.event.PreDeleteNationEvent;
-import com.palmergames.bukkit.towny.event.RenameNationEvent;
 import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
 import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
 import com.palmergames.bukkit.towny.event.nation.NationTownLeaveEvent;
@@ -263,5 +260,23 @@ public class SiegeWarNationEventListener implements Listener {
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_remove_enemy"));
 			}
 		}
+	}
+
+	/**
+	 * This event is fired while calculating the bonus blocks a town receives from its nation
+	 *
+	 * Vanilla Towny Calculation:
+	 * Count all residents of all home towns of the nation
+	 *
+	 * SiegeWar Calculation:
+	 * 1. Count all residents of home towns which are unoccupied.
+	 * 2. Plus all residents from foreign towns which are occupied by the nation.
+	 *
+	 */
+	@EventHandler
+	public void on(NationBonusCalculationEvent event) {
+		Map<TownySettings.NationLevel, Object> effectiveNationLevel = SiegeWarNationUtil.calculateEffectiveNationLevel(event.getNation());
+		int bonusBlocks = (Integer)effectiveNationLevel.get(TownySettings.NationLevel.TOWN_BLOCK_LIMIT_BONUS);
+		event.setBonusBlocks(bonusBlocks);
 	}
 }
