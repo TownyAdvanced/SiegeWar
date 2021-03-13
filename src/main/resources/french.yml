@@ -152,9 +152,6 @@ msg_war_common_town_became_non_peaceful: "&b%s a été confirmé comme non pacif
 msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: "&cImpossible d'ajouter un grade militaire aux résidents, car ils sont dans une ville paisible."
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: "&cAllergie de guerre active. Pour supprimer cet effet, quittez immédiatement la zone de siège."
 msg_war_siege_err_cannot_attack_peaceful_town: "&cVous ne pouvez pas attaquer une ville pacifique."
-msg_war_siege_peaceful_town_changed_nation: "&b%s a pacifiquement changé de nation, passant de %s à %s."
-msg_war_siege_peaceful_town_joined_nation: "&b%s a pacifiquement rejoint %s."
-msg_war_siege_peaceful_town_left_nation: "&b%s a pacifiquement quitté %s."
 
 #Siege immunities
 msg_set_siege_immunities_town: "L'immunité au siège de la ville %s est définie sur %s heures."
@@ -318,6 +315,12 @@ msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control se
 
 #Added in 0.15
 msg_err_cannot_merge_towns: '&cUnable to merge a town that is under siege!'
+
 msg_war_siege_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks. The town may get automatically occupied by a nation with a strong presence in the local area. (see user-guide for more details). Residents cannot enter siege-zones or gain nation-military ranks.'
 msg_war_siege_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to siege attacks. The town can no longer get automatically occupied. Residents can enter siege-zones and gain nation-military ranks.'
 msg_war_siege_peaceful_town_total_switches: '&b%d peaceful town%s %s been peacefully occupied, or released from occupation.'
+msg_war_siege_neutral_town_peacefully_occupied: "&b%s has been peacefully occupied by %s."
+msg_war_siege_neutral_town_peacefully_released: "&b%s has been peacefully released from occupation."
+msg_war_siege_nation_town_peacefully_occupied: "&b%s, belonging to %s, has been peacefully occupied by %s."
+msg_war_siege_nation_town_peacefully_released: "&b%s, belonging to %s, has been peacefully released from occupation."
+
