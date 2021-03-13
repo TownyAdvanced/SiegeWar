@@ -1,39 +1,38 @@
 package com.gmail.goosius.siegewar.listeners;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import com.gmail.goosius.siegewar.utils.*;
-import com.palmergames.bukkit.towny.TownySettings;
-import com.palmergames.bukkit.towny.event.*;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-
-import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
-import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.PermissionUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyFormatter;
-import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
+import com.palmergames.bukkit.towny.TownySettings;
+import com.palmergames.bukkit.towny.event.NationBonusCalculationEvent;
+import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
+import com.palmergames.bukkit.towny.event.PreDeleteNationEvent;
+import com.palmergames.bukkit.towny.event.RenameNationEvent;
 import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
-import com.palmergames.bukkit.towny.event.nation.NationTownLeaveEvent;
-import com.palmergames.bukkit.towny.event.nation.PreNewNationEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.util.ChatTools;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -48,94 +47,6 @@ public class SiegeWarNationEventListener implements Listener {
 	public SiegeWarNationEventListener(SiegeWar instance) {
 
 		plugin = instance;
-	}
-	/*
-	 * SW limits which Towns can join or be added to a nation.
-	 */
-	@EventHandler
-	public void onNationAddTownEvent(NationPreAddTownEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && event.getTown().isNeutral()) {
-			if(!TownPeacefulnessUtil.canPeacefulTownJoinNation(event.getTown(), event.getNation())) {
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_join_nation",
-						event.getTown().getName(),
-						event.getNation().getName(),
-						SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement(),
-						SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement()));
-				event.setCancelled(true);
-			}
-		}
-	}
-	
-	/*
-	 * SW warns peaceful towns who make nations their decision may be a poor one, but does not stop them.
-	 */
-	@EventHandler
-	public void onNewNationEvent(PreNewNationEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
-				&& event.getTown().isNeutral()) {
-			if (!SiegeWarSettings.getWarCommonPeacefulTownsAllowedToMakeNation()) {
-				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_towns_cannot_make_nations"));
-			} else 
-				Messaging.sendMsg(event.getTown().getMayor().getPlayer(), Translation.of("msg_war_siege_warning_peaceful_town_should_not_create_nation"));
-		}
-	}
-	
-	/*
-	 * SW can prevent towns leaving their nations.
-	 */
-	@EventHandler
-	public void onTownTriesToLeaveNation(NationPreTownLeaveEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			Town town = event.getTown();
-
-			//A peaceful town might not be able to leave
-			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
-					&& town.isNeutral()
-					&& !TownPeacefulnessUtil.canPeacefulTownLeaveNation(town)) {
-
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_war_siege_peaceful_town_cannot_revolt_zero_or_one_unsieged_guardian_towns_nearby",
-						SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement(),
-						SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement()));
-				event.setCancelled(true);
-				return;
-			}
-
-			//A town cannot leave unless its revolt immunity timer is finished
-			if (SiegeWarSettings.getWarSiegeTownLeaveDisabled()) {
-
-				if (!SiegeWarSettings.getWarSiegeRevoltEnabled()) {
-					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_war_town_voluntary_leave_impossible"));
-					event.setCancelled(true);
-				}
-				if (System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(town)) {
-					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_war_revolt_immunity_active"));
-					event.setCancelled(true);
-				} else {
-					// Towny will cancel the leaving on lowest priority if the town is conquered.
-					// We want to un-cancel it.
-					if (event.isCancelled())
-						event.setCancelled(false);
-				}
-			}
-		}
-	}
-
-	@EventHandler
-	public void onTownLeavesNation(NationTownLeaveEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeRevoltEnabled()) {
-			//Activate revolt immunity
-			SiegeWarTimeUtil.activateRevoltImmunityTimer(event.getTown());
-			event.getTown().setConquered(false);
-			event.getTown().setConqueredDays(0);
-			event.getTown().save();
-
-			Messaging.sendGlobalMessage(
-				Translation.of("msg_siege_war_revolt",
-				event.getTown().getFormattedName(),
-				event.getTown().getMayor().getFormattedName(),
-				event.getNation().getFormattedName()));
-		}	
 	}
 	
 	@EventHandler

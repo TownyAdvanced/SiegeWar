@@ -154,12 +154,9 @@ msg_war_siege_town_became_non_peaceful: "&b%s a été confirmé comme non pacifi
 msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: "&cImpossible d'ajouter un grade militaire aux résidents, car ils sont dans une ville paisible."
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: "&cAllergie de guerre active. Pour supprimer cet effet, quittez immédiatement la zone de siège."
 msg_war_siege_err_cannot_attack_peaceful_town: "&cVous ne pouvez pas attaquer une ville pacifique."
-msg_war_siege_peaceful_town_cannot_join_nation: "c%s [PEACEFUL] ne peut pas rejoindre %s, car la nation n'a pas de ville gardienne à proximité (à moins de %d chunks). Une ville gardienne est une ville de nation non pacifique avec au moins %d claims."
 msg_war_siege_peaceful_town_changed_nation: "&b%s a pacifiquement changé de nation, passant de %s à %s."
 msg_war_siege_peaceful_town_joined_nation: "&b%s a pacifiquement rejoint %s."
 msg_war_siege_peaceful_town_left_nation: "&b%s a pacifiquement quitté %s."
-msg_war_siege_warning_peaceful_town_should_not_create_nation: "&cVous êtes sur le point de faire d'une ville pacifique une capitale. C'est généralement une mauvaise idée, car la nation pourrait tomber en ruine sans combat."
-msg_war_siege_peaceful_towns_cannot_make_nations: "&cLes villes pacifiques ne peuvent fonder des nations!"
 
 #Siege immunities
 msg_set_siege_immunities_town: "L'immunité au siège de la ville %s est définie sur %s heures."

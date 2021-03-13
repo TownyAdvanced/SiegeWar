@@ -321,10 +321,6 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_GUARDIAN_TOWN_MIN_DISTANCE_REQUIREMENT_TOWNBLOCKS);
 	}
 
-	public static boolean getWarCommonPeacefulTownsAllowedToMakeNation() {
-		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_ALLOWED_TO_MAKE_NATION);
-	}
-
 	public static int getWarCommonPeacefulTownsNewTownConfirmationRequirementDays() {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_NEW_TOWN_CONFIRMATION_REQUIREMENT_DAYS);
 	}

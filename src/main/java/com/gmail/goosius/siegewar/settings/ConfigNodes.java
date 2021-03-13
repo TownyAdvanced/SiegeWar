@@ -559,11 +559,6 @@ public enum ConfigNodes {
 			"false",
 			"",
 			"# If this setting is true, then new towns start peaceful"),
-	PEACEFUL_TOWNS_ALLOWED_TO_MAKE_NATION(
-			"peaceful_towns.allowed_to_make_nation",
-			"false",
-			"",
-			"# If this setting is true, then peaceful towns can found nations."),
 	PEACEFUL_TOWNS_NEW_TOWN_CONFIRMATION_REQUIREMENT_DAYS(
 			"peaceful_towns.new_town_confirmation_requirement_days",
 			"2",
