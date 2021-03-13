@@ -321,13 +321,10 @@ msg_war_siege_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful
 msg_war_siege_peaceful_town_total_switches: '&b%d peaceful town%s %s been peacefully occupied, or released from occupation.'
 
 
-msg_war_siege_peaceful_town_changed_nation: "&b%s has peacefully changed hands, moving from %s to %s."
-msg_war_siege_peaceful_town_joined_nation: "&b%s has peacefully joined %s."
-msg_war_siege_peaceful_town_left_nation: "&b%s has peacefully left %s."
-msg_war_siege_peaceful_town_changed_nation: "&b%s has peacefully changed hands, moving from %s to %s."
 
 
-
-msg_war_siege_peaceful_town_occupied: "&b%s was peacefully occupied."
-msg_war_siege_peaceful_town_released_from_occupation: "&b%s was peacefully released from occupation."
+msg_war_siege_neutral_town_peacefully_occupied: "&b%s has been peacefully occupied by %s."
+msg_war_siege_neutral_town_peacefully_released: "&b%s has been peacefully released from occupation."
+msg_war_siege_nation_town_peacefully_occupied: "&b%s, belonging to %s, has been peacefully occupied by %s."
+msg_war_siege_nation_town_peacefully_released: "&b%s, belonging to %s, has been peacefully released from occupation."
 

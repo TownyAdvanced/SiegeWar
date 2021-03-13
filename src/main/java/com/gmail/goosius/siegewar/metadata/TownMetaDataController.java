@@ -123,4 +123,10 @@ public class TownMetaDataController {
 			town.addMetaData(new StringDataField("siegewar_occupyingNationUUID", uuid));
 	}
 
+	public static void removeOccupationMetadata(Town town) {
+		StringDataField sdf = (StringDataField) occupyingNationUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			town.removeMetaData(sdf);
+	}
+
 }

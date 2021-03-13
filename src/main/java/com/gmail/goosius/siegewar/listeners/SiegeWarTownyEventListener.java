@@ -11,7 +11,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.event.NationBonusCalculationEvent;
 import com.palmergames.bukkit.towny.event.PreNewDayEvent;
 import com.palmergames.bukkit.towny.event.SpawnEvent;
 import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
@@ -61,7 +60,7 @@ public class SiegeWarTownyEventListener implements Listener {
         if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
             TownPeacefulnessUtil.updateTownPeacefulnessCounters();
             if(SiegeWarSettings.getWarSiegeEnabled())
-                TownPeacefulnessUtil.evaluatePeacefulTownNationAssignments();
+                TownPeacefulnessUtil.evaluatePeacefulTownOccupationAssignments();
         }
     }
     
