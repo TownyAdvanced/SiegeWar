@@ -163,7 +163,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 				Town destinationTown = TownyAPI.getInstance().getTown(event.getTo());
 				Resident resident = TownyUniverse.getInstance().getResident(event.getPlayer().getUniqueId());
 
-				if (destinationTown.hasResident(resident) || (destinationTown.isNeutral() && SiegeWarSettings.getWarCommonPeacefulTownsPublicSpawning()))
+				if (destinationTown.hasResident(resident))
 					return;
 
 				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {

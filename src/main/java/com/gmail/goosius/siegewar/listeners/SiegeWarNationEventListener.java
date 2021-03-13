@@ -48,7 +48,7 @@ public class SiegeWarNationEventListener implements Listener {
 
 		plugin = instance;
 	}
-	
+
 	@EventHandler
 	public void onNationRankGivenToPlayer(NationRankAddEvent event) {
 		//In Siegewar, if target town is peaceful, can't add military rank

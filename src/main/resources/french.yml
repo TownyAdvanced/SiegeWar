@@ -149,8 +149,6 @@ msg_war_common_town_peacefulness_countdown_cancelled: "&bLe compte à rebours du
 msg_war_common_town_became_peaceful: "&b%s a été confirmé comme étant pacifique."
 msg_war_common_town_became_non_peaceful: "&b%s a été confirmé comme non pacifique."
 
-msg_war_siege_town_became_peaceful: "&b%s a été confirmé comme étant pacifique. La ville est désormais immunisée contre les sièges et les taxes. Le choix de la nation de la ville est maintenant limité aux nations avec une forte présence dans la région. (voir le guide utilisateur pour plus de détails). Les résidents ne peuvent pas entrer dans les zones de siège ou gagner des grades militaires nationaux."
-msg_war_siege_town_became_non_peaceful: "&b%s a été confirmé comme non pacifique. La ville n'est plus à l'abri des sièges et des taxes. Le choix de la nation de la ville n'est plus limité. Les résidents peuvent entrer dans les zones de siège et gagner des grades militaires nationaux."
 msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: "&cImpossible d'ajouter un grade militaire aux résidents, car ils sont dans une ville paisible."
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: "&cAllergie de guerre active. Pour supprimer cet effet, quittez immédiatement la zone de siège."
 msg_war_siege_err_cannot_attack_peaceful_town: "&cVous ne pouvez pas attaquer une ville pacifique."
@@ -178,7 +176,6 @@ status_no: "&cNON"
 msg_err_no_money: "&cIl n'y a pas assez d'argent dans la banque."
 
 #Added in 0.04:
-msg_war_siege_peaceful_town_total_switches: "&b%d villes pacifiques %s %s pacifiquement changé de nations."
 msg_err_not_registered_1: "&c%s n'est pas enregistré."
 msg_error_must_be_num: "&bLe montant doit être un nombre."
 
@@ -321,3 +318,6 @@ msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control se
 
 #Added in 0.15
 msg_err_cannot_merge_towns: '&cUnable to merge a town that is under siege!'
+msg_war_siege_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks. The town may get automatically occupied by a nation with a strong presence in the local area. (see user-guide for more details). Residents cannot enter siege-zones or gain nation-military ranks.'
+msg_war_siege_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to siege attacks. The town can no longer get automatically occupied. Residents can enter siege-zones and gain nation-military ranks.'
+msg_war_siege_peaceful_town_total_switches: '&b%d peaceful town%s %s been peacefully occupied, or released from occupation.'

@@ -278,16 +278,6 @@ public class SiegeWarTownEventListener implements Listener {
 	}
 
 	/*
-	 * In SiegeWar neutral/peaceful towns do not pay their Nation tax. 
-	 */
-	@EventHandler
-	public void onTownPayNationTax(PreTownPaysNationTaxEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && event.getTown().isNeutral()) {
-			event.setCancelled(true);
-		}
-	}
-
-	/*
 	 * SiegeWar will add lines to towns which have a siege
 	 */
 	@EventHandler
