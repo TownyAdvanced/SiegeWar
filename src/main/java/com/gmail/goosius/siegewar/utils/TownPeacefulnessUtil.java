@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -197,7 +198,7 @@ public class TownPeacefulnessUtil {
 
 				//If there are no guardian towns, ensure the town is not occupied
 				if(guardianTowns.size() == 0) {
-					townTransferred = ensureTownIsNotOccupied(peacefulTown);
+					townTransferred = ensureTownIsPeacefullyUnoccupied(peacefulTown);
 
 				} else {
 					//Find guardian nation
@@ -210,7 +211,7 @@ public class TownPeacefulnessUtil {
 						continue;
 
 					//Ensure the town is occupied
-					townTransferred = ensureTownIsOccupied(peacefulTown, guardianNation);
+					townTransferred = ensureTownIsPeacefullyOccupied(peacefulTown, guardianNation);
 				}
 
 				if (townTransferred)
@@ -242,20 +243,14 @@ public class TownPeacefulnessUtil {
 		return topGuardianTown.getNation();
 	}
 
-	private static boolean ensureTownIsNotOccupied(Town peacefulTown) throws NotRegisteredException {
-		Nation previousOccupier = getCurrentOccupier(peacefulTown);
+	private static boolean ensureTownIsPeacefullyUnoccupied(Town peacefulTown) throws NotRegisteredException {
+		Nation previousOccupier = TownOccupationController.getTownOccupier(peacefulTown);
 
 		if(previousOccupier == null) {
-			//Fix data if required
-			if(peacefulTown.isConquered()) {
-				peacefulTown.setConquered(false);
-				peacefulTown.save();;
-			}
 			return false;
 		} else {
-			peacefulTown.setConquered(false);
-			TownMetaDataController.removeOccupationMetadata(peacefulTown);
-			peacefulTown.save();
+			//Remove occupation
+			TownOccupationController.setTownOccupier(peacefulTown, null);
 			//Send messages
 			if(peacefulTown.hasNation()) {
 				TownyMessaging.sendPrefixedNationMessage(previousOccupier, Translation.of("msg_war_siege_nation_town_peacefully_released", peacefulTown.getName(), peacefulTown.getNation().getName()));
@@ -268,17 +263,14 @@ public class TownPeacefulnessUtil {
 		}
 	}
 
-	private static boolean ensureTownIsOccupied(Town peacefulTown, Nation newOccupier) throws NotRegisteredException {
-		Nation currentOccupier = getCurrentOccupier(peacefulTown);
+	private static boolean ensureTownIsPeacefullyOccupied(Town peacefulTown, Nation newOccupier) throws NotRegisteredException {
+		Nation currentOccupier = TownOccupationController.getTownOccupier(peacefulTown);
 
 		if(currentOccupier == null) {
 			//Town is not yet occupied
 
-			//Occupy town now
-			peacefulTown.setConquered(true);
-			TownMetaDataController.setOccupyingNationUUID(peacefulTown, newOccupier.getUUID().toString());
-			peacefulTown.save();
-
+			//Occupy town
+			TownOccupationController.setTownOccupier(peacefulTown, newOccupier);
 			//Send messages
 			if(peacefulTown.hasNation()) {
 				//Send to nation of peaceful town
@@ -298,10 +290,8 @@ public class TownPeacefulnessUtil {
 			if(currentOccupier == newOccupier)
 				return false;
 
-			//Set occupation data
-			TownMetaDataController.setOccupyingNationUUID(peacefulTown, newOccupier.getUUID().toString());
-			peacefulTown.save();
-
+			//Change occupation
+			TownOccupationController.setTownOccupier(peacefulTown, newOccupier);
 			//Send messages
 			if(peacefulTown.hasNation()) {
 				//Send to nation of peaceful town
@@ -320,18 +310,6 @@ public class TownPeacefulnessUtil {
 			}
 		}
 		return true; //Town switched
-	}
-
-	private static Nation getCurrentOccupier(Town peacefulTown) {
-		Nation currentOccupier = null;
-		if(peacefulTown.isConquered()) {
-			String currentOccupierUUUD = TownMetaDataController.getOccupyingNationUUID(peacefulTown);
-			if (currentOccupierUUUD == null)
-				return null;
-
-			currentOccupier = TownyUniverse.getInstance().getNation(currentOccupierUUUD);
-		}
-		return currentOccupier;
 	}
 
 	public static Set<Town> getGuardianTowns(Town peacefulTown) {

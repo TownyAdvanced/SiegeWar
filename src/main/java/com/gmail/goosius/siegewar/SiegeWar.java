@@ -63,8 +63,12 @@ public class SiegeWar extends JavaPlugin {
 
         registerCommands();
         
-        if (Bukkit.getPluginManager().getPlugin("Towny").isEnabled())
-        	SiegeController.loadAll();
+        if (Bukkit.getPluginManager().getPlugin("Towny").isEnabled()) {
+        	if(!SiegeController.loadAll())
+        		isError = true;
+        	if(!TownOccupationController.loadAll())
+        		isError = true;
+		}
 
 		if(isError) {
 			System.err.println(prefix + "SiegeWar is in safe mode. Dynmap integration disabled.");

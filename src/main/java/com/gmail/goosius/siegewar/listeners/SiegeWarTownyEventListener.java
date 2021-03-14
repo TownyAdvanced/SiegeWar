@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
@@ -50,6 +51,7 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onTownyDatabaseLoad(TownyLoadedDatabaseEvent event) {
     	System.out.println(SiegeWar.prefix + "Towny database reload detected, reloading sieges...");
         SiegeController.loadAll();
+        TownOccupationController.loadAll();
     }
     
     /*
