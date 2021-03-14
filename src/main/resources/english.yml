@@ -330,4 +330,5 @@ nation_help_13 : 'Revolt against your occupier. A revolt-siege will start.'
 nation_help_14 : 'Release the given town from occupation.'
 
 # Revolt
-msg_err_town_unoccupied_revolt_disallowed: 'Your town is not occupied. Revolt not possible.'
+msg_err_town_unoccupied_revolt_disallowed: '&cYour town is not occupied. Revolt not possible.'
+

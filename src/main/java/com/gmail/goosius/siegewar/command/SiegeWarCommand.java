@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.*;
@@ -233,7 +234,15 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					if (!town.isConquered())
 						throw new TownyException(Translation.of("msg_err_town_unoccupied_revolt_disallowed"));
 
-					//Got here? Good to go. Revolt now
+					//Ensure the town does not have revolt immunity
+					//TODO
+
+					//If you revolt, you lose any siege immunity you may have
+
+					//Ensure the town is not under
+					//Revolt now
+					//Start a siege
+
 				} catch(Exception e) {
 					player.sendMessage(e.getMessage());
 				}
