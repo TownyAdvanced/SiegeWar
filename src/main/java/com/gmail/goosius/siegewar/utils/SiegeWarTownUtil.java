@@ -27,24 +27,6 @@ public class SiegeWarTownUtil {
 		}
 		town.save();
     }
-    
-    public static void disableNationPerms(Town town) {
-        town.getPermissions().change(Action.PERM_LEVEL, false, PermLevel.NATION);
-
-        for (TownBlock plot : town.getTownBlocks()) {
-            if (plot.hasResident())
-                continue;
-
-			TownyPermission plotPerm = plot.getPermissions();
-			if (plotPerm.getNationPerm(ActionType.BUILD) || plotPerm.getNationPerm(ActionType.DESTROY)
-				|| plotPerm.getNationPerm(ActionType.ITEM_USE) || plotPerm.getNationPerm(ActionType.SWITCH)) {
-			
-				plot.getPermissions().change(Action.PERM_LEVEL, false, PermLevel.NATION);
-				plot.save();
-			}
-        }
-        town.save();
-    }
 
     /**
 	 * Sets pvp flags in a town to the desired setting.

@@ -39,8 +39,6 @@ msg_siege_war_attacker_abandon: '&bAn army belonging to %s has abandoned its att
 msg_siege_war_pending_attacker_abandon: '&bAn army belonging to %s has abandoned its attack on %s. Defender victory will be confirmed in %s!'
 msg_siege_war_town_surrender: '&b%s has surrendered to an army belonging to %s. The attackers are victorious!'
 msg_siege_war_pending_town_surrender: '&b%s has surrendered to an army belonging to %s. Attacker victory will be confirmed in %s!'
-msg_siege_war_neutral_town_captured: '&b%s has been captured by %s!'
-msg_siege_war_nation_town_captured: '&b%s, previously belonging to %s, has been captured by %s!'
 msg_siege_war_neutral_town_plundered: '&b%s has been plundered of %s by %s!'
 msg_siege_war_nation_town_plundered: '&b%s has been plundered of %s by %s!'
 msg_siege_war_town_ruined_from_plunder: '&b%s has been reduced to ruins by %s!'
@@ -89,11 +87,7 @@ msg_err_siege_war_cannot_abandon_no_nearby_siege_attacks: '&cYou cannot abandon 
 msg_err_siege_war_cannot_abandon_nation_not_attacking_zone: '&cYou cannot abandon because your nation is not attacking in this area.'
 msg_err_siege_war_cannot_abandon_siege_over: '&cYou cannot abandon because the siege is over.'
 #Invade
-msg_err_siege_war_cannot_invade_own_town: '&cYou cannot capture your own town.'
-msg_err_siege_war_cannot_invade_without_victory: "&cYou cannot capture the town unless your nation is victorious in the siege."
 msg_err_siege_war_no_siege_on_target_town: '&cThere is no siege on the target town of %s.'
-msg_err_siege_war_town_already_invaded: '&cThis town has already been captured'
-msg_err_siege_war_town_already_belongs_to_your_nation: '&cThis town already belongs to your nation'
 #Plunder
 msg_err_siege_war_cannot_plunder_own_town: '&cYou cannot plunder your own town.'
 msg_err_siege_war_cannot_plunder_without_victory: "&cYou cannot plunder unless your nation is victorious in the siege."
@@ -227,7 +221,6 @@ msg_war_siege_peaceful_town_cannot_revolt_zero_or_one_unsieged_guardian_towns_ne
 #Added in 0.08:
 status_nation_town_stats: '&2Towns Captured/Lost: &a%d&2/&a%d'
 status_nation_plunder_stats: '&2Plunder Gains/Losses: &a%d&2/&a%d'
-status_nation_enemy_nations_defeated: '&2Enemy Nations Defeated: &a%d'
 
 msg_swa_set_towns_gained_success: '&bSuccessfully set towns gained to %d for %s.'
 msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
@@ -320,8 +313,15 @@ msg_err_cannot_merge_towns: '&cUnable to merge a town that is under siege!'
 msg_war_siege_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks. The town may get automatically occupied by a nation with a strong presence in the local area. (see user-guide for more details). Residents cannot enter siege-zones or gain nation-military ranks.'
 msg_war_siege_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to siege attacks. The town can no longer get automatically occupied. Residents can enter siege-zones and gain nation-military ranks.'
 msg_war_siege_peaceful_town_total_switches: '&b%d peaceful town%s %s been peacefully occupied, or released from occupation.'
+
 msg_war_siege_neutral_town_peacefully_occupied: "&b%s has been peacefully occupied by %s."
-msg_war_siege_neutral_town_peacefully_released: "&b%s has been peacefully released from occupation."
+msg_war_siege_neutral_town_peacefully_released: "&b%s has been pemsg_err_siege_war_cannot_invade_own_townacefully released from occupation."
 msg_war_siege_nation_town_peacefully_occupied: "&b%s, belonging to %s, has been peacefully occupied by %s."
 msg_war_siege_nation_town_peacefully_released: "&b%s, belonging to %s, has been peacefully released from occupation."
 
+msg_err_siege_war_cannot_invade_own_town: '&cYou cannot invade your own town.'
+msg_err_siege_war_cannot_invade_without_victory: "&cYou cannot invade the town unless your nation is victorious in the siege."
+msg_err_siege_war_town_already_invaded: '&cThis town has already been invaded'
+
+msg_siege_war_neutral_town_invaded: '&b%s has been invaded by %s, and placed under occupation!'
+msg_siege_war_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and placed under occupation!'

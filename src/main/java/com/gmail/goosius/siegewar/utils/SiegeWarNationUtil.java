@@ -38,4 +38,11 @@ public class SiegeWarNationUtil {
         //Return effective nation level
         return TownySettings.getNationLevel(effectNumberOfResidents);
     }
+
+    public static int calculateEffectiveNumberOfTownsInNation(Nation nation) {
+        int effectiveNumber = 0;
+        effectiveNumber += nation.getNumTowns();
+        effectiveNumber += TownOccupationController.getTownsOccupiedByNation(nation).size();
+        return effectiveNumber;
+    }
 }

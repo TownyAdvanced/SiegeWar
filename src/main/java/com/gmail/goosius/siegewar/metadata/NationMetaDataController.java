@@ -13,8 +13,7 @@ public class NationMetaDataController {
         plunderGained = "siegewar_totalplundergained",
         plunderLost = "siegewar_totalplunderlost",
         townsGained = "siegewar_totaltownsgained",
-        townsLost = "siegewar_totaltownslost",
-        nationsDefeated = "siegewar_nationsdefeated";
+        townsLost = "siegewar_totaltownslost";
 
     public NationMetaDataController(SiegeWar plugin) {
         this.plugin = plugin;
@@ -61,10 +60,6 @@ public class NationMetaDataController {
         return getIdf(nation, townsLost);
     }
 
-    public static int getNationsDefeated(Nation nation) {
-        return getIdf(nation, nationsDefeated);
-    }
-
     public static void setTotalPlunderGained(Nation nation, int num) {
         setIdf(nation, plunderGained, num);
     }
@@ -79,13 +74,5 @@ public class NationMetaDataController {
 
     public static void setTotalTownsLost(Nation nation, int num) {
         setIdf(nation, townsLost, num);
-    }
-
-    public static void setNationsDefeated(Nation nation, int num) {
-        setIdf(nation, nationsDefeated, num);
-    }
-
-    public static void incrementDefeatedNations(Nation nation) {
-        setNationsDefeated(nation, getNationsDefeated(nation) + 1);
     }
 }

@@ -107,9 +107,8 @@ public class SiegeWarNationEventListener implements Listener {
 
 			if (SiegeWarSettings.getWarSiegeNationStatisticsEnabled()) {
 				event.addLines(Arrays.asList(Translation.of("status_nation_town_stats", NationMetaDataController.getTotalTownsGained(nation), NationMetaDataController.getTotalTownsLost(nation)),
-											Translation.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation)),
-											Translation.of("status_nation_enemy_nations_defeated", NationMetaDataController.getNationsDefeated(nation))));
-			}	
+											Translation.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation))));
+			}
 		}
 	}
     

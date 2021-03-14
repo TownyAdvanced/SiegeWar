@@ -2,8 +2,10 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.exceptions.AlreadyRegisteredException;
@@ -43,9 +45,6 @@ public class InvadeTown {
         if (siege.isTownInvaded())
             throw new TownyException(String.format(Translation.of("msg_err_siege_war_town_already_invaded"), townToBeInvaded.getName()));
 
-		if(townToBeInvaded.hasNation() && townToBeInvaded.getNation() == attackerWinner)
-			throw new TownyException(String.format(Translation.of("msg_err_siege_war_town_already_belongs_to_your_nation"), townToBeInvaded.getName()));
-
 		if (TownySettings.getNationRequiresProximity() > 0) {
 			Coord capitalCoord = attackerWinner.getCapital().getHomeBlock().getCoord();
 			Coord townCoord = townToBeInvaded.getHomeBlock().getCoord();
@@ -60,76 +59,59 @@ public class InvadeTown {
 		}
 
 		if (TownySettings.getMaxTownsPerNation() > 0) {
-			if (attackerWinner.getTowns().size() >= TownySettings.getMaxTownsPerNation()){
+			int effectiveNumTowns = SiegeWarNationUtil.calculateEffectiveNumberOfTownsInNation(attackerWinner);
+			if (effectiveNumTowns >= TownySettings.getMaxTownsPerNation()){
 				throw new TownyException(String.format(Translation.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
 			}
 		}
 
-		captureTown(siege, attackerWinner, townToBeInvaded);
-
+		invadeTown(siege, attackerWinner, townToBeInvaded);
     }
 
-    private static void captureTown(Siege siege, Nation attackingNation, Town defendingTown) {
-		Nation nationOfDefendingTown = null;
-		boolean nationTown = false;
-		boolean nationDefeated = false;
-		
-        if(defendingTown.hasNation()) {
-			nationTown = true;
-			
-            nationOfDefendingTown = TownyAPI.getInstance().getTownNationOrNull(defendingTown);
+	/**
+	 * Invade the town
+	 *
+	 * @param siege the siege
+	 * @param invadingNation the nation doing the invading
+	 * @param invadedTown the town being invaded
+	 */
+    private static void invadeTown(Siege siege, Nation invadingNation, Town invadedTown) {
+		Nation nationOfInvadedTown = null;
 
-            // This will delete the Nation when it loses its last town, mark them defeated.
-            if(nationOfDefendingTown.getTowns().size() == 1) {
-				nationDefeated = true;
-				NationMetaDataController.incrementDefeatedNations(attackingNation);   
-			} else
-				NationMetaDataController.setTotalTownsLost(nationOfDefendingTown, NationMetaDataController.getTotalTownsLost(nationOfDefendingTown) + 1);
-            
-			//Remove town from nation (and nation itself if empty)
-            defendingTown.removeNation();
+        if(invadedTown.hasNation()) {
+			//Update stats of defeated nation
+            nationOfInvadedTown = TownyAPI.getInstance().getTownNationOrNull(invadedTown);
+			NationMetaDataController.setTotalTownsLost(nationOfInvadedTown, NationMetaDataController.getTotalTownsLost(nationOfInvadedTown) + 1);
         }
-        
-        // Add town to nation.
-        try {
-			defendingTown.setNation(attackingNation);
-		} catch (AlreadyRegisteredException ignored) {}
-        
-        //Set flags to indicate success
-		siege.setTownInvaded(true);
-		defendingTown.setConquered(true);
-		
-		SiegeWarTownUtil.disableNationPerms(defendingTown);
 
-		NationMetaDataController.setTotalTownsGained(attackingNation, NationMetaDataController.getTotalTownsGained(attackingNation) + 1);
+		//Set town to occupied
+		TownOccupationController.setTownOccupier(invadedTown, invadingNation);
+        //Update siege flags
+		siege.setTownInvaded(true);
+		//Update stats of victorious nation
+		NationMetaDataController.setTotalTownsGained(invadingNation, NationMetaDataController.getTotalTownsGained(invadingNation) + 1);
 
 		//Save to db
         SiegeController.saveSiege(siege);
-		defendingTown.save();
-		attackingNation.save();
-		if(nationTown && !nationDefeated) {
-			nationOfDefendingTown.save();
+		invadedTown.save();
+		invadingNation.save();
+		if(nationOfInvadedTown != null) {
+			nationOfInvadedTown.save();
 		}
 		
 		//Messaging
-		if(nationTown) {
+		if(nationOfInvadedTown != null) {
 			Messaging.sendGlobalMessage(
-				Translation.of("msg_siege_war_nation_town_captured",
-				defendingTown.getFormattedName(),
-				nationOfDefendingTown.getFormattedName(),
-				attackingNation.getFormattedName()
+				Translation.of("msg_siege_war_nation_town_invaded",
+				invadedTown.getFormattedName(),
+				nationOfInvadedTown.getFormattedName(),
+				invadingNation.getFormattedName()
 			));
 		} else {
 			Messaging.sendGlobalMessage(
-				Translation.of("msg_siege_war_neutral_town_captured",
-				defendingTown.getFormattedName(),
-				attackingNation.getFormattedName()
-			));
-		}
-		if(nationDefeated) {
-			Messaging.sendGlobalMessage(
-				Translation.of("msg_siege_war_nation_defeated",
-				nationOfDefendingTown.getFormattedName()
+				Translation.of("msg_siege_war_neutral_town_invaded",
+				invadedTown.getFormattedName(),
+				invadingNation.getFormattedName()
 			));
 		}
     }

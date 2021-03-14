@@ -89,11 +89,7 @@ msg_err_siege_war_cannot_abandon_no_nearby_siege_attacks: "&cVous ne pouvez pas 
 msg_err_siege_war_cannot_abandon_nation_not_attacking_zone: "&cVous ne pouvez pas abandonner parce que votre nation n'attaque pas par ici."
 msg_err_siege_war_cannot_abandon_siege_over: "&cVous ne pouvez pas abandonner car le siège est terminé."
 #Invade
-msg_err_siege_war_cannot_invade_own_town: "&cVous ne pouvez pas capturer votre propre ville."
-msg_err_siege_war_cannot_invade_without_victory: "&cVous ne pouvez pas capturer la ville à moins que votre nation ne soit victorieuse du siège."
 msg_err_siege_war_no_siege_on_target_town: "&cIl n'y a pas de siège sur la ville de %s."
-msg_err_siege_war_town_already_invaded: "&cCette ville a déjà été capturée"
-msg_err_siege_war_town_already_belongs_to_your_nation: "&cCette ville appartient déjà à votre nation"
 #Plunder
 msg_err_siege_war_cannot_plunder_own_town: "&cVous ne pouvez pas piller votre propre ville."
 msg_err_siege_war_cannot_plunder_without_victory: "&cVous ne pouvez pas piller à moins que votre nation ne remporte le siège."
@@ -227,7 +223,6 @@ msg_war_siege_peaceful_town_cannot_revolt_zero_or_one_unsieged_guardian_towns_ne
 #Added in 0.08:
 status_nation_town_stats: '&2Towns Captured/Lost: &a%d&2/&a%d'
 status_nation_plunder_stats: '&2Plunder Gains/Losses: &a%d&2/&a%d'
-status_nation_enemy_nations_defeated: '&2Enemy Nations Defeated: &a%d'
 
 msg_swa_set_towns_gained_success: '&bSuccessfully set towns gained to %d for %s.'
 msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
@@ -324,3 +319,6 @@ msg_war_siege_neutral_town_peacefully_released: "&b%s has been peacefully releas
 msg_war_siege_nation_town_peacefully_occupied: "&b%s, belonging to %s, has been peacefully occupied by %s."
 msg_war_siege_nation_town_peacefully_released: "&b%s, belonging to %s, has been peacefully released from occupation."
 
+msg_err_siege_war_cannot_invade_own_town: '&cYou cannot invade your own town.'
+msg_err_siege_war_cannot_invade_without_victory: "&cYou cannot invade the town unless your nation is victorious in the siege."
+msg_err_siege_war_town_already_invaded: '&cThis town has already been invaded'
