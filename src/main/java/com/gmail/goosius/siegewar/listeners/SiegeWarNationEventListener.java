@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
@@ -153,6 +154,11 @@ public class SiegeWarNationEventListener implements Listener {
 		for (Siege siege : SiegeController.getSiegesByNationUUID(event.getNation().getUUID())) {
 			SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
 		}
+
+		/*
+		 * Remove any town occupation data associated with that nation
+		 */
+		TownOccupationController.removeTownOccupations(event.getNation());
 	}
 
 	@EventHandler

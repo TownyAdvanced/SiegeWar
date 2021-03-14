@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
@@ -30,7 +31,7 @@ public class SiegeWarNationUtil {
         }
 
         //Count all foreign towns which the nation has occupied
-        for(Town town: SiegeController.getTownsOccupiedByNation(nation)) {
+        for(Town town: TownOccupationController.getTownsOccupiedByNation(nation)) {
             effectNumberOfResidents += town.getNumResidents();
         }
 

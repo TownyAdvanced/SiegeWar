@@ -133,5 +133,18 @@ public class TownOccupationController {
             }
         }
     }
+
+    public static void removeTownOccupations(Nation nation) {
+        synchronized (NATION_TOWNS_OCCUPATION_MAP_LOCK) {
+            if(nationTownsOccupationMap.containsKey(nation)) {
+                for(Town occupiedTown: nationTownsOccupationMap.get(nation)) {
+                    occupiedTown.setConquered(false);
+                    TownMetaDataController.removeOccupationMetadata(occupiedTown);
+                    occupiedTown.save();
+                }
+                nationTownsOccupationMap.remove(nation);
+            }
+        }
+    }
 }
 

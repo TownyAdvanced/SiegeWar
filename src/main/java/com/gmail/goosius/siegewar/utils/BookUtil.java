@@ -179,7 +179,6 @@ public class BookUtil {
 			text += "\nPEACEFUL TOWNS\n\n";
 			text += "Peaceful towns can opt out of war (by toggling peaceful, a town receives immunity from siege attacks & taxes. In return, its nation choice is more restricted, and its residents suffer from 'war allergy' if they approach a siege zone).\n";
 			text += "When a town chooses to toggle their peaceful status, it will take " + SiegeWarSettings.getWarCommonPeacefulTownsConfirmationRequirementDays() + " days for their decision to take effect.\n";
-			text += "Peaceful towns " + (SiegeWarSettings.getWarCommonPeacefulTownsAllowedToMakeNation() ? "are" : "are not") + " allowed to make nations.\n";
 			text += "Peaceful towns " + (SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP() ? "are" : "are not") + " allowed to toggle their pvp status.\n";
 			text += "Peaceful towns may fall under the jurisdiction of a Guardian Town. Guardian Towns are towns which have " + SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement() + " townblocks claimed, which are within " + SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement() + " townblocks of the peaceful town.\n";
 			text += "When a Guardian Town is within this distance the peaceful town will join the Guardian Town's nation.\n\n";
