@@ -69,15 +69,15 @@ public class TownPeacefulnessUtil {
 
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			if (town.isNeutral()) {
-				message = Translation.of("msg_war_siege_town_became_peaceful", town.getFormattedName());
+				message = Translation.of("msg_town_became_peaceful", town.getFormattedName());
 			} else {
-				message = Translation.of("msg_war_siege_town_became_non_peaceful", town.getFormattedName());
+				message = Translation.of("msg_town_became_non_peaceful", town.getFormattedName());
 			}
 		} else {
 			if (town.isNeutral()) {
-				message = Translation.of("msg_war_common_town_became_peaceful", town.getFormattedName());
+				message = Translation.of("msg_town_became_peaceful", town.getFormattedName());
 			} else {
-				message = Translation.of("msg_war_common_town_became_non_peaceful", town.getFormattedName());
+				message = Translation.of("msg_town_became_non_peaceful", town.getFormattedName());
 			}
 		}
 		TownyMessaging.sendPrefixedTownMessage(town, message);
@@ -228,7 +228,7 @@ public class TownPeacefulnessUtil {
 		//Send a global message with how many towns were modified.
 		if (modifiedTowns > 0) {
 			boolean one = modifiedTowns == 1;
-			Messaging.sendGlobalMessage(Translation.of("msg_war_siege_peaceful_town_total_switches", modifiedTowns, one ? "" : "s", one ? "has" : "have"));
+			Messaging.sendGlobalMessage(Translation.of("msg_peaceful_town_total_switches", modifiedTowns, one ? "" : "s", one ? "has" : "have"));
 		}
 	}
 
@@ -253,11 +253,11 @@ public class TownPeacefulnessUtil {
 			TownOccupationController.setTownOccupier(peacefulTown, null);
 			//Send messages
 			if(peacefulTown.hasNation()) {
-				TownyMessaging.sendPrefixedNationMessage(previousOccupier, Translation.of("msg_war_siege_nation_town_peacefully_released", peacefulTown.getName(), peacefulTown.getNation().getName()));
-				TownyMessaging.sendPrefixedNationMessage(peacefulTown.getNation(), Translation.of("msg_war_siege_nation_town_peacefully_released", peacefulTown.getFormattedName(), peacefulTown.getNation().getName()));
+				TownyMessaging.sendPrefixedNationMessage(previousOccupier, Translation.of("msg_nation_town_peacefully_released", peacefulTown.getName(), peacefulTown.getNation().getName()));
+				TownyMessaging.sendPrefixedNationMessage(peacefulTown.getNation(), Translation.of("msg_nation_town_peacefully_released", peacefulTown.getFormattedName(), peacefulTown.getNation().getName()));
 			} else {
-				TownyMessaging.sendPrefixedNationMessage(previousOccupier, Translation.of("msg_war_siege_neutral_town_peacefully_released", peacefulTown.getName()));
-				TownyMessaging.sendPrefixedTownMessage(peacefulTown, Translation.of("msg_war_siege_neutral_town_peacefully_released", peacefulTown.getName()));
+				TownyMessaging.sendPrefixedNationMessage(previousOccupier, Translation.of("msg_neutral_town_peacefully_released", peacefulTown.getName()));
+				TownyMessaging.sendPrefixedTownMessage(peacefulTown, Translation.of("msg_neutral_town_peacefully_released", peacefulTown.getName()));
 			}
 			return true;
 		}
@@ -274,14 +274,14 @@ public class TownPeacefulnessUtil {
 			//Send messages
 			if(peacefulTown.hasNation()) {
 				//Send to nation of peaceful town
-				TownyMessaging.sendPrefixedNationMessage(peacefulTown.getNation(), Translation.of("msg_war_siege_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
+				TownyMessaging.sendPrefixedNationMessage(peacefulTown.getNation(), Translation.of("msg_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
 				//Send to occupier
-				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_war_siege_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
+				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
 			} else {
 				//Send to peaceful town
-				TownyMessaging.sendPrefixedTownMessage(peacefulTown, Translation.of("msg_war_siege_neutral_town_peacefully_occupied", peacefulTown.getName()));
+				TownyMessaging.sendPrefixedTownMessage(peacefulTown, Translation.of("msg_neutral_town_peacefully_occupied", peacefulTown.getName()));
 				//Send to occupier
-				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_war_siege_neutral_town_peacefully_occupied", peacefulTown.getName()));
+				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_neutral_town_peacefully_occupied", peacefulTown.getName()));
 			}
 		} else {
 			//Town is already occupied
@@ -295,18 +295,18 @@ public class TownPeacefulnessUtil {
 			//Send messages
 			if(peacefulTown.hasNation()) {
 				//Send to nation of peaceful town
-				TownyMessaging.sendPrefixedNationMessage(peacefulTown.getNation(), Translation.of("msg_war_siege_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
+				TownyMessaging.sendPrefixedNationMessage(peacefulTown.getNation(), Translation.of("msg_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
 				//Send to previous occupier
-				TownyMessaging.sendPrefixedNationMessage(currentOccupier, Translation.of("msg_war_siege_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
+				TownyMessaging.sendPrefixedNationMessage(currentOccupier, Translation.of("msg_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
 				//Send to new occupier
-				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_war_siege_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
+				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
 			} else {
 				//Send to peaceful town
-				TownyMessaging.sendPrefixedTownMessage(peacefulTown, Translation.of("msg_war_siege_neutral_town_peacefully_occupied", peacefulTown.getName()));
+				TownyMessaging.sendPrefixedTownMessage(peacefulTown, Translation.of("msg_neutral_town_peacefully_occupied", peacefulTown.getName()));
 				//Send to previous occupier
-				TownyMessaging.sendPrefixedNationMessage(currentOccupier, Translation.of("msg_war_siege_neutral_town_peacefully_occupied", peacefulTown.getName()));
+				TownyMessaging.sendPrefixedNationMessage(currentOccupier, Translation.of("msg_neutral_town_peacefully_occupied", peacefulTown.getName()));
 				//Send to new occupier
-				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_war_siege_neutral_town_peacefully_occupied", peacefulTown.getName()));
+				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_neutral_town_peacefully_occupied", peacefulTown.getName()));
 			}
 		}
 		return true; //Town switched

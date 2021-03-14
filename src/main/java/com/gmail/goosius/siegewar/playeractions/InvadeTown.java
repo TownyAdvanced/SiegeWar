@@ -40,10 +40,10 @@ public class InvadeTown {
     	Nation attackerWinner = siege.getAttackingNation();
 		
 		if (nationOfInvadingResident != attackerWinner)
-			throw new TownyException(Translation.of("msg_err_siege_war_cannot_invade_without_victory"));
+			throw new TownyException(Translation.of("msg_err_cannot_invade_without_victory"));
 
         if (siege.isTownInvaded())
-            throw new TownyException(String.format(Translation.of("msg_err_siege_war_town_already_invaded"), townToBeInvaded.getName()));
+            throw new TownyException(String.format(Translation.of("msg_err_town_already_invaded"), townToBeInvaded.getName()));
 
 		if (TownySettings.getNationRequiresProximity() > 0) {
 			Coord capitalCoord = attackerWinner.getCapital().getHomeBlock().getCoord();
@@ -102,14 +102,14 @@ public class InvadeTown {
 		//Messaging
 		if(nationOfInvadedTown != null) {
 			Messaging.sendGlobalMessage(
-				Translation.of("msg_siege_war_nation_town_invaded",
+				Translation.of("msg_nation_town_invaded",
 				invadedTown.getFormattedName(),
 				nationOfInvadedTown.getFormattedName(),
 				invadingNation.getFormattedName()
 			));
 		} else {
 			Messaging.sendGlobalMessage(
-				Translation.of("msg_siege_war_neutral_town_invaded",
+				Translation.of("msg_neutral_town_invaded",
 				invadedTown.getFormattedName(),
 				invadingNation.getFormattedName()
 			));

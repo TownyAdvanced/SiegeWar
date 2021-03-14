@@ -142,9 +142,6 @@ status_town_peacefulness_status_change_timer: "&2Compte à rebours avant le chan
 msg_war_common_town_declared_peaceful: "&bPaix déclarée ! La ville sera confirmée comme pacifique dans %d jour(s)."
 msg_war_common_town_declared_non_peaceful: "&bNon-pacificité déclarée! La ville sera confirmée comme non pacifique dans %d jour(s)"
 msg_war_common_town_peacefulness_countdown_cancelled: "&bLe compte à rebours du changement de statut de paix a été annulé."
-msg_war_common_town_became_peaceful: "&b%s a été confirmé comme étant pacifique."
-msg_war_common_town_became_non_peaceful: "&b%s a été confirmé comme non pacifique."
-
 msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: "&cImpossible d'ajouter un grade militaire aux résidents, car ils sont dans une ville paisible."
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: "&cAllergie de guerre active. Pour supprimer cet effet, quittez immédiatement la zone de siège."
 msg_war_siege_err_cannot_attack_peaceful_town: "&cVous ne pouvez pas attaquer une ville pacifique."
@@ -308,17 +305,30 @@ msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control se
 msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going into the town, or flying.'
 msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going below the altitude of the banner, going into the town, or flying.'
 
-#Added in 0.15
+##### Added in 0.15
+
+# Town Merging
 msg_err_cannot_merge_towns: '&cUnable to merge a town that is under siege!'
 
-msg_war_siege_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks. The town may get automatically occupied by a nation with a strong presence in the local area. (see user-guide for more details). Residents cannot enter siege-zones or gain nation-military ranks.'
-msg_war_siege_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to siege attacks. The town can no longer get automatically occupied. Residents can enter siege-zones and gain nation-military ranks.'
-msg_war_siege_peaceful_town_total_switches: '&b%d peaceful town%s %s been peacefully occupied, or released from occupation.'
-msg_war_siege_neutral_town_peacefully_occupied: "&b%s has been peacefully occupied by %s."
-msg_war_siege_neutral_town_peacefully_released: "&b%s has been peacefully released from occupation."
-msg_war_siege_nation_town_peacefully_occupied: "&b%s, belonging to %s, has been peacefully occupied by %s."
-msg_war_siege_nation_town_peacefully_released: "&b%s, belonging to %s, has been peacefully released from occupation."
+# Peacefulness
+msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks. The town may get automatically occupied by a nation with a strong presence in the local area. (see user-guide for more details). Residents cannot enter siege-zones or gain nation-military ranks.'
+msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to siege attacks. The town can no longer get automatically occupied. Residents can enter siege-zones and gain nation-military ranks.'
+msg_peaceful_town_total_switches: '&b%d peaceful town%s %s been peacefully occupied, or released from occupation.'
+msg_neutral_town_peacefully_occupied: "&b%s has been peacefully occupied by %s."
+msg_neutral_town_peacefully_released: "&b%s has been peacefully released from occupation."
+msg_nation_town_peacefully_occupied: "&b%s, belonging to %s, has been peacefully occupied by %s."
+msg_nation_town_peacefully_released: "&b%s, belonging to %s, has been peacefully released from occupation."
 
-msg_err_siege_war_cannot_invade_own_town: '&cYou cannot invade your own town.'
-msg_err_siege_war_cannot_invade_without_victory: "&cYou cannot invade the town unless your nation is victorious in the siege."
-msg_err_siege_war_town_already_invaded: '&cThis town has already been invaded'
+# Invasion
+msg_err_cannot_invade_own_town: '&cYou cannot invade your own town.'
+msg_err_cannot_invade_without_victory: "&cYou cannot invade the town unless your nation is victorious in the siege."
+msg_err_town_already_invaded: '&cThis town has already been invaded'
+msg_neutral_town_invaded: '&b%s has been invaded by %s, and placed under occupation!'
+msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and placed under occupation!'
+
+# Help
+nation_help_13 : 'Revolt against your occupier. A revolt-siege will start.'
+nation_help_14 : 'Release the given town from occupation.'
+
+# Revolt
+msg_err_town_unoccupied_revolt_disallowed: 'Your town is not occupied. Revolt not possible.'

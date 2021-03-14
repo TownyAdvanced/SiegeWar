@@ -39,7 +39,9 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
 	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "nation", "hud", "guide", "preference", "version");
 	
-	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers");
+	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers, release");
+
+	private static final List<String> siegewarTownTabCompletes = Arrays.asList("revolt");
 
 	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("beacons");
 	
@@ -49,6 +51,9 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		case "nation":
 			if (args.length == 2)
 				return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
+		case "town":
+			if (args.length == 2)
+				return NameUtil.filterByStart(siegewarTownTabCompletes, args[1]);
 		case "hud":
 			if (args.length == 2)
 				return NameUtil.filterByStart(new ArrayList<String>(SiegeController.getSiegedTownNames()), args[1]);
@@ -70,14 +75,22 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw guide", "", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw collect", "", Translation.of("nation_help_11")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw town", "revolt", Translation.of("nation_help_13")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "release [town]", Translation.of("nation_help_14")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw version", "", ""));
 	}
-	
+
+	private void showTownHelp(CommandSender sender) {
+		sender.sendMessage(ChatTools.formatTitle("/siegewar town"));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "revolt", Translation.of("nation_help_13")));
+	}
+
 	private void showNationHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar nation"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "release [town]", Translation.of("nation_help_14")));
 	}
 
 	private void showPreferenceHelp(CommandSender sender) {
@@ -111,6 +124,9 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			break;
 		case "guide":
 			parseSiegeWarGuideCommand(player);
+			break;
+		case "town":
+			parseSiegeWarTownCommand(player, StringMgmt.remFirstArg(args));
 			break;
 		case "nation":
 			parseSiegeWarNationCommand(player, StringMgmt.remFirstArg(args));
@@ -186,6 +202,49 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			Messaging.sendErrorMsg(player, e.getMessage());
 		}
 	}
+
+
+
+	private void parseSiegeWarTownCommand(Player player, String[] args) {
+		if (args.length < 2) {
+			showTownHelp(player);
+			return;
+		}
+
+		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION.getNode(args[0]))) {
+			player.sendMessage(Translation.of("msg_err_command_disable"));
+			return;
+		}
+
+		switch (args[0]) {
+			case "revolt":
+				try {
+					//Ensure revolt setting is enabled
+					if (!SiegeWarSettings.getWarSiegeRevoltEnabled())
+						throw new TownyException(Translation.of("msg_err_command_disable"));
+
+					//Ensure player has a town
+					Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
+					if (resident == null || !resident.hasTown())
+						throw new TownyException(Translation.of("msg_err_command_disable"));
+
+					//Ensure the town is occupied.
+					Town town = TownyAPI.getInstance().getResidentTownOrNull(resident);
+					if (!town.isConquered())
+						throw new TownyException(Translation.of("msg_err_town_unoccupied_revolt_disallowed"));
+
+					//Got here? Good to go. Revolt now
+				} catch(Exception e) {
+					player.sendMessage(e.getMessage());
+				}
+
+			break;
+
+			default:
+				showNationHelp(player);
+		}
+	}
+
 
 	private void parseSiegeWarNationCommand(Player player, String[] args) {
 		if (args.length < 2) {
@@ -268,6 +327,11 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					Messaging.sendErrorMsg(player, ee.getMessage());
 				}
 				break;
+
+			case "release":
+					//.....TODO
+				break;
+
 			default:
 				showNationHelp(player);
 		}

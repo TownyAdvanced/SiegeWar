@@ -233,10 +233,10 @@ public class PlaceBlock {
 
 			Siege siege = SiegeController.getSiege(town);
 			if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
-				throw new TownyException(Translation.of("msg_err_siege_war_cannot_invade_without_victory"));
+				throw new TownyException(Translation.of("msg_err_cannot_invade_without_victory"));
 			
 			if(attackingTown == town)
-				throw new TownyException(Translation.of("msg_err_siege_war_cannot_invade_own_town"));
+				throw new TownyException(Translation.of("msg_err_cannot_invade_own_town"));
 			
 			InvadeTown.processInvadeTownRequest(nation, town, siege);
 
