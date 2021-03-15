@@ -1,9 +1,13 @@
 package com.gmail.goosius.siegewar.objects;
 
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -37,8 +41,9 @@ import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
  */
 public class Siege {
 	private String name;
-	private Nation attackingNation;
-	private Town defendingTown;
+	private SiegeType siegeType;
+	private Town town;
+	private Nation nation;
     private SiegeStatus status;
     private boolean townPlundered;
     private boolean townInvaded;
@@ -60,10 +65,12 @@ public class Siege {
 	private Set<String> attackerBattleContributors;   //UUID's of attackers who contributed during the current battle
 	private Map<String, Integer> attackerSiegeContributors;  //UUID:numContributions map of attackers who contributed during current siege
 
-	public Siege(String name) {
-        this.name = name;
+	public Siege(Town town) {
+		this.town = town;
+		name = "";
+        siegeType = SiegeType.CONQUEST;
         status = SiegeStatus.IN_PROGRESS;
-		attackingNation = null;
+		nation = null;
 		siegeBalance = 0;
 		siegeBannerLocation = null;
 		warChestAmount = 0;
@@ -79,12 +86,12 @@ public class Siege {
 		attackerSiegeContributors = new HashMap<>();
     }
 
-	public Nation getAttackingNation() {
-		return attackingNation;
+	public Nation getNation() {
+		return nation;
 	}
-	
-    public Town getDefendingTown() {
-        return defendingTown;
+
+    public Town getTown() {
+        return town;
     }
 
 	public long getScheduledEndTime() {
@@ -168,16 +175,58 @@ public class Siege {
 		return (long)((SiegeWarSettings.getWarSiegeMinSiegeDurationBeforeAbandonHours() * ONE_HOUR_IN_MILLIS) - getDurationMillis());
 	}
 
+	//<attacker> vs <defender>
 	public String getName() {
-		return name;
-	}
-	
-	public void setAttackingNation(Nation attackingNation) {
-		this.attackingNation = attackingNation;
+		return Translation.of("siege.name", getAttacker().getName(), getDefender().getName());
 	}
 
-	public void setDefendingTown(Town defendingTown) {
-		this.defendingTown = defendingTown;
+	public Government getAttacker() {
+		switch (siegeType) {
+			case CONQUEST:
+			case LIBERATION:
+			case SUPPRESSION:
+				return nation;
+			case REVOLT:
+				return town;
+			default:
+				throw new RuntimeException("Unknown siege type");
+		}
+	}
+
+	public Government getDefender() {
+		switch (siegeType) {
+			case CONQUEST:
+				if (town.hasNation()) {
+					try {
+						return town.getNation();
+					} catch (NotRegisteredException e) {
+						throw new RuntimeException("problem getting defender");
+					}
+				} else {
+					return town;
+				}
+			case LIBERATION:
+				Nation townOccupier =  TownOccupationController.getTownOccupier(town);
+				if(townOccupier == null) {
+					return town;
+				} else {
+					return townOccupier;
+				}
+			case SUPPRESSION:
+				return nation;
+			case REVOLT:
+				return town;
+			default:
+				throw new RuntimeException("Unknown siege type");
+		}
+	}
+
+	public void setNation(Nation nation) {
+		this.nation = nation;
+	}
+
+	public void setTown(Town town) {
+		this.town = town;
 	}
 
 	public Location getFlagLocation() {
@@ -404,5 +453,13 @@ public class Siege {
 
 	public void adjustBattlePointsEarnedFromCurrentBannerControl(int timedBattlePoints) {
 		timedBattlePointsEarnedFromCurrentBannerControl += timedBattlePoints;
+	}
+
+	public SiegeType getSiegeType() {
+		return siegeType;
+	}
+
+	public void setSiegeType(SiegeType siegeType) {
+		this.siegeType = siegeType;
 	}
 }

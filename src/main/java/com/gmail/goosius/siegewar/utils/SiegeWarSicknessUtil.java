@@ -110,9 +110,9 @@ public class SiegeWarSicknessUtil {
         if (!resident.hasTown())
             return false;
 
-        Town defendingTown = siege.getDefendingTown();
+        Town defendingTown = siege.getTown();
         Town residentTown = TownyAPI.getInstance().getResidentTownOrNull(resident);
-        Nation attackingNation = siege.getAttackingNation();
+        Nation attackingNation = siege.getNation();
         Nation residentNation = null;
         Nation defendingNation = null;
         

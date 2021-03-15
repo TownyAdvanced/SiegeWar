@@ -28,11 +28,11 @@ public class SiegeWarSiegeCompletionUtil {
 		siege.clearBannerControllingResidents();
 		siege.clearBannerControlSessions();
 		siege.setActualEndTime(System.currentTimeMillis());
-		SiegeWarTimeUtil.activateSiegeImmunityTimer(siege.getDefendingTown(), siege);
+		SiegeWarTimeUtil.activateSiegeImmunityTimer(siege.getTown(), siege);
 		if (siegeStatus == SiegeStatus.DEFENDER_SURRENDER || siegeStatus == SiegeStatus.ATTACKER_WIN) {
-			SiegeWarTimeUtil.activateRevoltImmunityTimer(siege.getDefendingTown()); //Prevent immediate revolt
+			SiegeWarTimeUtil.activateRevoltImmunityTimer(siege.getTown()); //Prevent immediate revolt
 		}
-		SiegeWarTownUtil.setTownPvpFlags(siege.getDefendingTown(), false);
+		SiegeWarTownUtil.setTownPvpFlags(siege.getTown(), false);
 		CosmeticUtil.removeFakeBeacons(siege);
 
 		//Save to db

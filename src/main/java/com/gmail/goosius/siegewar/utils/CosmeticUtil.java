@@ -142,15 +142,15 @@ public class CosmeticUtil {
 		
 		Town town = TownyAPI.getInstance().getResidentTownOrNull(resident);
 
-		if (siege.getDefendingTown().hasResident(resident))
+		if (siege.getTown().hasResident(resident))
 			return SiegeSide.DEFENDERS;
 		
-		if (town.isAlliedWith(siege.getDefendingTown()) && town.isAlliedWith(siege.getAttackingNation().getCapital()))
+		if (town.isAlliedWith(siege.getTown()) && town.isAlliedWith(siege.getNation().getCapital()))
 			return SiegeSide.NOBODY;
 		
-		if (town.isAlliedWith(siege.getDefendingTown()))
+		if (town.isAlliedWith(siege.getTown()))
 			return SiegeSide.DEFENDERS;
-		else if (town.isAlliedWith(siege.getAttackingNation().getCapital()))
+		else if (town.isAlliedWith(siege.getNation().getCapital()))
 			return SiegeSide.ATTACKERS;
 		else
 			return SiegeSide.NOBODY;

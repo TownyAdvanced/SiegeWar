@@ -223,7 +223,7 @@ public class PlaceBlock {
 
 		//If the town has a siege where the player's nation is already attacking, 
 		//attempt invasion, otherwise attempt attack
-		if(SiegeController.hasSiege(town) && SiegeController.getSiege(town).getAttackingNation() == nation) {
+		if(SiegeController.hasSiege(town) && SiegeController.getSiege(town).getNation() == nation) {
 
 			if (!SiegeWarSettings.getWarSiegeInvadeEnabled())
 				return;
@@ -308,7 +308,7 @@ public class PlaceBlock {
 	private static int getNumActiveAttackSieges(Nation nation) {
 		int result = 0;
 		for(Siege siege: SiegeController.getSieges()) {
-			if(siege.getAttackingNation() == nation && siege.getStatus().isActive())
+			if(siege.getNation() == nation && siege.getStatus().isActive())
 				result++;
 		}
 		return result;

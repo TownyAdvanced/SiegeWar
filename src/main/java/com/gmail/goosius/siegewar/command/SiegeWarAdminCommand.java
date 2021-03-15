@@ -37,7 +37,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	private static final List<String> siegewaradminImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","remove");
 	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setcaptured");
-	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost","setnationdefeats");
+	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost");
 
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
@@ -184,7 +184,6 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplunderlost [amount]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownsgained [amount]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownslost [amount]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setnationdefeats [amount]", ""));
 	}
 
 	private void parseSiegeWarReloadCommand(CommandSender sender) {
@@ -287,9 +286,9 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
 				case "end":
 					if (siege.getSiegeBalance() < 1)
-						DefenderWin.defenderWin(siege, siege.getDefendingTown());
+						DefenderWin.defenderWin(siege, siege.getTown());
 					else
-						AttackerWin.attackerWin(siege, siege.getAttackingNation());
+						AttackerWin.attackerWin(siege, siege.getNation());
 					return;
 				case "setplundered":
 					Boolean plundered = Boolean.parseBoolean(args[2]);
@@ -370,10 +369,6 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 				case "settownslost":
 					NationMetaDataController.setTotalTownsLost(nation, amount);
 					Messaging.sendMsg(sender, Translation.of("msg_swa_set_towns_lost_success", amount, nation.getName()));
-					return;
-				case "setnationdefeats":
-					NationMetaDataController.setNationsDefeated(nation, amount);
-					Messaging.sendMsg(sender, Translation.of("msg_swa_set_nationdefeats_success", amount, nation.getName()));
 					return;
 				default:
 					showNationHelp(sender);

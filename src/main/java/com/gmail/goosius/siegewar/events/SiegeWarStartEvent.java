@@ -19,9 +19,9 @@ public class SiegeWarStartEvent extends Event {
 
     public SiegeWarStartEvent(Siege siege, Town town, Block flag) {
         this.siege = siege;
-        this.attackerNation = siege.getAttackingNation();
+        this.attackerNation = siege.getNation();
         this.attackerTown = town;
-        this.defenderTown = siege.getDefendingTown();
+        this.defenderTown = siege.getTown();
         this.flag = flag;
     }
 

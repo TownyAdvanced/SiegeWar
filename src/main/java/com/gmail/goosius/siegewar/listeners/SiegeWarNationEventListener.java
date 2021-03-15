@@ -116,7 +116,7 @@ public class SiegeWarNationEventListener implements Listener {
 		List<Town> result = new ArrayList<>();
 		for(Siege siege : SiegeController.getSieges(nation)) {
 			if(siege.getStatus().isActive())
-				result.add(siege.getDefendingTown());
+				result.add(siege.getTown());
 		}
 		return result;
 	}
@@ -171,7 +171,7 @@ public class SiegeWarNationEventListener implements Listener {
 		List<Town> enemyTownsUnderSiege = SiegeController.getSiegedTowns(enemyNation);
 
 		for (Siege siege : SiegeController.getSieges(nation)) {
-			if (enemyTownsUnderSiege.contains(siege.getDefendingTown())) {
+			if (enemyTownsUnderSiege.contains(siege.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_remove_enemy"));
 			}

@@ -33,9 +33,9 @@ public class SiegeWarScoringUtil {
 	 */
 	public static TownyObject calculateSiegeWinner(Siege siege) {
 		if(siege.getSiegeBalance() > 0) {
-			return siege.getAttackingNation();
+			return siege.getNation();
 		} else {
-			return siege.getDefendingTown();
+			return siege.getTown();
 		}
     }
 
@@ -92,7 +92,7 @@ public class SiegeWarScoringUtil {
 		//Send messages to siege participants
 		String message = String.format(
 			unformattedErrorMessage,
-			siege.getDefendingTown().getName(),
+			siege.getTown().getName(),
 			resident.getName(),
 			Math.abs(battlePoints));
 
@@ -112,8 +112,8 @@ public class SiegeWarScoringUtil {
 		int defenderPopulation;
 
 		//Calculate defender population
-		if(siege.getDefendingTown().hasNation()) {
-			nation = TownyAPI.getInstance().getTownNationOrNull(siege.getDefendingTown());
+		if(siege.getTown().hasNation()) {
+			nation = TownyAPI.getInstance().getTownNationOrNull(siege.getTown());
 			
 			if(nationSidePopulationsCache != null && nationSidePopulationsCache.containsKey(nation)) {
 				defenderPopulation = nationSidePopulationsCache.get(nation);
@@ -126,11 +126,11 @@ public class SiegeWarScoringUtil {
 					nationSidePopulationsCache.put(nation, defenderPopulation);
 			}
 		} else {
-			defenderPopulation = siege.getDefendingTown().getNumResidents();
+			defenderPopulation = siege.getTown().getNumResidents();
 		}
 
 		//Calculate attacker population
-		nation = siege.getAttackingNation();
+		nation = siege.getNation();
 		if(nationSidePopulationsCache != null && nationSidePopulationsCache.containsKey(nation)) {
 			attackerPopulation = nationSidePopulationsCache.get(nation);
 		} else {

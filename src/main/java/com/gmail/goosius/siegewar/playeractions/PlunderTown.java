@@ -65,7 +65,7 @@ public class PlunderTown {
 		if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
 		
-		if(townOfPlunderingResident.getNation() != siege.getAttackingNation())
+		if(townOfPlunderingResident.getNation() != siege.getNation())
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
 		
         if(siege.isTownPlundered())
@@ -74,7 +74,7 @@ public class PlunderTown {
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_PLUNDER.getNode()))
             throw new TownyException(Translation.of("msg_err_command_disable"));
         
-        plunderTown(siege, townToBePlundered, siege.getAttackingNation());
+        plunderTown(siege, townToBePlundered, siege.getNation());
 
     }
 
@@ -173,8 +173,8 @@ public class PlunderTown {
 	}
 
 	private static void transferPlunderToSiegeAttackers(Siege siege, double totalPlunderAmount, boolean removeMoneyFromTownBank) throws EconomyException {
-		Town town = siege.getDefendingTown();
-		Nation nation = siege.getAttackingNation();
+		Town town = siege.getTown();
+		Nation nation = siege.getNation();
 
 		String distributionRatio = SiegeWarSettings.getWarSiegePlunderDistributionRatio();
 

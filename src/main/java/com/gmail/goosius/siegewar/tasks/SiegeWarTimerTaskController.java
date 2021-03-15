@@ -51,7 +51,7 @@ public class SiegeWarTimerTaskController {
 					}
 
 					//Save changes to db
-					siege.getDefendingTown().save();
+					siege.getTown().save();
 				}
 				break;
 
@@ -72,7 +72,7 @@ public class SiegeWarTimerTaskController {
 			default:
 				//Siege is inactive
 				//Wait for siege immunity timer to end then delete siege
-				if (System.currentTimeMillis() > TownMetaDataController.getSiegeImmunityEndTime(siege.getDefendingTown())) {
+				if (System.currentTimeMillis() > TownMetaDataController.getSiegeImmunityEndTime(siege.getTown())) {
 					SiegeController.removeSiege(siege, SiegeSide.NOBODY);
 				}
 		}

@@ -43,9 +43,9 @@ public class SiegeWarBannerControlUtil {
 			}
 		} catch (Exception e) {
 			try {
-				System.err.println("Problem evaluating banner control for siege: " + siege.getName());
+				System.err.println("Problem evaluating banner control for siege on town: " + siege.getTown().getName());
 			} catch (Exception e2) {
-				System.err.println("Problem evaluating banner control for siege: (could not read siege name)");
+				System.err.println("Problem evaluating banner control for siege: (could not read town name)");
 			}
 			e.printStackTrace();
 		}
@@ -54,7 +54,7 @@ public class SiegeWarBannerControlUtil {
 	private static void evaluateNewBannerControlSessions(Siege siege) {
 		try {
 			TownyUniverse universe = TownyUniverse.getInstance();
-			Town defendingTown = siege.getDefendingTown();
+			Town defendingTown = siege.getTown();
 			Resident resident;
 			Town residentTown;
 
@@ -78,7 +78,7 @@ public class SiegeWarBannerControlUtil {
 					continue; // Player already has a control session
 
 				residentTown = resident.getTown();
-				if(residentTown == siege.getDefendingTown()
+				if(residentTown == siege.getTown()
 					&& universe.getPermissionSource().testPermission(resident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS.getNode())) {
 					//Player is defending their own town
 
@@ -103,8 +103,8 @@ public class SiegeWarBannerControlUtil {
 						continue;
 					}
 
-					if (siege.getAttackingNation() == residentTown.getNation()
-							|| siege.getAttackingNation().hasMutualAlly(residentTown.getNation())) {
+					if (siege.getNation() == residentTown.getNation()
+							|| siege.getNation().hasMutualAlly(residentTown.getNation())) {
 						//Player is attacking
 
 						if(siege.getBannerControllingSide() == SiegeSide.ATTACKERS && siege.getBannerControllingResidents().contains(resident))
@@ -165,9 +165,9 @@ public class SiegeWarBannerControlUtil {
 			if(firstControlSwitchingSession) {
 				String message;
 				if (siegeSide == SiegeSide.ATTACKERS) {
-					message = Translation.of("msg_siege_war_attacking_troops_at_siege_banner", siege.getDefendingTown().getFormattedName());
+					message = Translation.of("msg_siege_war_attacking_troops_at_siege_banner", siege.getTown().getFormattedName());
 				} else {
-					message = Translation.of("msg_siege_war_defending_troops_at_siege_banner", siege.getDefendingTown().getFormattedName());
+					message = Translation.of("msg_siege_war_defending_troops_at_siege_banner", siege.getTown().getFormattedName());
 				}
 
 				SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
@@ -291,9 +291,9 @@ public class SiegeWarBannerControlUtil {
 						String message;
 						if(reversal) {
 							if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
-								message = Translation.of("msg_siege_war_banner_control_reversed_by_attacker", siege.getDefendingTown().getFormattedName());
+								message = Translation.of("msg_siege_war_banner_control_reversed_by_attacker", siege.getTown().getFormattedName());
 							} else {
-								message = Translation.of("msg_siege_war_banner_control_reversed_by_defender", siege.getDefendingTown().getFormattedName());
+								message = Translation.of("msg_siege_war_banner_control_reversed_by_defender", siege.getTown().getFormattedName());
 							}
 							if(SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled()) {
 								String sign = bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS ? "+" : "-";
@@ -301,9 +301,9 @@ public class SiegeWarBannerControlUtil {
 							}
 						} else {
 							if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
-								message = Translation.of("msg_siege_war_banner_control_gained_by_attacker", siege.getDefendingTown().getFormattedName());
+								message = Translation.of("msg_siege_war_banner_control_gained_by_attacker", siege.getTown().getFormattedName());
 							} else {
-								message = Translation.of("msg_siege_war_banner_control_gained_by_defender", siege.getDefendingTown().getFormattedName());
+								message = Translation.of("msg_siege_war_banner_control_gained_by_defender", siege.getTown().getFormattedName());
 							}
 						}
 						SiegeWarNotificationUtil.informSiegeParticipants(siege, message);

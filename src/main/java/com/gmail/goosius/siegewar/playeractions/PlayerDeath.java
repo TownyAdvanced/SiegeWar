@@ -105,19 +105,19 @@ public class PlayerDeath {
 					candidateSiegePlayerSide = SiegeSide.DEFENDERS; //Candidate siege has player defending own-town
 
 				} else if (deadResidentTown.hasNation()
-					&& candidateSiege.getDefendingTown().hasNation()
+					&& candidateSiege.getTown().hasNation()
 					&& candidateSiege.getStatus().isActive()
 					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode()))
-					&& (deadResidentTown.getNation() == candidateSiege.getDefendingTown().getNation()
-						|| deadResidentTown.getNation().hasMutualAlly(candidateSiege.getDefendingTown().getNation()))) {
+					&& (deadResidentTown.getNation() == candidateSiege.getTown().getNation()
+						|| deadResidentTown.getNation().hasMutualAlly(candidateSiege.getTown().getNation()))) {
 
 					candidateSiegePlayerSide = SiegeSide.DEFENDERS; //Candidate siege has player defending another town
 
 				} else if (deadResidentTown.hasNation()
 					&& candidateSiege.getStatus().isActive()
 					&& (tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode()))
-					&& (deadResidentTown.getNation() == candidateSiege.getAttackingNation()
-						|| deadResidentTown.getNation().hasMutualAlly(candidateSiege.getAttackingNation()))) {
+					&& (deadResidentTown.getNation() == candidateSiege.getNation()
+						|| deadResidentTown.getNation().hasMutualAlly(candidateSiege.getNation()))) {
 
 					candidateSiegePlayerSide = SiegeSide.ATTACKERS; //Candidate siege has player attacking
 

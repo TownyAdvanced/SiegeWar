@@ -8,13 +8,11 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
-import com.palmergames.bukkit.towny.exceptions.AlreadyRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.gmail.goosius.siegewar.settings.Translation;
-import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 
 /**
  * This class is responsible for processing requests to invade towns
@@ -37,7 +35,7 @@ public class InvadeTown {
                                                 Town townToBeInvaded,
                                                 Siege siege) throws TownyException {
 
-    	Nation attackerWinner = siege.getAttackingNation();
+    	Nation attackerWinner = siege.getNation();
 		
 		if (nationOfInvadingResident != attackerWinner)
 			throw new TownyException(Translation.of("msg_err_cannot_invade_without_victory"));

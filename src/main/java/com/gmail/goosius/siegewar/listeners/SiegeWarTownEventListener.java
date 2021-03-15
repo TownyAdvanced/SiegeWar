@@ -30,7 +30,6 @@ import com.palmergames.bukkit.towny.event.RenameTownEvent;
 import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.TownStatusScreenEvent;
-import com.palmergames.bukkit.towny.event.time.dailytaxes.PreTownPaysNationTaxEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
@@ -220,7 +219,7 @@ public class SiegeWarTownEventListener implements Listener {
 					} catch (Exception e) {
 						//Problem with this particular siegezone. Ignore siegezone
 						try {
-							System.out.println("Problem with verifying claim against the following siege zone" + siege.getName() + ". Claim allowed.");
+							System.out.println("Problem with verifying claim against the following siege zone" + siege.getTown().getName() + ". Claim allowed.");
 						} catch (Exception e2) {
 							System.out.println("Problem with verifying claim against a siege zone (name could not be read). Claim allowed");
 						}
@@ -274,7 +273,7 @@ public class SiegeWarTownEventListener implements Listener {
 	@EventHandler
 	public void onDeleteTown(DeleteTownEvent event) {
 		if (SiegeController.hasSiege(event.getTownUUID()))
-			SiegeController.removeSiege(SiegeController.getSiege(event.getTownUUID()), SiegeSide.ATTACKERS);
+			SiegeController.removeSiege(SiegeController.getSiegeByTownUUID(event.getTownUUID()), SiegeSide.ATTACKERS);
 	}
 
 	/*
@@ -302,7 +301,7 @@ public class SiegeWarTownEventListener implements Listener {
 	                    out.add(siegeStatus);
 
 						// > Attacker: Land of Empire (Nation)
-						out.add(Translation.of("status_town_siege_status_besieger", siege.getAttackingNation().getFormattedName()));
+						out.add(Translation.of("status_town_siege_status_besieger", siege.getNation().getFormattedName()));
 
 						// > Balance: 530
 						out.add(Translation.of("status_town_siege_status_siege_balance", siege.getSiegeBalance()));
@@ -405,9 +404,9 @@ public class SiegeWarTownEventListener implements Listener {
             case IN_PROGRESS:
                 return Translation.of("status_town_siege_status_in_progress");
             case ATTACKER_WIN:
-                return Translation.of("status_town_siege_status_attacker_win", siege.getAttackingNation().getFormattedName());
+                return Translation.of("status_town_siege_status_attacker_win", siege.getNation().getFormattedName());
             case DEFENDER_SURRENDER:
-                return Translation.of("status_town_siege_status_defender_surrender", siege.getAttackingNation().getFormattedName());
+                return Translation.of("status_town_siege_status_defender_surrender", siege.getNation().getFormattedName());
             case DEFENDER_WIN:
                 return Translation.of("status_town_siege_status_defender_win");
             case ATTACKER_ABANDON:

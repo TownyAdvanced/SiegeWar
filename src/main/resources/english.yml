@@ -195,15 +195,8 @@ siege_status_pending_defender_surrender: 'Pending Defender Surrender'
 siege_status_unknown: 'Unknown'
 
 dynmap_siege_title: 'Siege: %s'
-dynmap_siege_attacker: 'Attacker: %s'
-dynmap_siege_defender: 'Defender: %s'
 dynmap_siege_banner_control: 'Banner Control: %s'
-dynmap_siege_status: 'Status: %s'
-dynmap_siege_status_in_progress: 'In Progress'
-dynmap_siege_status_pending_surrender: 'Pending Surrender'
-dynmap_siege_status_pending_abandon: 'Pending Abandon'
 dynmap_siege_time_left: 'Time Left: %s'
-dynmap_siege_war_chest: 'War Chest: %s'
 
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to breaking due to inventory degradation.'
@@ -223,7 +216,6 @@ msg_swa_set_towns_gained_success: '&bSuccessfully set towns gained to %d for %s.
 msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
 msg_swa_set_plunder_gained_success: '&bSuccessfully set plunder gained to %d for %s.'
 msg_swa_set_plunder_lost_success: '&bSuccessfully set plunder lost to %d for %s.'
-msg_swa_set_nationdefeats_success: '&bSuccessfully set nation defeats to %d for %s.'
 msg_err_nation_not_registered: '&cNation %s is not registered.'
 
 msg_err_cannot_remove_enemy: '&cYou cannot remove a nation as enemy if you have an active siege against them!'
@@ -332,3 +324,15 @@ nation_help_14 : 'Release the given town from occupation.'
 # Revolt
 msg_err_town_unoccupied_revolt_disallowed: '&cYour town is not occupied. Revolt not possible.'
 
+# Siege Types
+siege_type_conquest: 'CONQUEST'
+siege_type_liberation: 'LIBERATION'
+siege_type_revolt: 'REVOLT'
+siege_type_suppression: 'SUPPRESSION'
+
+# Dynmap
+dynmap_siege_type: 'Type: %s'
+dynmap_siege_town: 'Town: %s'
+
+# General
+siege.name: '%s vs %s'

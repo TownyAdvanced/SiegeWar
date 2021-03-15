@@ -27,7 +27,7 @@ public class SiegeWarMoneyUtil {
 	 * @param siege the siege
 	 */
 	public static void giveWarChestToAttackingNation(Siege siege) {
-		Nation winnerNation = siege.getAttackingNation();
+		Nation winnerNation = siege.getNation();
 		if (TownyEconomyHandler.isActive()) {
 			try {
 				winnerNation.getAccount().deposit(siege.getWarChestAmount(), "War Chest Captured/Returned");
@@ -39,7 +39,7 @@ public class SiegeWarMoneyUtil {
 				//Send message to nation(
 				TownyMessaging.sendPrefixedNationMessage(winnerNation, message);
 				//Send message to town
-				TownyMessaging.sendPrefixedTownMessage(siege.getDefendingTown(), message);
+				TownyMessaging.sendPrefixedTownMessage(siege.getTown(), message);
 			} catch (Exception e) {
 				System.out.println("Problem paying war chest(s) to winner nation");
 				e.printStackTrace();
@@ -53,7 +53,7 @@ public class SiegeWarMoneyUtil {
 	 * @param siege the siege zone
 	 */
 	public static void giveWarChestToDefendingTown(Siege siege) {
-		Town winnerTown= siege.getDefendingTown();
+		Town winnerTown= siege.getTown();
 		if(TownyEconomyHandler.isActive()) {
 			winnerTown.getAccount().deposit(siege.getWarChestAmount(), "War Chest Captured");
 			String message =
@@ -62,7 +62,7 @@ public class SiegeWarMoneyUtil {
 				TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
 
 			//Send message to nation
-			TownyMessaging.sendPrefixedNationMessage(siege.getAttackingNation(), message);
+			TownyMessaging.sendPrefixedNationMessage(siege.getNation(), message);
 			//Send message to town
 			TownyMessaging.sendPrefixedTownMessage(winnerTown, message);
 		}

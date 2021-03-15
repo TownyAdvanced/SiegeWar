@@ -60,8 +60,8 @@ public class AbandonAttack {
 			SiegeController.saveSiege(siege);
 			Messaging.sendGlobalMessage(
 				Translation.of("msg_siege_war_pending_attacker_abandon",
-				siege.getAttackingNation().getFormattedName(),
-				siege.getDefendingTown().getFormattedName(),
+				siege.getNation().getFormattedName(),
+				siege.getTown().getFormattedName(),
 				TimeMgmt.getFormattedTimeValue(timeUntilOfficialAbandon)));
 		} else {
 			//Immediate abandon
@@ -69,8 +69,8 @@ public class AbandonAttack {
 			SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.ATTACKER_ABANDON);
 			Messaging.sendGlobalMessage(
 				Translation.of("msg_siege_war_attacker_abandon",
-				siege.getAttackingNation().getFormattedName(),
-				siege.getDefendingTown().getFormattedName()));
+				siege.getNation().getFormattedName(),
+				siege.getTown().getFormattedName()));
 		}
 	}
 }

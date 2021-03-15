@@ -107,12 +107,12 @@ public class AttackTown {
     private static void attackTown(Block block, Nation attackingNation, Town attackingTown, Town defendingTown) throws TownyException {
 		//Create Siege
 		String siegeName = attackingNation.getName() + "#vs#" + defendingTown.getName();
-		SiegeController.newSiege(siegeName);
-		Siege siege = SiegeController.getSiege(siegeName);
+		SiegeController.newSiege(defendingTown);
+		Siege siege = SiegeController.getSiege(defendingTown);
 		
 		//Set values in siege object
-		siege.setAttackingNation(attackingNation);
-		siege.setDefendingTown(defendingTown);
+		siege.setNation(attackingNation);
+		siege.setTown(defendingTown);
 		siege.setStatus(SiegeStatus.IN_PROGRESS);
 		siege.setTownPlundered(false);
 		siege.setTownInvaded(false);
@@ -145,11 +145,11 @@ public class AttackTown {
 
 		//Save to DB
 		SiegeController.saveSiege(siege);
-		SiegeController.addSiegedTown(siege);
+		//SiegeController.addSiegedTown(siege);
 		attackingNation.save();
 
 		//Send global message;
-		if (siege.getDefendingTown().hasNation()) {
+		if (siege.getTown().hasNation()) {
 			Messaging.sendGlobalMessage(String.format(
 				Translation.of("msg_siege_war_siege_started_nation_town"),
 				attackingNation.getFormattedName(),

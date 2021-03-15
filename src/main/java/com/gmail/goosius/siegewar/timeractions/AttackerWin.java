@@ -26,7 +26,7 @@ public class AttackerWin {
 		
 		Messaging.sendGlobalMessage(Translation.of("msg_siege_war_attacker_win", 
 		    winnerNation.getFormattedName(),
-			siege.getDefendingTown().getFormattedName()
+			siege.getTown().getFormattedName()
 		));
 
 		SiegeWarMoneyUtil.giveWarChestToAttackingNation(siege);
