@@ -115,7 +115,6 @@ status_town_siege_status_defender_surrender: 'Town Surrender - to %s'
 status_town_siege_status_pending_attacker_abandon: 'Attacker Retreat Pending, in %s'
 status_town_siege_status_pending_defender_surrender: 'Town Surrender Pending, in %s'
 
-status_town_siege_status_besieger: '&2 > Besieger: &a%s'
 status_town_siege_status_banner_xyz: '&2 > Banner XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > Immunity Timer: &a%s'
 status_town_siege_victory_timer: '&2 > Victory Timer: &a%s'
@@ -257,7 +256,6 @@ msg_siege_war_defender_death: '&bSiege of %s > Defender died > %s > Battle Point
 #Battle sessions
 status_town_siege_battle: '&2Battle'
 status_town_siege_battle_time_remaining: '&2 > Time Remaining: &a%s'
-status_town_siege_battle_score: '&2 > Points: &a%s &2/ &a%s'
 msg_war_siege_battle_session_started: "&bA new battle session has started."
 msg_war_siege_battle_session_ended_with_battles: "&bThe current battle session has ended. The following teams won their battles:"
 msg_war_siege_battle_session_ended_without_battles: "&bThe current battle session has ended. There were no battles."
@@ -273,8 +271,6 @@ hud_battle_defender_points: 'BAT DEF Points: '
 hud_battle_time_remaining: 'BAT Time Left: '
 
 #Dynmap
-dynmap_battle_points: 'Siege Balance: %d'
-dynmap_siege_battle_score: 'Battle Points: %s / %s'
 dynmap_siege_battle_time_left: 'Battle Time Left: %s'
 
 #Banner control
@@ -318,7 +314,6 @@ msg_neutral_town_invaded: '&b%s has been invaded by %s, and placed under occupat
 msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and placed under occupation!'
 
 # Help
-nation_help_13 : 'Revolt against your occupier. A revolt-siege will start.'
 nation_help_14 : 'Release the given town from occupation.'
 
 # Revolt
@@ -333,6 +328,14 @@ siege_type_suppression: 'SUPPRESSION'
 # Dynmap
 dynmap_siege_type: 'Type: %s'
 dynmap_siege_town: 'Town: %s'
+dynmap_siege_balance: 'Siege Balance: %d'
+dynmap_siege_battle_points: 'Battle Points: %s / %s'
 
 # General
 siege.name: '%s vs %s'
+
+# Town screen
+status_town_siege_type: '&2 > Type: &a%s'
+status_town_siege_attacker: '&2 > Attacker: &a%s'
+status_town_siege_defender: '&2 > Defender: &a%s'
+status_town_siege_battle_points: '&2 > Points: &a%s &2/ &a%s'

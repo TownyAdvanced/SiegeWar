@@ -300,8 +300,14 @@ public class SiegeWarTownEventListener implements Listener {
 	                    String siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
 	                    out.add(siegeStatus);
 
-						// > Attacker: Land of Empire (Nation)
-						out.add(Translation.of("status_town_siege_status_besieger", siege.getNation().getFormattedName()));
+	                    // > Type: CONQUEST
+						out.add(Translation.of("status_town_siege_type", siege.getSiegeType().getName()));
+
+						// > Attacker: Land of Darkness (Nation)
+						out.add(Translation.of("status_town_siege_attacker", siege.getAttacker().getFormattedName()));
+
+						// > Defender: Land of Light (Nation)
+						out.add(Translation.of("status_town_siege_defender", siege.getDefender().getFormattedName()));
 
 						// > Balance: 530
 						out.add(Translation.of("status_town_siege_status_siege_balance", siege.getSiegeBalance()));
@@ -349,7 +355,7 @@ public class SiegeWarTownEventListener implements Listener {
 							}
 
 							// > Points: +90 / -220
-							out.add(Translation.of("status_town_siege_battle_score", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
+							out.add(Translation.of("status_town_siege_battle_points", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
 
 							// > Time Remaining: 22 minutes
 							out.add(Translation.of("status_town_siege_battle_time_remaining", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
