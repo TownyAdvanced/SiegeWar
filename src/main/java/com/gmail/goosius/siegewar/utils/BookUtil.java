@@ -90,8 +90,8 @@ public class BookUtil {
 		text += "Players win sieges by holding the ground within " + TownySettings.getTownBlockSize() + " blocks of the siege banner (the 'timed point zone'), and/or by killing enemy soldiers within " + SiegeWarSettings.getWarSiegeZoneRadiusBlocks() + " blocks of the siege banner (the 'siege zone').\n\n";
 		text += "Attackers gain " + SiegeWarSettings.getWarBattlePointsForAttackerOccupation() + " base points every 20 seconds for holding the banner. ";
 		text += "Defenders gain " + SiegeWarSettings.getWarBattlePointsForDefenderOccupation() + " base points every 20 seconds for holding the banner. ";
-		text += "Attackers gain " + SiegeWarSettings.getWarBattlePointsForAttackerDeath() + " base points if an attacker is killed in the siege zone. ";
-		text += "Defenders gain " + SiegeWarSettings.getWarBattlePointsForDefenderDeath() + " base points if an defender is killed in the siege zone.\n\n";
+		text += "Defenders gain " + SiegeWarSettings.getWarBattlePointsForAttackerDeath() + " base points if an attacker is killed in the siege zone. ";
+		text += "Attackers gain " + SiegeWarSettings.getWarBattlePointsForDefenderDeath() + " base points if a defender is killed in the siege zone.\n\n";
 		if (SiegeWarSettings.isWarSiegeCounterattackBoosterEnabled() && counterPercent > 0) {
 			text += "If one siege-side has banner control, then the other side will receive a kill point bonus of " + counterPercent + " % for each player on the banner control list. ";
 			text += "For example, if there are 3 players on the banner control list and one is killed, the enemy side will receive " + (3 * counterPercent) + "% more death points than normal.\n\n";
