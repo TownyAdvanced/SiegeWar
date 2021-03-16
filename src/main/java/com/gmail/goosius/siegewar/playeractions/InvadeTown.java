@@ -25,6 +25,8 @@ public class InvadeTown {
 	 *
 	 * This method does some final checks and if they pass, the invasion is executed.
 	 *
+	 * Note: At this point we know by the context, that the town is unoccupied.
+	 *
 	 * @param siege the siege of the town.
 	 * @throws TownyException when the invasion wont be allowed.
 	 */
