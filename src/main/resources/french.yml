@@ -84,10 +84,6 @@ msg_err_siege_war_cannot_place_banner_far_above_town: "La bannière de siège ne
 msg_err_siege_war_cannot_join_siege: "&cVous ne pouvez pas attaquer une ville lorsqu'elle est assiégée par une autre nation."
 msg_err_siege_war_nation_has_too_many_active_siege_attacks: "&cVotre nation a atteint le nombre maximum d'attaques de siège simultanées. Pour lancer une autre attaque, une ou plusieurs des attaques en cours doivent se terminer."
 msg_err_siege_war_town_not_close_enough_to_nation: "&cLa ville est trop éloignée de votre capitale pour être attaquée."
-#Abandon
-msg_err_siege_war_cannot_abandon_no_nearby_siege_attacks: "&cVous ne pouvez pas abandonner car il n'y a pas de bannières de siège actives à proximité."
-msg_err_siege_war_cannot_abandon_nation_not_attacking_zone: "&cVous ne pouvez pas abandonner parce que votre nation n'attaque pas par ici."
-msg_err_siege_war_cannot_abandon_siege_over: "&cVous ne pouvez pas abandonner car le siège est terminé."
 #Invade
 msg_err_siege_war_no_siege_on_target_town: "&cIl n'y a pas de siège sur la ville de %s."
 #Plunder
@@ -95,9 +91,6 @@ msg_err_siege_war_cannot_plunder_own_town: "&cVous ne pouvez pas piller votre pr
 msg_err_siege_war_cannot_plunder_without_victory: "&cVous ne pouvez pas piller à moins que votre nation ne remporte le siège."
 msg_err_siege_war_cannot_plunder_without_economy: "&cVous ne pouvez pas piller car aucun plugin économique n'est actif"
 msg_err_siege_war_town_already_plundered: "&cCette ville a déjà été pillée."
-#Surrender
-msg_err_siege_war_cannot_surrender_not_your_town: "&cVous ne pouvez pas vous rendre car ce n'est pas votre ville."
-msg_err_siege_war_cannot_surrender_siege_finished: "&cVous ne pouvez pas vous rendre parce que le siège est terminé."
 #Block change
 msg_err_siege_war_cannot_destroy_siege_banner: "&cPendant que le siège est en cours, vous ne pouvez pas détruire la bannière de siège ou le bloc auquel elle est attachée."
 msg_err_siege_war_banner_support_block_not_stable: "&cVous ne pouvez pas placer la bannière sur un sol instable, par ex. sable ou gravier."
@@ -111,11 +104,6 @@ status_town_revolt_immunity_timer: "&2Immunité à la révolte : &a%s"
 status_town_siege_status: "&2Siège : &a%s"
 status_town_siege_status_in_progress: "En cours"
 status_town_siege_status_attacker_win: "Victoire de l'attaquant - %s"
-status_town_siege_status_defender_win: "Victoire de la ville"
-status_town_siege_status_attacker_abandon: "Retraite de l'attaquent"
-status_town_siege_status_defender_surrender: "La ville se rend - à %s"
-status_town_siege_status_pending_attacker_abandon: "Retraite de l'attaquant en attente, dans %s"
-status_town_siege_status_pending_defender_surrender: "La ville se rend, dans %s"
 
 status_town_siege_status_banner_xyz: "&2 > Bannière XYZ : &a%d,%d,%d"
 status_town_siege_immunity_timer: "&2 > Temps d'immunité : &a%s"
@@ -189,10 +177,6 @@ msg_swa_set_captured_success: "&bCapture défini pour %s sur %s."
 siege_status_in_progress: "En cours"
 siege_status_attacker_win: "Victoire de l'Attaquant"
 siege_status_defender_win: "Victoire du Défenseur"
-siege_status_attacker_abandon: "Abandon de l'attaquant"
-siege_status_defender_surrender: "Capitulation du défenseur"
-siege_status_pending_attacker_abandon: "En attente de l'abandon de l'attaquant"
-siege_status_pending_defender_surrender: "En attente de la capitulation du défenseur"
 siege_status_unknown: "Inconnu"
 
 dynmap_siege_title: "Siège: %s"
@@ -326,7 +310,7 @@ siege_type_liberation: 'LIBERATION'
 siege_type_revolt: 'REVOLT'
 siege_type_suppression: 'SUPPRESSION'
 
-#Dynmap
+# Dynmap
 dynmap_siege_type: 'Type: %s'
 dynmap_siege_town: 'Town: %s'
 dynmap_siege_balance: 'Siege Balance: %d'
@@ -334,8 +318,51 @@ dynmap_siege_battle_points: 'Battle Points: %s / %s'
 
 # General
 siege.name: '%s vs %s'
+
 # Town screen
 status_town_siege_type: '&2 > Type: &a%s'
 status_town_siege_attacker: '&2 > Attacker: &a%s'
 status_town_siege_defender: '&2 > Defender: &a%s'
 status_town_siege_battle_points: '&2 > Points: &a%s &2/ &a%s'
+status_town_siege_status_defender_win: 'Defender Victory'
+status_town_siege_status_attacker_abandon: 'Attacker Abandon'
+status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending, in %s'
+status_town_siege_status_defender_surrender: 'Defender Surrender - to %s'
+status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending, in %s'
+
+# Generic error
+msg_err_action_disable: '&cYou don''t have enough permissions for that action.'
+
+#Siege started messages
+msg_conquest_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A siege of CONQUEST has begun!'
+msg_conquest_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A siege of CONQUEST has begun!'
+msg_liberation_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A siege of LIBERATION has begun!'
+msg_liberation_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A siege of LIBERATION has begun!'
+msg_revolt_siege_started_neutral_town: '&bThe townspeople of %s have risen up against the occupying army of %s. A siege of REVOLT has begun!'
+msg_revolt_siege_started_nation_town: '&bThe townspeople of %s, whose home nation is %s, have risen up against the occupying army of %s. A siege of REVOLT has begun!'
+msg_suppression_siege_started_neutral_town: '&bThe nation of %s has moved to stamp out resistance in %s. A siege of SUPPRESSION has begun!'
+msg_suppression_siege_started_nation_town: '&bThe nation of %s has moved to stamp out resistance in by %s at %s. A siege of SUPPRESSION has begun!'
+
+#Defender Surrender messages
+msg_conquest_siege_defender_surrender: '&sSiege of CONQUEST at %s > The town has surrendered to the army of %s. The attackers are victorious!'
+msg_liberation_siege_defender_surrender: '&sSiege of LIBERATION at %s > The occupying army of %s has surrendered to the army of %s, and the occupation has been ended. The attackers are victorious!'
+msg_revolt_siege_defender_surrender: '&sSiege of REVOLT at %s > The occupying army of %s has surrendered to the rebels, and the occupation has been ended. The attackers are victorious!'
+msg_suppression_siege_defender_surrender: '&sSiege of SUPPRESSION at %s > The town has surrendered to the occupying army of %s. '
+
+#Siege Abandon messages
+msg_conquest_siege_attacker_abandon: '&sSiege of CONQUEST at %s > The army of %s has abandoned its attack. The defenders are victorious!'
+msg_liberation_siege_attacker_abandon: '&sSiege of LIBERATION at %s > The army of %s has abandoned its attack against %s. The defenders are victorious!'
+msg_revolt_siege_attacker_abandon: '&sSiege of REVOLT at %s > The attacking rebel army has abandoned its revolt against %s. The defenders are victorious!'
+msg_suppression_siege_attacker_abandon: '&sSiege of SUPPRESSION at %s > The army of %s has abandoned its attack and released the town from occupation. The defenders are victorious!'
+
+# Generic Victory messages
+msg_immediate_attacker_victory: " The attackers are victorious!"
+msg_pending_attacker_victory: " Attacker victory will be confirmed in %s."
+msg_immediate_defender_victory: " The attackers are victorious!"
+msg_pending_defender_victory: " Defender victory will be confirmed in %s."
+
+# Siege statuses
+siege_status_attacker_abandon: "Abandon de l'attaquant"
+siege_status_defender_surrender: "Capitulation du défenseur"
+siege_status_pending_attacker_abandon: "En attente de l'abandon de l'attaquant"
+siege_status_pending_defender_surrender: "En attente de la capitulation du défenseur"

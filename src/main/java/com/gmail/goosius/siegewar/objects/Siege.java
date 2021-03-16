@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.objects;
 
-import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
@@ -461,6 +460,8 @@ public class Siege {
 	}
 
 	public void setSiegeType(SiegeType siegeType) {
+		if(siegeType == null) //Safety feature
+			throw new RuntimeException("SiegeType cannot be null");
 		this.siegeType = siegeType;
 	}
 }
