@@ -91,7 +91,7 @@ public class TownOccupationController {
         return occupier;
     }
 
-    public static void setTownOccupier(Town occupiedTown, Nation occupyingNation) {
+    public static void setTownOccupation(Town occupiedTown, Nation occupyingNation) {
         if (occupyingNation == null) {
             //Remove occupation
             occupiedTown.setConquered(false);

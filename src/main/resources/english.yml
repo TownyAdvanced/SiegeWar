@@ -294,10 +294,17 @@ nation_help_14 : 'Release the given town from occupation.'
 
 # Error messages
 msg_err_action_disable: '&cYou don''t have enough permissions for that action.'
-msg_err_town_unoccupied_revolt_disallowed: '&cYour town is not occupied. Revolt not possible.'
+#Attack
+msg_err_cannot_start_siege_attack_at_peaceful_town: '&cYou cannot start a siege at a peaceful town'
+msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruined town'
+msg_err_cannot_start_siege_due_to_siege_immunity: '&cYou cannot start a siege now, because the nearby town has siege immunity'
+#Abandon
 msg_err_town_has_no_active_siege_to_abandon_surrender: '&cThe nearby town has no siege. Abandon/Surrender not possible.'
+#Invade
 msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot invade while the siege is still in progress'
-msg_err_cannot_invade_your_nation_already_occupies_town: '&cYour nation is already occupying the town'
+msg_err_cannot_invade_town_already_invaded: '&cYour nation hsa already invaded the town'
+
+
 
 # Siege Types
 siege_type_conquest: 'CONQUEST'

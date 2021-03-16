@@ -65,9 +65,24 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_REVOLT_ENABLED);
 	}
 
-	public static boolean getWarSiegeTownLeaveDisabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_TOWN_LEAVE_DISABLED);
+	public static boolean getConquestSiegesEnabled() {
+		return true;
 	}
+
+	public static boolean getLiberationSiegesEnabled() {
+		return true;
+	}
+
+	public static boolean getRevoltSiegesEnabled() {
+		return true;
+	}
+
+	public static boolean getSuppressionSiegesEnabled() {
+		return true;
+	}
+
+
+
 
 	public static boolean getWarSiegePvpAlwaysOnInBesiegedTowns() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_PVP_ALWAYS_ON_IN_BESIEGED_TOWNS);

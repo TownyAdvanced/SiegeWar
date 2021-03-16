@@ -73,12 +73,6 @@ public enum ConfigNodes {
 			"# If true, then a king can pay their soldiers using '/sw nation paysoldiers <total amount>'.",
 			"# The amount will be distributed among the soldiers according to their ranks.",
 			"# The permission of siegewar.nation.siege.pay.grade.x, determines how much a rank is paid. x=100 is a normal share, x=200 is double"),
-	WAR_SIEGE_TOWN_LEAVE_DISABLED(
-			"war.siege.switches.nation_leave_disabled",
-			"true",
-			"",
-			"#. If true, then a town cannot leave a nation of its own accord. ",
-			"# However the nation can always kick."),
 	WAR_SIEGE_REVOLT_ENABLED(
 			"war.siege.switches.revolt_enabled",
 			"true",

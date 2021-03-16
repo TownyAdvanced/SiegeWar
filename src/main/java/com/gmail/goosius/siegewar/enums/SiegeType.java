@@ -87,4 +87,8 @@ public enum SiegeType {
     public String getMsgKeyTownSurrender() {
         return String.format(langKeyTemplate_townSurrender, this.toString().toLowerCase());
     }
+
+    public SiegeWarPermissionNodes getPermissionNodeToAttack() {
+
+    }
 }

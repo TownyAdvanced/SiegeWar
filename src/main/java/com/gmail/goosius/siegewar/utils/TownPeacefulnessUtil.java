@@ -250,7 +250,7 @@ public class TownPeacefulnessUtil {
 			return false;
 		} else {
 			//Remove occupation
-			TownOccupationController.setTownOccupier(peacefulTown, null);
+			TownOccupationController.setTownOccupation(peacefulTown, null);
 			//Send messages
 			if(peacefulTown.hasNation()) {
 				TownyMessaging.sendPrefixedNationMessage(previousOccupier, Translation.of("msg_nation_town_peacefully_released", peacefulTown.getName(), peacefulTown.getNation().getName()));
@@ -270,7 +270,7 @@ public class TownPeacefulnessUtil {
 			//Town is not yet occupied
 
 			//Occupy town
-			TownOccupationController.setTownOccupier(peacefulTown, newOccupier);
+			TownOccupationController.setTownOccupation(peacefulTown, newOccupier);
 			//Send messages
 			if(peacefulTown.hasNation()) {
 				//Send to nation of peaceful town
@@ -291,7 +291,7 @@ public class TownPeacefulnessUtil {
 				return false;
 
 			//Change occupation
-			TownOccupationController.setTownOccupier(peacefulTown, newOccupier);
+			TownOccupationController.setTownOccupation(peacefulTown, newOccupier);
 			//Send messages
 			if(peacefulTown.hasNation()) {
 				//Send to nation of peaceful town

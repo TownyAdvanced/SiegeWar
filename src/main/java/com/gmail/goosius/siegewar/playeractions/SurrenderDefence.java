@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
@@ -19,6 +20,9 @@ import org.bukkit.entity.Player;
 public class SurrenderDefence {
 
 	public static void processSurrenderDefenceRequest(Player player, Siege siege) throws TownyException {
+		if(!SiegeWarSettings.getWarSiegeAbandonEnabled())
+			throw new TownyException(Translation.of("msg_err_action_disable"));
+
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, siege.getSiegeType().getPermissionNodeToSurrenderDefence().getNode()))
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 

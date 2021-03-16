@@ -37,50 +37,38 @@ public class StartConquestSiege {
 	 *
 	 * This method does some final checks and if they pass, the attack is initiated.
 	 *
-	 * @param townOfAttackingPlayer town which is attacking.
-	 * @param nationOfAttackingPlayer nation which is attacking.
-	 * @param block the attack banner 
+	 * @param townOfSiegeStarter town
+	 * @param nationOfSiegeStarter nation which is attacking.
 	 * @param townBlock the townblock where the attack is taking place.
-	 * @param defendingTown the town about to be attacked
+	 * @param targetTown the town about to be attacked
+	 * @param bannerBlock the banner block
+	 *
 	 * @throws TownyException when attack cannot be made.
+	 *
 	 */
-    public static void processAttackTownRequest(Town townOfAttackingPlayer,
-    											Nation nationOfAttackingPlayer,
-                                                Block block,
-                                                TownBlock townBlock,
-                                                Town defendingTown) throws TownyException {
+    public static void processStartRequest(Town townOfSiegeStarter,
+										   Nation nationOfSiegeStarter,
+										   TownBlock townBlock,
+										   Town targetTown,
+										   Block bannerBlock) throws TownyException {
 
-		if (SiegeController.hasActiveSiege(defendingTown))
-			throw new TownyException(Translation.of("msg_err_siege_war_cannot_join_siege"));
+		if (nationOfSiegeStarter == null)
+			throw new TownyException(Translation.of("msg_err_action_disable"));
 
-		if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && defendingTown.isNeutral())
-			throw new TownyException(Translation.of("msg_war_siege_err_cannot_attack_peaceful_town"));
+        if (targetTown.hasNation()) {
+            Nation nationOfDefendingTown = targetTown.getNation();
 
-		if (!(SiegeController.hasActiveSiege(defendingTown))
-            	&& System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(defendingTown))
-            throw new TownyException(Translation.of("msg_err_siege_war_cannot_attack_siege_immunity"));
-
-		if (defendingTown.isRuined())
-            throw new TownyException(Translation.of("msg_err_cannot_attack_ruined_town"));
-		
-        if (defendingTown.hasNation()) {
-            Nation nationOfDefendingTown = defendingTown.getNation();
-
-            if (nationOfAttackingPlayer == nationOfDefendingTown)
+            if (nationOfSiegeStarter == nationOfDefendingTown)
                 throw new TownyException(Translation.of("msg_err_siege_war_cannot_attack_town_in_own_nation"));
 
-            if (!nationOfAttackingPlayer.hasEnemy(nationOfDefendingTown))
+            if (!nationOfSiegeStarter.hasEnemy(nationOfDefendingTown))
                 throw new TownyException(Translation.of("msg_err_siege_war_cannot_attack_non_enemy_nation"));
         }
 
-        if(!SiegeWarDistanceUtil.isBannerToTownElevationDifferenceOk(block, townBlock)) {
-			throw new TownyException(Translation.of("msg_err_siege_war_cannot_place_banner_far_above_town"));
-		}
-
 		if (TownySettings.getNationRequiresProximity() > 0) {
-			Coord capitalCoord = nationOfAttackingPlayer.getCapital().getHomeBlock().getCoord();
-			Coord townCoord = defendingTown.getHomeBlock().getCoord();
-			if (!nationOfAttackingPlayer.getCapital().getHomeBlock().getWorld().getName().equals(defendingTown.getHomeBlock().getWorld().getName())) {
+			Coord capitalCoord = nationOfSiegeStarter.getCapital().getHomeBlock().getCoord();
+			Coord townCoord = targetTown.getHomeBlock().getCoord();
+			if (!nationOfSiegeStarter.getCapital().getHomeBlock().getWorld().getName().equals(targetTown.getHomeBlock().getWorld().getName())) {
 				throw new TownyException(Translation.of("msg_err_nation_homeblock_in_another_world"));
 			}
 			double distance;
@@ -91,22 +79,19 @@ public class StartConquestSiege {
 		}
 
 		//Call event
-		PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(townOfAttackingPlayer, nationOfAttackingPlayer, block, townBlock, defendingTown);
+		PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(townOfSiegeStarter, nationOfSiegeStarter, bannerBlock, townBlock, targetTown);
 		Bukkit.getPluginManager().callEvent(preSiegeWarStartEvent);
 
 		//Setup attack
 		if (!preSiegeWarStartEvent.isCancelled()){
-			attackTown(block, nationOfAttackingPlayer, townOfAttackingPlayer, defendingTown);
+			startSiege(bannerBlock, nationOfSiegeStarter, townOfSiegeStarter, targetTown);
 		} else {
 			throw new TownyException(preSiegeWarStartEvent.getCancellationMsg());
 		}
-
     }
 
-
-    private static void attackTown(Block block, Nation attackingNation, Town attackingTown, Town defendingTown) throws TownyException {
+    private static void startSiege(Block bannerBlock, Nation attackingNation, Town attackingTown, Town defendingTown) throws TownyException {
 		//Create Siege
-		String siegeName = attackingNation.getName() + "#vs#" + defendingTown.getName();
 		SiegeController.newSiege(defendingTown);
 		Siege siege = SiegeController.getSiege(defendingTown);
 		
@@ -121,7 +106,7 @@ public class StartConquestSiege {
 			(System.currentTimeMillis() +
 				((long) (SiegeWarSettings.getWarSiegeMaxHoldoutTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS))));
 		siege.setActualEndTime(0);
-		siege.setFlagLocation(block.getLocation());
+		siege.setFlagLocation(bannerBlock.getLocation());
 		siege.setWarChestAmount(SiegeWarMoneyUtil.getSiegeCost(defendingTown));
 		
 		SiegeController.setSiege(defendingTown, true);
@@ -165,6 +150,6 @@ public class StartConquestSiege {
 		}
 
 		//Call event
-		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, attackingTown, block));
+		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, attackingTown, bannerBlock));
     }
 }
