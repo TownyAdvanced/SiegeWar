@@ -8,18 +8,20 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.entity.Player;
 
 public class StartRevoltSiege {
 
-    public static void processStartSiegeRequest(Player player, Town town, Nation townOccupier) throws TownyException {
+    public static void processStartSiegeRequest(Player player, Town town) throws TownyException {
         if (!SiegeWarSettings.getRevoltSiegesEnabled())
             throw new TownyException(Translation.of("msg_err_action_disable"));
 
         if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeType.REVOLT.getPermissionNodeToAttack().getNode()))
             throw new TownyException(Translation.of("msg_err_action_disable"));
+
+        if(!town.isConquered())
+            throw new TownyException(Translation.of("msg_err_cannot_start_revolt_siege_as_town_is_unoccupied"));
 
         if (System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(town))
             throw new TownyException(Translation.of("msg_err_siege_war_revolt_immunity_active"));

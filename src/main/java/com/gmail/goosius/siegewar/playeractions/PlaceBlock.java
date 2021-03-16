@@ -250,38 +250,37 @@ public class PlaceBlock {
 		if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && nearbyTown.isNeutral())
 			throw new TownyException(Translation.of("msg_err_cannot_start_siege_attack_at_peaceful_town"));
 
-		if(!SiegeWarDistanceUtil.isBannerToTownElevationDifferenceOk(bannerBlock, nearbyTownBlock))
+		if (!SiegeWarDistanceUtil.isBannerToTownElevationDifferenceOk(bannerBlock, nearbyTownBlock))
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_place_banner_far_above_town"));
-
-		if (System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(nearbyTown))
-			throw new TownyException(Translation.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
 
 		if (nearbyTown.isRuined())
 			throw new TownyException(Translation.of("msg_err_cannot_start_siege_at_ruined_town"));
 
-		if (nearbyTown.isConquered()) {
-			Nation townOccupier = TownOccupationController.getTownOccupier(nearbyTown);
-			if(residentsTown == nearbyTown) {
-				//Revolt siege
-				StartRevoltSiege.processStartSiegeRequest(player, residentsTown, townOccupier);
-			} else {
-				if (residentsNation == null)
-					throw new TownyException(Translation.of("msg_err_action_disable"));
+		if (residentsTown == nearbyTown) {
+			//Revolt siege
+			StartRevoltSiege.processStartSiegeRequest(player, residentsTown);
+		} else {
+			if (residentsNation == null)
+				throw new TownyException(Translation.of("msg_err_action_disable"));
 
-				if (residentsNation == townOccupier) {
+			if (System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(nearbyTown))
+				throw new TownyException(Translation.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
+
+			if (nearbyTown.isConquered()) {
+				Nation occupierOfNearbyTown = TownOccupationController.getTownOccupier(nearbyTown);
+				if (residentsNation == occupierOfNearbyTown) {
 					//Suppression siege
-					StartSuppressionSiege.processStartSiegeRequest(player, residentsTown, townOccupier);
+					StartSuppressionSiege.processStartSiegeRequest(player, residentsTown, occupierOfNearbyTown);
 				} else {
 					//Liberation siege
-					StartLiberationSiege.processStartSiegeRequest(player, residentsTown, residentsNation, townOccupier);
+					StartLiberationSiege.processStartSiegeRequest(player, residentsTown, residentsNation, occupierOfNearbyTown);
 				}
+			} else {
+				//Conquest siege
+				StartConquestSiege.processStartRequest(residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 			}
-		} else {
-			//Conquest siege
-			StartConquestSiege.processStartRequest(residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 		}
 	}
-
 
 
 

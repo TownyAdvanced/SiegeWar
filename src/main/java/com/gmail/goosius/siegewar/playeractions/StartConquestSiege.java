@@ -51,10 +51,6 @@ public class StartConquestSiege {
 										   TownBlock townBlock,
 										   Town targetTown,
 										   Block bannerBlock) throws TownyException {
-
-		if (nationOfSiegeStarter == null)
-			throw new TownyException(Translation.of("msg_err_action_disable"));
-
         if (targetTown.hasNation()) {
             Nation nationOfDefendingTown = targetTown.getNation();
 
