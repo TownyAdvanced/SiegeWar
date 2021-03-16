@@ -28,9 +28,6 @@ msg_err_command_disable: "&cVous n'avez pas la permission d'effectuer cette comm
 
 #Added in (Siegewar version)
 #Siege war happy-path messages
-msg_siege_war_revolt: "&bLe peuple de %s, dirigé par %s, se sont révoltés contre %s, et se sont déclarés libres de choisir leur propre destin!"
-msg_siege_war_siege_started_neutral_town: "&bUne armée appartenant à %s attaque %s. Un siège a commencé !"
-msg_siege_war_siege_started_nation_town: "&bUne armée appartenant à %s attaque %s de %s. Un siège a commencé !"
 msg_siege_war_attack_pay_war_chest: "&bUn coffre de guerre a été préparé par %s, avec une valeur de %s. Celui qui remporte le siège recevra cet argent."
 msg_siege_war_attack_recover_war_chest: "&bLe coffre de guerre a été récupéré par %s, avec une valeur de %s."
 msg_siege_war_defender_win: "&bLes défenseurs de %s ont réussi à chasser toutes les armées attaquantes. Le siège a échoué !"
@@ -294,15 +291,16 @@ msg_nation_town_peacefully_released: "&b%s, belonging to %s, has been peacefully
 # Invasion
 msg_err_cannot_invade_own_town: '&cYou cannot invade your own town.'
 msg_err_cannot_invade_without_victory: "&cYou cannot invade the town unless your nation is victorious in the siege."
-msg_err_town_already_invaded: '&cThis town has already been invaded'
 msg_neutral_town_invaded: '&b%s has been invaded by %s, and placed under occupation!'
 msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and placed under occupation!'
 
 # Help
 nation_help_14 : 'Release the given town from occupation.'
 
-# Revolt
+# Error Messages
+msg_err_action_disable: '&cYou don''t have enough permissions for that action.'
 msg_err_town_unoccupied_revolt_disallowed: '&cYour town is not occupied. Revolt not possible.'
+msg_err_town_has_no_active_siege_to_abandon_surrender: '&cThe nearby town has no siege. Abandon/Surrender not possible.'
 
 # Siege Types
 siege_type_conquest: 'CONQUEST'
@@ -329,9 +327,6 @@ status_town_siege_status_attacker_abandon: 'Attacker Abandon'
 status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending, in %s'
 status_town_siege_status_defender_surrender: 'Defender Surrender - to %s'
 status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending, in %s'
-
-# Generic error
-msg_err_action_disable: '&cYou don''t have enough permissions for that action.'
 
 #Siege started messages
 msg_conquest_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A siege of CONQUEST has begun!'

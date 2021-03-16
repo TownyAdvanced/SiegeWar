@@ -3,21 +3,21 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.TownBlock;
+import com.palmergames.bukkit.towny.object.*;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -97,67 +97,25 @@ public class PlaceBlock {
 	}
 
 	/**
-	 * Evaluates a banner placement request. Determines which type of banner this
-	 * is, and where it is being placed. Then calls an appropriate private method.
-	 * 
-	 * @param player Player placing a banner.
-	 * @param block The banner.
-	 * @throws TownyException thrown when the banner is not allowed to be placed.
+	 * Evaluates placing a standing banner
+	 * @throws TownyException if the banner will not be allowed.
 	 */
 	private static void evaluatePlaceStandingBanner(Player player, Block block) throws TownyException {
 		//Ensure the the banner is placed in wilderness
 		if (!TownyAPI.getInstance().isWilderness(block))
 			return;
 
-		/*
-		 * there are differing outcomes depending on whether
-		 * this is a white banner or a coloured banner
-		 */
-		if (isWhiteBanner(block)) {
-			evaluatePlaceWhiteBannerInWilderness(block, player);
-		} else {
-			evaluatePlaceColouredBannerInWilderness(block, player);
-		}
-	}
-
-	/**
-	 * Possibilities:
-	 *
-	 * Effects depend on the type of siege and who places it
-	 * CONQUEST
-	 * - Attacking king/general ----> Attacker abandon
-	 * - Town mayor ---> Defender surrender
-	 * LIBERATION
-	 * - Attacking king/general ---> Attacker abandon
-	 * - Defending king/general ---> Defender surrender
-	 * REVOLT
-	 * - Attacking town ---> Attacker abandon
-	 * - Defending king/general-----> Defender surrender
-	 * SUPPRESSION
-	 * - Attacking king/general ---> Attacker abandon
-	 * - Town mayor ---> Defender surrender
-	 *
-	 * @param block the banner
-	 * @param player the player
-	 */
-	private static void evaluatePlaceWhiteBannerInWilderness(Block block, Player player) throws TownyException {
-
-		//Ensure that at least one of the adjacent towns has an active siege
-		Siege candidateSiege;
+		//Ensure there ia an adjacent town
 		List<TownBlock> adjacentTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
-		List<Siege> adjacentSieges = new ArrayList<>();
-		for (TownBlock adjacentTownBlock : adjacentTownBlocks) {
-			if (adjacentTownBlock.hasTown() && SiegeController.hasSiege(adjacentTownBlock.getTown())) {
-				candidateSiege = SiegeController.getSiege(adjacentTownBlock.getTown());
-				if (candidateSiege.getStatus().isActive())
-					adjacentSieges.add(candidateSiege);
-			}
-		}
-		if (adjacentSieges.size() == 0)
+		if (adjacentTownBlocks.size() == 0)
 			return;
 
-		//Ensure that there is just 1 siege nearby (or else we don't know which one to cancel)
-		if (adjacentSieges.size() > 1)
+		//Ensure siege is enabled in this world
+		if (!SiegeWarSettings.getWarSiegeWorlds().contains(block.getWorld().getName()))
+			throw new TownyException(Translation.of("msg_err_siege_war_not_enabled_in_world"));
+
+		//Ensure that there is just 1 town nearby (or else we don't know which town to affect
+		if (adjacentTownBlocks.size() > 1)
 			throw new TownyException(Translation.of("msg_err_siege_war_too_many_adjacent_cardinal_town_blocks"));
 
 		//Ensure siege is enabled in this world
@@ -170,24 +128,49 @@ public class PlaceBlock {
 			throw new TownyException(Translation.of("msg_err_siege_war_action_not_a_town_member"));
 		Town residentsTown = resident.getTown();
 
-		//Get siege & siegeTown, for convenience
-		Siege siege = adjacentSieges.get(0);
-		Town siegedTown = siege.getTown();
-
-		//Get nation (if any, for convenience)
+		//Get resident's nation (if any, for convenience)
 		Nation residentsNation = null;
 		if (residentsTown.hasNation())
 			residentsNation = residentsTown.getNation();
 
+		if (isWhiteBanner(block)) {
+			evaluatePlaceWhiteBannerNearTown(player, residentsTown, residentsNation, adjacentTownBlocks.get(0).getTown());
+		} else {
+			evaluatePlaceColouredBannerNearTown(player, residentsTown, residentsNation, adjacentTownBlocks.get(0).getTown());
+		}
+	}
+
+		/**
+         * Evaluates placing a white banner near a town
+         *
+         * Effects depend on the nature of the siege (if any) and the allegiances of the banner placer
+		 *
+         * @param player the player placing the banner
+         * @param residentsTown the town of the player placing the banner
+		 * @param residentsNation the nation of the player placing the banner (can be null)
+		 * @param nearbyTown the nearby town
+         */
+	private static void evaluatePlaceWhiteBannerNearTown(Player player,
+												   Town residentsTown,
+												   Nation residentsNation,
+												   Town nearbyTown) throws TownyException {
+
+		//Ensure that the nearby town has an active siege
+		if (!SiegeController.hasActiveSiege(nearbyTown))
+			throw new TownyException(Translation.of("msg_err_town_has_no_active_siege_to_abandon_surrender"));
+
+		//Get siege
+		Siege siege = SiegeController.getSiege(nearbyTown);
+
 		/*
-		 * Check whether the combination of player & target town
-		 * qualifies as a 'abandonAttack'  or 'surrenderTown'
+		 * Check what type of action this qualifies as.
+		 * Depending on the scenario, it may be 'abandonAttack' or 'surrenderDefence'
 		 */
 		switch (siege.getSiegeType()) {
 			case CONQUEST:
 				if (residentsNation != null && residentsNation == siege.getAttacker()) {
 					AbandonAttack.processAbandonAttackRequest(player, siege);
-				} else if (residentsTown == siegedTown) {
+				} else if (residentsTown == nearbyTown) {
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException("msg_err_action_disable");
@@ -196,25 +179,25 @@ public class PlaceBlock {
 			case LIBERATION:
 				if (residentsNation != null && residentsNation == siege.getAttacker()) {
 					AbandonAttack.processAbandonAttackRequest(player, siege);
-				} else if (residentsNation != null && TownOccupationController.getTownOccupier(siegedTown) == residentsNation) {
+				} else if (residentsNation != null && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException("msg_err_action_disable");
 				}
 				break;
 			case REVOLT:
-				if (residentsTown == siegedTown) {
+				if (residentsTown == nearbyTown) {
 					AbandonAttack.processAbandonAttackRequest(player, siege);
-				} else if (residentsNation != null && TownOccupationController.getTownOccupier(siegedTown) == residentsNation) {
+				} else if (residentsNation != null && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException("msg_err_action_disable");
 				}
 				break;
 			case SUPPRESSION:
-				if (residentsNation != null && TownOccupationController.getTownOccupier(siegedTown) == residentsNation) {
+				if (residentsNation != null && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
 					AbandonAttack.processAbandonAttackRequest(player, siege);
-					if (residentsTown == siegedTown) {
+					if (residentsTown == nearbyTown) {
 						SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 					} else {
 						throw new TownyException("msg_err_action_disable");
@@ -225,11 +208,80 @@ public class PlaceBlock {
 	}
 
 	/**
-	 * Evaluates placing a coloured banner in the wilderness.
-	 * Determines if the event will be considered as an attack or invade request.
-	 * @throws TownyException when the banner will not be allowed.
+	 * Evaluates coloured banner near a town
+	 *
+	 * Effects depend on the allegiances of the town and of the banner placer
+	 *
+	 * @param player the player placing the banner
+	 * @param residentsTown the town of the player placing the banner
+	 * @param residentsNation the nation of the player placing the banner (can be null)
+	 * @param nearbyTown the nearby town
 	 */
-	private static void evaluatePlaceColouredBannerInWilderness(Block block, Player player) throws TownyException {
+	public static void evaluatePlaceColouredBannerNearTown(Player player,
+														   Town residentsTown,
+														   Nation residentsNation,
+														   Town nearbyTown) throws TownyException {
+
+		//Check whether nearby town has a current or recent siege
+		Siege siege = null;
+		if (!SiegeController.hasSiege(nearbyTown))
+			siege = SiegeController.getSiege(nearbyTown);
+
+		if(siege == null) {
+			/*
+			 * Start new siege request
+			 * Check what type of siege this would be.
+			 */
+		} else {
+			evaluateInvasionAttempt(player, residentsNation, nearbyTown, siege);
+		}
+	}
+
+
+
+	private static void evaluateInvasionAttempt(Player player, Nation residentsNation, Town nearbyTown, Siege siege) throws TownyException {
+		if(residentsNation == null)
+			throw new TownyException("msg_err_action_disable");  //Can't invade if nationless
+
+		if(residentsNation != siege.getAttacker())
+			throw new TownyException("msg_err_action_disable");  //Can't invade unless you are the attacker
+
+		if(siege.getStatus().isActive())
+			throw new TownyException("msg_err_cannot_invade_siege_still_in_progress");
+
+		if(residentsNation == TownOccupationController.getTownOccupier(nearbyTown))
+			throw new TownyException("msg_err_cannot_invade_your_nation_already_occupies_town");
+
+		if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
+			throw new TownyException(Translation.of("msg_err_cannot_invade_without_victory"));
+
+		if (siege.isTownInvaded())
+			throw new TownyException(Translation.of("msg_err_town_already_invaded"));
+
+		if (TownySettings.getNationRequiresProximity() > 0) {
+			Coord capitalCoord = residentsNation.getCapital().getHomeBlock().getCoord();
+			Coord townCoord = nearbyTown.getHomeBlock().getCoord();
+			if (!residentsNation.getCapital().getHomeBlock().getWorld().getName().equals(nearbyTown.getHomeBlock().getWorld().getName())) {
+				throw new TownyException(Translation.of("msg_err_nation_homeblock_in_another_world"));
+			}
+			double distance;
+			distance = Math.sqrt(Math.pow(capitalCoord.getX() - townCoord.getX(), 2) + Math.pow(capitalCoord.getZ() - townCoord.getZ(), 2));
+			if (distance > TownySettings.getNationRequiresProximity()) {
+				throw new TownyException(String.format(Translation.of("msg_err_town_not_close_enough_to_nation"), nearbyTown.getName()));
+			}
+		}
+
+		if (TownySettings.getMaxTownsPerNation() > 0) {
+			int effectiveNumTowns = SiegeWarNationUtil.calculateEffectiveNumberOfTownsInNation(residentsNation);
+			if (effectiveNumTowns >= TownySettings.getMaxTownsPerNation()){
+				throw new TownyException(String.format(Translation.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
+			}
+		}
+
+		InvadeTown.processInvadeTownRequest(player, siege);
+	}
+
+
 
 		/*
 		// Fail early if this is not a siege-enabled world.
@@ -309,8 +361,6 @@ public class PlaceBlock {
 		}
 
 */
-
-	}
 
 	/**
 	 * Evaluates placing a chest.

@@ -18,8 +18,14 @@ import org.bukkit.entity.Player;
  */
 public class SurrenderDefence {
 
-    public static void surrenderDefence(Siege siege) {
+	public static void processSurrenderDefenceRequest(Player player, Siege siege) throws TownyException {
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, siege.getSiegeType().getPermissionNodeToSurrenderDefence().getNode()))
+			throw new TownyException(Translation.of("msg_err_action_disable"));
 
+		surrenderDefence(siege);
+	}
+
+    private static void surrenderDefence(Siege siege) {
 		long timeUntilSurrenderConfirmation = siege.getTimeUntilSurrenderConfirmationMillis();
 
 		if(timeUntilSurrenderConfirmation > 0) {
@@ -34,14 +40,6 @@ public class SurrenderDefence {
 			Messaging.sendGlobalMessage(getSurrenderMessage(siege, 0));
 		}
     }
-
-	public static void processSurrenderDefenceRequest(Player player, Siege siege) throws TownyException {
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, siege.getSiegeType().getPermissionNodeToSurrenderDefence().getNode()))
-			throw new TownyException(Translation.of("msg_err_command_disable"));
-
-		surrenderDefence(siege);
-	}
-
 
 	private static String getSurrenderMessage(Siege siege, long timeUntilAbandonConfirmation) {
 		String key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toString().toLowerCase());

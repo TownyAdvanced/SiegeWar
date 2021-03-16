@@ -18,6 +18,13 @@ import org.bukkit.entity.Player;
  */
 public class AbandonAttack {
 
+	public static void processAbandonAttackRequest(Player player, Siege siege) throws TownyException {
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, siege.getSiegeType().getPermissionNodeToAbandonAttack().getNode()))
+			throw new TownyException(Translation.of("msg_err_action_disable"));
+
+		abandonAttack(siege);
+	}
+
     private static void abandonAttack(Siege siege) {
 		long timeUntilOfficialAbandon = siege.getTimeUntilAbandonConfirmationMillis();
 
@@ -32,13 +39,6 @@ public class AbandonAttack {
 			SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.ATTACKER_ABANDON);
 			Messaging.sendGlobalMessage(getAbandonMessage(siege, 0));
 		}
-	}
-
-	public static void processAbandonAttackRequest(Player player, Siege siege) throws TownyException {
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, siege.getSiegeType().getPermissionNodeToAbandonAttack().getNode()))
-			throw new TownyException(Translation.of("msg_err_command_disable"));
-
-		abandonAttack(siege);
 	}
 
 	private static String getAbandonMessage(Siege siege, long timeUntilAbandonConfirmation) {

@@ -30,7 +30,7 @@ import org.bukkit.block.Block;
  *
  * @author Goosius
  */
-public class AttackTown {
+public class StartConquestSiege {
 
 	/**
 	 * Process an attack town request
