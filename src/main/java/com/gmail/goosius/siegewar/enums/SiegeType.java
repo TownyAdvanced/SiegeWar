@@ -26,14 +26,14 @@ public enum SiegeType {
 
     private final String siegeTypeLangKey;
     private final SiegeWarPermissionNodes permissionNodeToAbandonAttack;
-    private final SiegeWarPermissionNodes permissionNodeToAbandonDefence;
+    private final SiegeWarPermissionNodes permissionNodeToSurrenderDefence;
 
     SiegeType(SiegeWarPermissionNodes permissionNodeToAbandonAttack,
               SiegeWarPermissionNodes permissionNodeToAbandonDefence) {
         String siegeTypeNameLowercase = this.toString().toLowerCase();
         this.siegeTypeLangKey = String.format(langKeyTemplate_siegeType, siegeTypeNameLowercase);
         this.permissionNodeToAbandonAttack = permissionNodeToAbandonAttack;
-        this.permissionNodeToAbandonDefence = permissionNodeToAbandonDefence;
+        this.permissionNodeToSurrenderDefence = permissionNodeToAbandonDefence;
     }
 
     public String getName() {
@@ -80,8 +80,8 @@ public enum SiegeType {
         return permissionNodeToAbandonAttack;
     }
 
-    public SiegeWarPermissionNodes getPermissionNodeToAbandonDefence() {
-        return permissionNodeToAbandonDefence;
+    public SiegeWarPermissionNodes getPermissionNodeToSurrenderDefence() {
+        return permissionNodeToSurrenderDefence;
     }
 
     public String getMsgKeyTownSurrender() {

@@ -349,11 +349,11 @@ msg_revolt_siege_started_nation_town: '&bThe townspeople of %s, whose home natio
 msg_suppression_siege_started_neutral_town: '&bThe nation of %s has moved to stamp out resistance in %s. A siege of SUPPRESSION has begun!'
 msg_suppression_siege_started_nation_town: '&bThe nation of %s has moved to stamp out resistance in by %s at %s. A siege of SUPPRESSION has begun!'
 
-#Town Surrender messages
-msg_conquest_siege_town_surrender: '&sSiege of CONQUEST at %s > The town has surrendered to the army of %s. The attackers are victorious!'
-msg_liberation_siege_town_surrender: '&sSiege of LIBERATION at %s > The occupying army of %s has surrendered to the army of %s, and the occupation has been ended. The attackers are victorious!'
-msg_revolt_siege_town_surrender: '&sSiege of REVOLT at %s > The occupying army of %s has surrendered to the rebels, and the occupation has been ended. The attackers are victorious!'
-msg_suppression_siege_town_surrender: '&sSiege of SUPPRESSION at %s > The town has surrendered to the occupying army of %s. '
+#Defender Surrender messages
+msg_conquest_siege_defender_surrender: '&sSiege of CONQUEST at %s > The town has surrendered to the army of %s. The attackers are victorious!'
+msg_liberation_siege_defender_surrender: '&sSiege of LIBERATION at %s > The occupying army of %s has surrendered to the army of %s, and the occupation has been ended. The attackers are victorious!'
+msg_revolt_siege_defender_surrender: '&sSiege of REVOLT at %s > The occupying army of %s has surrendered to the rebels, and the occupation has been ended. The attackers are victorious!'
+msg_suppression_siege_defender_surrender: '&sSiege of SUPPRESSION at %s > The town has surrendered to the occupying army of %s. '
 
 #Siege Abandon messages
 msg_conquest_siege_attacker_abandon: '&sSiege of CONQUEST at %s > The army of %s has abandoned its attack. The defenders are victorious!'

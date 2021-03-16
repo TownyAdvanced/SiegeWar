@@ -82,4 +82,39 @@ public class AbandonAttack {
 
 		abandonAttack(siege);
 	}
+
+
+	private static String getAbandonMessage(Siege siege, long timeUntilAbandonConfirmation) {
+		String key = String.format("msg_%s_siege_attacker_abandon", siege.getSiegeType().toString().toLowerCase());
+		String message = "";
+		switch(siege.getSiegeType()) {
+			case CONQUEST:
+			case SUPPRESSION:
+				message = Translation.of(key,
+						siege.getTown().getFormattedName(),
+						siege.getAttacker().getFormattedName());
+				break;
+			case LIBERATION:
+				message = Translation.of(key,
+						siege.getTown().getFormattedName(),
+						siege.getAttacker().getFormattedName(),
+						siege.getDefender().getFormattedName());
+				break;
+			case REVOLT:
+				message = Translation.of(key,
+						siege.getTown().getFormattedName(),
+						siege.getDefender().getFormattedName());
+				break;
+		}
+
+		if(timeUntilAbandonConfirmation == 0) {
+			message += Translation.of("msg_immediate_defender_victory");
+		} else {
+			message += Translation.of("msg_pending_defender_victory", timeUntilAbandonConfirmation);
+		}
+
+		return message;
+	}
+}
+
 }

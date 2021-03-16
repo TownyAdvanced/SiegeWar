@@ -2,7 +2,6 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
@@ -13,13 +12,13 @@ import com.palmergames.bukkit.towny.exceptions.TownyException;
 import org.bukkit.entity.Player;
 
 /**
- * This class is responsible for processing requests to surrender towns
+ * This class is responsible for processing requests to surrender siege defences
  *
  * @author Goosius
  */
-public class SurrenderTown {
+public class SurrenderDefence {
 
-    public static void surrenderTown(Siege siege) {
+    public static void surrenderDefence(Siege siege) {
 
 		long timeUntilSurrenderConfirmation = siege.getTimeUntilSurrenderConfirmationMillis();
 
@@ -36,16 +35,16 @@ public class SurrenderTown {
 		}
     }
 
-	public static void processSurrenderTownRequest(Player player, Siege siege) throws TownyException {
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, siege.getSiegeType().getPermissionNodeToAbandonAttack().getNode()))
+	public static void processSurrenderDefenceRequest(Player player, Siege siege) throws TownyException {
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, siege.getSiegeType().getPermissionNodeToSurrenderDefence().getNode()))
 			throw new TownyException(Translation.of("msg_err_command_disable"));
 
-		surrenderTown(siege);
+		surrenderDefence(siege);
 	}
 
 
 	private static String getSurrenderMessage(Siege siege, long timeUntilAbandonConfirmation) {
-		String key = String.format("msg_%s_siege_town_surrender", siege.getSiegeType().toString().toLowerCase());
+		String key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toString().toLowerCase());
 		String message = "";
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
@@ -68,9 +67,9 @@ public class SurrenderTown {
 		}
 
 		if(timeUntilAbandonConfirmation == 0) {
-			message += Translation.of("msg_immediate_defender_victory");
+			message += Translation.of("msg_immediate_attacker_victory");
 		} else {
-			message += Translation.of("msg_pending_defender_victory", timeUntilAbandonConfirmation);
+			message += Translation.of("msg_pending_attacker_victory", timeUntilAbandonConfirmation);
 		}
 
 		return message;

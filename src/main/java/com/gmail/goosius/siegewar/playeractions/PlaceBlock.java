@@ -183,7 +183,7 @@ public class PlaceBlock {
 				if(town.isConquered())
 					throw new TownyException(Translation.of("msg_war_siege_occupied_towns_cannot_surrender"));
 
-				SurrenderTown.surrenderTown(SiegeController.getSiege(town));
+				SurrenderDefence.surrenderDefence(SiegeController.getSiege(town));
 			}
 		}
 	}
@@ -255,7 +255,7 @@ public class PlaceBlock {
 				if (residentsNation != null && residentsNation == siege.getAttacker()) {
 					AbandonAttack.processAbandonAttackRequest(player, siege);
 				} else if (residentsTown == siegedTown) {
-					SurrenderTown.processSurrenderTownRequest(player, siege);
+					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException("msg_err_action_disable");
 				}
@@ -264,7 +264,7 @@ public class PlaceBlock {
 				if (residentsNation != null && residentsNation == siege.getAttacker()) {
 					AbandonAttack.processAbandonAttackRequest(player, siege);
 				} else if (residentsNation != null && TownOccupationController.getTownOccupier(siegedTown) == residentsNation) {
-					SurrenderTown.processSurrenderTownRequest(player, siege);
+					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException("msg_err_action_disable");
 				}
@@ -273,7 +273,7 @@ public class PlaceBlock {
 				if (residentsTown == siegedTown) {
 					AbandonAttack.processAbandonAttackRequest(player, siege);
 				} else if (residentsNation != null && TownOccupationController.getTownOccupier(siegedTown) == residentsNation) {
-					SurrenderTown.processSurrenderTownRequest(player, siege);
+					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException("msg_err_action_disable");
 				}
@@ -282,7 +282,7 @@ public class PlaceBlock {
 				if (residentsNation != null && TownOccupationController.getTownOccupier(siegedTown) == residentsNation) {
 					AbandonAttack.processAbandonAttackRequest(player, siege);
 				if (residentsTown == siegedTown) {
-					SurrenderTown.processSurrenderTownRequest(player, siege);
+					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException("msg_err_action_disable");
 				}
