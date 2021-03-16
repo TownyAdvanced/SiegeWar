@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.playeractions;
 
+import com.palmergames.bukkit.towny.TownyUniverse;
 import org.bukkit.block.Block;
 
 import com.gmail.goosius.siegewar.Messaging;
@@ -13,6 +14,7 @@ import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
+import org.bukkit.entity.Player;
 
 /**
  * This class is responsible for processing requests to Abandon siege attacks
@@ -47,11 +49,11 @@ public class AbandonAttack {
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_abandon_siege_over"));
 		
 		// Start abandoning the siege.
-		attackerAbandon(nearestSiege);
+		abandonAttack(nearestSiege);
     	
     }
 
-    private static void attackerAbandon(Siege siege) {
+    private static void abandonAttack(Siege siege) {
 		long timeUntilOfficialAbandon = siege.getTimeUntilAbandonConfirmationMillis();
 
 		if(timeUntilOfficialAbandon > 0) {
@@ -60,8 +62,8 @@ public class AbandonAttack {
 			SiegeController.saveSiege(siege);
 			Messaging.sendGlobalMessage(
 				Translation.of("msg_siege_war_pending_attacker_abandon",
-				siege.getNation().getFormattedName(),
-				siege.getTown().getFormattedName(),
+				siege.getAttacker().getFormattedName(),
+				siege.getDefender().getFormattedName(),
 				TimeMgmt.getFormattedTimeValue(timeUntilOfficialAbandon)));
 		} else {
 			//Immediate abandon
@@ -69,8 +71,15 @@ public class AbandonAttack {
 			SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.ATTACKER_ABANDON);
 			Messaging.sendGlobalMessage(
 				Translation.of("msg_siege_war_attacker_abandon",
-				siege.getNation().getFormattedName(),
-				siege.getTown().getFormattedName()));
+				siege.getAttacker().getFormattedName(),
+				siege.getDefender().getFormattedName()));
 		}
+	}
+
+	public static void processAbandonAttackRequest(Player player, Siege siege) throws TownyException {
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, siege.getSiegeType().getPermissionNodeToAbandonAttack().getNode()))
+			throw new TownyException(Translation.of("msg_err_command_disable"));
+
+		abandonAttack(siege);
 	}
 }

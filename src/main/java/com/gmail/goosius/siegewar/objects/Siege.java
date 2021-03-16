@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.objects;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
@@ -461,5 +462,52 @@ public class Siege {
 
 	public void setSiegeType(SiegeType siegeType) {
 		this.siegeType = siegeType;
+	}
+
+	public String getMsgPlayerEndSiegeEarly(SiegeStatus siegeStatus, long timeUntilAbandonConfirmation) {
+		String key ="msg_" + siegeType.toString().toLowerCase();
+		boolean pending = false;
+		switch(siegeStatus) {
+			case ATTACKER_ABANDON:
+				key+= "_attacker_abandon";
+				break;
+			case DEFENDER_SURRENDER:
+				key+= "_defender_surrender";
+				break;
+			case PENDING_ATTACKER_ABANDON:
+				key+= "_pending_attacker_abandon";
+				pending = true;
+				break;
+			case PENDING_DEFENDER_SURRENDER:
+				key+= "_pending_defender_surrender";
+				pending = true;
+				break;
+		}
+
+		if(siegeType == SiegeType.REVOLT) {
+			//Occupying army is surrendering
+			if (pending) {
+				return Translation.of(key,
+						town.getFormattedName(),
+						getDefender().getFormattedName(),
+						TimeMgmt.getFormattedTimeValue(timeUntilAbandonConfirmation));
+			} else {
+				return Translation.of(key,
+						town.getFormattedName(),
+						getDefender().getFormattedName());
+			}
+		} else {
+			//Town is surrendering
+			if (pending) {
+				return Translation.of(key,
+						town.getFormattedName(),
+						getAttacker().getFormattedName(),
+						TimeMgmt.getFormattedTimeValue(timeUntilAbandonConfirmation));
+			} else {
+				return Translation.of(key,
+						town.getFormattedName(),
+						getAttacker().getFormattedName());
+			}
+		}
 	}
 }

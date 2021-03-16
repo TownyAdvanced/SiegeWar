@@ -35,10 +35,6 @@ msg_siege_war_attack_pay_war_chest: '&bA war-chest has been prepared by %s, with
 msg_siege_war_attack_recover_war_chest: '&bThe war chest has been recovered by %s, with a value of %s.'
 msg_siege_war_defender_win: '&bThe defenders of %s have successfully driven off all attacking armies. The siege has failed!'
 msg_siege_war_attacker_win: '&bAn army belonging to %s has successfully breached the defences of %s. The siege is over!'
-msg_siege_war_attacker_abandon: '&bAn army belonging to %s has abandoned its attack on %s. The defenders are victorious!'
-msg_siege_war_pending_attacker_abandon: '&bAn army belonging to %s has abandoned its attack on %s. Defender victory will be confirmed in %s!'
-msg_siege_war_town_surrender: '&b%s has surrendered to an army belonging to %s. The attackers are victorious!'
-msg_siege_war_pending_town_surrender: '&b%s has surrendered to an army belonging to %s. Attacker victory will be confirmed in %s!'
 msg_siege_war_neutral_town_plundered: '&b%s has been plundered of %s by %s!'
 msg_siege_war_nation_town_plundered: '&b%s has been plundered of %s by %s!'
 msg_siege_war_town_ruined_from_plunder: '&b%s has been reduced to ruins by %s!'
@@ -70,7 +66,7 @@ msg_err_siege_war_revolt_immunity_active: "&cYour town has revolt immunity. It c
 msg_err_siege_war_not_enabled_in_world: '&cWar is not enabled in this world.'
 msg_err_siege_war_banner_must_be_placed_above_ground: '&cThe siege banner must be placed above ground.'
 msg_err_siege_war_action_not_a_town_member: '&cYou must be a member of a town to do this action.'
-msg_err_siege_war_action_not_a_nation_member: '&cYou must be a member of a nation to do this action.'
+NUKE ???? msg_err_siege_war_action_not_a_nation_member: '&cYou must be a member of a nation to do this action.'
 msg_err_siege_war_cannot_attack_own_town: '&cYou cannot attack your own town.'
 msg_err_siege_war_cannot_attack_town_in_own_nation: '&cYou cannot attack a town in your own nation.'
 msg_err_siege_war_cannot_attack_non_enemy_nation: '&cYou cannot attack a town unless the nation of that town is an enemy of your nation.'
@@ -339,3 +335,38 @@ status_town_siege_type: '&2 > Type: &a%s'
 status_town_siege_attacker: '&2 > Attacker: &a%s'
 status_town_siege_defender: '&2 > Defender: &a%s'
 status_town_siege_battle_points: '&2 > Points: &a%s &2/ &a%s'
+
+# Generic error
+msg_err_action_disable: '&cYou don''t have enough permissions for that action.'
+
+#Siege started messages
+msg_conquest_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A siege of CONQUEST has begun!'
+msg_conquest_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A siege of CONQUEST has begun!'
+msg_liberation_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A siege of LIBERATION has begun!'
+msg_liberation_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A siege of LIBERATION has begun!'
+msg_revolt_siege_started_neutral_town: '&bThe townspeople of %s have risen up against the occupying army of %s. A siege of REVOLT has begun!'
+msg_revolt_siege_started_nation_town: '&bThe townspeople of %s, whose home nation is %s, have risen up against the occupying army of %s. A siege of REVOLT has begun!'
+msg_suppression_siege_started_neutral_town: '&bThe nation of %s has moved to stamp out resistance in %s. A siege of SUPPRESSION has begun!'
+msg_suppression_siege_started_nation_town: '&bThe nation of %s has moved to stamp out resistance in by %s at %s. A siege of SUPPRESSION has begun!'
+
+#Town Surrender messages
+msg_conquest_siege_town_surrender: '&sSiege of CONQUEST at %s > The town has surrendered to the army of %s. The attackers are victorious!'
+msg_conquest_siege_pending_town_surrender: '&bSiege of CONQUEST at %s > The town has surrendered to the army of %s. Attacker victory will be confirmed in %s.'
+msg_liberation_siege_town_surrender: '&sSiege of LIBERATION at %s > The town has been surrendered to the army of %s. The attackers are victorious!'
+msg_liberation_siege_pending_town_surrender: '&bSiege of LIBERATION at %s > The town has been surrendered to the army of %s. Attacker victory will be confirmed in %s.'
+msg_revolt_siege_town_surrender: '&sSiege of REVOLT at %s > The occupying army of %s has surrendered to the rebels, and the occupation has been ended. The attackers are victorious!'
+msg_revolt_siege_pending_town_surrender: '&sSiege of REVOLT at %s > The occupying army of %s has surrendered to the rebels, and occupation has been ended. Attacker victory will be confirmed in %s.'
+msg_suppression_siege_town_surrender: '&sSiege of SUPPRESSION at %s > The town has surrendered to the occupying army of %s. The attackers are victorious!'
+msg_suppression_siege_pending_town_surrender: '&bSiege of SUPPRESSION at %s > The town has surrendered to the occupying army of %s. Attacker victory will be confirmed in %s.'
+
+#Siege Abandon messages
+msg_conquest_siege_attacker_abandon: '&sSiege of CONQUEST at %s > The army of %s has abandoned its attack. The defenders are victorious!'
+msg_conquest_siege_pending_attacker_abandon: '&bSiege of CONQUEST at %s > The army of %s has abandoned its attack. Defender victory will be confirmed in %s.'
+msg_liberation_siege_attacker_abandon: '&sSiege of LIBERATION at %s > The army of %s has abandoned its attack. The defenders are victorious!'
+msg_liberation_siege_pending_attacker_abandon: '&bSiege of LIBERATION at %s > The army of %s has abandoned its attack. Defender victory will be confirmed in %s.'
+msg_revolt_siege_attacker_abandon: '&sSiege of REVOLT at %s > The attacking rebel army has abandoned its revolt against %s. The defenders are victorious!'
+msg_revolt_siege_pending_attacker_abandon: '&sSiege of REVOLT at %s > The attacking rebel army has abandoned its revolt against %s. Defender victory will be confirmed in %s.'
+msg_suppression_siege_attacker_abandon: '&sSiege of SUPPRESSION at %s > The army of %s has abandoned its attack and released the town from occupation. The defenders are victorious!'
+msg_suppression_siege_pending_attacker_abandon: '&bSiege of SUPPRESSION at %s > The army of %s has abandoned its attack and released the town from occupation. Defender victory will be confirmed in %s.'
+
+

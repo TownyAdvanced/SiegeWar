@@ -1,26 +1,70 @@
 package com.gmail.goosius.siegewar.enums;
 
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.object.Government;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Town;
 
 public enum SiegeType {
 
-    CONQUEST("siege_type_conquest"),
-    LIBERATION("siege_type_liberation"),
-    REVOLT("siege_type_revolt"),
-    SUPPRESSION("siege_type_suppression");
+    CONQUEST(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ABANDON,
+            SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER),
+    LIBERATION(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ABANDON,
+            SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER),
+    REVOLT(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ABANDON,
+            SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER),
+    SUPPRESSION(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ABANDON,
+            SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER);
 
-    private String langStringKey;
+    private final static String langKeyTemplate_siegeType = "siege_type_%s";
+    private final static String langKeyTemplate_siegeStartedNeutralTown = "msg_%s_siege_started_neutral_town";
+    private final static String langKeyTemplate_siegeStartedNationTown = "msg_%s_siege_started_nation_town";
+    private final static String langKeyTemplate_attackerAbandon= "msg_%s_siege_attacker_abandon";
+    private final static String langKeyTemplate_townSurrender= "msg_%s_siege_town_surrender";
+    private final static String langKeyTemplate_pendingAttackerAbandon= "msg_%s_siege_pending_attacker_abandon";
+    private final static String langKeyTemplate_pendingTownSurrender= "msg_%s_siege_pending__town_surrender";
 
-    SiegeType(String langStringKey) {
-        this.langStringKey = langStringKey;
+    private final String siegeTypeLangKey;
+    private final SiegeWarPermissionNodes permissionNodeToAbandonAttack;
+    private final SiegeWarPermissionNodes permissionNodeToAbandonDefence;
+
+    SiegeType(SiegeWarPermissionNodes permissionNodeToAbandonAttack,
+              SiegeWarPermissionNodes permissionNodeToAbandonDefence) {
+        String siegeTypeNameLowercase = this.toString().toLowerCase();
+        this.siegeTypeLangKey = String.format(langKeyTemplate_siegeType, siegeTypeNameLowercase);
+        this.permissionNodeToAbandonAttack = permissionNodeToAbandonAttack;
+        this.permissionNodeToAbandonDefence = permissionNodeToAbandonDefence;
     }
 
     public String getName() {
-        return Translation.of(langStringKey);
+        return Translation.of(siegeTypeLangKey);
     }
+
+    public String getMsgSiegeStartedNeutralTown(Government attacker, Government defender) {
+        String key = String.format(langKeyTemplate_siegeStartedNeutralTown, this.toString().toLowerCase());
+        return Translation.of(key, attacker.getFormattedName(), defender.getFormattedName());
+    }
+
+    public String getMsgSiegeStartedNationTown(Government attacker, Government defender) {
+        String key = String.format(langKeyTemplate_siegeStartedNationTown, this.toString().toLowerCase());
+        return Translation.of(key, attacker.getFormattedName(), defender.getFormattedName());
+    }
+
+    public String getMsgSiegeAttackerAbandon(Town town, Government attacker) {
+        String key = String.format(langKeyTemplate_siegeStartedNeutralTown, this.toString().toLowerCase());
+        return Translation.of(key, town.getFormattedName(), attacker.getFormattedName());
+    }
+
+    public String getMsgSiegePendingAttackerAbandon(Town town, Government attacker) {
+        String key = String.format(langKeyTemplate_siegeStartedNeutralTown, this.toString().toLowerCase());
+        return Translation.of(key, town.getFormattedName(), attacker.getFormattedName());
+    }
+
 
     public static SiegeType parseString(String line) {
         switch (line) {
+            case "CONQUEST":
+                return CONQUEST;
             case "LIBERATION":
                 return LIBERATION;
             case "REVOLT":
@@ -28,7 +72,19 @@ public enum SiegeType {
             case "SUPPRESSION":
                 return SUPPRESSION;
             default:
-                return CONQUEST;
+                throw new RuntimeException("Unrecognized enum name");
         }
+    }
+
+    public SiegeWarPermissionNodes getPermissionNodeToAbandonAttack() {
+        return permissionNodeToAbandonAttack;
+    }
+
+    public SiegeWarPermissionNodes getPermissionNodeToAbandonDefence() {
+        return permissionNodeToAbandonDefence;
+    }
+
+    public String getMsgKeyTownSurrender() {
+        return String.format(langKeyTemplate_townSurrender, this.toString().toLowerCase());
     }
 }
