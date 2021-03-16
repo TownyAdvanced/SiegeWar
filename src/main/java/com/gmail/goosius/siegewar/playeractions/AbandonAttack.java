@@ -61,7 +61,7 @@ public class AbandonAttack {
 			siege.setStatus(SiegeStatus.PENDING_ATTACKER_ABANDON);
 			SiegeController.saveSiege(siege);
 			Messaging.sendGlobalMessage(
-				Translation.of("msg_siege_war_pending_attacker_abandon",
+				Translation.of("msg_siege_war_attacker_abandon",
 				siege.getAttacker().getFormattedName(),
 				siege.getDefender().getFormattedName(),
 				TimeMgmt.getFormattedTimeValue(timeUntilOfficialAbandon)));

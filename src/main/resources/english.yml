@@ -351,22 +351,23 @@ msg_suppression_siege_started_nation_town: '&bThe nation of %s has moved to stam
 
 #Town Surrender messages
 msg_conquest_siege_town_surrender: '&sSiege of CONQUEST at %s > The town has surrendered to the army of %s. The attackers are victorious!'
-msg_conquest_siege_pending_town_surrender: '&bSiege of CONQUEST at %s > The town has surrendered to the army of %s. Attacker victory will be confirmed in %s.'
-msg_liberation_siege_town_surrender: '&sSiege of LIBERATION at %s > The town has been surrendered to the army of %s. The attackers are victorious!'
-msg_liberation_siege_pending_town_surrender: '&bSiege of LIBERATION at %s > The town has been surrendered to the army of %s. Attacker victory will be confirmed in %s.'
+msg_liberation_siege_town_surrender: '&sSiege of LIBERATION at %s > The occupying army of %s has surrendered to the army of %s, and the occupation has been ended. The attackers are victorious!'
 msg_revolt_siege_town_surrender: '&sSiege of REVOLT at %s > The occupying army of %s has surrendered to the rebels, and the occupation has been ended. The attackers are victorious!'
-msg_revolt_siege_pending_town_surrender: '&sSiege of REVOLT at %s > The occupying army of %s has surrendered to the rebels, and occupation has been ended. Attacker victory will be confirmed in %s.'
-msg_suppression_siege_town_surrender: '&sSiege of SUPPRESSION at %s > The town has surrendered to the occupying army of %s. The attackers are victorious!'
-msg_suppression_siege_pending_town_surrender: '&bSiege of SUPPRESSION at %s > The town has surrendered to the occupying army of %s. Attacker victory will be confirmed in %s.'
+msg_suppression_siege_town_surrender: '&sSiege of SUPPRESSION at %s > The town has surrendered to the occupying army of %s. '
 
 #Siege Abandon messages
 msg_conquest_siege_attacker_abandon: '&sSiege of CONQUEST at %s > The army of %s has abandoned its attack. The defenders are victorious!'
-msg_conquest_siege_pending_attacker_abandon: '&bSiege of CONQUEST at %s > The army of %s has abandoned its attack. Defender victory will be confirmed in %s.'
-msg_liberation_siege_attacker_abandon: '&sSiege of LIBERATION at %s > The army of %s has abandoned its attack. The defenders are victorious!'
-msg_liberation_siege_pending_attacker_abandon: '&bSiege of LIBERATION at %s > The army of %s has abandoned its attack. Defender victory will be confirmed in %s.'
+msg_liberation_siege_attacker_abandon: '&sSiege of LIBERATION at %s > The army of %s has abandoned its attack against %s. The defenders are victorious!'
 msg_revolt_siege_attacker_abandon: '&sSiege of REVOLT at %s > The attacking rebel army has abandoned its revolt against %s. The defenders are victorious!'
-msg_revolt_siege_pending_attacker_abandon: '&sSiege of REVOLT at %s > The attacking rebel army has abandoned its revolt against %s. Defender victory will be confirmed in %s.'
 msg_suppression_siege_attacker_abandon: '&sSiege of SUPPRESSION at %s > The army of %s has abandoned its attack and released the town from occupation. The defenders are victorious!'
-msg_suppression_siege_pending_attacker_abandon: '&bSiege of SUPPRESSION at %s > The army of %s has abandoned its attack and released the town from occupation. Defender victory will be confirmed in %s.'
+
+# Generic Victory messages
+msg_immediate_attacker_victory: " The attackers are victorious!"
+msg_pending_attacker_victory: " Attacker victory will be confirmed in %s."
+msg_immediate_defender_victory: " The attackers are victorious!"
+msg_pending_defender_victory: " Defender victory will be confirmed in %s."
+
+
+
 
 

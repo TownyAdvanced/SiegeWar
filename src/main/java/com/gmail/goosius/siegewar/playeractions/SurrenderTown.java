@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
@@ -26,12 +27,12 @@ public class SurrenderTown {
 			//Pending surrender
 			siege.setStatus(SiegeStatus.PENDING_DEFENDER_SURRENDER);
 			SiegeController.saveSiege(siege);
-			Messaging.sendGlobalMessage(siege.getMsgPlayerEndSiegeEarly(SiegeStatus.PENDING_DEFENDER_SURRENDER, timeUntilSurrenderConfirmation));
+			Messaging.sendGlobalMessage(getSurrenderMessage(siege, timeUntilSurrenderConfirmation));
 		} else {
 			//Immediate surrender
 			SiegeWarMoneyUtil.giveWarChestToAttackingNation(siege);
 			SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.DEFENDER_SURRENDER);
-			Messaging.sendGlobalMessage(siege.getMsgPlayerEndSiegeEarly(SiegeStatus.DEFENDER_SURRENDER, 0));
+			Messaging.sendGlobalMessage(getSurrenderMessage(siege, 0));
 		}
     }
 
@@ -40,5 +41,38 @@ public class SurrenderTown {
 			throw new TownyException(Translation.of("msg_err_command_disable"));
 
 		surrenderTown(siege);
+	}
+
+
+	private static String getSurrenderMessage(Siege siege, long timeUntilAbandonConfirmation) {
+		String key = String.format("msg_%s_siege_town_surrender", siege.getSiegeType().toString().toLowerCase());
+		String message = "";
+		switch(siege.getSiegeType()) {
+			case CONQUEST:
+			case SUPPRESSION:
+				message = Translation.of(key,
+						siege.getTown().getFormattedName(),
+						siege.getAttacker().getFormattedName());
+				break;
+			case LIBERATION:
+				message = Translation.of(key,
+						siege.getTown().getFormattedName(),
+						siege.getDefender().getFormattedName(),
+						siege.getAttacker().getFormattedName());
+				break;
+			case REVOLT:
+				message = Translation.of(key,
+						siege.getTown().getFormattedName(),
+						siege.getDefender().getFormattedName());
+				break;
+		}
+
+		if(timeUntilAbandonConfirmation == 0) {
+			message += Translation.of("msg_immediate_defender_victory");
+		} else {
+			message += Translation.of("msg_pending_defender_victory", timeUntilAbandonConfirmation);
+		}
+
+		return message;
 	}
 }

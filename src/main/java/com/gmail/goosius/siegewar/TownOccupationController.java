@@ -79,10 +79,10 @@ public class TownOccupationController {
         }
     }
 
-    public static Nation getTownOccupier(Town peacefulTown) {
+    public static Nation getTownOccupier(Town occupiedTown) {
         Nation occupier = null;
-        if(peacefulTown.isConquered()) {
-            String occupierUUID = TownMetaDataController.getOccupyingNationUUID(peacefulTown);
+        if(occupiedTown.isConquered()) {
+            String occupierUUID = TownMetaDataController.getOccupyingNationUUID(occupiedTown);
             if (occupierUUID == null)
                 return null;
 
