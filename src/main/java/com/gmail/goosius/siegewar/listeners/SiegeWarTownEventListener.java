@@ -3,8 +3,10 @@ package com.gmail.goosius.siegewar.listeners;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.bukkit.towny.object.Nation;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
@@ -284,6 +286,12 @@ public class SiegeWarTownEventListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			List<String> out = new ArrayList<>();
 			Town town = event.getTown();
+
+			//Occupying Nation: Empire of the Fluffy Bunnies'
+			if(SiegeWarSettings.getWarSiegeInvadeEnabled() && town.isConquered()) {
+				Nation townOccupier = TownOccupationController.getTownOccupier(town);
+				out.add(Translation.of("status_town_occupying_nation", townOccupier.getFormattedName()));
+			}
 			
 	        //Revolt Immunity Timer: 71.8 hours
 	        if (SiegeWarSettings.getWarSiegeRevoltEnabled() && System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(town)) {        	

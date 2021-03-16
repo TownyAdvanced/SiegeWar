@@ -81,9 +81,6 @@ public class SiegeWarSettings {
 		return true;
 	}
 
-
-
-
 	public static boolean getWarSiegePvpAlwaysOnInBesiegedTowns() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_PVP_ALWAYS_ON_IN_BESIEGED_TOWNS);
 	}

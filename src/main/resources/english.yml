@@ -300,14 +300,11 @@ msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruin
 msg_err_cannot_start_siege_due_to_siege_immunity: '&cYou cannot start a siege now, because the nearby town has siege immunity.'
 #Revolt
 msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cYou cannot start a revolt siege because the town is not in an occupied state.'
-
 #Abandon
 msg_err_town_has_no_active_siege_to_abandon_surrender: '&cThe nearby town has no siege. Abandon/Surrender not possible.'
 #Invade
 msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot invade while the siege is still in progress'
 msg_err_cannot_invade_town_already_invaded: '&cYour nation hsa already invaded the town'
-
-
 
 # Siege Types
 siege_type_conquest: 'CONQUEST'
@@ -325,6 +322,7 @@ dynmap_siege_battle_points: 'Battle Points: %s / %s'
 siege.name: '%s vs %s'
 
 # Town screen
+status_town_occupying_nation: '&2Occupying Nation: &a%s'
 status_town_siege_type: '&2 > Type: &a%s'
 status_town_siege_attacker: '&2 > Attacker: &a%s'
 status_town_siege_defender: '&2 > Defender: &a%s'
