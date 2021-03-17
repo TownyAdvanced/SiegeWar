@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
+import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -287,9 +289,9 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
 				case "end":
 					if (siege.getSiegeBalance() < 1)
-						DefenderWin.defenderWin(siege, SiegeStatus.DEFENDER_WIN);
+						DefenderTimedWin.defenderTimedWin(siege);
 					else
-						AttackerWin.attackerWin(siege, SiegeStatus.ATTACKER_WIN);
+						AttackerTimedWin.attackerTimedWin(siege);
 					return;
 				case "setplundered":
 					Boolean plundered = Boolean.parseBoolean(args[2]);

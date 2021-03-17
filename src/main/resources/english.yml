@@ -274,38 +274,10 @@ msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control se
 # Town Merging
 msg_err_cannot_merge_towns: '&cUnable to merge a town that is under siege!'
 
-# Peacefulness
-msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks. The town may get automatically occupied by a nation with a strong presence in the local area. (see user-guide for more details). Residents cannot enter siege-zones or gain nation-military ranks.'
-msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to siege attacks. The town can no longer get automatically occupied. Residents can enter siege-zones and gain nation-military ranks.'
-msg_peaceful_town_total_switches: '&b%d peaceful town%s %s been peacefully occupied, or released from occupation.'
-msg_neutral_town_peacefully_occupied: "&b%s has been peacefully occupied by %s."
-msg_neutral_town_peacefully_released: "&b%s has been peacefully released from occupation."
-msg_nation_town_peacefully_occupied: "&b%s, belonging to %s, has been peacefully occupied by %s."
-msg_nation_town_peacefully_released: "&b%s, belonging to %s, has been peacefully released from occupation."
-
-# Invasion
-msg_err_cannot_invade_own_town: '&cYou cannot invade your own town.'
-msg_err_cannot_invade_without_victory: "&cYou cannot invade the town unless your nation is victorious in the siege."
-msg_neutral_town_invaded: '&b%s has been invaded by %s, and placed under occupation!'
-msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and placed under occupation!'
-
-# Help
-nation_help_14 : 'Release the given town from occupation.'
-
-# Error messages
+# General
+siege.name: '%s vs %s'
 msg_err_action_disable: '&cYou don''t have enough permissions for that action.'
 msg_err_unknown_town: '&cUnknown Town'
-#Attack
-msg_err_cannot_start_siege_attack_at_peaceful_town: '&cYou cannot start a siege at a peaceful town.'
-msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruined town.'
-msg_err_cannot_start_siege_due_to_siege_immunity: '&cYou cannot start a siege now, because the nearby town has siege immunity.'
-#Revolt
-msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cYou cannot start a revolt siege because the town is not in an occupied state.'
-#Abandon
-msg_err_town_has_no_active_siege_to_abandon_surrender: '&cThe nearby town has no siege. Abandon/Surrender not possible.'
-#Invade
-msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot invade while the siege is still in progress'
-msg_err_cannot_invade_town_already_invaded: '&cYour nation hsa already invaded the town'
 
 # Siege Types
 siege_type_conquest: 'CONQUEST'
@@ -319,8 +291,19 @@ dynmap_siege_town: 'Town: %s'
 dynmap_siege_balance: 'Siege Balance: %d'
 dynmap_siege_battle_points: 'Battle Points: %s / %s'
 
-# General
-siege.name: '%s vs %s'
+# Starting sieges
+msg_err_cannot_start_siege_attack_at_peaceful_town: '&cYou cannot start a siege at a peaceful town.'
+msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruined town.'
+msg_err_cannot_start_siege_due_to_siege_immunity: '&cYou cannot start a siege now, because the nearby town has siege immunity.'
+msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cYou cannot start a revolt siege because the town is not in an occupied state.'
+msg_conquest_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A siege of CONQUEST has begun!'
+msg_conquest_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A siege of CONQUEST has begun!'
+msg_liberation_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A siege of LIBERATION has begun!'
+msg_liberation_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A siege of LIBERATION has begun!'
+msg_revolt_siege_started_neutral_town: '&bThe townspeople of %s have risen up against the occupying army of %s. A siege of REVOLT has begun!'
+msg_revolt_siege_started_nation_town: '&bThe townspeople of %s, whose home nation is %s, have risen up against the occupying army of %s. A siege of REVOLT has begun!'
+msg_suppression_siege_started_neutral_town: '&bThe nation of %s has moved to stamp out resistance in %s. A siege of SUPPRESSION has begun!'
+msg_suppression_siege_started_nation_town: '&bThe nation of %s has moved to stamp out resistance in by %s at %s. A siege of SUPPRESSION has begun!'
 
 # Town screen
 status_town_occupying_nation: '&2Occupying Nation: &a%s'
@@ -334,29 +317,26 @@ status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending, in
 status_town_siege_status_defender_surrender: 'Defender Surrender - to %s'
 status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending, in %s'
 
-#Siege started messages
-msg_conquest_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A siege of CONQUEST has begun!'
-msg_conquest_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A siege of CONQUEST has begun!'
-msg_liberation_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A siege of LIBERATION has begun!'
-msg_liberation_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A siege of LIBERATION has begun!'
-msg_revolt_siege_started_neutral_town: '&bThe townspeople of %s have risen up against the occupying army of %s. A siege of REVOLT has begun!'
-msg_revolt_siege_started_nation_town: '&bThe townspeople of %s, whose home nation is %s, have risen up against the occupying army of %s. A siege of REVOLT has begun!'
-msg_suppression_siege_started_neutral_town: '&bThe nation of %s has moved to stamp out resistance in %s. A siege of SUPPRESSION has begun!'
-msg_suppression_siege_started_nation_town: '&bThe nation of %s has moved to stamp out resistance in by %s at %s. A siege of SUPPRESSION has begun!'
+# Siege statuses
+siege_status_attacker_abandon: 'Attacker Abandon'
+siege_status_defender_surrender: 'Defender Surrender'
+siege_status_pending_attacker_abandon: 'Pending Attacker Abandon'
+siege_status_pending_defender_surrender: 'Pending Defender Surrender'
 
-#Defender Surrender messages
+# Surrendering defences
 msg_conquest_siege_defender_surrender: '&sSiege of CONQUEST at %s > The town has surrendered to the army of %s.'
 msg_liberation_siege_defender_surrender: '&sSiege of LIBERATION at %s > The occupying army of %s has surrendered to the army of %s, and the occupation has been ended.'
 msg_revolt_siege_defender_surrender: '&sSiege of REVOLT at %s > The occupying army of %s has surrendered to the rebels, and the occupation has been ended.'
 msg_suppression_siege_defender_surrender: '&sSiege of SUPPRESSION at %s > The town has surrendered to the occupying army of %s. '
 
-#Siege Abandon messages
+# Abandoning attacks
 msg_conquest_siege_attacker_abandon: '&sSiege of CONQUEST at %s > The army of %s has abandoned its attack.'
 msg_liberation_siege_attacker_abandon: '&sSiege of LIBERATION at %s > The army of %s has abandoned its attack against %s.'
 msg_revolt_siege_attacker_abandon: '&sSiege of REVOLT at %s > The attacking rebel army has abandoned its revolt against %s.'
 msg_suppression_siege_attacker_abandon: '&sSiege of SUPPRESSION at %s > The army of %s has abandoned its attack and released the town from occupation.'
+msg_err_town_has_no_active_siege_to_abandon_surrender: '&cThe nearby town has no siege. Abandon/Surrender not possible.'
 
-# Timed Attacker Win messages
+# Timed wins
 msg_conquest_siege_timed_attacker_win: '&sSiege of CONQUEST at %s > The attacking army of %s has defeated the army of %s and breached the defences of the town.'
 msg_liberation_siege_timed_attacker_win: '&sSiege of LIBERATION at %s > The attacking army of %s has defeated the occupying army of %s, and liberated the townspeople from occupation.'
 msg_revolt_siege_timed_attacker_win: '&sSiege of REVOLT at %s > The attacking rebel army have driven out the occupying army of %s.'
@@ -368,14 +348,28 @@ msg_pending_attacker_victory: " Attacker victory will be confirmed in %s."
 msg_immediate_defender_victory: " The attackers are victorious!"
 msg_pending_defender_victory: " Defender victory will be confirmed in %s."
 
-# Siege statuses
-siege_status_attacker_abandon: 'Attacker Abandon'
-siege_status_defender_surrender: 'Defender Surrender'
-siege_status_pending_attacker_abandon: 'Pending Attacker Abandon'
-siege_status_pending_defender_surrender: 'Pending Defender Surrender'
+# Invasions
+msg_err_cannot_invade_own_town: '&cYou cannot invade your own town.'
+msg_err_cannot_invade_without_victory: "&cYou cannot invade the town unless your nation is victorious in the siege."
+msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot invade while the siege is still in progress'
+msg_err_cannot_invade_town_already_invaded: '&cYour nation hsa already invaded the town'
+msg_neutral_town_invaded: '&b%s has been invaded by %s, and placed under occupation!'
+msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and placed under occupation!'
 
-# Release from occupation
+# Releasing towns from occupation
 msg_err_cannot_release_town_not_occupied_by_nation: '&c You cannot release the town because it is not occupied by your nation'
+msg_err_cannot_release_besieged_town: '&c You cannot release a besieged town'
 msg_town_released_from_occupation: 'The town has been released from occupation by %s'
 msg_foreign_town_released_from_occupation: 'Tha nation released the town of %s from occupation'
-msg_err_cannot_release_besieged_town: 'You cannot release a besieged town'
+
+# Help
+nation_help_14 : 'Release the given town from occupation.'
+
+# Peaceful towns
+msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks. The town may get automatically occupied by a nation with a strong presence in the local area. (see user-guide for more details). Residents cannot enter siege-zones or gain nation-military ranks.'
+msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to siege attacks. The town can no longer get automatically occupied. Residents can enter siege-zones and gain nation-military ranks.'
+msg_peaceful_town_total_switches: '&b%d peaceful town%s %s been peacefully occupied, or released from occupation.'
+msg_neutral_town_peacefully_occupied: "&b%s has been peacefully occupied by %s."
+msg_neutral_town_peacefully_released: "&b%s has been peacefully released from occupation."
+msg_nation_town_peacefully_occupied: "&b%s, belonging to %s, has been peacefully occupied by %s."
+msg_nation_town_peacefully_released: "&b%s, belonging to %s, has been peacefully released from occupation."
