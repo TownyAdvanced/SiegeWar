@@ -2,10 +2,12 @@ package com.gmail.goosius.siegewar;
 
 import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
+import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -36,23 +38,25 @@ public class TownOccupationController {
         List<Town> occupiedTowns;
 
         for (Town town : TownyUniverse.getInstance().getTowns()) {
-            //Load occupying nation data
+            //Load occupier data
             occupyingNationUUID = TownMetaDataController.getOccupyingNationUUID(town);
-            if (occupyingNationUUID != null) {
+            if (occupyingNationUUID == null) {
+                //No occupier found
+                if (!town.isConquered()) {
+                    town.setConquered(true); //Fix de-synced data
+                    town.save();
+                }
+                continue; //
+            } else {
+                // Occupier found
                 try {
                     occupyingNation = TownyUniverse.getInstance().getDataSource().getNation(UUID.fromString(SiegeMetaDataController.getNationUUID(town)));
                 } catch (NotRegisteredException e) {
-                    //Fix data - no occupier, so conquered must be false
-                    town.setConquered(false);
-                    town.save();
-                    continue; //Next town
-                }
-            } else {
-                if (town.isConquered()) {
-                    //Fix data - no occupier, so conquered must be false
-                    town.setConquered(false);
-                    town.save();
-                    continue; //Next town
+                    if(town.isConquered()) {
+                        town.setConquered(false); //Fix de-synced data
+                        town.save();
+                        continue;
+                    }
                 }
             }
 
@@ -60,11 +64,10 @@ public class TownOccupationController {
             //Populate the map
             if (nationTownsOccupationMap.containsKey(occupyingNation)) {
                 occupiedTowns = new ArrayList<>();
-                occupiedTowns.add(town);
             } else {
                 occupiedTowns = nationTownsOccupationMap.get(occupyingNation);
-                occupiedTowns.add(town);
             }
+            occupiedTowns.add(town);
             nationTownsOccupationMap.put(occupyingNation, occupiedTowns);
         }
     }
@@ -79,16 +82,45 @@ public class TownOccupationController {
         }
     }
 
-    public static Nation getTownOccupier(Town occupiedTown) {
-        Nation occupier = null;
-        if(occupiedTown.isConquered()) {
-            String occupierUUID = TownMetaDataController.getOccupyingNationUUID(occupiedTown);
-            if (occupierUUID == null)
-                return null;
 
-            occupier = TownyUniverse.getInstance().getNation(occupierUUID);
-        }
-        return occupier;
+    /**
+     * Determine if a town is occupied.
+     *
+     * In the SW codebase, do NOT use town.isConquered() for that purpose.
+     *
+     * Because in the SW system, town.conquered is only used for displaying the tag on the town screen,
+     * and the flag can temporarily go out of synch with siegewar due to
+     * commands/processes from Towny & 3rd party plugins.
+     */
+     public static boolean isTownOccupied(Town occupiedTown) {
+         String occupierUUID = TownMetaDataController.getOccupyingNationUUID(occupiedTown);
+         if (occupierUUID == null) {
+             if(occupiedTown.isConquered())
+                 occupiedTown.setConquered(false); //Fix de-synced data
+             return false;
+         } else
+         if(!occupiedTown.isConquered())
+             occupiedTown.setConquered(true); //Fix de-synced data
+         return true;
+    }
+
+    /**
+     * Get the occupying nation
+     *
+     * If there is any uncertainty whether the town is actually occupied,
+     * make sure to call isTownOccupied(town) before calling this method
+     *
+     * @param occupiedTown the occupied town
+     * @return the occupying nation.
+     * @throws RuntimeException if no occupier is found
+     */
+    @Nullable
+    public static Nation getTownOccupier(Town occupiedTown) {
+        String occupierUUID = TownMetaDataController.getOccupyingNationUUID(occupiedTown);
+        if (occupierUUID == null)
+            throw new RuntimeException("Occupier not found");
+        else
+            return TownyUniverse.getInstance().getNation(occupierUUID);
     }
 
     public static void setTownOccupation(Town occupiedTown, Nation occupyingNation) {

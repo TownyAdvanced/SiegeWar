@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -20,7 +21,7 @@ public class StartRevoltSiege {
         if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeType.REVOLT.getPermissionNodeToAttack().getNode()))
             throw new TownyException(Translation.of("msg_err_action_disable"));
 
-        if(!town.isConquered())
+        if(!TownOccupationController.isTownOccupied(town))
             throw new TownyException(Translation.of("msg_err_cannot_start_revolt_siege_as_town_is_unoccupied"));
 
         if (System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(town))

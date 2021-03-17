@@ -237,7 +237,7 @@ public class SiegeWarTownEventListener implements Listener {
 	 */
 	@EventHandler
 	public void onTownUnclaim(TownPreUnclaimCmdEvent event) {
-		if (SiegeWarSettings.getWarCommonOccupiedTownUnClaimingDisabled() && event.getTown().isConquered()) {
+		if (SiegeWarSettings.getWarCommonOccupiedTownUnClaimingDisabled() && TownOccupationController.isTownOccupied(event.getTown())) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_war_common_occupied_town_cannot_unclaim"));
 			return;
@@ -288,7 +288,7 @@ public class SiegeWarTownEventListener implements Listener {
 			Town town = event.getTown();
 
 			//Occupying Nation: Empire of the Fluffy Bunnies'
-			if(SiegeWarSettings.getWarSiegeInvadeEnabled() && town.isConquered()) {
+			if(SiegeWarSettings.getWarSiegeInvadeEnabled() && TownOccupationController.isTownOccupied(town)) {
 				Nation townOccupier = TownOccupationController.getTownOccupier(town);
 				out.add(Translation.of("status_town_occupying_nation", townOccupier.getFormattedName()));
 			}

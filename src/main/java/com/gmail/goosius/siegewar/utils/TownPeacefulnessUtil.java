@@ -244,22 +244,23 @@ public class TownPeacefulnessUtil {
 	}
 
 	private static boolean ensureTownIsPeacefullyUnoccupied(Town peacefulTown) throws NotRegisteredException {
-		Nation previousOccupier = TownOccupationController.getTownOccupier(peacefulTown);
 
-		if(previousOccupier == null) {
-			return false;
-		} else {
+		if(TownOccupationController.isTownOccupied(peacefulTown)) {
+			//Get current occupier
+			Nation currentOccupier = TownOccupationController.getTownOccupier(peacefulTown);
 			//Remove occupation
 			TownOccupationController.setTownOccupation(peacefulTown, null);
 			//Send messages
 			if(peacefulTown.hasNation()) {
-				TownyMessaging.sendPrefixedNationMessage(previousOccupier, Translation.of("msg_nation_town_peacefully_released", peacefulTown.getName(), peacefulTown.getNation().getName()));
+				TownyMessaging.sendPrefixedNationMessage(currentOccupier, Translation.of("msg_nation_town_peacefully_released", peacefulTown.getName(), peacefulTown.getNation().getName()));
 				TownyMessaging.sendPrefixedNationMessage(peacefulTown.getNation(), Translation.of("msg_nation_town_peacefully_released", peacefulTown.getFormattedName(), peacefulTown.getNation().getName()));
 			} else {
-				TownyMessaging.sendPrefixedNationMessage(previousOccupier, Translation.of("msg_neutral_town_peacefully_released", peacefulTown.getName()));
+				TownyMessaging.sendPrefixedNationMessage(currentOccupier, Translation.of("msg_neutral_town_peacefully_released", peacefulTown.getName()));
 				TownyMessaging.sendPrefixedTownMessage(peacefulTown, Translation.of("msg_neutral_town_peacefully_released", peacefulTown.getName()));
 			}
 			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -326,7 +327,7 @@ public class TownPeacefulnessUtil {
 				if(!candidateTown.isNeutral()
 					&& candidateTown.hasNation()
 					&& candidateTown.isOpen()
-					&& !candidateTown.isConquered()
+					&& !TownOccupationController.isTownOccupied(candidateTown)
 					&& !SiegeController.hasActiveSiege(candidateTown)
 					&& candidateTown.getTownBlocks().size() >= guardianTownPlotsRequirement
 					&& SiegeWarDistanceUtil.areTownsClose(peacefulTown, candidateTown, guardianTownMaxDistanceRequirementTownblocks)) {

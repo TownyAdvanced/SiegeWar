@@ -79,10 +79,6 @@ public class PlayerDeath {
 
 			Town deadResidentTown = deadResident.getTown();
 
-			//Residents of occupied towns do not give battle points if killed
-			if (deadResidentTown.isConquered())
-				return;
-
 			//Declare local variables
 			Siege confirmedCandidateSiege = null;
 			SiegeSide confirmedCandidateSiegePlayerSide = SiegeSide.NOBODY;

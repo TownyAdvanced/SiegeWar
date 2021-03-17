@@ -266,7 +266,7 @@ public class PlaceBlock {
 			if (System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(nearbyTown))
 				throw new TownyException(Translation.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
 
-			if (nearbyTown.isConquered()) {
+			if (TownOccupationController.isTownOccupied(nearbyTown)) {
 				Nation occupierOfNearbyTown = TownOccupationController.getTownOccupier(nearbyTown);
 				if (residentsNation == occupierOfNearbyTown) {
 					//Suppression siege

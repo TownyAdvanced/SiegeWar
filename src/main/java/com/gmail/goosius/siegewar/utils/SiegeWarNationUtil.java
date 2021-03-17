@@ -25,7 +25,7 @@ public class SiegeWarNationUtil {
 
         //Count all home towns which are unoccupied;
         for(Town town: new ArrayList<>(nation.getTowns())) {
-            if(!town.isConquered()) {
+            if(!TownOccupationController.isTownOccupied(town)) {
                 effectNumberOfResidents += town.getNumResidents();
             }
         }
