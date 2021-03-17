@@ -58,6 +58,9 @@ public class StartConquestSiege {
 										   Town targetTown,
 										   Block bannerBlock) throws TownyException {
 
+		if (!SiegeWarSettings.getConquestSiegesEnabled())
+			throw new TownyException(Translation.of("msg_err_action_disable"));
+
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToStartSiege(SiegeType.CONQUEST)))
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 

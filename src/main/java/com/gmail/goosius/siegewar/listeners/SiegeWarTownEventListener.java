@@ -296,7 +296,7 @@ public class SiegeWarTownEventListener implements Listener {
 			}
 			
 	        //Revolt Immunity Timer: 71.8 hours
-	        if (SiegeWarSettings.getWarSiegeRevoltEnabled() && System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(town)) {        	
+	        if (SiegeWarSettings.getRevoltSiegesEnabled() && System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(town)) {
 	        	String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getRevoltImmunityEndTime(town)- System.currentTimeMillis());        	
 	            out.add(Translation.of("status_town_revolt_immunity_timer", time));
 	        }
@@ -396,8 +396,7 @@ public class SiegeWarTownEventListener implements Listener {
 						break;
 	            }
 	        } else {
-	            if (SiegeWarSettings.getWarSiegeAttackEnabled() 
-	            	&& !(SiegeController.hasActiveSiege(town))
+	            if(!SiegeController.hasActiveSiege(town)
 	            	&& System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(town)) {
 	                //Siege:
 	                // > Immunity Timer: 40.8 hours

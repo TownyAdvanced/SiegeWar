@@ -37,16 +37,12 @@ public class SiegeWarSettings {
 		return worldsWithSiegeWarEnabled;
 	}
 
-	public static boolean getWarSiegeAttackEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_ATTACK_ENABLED);
-	}
-
 	public static boolean getWarSiegeAbandonEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_ABANDON_ENABLED);
 	}
 
 	public static boolean getWarSiegeSurrenderEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_TOWN_SURRENDER_ENABLED);
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_SURRENDER_ENABLED);
 	}
 
 	public static boolean getWarSiegeInvadeEnabled() {
@@ -61,24 +57,20 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MILITARY_SALARY_ENABLED);
 	}
 
-	public static boolean getWarSiegeRevoltEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_REVOLT_ENABLED);
-	}
-
 	public static boolean getConquestSiegesEnabled() {
-		return true;
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_CONQUEST_SIEGES_ENABLED);
 	}
 
 	public static boolean getLiberationSiegesEnabled() {
-		return true;
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_LIBERATION_SIEGES_ENABLED);
 	}
 
 	public static boolean getRevoltSiegesEnabled() {
-		return true;
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_REVOLT_SIEGES_ENABLED);
 	}
 
 	public static boolean getSuppressionSiegesEnabled() {
-		return true;
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_SUPPRESSION_SIEGES_ENABLED);
 	}
 
 	public static boolean getWarSiegePvpAlwaysOnInBesiegedTowns() {

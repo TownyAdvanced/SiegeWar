@@ -37,32 +37,46 @@ public enum ConfigNodes {
 			"world, world_nether, world_the_end",
 			"",
 			"# This list specifies the worlds in which siegewar is enabled."),
-	WAR_SIEGE_ATTACK_ENABLED(
-			"war.siege.switches.attack_enabled",
+	WAR_SIEGE_CONQUEST_SIEGES_ENABLED(
+			"war.siege.switches.conquest_sieges_enabled",
 			"true",
 			"",
-			"# If true, then nations can start sieges."),
+			"# If true, then nations can start conquest sieges."),
+	WAR_SIEGE_LIBERATION_SIEGES_ENABLED(
+			"war.siege.switches.liberation_sieges_enabled",
+			"true",
+			"",
+			"# If true, then nations can start liberation sieges."),
+	WAR_SIEGE_REVOLT_SIEGES_ENABLED(
+			"war.siege.switches.revolt_sieges_enabled",
+			"true",
+			"",
+			"# If true, then towns can start revolt sieges."),
+	WAR_SIEGE_SUPPRESSION_SIEGES_ENABLED(
+			"war.siege.switches.suppression_sieges_enabled",
+			"true",
+			"",
+			"# If true, then nations can start suppression sieges."),
 	WAR_SIEGE_ABANDON_ENABLED(
 			"war.siege.switches.abandon_enabled",
 			"true",
 			"",
-			"# If true, then nations can abandon sieges."),
-	WAR_SIEGE_TOWN_SURRENDER_ENABLED(
+			"# If true, then attackers can abandon sieges."),
+	WAR_SIEGE_SURRENDER_ENABLED(
 			"war.siege.switches.town_surrender_enabled",
 			"true",
 			"",
-			"# If true, then a town can surrender."),
+			"# If true, then defenders can surrender sieges."),
 	WAR_SIEGE_INVADE_ENABLED(
 			"war.siege.switches.invade_enabled",
 			"true",
 			"",
-			"# If true, then a nation siege winner can invade the defeated town.",
-			"# This action will add the town to the nation"),
+			"# If true, then invasions are enabled."),
 	WAR_SIEGE_PLUNDER_ENABLED(
 			"war.siege.switches.plunder_enabled",
 			"true",
 			"",
-			"# If true, then a nation siege winner can plunder the defeated town.",
+			"# If true, then plunder is enabled.",
 			"# This action will steal money from the town, and transfer it to the victorious nation.",
 			"# The below setting of war.siege.money.attacker_plunder_distribution_ratio determines the nation-bank/soldiers distribution",
 			"# If the town does not have sufficient funds, it will be bankrupted/ruined/destroyed."),
@@ -73,12 +87,6 @@ public enum ConfigNodes {
 			"# If true, then a king can pay their soldiers using '/sw nation paysoldiers <total amount>'.",
 			"# The amount will be distributed among the soldiers according to their ranks.",
 			"# The permission of siegewar.nation.siege.pay.grade.x, determines how much a rank is paid. x=100 is a normal share, x=200 is double"),
-	WAR_SIEGE_REVOLT_ENABLED(
-			"war.siege.switches.revolt_enabled",
-			"true",
-			"",
-			"#. If true, then a town can 'revolt' against the nation and leave",
-			 "# Usually enabled in combination with WAR_SIEGE_TOWN_LEAVE_DISABLED"),
 	WAR_SIEGE_PVP_ALWAYS_ON_IN_BESIEGED_TOWNS(
 			"war.siege.switches.pvp_always_on_in_besieged_towns",
 			"true",

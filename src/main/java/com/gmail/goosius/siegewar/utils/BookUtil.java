@@ -15,7 +15,7 @@ public class BookUtil {
 	public static void buildBook(Player player) {
 
 		String text = "";
-		if (SiegeWarSettings.getWarSiegeAttackEnabled() && SiegeWarSettings.getWarSiegeEnabled()) {
+		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			text = siegeWarUserGuide(text);
 		} else 
 			text = "Siege War is disabled in the config...";
@@ -164,7 +164,7 @@ public class BookUtil {
 			text += "If the attacker has won the siege, the king (or a general) of the attacking nation may place a second coloured banner outside the town. This will capture the town, and forcibly add it to the victorious nation (which it cannot leave for " + occupationtime + ").\n\n";
 			
 			// Revolt
-			if (SiegeWarSettings.getWarSiegeRevoltEnabled()) {
+			if (SiegeWarSettings.getRevoltSiegesEnabled()) {
 				text += "An occupied town can revolt after " + occupationtime + ", freeing themselves from the occupying nation.\n";
 				text += "A town which has revolted from their occupying nation will receive " + SiegeWarSettings.getWarSiegeRevoltImmunityTimeHours() + " hours of siege immunity.\n\n";
 			} else
