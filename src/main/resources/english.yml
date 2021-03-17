@@ -99,7 +99,6 @@ status_town_siege_status_attacker_win: 'Attacker Victory - %s'
 status_town_siege_status_banner_xyz: '&2 > Banner XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > Immunity Timer: &a%s'
 status_town_siege_victory_timer: '&2 > Victory Timer: &a%s'
-status_town_siege_invaded_plundered_status: '&2 > Town Captured: %s  &2Town Plundered: %s'
 status_town_banner_control: '&2 > Banner Control: %s &a[%s]&2: &f'
 status_town_banner_control_nobody: '&2 > Banner Control: %s'
 
@@ -163,7 +162,6 @@ msg_err_peaceful_town_pvp_forced_off: '&cPeaceful towns have PVP forced OFF.'
 msg_swa_resident_already_has_control: '&cResident %s already has control.'
 msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
 msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
-msg_swa_set_captured_success: '&bSet captured to %s for %s.'
 
 siege_status_in_progress: 'In Progress'
 siege_status_attacker_win: 'Attacker Win'
@@ -278,6 +276,8 @@ msg_err_cannot_merge_towns: '&cUnable to merge a town that is under siege!'
 siege.name: '%s vs %s'
 msg_err_action_disable: '&cYou don''t have enough permissions for that action.'
 msg_err_unknown_town: '&cUnknown Town'
+msg_err_unknown_nation: '&cUnknown Nation'
+
 
 # Siege Types
 siege_type_conquest: 'CONQUEST'
@@ -316,6 +316,7 @@ status_town_siege_status_attacker_abandon: 'Attacker Abandon'
 status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending, in %s'
 status_town_siege_status_defender_surrender: 'Defender Surrender - to %s'
 status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending, in %s'
+status_town_siege_invaded_plundered_status: '&2 > Town Invaded: %s  &2Town Plundered: %s'
 
 # Siege statuses
 siege_status_attacker_abandon: 'Attacker Abandon'
@@ -373,3 +374,12 @@ msg_neutral_town_peacefully_occupied: "&b%s has been peacefully occupied by %s."
 msg_neutral_town_peacefully_released: "&b%s has been peacefully released from occupation."
 msg_nation_town_peacefully_occupied: "&b%s, belonging to %s, has been peacefully occupied by %s."
 msg_nation_town_peacefully_released: "&b%s, belonging to %s, has been peacefully released from occupation."
+
+# Admin commands
+msg_err_swa_cannot_set_invade_due_to_siege_type: '&cYou cannot set the invaded flag for this type of siege.'
+msg_err_swa_cannot_set_occupier_due_to_active_siege: '&cYou cannot set an occupier if the town has an active siege.'
+msg_err_swa_home_nation_cannot_be_occupier: '&cYou cannot set the towns home nation to be its occupier.'
+
+msg_swa_set_invade_success: '&bSet invaded to %s for %s.'
+msg_swa_town_occupation_removal_success: '&bTown occupier removed for %s.'
+msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
