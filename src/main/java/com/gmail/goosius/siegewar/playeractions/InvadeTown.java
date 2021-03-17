@@ -73,7 +73,7 @@ public class InvadeTown {
 		}
 
 		if (TownySettings.getMaxTownsPerNation() > 0) {
-			int effectiveNumTowns = SiegeWarNationUtil.calculateEffectiveNumberOfTownsInNation(residentsNation);
+			int effectiveNumTowns = SiegeWarNationUtil.getEffectiveNation(residentsNation).getNumTowns();
 			if (effectiveNumTowns >= TownySettings.getMaxTownsPerNation()){
 				throw new TownyException(String.format(Translation.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
 			}
