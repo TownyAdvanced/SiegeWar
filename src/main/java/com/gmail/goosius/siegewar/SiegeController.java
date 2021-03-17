@@ -148,7 +148,7 @@ public class SiegeController {
 		if (siegeStatusString == null || siegeStatusString.isEmpty())
 			return false;
 		else
-			siege.setStatus(SiegeStatus.parseString(siegeTypeString));
+			siege.setStatus(SiegeStatus.parseString(siegeStatusString));
 
 		siege.setSiegeBalance(SiegeMetaDataController.getSiegeBalance(town));
 		siege.setWarChestAmount(SiegeMetaDataController.getWarChestAmount(town));
