@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -44,6 +45,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.TimeMgmt;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 
@@ -372,21 +374,16 @@ public class SiegeWarTownEventListener implements Listener {
 
 	                case ATTACKER_WIN:
 	                case DEFENDER_SURRENDER:
-	                    siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
-	                    String invadedYesNo = siege.isTownInvaded() ? Translation.of("status_yes") : Translation.of("status_no_green");
-	                    String plunderedYesNo = siege.isTownPlundered() ? Translation.of("status_yes") : Translation.of("status_no_green");
-	                    String invadedPlunderedStatus = Translation.of("status_town_siege_invaded_plundered_status", invadedYesNo, plunderedYesNo);
-	                    String siegeImmunityTimer = Translation.of("status_town_siege_immunity_timer", time);
-	                    out.add(siegeStatus);
-	                    out.add(invadedPlunderedStatus);
-	                    out.add(siegeImmunityTimer);
-	                    break;
+					case DEFENDER_WIN:
+					case ATTACKER_ABANDON:
+					    siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
+						out.add(siegeStatus);
 
-	                case DEFENDER_WIN:
-	                case ATTACKER_ABANDON:
-	                    siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
-	                    siegeImmunityTimer = Translation.of("status_town_siege_immunity_timer", time);
-	                    out.add(siegeStatus);
+	                    String invadedPlunderedStatus = getInvadedPlunderedStatusLine(siege);
+						if(!invadedPlunderedStatus.isEmpty())
+							out.add(invadedPlunderedStatus);
+
+	                    String siegeImmunityTimer = Translation.of("status_town_siege_immunity_timer", time);
 	                    out.add(siegeImmunityTimer);
 	                    break;
 
@@ -433,7 +430,43 @@ public class SiegeWarTownEventListener implements Listener {
                 return "???";
         }
     }
-    
+
+    private static String getInvadedPlunderedStatusLine(Siege siege) {
+		switch(siege.getSiegeType()) {
+			case CONQUEST:
+			case SUPPRESSION:
+			case LIBERATION:
+				switch (siege.getStatus()) {
+					case ATTACKER_WIN:
+					case DEFENDER_SURRENDER:
+						return getPlunderStatusLine(siege) + getInvadeStatusLine(siege);
+				}
+				break;
+			case REVOLT:
+				switch (siege.getStatus()) {
+					case DEFENDER_WIN:
+					case ATTACKER_ABANDON:
+						return getPlunderStatusLine(siege) + getInvadeStatusLine(siege);
+				}
+				break;
+		}
+		return "";
+	}
+
+	private static String getPlunderStatusLine(Siege siege) {
+		String plunderedYesNo = siege.isTownPlundered() ? Translation.of("status_yes") : Translation.of("status_no_green");
+		return Translation.of("status_town_siege_status_plundered", plunderedYesNo);
+	}
+
+	private static String getInvadeStatusLine(Siege siege) {
+		if(siege.getSiegeType() == SiegeType.REVOLT && siege.getSiegeType() == SiegeType.SUPPRESSION) {
+			return "";
+		} else {
+			String invadedYesNo = siege.isTownInvaded() ? Translation.of("status_yes") : Translation.of("status_no_green");
+			return Translation.of("status_town_siege_status_invaded", invadedYesNo);
+		}
+	}
+
     @EventHandler
     public void onTownUnconquer(TownUnconquerEvent event) {
     	if (SiegeWarSettings.getWarSiegeEnabled())

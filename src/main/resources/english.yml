@@ -316,7 +316,8 @@ status_town_siege_status_attacker_abandon: 'Attacker Abandon'
 status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending, in %s'
 status_town_siege_status_defender_surrender: 'Defender Surrender - to %s'
 status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending, in %s'
-status_town_siege_invaded_plundered_status: '&2 > Town Invaded: %s  &2Town Plundered: %s'
+status_town_siege_status_plundered: '&2 > Town Plundered: %s'
+status_town_siege_status_invaded: '   &2Town Invaded: %s'
 
 # Siege statuses
 siege_status_attacker_abandon: 'Attacker Abandon'
