@@ -38,22 +38,28 @@ public class TownOccupationController {
         List<Town> occupiedTowns;
 
         for (Town town : TownyUniverse.getInstance().getTowns()) {
-            //Load occupier data
             occupyingNationUUID = TownMetaDataController.getOccupyingNationUUID(town);
             if (occupyingNationUUID == null) {
-                //No occupier found
-                if (!town.isConquered()) {
-                    town.setConquered(true); //Fix de-synced data
+                //Occupier not found. Fix any de-synced data and move to next town
+                if (town.isConquered()) {
+                    town.setConquered(false);
                     town.save();
                 }
-                continue; //
+                continue; //Go to next town
             } else {
-                // Occupier found
+                //Occupier found
                 try {
                     occupyingNation = TownyUniverse.getInstance().getDataSource().getNation(UUID.fromString(SiegeMetaDataController.getNationUUID(town)));
+                    //Occupier loaded correctly. Fixed any de-synced data
+                    if(!town.isConquered()) {
+                        town.setConquered(true);
+                        town.save();
+                    }
+
                 } catch (NotRegisteredException e) {
+                    //Could not load occupuer. Fix any de-synced data and move to next town
                     if(town.isConquered()) {
-                        town.setConquered(false); //Fix de-synced data
+                        town.setConquered(false);
                         town.save();
                         continue;
                     }
