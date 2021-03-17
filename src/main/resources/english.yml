@@ -326,23 +326,28 @@ siege_status_pending_attacker_abandon: 'Pending Attacker Abandon'
 siege_status_pending_defender_surrender: 'Pending Defender Surrender'
 
 # Surrendering defences
-msg_conquest_siege_defender_surrender: '&sSiege of CONQUEST at %s > The town has surrendered to the army of %s.'
-msg_liberation_siege_defender_surrender: '&sSiege of LIBERATION at %s > The occupying army of %s has surrendered to the army of %s, and the occupation has been ended.'
-msg_revolt_siege_defender_surrender: '&sSiege of REVOLT at %s > The occupying army of %s has surrendered to the rebels, and the occupation has been ended.'
-msg_suppression_siege_defender_surrender: '&sSiege of SUPPRESSION at %s > The town has surrendered to the occupying army of %s. '
+msg_conquest_siege_defender_surrender: '&bSiege of CONQUEST at %s > The town has surrendered to the army of %s.'
+msg_liberation_siege_defender_surrender: '&bSiege of LIBERATION at %s > The occupying army of %s has surrendered to the army of %s, and the occupation has been ended.'
+msg_revolt_siege_defender_surrender: '&bSiege of REVOLT at %s > The occupying army of %s has surrendered to the rebels, and the occupation has been ended.'
+msg_suppression_siege_defender_surrender: '&bSiege of SUPPRESSION at %s > The town has surrendered to the occupying army of %s. '
 
 # Abandoning attacks
-msg_conquest_siege_attacker_abandon: '&sSiege of CONQUEST at %s > The army of %s has abandoned its attack.'
-msg_liberation_siege_attacker_abandon: '&sSiege of LIBERATION at %s > The army of %s has abandoned its attack against %s.'
-msg_revolt_siege_attacker_abandon: '&sSiege of REVOLT at %s > The attacking rebel army has abandoned its revolt against %s.'
-msg_suppression_siege_attacker_abandon: '&sSiege of SUPPRESSION at %s > The army of %s has abandoned its attack and released the town from occupation.'
+msg_conquest_siege_attacker_abandon: '&bSiege of CONQUEST at %s > The army of %s has abandoned its attack.'
+msg_liberation_siege_attacker_abandon: '&bSiege of LIBERATION at %s > The army of %s has abandoned its attack against %s.'
+msg_revolt_siege_attacker_abandon: '&bSiege of REVOLT at %s > The attacking rebel army has abandoned its revolt against %s.'
+msg_suppression_siege_attacker_abandon: '&bSiege of SUPPRESSION at %s > The army of %s has abandoned its attack and released the town from occupation.'
 msg_err_town_has_no_active_siege_to_abandon_surrender: '&cThe nearby town has no siege. Abandon/Surrender not possible.'
 
 # Timed wins
-msg_conquest_siege_timed_attacker_win: '&sSiege of CONQUEST at %s > The attacking army of %s has defeated the army of %s and breached the defences of the town.'
-msg_liberation_siege_timed_attacker_win: '&sSiege of LIBERATION at %s > The attacking army of %s has defeated the occupying army of %s, and liberated the townspeople from occupation.'
-msg_revolt_siege_timed_attacker_win: '&sSiege of REVOLT at %s > The attacking rebel army have driven out the occupying army of %s.'
-msg_suppression_siege_timed_attacker_win: '&sSiege of SUPPRESSION at %s > The occupying army of %s has successfully suppressed rebel activity in the town.'
+msg_conquest_siege_timed_attacker_win: '&bSiege of CONQUEST at %s > The attacking army of %s has defeated the army of %s and breached the defences of the town.'
+msg_liberation_siege_timed_attacker_win: '&bSiege of LIBERATION at %s > The attacking army of %s has defeated the occupying army of %s, and liberated the townspeople from occupation.'
+msg_revolt_siege_timed_attacker_win: '&bSiege of REVOLT at %s > The attacking rebel army have driven out the occupying army of %s.'
+msg_suppression_siege_timed_attacker_win: '&bSiege of SUPPRESSION at %s > The occupying army of %s has successfully suppressed rebel activity in the town.'
+
+msg_conquest_siege_timed_defender_win: '&bSiege of CONQUEST at %s > The defending army of %s has defeated the army of %s, and driven the attackers off.'
+msg_liberation_siege_timed_defender_win: '&bSiege of LIBERATION at %s > The occupying army of %s has defeated the army of %s, and successfully prevented the liberation of the town.'
+msg_revolt_siege_timed_defender_win: '&bSiege of REVOLT at %s > The occupying army of %s has defeated the attacking rebels, and crushed the rebellion.'
+msg_suppression_siege_timed_defender_win: '&bSiege of SUPPRESSION at %s > The defending army of %s have defeated the army of %s, preventing the attempted suppression, and freeing themselves from occupation.'
 
 # Generic Victory messages
 msg_immediate_attacker_victory: " The attackers are victorious!"
