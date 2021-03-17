@@ -280,6 +280,10 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				try {
 					String townName = args[1];
 
+					//Check for permission
+					if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_RELEASE.getNode()))
+						throw new TownyException(Translation.of("msg_err_action_disable"));
+
 					//Ensure resident has a town & nation
 					Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 					if (resident == null || !resident.hasTown() || !resident.getTown().hasNation())

@@ -20,7 +20,6 @@ public class StartLiberationSiege {
         if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeType.LIBERATION.getPermissionNodeToAttack().getNode()))
             throw new TownyException(Translation.of("msg_err_action_disable"));
 
-
         startSiege();
     }
 

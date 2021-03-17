@@ -277,7 +277,7 @@ public class PlaceBlock {
 				}
 			} else {
 				//Conquest siege
-				StartConquestSiege.processStartRequest(residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
+				StartConquestSiege.processStartRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 			}
 		}
 	}

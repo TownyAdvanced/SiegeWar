@@ -4,6 +4,7 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.events.PreSiegeWarStartEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -15,6 +16,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -24,6 +26,7 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 /**
  * This class is responsible for processing requests to start siege attacks
@@ -46,12 +49,17 @@ public class StartConquestSiege {
 	 * @throws TownyException when attack cannot be made.
 	 *
 	 */
-    public static void processStartRequest(Town townOfSiegeStarter,
+    public static void processStartRequest(Player player,
+										   Town townOfSiegeStarter,
 										   Nation nationOfSiegeStarter,
 										   TownBlock townBlock,
 										   Town targetTown,
 										   Block bannerBlock) throws TownyException {
-        if (targetTown.hasNation()) {
+
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeType.CONQUEST.getPermissionNodeToAttack().getNode()))
+			throw new TownyException(Translation.of("msg_err_action_disable"));
+
+		if (targetTown.hasNation()) {
             Nation nationOfDefendingTown = targetTown.getNation();
 
             if (nationOfSiegeStarter == nationOfDefendingTown)
