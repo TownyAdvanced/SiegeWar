@@ -3,17 +3,13 @@ package com.gmail.goosius.siegewar.tasks;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
-import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.playeractions.SurrenderDefence;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.timeractions.AttackerWin;
-import com.gmail.goosius.siegewar.timeractions.DefenderWin;
+import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
+import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.*;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.TownyObject;
-import com.palmergames.util.TimeMgmt;
 
 /**
  * This class intercepts siege related instructions coming from timer tasks.
@@ -43,34 +39,26 @@ public class SiegeWarTimerTaskController {
 			case IN_PROGRESS:
 				//If scheduled end time has arrived, choose winner
 				if (System.currentTimeMillis() > siege.getScheduledEndTime()) {
-					TownyObject siegeWinner = SiegeWarScoringUtil.calculateSiegeWinner(siege);
-					if (siegeWinner instanceof Town) {
-						DefenderWin.defenderWin(siege, (Town) siegeWinner);
+					if (siege.getSiegeBalance() > 0) {
+						AttackerTimedWin.attackerTimedWin(siege);
 					} else {
-						AttackerWin.attackerWin(siege, (Nation) siegeWinner);
+						DefenderTimedWin.defenderTimedWin(siege);
 					}
-
-					//Save changes to db
-					siege.getTown().save();
 				}
 				break;
 
 			case PENDING_DEFENDER_SURRENDER:
-				if(siege.getDurationMillis() > (SiegeWarSettings.getWarSiegeMinSiegeDurationBeforeSurrenderHours() * TimeMgmt.ONE_HOUR_IN_MILLIS )) {
-					SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.DEFENDER_SURRENDER);
-					SiegeWarMoneyUtil.giveWarChestToAttackingNation(siege);
-				}
+				if(siege.getTimeUntilSurrenderConfirmationMillis() < 0)
+					SurrenderDefence.surrenderDefence(siege, 0);
 				break;
 
 			case PENDING_ATTACKER_ABANDON:
-				if(siege.getDurationMillis() > (SiegeWarSettings.getWarSiegeMinSiegeDurationBeforeAbandonHours() * TimeMgmt.ONE_HOUR_IN_MILLIS )) {
-					SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.ATTACKER_ABANDON);
-					SiegeWarMoneyUtil.giveWarChestToDefendingTown(siege);
-				}
+				if(siege.getTimeUntilAbandonConfirmationMillis() < 0)
+					SurrenderDefence.surrenderDefence(siege, 0);
 				break;
 
 			default:
-				//Siege is inactive
+				//Siege is inactive i.e. in the 'aftermath' phase
 				//Wait for siege immunity timer to end then delete siege
 				if (System.currentTimeMillis() > TownMetaDataController.getSiegeImmunityEndTime(siege.getTown())) {
 					SiegeController.removeSiege(siege, SiegeSide.NOBODY);

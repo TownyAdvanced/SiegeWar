@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.TownyObject;
@@ -31,11 +32,11 @@ public class SiegeWarScoringUtil {
 	 * @param siege the siege
 	 * @return the winner of the siege
 	 */
-	public static TownyObject calculateSiegeWinner(Siege siege) {
+	public static Government calculateSiegeWinner(Siege siege) {
 		if(siege.getSiegeBalance() > 0) {
-			return siege.getNation();
+			return siege.getAttacker();
 		} else {
-			return siege.getTown();
+			return siege.getDefender();
 		}
     }
 

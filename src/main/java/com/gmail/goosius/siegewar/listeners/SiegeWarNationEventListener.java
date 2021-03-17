@@ -157,7 +157,7 @@ public class SiegeWarNationEventListener implements Listener {
 		/*
 		 * Remove any town occupation data associated with that nation
 		 */
-		TownOccupationController.removeTownOccupations(event.getNation());
+		TownOccupationController.removeForeignTownOccupations(event.getNation());
 	}
 
 	@EventHandler

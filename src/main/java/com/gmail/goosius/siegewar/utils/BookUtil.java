@@ -162,10 +162,7 @@ public class BookUtil {
 		text += "\nPOST-SIEGE ACTION: TOWN CAPTURE\n\n";
 		if (SiegeWarSettings.getWarSiegeInvadeEnabled()) {
 			text += "If the attacker has won the siege, the king (or a general) of the attacking nation may place a second coloured banner outside the town. This will capture the town, and forcibly add it to the victorious nation (which it cannot leave for " + occupationtime + ").\n\n";
-
-			if (SiegeWarSettings.getWarSiegeTownLeaveDisabled())
-				text += "An occupied town cannot leave their nation, but the nation can kick the town if they so desire.\n";
-
+			
 			// Revolt
 			if (SiegeWarSettings.getWarSiegeRevoltEnabled()) {
 				text += "An occupied town can revolt after " + occupationtime + ", freeing themselves from the occupying nation.\n";

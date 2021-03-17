@@ -22,7 +22,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 
@@ -178,9 +177,9 @@ public class SiegeController {
 			SiegeWarTimeUtil.activateSiegeImmunityTimer(siege.getTown(), siege);
 
 			if (refundSideIfSiegeIsActive == SiegeSide.ATTACKERS)
-				SiegeWarMoneyUtil.giveWarChestToAttackingNation(siege);
+				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
 			else if (refundSideIfSiegeIsActive == SiegeSide.DEFENDERS)
-				SiegeWarMoneyUtil.giveWarChestToDefendingTown(siege);
+				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefender());
 		}
 
 		Town town = siege.getTown();

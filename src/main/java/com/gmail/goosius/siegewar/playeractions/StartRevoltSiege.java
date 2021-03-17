@@ -31,17 +31,7 @@ public class StartRevoltSiege {
     }
 
     private static void startSiege() {
-
-    }
-
-    private void parseSiegeWarRevoltCommand(Player player) {
-        if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeRevoltEnabled()) {
-
-
-
-            //TODO---- START SIEGE NOW
-            //Do revolt now
-
+    /*
 
             //Activate revolt immunity
             SiegeWarTimeUtil.activateRevoltImmunityTimer(event.getTown());
@@ -54,6 +44,6 @@ public class StartRevoltSiege {
                             event.getTown().getFormattedName(),
                             event.getTown().getMayor().getFormattedName(),
                             event.getNation().getFormattedName()));
-        }
+     */
     }
 }

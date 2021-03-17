@@ -1,12 +1,12 @@
 package com.gmail.goosius.siegewar.timeractions;
 
-import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
-import com.palmergames.bukkit.towny.object.Town;
-import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 
 /**
  * This class is responsible for processing siege defender wins
@@ -19,14 +19,24 @@ public class DefenderWin
 	 * This method triggers siege values to be updated for a defender win
 	 *
 	 * @param siege the siege
-	 * @param winnerTown the winning town
+	 * @param siegeStatus the siege status
 	 */
-    public static void defenderWin(Siege siege, Town winnerTown) {
-		SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.DEFENDER_WIN);
+    public static void defenderWin(Siege siege, SiegeStatus siegeStatus) {
 
-		Messaging.sendGlobalMessage(Translation.of("msg_siege_war_defender_win", winnerTown.getFormattedName()));
-
-		SiegeWarMoneyUtil.giveWarChestToDefendingTown(siege);
+		switch(siege.getSiegeType()) {
+			case CONQUEST:
+			case LIBERATION:
+				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefender());
+				break;
+			case SUPPRESSION:
+				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefender());
+				TownOccupationController.removeTownOccupation(siege.getTown());
+				break;
+			case REVOLT:
+				SiegeWarTimeUtil.activateRevoltImmunityTimer(siege.getTown());
+				break;
+		}
+		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege, siegeStatus);
     }
 
 }

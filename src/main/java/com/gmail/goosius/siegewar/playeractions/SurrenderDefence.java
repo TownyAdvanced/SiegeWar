@@ -2,12 +2,16 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.timeractions.AttackerWin;
+import com.gmail.goosius.siegewar.timeractions.DefenderWin;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import org.bukkit.entity.Player;
@@ -26,24 +30,22 @@ public class SurrenderDefence {
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, siege.getSiegeType().getPermissionNodeToSurrenderDefence().getNode()))
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
-		surrenderDefence(siege);
+		surrenderDefence(siege, siege.getTimeUntilSurrenderConfirmationMillis());
 	}
 
-    private static void surrenderDefence(Siege siege) {
-		long timeUntilSurrenderConfirmation = siege.getTimeUntilSurrenderConfirmationMillis();
-
+    public static void surrenderDefence(Siege siege, long timeUntilSurrenderConfirmation) {
 		if(timeUntilSurrenderConfirmation > 0) {
 			//Pending surrender
 			siege.setStatus(SiegeStatus.PENDING_DEFENDER_SURRENDER);
 			SiegeController.saveSiege(siege);
-			Messaging.sendGlobalMessage(getSurrenderMessage(siege, timeUntilSurrenderConfirmation));
 		} else {
 			//Immediate surrender
-			SiegeWarMoneyUtil.giveWarChestToAttackingNation(siege);
-			SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.DEFENDER_SURRENDER);
-			Messaging.sendGlobalMessage(getSurrenderMessage(siege, 0));
+			AttackerWin.attackerWin(siege, SiegeStatus.DEFENDER_SURRENDER);
 		}
-    }
+
+		//Send global message
+		Messaging.sendGlobalMessage(getSurrenderMessage(siege, timeUntilSurrenderConfirmation));
+	}
 
 	private static String getSurrenderMessage(Siege siege, long timeUntilAbandonConfirmation) {
 		String key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toString().toLowerCase());
@@ -68,10 +70,10 @@ public class SurrenderDefence {
 				break;
 		}
 
-		if(timeUntilAbandonConfirmation == 0) {
-			message += Translation.of("msg_immediate_attacker_victory");
-		} else {
+		if(timeUntilAbandonConfirmation > 0) {
 			message += Translation.of("msg_pending_attacker_victory", timeUntilAbandonConfirmation);
+		} else {
+			message += Translation.of("msg_immediate_attacker_victory");
 		}
 
 		return message;

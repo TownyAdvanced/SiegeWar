@@ -206,11 +206,10 @@ public class Siege {
 					return town;
 				}
 			case LIBERATION:
-				Nation townOccupier = TownOccupationController.getTownOccupier(town);
-				if(townOccupier == null) {
-					return town;
+				if(TownOccupationController.isTownOccupied(town)) {
+					return TownOccupationController.getTownOccupier(town);
 				} else {
-					return townOccupier;
+					return town;
 				}
 			case SUPPRESSION:
 				return nation;

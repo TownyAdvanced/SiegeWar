@@ -89,6 +89,7 @@ public enum SiegeType {
     }
 
     public SiegeWarPermissionNodes getPermissionNodeToAttack() {
-
+        //TODO - FIXME
+        return null;
     }
 }

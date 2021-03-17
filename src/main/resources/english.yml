@@ -294,6 +294,7 @@ nation_help_14 : 'Release the given town from occupation.'
 
 # Error messages
 msg_err_action_disable: '&cYou don''t have enough permissions for that action.'
+msg_err_unknown_town: '&cUnknown Town'
 #Attack
 msg_err_cannot_start_siege_attack_at_peaceful_town: '&cYou cannot start a siege at a peaceful town.'
 msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruined town.'
@@ -344,16 +345,22 @@ msg_suppression_siege_started_neutral_town: '&bThe nation of %s has moved to sta
 msg_suppression_siege_started_nation_town: '&bThe nation of %s has moved to stamp out resistance in by %s at %s. A siege of SUPPRESSION has begun!'
 
 #Defender Surrender messages
-msg_conquest_siege_defender_surrender: '&sSiege of CONQUEST at %s > The town has surrendered to the army of %s. The attackers are victorious!'
-msg_liberation_siege_defender_surrender: '&sSiege of LIBERATION at %s > The occupying army of %s has surrendered to the army of %s, and the occupation has been ended. The attackers are victorious!'
-msg_revolt_siege_defender_surrender: '&sSiege of REVOLT at %s > The occupying army of %s has surrendered to the rebels, and the occupation has been ended. The attackers are victorious!'
+msg_conquest_siege_defender_surrender: '&sSiege of CONQUEST at %s > The town has surrendered to the army of %s.'
+msg_liberation_siege_defender_surrender: '&sSiege of LIBERATION at %s > The occupying army of %s has surrendered to the army of %s, and the occupation has been ended.'
+msg_revolt_siege_defender_surrender: '&sSiege of REVOLT at %s > The occupying army of %s has surrendered to the rebels, and the occupation has been ended.'
 msg_suppression_siege_defender_surrender: '&sSiege of SUPPRESSION at %s > The town has surrendered to the occupying army of %s. '
 
 #Siege Abandon messages
-msg_conquest_siege_attacker_abandon: '&sSiege of CONQUEST at %s > The army of %s has abandoned its attack. The defenders are victorious!'
-msg_liberation_siege_attacker_abandon: '&sSiege of LIBERATION at %s > The army of %s has abandoned its attack against %s. The defenders are victorious!'
-msg_revolt_siege_attacker_abandon: '&sSiege of REVOLT at %s > The attacking rebel army has abandoned its revolt against %s. The defenders are victorious!'
-msg_suppression_siege_attacker_abandon: '&sSiege of SUPPRESSION at %s > The army of %s has abandoned its attack and released the town from occupation. The defenders are victorious!'
+msg_conquest_siege_attacker_abandon: '&sSiege of CONQUEST at %s > The army of %s has abandoned its attack.'
+msg_liberation_siege_attacker_abandon: '&sSiege of LIBERATION at %s > The army of %s has abandoned its attack against %s.'
+msg_revolt_siege_attacker_abandon: '&sSiege of REVOLT at %s > The attacking rebel army has abandoned its revolt against %s.'
+msg_suppression_siege_attacker_abandon: '&sSiege of SUPPRESSION at %s > The army of %s has abandoned its attack and released the town from occupation.'
+
+# Timed Attacker Win messages
+msg_conquest_siege_timed_attacker_win: '&sSiege of CONQUEST at %s > The attacking army of %s has defeated the army of %s and breached the defences of the town.'
+msg_liberation_siege_timed_attacker_win: '&sSiege of LIBERATION at %s > The attacking army of %s has defeated the occupying army of %s, and liberated the townspeople from occupation.'
+msg_revolt_siege_timed_attacker_win: '&sSiege of REVOLT at %s > The attacking rebel army have driven out the occupying army of %s.'
+msg_suppression_siege_timed_attacker_win: '&sSiege of SUPPRESSION at %s > The occupying army of %s has successfully suppressed rebel activity in the town.'
 
 # Generic Victory messages
 msg_immediate_attacker_victory: " The attackers are victorious!"
@@ -367,3 +374,8 @@ siege_status_defender_surrender: 'Defender Surrender'
 siege_status_pending_attacker_abandon: 'Pending Attacker Abandon'
 siege_status_pending_defender_surrender: 'Pending Defender Surrender'
 
+# Release from occupation
+msg_err_cannot_release_town_not_occupied_by_nation: '&c You cannot release the town because it is not occupied by your nation'
+msg_town_released_from_occupation: 'The town has been released from occupation by %s'
+msg_foreign_town_released_from_occupation: 'Tha nation released the town of %s from occupation'
+msg_err_cannot_release_besieged_town: 'You cannot release a besieged town'

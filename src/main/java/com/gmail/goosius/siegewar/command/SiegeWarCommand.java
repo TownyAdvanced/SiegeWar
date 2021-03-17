@@ -8,7 +8,11 @@ import java.util.Map;
 import java.util.HashMap;
 
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
+import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.playeractions.AbandonAttack;
+import com.gmail.goosius.siegewar.playeractions.SurrenderDefence;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.*;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -273,12 +277,41 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				break;
 
 			case "release":
-					//.....TODO
-				//TODO ----- Make sure to END any relevant sieges
-				//e.g. if you release a town from occupation which has a siege on it:
-				// 1. If revolt siege,  the counts as defender surrender
-				// 2. If liberation siege, this counts as defender surrender
-				// 3. If suppression siege, this counts as attacker abandon
+				try {
+					String townName = args[1];
+
+					//Ensure resident has a town & nation
+					Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
+					if (resident == null || !resident.hasTown() || !resident.getTown().hasNation())
+						throw new TownyException(Translation.of("msg_err_command_disable"));
+
+					Town residentsTown = TownyAPI.getInstance().getResidentTownOrNull(resident);
+					Nation residentsNation = TownyAPI.getInstance().getTownNationOrNull(residentsTown);
+
+					//Ensure the specified town exists
+					if (TownyUniverse.getInstance().hasTown(townName))
+						throw new TownyException(Translation.of("msg_err_unknown_town"));
+
+					//Ensure the specified town is occupied by the resident's nation
+					Town townToRelease = TownyUniverse.getInstance().getTown(townName);
+					if(!TownOccupationController.isTownOccupied(townToRelease))
+						throw new TownyException(Translation.of("msg_err_cannot_release_town_not_occupied_by_nation"));
+					if(TownOccupationController.getTownOccupier(townToRelease) != residentsNation)
+						throw new TownyException(Translation.of("msg_err_cannot_release_town_not_occupied_by_nation"));
+
+					//Ensure besieged towns cannot be released
+					if(SiegeController.hasActiveSiege(townToRelease))
+						throw new TownyException(Translation.of("msg_err_cannot_release_besieged_town"));
+
+					//Release town
+					TownOccupationController.removeTownOccupation(townToRelease);
+
+					//Send messages
+					TownyMessaging.sendPrefixedTownMessage(townToRelease, String.format(Translation.of("msg_town_released_from_occupation"), residentsNation));
+					TownyMessaging.sendPrefixedNationMessage(residentsNation, String.format(Translation.of("msg_foreign_town_released_from_occupation"), townToRelease.getName()));
+				} catch (Exception e) {
+					Messaging.sendErrorMsg(player, e.getMessage());
+				}
 				break;
 
 			default:

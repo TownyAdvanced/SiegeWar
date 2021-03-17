@@ -2,12 +2,15 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.timeractions.DefenderWin;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import org.bukkit.entity.Player;
@@ -26,23 +29,21 @@ public class AbandonAttack {
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, siege.getSiegeType().getPermissionNodeToAbandonAttack().getNode()))
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
-		abandonAttack(siege);
+		abandonAttack(siege, siege.getTimeUntilAbandonConfirmationMillis());
 	}
 
-    private static void abandonAttack(Siege siege) {
-		long timeUntilOfficialAbandon = siege.getTimeUntilAbandonConfirmationMillis();
-
+    public static void abandonAttack(Siege siege, long timeUntilOfficialAbandon) {
 		if(timeUntilOfficialAbandon > 0) {
 			//Pending abandon
 			siege.setStatus(SiegeStatus.PENDING_ATTACKER_ABANDON);
 			SiegeController.saveSiege(siege);
-			Messaging.sendGlobalMessage(getAbandonMessage(siege, timeUntilOfficialAbandon));
 		} else {
 			//Immediate abandon
-			SiegeWarMoneyUtil.giveWarChestToDefendingTown(siege);
-			SiegeWarSiegeCompletionUtil.updateSiegeValuesToComplete(siege, SiegeStatus.ATTACKER_ABANDON);
-			Messaging.sendGlobalMessage(getAbandonMessage(siege, 0));
+			DefenderWin.defenderWin(siege, SiegeStatus.ATTACKER_ABANDON);
 		}
+
+		//Send global message
+		Messaging.sendGlobalMessage(getAbandonMessage(siege, timeUntilOfficialAbandon));
 	}
 
 	private static String getAbandonMessage(Siege siege, long timeUntilAbandonConfirmation) {
@@ -68,10 +69,10 @@ public class AbandonAttack {
 				break;
 		}
 
-		if (timeUntilAbandonConfirmation == 0) {
-			message += Translation.of("msg_immediate_defender_victory");
-		} else {
+		if (timeUntilAbandonConfirmation > 0) {
 			message += Translation.of("msg_pending_defender_victory", timeUntilAbandonConfirmation);
+		} else {
+			message += Translation.of("msg_immediate_defender_victory");
 		}
 
 		return message;
