@@ -7,14 +7,14 @@ import com.palmergames.bukkit.towny.object.Town;
 
 public enum SiegeType {
 
-    CONQUEST(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ABANDON,
-            SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER),
-    LIBERATION(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ABANDON,
-            SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER),
-    REVOLT(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ABANDON,
-            SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER),
-    SUPPRESSION(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ABANDON,
-            SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER);
+    CONQUEST(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_CONQUEST_SIEGE_ABANDON,
+            SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_CONQUEST_SIEGE_SURRENDER),
+    LIBERATION(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_ABANDON,
+            SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_SURRENDER),
+    REVOLT(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_ABANDON,
+            SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_REVOLT_SIEGE_SURRENDER),
+    SUPPRESSION(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_ABANDON,
+            SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SUPPRESSION_SIEGE_SURRENDER);
 
     private final static String langKeyTemplate_siegeType = "siege_type_%s";
     private final static String langKeyTemplate_siegeStartedNeutralTown = "msg_%s_siege_started_neutral_town";

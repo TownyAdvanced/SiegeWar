@@ -7,16 +7,38 @@ package com.gmail.goosius.siegewar.enums;
  */
 public enum SiegeWarPermissionNodes {
 
-	//This permission affects battle points, but the perm currently has the older name of siege points
+	// ----- Nation Siege Perms -----
+
+	//Battle points
 	SIEGEWAR_NATION_SIEGE_BATTLE_POINTS("siegewar.nation.siege.battle.points"),
-	SIEGEWAR_NATION_SIEGE_LEADERSHIP("siegewar.nation.siege.leadership"),
-	SIEGEWAR_NATION_SIEGE_ATTACK("siegewar.nation.siege.attack"),
-	SIEGEWAR_NATION_SIEGE_ABANDON("siegewar.nation.siege.abandon"),
+
+	//Actions
+	SIEGEWAR_NATION_SIEGE_CONQUEST_SIEGE_START("siegewar.nation.siege.conquest.siege.start"),
+	SIEGEWAR_NATION_SIEGE_CONQUEST_SIEGE_ABANDON("siegewar.nation.siege.conquest.siege.abandon"),
+	SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_START("siegewar.nation.siege.liberation.siege.start"),
+	SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_ABANDON("siegewar.nation.siege.liberation.siege.abandon"),
+	SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_SURRENDER("siegewar.nation.siege.liberation.siege.surrender"),
+	SIEGEWAR_NATION_SIEGE_REVOLT_SIEGE_SURRENDER("siegewar.nation.siege.revolt.siege.surrender"),
+	SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_START("siegewar.nation.siege.suppression.siege.start"),
+	SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_ABANDON("siegewar.nation.siege.suppression.siege.abandon"),
+
+	//Post Siege Actions
 	SIEGEWAR_NATION_SIEGE_INVADE("siegewar.nation.siege.invade"),
 	SIEGEWAR_NATION_SIEGE_PLUNDER("siegewar.nation.siege.plunder"),
-	//This permission affects battle points, but the perm currently has the older name of siege points
+
+	// ----- Town Siege Perms -----
+
+	//Battle points
 	SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS("siegewar.town.siege.battle.points"),
-	SIEGEWAR_TOWN_SIEGE_SURRENDER("siegewar.town.siege.surrender"),
+
+	//Actions
+	SIEGEWAR_TOWN_SIEGE_CONQUEST_SIEGE_SURRENDER("siegewar.town.siege.conquest.siege.surrender"),
+	SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_ABANDON("siegewar.town.siege.revolt.siege.abandon"),
+	SIEGEWAR_TOWN_SIEGE_SUPPRESSION_SIEGE_SURRENDER("siegewar.town.siege.suppression.siege.surrender"),
+
+	// ------------------------------
+	
+	// Perm related to cannon session integration
 	SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION("siegewar.town.siege.startcannonsession"),
 	// Siegewar related war sickness immunities
 	SIEGEWAR_IMMUNE_TO_WAR_NAUSEA("siegewar.immune.to.war.nausea"),
