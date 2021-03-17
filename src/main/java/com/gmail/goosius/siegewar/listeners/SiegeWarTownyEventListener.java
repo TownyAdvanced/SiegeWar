@@ -181,6 +181,7 @@ public class SiegeWarTownyEventListener implements Listener {
      *
      * @param event the TownyExplosionDamagesEntityEvent event
      */
+    @EventHandler(priority = EventPriority.HIGH)
     public void onExplosionDamageEntity(TownyExplosionDamagesEntityEvent event) {
         if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginDetected()) {
             if (event.isCancelled()) {
