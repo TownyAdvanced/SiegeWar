@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.events.PreSiegeWarStartEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -40,6 +41,7 @@ public class StartConquestSiege {
 	 *
 	 * This method does some final checks and if they pass, the attack is initiated.
 	 *
+	 * @param player the player
 	 * @param townOfSiegeStarter town
 	 * @param nationOfSiegeStarter nation which is attacking.
 	 * @param townBlock the townblock where the attack is taking place.
@@ -56,7 +58,7 @@ public class StartConquestSiege {
 										   Town targetTown,
 										   Block bannerBlock) throws TownyException {
 
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeType.CONQUEST.getPermissionNodeToAttack().getNode()))
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToStartSiege(SiegeType.CONQUEST)))
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
 		if (targetTown.hasNation()) {

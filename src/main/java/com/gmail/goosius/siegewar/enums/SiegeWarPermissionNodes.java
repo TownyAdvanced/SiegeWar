@@ -1,5 +1,7 @@
 package com.gmail.goosius.siegewar.enums;
 
+import com.gmail.goosius.siegewar.objects.Siege;
+
 /**
  * 
  * @author LlmDl
@@ -92,4 +94,51 @@ public enum SiegeWarPermissionNodes {
 
 		return value.replace("*", replace + "");
 	}
+
+	public static String getPermissionNodeToStartSiege(SiegeType siegeType) {
+		switch (siegeType) {
+			case CONQUEST:
+				return SIEGEWAR_NATION_SIEGE_CONQUEST_SIEGE_START.getNode();
+			case LIBERATION:
+				return SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_START.getNode();
+			case REVOLT:
+				return SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_START.getNode();
+			case SUPPRESSION:
+				return SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_START.getNode();
+			default:
+				throw new RuntimeException("Uknown siege type");
+		}
+	}
+
+	public static String getPermissionNodeToAbandonAttack(SiegeType siegeType) {
+		switch (siegeType) {
+			case CONQUEST:
+				return SIEGEWAR_NATION_SIEGE_CONQUEST_SIEGE_ABANDON.getNode();
+			case LIBERATION:
+				return SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_ABANDON.getNode();
+			case REVOLT:
+				return SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_ABANDON.getNode();
+			case SUPPRESSION:
+				return SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_ABANDON.getNode();
+			default:
+				throw new RuntimeException("Uknown siege type");
+		}
+	}
+
+	public static String getPermissionNodeToSurrenderDefence(SiegeType siegeType) {
+		switch (siegeType) {
+			case CONQUEST:
+				return SIEGEWAR_TOWN_SIEGE_CONQUEST_SIEGE_SURRENDER.getNode();
+			case LIBERATION:
+				return SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_SURRENDER.getNode();
+			case REVOLT:
+				return SIEGEWAR_NATION_SIEGE_REVOLT_SIEGE_SURRENDER.getNode();
+			case SUPPRESSION:
+				return SIEGEWAR_TOWN_SIEGE_SUPPRESSION_SIEGE_SURRENDER.getNode();
+			default:
+				throw new RuntimeException("Uknown siege type");
+		}
+	}
+
+
 }

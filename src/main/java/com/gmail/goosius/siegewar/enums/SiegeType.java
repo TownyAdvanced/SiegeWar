@@ -3,34 +3,17 @@ package com.gmail.goosius.siegewar.enums;
 import com.gmail.goosius.siegewar.settings.Translation;
 
 public enum SiegeType {
-
-    CONQUEST(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_CONQUEST_SIEGE_START,
-            SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_CONQUEST_SIEGE_ABANDON,
-            SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_CONQUEST_SIEGE_SURRENDER),
-    LIBERATION(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_START ,
-            SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_ABANDON,
-            SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_SURRENDER),
-    REVOLT(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_START,
-            SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_ABANDON,
-            SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_REVOLT_SIEGE_SURRENDER),
-    SUPPRESSION(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_START,
-            SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_ABANDON,
-            SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SUPPRESSION_SIEGE_SURRENDER);
+    CONQUEST,
+    LIBERATION,
+    REVOLT,
+    SUPPRESSION;
 
     private final static String langKeyTemplate_siegeType = "siege_type_%s";
     private final String siegeTypeLangKey;
-    private final SiegeWarPermissionNodes permissionNodeToStartAttack;
-    private final SiegeWarPermissionNodes permissionNodeToAbandonAttack;
-    private final SiegeWarPermissionNodes permissionNodeToSurrenderDefence;
 
-    SiegeType(SiegeWarPermissionNodes permissionNodeToStartAttack,
-              SiegeWarPermissionNodes permissionNodeToAbandonAttack,
-              SiegeWarPermissionNodes permissionNodeToAbandonDefence) {
+    SiegeType() {
         String siegeTypeNameLowercase = this.toString().toLowerCase();
         this.siegeTypeLangKey = String.format(langKeyTemplate_siegeType, siegeTypeNameLowercase);
-        this.permissionNodeToStartAttack = permissionNodeToStartAttack;
-        this.permissionNodeToAbandonAttack = permissionNodeToAbandonAttack;
-        this.permissionNodeToSurrenderDefence = permissionNodeToAbandonDefence;
     }
 
     public String getName() {
@@ -50,17 +33,5 @@ public enum SiegeType {
             default:
                 throw new RuntimeException("Unrecognized enum name");
         }
-    }
-
-    public SiegeWarPermissionNodes getPermissionNodeToAbandonAttack() {
-        return permissionNodeToAbandonAttack;
-    }
-
-    public SiegeWarPermissionNodes getPermissionNodeToSurrenderDefence() {
-        return permissionNodeToSurrenderDefence;
-    }
-
-    public SiegeWarPermissionNodes getPermissionNodeToAttack() {
-        return permissionNodeToStartAttack;
     }
 }

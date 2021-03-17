@@ -4,6 +4,8 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeType;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
@@ -27,7 +29,7 @@ public class SurrenderDefence {
 		if(!SiegeWarSettings.getWarSiegeAbandonEnabled())
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, siege.getSiegeType().getPermissionNodeToSurrenderDefence().getNode()))
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToSurrenderDefence(siege.getSiegeType())))
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
 		surrenderDefence(siege, siege.getTimeUntilSurrenderConfirmationMillis());

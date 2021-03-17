@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -37,7 +38,7 @@ public class InvadeTown {
 		if(!SiegeWarSettings.getWarSiegeInvadeEnabled())
 			throw new TownyException("msg_err_action_disable");
 
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, siege.getSiegeType().getPermissionNodeToSurrenderDefence().getNode()))
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_INVADE.getNode()))
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
 		if(residentsNation == null)
@@ -49,8 +50,8 @@ public class InvadeTown {
 		if(siege.getStatus().isActive())
 			throw new TownyException("msg_err_cannot_invade_siege_still_in_progress");
 
-		if(siege.getTownInvaded())
-			throw new TownyException("msg_err_cannot_invade_town_already_invaded");
+		if(TownOccupationController.getTownOccupier(nearbyTown) == residentsNation)
+			throw new TownyException("msg_err_cannot_invade_town_already_occupied");
 
 		if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
 			throw new TownyException(Translation.of("msg_err_cannot_invade_without_victory"));
