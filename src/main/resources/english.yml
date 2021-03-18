@@ -93,7 +93,6 @@ msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'You c
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2Revolt Immunity Timer: &a%s'
 status_town_siege_status_in_progress: 'In Progress'
-status_town_siege_status_attacker_win: 'Attacker Victory - %s'
 
 status_town_siege_status_banner_xyz: '&2 > Banner XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > Immunity Timer: &a%s'
@@ -314,6 +313,7 @@ status_town_siege_status: '&2 > Status: &a%s'
 status_town_siege_attacker: '&2 > Attacker: &a%s'
 status_town_siege_defender: '&2 > Defender: &a%s'
 status_town_siege_battle_points: '&2 > Points: &a%s &2/ &a%s'
+status_town_siege_status_attacker_win: 'Attacker Victory'
 status_town_siege_status_defender_win: 'Defender Victory'
 status_town_siege_status_attacker_abandon: 'Attacker Abandon'
 status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending, in %s'

@@ -412,9 +412,9 @@ public class SiegeWarTownEventListener implements Listener {
             case IN_PROGRESS:
                 return Translation.of("status_town_siege_status_in_progress");
             case ATTACKER_WIN:
-                return Translation.of("status_town_siege_status_attacker_win", siege.getNation().getFormattedName());
+                return Translation.of("status_town_siege_status_attacker_win");
             case DEFENDER_SURRENDER:
-                return Translation.of("status_town_siege_status_defender_surrender", siege.getNation().getFormattedName());
+                return Translation.of("status_town_siege_status_defender_surrender");
             case DEFENDER_WIN:
                 return Translation.of("status_town_siege_status_defender_win");
             case ATTACKER_ABANDON:
