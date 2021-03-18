@@ -97,11 +97,16 @@ public class SiegeWarNationEventListener implements Listener {
 	public void onNationStatusScreen(NationStatusScreenEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			Nation nation = event.getNation();
-			
-	        // Siege Attacks [3]: TownA, TownB, TownC
+
+			// Occupied Towns[3]: Town1, Town2, Town3
+			List<Town> occupiedTowns = TownOccupationController.getTownsOccupiedByNation(nation);
+			String[] formattedOccupiedTowns = TownyFormatter.getFormattedNames(occupiedTowns.toArray(new Town[0]));
+			List<String> out = new ArrayList<>(ChatTools.listArr(formattedOccupiedTowns, Translation.of("status_nation_occupied_towns", occupiedTowns.size())));
+
+			// Siege Attacks [3]: TownA, TownB, TownC
 	        List<Town> siegeAttacks = getTownsUnderSiegeAttack(nation);
 	        String[] formattedSiegeAttacks = TownyFormatter.getFormattedNames(siegeAttacks.toArray(new Town[0]));
-	        List<String> out = new ArrayList<>(ChatTools.listArr(formattedSiegeAttacks, Translation.of("status_nation_siege_attacks", siegeAttacks.size())));
+	        out.addAll(new ArrayList<>(ChatTools.listArr(formattedSiegeAttacks, Translation.of("status_nation_siege_attacks", siegeAttacks.size()))));
 
 	        // Siege Defences [3]: TownX, TownY, TownZ
 	        List<Town> siegeDefences = getTownsUnderSiegeDefence(nation);
