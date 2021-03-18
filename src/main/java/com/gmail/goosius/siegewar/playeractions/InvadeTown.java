@@ -115,15 +115,15 @@ public class InvadeTown {
 		if(nationOfInvadedTown == null) {
 			Messaging.sendGlobalMessage(
 					Translation.of("msg_neutral_town_invaded",
-							invadedTown.getFormattedName(),
-							invadingNation.getFormattedName()
+							invadedTown.getName(),
+							invadingNation.getName()
 					));
 		} else {
 			Messaging.sendGlobalMessage(
 					Translation.of("msg_nation_town_invaded",
-							invadedTown.getFormattedName(),
-							nationOfInvadedTown.getFormattedName(),
-							invadingNation.getFormattedName()
+							invadedTown.getName(),
+							nationOfInvadedTown.getName(),
+							invadingNation.getName()
 					));
 		}
 

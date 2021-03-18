@@ -26,14 +26,14 @@ public class DefenderTimedWin {
             case SUPPRESSION:
             case LIBERATION:
                 message = Translation.of(key,
-                        siege.getTown().getFormattedName(),
-                        siege.getDefender().getFormattedName(),
-                        siege.getAttacker().getFormattedName());
+                        siege.getTown().getName(),
+                        siege.getDefender().getName(),
+                        siege.getAttacker().getName());
                 break;
             case REVOLT:
                 message = Translation.of(key,
-                        siege.getTown().getFormattedName(),
-                        siege.getDefender().getFormattedName());
+                        siege.getTown().getName(),
+                        siege.getDefender().getName());
                 break;
         }
         return message;

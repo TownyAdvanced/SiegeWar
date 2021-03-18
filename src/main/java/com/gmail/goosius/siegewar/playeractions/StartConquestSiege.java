@@ -130,7 +130,7 @@ public class StartConquestSiege {
 			attackingNation.getAccount().withdraw(siege.getWarChestAmount(), "Cost of starting a siege.");
 			String moneyMessage =
 				Translation.of("msg_siege_war_attack_pay_war_chest",
-				attackingNation.getFormattedName(),
+				attackingNation.getName(),
 				TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
 
 			TownyMessaging.sendPrefixedNationMessage(attackingNation, moneyMessage);
@@ -145,16 +145,16 @@ public class StartConquestSiege {
 		//Send global message;
 		if (siege.getTown().hasNation()) {
 			Messaging.sendGlobalMessage(String.format(
-				Translation.of("msg_siege_war_siege_started_nation_town"),
-				attackingNation.getFormattedName(),
-				defendingTown.getNation().getFormattedName(),
-				defendingTown.getFormattedName()
+				Translation.of("msg_conquest_siege_started_nation_town"),
+				attackingNation.getName(),
+				defendingTown.getNation().getName(),
+				defendingTown.getName()
 			));
 		} else {
 			Messaging.sendGlobalMessage(String.format(
-				Translation.of("msg_siege_war_siege_started_neutral_town"),
-				attackingNation.getFormattedName(),
-				defendingTown.getFormattedName()
+				Translation.of("msg_conquest_siege_started_neutral_town"),
+				attackingNation.getName(),
+				defendingTown.getName()
 			));
 		}
 

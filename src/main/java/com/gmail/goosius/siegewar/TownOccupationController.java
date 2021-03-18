@@ -66,7 +66,7 @@ public class TownOccupationController {
 
             //At this point, valid occupier data has been found
             //Get nation
-            occupyingNation = TownyUniverse.getInstance().getNation(occupyingNationUUID);
+            occupyingNation = TownyUniverse.getInstance().getNation(UUID.fromString(occupyingNationUUID));
             //Populate the map
             if (nationTownsOccupationMap.containsKey(occupyingNation)) {
                 occupiedTowns = nationTownsOccupationMap.get(occupyingNation);
@@ -135,7 +135,7 @@ public class TownOccupationController {
                     occupiedTown.setConquered(true); //Fix data if required
                     occupiedTown.save();
                 }
-                return TownyUniverse.getInstance().getNation(occupierUUID);
+                return TownyUniverse.getInstance().getNation(UUID.fromString(occupierUUID));
             } else {
                 //Nation could not be loaded. Fix data
                 TownMetaDataController.removeOccupationMetadata(occupiedTown);

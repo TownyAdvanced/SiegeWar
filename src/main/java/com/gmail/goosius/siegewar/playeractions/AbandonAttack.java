@@ -2,19 +2,19 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.timeractions.DefenderWin;
-import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
+import com.palmergames.bukkit.towny.TownyTimerHandler;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import org.bukkit.entity.Player;
+
+import java.time.format.DateTimeFormatter;
 
 /**
  * This class is responsible for processing requests to Abandon siege attacks
@@ -54,19 +54,19 @@ public class AbandonAttack {
 			case CONQUEST:
 			case SUPPRESSION:
 				message = Translation.of(key,
-						siege.getTown().getFormattedName(),
-						siege.getAttacker().getFormattedName());
+						siege.getTown().getName(),
+						siege.getAttacker().getName());
 				break;
 			case LIBERATION:
 				message = Translation.of(key,
-						siege.getTown().getFormattedName(),
-						siege.getAttacker().getFormattedName(),
-						siege.getDefender().getFormattedName());
+						siege.getTown().getName(),
+						siege.getAttacker().getName(),
+						siege.getDefender().getName());
 				break;
 			case REVOLT:
 				message = Translation.of(key,
-						siege.getTown().getFormattedName(),
-						siege.getDefender().getFormattedName());
+						siege.getTown().getName(),
+						siege.getDefender().getName());
 				break;
 		}
 
