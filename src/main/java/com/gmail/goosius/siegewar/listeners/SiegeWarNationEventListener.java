@@ -12,20 +12,25 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
-import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyEconomyHandler;
-import com.palmergames.bukkit.towny.TownyFormatter;
-import com.palmergames.bukkit.towny.TownySettings;
+import com.palmergames.bukkit.towny.*;
 import com.palmergames.bukkit.towny.event.NationBonusCalculationEvent;
 import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
 import com.palmergames.bukkit.towny.event.PreDeleteNationEvent;
 import com.palmergames.bukkit.towny.event.RenameNationEvent;
+import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumOnlinePlayersCalculationEvent;
+import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumResidentsCalculationEvent;
+import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumTownsCalculationEvent;
 import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.bukkit.util.ChatTools;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -179,20 +184,63 @@ public class SiegeWarNationEventListener implements Listener {
 	}
 
 	/**
-	 * This event is fired while calculating the bonus blocks a town receives from its nation
+	 * Updates the number of bonus blocks when Towny calculates it
 	 *
-	 * Vanilla Towny Calculation:
-	 * Count all residents of all home towns of the nation
-	 *
-	 * SiegeWar Calculation:
-	 * 1. Count all residents of home towns which are unoccupied.
-	 * 2. Plus all residents from foreign towns which are occupied by the nation.
-	 *
+	 * All unoccupied home towns are counted
+	 * All occupied foreign towns are counted
 	 */
 	@EventHandler
 	public void on(NationBonusCalculationEvent event) {
 		Nation effectiveNation = SiegeWarNationUtil.getEffectiveNation(event.getNation());
 		int bonusBlocks = (Integer) TownySettings.getNationLevel(effectiveNation).get(TownySettings.NationLevel.TOWN_BLOCK_LIMIT_BONUS);
 		event.setBonusBlocks(bonusBlocks);
+	}
+
+	/**
+	 * Update the nation numresidents calculation when towny displays the nations list
+	 *
+	 * All unoccupied home towns are counted
+	 * All occupied foreign towns are counted
+	 */
+	@EventHandler
+	public void on(NationListDisplayedNumResidentsCalculationEvent event) {
+		Nation effectiveNation = SiegeWarNationUtil.getEffectiveNation(event.getNation());
+		event.setDisplayedValue(effectiveNation.getNumResidents());
+	}
+
+	/**
+	 * Update the nation numtowns calculation when towny displays the nations list
+	 *
+	 * All unoccupied home towns are counted
+	 * All occupied foreign towns are counted
+	 */
+	@EventHandler
+	public void on(NationListDisplayedNumTownsCalculationEvent event) {
+		Nation effectiveNation = SiegeWarNationUtil.getEffectiveNation(event.getNation());
+		event.setDisplayedValue(effectiveNation.getNumTowns());
+	}
+
+	/**
+	 * Update the nation onlineplayers calculation when towny displays the nations list
+	 *
+	 * All unoccupied home towns are counted
+	 * All occupied foreign towns are counted
+	 */
+	@EventHandler
+	public void on(NationListDisplayedNumOnlinePlayersCalculationEvent event) {
+		int effectiveNumOnlinePlayers = 0;
+		Resident resident;
+		Nation effectiveNation = SiegeWarNationUtil.getEffectiveNation(event.getNation());
+		for(Player player: BukkitTools.getOnlinePlayers()) {
+			if(TownyUniverse.getInstance().hasResident(player.getUniqueId())) {
+				resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
+				try {
+					if(resident.hasNation() && effectiveNation.getTowns().contains(resident.getTown())) {
+						effectiveNumOnlinePlayers++;
+					}
+				} catch (NotRegisteredException ignored) {}
+			}
+		}
+		event.setDisplayedValue(effectiveNumOnlinePlayers);
 	}
 }

@@ -226,16 +226,13 @@ public class PlaceBlock {
 														   Block bannerBlock) throws TownyException {
 
 		//Check whether nearby town has a current or recent siege
-		Siege siege = null;
-		if (!SiegeController.hasSiege(nearbyTown))
-			siege = SiegeController.getSiege(nearbyTown);
-
-		if(siege == null) {
+		if (SiegeController.hasSiege(nearbyTown)) {
+			//If there is no siege, it is an attempt to invade the town
+			Siege siege = SiegeController.getSiege(nearbyTown);
+			InvadeTown.processInvadeTownRequest(player, residentsNation, nearbyTown, siege);
+		} else {
 			//If there is no siege, it is an attempt to start a new siege
 			evaluateStartNewSiegeAttempt(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
-		} else {
-			//If there is no siege, it is an attempt to invade the town
-			InvadeTown.processInvadeTownRequest(player, residentsNation, nearbyTown, siege);
 		}
 	}
 
