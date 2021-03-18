@@ -46,7 +46,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			case "nation":
 				if (args.length == 2)
 					return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
-				if(args.length == 3 & args[1].equalsIgnoreCase("release")) {
+				if (args.length == 3 && args[1].equalsIgnoreCase("release")) {
 					return NameUtil.filterByStart(new ArrayList<>(TownOccupationController.getAllOccupiedTownNames()), args[2]);
 				}
 				break;
@@ -291,7 +291,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					Nation residentsNation = TownyAPI.getInstance().getTownNationOrNull(residentsTown);
 
 					//Ensure the specified town exists
-					if (TownyUniverse.getInstance().hasTown(townName))
+					if (!TownyUniverse.getInstance().hasTown(townName))
 						throw new TownyException(Translation.of("msg_err_unknown_town"));
 
 					//Ensure the specified town is occupied by the resident's nation
