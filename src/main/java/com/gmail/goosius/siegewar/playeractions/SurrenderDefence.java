@@ -16,6 +16,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
 
 /**
@@ -49,7 +50,7 @@ public class SurrenderDefence {
 		Messaging.sendGlobalMessage(getSurrenderMessage(siege, timeUntilSurrenderConfirmation));
 	}
 
-	private static String getSurrenderMessage(Siege siege, long timeUntilAbandonConfirmation) {
+	private static String getSurrenderMessage(Siege siege, long timeUntilSurrenderConfirmation) {
 		String key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toString().toLowerCase());
 		String message = "";
 		switch(siege.getSiegeType()) {
@@ -72,8 +73,8 @@ public class SurrenderDefence {
 				break;
 		}
 
-		if(timeUntilAbandonConfirmation > 0) {
-			message += Translation.of("msg_pending_attacker_victory", timeUntilAbandonConfirmation);
+		if(timeUntilSurrenderConfirmation > 0) {
+			message += Translation.of("msg_pending_attacker_victory", TimeMgmt.getFormattedTimeValue(timeUntilSurrenderConfirmation));
 		} else {
 			message += Translation.of("msg_immediate_attacker_victory");
 		}

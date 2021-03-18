@@ -12,6 +12,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.palmergames.bukkit.towny.TownyTimerHandler;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
 
 import java.time.format.DateTimeFormatter;
@@ -71,10 +72,12 @@ public class AbandonAttack {
 		}
 
 		if (timeUntilAbandonConfirmation > 0) {
-			message += Translation.of("msg_pending_defender_victory", timeUntilAbandonConfirmation);
+			message += Translation.of("msg_pending_defender_victory", TimeMgmt.getFormattedTimeValue(timeUntilAbandonConfirmation));
 		} else {
 			message += Translation.of("msg_immediate_defender_victory");
 		}
+
+
 
 		return message;
 	}
