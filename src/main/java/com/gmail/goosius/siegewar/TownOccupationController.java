@@ -216,5 +216,15 @@ public class TownOccupationController {
             }
         }
     }
+
+    public static Set<String> getAllOccupiedTownNames() {
+        Set<String> result = new HashSet<>();
+        for (Set<Town> occupiedTowns : new HashMap<>(nationTownsOccupationMap).values()) {
+            for(Town occupiedTown: occupiedTowns) {
+                result.add(occupiedTown.getName());
+            }
+        }
+        return result;
+    }
 }
 

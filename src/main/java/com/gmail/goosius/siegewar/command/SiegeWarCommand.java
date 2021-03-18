@@ -1,44 +1,36 @@
 package com.gmail.goosius.siegewar.command;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-
+import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
-import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
-import com.gmail.goosius.siegewar.objects.Siege;
-import com.gmail.goosius.siegewar.playeractions.AbandonAttack;
-import com.gmail.goosius.siegewar.playeractions.SurrenderDefence;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.*;
+import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.BookUtil;
+import com.gmail.goosius.siegewar.utils.CosmeticUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.permissions.TownyPerms;
+import com.palmergames.bukkit.towny.utils.NameUtil;
+import com.palmergames.bukkit.util.ChatTools;
+import com.palmergames.util.StringMgmt;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
-import com.gmail.goosius.siegewar.settings.Translation;
-import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.utils.NameUtil;
-import com.palmergames.bukkit.util.ChatTools;
-import com.palmergames.util.StringMgmt;
+
+import java.util.*;
 
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
@@ -51,23 +43,29 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
 		switch (args[0].toLowerCase()) {
-		case "nation":
-			if (args.length == 2)
-				return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
-		case "hud":
-			if (args.length == 2)
-				return NameUtil.filterByStart(new ArrayList<String>(SiegeController.getSiegedTownNames()), args[1]);
-		case "preference":
-			if (args.length == 2)
-				return NameUtil.filterByStart(siegewarPreferenceTabCompletes, args[1]);
-			if (args.length == 3)
-				return NameUtil.filterByStart(Arrays.asList("on", "off"), args[2]);
-		default:
-			if (args.length == 1)
-				return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
-			else
-				return Collections.emptyList();
+			case "nation":
+				if (args.length == 2)
+					return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
+				if(args.length == 3 & args[1].equalsIgnoreCase("release")) {
+					return NameUtil.filterByStart(new ArrayList<>(TownOccupationController.getAllOccupiedTownNames()), args[2]);
+				}
+				break;
+			case "hud":
+				if (args.length == 2)
+					return NameUtil.filterByStart(new ArrayList<>(SiegeController.getSiegedTownNames()), args[1]);
+				break;
+			case "preference":
+				if (args.length == 2)
+					return NameUtil.filterByStart(siegewarPreferenceTabCompletes, args[1]);
+				if (args.length == 3)
+					return NameUtil.filterByStart(Arrays.asList("on", "off"), args[2]);
+				break;
 		}
+
+		if (args.length == 1)
+			return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
+		else
+			return Collections.emptyList();
 	}
 
 	private void showSiegeWarHelp(CommandSender sender) {
