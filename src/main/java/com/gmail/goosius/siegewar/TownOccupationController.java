@@ -183,6 +183,8 @@ public class TownOccupationController {
     }
 
     public static void setTownOccupation(Town occupiedTown, @NotNull Nation occupyingNation) {
+        //Remove any existing occupation
+        removeTownOccupation(occupiedTown);
         //Add occupation
         TownMetaDataController.setOccupyingNationUUID(occupiedTown, occupyingNation.getUUID().toString());
         occupiedTown.setConquered(true);
