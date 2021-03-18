@@ -1,19 +1,17 @@
 package com.gmail.goosius.siegewar;
 
-import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public class TownOccupationController {
 
-    private static Map<Nation, List<Town>> nationTownsOccupationMap = new HashMap<>();
+    private static Map<Nation, Set<Town>> nationTownsOccupationMap = new HashMap<>();
     private final static String NATION_TOWNS_OCCUPATION_MAP_LOCK = "";
 
     public static void clearTownOccupations() {
@@ -35,7 +33,7 @@ public class TownOccupationController {
     public static void loadTownOccupationData() {
         String occupyingNationUUID;
         Nation occupyingNation = null;
-        List<Town> occupiedTowns;
+        Set<Town> occupiedTowns;
 
         for (Town town : TownyUniverse.getInstance().getTowns()) {
             occupyingNationUUID = TownMetaDataController.getOccupyingNationUUID(town);
@@ -72,7 +70,7 @@ public class TownOccupationController {
                 occupiedTowns = nationTownsOccupationMap.get(occupyingNation);
                 occupiedTowns.add(town);
             } else {
-                occupiedTowns = new ArrayList<>();
+                occupiedTowns = new HashSet<>();
                 occupiedTowns.add(town);
                 nationTownsOccupationMap.put(occupyingNation, occupiedTowns);
             }
@@ -81,7 +79,7 @@ public class TownOccupationController {
     }
 
     public static List<Town> getOccupiedForeignTowns(Nation nation) {
-        Map<Nation, List<Town>> nationTownsOccupationMapCopy = new HashMap<>(nationTownsOccupationMap);
+        Map<Nation, Set<Town>> nationTownsOccupationMapCopy = new HashMap<>(nationTownsOccupationMap);
 
         if (nationTownsOccupationMapCopy.containsKey(nation)) {
             return new ArrayList<>(nationTownsOccupationMapCopy.get(nation));
@@ -92,9 +90,9 @@ public class TownOccupationController {
 
     public static List<Town> getOccupiedHomeTowns(Nation nation) {
         List<Town> occupiedHomeTowns = new ArrayList<>();
-        Map<Nation, List<Town>> nationTownsOccupationMapCopy = new HashMap<>(nationTownsOccupationMap);
+        Map<Nation, Set<Town>> nationTownsOccupationMapCopy = new HashMap<>(nationTownsOccupationMap);
 
-        for(List<Town> occupiedTowns: nationTownsOccupationMapCopy.values()) {
+        for(Set<Town> occupiedTowns: nationTownsOccupationMapCopy.values()) {
             for(Town occupiedTown: occupiedTowns) {
                 try {
                     if(occupiedTown.hasNation() && occupiedTown.getNation() == nation)
@@ -169,7 +167,7 @@ public class TownOccupationController {
         //Adjust occupation map
         synchronized (NATION_TOWNS_OCCUPATION_MAP_LOCK) {
             //Remove town if it appears anywhere in the occupation map
-            for(Map.Entry<Nation, List<Town>> mapEntry: new HashMap<>(nationTownsOccupationMap).entrySet()) {
+            for(Map.Entry<Nation, Set<Town>> mapEntry: new HashMap<>(nationTownsOccupationMap).entrySet()) {
                 if(mapEntry.getValue().contains(occupiedTown)) {
                     if(mapEntry.getValue().size() == 1) {
                         //This it the only town on the list
@@ -193,11 +191,11 @@ public class TownOccupationController {
         synchronized (NATION_TOWNS_OCCUPATION_MAP_LOCK) {
             if (nationTownsOccupationMap.containsKey(occupyingNation)) {
                 //Nation already on map
-                List<Town> occupiedTownsList = nationTownsOccupationMap.get(occupyingNation);
+                Set<Town> occupiedTownsList = nationTownsOccupationMap.get(occupyingNation);
                 occupiedTownsList.add(occupiedTown);
             } else {
                 //Nation not yet on map
-                List<Town> occupiedTownsList = new ArrayList<>();
+                Set<Town> occupiedTownsList = new HashSet<>();
                 occupiedTownsList.add(occupiedTown);
                 nationTownsOccupationMap.put(occupyingNation, occupiedTownsList);
             }

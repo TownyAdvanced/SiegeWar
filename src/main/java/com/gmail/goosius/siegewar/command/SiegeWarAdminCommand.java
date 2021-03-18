@@ -185,7 +185,8 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
 	private void showTownHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/swa town"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setcaptured [true/false]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupier [town]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] removeoccupier", ""));
 	}
 
 	private void showNationHelp(CommandSender sender) {
@@ -333,7 +334,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	}
 
 	private void parseSiegeWarTownCommand(CommandSender sender, String[] args) {
-		if (args.length >= 3) {
+		if (args.length >= 2) {
 			Town town = TownyUniverse.getInstance().getTown(args[0]);
 			if (town == null) {
 				Messaging.sendErrorMsg(sender, Translation.of("msg_err_town_not_registered", args[0]));
@@ -342,6 +343,11 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
 			switch (args[1].toLowerCase()) {
 				case "setoccupier":
+					if (args.length < 3) {
+						showSiegeHelp(sender);
+						return;
+					}
+
 					if(SiegeController.hasActiveSiege(town)) {
 						Messaging.sendErrorMsg(sender, Translation.of("msg_err_swa_cannot_change_occupier_due_to_active_siege"));
 						return;
