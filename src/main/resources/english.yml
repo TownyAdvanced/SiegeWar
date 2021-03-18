@@ -240,8 +240,6 @@ msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control 
 
 #Hud
 hud_siege_balance: 'Siege Balance: '
-hud_battle_attacker_points: 'BAT ATK Points: '
-hud_battle_defender_points: 'BAT DEF Points: '
 hud_battle_time_remaining: 'BAT Time Left: '
 
 #Dynmap
@@ -277,7 +275,6 @@ msg_err_action_disable: '&cYou don''t have enough permissions for that action.'
 msg_err_unknown_town: '&cUnknown Town'
 msg_err_unknown_nation: '&cUnknown Nation'
 
-
 # Siege Types
 siege_type_conquest: 'Conquest'
 siege_type_liberation: 'Liberation'
@@ -289,6 +286,11 @@ dynmap_siege_type: 'Type: %s'
 dynmap_siege_town: 'Town: %s'
 dynmap_siege_balance: 'Siege Balance: %d'
 dynmap_siege_battle_points: 'Battle Points: %s / %s'
+
+# HUD
+hud_siege_type: 'Type: '
+hud_battle_attacker_points: 'ATK BAT Points: '
+hud_battle_defender_points: 'DEF BAT Points: '
 
 # Starting sieges
 msg_err_cannot_start_siege_attack_at_peaceful_town: '&cYou cannot start a siege at a peaceful town.'

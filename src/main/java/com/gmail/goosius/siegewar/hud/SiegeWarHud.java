@@ -19,6 +19,7 @@ public class SiegeWarHud {
         }
         
         board.getObjective("WAR_HUD_OBJ").setDisplayName(SiegeHUDManager.checkLength(Colors.Gold + "§l" + siege.getTown().getName()) + " " + Translation.of("hud_title"));
+        board.getTeam("siegeType").setSuffix(SiegeHUDManager.checkLength(siege.getSiegeType().getName()));
         board.getTeam("attackers").setSuffix(SiegeHUDManager.checkLength(siege.getNation().getName()));
         board.getTeam("defenders").setSuffix(SiegeHUDManager.checkLength(siege.getTown().getName()));
         board.getTeam("balance").setSuffix(siege.getSiegeBalance().toString());
@@ -34,7 +35,8 @@ public class SiegeWarHud {
         Objective objective = board.registerNewObjective("WAR_HUD_OBJ", "", Translation.of("hud_title"));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        Team attackers = board.registerNewTeam("attackers"),
+        Team siegeType = board.registerNewTeam("siegeType"),
+            attackers = board.registerNewTeam("attackers"),
             defenders = board.registerNewTeam("defenders"),
             balance = board.registerNewTeam("balance"),
             timeRemaining = board.registerNewTeam("timeRemaining"),
@@ -43,7 +45,8 @@ public class SiegeWarHud {
             battleDefenderScore = board.registerNewTeam("btDefenderPoints"),
             battleTimeRemaining = board.registerNewTeam("btTimeRemaining");
 
-        String attackers_entry = Colors.LightGray + Translation.of("hud_attackers"),
+        String siegeType_entry = Colors.LightGray + Translation.of("hud_siege_type"),
+            attackers_entry = Colors.LightGray + Translation.of("hud_attackers"),
             defenders_entry = Colors.LightGray + Translation.of("hud_defenders"),
             balance_entry = Colors.LightGray + Translation.of("hud_siege_balance"),
             timeRemaining_entry = Colors.LightGray + Translation.of("hud_time_remaining"),
@@ -52,6 +55,7 @@ public class SiegeWarHud {
             battleDefenderScore_entry = Colors.LightGray + Translation.of("hud_battle_defender_points"),
             battleTimeRemaining_entry = Colors.LightGray + Translation.of("hud_battle_time_remaining");
 
+        siegeType.addEntry(siegeType_entry);
         attackers.addEntry(attackers_entry);
         defenders.addEntry(defenders_entry);
         balance.addEntry(balance_entry);
@@ -61,6 +65,7 @@ public class SiegeWarHud {
         battleAttackerScore.addEntry(battleAttackerScore_entry);
         battleTimeRemaining.addEntry(battleTimeRemaining_entry);
 
+        objective.getScore(siegeType_entry).setScore(9);
         objective.getScore(attackers_entry).setScore(8);
         objective.getScore(defenders_entry).setScore(7);
         objective.getScore(balance_entry).setScore(6);
