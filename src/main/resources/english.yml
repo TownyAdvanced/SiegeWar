@@ -322,6 +322,10 @@ status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending
 status_town_siege_status_plundered: '&2 > Town Plundered: %s'
 status_town_siege_status_invaded: '   &2Town Invaded: %s'
 
+# Nation screen
+status_nation_occupied_home_towns: '&2Occupied Home Towns &a[%s]&2: &f'
+status_nation_occupied_foreign_towns: '&2Occupied Foreign Towns &a[%s]&2: &f'
+
 # Siege statuses
 siege_status_attacker_abandon: 'Attacker Abandon'
 siege_status_defender_surrender: 'Defender Surrender'

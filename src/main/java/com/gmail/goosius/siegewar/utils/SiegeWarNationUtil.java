@@ -29,7 +29,7 @@ public class SiegeWarNationUtil {
         }
 
         //Count all foreign towns which the nation has occupied
-        for(Town town: TownOccupationController.getTownsOccupiedByNation(nation)) {
+        for(Town town: TownOccupationController.getOccupiedForeignTowns(nation)) {
             effectiveNation.addTown(town);
         }
 

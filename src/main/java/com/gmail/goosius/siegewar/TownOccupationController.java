@@ -80,7 +80,7 @@ public class TownOccupationController {
         }
     }
 
-    public static List<Town> getTownsOccupiedByNation(Nation nation) {
+    public static List<Town> getOccupiedForeignTowns(Nation nation) {
         Map<Nation, List<Town>> nationTownsOccupationMapCopy = new HashMap<>(nationTownsOccupationMap);
 
         if (nationTownsOccupationMapCopy.containsKey(nation)) {
@@ -88,6 +88,21 @@ public class TownOccupationController {
         } else {
             return new ArrayList<>();
         }
+    }
+
+    public static List<Town> getOccupiedHomeTowns(Nation nation) {
+        List<Town> occupiedHomeTowns = new ArrayList<>();
+        Map<Nation, List<Town>> nationTownsOccupationMapCopy = new HashMap<>(nationTownsOccupationMap);
+
+        for(List<Town> occupiedTowns: nationTownsOccupationMapCopy.values()) {
+            for(Town occupiedTown: occupiedTowns) {
+                try {
+                    if(occupiedTown.hasNation() && occupiedTown.getNation() == nation)
+                        occupiedHomeTowns.add(occupiedTown);
+                } catch (NotRegisteredException ignored) {}
+            }
+        }
+        return occupiedHomeTowns;
     }
 
     /**

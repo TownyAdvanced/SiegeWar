@@ -29,7 +29,6 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.bukkit.util.ChatTools;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -38,7 +37,6 @@ import org.bukkit.event.Listener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 
@@ -98,10 +96,15 @@ public class SiegeWarNationEventListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			Nation nation = event.getNation();
 
-			// Occupied Towns[3]: Town1, Town2, Town3
-			List<Town> occupiedTowns = TownOccupationController.getTownsOccupiedByNation(nation);
-			String[] formattedOccupiedTowns = TownyFormatter.getFormattedNames(occupiedTowns.toArray(new Town[0]));
-			List<String> out = new ArrayList<>(ChatTools.listArr(formattedOccupiedTowns, Translation.of("status_nation_occupied_towns", occupiedTowns.size())));
+			// Occupied Home Towns[3]: Town1, Town2, Town3
+			List<Town> occupiedHomeTowns = TownOccupationController.getOccupiedHomeTowns(nation);
+			String[] formattedOccupiedHomeTowns = TownyFormatter.getFormattedNames(occupiedHomeTowns.toArray(new Town[0]));
+			List<String> out = new ArrayList<>(ChatTools.listArr(formattedOccupiedHomeTowns, Translation.of("status_nation_occupied_home_towns", occupiedHomeTowns.size())));
+
+			// Occupied Foreign Towns[3]: Town4, Town5, Town6
+			List<Town> occupiedForeignTowns = TownOccupationController.getOccupiedForeignTowns(nation);
+			String[] formattedOccupiedForeignTowns = TownyFormatter.getFormattedNames(occupiedForeignTowns.toArray(new Town[0]));
+			out.addAll(new ArrayList<>(ChatTools.listArr(formattedOccupiedForeignTowns, Translation.of("status_nation_occupied_foreign_towns", occupiedForeignTowns.size()))));
 
 			// Siege Attacks [3]: TownA, TownB, TownC
 	        List<Town> siegeAttacks = getTownsUnderSiegeAttack(nation);
