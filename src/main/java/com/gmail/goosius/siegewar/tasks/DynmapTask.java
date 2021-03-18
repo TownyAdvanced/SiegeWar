@@ -1,15 +1,17 @@
 package com.gmail.goosius.siegewar.tasks;
 
-import java.io.InputStream;
-import java.util.*;
-
-import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.BattleSession;
+import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.Settings;
-import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.object.Town;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.SiegeWarDynmapUtil;
+import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.util.StringMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -19,14 +21,8 @@ import org.dynmap.markers.MarkerAPI;
 import org.dynmap.markers.MarkerIcon;
 import org.dynmap.markers.MarkerSet;
 
-import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.objects.Siege;
-import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
-import com.gmail.goosius.siegewar.utils.SiegeWarDynmapUtil;
-import com.palmergames.bukkit.towny.TownyEconomyHandler;
-import com.palmergames.util.StringMgmt;
+import java.io.InputStream;
+import java.util.*;
 
 public class DynmapTask {
 
@@ -76,7 +72,6 @@ public class DynmapTask {
             if (!stop) {
                 hideMapSneakingPlayers();
                 displaySieges();
-                addOccupationInformationToTowns();
             }
         }, 40l, 300l);
     }
@@ -210,34 +205,6 @@ public class DynmapTask {
             } else {
                 // Otherwise don't hide
                 dynmapAPI.assertPlayerInvisibility(player, false, SiegeWar.getSiegeWar());
-            }
-        }
-    }
-
-    private static void addOccupationInformationToTowns() {
-        String finalDescription;
-        String rawDescription;
-        for(Marker townMarker: new HashSet<>(townyMarkerSet.getMarkers())) {
-            rawDescription = townMarker.getDescription();
-            if(rawDescription != null && !rawDescription.isEmpty()) {
-                if(rawDescription.contains("%occupyingNation%")) {
-                    //Get town name
-                    String townName = townMarker.getLabel().replaceAll("\\s\\(.*", "");
-                    //Ensure town can be found
-                    if(!TownyUniverse.getInstance().hasTown(townName))
-                        continue;
-                    //Get town
-                    Town town = TownyUniverse.getInstance().getTown(townName);
-                    //Add occupier info
-                    if(TownOccupationController.isTownOccupied(town)) {
-                        String occupierName = TownOccupationController.getTownOccupier(town).getName();
-                        finalDescription = rawDescription.replace("%occupyingNation%", occupierName);
-                    } else {
-                        finalDescription = "";
-                    }
-                    //Modify original description
-                    townMarker.setDescription(finalDescription);
-                }
             }
         }
     }
