@@ -189,9 +189,6 @@ public class SiegeWarBannerControlUtil {
 		if (!resident.hasTown())
 			return false; //Player is a nomad
 
-		if(TownOccupationController.isTownOccupied(resident.getTown()))
-			return false; // Player is from occupied town
-
 		if(player.isFlying() || player.isGliding())
 			return false;   // Player is flying
 

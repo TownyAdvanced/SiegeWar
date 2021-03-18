@@ -36,6 +36,7 @@ public class DefenderTimedWin {
                         siege.getDefender().getName());
                 break;
         }
+        message += Translation.of("msg_immediate_defender_victory");
         return message;
     }
 

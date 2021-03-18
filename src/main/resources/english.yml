@@ -284,6 +284,7 @@ siege_type_suppression: 'Suppression'
 dynmap_siege_type: 'Type: %s'
 dynmap_siege_town: 'Town: %s'
 dynmap_siege_balance: 'Siege Balance: %d'
+dynmap_siege_war_chest: 'War Chest: %s'
 dynmap_siege_battle_points: 'Battle Points: %s / %s'
 
 # HUD
@@ -373,10 +374,10 @@ msg_neutral_town_invaded: '&b%s has been invaded by %s, and placed under occupat
 msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and placed under occupation!'
 
 # Releasing towns from occupation
-msg_err_cannot_release_town_not_occupied_by_nation: '&c You cannot release the town because it is not occupied by your nation'
-msg_err_cannot_release_besieged_town: '&c You cannot release a besieged town'
+msg_err_cannot_release_town_not_occupied_by_nation: '&cYou cannot release the town because it is not occupied by your nation'
+msg_err_cannot_release_besieged_town: '&cYou cannot release a besieged town'
 msg_town_released_from_occupation: 'The town has been released from occupation by %s'
-msg_foreign_town_released_from_occupation: 'Tha nation released the town of %s from occupation'
+msg_foreign_town_released_from_occupation: 'The nation released the town of %s from occupation'
 
 # Help
 nation_help_14 : 'Release the given town from occupation.'

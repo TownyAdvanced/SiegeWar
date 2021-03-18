@@ -73,8 +73,6 @@ public class AbandonAttack {
 			message += Translation.of("msg_immediate_defender_victory");
 		}
 
-
-
 		return message;
 	}
 }
