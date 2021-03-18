@@ -36,22 +36,22 @@ public class InvadeTown {
 	 */
 	public static void processInvadeTownRequest(Player player, Nation residentsNation, Town nearbyTown, Siege siege) throws TownyException {
 		if(!SiegeWarSettings.getWarSiegeInvadeEnabled())
-			throw new TownyException("msg_err_action_disable");
+			throw new TownyException(Translation.of("msg_err_action_disable"));
 
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_INVADE.getNode()))
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
 		if(residentsNation == null)
-			throw new TownyException("msg_err_action_disable");  //Can't invade if nationless
+			throw new TownyException(Translation.of("msg_err_action_disable"));  //Can't invade if nationless
 
 		if(residentsNation != siege.getAttacker())
-			throw new TownyException("msg_err_action_disable");  //Can't invade unless you are the attacker
+			throw new TownyException(Translation.of("msg_err_action_disable"));  //Can't invade unless you are the attacker
 
 		if(siege.getStatus().isActive())
-			throw new TownyException("msg_err_cannot_invade_siege_still_in_progress");
+			throw new TownyException(Translation.of("msg_err_cannot_invade_siege_still_in_progress"));
 
 		if(TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation)
-			throw new TownyException("msg_err_cannot_invade_town_already_occupied");
+			throw new TownyException(Translation.of("msg_err_cannot_invade_town_already_occupied"));
 
 		if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
 			throw new TownyException(Translation.of("msg_err_cannot_invade_without_victory"));

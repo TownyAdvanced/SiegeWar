@@ -172,7 +172,7 @@ public class PlaceBlock {
 				} else if (residentsTown == nearbyTown) {
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
-					throw new TownyException("msg_err_action_disable");
+					throw new TownyException(Translation.of("msg_err_action_disable"));
 				}
 				break;
 			case LIBERATION:
@@ -181,7 +181,7 @@ public class PlaceBlock {
 				} else if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
-					throw new TownyException("msg_err_action_disable");
+					throw new TownyException(Translation.of("msg_err_action_disable"));
 				}
 				break;
 			case REVOLT:
@@ -190,7 +190,7 @@ public class PlaceBlock {
 				} else if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
-					throw new TownyException("msg_err_action_disable");
+					throw new TownyException(Translation.of("msg_err_action_disable"));
 				}
 				break;
 			case SUPPRESSION:
@@ -199,7 +199,7 @@ public class PlaceBlock {
 					if (residentsTown == nearbyTown) {
 						SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 					} else {
-						throw new TownyException("msg_err_action_disable");
+						throw new TownyException(Translation.of("msg_err_action_disable"));
 					}
 					break;
 				}

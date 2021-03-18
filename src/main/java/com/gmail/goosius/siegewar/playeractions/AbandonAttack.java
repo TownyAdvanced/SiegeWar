@@ -8,14 +8,10 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.timeractions.DefenderWin;
-import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
-import com.palmergames.bukkit.towny.TownyTimerHandler;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
-
-import java.time.format.DateTimeFormatter;
 
 /**
  * This class is responsible for processing requests to Abandon siege attacks
