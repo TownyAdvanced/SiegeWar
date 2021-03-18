@@ -176,7 +176,7 @@ public class PlaceBlock {
 			case LIBERATION:
 				if (residentsNation != null && residentsNation == siege.getAttacker()) {
 					AbandonAttack.processAbandonAttackRequest(player, siege);
-				} else if (residentsNation != null && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
+				} else if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException("msg_err_action_disable");
@@ -185,14 +185,14 @@ public class PlaceBlock {
 			case REVOLT:
 				if (residentsTown == nearbyTown) {
 					AbandonAttack.processAbandonAttackRequest(player, siege);
-				} else if (residentsNation != null && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
+				} else if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException("msg_err_action_disable");
 				}
 				break;
 			case SUPPRESSION:
-				if (residentsNation != null && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
+				if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
 					AbandonAttack.processAbandonAttackRequest(player, siege);
 					if (residentsTown == nearbyTown) {
 						SurrenderDefence.processSurrenderDefenceRequest(player, siege);

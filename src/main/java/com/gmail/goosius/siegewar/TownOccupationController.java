@@ -40,24 +40,22 @@ public class TownOccupationController {
         for (Town town : TownyUniverse.getInstance().getTowns()) {
             occupyingNationUUID = TownMetaDataController.getOccupyingNationUUID(town);
             if (occupyingNationUUID == null) {
-                //Occupier not found. Fix any de-synced data and move to next town
+                //Occupier uuid not found. Fix data if required and move to next town
                 if (town.isConquered()) {
                     town.setConquered(false);
                     town.save();
                 }
-                continue; //Go to next town
+                continue;
             } else {
-                //Occupier found
-                try {
-                    occupyingNation = TownyUniverse.getInstance().getDataSource().getNation(UUID.fromString(SiegeMetaDataController.getNationUUID(town)));
-                    //Occupier loaded correctly. Fixed any de-synced data
-                    if(!town.isConquered()) {
+                //Occupier uuid found
+                if(TownyUniverse.getInstance().hasNation(UUID.fromString(occupyingNationUUID))) {
+                    //Nation UUID is known to towny. Fixed data if required.
+                    if (!town.isConquered()) {
                         town.setConquered(true);
                         town.save();
                     }
-
-                } catch (NotRegisteredException e) {
-                    //Could not load occupuer. Fix any de-synced data and move to next town
+                } else {
+                    //Nation UUID is not known to Towny. Fix data if required and move to next town
                     if(town.isConquered()) {
                         town.setConquered(false);
                         town.save();
@@ -67,6 +65,8 @@ public class TownOccupationController {
             }
 
             //At this point, valid occupier data has been found
+            //Get nation
+            occupyingNation = TownyUniverse.getInstance().getNation(occupyingNationUUID);
             //Populate the map
             if (nationTownsOccupationMap.containsKey(occupyingNation)) {
                 occupiedTowns = new ArrayList<>();
@@ -88,7 +88,6 @@ public class TownOccupationController {
         }
     }
 
-
     /**
      * Determine if a town is occupied.
      *
@@ -105,12 +104,13 @@ public class TownOccupationController {
          String occupierUUID = TownMetaDataController.getOccupyingNationUUID(occupiedTown);
          if (occupierUUID == null) {
              if(occupiedTown.isConquered())
-                 occupiedTown.setConquered(false); //Fix de-synced data
+                 occupiedTown.setConquered(false); //Fix data if required
              return false;
-         } else
-         if(!occupiedTown.isConquered())
-             occupiedTown.setConquered(true); //Fix de-synced data
-         return true;
+         } else {
+             if (!occupiedTown.isConquered())
+                 occupiedTown.setConquered(true); //Fix data if required
+             return true;
+         }
     }
 
     /**
@@ -123,13 +123,25 @@ public class TownOccupationController {
      * @return the occupying nation.
      * @throws RuntimeException if no occupier is found
      */
-    @Nullable
     public static Nation getTownOccupier(Town occupiedTown) {
         String occupierUUID = TownMetaDataController.getOccupyingNationUUID(occupiedTown);
-        if (occupierUUID == null)
+        if (occupierUUID == null) {
             throw new RuntimeException("Occupier not found");
-        else
-            return TownyUniverse.getInstance().getNation(occupierUUID);
+        } else {
+            if(TownyUniverse.getInstance().hasNation(UUID.fromString(occupierUUID))) {
+                if(!occupiedTown.isConquered()) {
+                    occupiedTown.setConquered(true); //Fix data if required
+                    occupiedTown.save();
+                }
+                return TownyUniverse.getInstance().getNation(occupierUUID);
+            } else {
+                //Nation could not be loaded. Fix data
+                TownMetaDataController.removeOccupationMetadata(occupiedTown);
+                occupiedTown.setConquered(false);
+                occupiedTown.save();
+                throw new RuntimeException("Error loading occupier data for " + occupiedTown.getName() + " Data fixed automatically by de-occupying town");
+            }
+        }
     }
 
     public static void removeTownOccupation(Town occupiedTown) {

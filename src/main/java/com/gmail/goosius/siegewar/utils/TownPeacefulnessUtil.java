@@ -265,27 +265,9 @@ public class TownPeacefulnessUtil {
 	}
 
 	private static boolean ensureTownIsPeacefullyOccupied(Town peacefulTown, Nation newOccupier) throws NotRegisteredException {
-		Nation currentOccupier = TownOccupationController.getTownOccupier(peacefulTown);
-
-		if(currentOccupier == null) {
-			//Town is not yet occupied
-
-			//Occupy town
-			TownOccupationController.setTownOccupation(peacefulTown, newOccupier);
-			//Send messages
-			if(peacefulTown.hasNation()) {
-				//Send to nation of peaceful town
-				TownyMessaging.sendPrefixedNationMessage(peacefulTown.getNation(), Translation.of("msg_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
-				//Send to occupier
-				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
-			} else {
-				//Send to peaceful town
-				TownyMessaging.sendPrefixedTownMessage(peacefulTown, Translation.of("msg_neutral_town_peacefully_occupied", peacefulTown.getName()));
-				//Send to occupier
-				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_neutral_town_peacefully_occupied", peacefulTown.getName()));
-			}
-		} else {
+		if(TownOccupationController.isTownOccupied(peacefulTown)) {
 			//Town is already occupied
+			Nation currentOccupier = TownOccupationController.getTownOccupier(peacefulTown);
 
 			//Check if town is already occupied by correct nation
 			if(currentOccupier == newOccupier)
@@ -307,6 +289,22 @@ public class TownPeacefulnessUtil {
 				//Send to previous occupier
 				TownyMessaging.sendPrefixedNationMessage(currentOccupier, Translation.of("msg_neutral_town_peacefully_occupied", peacefulTown.getName()));
 				//Send to new occupier
+				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_neutral_town_peacefully_occupied", peacefulTown.getName()));
+			}
+		} else {
+			//Town is not yet occupied
+			//Occupy town
+			TownOccupationController.setTownOccupation(peacefulTown, newOccupier);
+			//Send messages
+			if(peacefulTown.hasNation()) {
+				//Send to nation of peaceful town
+				TownyMessaging.sendPrefixedNationMessage(peacefulTown.getNation(), Translation.of("msg_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
+				//Send to occupier
+				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
+			} else {
+				//Send to peaceful town
+				TownyMessaging.sendPrefixedTownMessage(peacefulTown, Translation.of("msg_neutral_town_peacefully_occupied", peacefulTown.getName()));
+				//Send to occupier
 				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_neutral_town_peacefully_occupied", peacefulTown.getName()));
 			}
 		}

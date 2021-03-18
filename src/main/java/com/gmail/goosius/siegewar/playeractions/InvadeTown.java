@@ -50,7 +50,7 @@ public class InvadeTown {
 		if(siege.getStatus().isActive())
 			throw new TownyException("msg_err_cannot_invade_siege_still_in_progress");
 
-		if(TownOccupationController.getTownOccupier(nearbyTown) == residentsNation)
+		if(TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation)
 			throw new TownyException("msg_err_cannot_invade_town_already_occupied");
 
 		if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
