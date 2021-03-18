@@ -69,12 +69,14 @@ public class TownOccupationController {
             occupyingNation = TownyUniverse.getInstance().getNation(occupyingNationUUID);
             //Populate the map
             if (nationTownsOccupationMap.containsKey(occupyingNation)) {
-                occupiedTowns = new ArrayList<>();
-            } else {
                 occupiedTowns = nationTownsOccupationMap.get(occupyingNation);
+                occupiedTowns.add(town);
+            } else {
+                occupiedTowns = new ArrayList<>();
+                occupiedTowns.add(town);
+                nationTownsOccupationMap.put(occupyingNation, occupiedTowns);
             }
-            occupiedTowns.add(town);
-            nationTownsOccupationMap.put(occupyingNation, occupiedTowns);
+
         }
     }
 
