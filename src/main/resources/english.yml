@@ -143,10 +143,10 @@ msg_err_no_money: '&cThere is not enough money in the bank.'
 
 #Added in 0.04:
 msg_err_not_registered_1: '&c%s is not registered.'
-msg_error_must_be_num: '&bAmount must be a number.'
+msg_error_must_be_num: '&cAmount must be a number.'
 
 #Added in 0.05:
-msg_err_not_being_sieged: '&bTown %s does not have any active sieges.'
+msg_err_not_being_sieged: '&cTown %s does not have any active sieges.'
 msg_err_town_not_registered: '&cTown %s is not registered.'
 
 #Scoreboard
@@ -388,7 +388,7 @@ msg_nation_town_peacefully_released: "&b%s, belonging to %s, has been peacefully
 
 # Admin commands
 msg_err_swa_cannot_set_invade_due_to_siege_type: '&cYou cannot set the invaded flag for this type of siege.'
-msg_err_swa_cannot_set_occupier_due_to_active_siege: '&cYou cannot set an occupier if the town has an active siege.'
+msg_err_swa_cannot_change_occupier_due_to_active_siege: '&cYou cannot change the occupier if the town has an active siege.'
 msg_err_swa_home_nation_cannot_be_occupier: '&cYou cannot set the towns home nation to be its occupier.'
 
 msg_swa_set_invade_success: '&bSet invaded to %s for %s.'

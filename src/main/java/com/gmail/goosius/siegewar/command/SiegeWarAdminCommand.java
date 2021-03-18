@@ -42,7 +42,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	private static final List<String> siegewaradminTabCompletes = Arrays.asList("immunity","reload","siege","town","nation");
 	private static final List<String> siegewaradminImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
-	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setoccupier");
+	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setoccupier","removeoccupier");
 	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost");
 
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
@@ -341,15 +341,9 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			}
 
 			switch (args[1].toLowerCase()) {
-				case "setoccupier": {
+				case "setoccupier":
 					if(SiegeController.hasActiveSiege(town)) {
-						Messaging.sendErrorMsg(sender, Translation.of("msg_err_swa_cannot_set_occupier_due_to_active_siege"));
-						return;
-					}
-
-					if(args[2].toLowerCase().equals("none")) {
-						TownOccupationController.removeTownOccupation(town);
-						Messaging.sendMsg(sender, Translation.of("msg_swa_town_occupation_removal_success", town.getName()));
+						Messaging.sendErrorMsg(sender, Translation.of("msg_err_swa_cannot_change_occupier_due_to_active_siege"));
 						return;
 					}
 
@@ -369,8 +363,17 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
 					TownOccupationController.setTownOccupation(town, occupier);
 					Messaging.sendMsg(sender, Translation.of("msg_swa_town_occupation_change_success", occupier.getName(), town.getName()));
-					return;
-				}
+					break;
+
+				case "removeoccupier":
+					if(SiegeController.hasActiveSiege(town)) {
+						Messaging.sendErrorMsg(sender, Translation.of("msg_err_swa_cannot_change_occupier_due_to_active_siege"));
+						return;
+					}
+
+					TownOccupationController.removeTownOccupation(town);
+					Messaging.sendMsg(sender, Translation.of("msg_swa_town_occupation_removal_success", town.getName()));
+					break;
 			}
 		} else
 			showTownHelp(sender);

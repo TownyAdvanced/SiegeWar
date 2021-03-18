@@ -151,10 +151,10 @@ msg_err_no_money: "&cIl n'y a pas assez d'argent dans la banque."
 
 #Added in 0.04:
 msg_err_not_registered_1: "&c%s n'est pas enregistré."
-msg_error_must_be_num: "&bLe montant doit être un nombre."
+msg_error_must_be_num: "&cLe montant doit être un nombre."
 
 #Added in 0.05:
-msg_err_not_being_sieged: "&bLa ville %s n'a pas de siège actif."
+msg_err_not_being_sieged: "&cLa ville %s n'a pas de siège actif."
 msg_err_town_not_registered: "&cLa ville %s n'est pas enregistrée."
 
 #Scoreboard
