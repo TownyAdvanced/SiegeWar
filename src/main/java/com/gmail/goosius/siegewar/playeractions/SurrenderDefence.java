@@ -2,18 +2,12 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.timeractions.AttackerWin;
-import com.gmail.goosius.siegewar.timeractions.DefenderWin;
-import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.util.TimeMgmt;
