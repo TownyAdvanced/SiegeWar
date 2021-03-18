@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -151,13 +152,14 @@ public class PlaceBlock {
 												   Town residentsTown,
 												   Nation residentsNation,
 												   Town nearbyTown) throws TownyException {
-
-		//Ensure that the nearby town has an active siege
-		if (!SiegeController.hasActiveSiege(nearbyTown))
-			throw new TownyException(Translation.of("msg_err_town_has_no_active_siege_to_abandon_surrender"));
+		//Ensure that there is a siege
+		if (!SiegeController.hasSiege(nearbyTown))
+			throw new TownyException(Translation.of("msg_err_town_cannot_end_siege_as_no_siege"));
 
 		//Get siege
 		Siege siege = SiegeController.getSiege(nearbyTown);
+		if(siege.getStatus() != SiegeStatus.IN_PROGRESS)
+			throw new TownyException(Translation.of("msg_err_town_cannot_end_siege_as_finished"));
 
 		/*
 		 * Check what type of action this qualifies as.

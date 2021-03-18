@@ -302,23 +302,27 @@ public class SiegeWarTownEventListener implements Listener {
 	        }
 
 	        if (SiegeController.hasSiege(town)) {
-	            Siege siege = SiegeController.getSiege(town);
-	            String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getSiegeImmunityEndTime(town)- System.currentTimeMillis());
-	            switch (siege.getStatus()) {
+				Siege siege = SiegeController.getSiege(town);
+				SiegeStatus siegeStatus= siege.getStatus();
+				String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getSiegeImmunityEndTime(town)- System.currentTimeMillis());
+
+				//Siege:
+				out.add(Translation.of("status_town_siege"));
+
+				// > Type: Conquest
+				out.add(Translation.of("status_town_siege_type", siege.getSiegeType().getName()));
+
+				// > Status: In Progress
+				out.add(Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege)));
+
+				// > Attacker: Land of Darkness (Nation)
+				out.add(Translation.of("status_town_siege_attacker", siege.getAttacker().getFormattedName()));
+
+				// > Defender: Land of Light (Nation)
+				out.add(Translation.of("status_town_siege_defender", siege.getDefender().getFormattedName()));
+
+				switch (siegeStatus) {
 	                case IN_PROGRESS:
-	                    //Siege:
-	                    String siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
-	                    out.add(siegeStatus);
-
-	                    // > Type: CONQUEST
-						out.add(Translation.of("status_town_siege_type", siege.getSiegeType().getName()));
-
-						// > Attacker: Land of Darkness (Nation)
-						out.add(Translation.of("status_town_siege_attacker", siege.getAttacker().getFormattedName()));
-
-						// > Defender: Land of Light (Nation)
-						out.add(Translation.of("status_town_siege_defender", siege.getDefender().getFormattedName()));
-
 						// > Balance: 530
 						out.add(Translation.of("status_town_siege_status_siege_balance", siege.getSiegeBalance()));
 
@@ -376,9 +380,6 @@ public class SiegeWarTownEventListener implements Listener {
 	                case DEFENDER_SURRENDER:
 					case DEFENDER_WIN:
 					case ATTACKER_ABANDON:
-					    siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
-						out.add(siegeStatus);
-
 	                    String invadedPlunderedStatus = getInvadedPlunderedStatusLine(siege);
 						if(!invadedPlunderedStatus.isEmpty())
 							out.add(invadedPlunderedStatus);
@@ -389,9 +390,6 @@ public class SiegeWarTownEventListener implements Listener {
 
 	                case PENDING_DEFENDER_SURRENDER:
 	                case PENDING_ATTACKER_ABANDON:
-	                    siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
-	                    out.add(siegeStatus);
-	                    break;
 					case UNKNOWN:
 						break;
 	            }
@@ -400,7 +398,7 @@ public class SiegeWarTownEventListener implements Listener {
 	            	&& System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(town)) {
 	                //Siege:
 	                // > Immunity Timer: 40.8 hours
-	                out.add(Translation.of("status_town_siege_status", ""));
+	                out.add(Translation.of("status_town_siege"));
 	                String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getSiegeImmunityEndTime(town)- System.currentTimeMillis()); 
 	                out.add(Translation.of("status_town_siege_immunity_timer", time));
 	            }
