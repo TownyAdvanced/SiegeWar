@@ -3,10 +3,13 @@ package com.gmail.goosius.siegewar.tasks;
 import java.io.InputStream;
 import java.util.*;
 
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.settings.Settings;
+import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -30,7 +33,8 @@ public class DynmapTask {
     static DynmapAPI dynmapAPI;
     static MarkerAPI markerapi;
     static boolean stop;
-    static MarkerSet markerSet;
+    static MarkerSet siegeWarMarkerSet;
+    static MarkerSet townyMarkerSet;
     static Map<UUID, Marker> townUUDToSiegeMarkerMap = new HashMap<>();
     final static String PEACEFUL_BANNER_ICON_ID = "fire";
     final static String BATTLE_BANNER_ICON_ID = "siegewar.battle";
@@ -43,16 +47,20 @@ public class DynmapTask {
             return;
         }
 
-        markerSet = markerapi.getMarkerSet("siegewar.markerset");
-        if (markerSet == null) {
-            markerSet = markerapi.createMarkerSet("siegewar.markerset", "SiegeWar", null, false);
+        //Create siegewar marker set
+        siegeWarMarkerSet = markerapi.getMarkerSet("siegewar.markerset");
+        if (siegeWarMarkerSet == null) {
+            siegeWarMarkerSet = markerapi.createMarkerSet("siegewar.markerset", "SiegeWar", null, false);
         } else
-            markerSet.setMarkerSetLabel("SiegeWar");
+            siegeWarMarkerSet.setMarkerSetLabel("SiegeWar");
 
-        if (markerSet == null) {
+        if (siegeWarMarkerSet == null) {
             System.err.println(SiegeWar.prefix + "Error creating dynmap marker set");
             return;
         }
+
+        //Get towny marker set
+        townyMarkerSet = markerapi.getMarkerSet("towny.markerset");
 
         //Create battle banner marker icon
         InputStream png = SiegeWar.getSiegeWar().getResource(Settings.BATTLE_BANNER_FILE_NAME);
@@ -68,6 +76,7 @@ public class DynmapTask {
             if (!stop) {
                 hideMapSneakingPlayers();
                 displaySieges();
+                addOccupationInformationToTowns();
             }
         }, 40l, 300l);
     }
@@ -162,12 +171,12 @@ public class DynmapTask {
                         double siegeX = siegeLoc.getX();
                         double siegeZ = siegeLoc.getZ();
                         String siegeMarkerId = siege.getTown().getUUID().toString();
-                        Marker siegeMarker = markerSet.findMarker(siegeMarkerId);
+                        Marker siegeMarker = siegeWarMarkerSet.findMarker(siegeMarkerId);
                         if (siegeMarker == null) {
-                            markerSet.createMarker(siegeMarkerId, name, siegeLoc.getWorld().getName(), siegeX, 64,
+                            siegeWarMarkerSet.createMarker(siegeMarkerId, name, siegeLoc.getWorld().getName(), siegeX, 64,
                                     siegeZ, siegeIcon, false);
 
-                            siegeMarker = markerSet.findMarker(siegeMarkerId);
+                            siegeMarker = siegeWarMarkerSet.findMarker(siegeMarkerId);
                             siegeMarker.setLabel(name);
                             siegeMarker.setDescription(desc);
                         } else {
@@ -201,6 +210,34 @@ public class DynmapTask {
             } else {
                 // Otherwise don't hide
                 dynmapAPI.assertPlayerInvisibility(player, false, SiegeWar.getSiegeWar());
+            }
+        }
+    }
+
+    private static void addOccupationInformationToTowns() {
+        String finalDescription;
+        String rawDescription;
+        for(Marker townMarker: new HashSet<>(townyMarkerSet.getMarkers())) {
+            rawDescription = townMarker.getDescription();
+            if(rawDescription != null && !rawDescription.isEmpty()) {
+                if(rawDescription.contains("%occupyingNation%")) {
+                    //Get town name
+                    String townName = townMarker.getLabel().replaceAll("\\s\\(.*", "");
+                    //Ensure town can be found
+                    if(!TownyUniverse.getInstance().hasTown(townName))
+                        continue;
+                    //Get town
+                    Town town = TownyUniverse.getInstance().getTown(townName);
+                    //Add occupier info
+                    if(TownOccupationController.isTownOccupied(town)) {
+                        String occupierName = TownOccupationController.getTownOccupier(town).getName();
+                        finalDescription = rawDescription.replace("%occupyingNation%", occupierName);
+                    } else {
+                        finalDescription = "";
+                    }
+                    //Modify original description
+                    townMarker.setDescription(finalDescription);
+                }
             }
         }
     }
