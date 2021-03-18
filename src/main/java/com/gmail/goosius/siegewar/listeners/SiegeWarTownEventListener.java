@@ -37,6 +37,7 @@ import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
 import com.palmergames.bukkit.towny.event.town.TownUnconquerEvent;
+import com.palmergames.bukkit.towny.event.town.TownMapColourCalculationEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleOpenEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownTogglePVPEvent;
@@ -466,8 +467,8 @@ public class SiegeWarTownEventListener implements Listener {
 
     @EventHandler
     public void onTownUnconquer(TownUnconquerEvent event) {
-    	if (SiegeWarSettings.getWarSiegeEnabled())
-    		event.setCancelled(true);
+       if (SiegeWarSettings.getWarSiegeEnabled())
+               event.setCancelled(true);
     }
 
 	@EventHandler
@@ -475,6 +476,14 @@ public class SiegeWarTownEventListener implements Listener {
 		if (SiegeController.hasSiege(event.getSuccumbingTown())) {
 			event.setCancelMessage(Translation.of("msg_err_cannot_merge_towns"));
 			event.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void on(TownMapColourCalculationEvent event) {
+		if(TownOccupationController.isTownOccupied(event.getTown())) {
+			String mapColorHexCode = TownOccupationController.getTownOccupier(event.getTown()).getMapColorHexCode();
+			event.setMapColorHexCode(mapColorHexCode);
 		}
 	}
 }
