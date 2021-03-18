@@ -89,9 +89,10 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			if (args.length == 3)
 				return NameUtil.filterByStart(siegewaradminTownTabCompletes, args[2]);
 
-			if (args[2].equalsIgnoreCase("setoccupier")) {
-				if (args.length == 4)
-					return getTownyStartingWith(args[2], "n");
+			if (args.length == 4) {
+				if (args[2].equalsIgnoreCase("setoccupier")) {
+					return getTownyStartingWith(args[3], "n");
+				}
 			}
 		case "nation":
 			if (args.length == 2)
