@@ -307,9 +307,10 @@ public class SiegeController {
 	public static List<Siege> getSiegesByNationUUID(UUID uuid) {
 		List<Siege> siegeList = new ArrayList<>();
 		for (Siege siege : townSiegeMap.values()) {
-			Town town = siege.getTown();
-			if (UUID.fromString(SiegeMetaDataController.getNationUUID(town)).equals(uuid))
+			if(siege.getAttacker().getUUID().equals(uuid)
+				|| siege.getDefender().getUUID().equals(uuid)) {
 				siegeList.add(siege);
+			}
 		}
 		return siegeList;
 	}
