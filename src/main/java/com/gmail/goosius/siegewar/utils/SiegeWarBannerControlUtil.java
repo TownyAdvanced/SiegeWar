@@ -86,8 +86,10 @@ public class SiegeWarBannerControlUtil {
 				switch(siegeSide) {
 					case ATTACKERS:
 						addNewBannerControlSession(siege, player, resident, SiegeSide.ATTACKERS);
+						break;
 					case DEFENDERS:
 						addNewBannerControlSession(siege, player, resident, SiegeSide.DEFENDERS);
+						break;
 					case NOBODY:
 						continue;
 				}
