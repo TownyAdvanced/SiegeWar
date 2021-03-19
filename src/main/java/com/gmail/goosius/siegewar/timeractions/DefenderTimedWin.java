@@ -14,8 +14,8 @@ import com.gmail.goosius.siegewar.settings.Translation;
 public class DefenderTimedWin {
 
     public static void defenderTimedWin(Siege siege) {
-        DefenderWin.defenderWin(siege, SiegeStatus.DEFENDER_WIN);
         Messaging.sendGlobalMessage(getTimedDefenderWinMessage(siege));
+        DefenderWin.defenderWin(siege, SiegeStatus.DEFENDER_WIN);
     }
 
     private static String getTimedDefenderWinMessage(Siege siege) {

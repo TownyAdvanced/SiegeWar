@@ -31,6 +31,9 @@ public class AbandonAttack {
 	}
 
     public static void abandonAttack(Siege siege, long timeUntilOfficialAbandon) {
+		//Send global message
+		Messaging.sendGlobalMessage(getAbandonMessage(siege, timeUntilOfficialAbandon));
+		//Do surrender
 		if(timeUntilOfficialAbandon > 0) {
 			//Pending abandon
 			siege.setStatus(SiegeStatus.PENDING_ATTACKER_ABANDON);
@@ -39,9 +42,6 @@ public class AbandonAttack {
 			//Immediate abandon
 			DefenderWin.defenderWin(siege, SiegeStatus.ATTACKER_ABANDON);
 		}
-
-		//Send global message
-		Messaging.sendGlobalMessage(getAbandonMessage(siege, timeUntilOfficialAbandon));
 	}
 
 	private static String getAbandonMessage(Siege siege, long timeUntilAbandonConfirmation) {

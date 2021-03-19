@@ -31,6 +31,9 @@ public class SurrenderDefence {
 	}
 
     public static void surrenderDefence(Siege siege, long timeUntilSurrenderConfirmation) {
+		//Send global message
+		Messaging.sendGlobalMessage(getSurrenderMessage(siege, timeUntilSurrenderConfirmation));
+		//Do surrender
 		if(timeUntilSurrenderConfirmation > 0) {
 			//Pending surrender
 			siege.setStatus(SiegeStatus.PENDING_DEFENDER_SURRENDER);
@@ -39,9 +42,6 @@ public class SurrenderDefence {
 			//Immediate surrender
 			AttackerWin.attackerWin(siege, SiegeStatus.DEFENDER_SURRENDER);
 		}
-
-		//Send global message
-		Messaging.sendGlobalMessage(getSurrenderMessage(siege, timeUntilSurrenderConfirmation));
 	}
 
 	private static String getSurrenderMessage(Siege siege, long timeUntilSurrenderConfirmation) {
