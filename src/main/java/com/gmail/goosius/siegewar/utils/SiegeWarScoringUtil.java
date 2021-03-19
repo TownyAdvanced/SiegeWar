@@ -23,24 +23,6 @@ import java.util.Map;
 public class SiegeWarScoringUtil {
 
 	/**
-	 * This method calculates who has won a siege
-	 *
-	 * Siege Balance Negative - Defending town wins
-	 * Siege Balance 0 - Defending town wins
-	 * Siege Balance Positive - Attacking nation wins
-	 *
-	 * @param siege the siege
-	 * @return the winner of the siege
-	 */
-	public static Government calculateSiegeWinner(Siege siege) {
-		if(siege.getSiegeBalance() > 0) {
-			return siege.getAttacker();
-		} else {
-			return siege.getDefender();
-		}
-    }
-
-	/**
 	 * This method determines if a players is in the 'timed point zone' of a siege
 	 * 
 	 * - Must be in same world as flag
