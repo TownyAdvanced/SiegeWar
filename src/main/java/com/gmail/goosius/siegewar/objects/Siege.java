@@ -199,9 +199,7 @@ public class Siege {
 				if (town.hasNation()) {
 					try {
 						return town.getNation();
-					} catch (NotRegisteredException e) {
-						throw new RuntimeException("problem getting defender");
-					}
+					} catch (NotRegisteredException ignored) {}
 				} else {
 					return town;
 				}

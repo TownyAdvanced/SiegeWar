@@ -20,6 +20,13 @@ import org.bukkit.entity.Player;
  */
 public class AbandonAttack {
 
+	/**
+	 * At this point we know the player is a member of the attacking army
+	 *
+	 * @param player player
+	 * @param siege siege
+	 * @throws TownyException
+	 */
 	public static void processAbandonAttackRequest(Player player, Siege siege) throws TownyException {
 		if(!SiegeWarSettings.getWarSiegeAbandonEnabled())
 			throw new TownyException(Translation.of("msg_err_action_disable"));
@@ -33,7 +40,7 @@ public class AbandonAttack {
     public static void abandonAttack(Siege siege, long timeUntilOfficialAbandon) {
 		//Send global message
 		Messaging.sendGlobalMessage(getAbandonMessage(siege, timeUntilOfficialAbandon));
-		//Do surrender
+		//Do abandon
 		if(timeUntilOfficialAbandon > 0) {
 			//Pending abandon
 			siege.setStatus(SiegeStatus.PENDING_ATTACKER_ABANDON);

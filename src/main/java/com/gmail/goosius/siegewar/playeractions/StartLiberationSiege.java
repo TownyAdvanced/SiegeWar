@@ -78,7 +78,7 @@ public class StartLiberationSiege {
         }
 
         //Call event
-        PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(townOfSiegeStarter, nationOfSiegeStarter, bannerBlock, townBlock, targetTown);
+        PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(SiegeType.LIBERATION, targetTown, nationOfSiegeStarter, townOfSiegeStarter, bannerBlock, townBlock);
         Bukkit.getPluginManager().callEvent(preSiegeWarStartEvent);
 
         //Setup attack
@@ -89,15 +89,18 @@ public class StartLiberationSiege {
         }
     }
 
-    private static void startSiege(Block bannerBlock, Nation attackingNation, Town attackingTown, Town defendingTown) throws TownyException {
+    private static void startSiege(Block bannerBlock,
+                                   Nation liberatorNation,
+                                   Town townOfSiegeStarter,
+                                   Town targetTown) {
         //Create Siege
-        SiegeController.newSiege(defendingTown);
-        Siege siege = SiegeController.getSiege(defendingTown);
+        SiegeController.newSiege(targetTown);
+        Siege siege = SiegeController.getSiege(targetTown);
 
         //Set values in siege object
         siege.setSiegeType(SiegeType.LIBERATION);
-        siege.setNation(attackingNation);
-        siege.setTown(defendingTown);
+        siege.setNation(liberatorNation);
+        siege.setTown(targetTown);
         siege.setStatus(SiegeStatus.IN_PROGRESS);
         siege.setTownPlundered(false);
         siege.setTownInvaded(false);
@@ -107,49 +110,52 @@ public class StartLiberationSiege {
                         ((long) (SiegeWarSettings.getWarSiegeMaxHoldoutTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS))));
         siege.setActualEndTime(0);
         siege.setFlagLocation(bannerBlock.getLocation());
-        siege.setWarChestAmount(SiegeWarMoneyUtil.getSiegeCost(defendingTown));
+        siege.setWarChestAmount(SiegeWarMoneyUtil.getSiegeCost(targetTown));
 
-        SiegeController.setSiege(defendingTown, true);
-        SiegeController.putTownInSiegeMap(defendingTown, siege);
+        SiegeController.setSiege(targetTown, true);
+        SiegeController.putTownInSiegeMap(targetTown, siege);
 
         //Set town pvp and explosions to true.
-        SiegeWarTownUtil.setTownPvpFlags(defendingTown, true);
+        SiegeWarTownUtil.setTownPvpFlags(targetTown, true);
+
+        //Get occupier nation
+        Nation occupierNation = TownOccupationController.getTownOccupier(targetTown);
 
         //Pay into warchest
         if (TownyEconomyHandler.isActive()) {
             //Pay upfront cost into warchest now
-            attackingNation.getAccount().withdraw(siege.getWarChestAmount(), "Cost of starting a siege.");
+            liberatorNation.getAccount().withdraw(siege.getWarChestAmount(), "Cost of starting a siege.");
             String moneyMessage =
                     Translation.of("msg_siege_war_attack_pay_war_chest",
-                            attackingNation.getName(),
+                            liberatorNation.getName(),
                             TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
 
-            TownyMessaging.sendPrefixedNationMessage(attackingNation, moneyMessage);
-            TownyMessaging.sendPrefixedTownMessage(defendingTown, moneyMessage);
+            TownyMessaging.sendPrefixedNationMessage(liberatorNation, moneyMessage);
+            TownyMessaging.sendPrefixedNationMessage(occupierNation, moneyMessage);
         }
 
         //Save to DB
         SiegeController.saveSiege(siege);
-        attackingNation.save();
+        liberatorNation.save();
 
         //Send global message;
         if (siege.getTown().hasNation()) {
             Messaging.sendGlobalMessage(String.format(
                     Translation.of("msg_liberation_siege_started_nation_town"),
-                    attackingNation.getName(),
-                    TownOccupationController.getTownOccupier(defendingTown).getName(),
-                    defendingTown.getName()
+                    liberatorNation.getName(),
+                    occupierNation.getName(),
+                    targetTown.getName()
             ));
         } else {
             Messaging.sendGlobalMessage(String.format(
                     Translation.of("msg_liberation_siege_started_neutral_town"),
-                    attackingNation.getName(),
-                    TownOccupationController.getTownOccupier(defendingTown).getName(),
-                    defendingTown.getName()
+                    liberatorNation.getName(),
+                    occupierNation.getName(),
+                    targetTown.getName()
             ));
         }
 
         //Call event
-        Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, attackingTown, bannerBlock));
+        Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, bannerBlock));
     }
 }

@@ -18,6 +18,7 @@ import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -90,7 +91,7 @@ public class StartConquestSiege {
 		}
 
 		//Call event
-		PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(townOfSiegeStarter, nationOfSiegeStarter, bannerBlock, townBlock, targetTown);
+		PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(SiegeType.CONQUEST, targetTown, nationOfSiegeStarter, townOfSiegeStarter, bannerBlock, townBlock);
 		Bukkit.getPluginManager().callEvent(preSiegeWarStartEvent);
 
 		//Setup attack
@@ -101,15 +102,15 @@ public class StartConquestSiege {
 		}
     }
 
-    private static void startSiege(Block bannerBlock, Nation attackingNation, Town attackingTown, Town defendingTown) throws TownyException {
+    private static void startSiege(Block bannerBlock, Nation attackingNation, Town townOfSiegeStarter, Town targetTown) {
 		//Create Siege
-		SiegeController.newSiege(defendingTown);
-		Siege siege = SiegeController.getSiege(defendingTown);
+		SiegeController.newSiege(targetTown);
+		Siege siege = SiegeController.getSiege(targetTown);
 
 		//Set values in siege object
 		siege.setSiegeType(SiegeType.CONQUEST);
 		siege.setNation(attackingNation);
-		siege.setTown(defendingTown);
+		siege.setTown(targetTown);
 		siege.setStatus(SiegeStatus.IN_PROGRESS);
 		siege.setTownPlundered(false);
 		siege.setTownInvaded(false);
@@ -119,13 +120,13 @@ public class StartConquestSiege {
 				((long) (SiegeWarSettings.getWarSiegeMaxHoldoutTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS))));
 		siege.setActualEndTime(0);
 		siege.setFlagLocation(bannerBlock.getLocation());
-		siege.setWarChestAmount(SiegeWarMoneyUtil.getSiegeCost(defendingTown));
+		siege.setWarChestAmount(SiegeWarMoneyUtil.getSiegeCost(targetTown));
 		
-		SiegeController.setSiege(defendingTown, true);
-		SiegeController.putTownInSiegeMap(defendingTown, siege);
+		SiegeController.setSiege(targetTown, true);
+		SiegeController.putTownInSiegeMap(targetTown, siege);
 
 		//Set town pvp and explosions to true.
-		SiegeWarTownUtil.setTownPvpFlags(defendingTown, true);
+		SiegeWarTownUtil.setTownPvpFlags(targetTown, true);
 		
 		//Pay into warchest
 		if (TownyEconomyHandler.isActive()) {
@@ -137,7 +138,7 @@ public class StartConquestSiege {
 				TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
 
 			TownyMessaging.sendPrefixedNationMessage(attackingNation, moneyMessage);
-			TownyMessaging.sendPrefixedTownMessage(defendingTown, moneyMessage);
+			TownyMessaging.sendPrefixedTownMessage(targetTown, moneyMessage);
 		}
 
 		//Save to DB
@@ -146,21 +147,23 @@ public class StartConquestSiege {
 
 		//Send global message;
 		if (siege.getTown().hasNation()) {
-			Messaging.sendGlobalMessage(String.format(
-				Translation.of("msg_conquest_siege_started_nation_town"),
-				attackingNation.getName(),
-				defendingTown.getNation().getName(),
-				defendingTown.getName()
-			));
+			try {
+				Messaging.sendGlobalMessage(String.format(
+					Translation.of("msg_conquest_siege_started_nation_town"),
+					attackingNation.getName(),
+					targetTown.getNation().getName(),
+					targetTown.getName()
+				));
+			} catch (NotRegisteredException ignored) {}
 		} else {
 			Messaging.sendGlobalMessage(String.format(
 				Translation.of("msg_conquest_siege_started_neutral_town"),
 				attackingNation.getName(),
-				defendingTown.getName()
+				targetTown.getName()
 			));
 		}
 
 		//Call event
-		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, attackingTown, bannerBlock));
+		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, bannerBlock));
     }
 }

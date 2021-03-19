@@ -65,27 +65,29 @@ public class StartRevoltSiege {
         if (System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(targetTown))
             throw new TownyException(Translation.of("msg_err_siege_war_revolt_immunity_active"));
 
+        Nation occupier = TownOccupationController.getTownOccupier(targetTown);
+
         //Call event
-        PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(townOfSiegeStarter, nationOfSiegeStarter, bannerBlock, townBlock, targetTown);
+        PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(SiegeType.REVOLT, targetTown, occupier, townOfSiegeStarter, bannerBlock, townBlock);
         Bukkit.getPluginManager().callEvent(preSiegeWarStartEvent);
 
         //Setup attack
         if (!preSiegeWarStartEvent.isCancelled()) {
-            startSiege(bannerBlock, nationOfSiegeStarter, townOfSiegeStarter, targetTown);
+            startSiege(bannerBlock, occupier, targetTown, townOfSiegeStarter);
         } else {
             throw new TownyException(preSiegeWarStartEvent.getCancellationMsg());
         }
     }
 
-    private static void startSiege(Block bannerBlock, Nation attackingNation, Town attackingTown, Town defendingTown) throws TownyException {
+    private static void startSiege(Block bannerBlock, Nation occupierNation, Town townOfSiegeStarter, Town targetTown) throws TownyException {
         //Create Siege
-        SiegeController.newSiege(defendingTown);
-        Siege siege = SiegeController.getSiege(defendingTown);
+        SiegeController.newSiege(targetTown);
+        Siege siege = SiegeController.getSiege(targetTown);
 
         //Set values in siege object
         siege.setSiegeType(SiegeType.REVOLT);
-        siege.setNation(attackingNation);
-        siege.setTown(defendingTown);
+        siege.setNation(occupierNation);
+        siege.setTown(targetTown);
         siege.setStatus(SiegeStatus.IN_PROGRESS);
         siege.setTownPlundered(false);
         siege.setTownInvaded(false);
@@ -95,37 +97,37 @@ public class StartRevoltSiege {
                         ((long) (SiegeWarSettings.getWarSiegeMaxHoldoutTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS))));
         siege.setActualEndTime(0);
         siege.setFlagLocation(bannerBlock.getLocation());
-        siege.setWarChestAmount(SiegeWarMoneyUtil.getSiegeCost(defendingTown));
+        siege.setWarChestAmount(SiegeWarMoneyUtil.getSiegeCost(targetTown));
 
-        SiegeController.setSiege(defendingTown, true);
-        SiegeController.putTownInSiegeMap(defendingTown, siege);
+        SiegeController.setSiege(targetTown, true);
+        SiegeController.putTownInSiegeMap(targetTown, siege);
 
         //Set town pvp and explosions to true.
-        SiegeWarTownUtil.setTownPvpFlags(defendingTown, true);
+        SiegeWarTownUtil.setTownPvpFlags(targetTown, true);
 
         //No warchest
 
         //Save to DB
         SiegeController.saveSiege(siege);
-        attackingNation.save();
+        occupierNation.save();
 
         //Send global message;
         if (siege.getTown().hasNation()) {
             Messaging.sendGlobalMessage(String.format(
                     Translation.of("msg_revolt_siege_started_nation_town"),
-                    defendingTown.getName(),
-                    defendingTown.getNation().getName(),
-                    TownOccupationController.getTownOccupier(defendingTown).getName()
+                    targetTown.getName(),
+                    targetTown.getNation().getName(),
+                    TownOccupationController.getTownOccupier(targetTown).getName()
             ));
         } else {
             Messaging.sendGlobalMessage(String.format(
                     Translation.of("msg_revolt_siege_started_neutral_town"),
-                    defendingTown.getName(),
-                    TownOccupationController.getTownOccupier(defendingTown).getName()
+                    targetTown.getName(),
+                    TownOccupationController.getTownOccupier(targetTown).getName()
             ));
         }
 
         //Call event
-        Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, attackingTown, bannerBlock));
+        Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, bannerBlock));
     }
 }
