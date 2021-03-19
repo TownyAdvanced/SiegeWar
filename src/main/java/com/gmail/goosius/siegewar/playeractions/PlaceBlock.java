@@ -4,12 +4,14 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -255,6 +257,9 @@ public class PlaceBlock {
 		if (nearbyTown.isRuined())
 			throw new TownyException(Translation.of("msg_err_cannot_start_siege_at_ruined_town"));
 
+		if(SiegeWarBlockUtil.isSupportBlockUnstable(bannerBlock))
+			throw new TownyException(Translation.of("msg_err_siege_war_banner_support_block_not_stable"));
+
 		if (residentsTown == nearbyTown) {
 			//Revolt siege
 			StartRevoltSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
@@ -264,6 +269,12 @@ public class PlaceBlock {
 
 			if (System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(nearbyTown))
 				throw new TownyException(Translation.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
+
+			if (TownyEconomyHandler.isActive() && !residentsNation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.getSiegeCost(targetTown)))
+				throw new TownyException(Translation.of("msg_err_no_money"));
+
+			if(SiegeController.getNumActiveAttackSieges(residentsNation) >= SiegeWarSettings.getWarSiegeMaxActiveSiegeAttacksPerNation())
+				throw new TownyException(Translation.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));
 
 			if (TownOccupationController.isTownOccupied(nearbyTown)) {
 				Nation occupierOfNearbyTown = TownOccupationController.getTownOccupier(nearbyTown);
