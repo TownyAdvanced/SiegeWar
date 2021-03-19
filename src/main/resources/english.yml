@@ -374,6 +374,9 @@ msg_err_cannot_invade_town_already_invaded: '&cYour nation has already invaded t
 msg_neutral_town_invaded: '&b%s has been invaded by %s, and placed under occupation!'
 msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and placed under occupation!'
 
+# Plunder
+msg_err_siege_war_plunder_not_possible_rebels_won: '&cPlunder not possible because the rebels won the revolt.'
+
 # Releasing towns from occupation
 msg_err_cannot_release_town_not_occupied_by_nation: '&cYou cannot release the town because it is not occupied by your nation'
 msg_err_cannot_release_besieged_town: '&cYou cannot release a besieged town'
