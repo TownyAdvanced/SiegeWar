@@ -29,7 +29,6 @@ public class BookUtil {
 		 */
 		String activeSession = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * TimeMgmt.ONE_MINUTE_IN_MILLIS);
 		String maxSiege = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getWarSiegeMaxHoldoutTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS);
-		String occupationtime = TimeMgmt.getFormattedTimeValue((long) SiegeWarSettings.getWarSiegeRevoltImmunityTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS);
 		double counterPercent = SiegeWarSettings.getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercentage();
 		boolean bankruptcy = TownySettings.isTownBankruptcyEnabled();
 		boolean ruins = TownRuinSettings.getTownRuinsEnabled();
@@ -161,12 +160,11 @@ public class BookUtil {
 		// Capturing
 		text += "\nPOST-SIEGE ACTION: TOWN CAPTURE\n\n";
 		if (SiegeWarSettings.getWarSiegeInvadeEnabled()) {
-			text += "If the attacker has won the siege, the king (or a general) of the attacking nation may place a second coloured banner outside the town. This will capture the town, and forcibly add it to the victorious nation (which it cannot leave for " + occupationtime + ").\n\n";
+			text += "If the attacker has won the siege, the king (or a general) of the attacking nation may place a second coloured banner outside the town. This will capture the town, and forcibly add it to the victorious nation.\n\n";
 			
 			// Revolt
 			if (SiegeWarSettings.getRevoltSiegesEnabled()) {
-				text += "An occupied town can revolt after " + occupationtime + ", freeing themselves from the occupying nation.\n";
-				text += "A town which has revolted from their occupying nation will receive " + SiegeWarSettings.getWarSiegeRevoltImmunityTimeHours() + " hours of siege immunity.\n\n";
+				text += "An occupied town can revolt after " + SiegeWarSettings.getWarSiegeRevoltImmunityTimeModifier()  + "of the siege immunity duration, freeing themselves from the occupying nation.\n";
 			} else
 				text += "An occupied town can not revolt from their occupying nation.\n\n";
 		}

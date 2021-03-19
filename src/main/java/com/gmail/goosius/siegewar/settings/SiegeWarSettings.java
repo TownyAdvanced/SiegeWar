@@ -97,8 +97,8 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_SIEGE_IMMUNITY_TIME_MODIFIER);
 	}
 
-	public static double getWarSiegeRevoltImmunityTimeHours() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_REVOLT_IMMUNITY_TIME_HOURS);
+	public static double getWarSiegeRevoltImmunityTimeModifier() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_REVOLT_IMMUNITY_TIME_MODIFIER);
 	}
 
 	public static double getWarSiegeAttackerPlunderAmountPerPlot() {

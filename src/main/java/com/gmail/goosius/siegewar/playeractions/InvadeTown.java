@@ -126,8 +126,5 @@ public class InvadeTown {
 							invadingNation.getName()
 					));
 		}
-
-		//Activate revolt immunity
-		SiegeWarTimeUtil.activateRevoltImmunityTimer(invadedTown);
     }
 }

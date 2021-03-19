@@ -21,6 +21,7 @@ public class AttackerWin {
 	 * @param siegeStatus the siege status
 	 */
 	public static void attackerWin(Siege siege, SiegeStatus siegeStatus) {
+		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege, siegeStatus);
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
 			case SUPPRESSION:
@@ -35,7 +36,6 @@ public class AttackerWin {
 				TownOccupationController.removeTownOccupation(siege.getTown());
 				break;
 		}
-		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege, siegeStatus);
     }
 
 }

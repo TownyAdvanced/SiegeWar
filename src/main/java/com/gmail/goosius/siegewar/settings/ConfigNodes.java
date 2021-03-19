@@ -275,13 +275,14 @@ public enum ConfigNodes {
 			"# The actual cooldown time will be the length of the previous siege, multiplied by this modifer.",
 			"# A high value makes sieges less frequent. Suitable for moderately-aggressive servers",
 			"# A low value makes sieges more frequent. Suitable for highly aggressive servers."),
-	WAR_SIEGE_REVOLT_IMMUNITY_TIME_HOURS(
-			"war.siege.times.revolt_immunity_time_hours",
-			"240",
+	WAR_SIEGE_REVOLT_IMMUNITY_TIME_MODIFIER(
+			"war.siege.times.revolt_immunity_time_modifier",
+			"0.75",
 			"",
-			"# This value determines how long a town must wait before it can revolt against an occupying nation nation. The immunity time gets set to the given value if a town is captured, or if it revolts.",
-			"# If the value is too high, towns will be frustrated that it is too difficult to revolt against an occupier.",
-			"# If the value is too low, nations will find it difficult to hold territory due to constant revolts."),
+			"# This value determines how long a town must wait before it can revolt against an occupying nation nation. The immunity time gets set to the given value if a town is invaded, or loses a revolt or suppression siege.",
+			"# The value represents a fraction of the actual immunity time.",
+			"# Not that revolting can break through siege immunity",
+			"# WARNING: Do not set this to any higher than about 0.8, because that could lead to towns getting trapped in an endless cycle of invasions from which they could not free themselves."),
 	WAR_SIEGE_BANNER_CONTROL_SESSION_DURATION_MINUTES (
 			"war.siege.times.banner_control_session_duration_minutes",
 			"7",

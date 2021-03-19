@@ -3,7 +3,6 @@ package com.gmail.goosius.siegewar.timeractions;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
@@ -22,7 +21,7 @@ public class DefenderWin
 	 * @param siegeStatus the siege status
 	 */
     public static void defenderWin(Siege siege, SiegeStatus siegeStatus) {
-
+		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege, siegeStatus);
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
 			case LIBERATION:
@@ -36,7 +35,5 @@ public class DefenderWin
 				SiegeWarTimeUtil.activateRevoltImmunityTimer(siege.getTown());
 				break;
 		}
-		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege, siegeStatus);
     }
-
 }
