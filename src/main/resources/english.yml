@@ -238,6 +238,7 @@ msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control 
 
 #Hud
 hud_siege_balance: 'Siege Balance: '
+hud_warchest: 'War Chest: '
 hud_battle_time_remaining: 'BAT Time Left: '
 
 #Dynmap
