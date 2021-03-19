@@ -30,7 +30,8 @@ public class SiegeMetaDataController {
 	/*
 	 * The nation UUID is no longer used in game
 	 * However it is used to clear up metadata
-	 * Eventually it can be deleted
+	 * Eventually it can be deleted,
+	 * because the old nation meta will not appear in sieges anymore
 	 */
 	private static StringDataField siegeNationUUID = new StringDataField("siegewar_nationUUID", "");
 
@@ -96,14 +97,6 @@ public class SiegeMetaDataController {
 		if (town.hasMeta(sdf.getKey()))
 			return MetaDataUtil.getString(town, sdf);
 		return null;
-	}
-	
-	public static void setNationUUID(Town town, String uuid) {
-		StringDataField sdf = (StringDataField) siegeNationUUID.clone();
-		if (town.hasMeta(sdf.getKey()))
-			MetaDataUtil.setString(town, sdf, uuid);
-		else
-			town.addMetaData(new StringDataField("siegewar_nationUUID", uuid));
 	}
 
 	@Nullable
