@@ -84,7 +84,6 @@ msg_err_siege_war_town_not_close_enough_to_nation: "&cLa ville est trop éloign�
 #Invade
 msg_err_siege_war_no_siege_on_target_town: "&cIl n'y a pas de siège sur la ville de %s."
 #Plunder
-msg_err_siege_war_cannot_plunder_own_town: "&cVous ne pouvez pas piller votre propre ville."
 msg_err_siege_war_cannot_plunder_without_victory: "&cVous ne pouvez pas piller à moins que votre nation ne remporte le siège."
 msg_err_siege_war_cannot_plunder_without_economy: "&cVous ne pouvez pas piller car aucun plugin économique n'est actif"
 msg_err_siege_war_town_already_plundered: "&cCette ville a déjà été pillée."

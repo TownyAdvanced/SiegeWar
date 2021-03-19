@@ -78,7 +78,6 @@ msg_err_siege_war_town_not_close_enough_to_nation: '&cThe town is too far away f
 #Invade
 msg_err_siege_war_no_siege_on_target_town: '&cThere is no siege on the target town of %s.'
 #Plunder
-msg_err_siege_war_cannot_plunder_own_town: '&cYou cannot plunder your own town.'
 msg_err_siege_war_cannot_plunder_without_victory: "&cYou cannot plunder unless your nation is victorious in the siege."
 msg_err_siege_war_cannot_plunder_without_economy: "&cYou cannot plunder because no economy plugin is active"
 msg_err_siege_war_town_already_plundered: '&cThis town has already been plundered.'
@@ -297,6 +296,7 @@ msg_err_cannot_start_siege_attack_at_peaceful_town: '&cYou cannot start a siege 
 msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruined town.'
 msg_err_cannot_start_siege_due_to_siege_immunity: '&cYou cannot start a siege now, because the nearby town has siege immunity.'
 msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cYou cannot start a revolt siege because the town is not in an occupied state.'
+msg_err_siege_war_cannot_attack_occupied_town_non_enemy_nation: '&cYou cannot attack an occupied town unless the occupier of that town is an enemy of your nation.'
 msg_conquest_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A CONQUEST SIEGE has begun!'
 msg_conquest_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A CONQUEST SIEGE has begun!'
 msg_liberation_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A LIBERATION SIEGE has begun!'
@@ -395,7 +395,6 @@ msg_nation_town_peacefully_released: "&b%s, belonging to %s, has been peacefully
 msg_err_swa_cannot_set_invade_due_to_siege_type: '&cYou cannot set the invaded flag for this type of siege.'
 msg_err_swa_cannot_change_occupier_due_to_active_siege: '&cYou cannot change the occupier if the town has an active siege.'
 msg_err_swa_home_nation_cannot_be_occupier: '&cYou cannot set the towns home nation to be its occupier.'
-
 msg_swa_set_invade_success: '&bSet invaded to %s for %s.'
 msg_swa_town_occupation_removal_success: '&bTown occupier removed for %s.'
 msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'

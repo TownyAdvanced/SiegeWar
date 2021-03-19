@@ -37,9 +37,11 @@ import org.bukkit.entity.Player;
 public class StartConquestSiege {
 
 	/**
-	 * Process an attack town request
+	 * Process a start conquest siege request.
 	 *
-	 * This method does some final checks and if they pass, the attack is initiated.
+	 * At this point we know that the resident has a nation and the town is not occupied
+	 *
+	 * This method does some final checks and if they pass, the siege is initiated.
 	 *
 	 * @param player the player
 	 * @param townOfSiegeStarter town
@@ -51,12 +53,12 @@ public class StartConquestSiege {
 	 * @throws TownyException when attack cannot be made.
 	 *
 	 */
-    public static void processStartRequest(Player player,
-										   Town townOfSiegeStarter,
-										   Nation nationOfSiegeStarter,
-										   TownBlock townBlock,
-										   Town targetTown,
-										   Block bannerBlock) throws TownyException {
+    public static void processStartSiegeRequest(Player player,
+												Town townOfSiegeStarter,
+												Nation nationOfSiegeStarter,
+												TownBlock townBlock,
+												Town targetTown,
+												Block bannerBlock) throws TownyException {
 
 		if (!SiegeWarSettings.getConquestSiegesEnabled())
 			throw new TownyException(Translation.of("msg_err_action_disable"));
@@ -103,7 +105,7 @@ public class StartConquestSiege {
 		//Create Siege
 		SiegeController.newSiege(defendingTown);
 		Siege siege = SiegeController.getSiege(defendingTown);
-		
+
 		//Set values in siege object
 		siege.setNation(attackingNation);
 		siege.setTown(defendingTown);
@@ -139,7 +141,6 @@ public class StartConquestSiege {
 
 		//Save to DB
 		SiegeController.saveSiege(siege);
-		//SiegeController.addSiegedTown(siege);
 		attackingNation.save();
 
 		//Send global message;

@@ -22,7 +22,6 @@ public class StartSuppressionSiege {
         if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToStartSiege(SiegeType.SUPPRESSION)))
             throw new TownyException(Translation.of("msg_err_action_disable"));
 
-
         startSiege();
     }
 

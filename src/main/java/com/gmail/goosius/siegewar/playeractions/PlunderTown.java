@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -44,9 +45,12 @@ public class PlunderTown {
 	 */
     public static void processPlunderTownRequest(Player player,
 												 Town townToBePlundered) throws TownyException {
+		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 
-		TownyUniverse universe = TownyUniverse.getInstance();
-		Resident resident = universe.getResident(player.getUniqueId());
+		if (!townyUniverse.getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_PLUNDER.getNode()))
+			throw new TownyException(Translation.of("msg_err_command_disable"));
+
+		Resident resident = townyUniverse.getResident(player.getUniqueId());
         if (resident == null)
         	throw new TownyException(Translation.of("msg_err_not_registered_1", player.getName()));
         
@@ -57,25 +61,26 @@ public class PlunderTown {
 		if(!townOfPlunderingResident.hasNation())
 			throw new TownyException(Translation.of("msg_err_siege_war_action_not_a_nation_member"));
 
-
-		if(townOfPlunderingResident == townToBePlundered)
-			throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_own_town"));
-
 		Siege siege = SiegeController.getSiege(townToBePlundered);
-		if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
-			throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
-		
 		if(townOfPlunderingResident.getNation() != siege.getNation())
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
-		
-        if(siege.isTownPlundered())
-            throw new TownyException(String.format(Translation.of("msg_err_siege_war_town_already_plundered"), townToBePlundered.getName()));
 
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_PLUNDER.getNode()))
-            throw new TownyException(Translation.of("msg_err_command_disable"));
-        
+		if(siege.isTownPlundered())
+			throw new TownyException(String.format(Translation.of("msg_err_siege_war_town_already_plundered"), townToBePlundered.getName()));
+
+		if(siege.getSiegeType() == SiegeType.REVOLT) {
+			if(siege.getStatus() != SiegeStatus.DEFENDER_WIN
+				&& siege.getStatus() != SiegeStatus.ATTACKER_ABANDON) {
+				throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
+			}
+		} else {
+			if(siege.getStatus() != SiegeStatus.ATTACKER_WIN
+					&& siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER) {
+				throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
+			}
+		}
+
         plunderTown(siege, townToBePlundered, siege.getNation());
-
     }
 
     private static void plunderTown(Siege siege, Town town, Nation nation) {

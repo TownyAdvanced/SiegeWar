@@ -272,11 +272,11 @@ public class PlaceBlock {
 					StartSuppressionSiege.processStartSiegeRequest(player, residentsTown, occupierOfNearbyTown);
 				} else {
 					//Liberation siege
-					StartLiberationSiege.processStartSiegeRequest(player, residentsTown, residentsNation, occupierOfNearbyTown);
+					StartLiberationSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 				}
 			} else {
 				//Conquest siege
-				StartConquestSiege.processStartRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
+				StartConquestSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 			}
 		}
 	}
