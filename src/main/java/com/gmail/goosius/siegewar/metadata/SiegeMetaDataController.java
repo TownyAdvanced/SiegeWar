@@ -304,6 +304,17 @@ public class SiegeMetaDataController {
 		StringDataField sdf = (StringDataField) siegeName.clone();
 		if (town.hasMeta(sdf.getKey()))
 			town.removeMetaData(sdf);
+
+		sdf = (StringDataField) siegeType.clone();
+		if (town.hasMeta(sdf.getKey()))
+			town.removeMetaData(sdf);
+		sdf = (StringDataField) siegeAttackerUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			town.removeMetaData(sdf);
+		sdf = (StringDataField) siegeDefenderUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			town.removeMetaData(sdf);
+
 		sdf = (StringDataField) siegeNationUUID.clone();
 		if (town.hasMeta(sdf.getKey()))
 			town.removeMetaData(sdf);
@@ -327,14 +338,17 @@ public class SiegeMetaDataController {
 		DecimalDataField ddf = (DecimalDataField) siegeWarChestAmount.clone();
 		if (town.hasMeta(ddf.getKey()))
 			town.removeMetaData(ddf);
-		
+
 		BooleanDataField bdf = (BooleanDataField) townPlundered.clone();
 		if (town.hasMeta(bdf.getKey()))
 			town.removeMetaData(bdf);
 		bdf = (BooleanDataField) townInvaded.clone();
 		if (town.hasMeta(bdf.getKey()))
 			town.removeMetaData(bdf);
-		
+		bdf = (BooleanDataField) hasSiege.clone();
+		if (town.hasMeta(bdf.getKey()))
+			town.removeMetaData(bdf);
+
 		LongDataField ldf = (LongDataField) startTime.clone();
 		if (town.hasMeta(ldf.getKey()))
 			town.removeMetaData(ldf);
