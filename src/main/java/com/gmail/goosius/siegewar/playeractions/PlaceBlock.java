@@ -257,7 +257,7 @@ public class PlaceBlock {
 
 		if (residentsTown == nearbyTown) {
 			//Revolt siege
-			StartRevoltSiege.processStartSiegeRequest(player, residentsTown);
+			StartRevoltSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 		} else {
 			if (residentsNation == null)
 				throw new TownyException(Translation.of("msg_err_action_disable"));
