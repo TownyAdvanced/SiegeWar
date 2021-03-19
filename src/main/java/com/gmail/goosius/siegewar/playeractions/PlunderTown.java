@@ -78,6 +78,8 @@ public class PlunderTown {
 			}
 			if(nationOfPlunderingResident != siege.getDefender())
 				throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
+
+			plunderTown(siege, townToBePlundered, (Nation)siege.getDefender());
 		} else {
 			if(siege.getStatus() != SiegeStatus.ATTACKER_WIN
 				&& siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER) {
@@ -85,9 +87,9 @@ public class PlunderTown {
 			}
 			if(nationOfPlunderingResident != siege.getAttacker())
 				throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
-		}
 
-		plunderTown(siege, townToBePlundered, (Nation)siege.getAttacker());
+			plunderTown(siege, townToBePlundered, (Nation)siege.getAttacker());
+		}
     }
 
     private static void plunderTown(Siege siege, Town town, Nation nation) {
@@ -103,7 +105,7 @@ public class PlunderTown {
 			//Redistribute money
 			if(town.getAccount().canPayFromHoldings(totalPlunderAmount)) {
 				//Town can afford plunder
-				transferPlunderToSiegeAttackers(siege, totalPlunderAmount, true);
+				transferPlunderToNation(siege, nation, totalPlunderAmount, true);
 
 				NationMetaDataController.setTotalPlunderGained(nation, NationMetaDataController.getTotalPlunderGained(nation) + (int) totalPlunderAmount);
 				if (town.hasNation()) {
@@ -130,12 +132,12 @@ public class PlunderTown {
 					// Charge the town (using .withdraw() which will allow for going into bankruptcy.)
 					town.getAccount().withdraw(totalPlunderAmount, "Plunder by " + nation.getName());
 					// And deposit it into the nation.
-					transferPlunderToSiegeAttackers(siege, totalPlunderAmount, false);
+					transferPlunderToNation(siege, nation, totalPlunderAmount, false);
 
 				} else {
 					// Not able to go bankrupt, they are destroyed, pay what they can.
 					totalPlunderAmount = town.getAccount().getHoldingBalance();
-					transferPlunderToSiegeAttackers(siege, totalPlunderAmount, true);
+					transferPlunderToNation(siege, nation, totalPlunderAmount, true);
 					townDestroyed = true;
 				}
 			}
@@ -184,9 +186,8 @@ public class PlunderTown {
 		}
 	}
 
-	private static void transferPlunderToSiegeAttackers(Siege siege, double totalPlunderAmount, boolean removeMoneyFromTownBank) throws EconomyException {
+	private static void transferPlunderToNation(Siege siege, Nation nation, double totalPlunderAmount, boolean removeMoneyFromTownBank) throws EconomyException {
 		Town town = siege.getTown();
-		Nation nation = (Nation)siege.getAttacker();
 
 		String distributionRatio = SiegeWarSettings.getWarSiegePlunderDistributionRatio();
 
