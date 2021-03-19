@@ -229,6 +229,21 @@ public class SiegeWarNationEventListener implements Listener {
 	}
 
 	/**
+	 * Update the nation numtownblocks calculation when towny displays the nations list
+	 *
+	 * All unoccupied home towns are counted
+	 * All occupied foreign towns are counted
+	 */
+	/*
+	TODO - ENABLE ME WHEN THE REQUIRED TOWNY CODE GETS ON MAVEN
+	@EventHandler
+	public void on(NationListDisplayedNumTownBlocksCalculationEvent event) {
+		Nation effectiveNation = SiegeWarNationUtil.getEffectiveNation(event.getNation());
+		event.setDisplayedValue(effectiveNation.getNumTownblocks());
+	}
+	*/
+
+	/**
 	 * Update the nation onlineplayers calculation when towny displays the nations list
 	 *
 	 * All unoccupied home towns are counted

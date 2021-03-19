@@ -1,6 +1,10 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class SiegeWarTownyDynmapListener implements Listener {
@@ -13,31 +17,28 @@ public class SiegeWarTownyDynmapListener implements Listener {
     }
 
     /**
-
+     * This method updates the town popup box on Dynmap-Towny
+     *
+     * 1. It looks for the %occupier% tag in the popup
+     * 2. If the %occupier% tag exists, it replaces it with the occupier name (blank for no occupier)
      */
 
     /*
+//    TODO - ENABLE ME WHEN THE REQUIRED TOWNY CODE GETS ON MAVEN
     @EventHandler
-    public void on(BuildTownDescriptionEvent event) {
-        if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
-            Player player = null;
-            try {
-                player = Towny.getPlugin().getServer().getPlayer(event.getPlayer());
-                SiegeWarCannonsUtil.processPlayerCannonInteraction(player, event.getCannon(), Translation.of("msg_err_cannot_fire_no_cannon_session"));
-            } catch (TownyException te) {
-                event.setCancelled(true);
-                if (player != null) {
-                    Messaging.sendErrorMsg(player, te.getMessage());
+    public void on(BuildTownMarkerDescriptionEvent event) {
+        if (SiegeWarSettings.getWarSiegeEnabled()) {
+            if(event.getDescription().contains("%occupier%")) {
+                String finalDescription;
+                if(TownOccupationController.isTownOccupied(event.getTown()) {
+                    finalDescription = event.getDescription().replace("%occupier%", TownOccupationController.getTownOccupier(town).getName());
                 } else {
-                    System.out.println("Problem Processing fire cannon event: " + te.getMessage());
+                    finalDescription = event.getDescription().replace("%occupier%", "");
                 }
-            } catch (Exception e) {
-                event.setCancelled(true);
-                System.out.println("Problem Processing fire cannon event: " + e.getMessage());
-                e.printStackTrace();
+                event.setDescription(finalDescription);
             }
         }
     }
     */
-
+     
 }
