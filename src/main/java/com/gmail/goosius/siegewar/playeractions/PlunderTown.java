@@ -145,16 +145,16 @@ public class PlunderTown {
 		if (town.hasNation()) {
 			Messaging.sendGlobalMessage(
 				Translation.of("msg_siege_war_nation_town_plundered",
-				town.getFormattedName(),
+				town.getName(),
 				TownyEconomyHandler.getFormattedBalance(totalPlunderAmount),
-				nation.getFormattedName()
+				nation.getName()
 			));
 		} else {
 			Messaging.sendGlobalMessage(
 				Translation.of("msg_siege_war_neutral_town_plundered",
-				town.getFormattedName(),
+				town.getName(),
 				TownyEconomyHandler.getFormattedBalance(totalPlunderAmount),
-				nation.getFormattedName()
+				nation.getName()
 			));
 		}
 

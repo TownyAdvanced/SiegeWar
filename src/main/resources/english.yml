@@ -318,7 +318,7 @@ status_town_siege_status_attacker_win: 'Attacker Victory'
 status_town_siege_status_defender_win: 'Defender Victory'
 status_town_siege_status_attacker_abandon: 'Attacker Abandon'
 status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending, in %s'
-status_town_siege_status_defender_surrender: 'Defender Surrender - to %s'
+status_town_siege_status_defender_surrender: 'Defender Surrender'
 status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending, in %s'
 status_town_siege_status_plundered: '&2 > Town Plundered: %s'
 status_town_siege_status_invaded: '   &2Town Invaded: %s'
@@ -361,7 +361,7 @@ msg_suppression_siege_timed_defender_win: '&bSUPPRESSION SIEGE at %s > The defen
 # Generic Victory messages
 msg_immediate_attacker_victory: " The attackers are victorious!"
 msg_pending_attacker_victory: " Attacker victory will be confirmed in %s."
-msg_immediate_defender_victory: " The attackers are victorious!"
+msg_immediate_defender_victory: " The defenders are victorious!"
 msg_pending_defender_victory: " Defender victory will be confirmed in %s."
 
 # Invasions
