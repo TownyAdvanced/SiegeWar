@@ -35,13 +35,13 @@ public class SiegeWarAllegianceUtil {
             case REVOLT:
                 //In the above sieges, attackers can be town guards
                 if (isTownGuard(deadPlayer, deadResidentTown, attackingGovernment))
-                    return SiegeSide.DEFENDERS;
+                    return SiegeSide.ATTACKERS;
             case CONQUEST:
             case SUPPRESSION:
             case LIBERATION:
                 //In the above sieges, attackers can be nation/allied soldiers
                 if (isNationSoldierOrAlliedSoldier(deadPlayer, deadResidentTown, attackingGovernment))
-                    return SiegeSide.DEFENDERS;
+                    return SiegeSide.ATTACKERS;
         }
         return SiegeSide.NOBODY;
     }

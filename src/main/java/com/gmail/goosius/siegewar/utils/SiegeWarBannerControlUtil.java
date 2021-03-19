@@ -55,9 +55,7 @@ public class SiegeWarBannerControlUtil {
 	private static void evaluateNewBannerControlSessions(Siege siege) {
 		try {
 			TownyUniverse universe = TownyUniverse.getInstance();
-			Town defendingTown = siege.getTown();
 			Resident resident;
-			Town residentTown;
 
 			for(Player player: Bukkit.getOnlinePlayers()) {
 
