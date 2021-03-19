@@ -68,24 +68,24 @@ public class PlunderTown {
 		Nation nationOfPlunderingResident = townOfPlunderingResident.getNation();
 
 		if(siege.getSiegeType() == SiegeType.REVOLT) {
+			if(siege.getStatus() == SiegeStatus.ATTACKER_WIN
+				|| siege.getStatus() == SiegeStatus.DEFENDER_SURRENDER) {
+				throw new TownyException(Translation.of("msg_err_siege_war_plunder_not_possible_rebels_won"));
+			}
 			if(siege.getStatus() != SiegeStatus.DEFENDER_WIN
 				&& siege.getStatus() != SiegeStatus.ATTACKER_ABANDON) {
 				throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
 			}
-
-			if(siege.getStatus() == SiegeStatus.ATTACKER_WIN
-					&& siege.getStatus() == SiegeStatus.DEFENDER_SURRENDER) {
-				throw new TownyException(Translation.of("msg_err_siege_war_plunder_not_possible_rebels_won"));
-			}
+			if(nationOfPlunderingResident != siege.getDefender())
+				throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
 		} else {
 			if(siege.getStatus() != SiegeStatus.ATTACKER_WIN
 				&& siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER) {
 				throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
 			}
+			if(nationOfPlunderingResident != siege.getAttacker())
+				throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
 		}
-
-		if(nationOfPlunderingResident != siege.getAttacker())
-			throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
 
 		plunderTown(siege, townToBePlundered, (Nation)siege.getAttacker());
     }
