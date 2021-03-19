@@ -63,6 +63,7 @@ public class SiegeController {
 				+ "!" + siege.getFlagLocation().getX()
 				+ "!" + siege.getFlagLocation().getY()
 				+ "!" + siege.getFlagLocation().getZ());
+		SiegeMetaDataController.setSiegeType(town, siege.getSiegeType().toString());
 		SiegeMetaDataController.setSiegeStatus(town, siege.getStatus().toString());
 		SiegeMetaDataController.setSiegeBalance(town, siege.getSiegeBalance());
 		SiegeMetaDataController.setWarChestAmount(town, siege.getWarChestAmount());
