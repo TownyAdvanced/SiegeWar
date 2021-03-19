@@ -4,7 +4,6 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -270,7 +269,7 @@ public class PlaceBlock {
 			if (System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(nearbyTown))
 				throw new TownyException(Translation.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
 
-			if (TownyEconomyHandler.isActive() && !residentsNation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.getSiegeCost(targetTown)))
+			if (TownyEconomyHandler.isActive() && !residentsNation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.getSiegeCost(nearbyTown)))
 				throw new TownyException(Translation.of("msg_err_no_money"));
 
 			if(SiegeController.getNumActiveAttackSieges(residentsNation) >= SiegeWarSettings.getWarSiegeMaxActiveSiegeAttacksPerNation())
@@ -407,15 +406,6 @@ public class PlaceBlock {
 	
 	private static boolean isWhiteBanner(Block block) {
 		return block.getType() == Material.WHITE_BANNER  && ((Banner) block.getState()).getPatterns().size() == 0;
-	}
-	
-	private static int getNumActiveAttackSieges(Nation nation) {
-		int result = 0;
-		for(Siege siege: SiegeController.getSieges()) {
-			if(siege.getNation() == nation && siege.getStatus().isActive())
-				result++;
-		}
-		return result;
 	}
 
 	private static boolean isValidPlacement(Block block) {

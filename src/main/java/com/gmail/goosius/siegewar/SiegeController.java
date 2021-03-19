@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
@@ -349,5 +350,15 @@ public class SiegeController {
 				.filter(t -> TownyAPI.getInstance().getTownNationOrNull(t).equals(nation))
 				.collect(Collectors.toList());
 
+	}
+
+	public static int getNumActiveAttackSieges(Nation nation) {
+		int num = 0;
+		for(Siege siege: getSieges(nation)) {
+			if(siege.getStatus().isActive() && siege.getAttacker() == nation) {
+				num++;
+			}
+		}
+		return num;
 	}
 }
