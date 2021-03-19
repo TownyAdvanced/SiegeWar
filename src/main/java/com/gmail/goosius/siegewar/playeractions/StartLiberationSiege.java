@@ -95,6 +95,7 @@ public class StartLiberationSiege {
         Siege siege = SiegeController.getSiege(defendingTown);
 
         //Set values in siege object
+        siege.setSiegeType(SiegeType.LIBERATION);
         siege.setNation(attackingNation);
         siege.setTown(defendingTown);
         siege.setStatus(SiegeStatus.IN_PROGRESS);
@@ -136,13 +137,14 @@ public class StartLiberationSiege {
             Messaging.sendGlobalMessage(String.format(
                     Translation.of("msg_liberation_siege_started_nation_town"),
                     attackingNation.getName(),
-                    defendingTown.getNation().getName(),
+                    TownOccupationController.getTownOccupier(defendingTown).getName(),
                     defendingTown.getName()
             ));
         } else {
             Messaging.sendGlobalMessage(String.format(
                     Translation.of("msg_liberation_siege_started_neutral_town"),
                     attackingNation.getName(),
+                    TownOccupationController.getTownOccupier(defendingTown).getName(),
                     defendingTown.getName()
             ));
         }

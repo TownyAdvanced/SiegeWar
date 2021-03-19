@@ -46,7 +46,6 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.TimeMgmt;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * 

@@ -43,13 +43,11 @@
 	  <version>0.96.7.8</version>
 	  <scope>provided</scope>
 	</dependency>
-    <!--
     <dependency>
       <groupId>com.github.TownyAdvanced</groupId>
       <artifactId>Dynmap-Towny</artifactId>
       <version>0.85</version>
     </dependency>
-    -->
     <dependency>
       <groupId>org.jetbrains</groupId>
       <artifactId>annotations</artifactId>

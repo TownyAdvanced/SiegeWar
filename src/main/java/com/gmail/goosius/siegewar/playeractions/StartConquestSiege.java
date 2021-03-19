@@ -107,6 +107,7 @@ public class StartConquestSiege {
 		Siege siege = SiegeController.getSiege(defendingTown);
 
 		//Set values in siege object
+		siege.setSiegeType(SiegeType.CONQUEST);
 		siege.setNation(attackingNation);
 		siege.setTown(defendingTown);
 		siege.setStatus(SiegeStatus.IN_PROGRESS);
