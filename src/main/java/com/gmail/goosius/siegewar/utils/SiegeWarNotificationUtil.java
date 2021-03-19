@@ -17,15 +17,19 @@ public class SiegeWarNotificationUtil {
 			Set<Town> townsToInform= new HashSet<>();
 
 			//attackers
-			nationsToInform.add(siege.getNation());
-			nationsToInform.addAll(siege.getNation().getMutualAllies());
-
-			//defenders
-			if (siege.getTown().hasNation()) {
-				nationsToInform.add(siege.getTown().getNation());
-				nationsToInform.addAll(siege.getTown().getNation().getMutualAllies());
+			if(siege.getAttacker() instanceof Nation) {
+				nationsToInform.add((Nation)siege.getAttacker());
+				nationsToInform.addAll(((Nation)siege.getAttacker()).getMutualAllies());
 			} else {
-				townsToInform.add(siege.getTown());
+				townsToInform.add((Town)siege.getAttacker());
+			}
+
+			//defender
+			if(siege.getDefender() instanceof Nation) {
+				nationsToInform.add((Nation)siege.getDefender());
+				nationsToInform.addAll(((Nation)siege.getDefender()).getMutualAllies());
+			} else {
+				townsToInform.add((Town)siege.getDefender());
 			}
 
 			//Inform required towns and nations

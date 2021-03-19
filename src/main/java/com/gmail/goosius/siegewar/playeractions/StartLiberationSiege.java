@@ -99,8 +99,9 @@ public class StartLiberationSiege {
 
         //Set values in siege object
         siege.setSiegeType(SiegeType.LIBERATION);
-        siege.setNation(liberatorNation);
         siege.setTown(targetTown);
+        siege.setAttacker(liberatorNation);
+        siege.setDefender(TownOccupationController.getTownOccupier(targetTown));
         siege.setStatus(SiegeStatus.IN_PROGRESS);
         siege.setTownPlundered(false);
         siege.setTownInvaded(false);

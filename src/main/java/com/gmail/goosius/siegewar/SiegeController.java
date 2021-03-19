@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -14,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import com.gmail.goosius.siegewar.enums.SiegeSide;
-import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
@@ -57,8 +57,9 @@ public class SiegeController {
 
 	public static void saveSiege(Siege siege) {
 		Town town = siege.getTown();
-		SiegeMetaDataController.setNationUUID(town, siege.getNation().getUUID().toString());
 		SiegeMetaDataController.setTownUUID(town, siege.getTown().getUUID().toString());
+		SiegeMetaDataController.setAttackerUUID(town, siege.getAttacker().getUUID().toString());
+		SiegeMetaDataController.setDefenderUUID(town, siege.getDefender().getUUID().toString());
 		SiegeMetaDataController.setFlagLocation(town, siege.getFlagLocation().getWorld().getName()
 				+ "!" + siege.getFlagLocation().getX()
 				+ "!" + siege.getFlagLocation().getY()
@@ -72,7 +73,7 @@ public class SiegeController {
 		SiegeMetaDataController.setStartTime(town, siege.getStartTime());
 		SiegeMetaDataController.setEndTime(town, siege.getScheduledEndTime());
 		SiegeMetaDataController.setActualEndTime(town, siege.getActualEndTime());
-		SiegeMetaDataController.setSiegeName(town, siege.getNation().getName() + "#vs#" + siege.getTown().getName());
+		SiegeMetaDataController.setSiegeName(town, siege.getAttacker().getName() + "#vs#" + siege.getDefender().getName());
 		SiegeMetaDataController.setAttackerSiegeContributors(town, siege.getAttackerSiegeContributors());
 	}
 
@@ -116,17 +117,6 @@ public class SiegeController {
 		//Town will be already loaded
 		Town town = siege.getTown();
 
-		//Load Nation
-		Nation nation;
-		try {
-			nation = TownyUniverse.getInstance().getDataSource().getNation(UUID.fromString(SiegeMetaDataController.getNationUUID(town)));
-			if (nation == null)
-				return false;
-			siege.setNation(nation);
-		} catch (Exception e) {
-			return false;
-		}
-
 		//Load siege type
 		String siegeTypeString = SiegeMetaDataController.getSiegeType(town);
 		if (siegeTypeString== null || siegeTypeString.isEmpty())
@@ -134,6 +124,63 @@ public class SiegeController {
 		else
 			siege.setSiegeType(SiegeType.parseString(siegeTypeString));
 
+		//Load Attacker & Defender
+		if (SiegeMetaDataController.getAttackerUUID(town) == null) {
+			//Attacker data not found. Look for old data schema
+			if (SiegeMetaDataController.getNationUUID(town) != null) {
+				//Old data scheme found, hook up to new values
+				Nation nation;
+				try {
+					nation = TownyUniverse.getInstance().getDataSource().getNation(UUID.fromString(SiegeMetaDataController.getNationUUID(town)));
+				} catch (NotRegisteredException e) {
+					return false;
+				}
+				siege.setAttacker(nation);
+				siege.setDefender(town);
+			} else {
+				System.err.print("Neither attackerUUID nor nationUUID were found");
+				return false;
+			}
+
+		} else {
+			//Load Attacker as normal
+			try {
+				switch (siege.getSiegeType()) {
+					case CONQUEST:
+					case LIBERATION:
+					case SUPPRESSION:
+						Nation nation = TownyUniverse.getInstance().getDataSource().getNation(UUID.fromString(SiegeMetaDataController.getAttackerUUID(town)));
+						siege.setAttacker(nation);
+						break;
+					case REVOLT:
+						siege.setAttacker(town);
+						break;
+				}
+			} catch (NotRegisteredException e) {
+				e.printStackTrace();
+				return false;
+			}
+
+			//Load Defender as normal
+			try {
+				switch (siege.getSiegeType()) {
+					case CONQUEST:
+					case SUPPRESSION:
+						siege.setDefender(town);
+						break;
+					case LIBERATION:
+					case REVOLT:
+						Nation nation = TownyUniverse.getInstance().getDataSource().getNation(UUID.fromString(SiegeMetaDataController.getDefenderUUID(town)));
+						siege.setDefender(nation);
+						break;
+				}
+			} catch (NotRegisteredException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		//Load flag location
 		if(SiegeMetaDataController.getFlagLocation(town).isEmpty())
 			return false;
 		String[] location = SiegeMetaDataController.getFlagLocation(town).split("!");
@@ -143,13 +190,6 @@ public class SiegeController {
 		double z = Double.parseDouble(location[3]);
 		Location loc = new Location(world, x, y, z);
 		siege.setFlagLocation(loc);
-
-		//Load siege status
-		String siegeStatusString = SiegeMetaDataController.getSiegeStatus(town);
-		if (siegeStatusString == null || siegeStatusString.isEmpty())
-			return false;
-		else
-			siege.setStatus(SiegeStatus.parseString(siegeStatusString));
 
 		siege.setSiegeBalance(SiegeMetaDataController.getSiegeBalance(town));
 		siege.setWarChestAmount(SiegeMetaDataController.getWarChestAmount(town));
@@ -196,9 +236,8 @@ public class SiegeController {
 		SiegeWarTownUtil.setTownPvpFlags(town, false);
 		CosmeticUtil.removeFakeBeacons(siege);
 
-		//Save attacking nation
-		siege.getNation().save();
-		siege = null;
+		//Save town
+		town.save();
 	}
 
 	public static void putTownInSiegeMap(Town town, Siege siege) {
@@ -234,11 +273,12 @@ public class SiegeController {
 		siegedTownNames.add(newname);
 	}
 
+	//Get all the sieges a nation is involved in
 	@Nullable
 	public static List<Siege> getSieges(Nation nation) {
 		List<Siege> siegeList = new ArrayList<>();
 		for (Siege siege : townSiegeMap.values()) {
-			if (siege.getNation().equals(nation))
+			if (siege.getAttacker().equals(nation) || siege.getDefender().equals(nation))
 				siegeList.add(siege);
 		}
 		return siegeList;

@@ -6,10 +6,7 @@ import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.object.Government;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.TownyObject;
+import com.palmergames.bukkit.towny.object.*;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -90,14 +87,20 @@ public class SiegeWarScoringUtil {
 	}
 
 	private static void updateBattlePointPopulationModifier(Siege siege, Map<Nation,Integer> nationSidePopulationsCache) {
-		Nation nation = null;
 		int attackerPopulation;
 		int defenderPopulation;
 
 		//Calculate defender population
-		if(siege.getTown().hasNation()) {
+		Nation nation = null;
+		if(siege.getDefender() instanceof Nation) {
+			nation = (Nation)siege.getDefender();
+		} else if (((Town)siege.getDefender()).hasNation()) {
+			nation = (Nation)siege.getDefender();
+		}
+
+		if(nation != null) {
 			nation = TownyAPI.getInstance().getTownNationOrNull(siege.getTown());
-			
+
 			if(nationSidePopulationsCache != null && nationSidePopulationsCache.containsKey(nation)) {
 				defenderPopulation = nationSidePopulationsCache.get(nation);
 			} else {
@@ -109,20 +112,30 @@ public class SiegeWarScoringUtil {
 					nationSidePopulationsCache.put(nation, defenderPopulation);
 			}
 		} else {
-			defenderPopulation = siege.getTown().getNumResidents();
+			defenderPopulation = ((Town)siege.getDefender()).getNumResidents();
 		}
 
 		//Calculate attacker population
-		nation = siege.getNation();
-		if(nationSidePopulationsCache != null && nationSidePopulationsCache.containsKey(nation)) {
-			attackerPopulation = nationSidePopulationsCache.get(nation);
-		} else {
-			attackerPopulation = nation.getNumResidents();
-			for (Nation alliedNation : nation.getMutualAllies()) {
-				attackerPopulation += alliedNation.getNumResidents();
+		nation = null;
+		if(siege.getAttacker() instanceof Nation) {
+			nation = (Nation)siege.getAttacker();
+		} else if (((Town)siege.getAttacker()).hasNation()) {
+			nation = (Nation)siege.getAttacker();
+		}
+
+		if(nation != null) {
+			if(nationSidePopulationsCache != null && nationSidePopulationsCache.containsKey(nation)) {
+				attackerPopulation = nationSidePopulationsCache.get(nation);
+			} else {
+				attackerPopulation = nation.getNumResidents();
+				for (Nation alliedNation : nation.getMutualAllies()) {
+					attackerPopulation += alliedNation.getNumResidents();
+				}
+				if (nationSidePopulationsCache != null)
+					nationSidePopulationsCache.put(nation, attackerPopulation);
 			}
-			if (nationSidePopulationsCache != null)
-				nationSidePopulationsCache.put(nation, attackerPopulation);
+		} else {
+			attackerPopulation = ((Town)siege.getAttacker()).getNumResidents();
 		}
 
 		//Note which side has the lower population

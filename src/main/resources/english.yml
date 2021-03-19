@@ -351,7 +351,7 @@ msg_err_town_cannot_end_siege_as_finished: '&cThe siege is finished or scheduled
 # Timed wins
 msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has defeated the army of %s and breached the defences of the town.'
 msg_liberation_siege_timed_attacker_win: '&bLIBERATION SIEGE at %s > The attacking army of %s has defeated the occupying army of %s, and liberated the townspeople from occupation.'
-msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking rebel army have driven out the occupying army of %s.'
+msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking rebel army has driven out the occupying army of %s.'
 msg_suppression_siege_timed_attacker_win: '&bSUPPRESSION SIEGE at %s > The occupying army of %s has successfully suppressed rebel activity in the town.'
 
 msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has defeated the army of %s, and driven the attackers off.'

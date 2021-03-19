@@ -311,7 +311,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 					Boolean invaded = Boolean.parseBoolean(args[2]);
 					if(invaded) {
 						siege.setTownInvaded(true);
-						TownOccupationController.setTownOccupation(town, siege.getNation());
+						TownOccupationController.setTownOccupation(town, (Nation)siege.getAttacker());
 					} else {
 						siege.setTownInvaded(false);
 						TownOccupationController.removeTownOccupation(town);

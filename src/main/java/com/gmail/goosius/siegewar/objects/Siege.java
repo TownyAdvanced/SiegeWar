@@ -43,7 +43,8 @@ public class Siege {
 	private String name;
 	private SiegeType siegeType;
 	private Town town;
-	private Nation nation;
+	private Government attacker;
+	private Government defender;
     private SiegeStatus status;
     private boolean townPlundered;
     private boolean townInvaded;
@@ -68,9 +69,10 @@ public class Siege {
 	public Siege(Town town) {
 		this.town = town;
 		name = "";
-        siegeType = SiegeType.CONQUEST;
-        status = SiegeStatus.IN_PROGRESS;
-		nation = null;
+        siegeType = null;
+        attacker = null;
+        defender = null;
+        status = null;
 		siegeBalance = 0;
 		siegeBannerLocation = null;
 		warChestAmount = 0;
@@ -85,10 +87,6 @@ public class Siege {
 		attackerBattleContributors = new HashSet<>();
 		attackerSiegeContributors = new HashMap<>();
     }
-
-	public Nation getNation() {
-		return nation;
-	}
 
     public Town getTown() {
         return town;
@@ -181,45 +179,19 @@ public class Siege {
 	}
 
 	public Government getAttacker() {
-		switch (siegeType) {
-			case CONQUEST:
-			case LIBERATION:
-			case SUPPRESSION:
-				return nation;
-			case REVOLT:
-				return town;
-			default:
-				throw new RuntimeException("Unknown siege type");
-		}
+		return attacker;
+	}
+
+	public void setAttacker(Government attacker) {
+		this.attacker = attacker;
 	}
 
 	public Government getDefender() {
-		switch (siegeType) {
-			case CONQUEST:
-				if (town.hasNation()) {
-					try {
-						return town.getNation();
-					} catch (NotRegisteredException ignored) {}
-				} else {
-					return town;
-				}
-			case LIBERATION:
-				if(TownOccupationController.isTownOccupied(town)) {
-					return TownOccupationController.getTownOccupier(town);
-				} else {
-					return town;
-				}
-			case SUPPRESSION:
-				return nation;
-			case REVOLT:
-				return TownOccupationController.getTownOccupier(town);
-			default:
-				throw new RuntimeException("Unknown siege type");
-		}
+		return defender;
 	}
 
-	public void setNation(Nation nation) {
-		this.nation = nation;
+	public void setDefender(Government defender) {
+		this.defender = defender;
 	}
 
 	public void setTown(Town town) {

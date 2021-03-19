@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -9,6 +10,7 @@ import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -46,7 +48,7 @@ public class SiegeWarSicknessUtil {
 
             boolean allowedInAnyOverlappingSiege = false;
             for (Siege siege : sieges) {
-			    if (isSiegeParticipant(resident, siege)) {
+			    if (isSiegeParticipant(player, resident, siege)) {
 			        allowedInAnyOverlappingSiege = true;
 			        break;
 			    }
@@ -76,7 +78,7 @@ public class SiegeWarSicknessUtil {
 			List<Siege> sieges = SiegeController.getActiveSiegesAt(player.getLocation());
 			boolean allowedInAnyOverlappingSiege = false;
 			for (Siege siege : sieges) {
-			    if (isSiegeParticipant(resident, siege)) {
+			    if (isSiegeParticipant(player, resident, siege)) {
 			        allowedInAnyOverlappingSiege = true;
 			        break;
 			    }
@@ -105,45 +107,18 @@ public class SiegeWarSicknessUtil {
         });
     }
 
-    public static boolean isSiegeParticipant(Resident resident, Siege siege) {
-
+    public static boolean isSiegeParticipant(Player player, Resident resident, Siege siege) {
         if (!resident.hasTown())
             return false;
 
-        Town defendingTown = siege.getTown();
-        Town residentTown = TownyAPI.getInstance().getResidentTownOrNull(resident);
-        Nation attackingNation = siege.getNation();
-        Nation residentNation = null;
-        Nation defendingNation = null;
-        
-        if (residentTown.hasNation())
-        	residentNation = TownyAPI.getInstance().getTownNationOrNull(residentTown);
-        
-        if (defendingTown.hasNation())
-        	defendingNation = TownyAPI.getInstance().getTownNationOrNull(defendingTown);
-        	
-
-        if (residentTown.equals(defendingTown) && resident.getPlayer()
-                .hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS.getNode())) {
-            // Player is defending their own town
-            return true;
+        SiegeSide siegeSide;
+        try {
+            siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
+        } catch (NotRegisteredException e) {
+            return false;
         }
 
-        if (residentNation != null
-        		&& (attackingNation.equals(TownyAPI.getInstance().getTownNationOrNull(residentTown)) || attackingNation.hasMutualAlly(TownyAPI.getInstance().getTownNationOrNull(residentTown)))
-                && resident.getPlayer().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode())) {
-            // Player is attacking
-            return true;
-        }
-
-        if (defendingNation != null && residentNation != null 
-                && (defendingNation.equals(residentNation) || defendingNation.hasMutualAlly(residentNation))
-                && resident.getPlayer().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode())) {
-            // Player is defending another town in the nation
-            return true;
-        }
-
-        return false;
+        return siegeSide != SiegeSide.NOBODY;
     }
 
     private static boolean isInOwnClaims(Resident resident) {

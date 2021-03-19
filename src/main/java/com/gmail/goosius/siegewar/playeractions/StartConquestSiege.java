@@ -109,7 +109,8 @@ public class StartConquestSiege {
 
 		//Set values in siege object
 		siege.setSiegeType(SiegeType.CONQUEST);
-		siege.setNation(attackingNation);
+		siege.setAttacker(attackingNation);
+		siege.setDefender(targetTown);
 		siege.setTown(targetTown);
 		siege.setStatus(SiegeStatus.IN_PROGRESS);
 		siege.setTownPlundered(false);

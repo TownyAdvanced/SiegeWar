@@ -8,6 +8,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 
@@ -109,10 +110,22 @@ public class CosmeticUtil {
 		if (siege.getBannerControlSessions().containsKey(player))
 			return getCaptureColor();
 
-		if (getSiegeSide(resident, siege) == SiegeSide.NOBODY || siege.getBannerControllingSide() == SiegeSide.NOBODY)
+		SiegeSide siegeSide;
+		if(resident.hasTown()) {
+			try {
+				siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
+			} catch (NotRegisteredException e) {
+				siegeSide = SiegeSide.NOBODY;
+			}
+		} else {
+			siegeSide = SiegeSide.NOBODY;
+		}
+
+
+		if (siegeSide == SiegeSide.NOBODY || siege.getBannerControllingSide() == SiegeSide.NOBODY)
 			return Material.GLASS;
 		
-		if (siege.getBannerControllingSide() != getSiegeSide(resident, siege))
+		if (siege.getBannerControllingSide() != siegeSide)
 			return getEnemyColor();
 		else
 			return getCapturedColor();
@@ -136,6 +149,7 @@ public class CosmeticUtil {
 		});
     }
 
+    /*
 	public static SiegeSide getSiegeSide(Resident resident, Siege siege) {
 		if (!resident.hasTown())
 			return SiegeSide.NOBODY;
@@ -156,6 +170,7 @@ public class CosmeticUtil {
 			return SiegeSide.NOBODY;
 	}
 
+     */
 	public static Material getCaptureColor() {
 		String materialName = SiegeWarSettings.getBeaconCaptureColor();	
 		Material material;

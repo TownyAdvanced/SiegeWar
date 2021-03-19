@@ -86,8 +86,9 @@ public class StartRevoltSiege {
 
         //Set values in siege object
         siege.setSiegeType(SiegeType.REVOLT);
-        siege.setNation(occupierNation);
         siege.setTown(targetTown);
+        siege.setAttacker(targetTown);
+        siege.setDefender(occupierNation);
         siege.setStatus(SiegeStatus.IN_PROGRESS);
         siege.setTownPlundered(false);
         siege.setTownInvaded(false);

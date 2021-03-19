@@ -78,42 +78,18 @@ public class SiegeWarBannerControlUtil {
 				if(siege.getBannerControlSessions().containsKey(player))
 					continue; // Player already has a control session
 
-				residentTown = resident.getTown();
-				if(residentTown == siege.getTown()
-					&& universe.getPermissionSource().testPermission(resident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS.getNode())) {
-					//Player is defending their own town
+				if(siege.getBannerControllingResidents().contains(resident))
+					continue;  // Player already on the BC list
 
-					if(siege.getBannerControllingSide() == SiegeSide.DEFENDERS && siege.getBannerControllingResidents().contains(resident))
-						continue; //Player already defending
+				SiegeSide siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
 
-					addNewBannerControlSession(siege, player, resident, SiegeSide.DEFENDERS);
-					continue;
-
-				} else if (residentTown.hasNation()
-					&& universe.getPermissionSource().testPermission(resident.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode())) {
-
-					if (defendingTown.hasNation()
-						&& (defendingTown.getNation() == residentTown.getNation()
-							|| defendingTown.getNation().hasMutualAlly(residentTown.getNation()))) {
-						//Player is defending another town in the nation
-
-						if(siege.getBannerControllingSide() == SiegeSide.DEFENDERS && siege.getBannerControllingResidents().contains(resident))
-							continue; //Player already defending
-
-						addNewBannerControlSession(siege, player, resident, SiegeSide.DEFENDERS);
-						continue;
-					}
-
-					if (siege.getNation() == residentTown.getNation()
-							|| siege.getNation().hasMutualAlly(residentTown.getNation())) {
-						//Player is attacking
-
-						if(siege.getBannerControllingSide() == SiegeSide.ATTACKERS && siege.getBannerControllingResidents().contains(resident))
-							continue; //Player already attacking
-
+				switch(siegeSide) {
+					case ATTACKERS:
 						addNewBannerControlSession(siege, player, resident, SiegeSide.ATTACKERS);
+					case DEFENDERS:
+						addNewBannerControlSession(siege, player, resident, SiegeSide.DEFENDERS);
+					case NOBODY:
 						continue;
-					}
 				}
 			}
 		} catch (Exception e) {

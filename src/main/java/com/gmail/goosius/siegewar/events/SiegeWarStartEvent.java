@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.events;
 
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event;
@@ -12,16 +11,12 @@ public class SiegeWarStartEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
     private final Siege siege;
-    private final Nation attackerNation;
     private final Town townOfSiegeStarter;
-    private final Town defenderTown;
     private final Block flag;
 
     public SiegeWarStartEvent(Siege siege, Town townOfSiegeStarter, Block flag) {
         this.siege = siege;
-        this.attackerNation = siege.getNation();
         this.townOfSiegeStarter = townOfSiegeStarter;
-        this.defenderTown = siege.getTown();
         this.flag = flag;
     }
 
@@ -39,16 +34,8 @@ public class SiegeWarStartEvent extends Event {
         return siege;
     }
 
-    public Nation getAttackerNation() {
-        return attackerNation;
-    }
-
     public Town getTownOfSiegeStarter() {
         return townOfSiegeStarter;
-    }
-
-    public Town getDefenderTown() {
-        return defenderTown;
     }
 
     public Block getFlag() {

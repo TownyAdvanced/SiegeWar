@@ -26,8 +26,17 @@ public class SiegeMetaDataController {
 	private static SiegeMetaDataController siegeMetaDataController;
 	private static BooleanDataField hasSiege = new BooleanDataField("siegewar_hasSiege", false);
 	private static StringDataField siegeName = new StringDataField("siegewar_name", "");
+
+	/*
+	 * The nation UUID is no longer used in game
+	 * However it is used to clear up metadata
+	 * Eventually it can be deleted
+	 */
 	private static StringDataField siegeNationUUID = new StringDataField("siegewar_nationUUID", "");
+
 	private static StringDataField siegeTownUUID = new StringDataField("siegewar_townUUID", "");
+	private static StringDataField siegeAttackerUUID = new StringDataField("siegewar_attackerUUID", "");
+	private static StringDataField siegeDefenderUUID = new StringDataField("siegewar_defenderUUID", "");
 	private static StringDataField siegeFlagLocation = new StringDataField("siegewar_flagLocation", "");
 	private static StringDataField siegeStatus = new StringDataField("siegewar_status", "");
 	private static StringDataField siegeType = new StringDataField("siegewar_type", "");
@@ -96,7 +105,39 @@ public class SiegeMetaDataController {
 		else
 			town.addMetaData(new StringDataField("siegewar_nationUUID", uuid));
 	}
-	
+
+	@Nullable
+	public static String getAttackerUUID(Town town) {
+		StringDataField sdf = (StringDataField) siegeAttackerUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			return MetaDataUtil.getString(town, sdf);
+		return null;
+	}
+
+	public static void setAttackerUUID(Town town, String uuid) {
+		StringDataField sdf = (StringDataField) siegeAttackerUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			MetaDataUtil.setString(town, sdf, uuid);
+		else
+			town.addMetaData(new StringDataField("siegewar_attackerUUID", uuid));
+	}
+
+	@Nullable
+	public static String getDefenderUUID(Town town) {
+		StringDataField sdf = (StringDataField) siegeDefenderUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			return MetaDataUtil.getString(town, sdf);
+		return null;
+	}
+
+	public static void setDefenderUUID(Town town, String uuid) {
+		StringDataField sdf = (StringDataField) siegeDefenderUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			MetaDataUtil.setString(town, sdf, uuid);
+		else
+			town.addMetaData(new StringDataField("siegewar_defenderUUID", uuid));
+	}
+
 	@Nullable
 	public static String getTownUUID(Town town) {
 		StringDataField sdf = (StringDataField) siegeTownUUID.clone();

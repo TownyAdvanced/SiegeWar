@@ -443,7 +443,7 @@ public class SiegeWarTownEventListener implements Listener {
 				switch (siege.getStatus()) {
 					case DEFENDER_WIN:
 					case ATTACKER_ABANDON:
-						return getPlunderStatusLine(siege) + getInvadeStatusLine(siege);
+						return getPlunderStatusLine(siege);
 				}
 				break;
 		}
