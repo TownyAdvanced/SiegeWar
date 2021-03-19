@@ -12,15 +12,13 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
+import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.*;
 import com.palmergames.bukkit.towny.event.NationBonusCalculationEvent;
 import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
 import com.palmergames.bukkit.towny.event.PreDeleteNationEvent;
 import com.palmergames.bukkit.towny.event.RenameNationEvent;
-import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumOnlinePlayersCalculationEvent;
-import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumResidentsCalculationEvent;
-import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumTownsCalculationEvent;
-import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
+import com.palmergames.bukkit.towny.event.nation.*;
 import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
@@ -265,5 +263,16 @@ public class SiegeWarNationEventListener implements Listener {
 			}
 		}
 		event.setDisplayedValue(effectiveNumOnlinePlayers);
+	}
+
+	/**
+	 * Override Towny's prevention of occupied towns leaving
+	 */
+	@EventHandler
+	public void onTownTriesToLeaveNation(NationPreTownLeaveEvent event) {
+		// Towny will cancel the leaving on lowest priority if the town is conquered.
+		// We want to un-cancel it.
+		if (event.isCancelled())
+			event.setCancelled(false);
 	}
 }
