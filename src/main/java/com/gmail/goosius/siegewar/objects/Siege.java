@@ -214,7 +214,7 @@ public class Siege {
 			case SUPPRESSION:
 				return nation;
 			case REVOLT:
-				return town;
+				return TownOccupationController.getTownOccupier(town);
 			default:
 				throw new RuntimeException("Unknown siege type");
 		}

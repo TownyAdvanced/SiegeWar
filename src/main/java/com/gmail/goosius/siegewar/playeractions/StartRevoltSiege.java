@@ -113,16 +113,15 @@ public class StartRevoltSiege {
         if (siege.getTown().hasNation()) {
             Messaging.sendGlobalMessage(String.format(
                     Translation.of("msg_revolt_siege_started_nation_town"),
-                    attackingNation.getName(),
-                    TownOccupationController.getTownOccupier(defendingTown).getName(),
-                    defendingTown.getName()
+                    defendingTown.getName(),
+                    defendingTown.getNation().getName(),
+                    TownOccupationController.getTownOccupier(defendingTown).getName()
             ));
         } else {
             Messaging.sendGlobalMessage(String.format(
                     Translation.of("msg_revolt_siege_started_neutral_town"),
-                    attackingNation.getName(),
-                    TownOccupationController.getTownOccupier(defendingTown).getName(),
-                    defendingTown.getName()
+                    defendingTown.getName(),
+                    TownOccupationController.getTownOccupier(defendingTown).getName()
             ));
         }
 
