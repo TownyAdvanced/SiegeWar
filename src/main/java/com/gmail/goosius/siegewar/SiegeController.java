@@ -181,6 +181,10 @@ public class SiegeController {
 			}
 		}
 
+		if (SiegeMetaDataController.getSiegeStatus(town).isEmpty())
+			return false;
+		siege.setStatus(SiegeStatus.parseString(SiegeMetaDataController.getSiegeStatus(town)));
+
 		//Load flag location
 		if(SiegeMetaDataController.getFlagLocation(town).isEmpty())
 			return false;
