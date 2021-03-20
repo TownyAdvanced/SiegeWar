@@ -106,7 +106,7 @@ public enum SiegeWarPermissionNodes {
 			case SUPPRESSION:
 				return SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_START.getNode();
 			default:
-				throw new RuntimeException("Uknown siege type");
+				throw new RuntimeException("Unknown siege type");
 		}
 	}
 
