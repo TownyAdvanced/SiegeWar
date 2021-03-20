@@ -98,7 +98,7 @@ public class StartRevoltSiege {
                         ((long) (SiegeWarSettings.getWarSiegeMaxHoldoutTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS))));
         siege.setActualEndTime(0);
         siege.setFlagLocation(bannerBlock.getLocation());
-        siege.setWarChestAmount(SiegeWarMoneyUtil.getSiegeCost(targetTown));
+        siege.setWarChestAmount(0);
 
         SiegeController.setSiege(targetTown, true);
         SiegeController.putTownInSiegeMap(targetTown, siege);
