@@ -23,16 +23,15 @@ public class SiegeMetaDataController {
 
 	@SuppressWarnings("unused")
 	private SiegeWar plugin;
-	private static SiegeMetaDataController siegeMetaDataController;
 	private static BooleanDataField hasSiege = new BooleanDataField("siegewar_hasSiege", false);
-	private static StringDataField siegeName = new StringDataField("siegewar_name", "");
 
 	/*
-	 * The nation UUID is no longer used in game
-	 * However it is used to clear up metadata
-	 * Eventually it can be deleted,
+	 * The following 2 fields are no longer used in game
+	 * However it they used to clear up metadata
+	 * Eventually they can be deleted,
 	 * because the old nation meta will not appear in sieges anymore
 	 */
+	private static StringDataField siegeName = new StringDataField("siegewar_name", "");
 	private static StringDataField siegeNationUUID = new StringDataField("siegewar_nationUUID", "");
 
 	private static StringDataField siegeTownUUID = new StringDataField("siegewar_townUUID", "");
@@ -54,11 +53,7 @@ public class SiegeMetaDataController {
 	public SiegeMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
 	}
-	
-	public static SiegeMetaDataController getSiegeMeta() {
-		return siegeMetaDataController;
-	}
-	
+
 	public static boolean hasSiege(Town town) {
 		BooleanDataField bdf = (BooleanDataField) hasSiege.clone();
 		if (town.hasMeta(bdf.getKey())) {
@@ -75,22 +70,6 @@ public class SiegeMetaDataController {
 			town.addMetaData(new BooleanDataField("siegewar_hasSiege", bool));
 	}
 
-	@Nullable
-	public static String getSiegeName(Town town) {
-		StringDataField sdf = (StringDataField) siegeName.clone();
-		if (town.hasMeta(sdf.getKey()))
-			return MetaDataUtil.getString(town, sdf);
-		return null;
-	}
-	
-	public static void setSiegeName(Town town, String name) {
-		StringDataField sdf = (StringDataField) siegeName.clone();
-		if (town.hasMeta(sdf.getKey()))
-			MetaDataUtil.setString(town, sdf, name);
-		else
-			town.addMetaData(new StringDataField("siegewar_name", name));
-	}
-	
 	@Nullable
 	public static String getNationUUID(Town town) {
 		StringDataField sdf = (StringDataField) siegeNationUUID.clone();

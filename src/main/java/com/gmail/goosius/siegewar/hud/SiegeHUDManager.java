@@ -24,7 +24,7 @@ public class SiegeHUDManager {
         if (!warHudUsers.containsKey(player)) {
             warHudUsers.put(player, siege);
             SiegeWarHud.toggleOn(player, siege);
-        } else if (warHudUsers.get(player).getName() != siege.getName()) {
+        } else if (warHudUsers.get(player) != siege) {
             warHudUsers.replace(player, siege);
             SiegeWarHud.updateInfo(player, siege);
         } else

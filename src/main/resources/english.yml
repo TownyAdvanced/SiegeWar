@@ -160,7 +160,6 @@ siege_status_attacker_win: 'Attacker Win'
 siege_status_defender_win: 'Defender Win'
 siege_status_unknown: 'Unknown'
 
-dynmap_siege_title: 'Siege: %s'
 dynmap_siege_banner_control: 'Banner Control: %s'
 dynmap_siege_time_left: 'Time Left: %s'
 
@@ -276,6 +275,7 @@ siege_type_revolt: 'Revolt'
 siege_type_suppression: 'Suppression'
 
 # Dynmap
+dynmap_siege_title: 'Siege: %s vs %s'
 dynmap_siege_type: 'Type: %s'
 dynmap_siege_town: 'Town: %s'
 dynmap_siege_balance: 'Siege Balance: %d'
@@ -299,8 +299,8 @@ msg_liberation_siege_started_neutral_town: '&bAn army belonging to %s has attack
 msg_liberation_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s, in an attempt to remove the occupation. A LIBERATION SIEGE has begun!'
 msg_revolt_siege_started_neutral_town: '&bThe townspeople of %s have risen up against the occupying army of %s. A REVOLT SIEGE has begun!'
 msg_revolt_siege_started_nation_town: '&bThe townspeople of %s, whose home nation is %s, have risen up against the occupying army of %s. A REVOLT SIEGE has begun!'
-msg_suppression_siege_started_neutral_town: '&bThe nation of %s has moved to stamp out resistance in %s. A SUPPRESSION SIEGE has begun!'
-msg_suppression_siege_started_nation_town: '&bThe nation of %s has moved to stamp out resistance in by %s at %s. A SUPPRESSION SIEGE has begun!'
+msg_suppression_siege_started_neutral_town: '&bThe nation of %s has moved to stamp out rebel activity at %s. A SUPPRESSION SIEGE has begun!'
+msg_suppression_siege_started_nation_town: '&bThe nation of %s has moved to stamp out rebel activity by %s at %s. A SUPPRESSION SIEGE has begun!'
 
 # Banner Control
 msg_siege_war_defending_troops_at_siege_banner: '&bSiege on %s > Defenders are at the siege banner.'

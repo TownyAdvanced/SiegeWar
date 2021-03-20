@@ -82,7 +82,6 @@ public class SiegeController {
 		SiegeMetaDataController.setStartTime(town, siege.getStartTime());
 		SiegeMetaDataController.setEndTime(town, siege.getScheduledEndTime());
 		SiegeMetaDataController.setActualEndTime(town, siege.getActualEndTime());
-		SiegeMetaDataController.setSiegeName(town, siege.getAttacker().getName() + "#vs#" + siege.getDefender().getName());
 		SiegeMetaDataController.setAttackerSiegeContributors(town, siege.getAttackerSiegeContributors());
 		town.save();
 	}
@@ -325,11 +324,6 @@ public class SiegeController {
 			}
 		}
 		return siegeList;
-	}
-
-	@Nullable
-	public static String getSiegeName(Town town) {
-		return SiegeMetaDataController.getSiegeName(town);
 	}
 
 	public static void setSiege(Town town, boolean bool) {

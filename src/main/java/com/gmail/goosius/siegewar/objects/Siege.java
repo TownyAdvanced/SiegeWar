@@ -173,11 +173,6 @@ public class Siege {
 		return (long)((SiegeWarSettings.getWarSiegeMinSiegeDurationBeforeAbandonHours() * ONE_HOUR_IN_MILLIS) - getDurationMillis());
 	}
 
-	//<attacker> vs <defender>
-	public String getName() {
-		return Translation.of("siege.name", getAttacker().getName(), getDefender().getName());
-	}
-
 	public Government getAttacker() {
 		return attacker;
 	}
@@ -187,6 +182,21 @@ public class Siege {
 	}
 
 	public Government getDefender() {
+		return defender;
+	}
+
+	/**
+	 * Get the defending nation if there is one,
+	 * else get defending town
+	 * 
+	 * @return the defender,
+	 */
+	public Government getDefendingNationIfPossibleElseTown() {
+		if(defender instanceof Town && ((Town)defender).hasNation()) {
+			try {
+				return ((Town)defender).getNation();
+			} catch (NotRegisteredException ignored) {}
+		}
 		return defender;
 	}
 
