@@ -108,7 +108,7 @@ public class SiegeWarTimerTaskController {
 	}
 
 	public static void evaluateCannonSessions() {
-		if(SiegeWar.getCannonsPluginDetected() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
+		if(SiegeWar.getCannonsPluginIntegrationEnabled() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
 			SiegeWarCannonsUtil.evaluateCannonSessions();
 		}
 	}
