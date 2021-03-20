@@ -271,7 +271,7 @@ public class PlaceBlock {
 			if (TownyEconomyHandler.isActive() && !residentsNation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.getSiegeCost(nearbyTown)))
 				throw new TownyException(Translation.of("msg_err_no_money"));
 
-			if(SiegeController.getNumActiveAttackSieges(residentsNation) >= SiegeWarSettings.getWarSiegeMaxActiveSiegeAttacksPerNation())
+			if(SiegeController.getActiveOffensiveSieges(residentsNation).size() >= SiegeWarSettings.getWarSiegeMaxActiveSiegeAttacksPerNation())
 				throw new TownyException(Translation.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));
 
 			if (TownOccupationController.isTownOccupied(nearbyTown)) {

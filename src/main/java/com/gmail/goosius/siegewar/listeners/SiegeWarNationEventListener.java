@@ -4,7 +4,6 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
-import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -113,12 +112,12 @@ public class SiegeWarNationEventListener implements Listener {
 			out.addAll(new ArrayList<>(ChatTools.listArr(formattedOccupiedForeignTowns, Translation.of("status_nation_occupied_foreign_towns", occupiedForeignTowns.size()))));
 
 			// Offensive Sieges [3]: TownA, TownB, TownC
-	        List<Town> siegeAttacks = getOffensiveSieges(nation);
+	        List<Town> siegeAttacks = SiegeController.getActiveOffensiveSieges(nation);
 	        String[] formattedSiegeAttacks = TownyFormatter.getFormattedNames(siegeAttacks.toArray(new Town[0]));
 	        out.addAll(new ArrayList<>(ChatTools.listArr(formattedSiegeAttacks, Translation.of("status_nation_offensive_sieges", siegeAttacks.size()))));
 
 	        // Defensive Sieges [3]: TownX, TownY, TownZ
-	        List<Town> siegeDefences = getDefensiveSieges(nation);
+	        List<Town> siegeDefences = SiegeController.getActiveDefensiveSieges(nation);
 	        String[] formattedSiegeDefences = TownyFormatter.getFormattedNames(siegeDefences.toArray(new Town[0]));
 	        out.addAll(ChatTools.listArr(formattedSiegeDefences, Translation.of("status_nation_defensive_sieges", siegeDefences.size())));
 	        
@@ -129,28 +128,6 @@ public class SiegeWarNationEventListener implements Listener {
 											Translation.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation))));
 			}
 		}
-	}
-
-	public static List<Town> getOffensiveSieges(Nation nation) {
-		List<Town> result = new ArrayList<>();
-		for(Siege siege : SiegeController.getSieges(nation)) {
-			if(siege.getStatus() == SiegeStatus.IN_PROGRESS
-				&& siege.getAttacker() == nation) {
-				result.add(siege.getTown());
-			}
-		}
-		return result;
-	}
-
-	public static List<Town> getDefensiveSieges(Nation nation) {
-		List<Town> result = new ArrayList<>();
-		for(Siege siege : SiegeController.getSieges(nation)) {
-			if(siege.getStatus() == SiegeStatus.IN_PROGRESS
-					&& siege.getDefender() == nation) {
-				result.add(siege.getTown());
-			}
-		}
-		return result;
 	}
 
 	/*

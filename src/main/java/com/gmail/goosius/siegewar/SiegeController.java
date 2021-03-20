@@ -370,17 +370,27 @@ public class SiegeController {
 
 	}
 
-	/**
-	 * Get the number of sieges in which the nation is the attacker
-	 */
-	public static int getNumActiveAttackSieges(Nation nation) {
-		int num = 0;
-		for(Siege siege: getSieges(nation)) {
-			if(siege.getStatus().isActive() && siege.getAttacker() == nation) {
-				num++;
+
+	public static List<Town> getActiveOffensiveSieges(Nation nation) {
+		List<Town> result = new ArrayList<>();
+		for(Siege siege : SiegeController.getSieges(nation)) {
+			if(siege.getStatus().isActive()
+					&& siege.getAttacker() == nation) {
+				result.add(siege.getTown());
 			}
 		}
-		return num;
+		return result;
+	}
+
+	public static List<Town> getActiveDefensiveSieges(Nation nation) {
+		List<Town> result = new ArrayList<>();
+		for(Siege siege : SiegeController.getSieges(nation)) {
+			if(siege.getStatus().isActive()
+					&& siege.getDefender() == nation) {
+				result.add(siege.getTown());
+			}
+		}
+		return result;
 	}
 
 	/**
