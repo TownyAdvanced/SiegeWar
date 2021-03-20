@@ -279,7 +279,7 @@ public class PlaceBlock {
 				Nation occupierOfNearbyTown = TownOccupationController.getTownOccupier(nearbyTown);
 				if (residentsNation == occupierOfNearbyTown) {
 					//Suppression siege
-					StartSuppressionSiege.processStartSiegeRequest(player, residentsTown, occupierOfNearbyTown);
+					StartSuppressionSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 				} else {
 					//Liberation siege
 					StartLiberationSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);

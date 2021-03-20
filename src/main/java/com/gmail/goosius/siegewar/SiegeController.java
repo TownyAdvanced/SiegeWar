@@ -6,12 +6,20 @@ import java.util.stream.Collectors;
 
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
+import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.object.Government;
+import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
@@ -76,6 +84,7 @@ public class SiegeController {
 		SiegeMetaDataController.setActualEndTime(town, siege.getActualEndTime());
 		SiegeMetaDataController.setSiegeName(town, siege.getAttacker().getName() + "#vs#" + siege.getDefender().getName());
 		SiegeMetaDataController.setAttackerSiegeContributors(town, siege.getAttackerSiegeContributors());
+		town.save();
 	}
 
 	public static boolean loadAll() {
@@ -360,6 +369,9 @@ public class SiegeController {
 
 	}
 
+	/**
+	 * Get the number of sieges in which the nation is the attacker
+	 */
 	public static int getNumActiveAttackSieges(Nation nation) {
 		int num = 0;
 		for(Siege siege: getSieges(nation)) {
@@ -368,5 +380,157 @@ public class SiegeController {
 			}
 		}
 		return num;
+	}
+
+	/**
+	 * Start a siege
+	 *
+	 * @param bannerBlock banner block
+	 * @param siegeType the siege type
+	 * @param targetTown the target town
+	 * @param attacker the attacking government
+	 * @param defender the defending government
+	 * @param townOfSiegeStarter the town of the siege starter
+	 * @param useWarchest true if warchest should be used
+	 */
+	public static void startSiege(Block bannerBlock,
+								   SiegeType siegeType,
+								   Town targetTown,
+								   Government attacker,
+								   Government defender,
+								   Town townOfSiegeStarter,
+								   boolean useWarchest) {
+		//Create Siege
+		SiegeController.newSiege(targetTown);
+		Siege siege = SiegeController.getSiege(targetTown);
+
+		//Set values in siege object
+		siege.setSiegeType(siegeType);
+		siege.setTown(targetTown);
+		siege.setAttacker(attacker);
+		siege.setDefender(defender);
+		siege.setStatus(SiegeStatus.IN_PROGRESS);
+		siege.setTownPlundered(false);
+		siege.setTownInvaded(false);
+		siege.setStartTime(System.currentTimeMillis());
+		siege.setScheduledEndTime(
+				(System.currentTimeMillis() +
+						((long) (SiegeWarSettings.getWarSiegeMaxHoldoutTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS))));
+		siege.setActualEndTime(0);
+		siege.setFlagLocation(bannerBlock.getLocation());
+
+		SiegeController.setSiege(targetTown, true);
+		SiegeController.putTownInSiegeMap(targetTown, siege);
+
+		//Set town pvp and explosions to true.
+		SiegeWarTownUtil.setTownPvpFlags(targetTown, true);
+
+		//Pay into warchest
+		if (useWarchest) {
+			siege.setWarChestAmount(SiegeWarMoneyUtil.getSiegeCost(targetTown));
+			if (TownyEconomyHandler.isActive()) {
+				//Pay upfront cost into warchest now
+				attacker.getAccount().withdraw(siege.getWarChestAmount(), "Cost of starting a siege.");
+				String moneyMessage =
+						Translation.of("msg_siege_war_attack_pay_war_chest",
+								attacker.getName(),
+								TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
+
+				TownyMessaging.sendPrefixedNationMessage((Nation)attacker, moneyMessage);
+				if(defender instanceof Nation) {
+					TownyMessaging.sendPrefixedNationMessage((Nation)defender, moneyMessage);
+				} else {
+					TownyMessaging.sendPrefixedTownMessage((Town)defender, moneyMessage);
+				}
+			}
+	 	} else {
+			siege.setWarChestAmount(0);
+		}
+
+		//Save to DB
+		SiegeController.saveSiege(siege);
+
+		//Send global message;
+		try {
+			sendGlobalSiegeStartMessage(siege);
+		} catch (NotRegisteredException ignored) {}
+
+		//Call event
+		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, bannerBlock));
+	}
+
+	private static void sendGlobalSiegeStartMessage(Siege siege) throws NotRegisteredException {
+		switch (siege.getSiegeType()) {
+
+			case CONQUEST:
+				if (siege.getTown().hasNation()) {
+					try {
+						Messaging.sendGlobalMessage(String.format(
+								Translation.of("msg_conquest_siege_started_nation_town"),
+								siege.getAttacker().getName(),
+								siege.getTown().getNation().getName(),
+								siege.getTown().getName()
+						));
+					} catch (NotRegisteredException ignored) {}
+				} else {
+					Messaging.sendGlobalMessage(String.format(
+							Translation.of("msg_conquest_siege_started_neutral_town"),
+							siege.getAttacker().getName(),
+							siege.getTown().getName()
+					));
+				}
+				break;
+			case LIBERATION:
+				if (siege.getTown().hasNation()) {
+					Messaging.sendGlobalMessage(String.format(
+							Translation.of("msg_liberation_siege_started_nation_town"),
+							siege.getAttacker().getName(),
+							siege.getDefender().getName(),
+							siege.getTown().getName()
+					));
+				} else {
+					Messaging.sendGlobalMessage(String.format(
+							Translation.of("msg_liberation_siege_started_neutral_town"),
+							siege.getAttacker().getName(),
+							siege.getDefender().getName(),
+							siege.getTown().getName()
+					));
+				}
+				break;
+			case REVOLT:
+				if (siege.getTown().hasNation()) {
+					Messaging.sendGlobalMessage(String.format(
+							Translation.of("msg_revolt_siege_started_nation_town"),
+							siege.getTown().getName(),
+							siege.getTown().getNation().getName(),
+							TownOccupationController.getTownOccupier(siege.getTown()).getName()
+					));
+				} else {
+					Messaging.sendGlobalMessage(String.format(
+							Translation.of("msg_revolt_siege_started_neutral_town"),
+							siege.getTown().getName(),
+							TownOccupationController.getTownOccupier(siege.getTown()).getName()
+					));
+				}
+				break;
+			case SUPPRESSION:
+				if (siege.getTown().hasNation()) {
+					try {
+						Messaging.sendGlobalMessage(String.format(
+								Translation.of("msg_suppression_siege_started_nation_town"),
+								siege.getAttacker().getName(),
+								siege.getTown().getNation().getName(),
+								siege.getTown().getName()
+						));
+					} catch (NotRegisteredException ignored) {}
+				} else {
+					Messaging.sendGlobalMessage(String.format(
+							Translation.of("msg_suppression_siege_started_neutral_town"),
+							siege.getAttacker().getName(),
+							siege.getTown().getName()
+					));
+				}
+				break;
+		}
 	}
 }

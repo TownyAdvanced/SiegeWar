@@ -8,10 +8,9 @@ import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.events.PreSiegeWarStartEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
-import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
@@ -24,14 +23,13 @@ import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 /**
- * This class is responsible for processing requests to start siege attacks
+ * This class is responsible for processing requests to start conquest sieges
  *
  * @author Goosius
  */
@@ -96,75 +94,16 @@ public class StartConquestSiege {
 
 		//Setup attack
 		if (!preSiegeWarStartEvent.isCancelled()){
-			startSiege(bannerBlock, nationOfSiegeStarter, townOfSiegeStarter, targetTown);
+			SiegeController.startSiege(
+					bannerBlock,
+					SiegeType.CONQUEST,
+					targetTown,
+					nationOfSiegeStarter,
+					targetTown,
+					townOfSiegeStarter,
+					true);
 		} else {
 			throw new TownyException(preSiegeWarStartEvent.getCancellationMsg());
 		}
-    }
-
-    private static void startSiege(Block bannerBlock, Nation attackingNation, Town townOfSiegeStarter, Town targetTown) {
-		//Create Siege
-		SiegeController.newSiege(targetTown);
-		Siege siege = SiegeController.getSiege(targetTown);
-
-		//Set values in siege object
-		siege.setSiegeType(SiegeType.CONQUEST);
-		siege.setAttacker(attackingNation);
-		siege.setDefender(targetTown);
-		siege.setTown(targetTown);
-		siege.setStatus(SiegeStatus.IN_PROGRESS);
-		siege.setTownPlundered(false);
-		siege.setTownInvaded(false);
-		siege.setStartTime(System.currentTimeMillis());
-		siege.setScheduledEndTime(
-			(System.currentTimeMillis() +
-				((long) (SiegeWarSettings.getWarSiegeMaxHoldoutTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS))));
-		siege.setActualEndTime(0);
-		siege.setFlagLocation(bannerBlock.getLocation());
-		siege.setWarChestAmount(SiegeWarMoneyUtil.getSiegeCost(targetTown));
-		
-		SiegeController.setSiege(targetTown, true);
-		SiegeController.putTownInSiegeMap(targetTown, siege);
-
-		//Set town pvp and explosions to true.
-		SiegeWarTownUtil.setTownPvpFlags(targetTown, true);
-		
-		//Pay into warchest
-		if (TownyEconomyHandler.isActive()) {
-			//Pay upfront cost into warchest now
-			attackingNation.getAccount().withdraw(siege.getWarChestAmount(), "Cost of starting a siege.");
-			String moneyMessage =
-				Translation.of("msg_siege_war_attack_pay_war_chest",
-				attackingNation.getName(),
-				TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
-
-			TownyMessaging.sendPrefixedNationMessage(attackingNation, moneyMessage);
-			TownyMessaging.sendPrefixedTownMessage(targetTown, moneyMessage);
-		}
-
-		//Save to DB
-		SiegeController.saveSiege(siege);
-		attackingNation.save();
-
-		//Send global message;
-		if (siege.getTown().hasNation()) {
-			try {
-				Messaging.sendGlobalMessage(String.format(
-					Translation.of("msg_conquest_siege_started_nation_town"),
-					attackingNation.getName(),
-					targetTown.getNation().getName(),
-					targetTown.getName()
-				));
-			} catch (NotRegisteredException ignored) {}
-		} else {
-			Messaging.sendGlobalMessage(String.format(
-				Translation.of("msg_conquest_siege_started_neutral_town"),
-				attackingNation.getName(),
-				targetTown.getName()
-			));
-		}
-
-		//Call event
-		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, bannerBlock));
     }
 }
