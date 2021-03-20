@@ -206,7 +206,7 @@ public enum ConfigNodes {
 			"80.0",
 			"",
 			"# The value specifies what proportion of the initial nation cost is refunded," +
-			"# When the nation is deleted or defeated."),
+			"# When the nation is deleted."),
 	WAR_SIEGE_EXTRA_MONEY_PERCENTAGE_PER_TOWN_LEVEL(
 			"war.siege.money.extra_money_percentage_per_town_level",
 			"0",
