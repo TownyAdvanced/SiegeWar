@@ -38,7 +38,6 @@ msg_siege_war_town_ruined_from_plunder: '&b%s has been reduced to ruins by %s!'
 msg_siege_war_town_bankrupted_from_plunder: '&b%s has been bankrupted by %s!'
 msg_siege_war_nation_defeated: '&b%s has been defeated!'
 msg_siege_war_attacking_troops_at_siege_banner: '&bSiege on %s > Attackers are at the siege banner.'
-msg_siege_war_defending_troops_at_siege_banner: '&bSiege on %s > Town defenders are at the siege banner.'
 msg_siege_war_banner_control_session_success: '&bBanner control session succeeded!. You have been added to the banner control list.'
 msg_siege_war_banner_control_gained_by_attacker: '&bSiege on %s > The attackers have gained banner control.'
 msg_siege_war_banner_control_gained_by_defender: '&bSiege on %s > The defenders have gained banner control.'
@@ -303,6 +302,9 @@ msg_revolt_siege_started_nation_town: '&bThe townspeople of %s, whose home natio
 msg_suppression_siege_started_neutral_town: '&bThe nation of %s has moved to stamp out resistance in %s. A SUPPRESSION SIEGE has begun!'
 msg_suppression_siege_started_nation_town: '&bThe nation of %s has moved to stamp out resistance in by %s at %s. A SUPPRESSION SIEGE has begun!'
 
+# Banner Control
+msg_siege_war_defending_troops_at_siege_banner: '&bSiege on %s > Defenders are at the siege banner.'
+
 # Town screen
 status_town_occupying_nation: '&2Occupying Nation: &a%s'
 status_town_siege: '&2Siege:'
@@ -320,18 +322,17 @@ status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending
 status_town_siege_status_plundered: '&2 > Town Plundered: %s'
 status_town_siege_status_invaded: '   &2Town Invaded: %s'
 
-# Nation screen
-status_nation_occupied_home_towns: '&2Occupied Home Towns &a[%s]&2: &f'
-status_nation_occupied_foreign_towns: '&2Occupied Foreign Towns &a[%s]&2: &f'
-status_nation_offensive_sieges: '&2Offensive Sieges &a[%s]&2: &f'
-status_nation_defensive_sieges: '&2Defensive Sieges &a[%s]&2: &f'
-
-
 # Siege statuses
 siege_status_attacker_abandon: 'Attacker Abandon'
 siege_status_defender_surrender: 'Defender Surrender'
 siege_status_pending_attacker_abandon: 'Pending Attacker Abandon'
 siege_status_pending_defender_surrender: 'Pending Defender Surrender'
+
+# Nation screen
+status_nation_occupied_home_towns: '&2Occupied Home Towns &a[%s]&2: &f'
+status_nation_occupied_foreign_towns: '&2Occupied Foreign Towns &a[%s]&2: &f'
+status_nation_offensive_sieges: '&2Offensive Sieges &a[%s]&2: &f'
+status_nation_defensive_sieges: '&2Defensive Sieges &a[%s]&2: &f'
 
 # Surrendering defences
 msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has surrendered to the army of %s.'
@@ -352,7 +353,6 @@ msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking a
 msg_liberation_siege_timed_attacker_win: '&bLIBERATION SIEGE at %s > The attacking army of %s has defeated the occupying army of %s, and liberated the townspeople from occupation.'
 msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking rebel army has driven out the occupying army of %s.'
 msg_suppression_siege_timed_attacker_win: '&bSUPPRESSION SIEGE at %s > The occupying army of %s has successfully suppressed rebel activity in the town.'
-
 msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has defeated the army of %s, and driven the attackers off.'
 msg_liberation_siege_timed_defender_win: '&bLIBERATION SIEGE at %s > The occupying army of %s has defeated the army of %s, and successfully prevented the liberation of the town.'
 msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The occupying army of %s has defeated the attacking rebels, and crushed the rebellion.'
