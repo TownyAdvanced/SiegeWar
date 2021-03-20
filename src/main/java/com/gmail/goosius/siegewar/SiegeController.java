@@ -222,10 +222,13 @@ public class SiegeController {
 			siege.setActualEndTime(System.currentTimeMillis());
 			SiegeWarTimeUtil.activateSiegeImmunityTimer(siege.getTown(), siege);
 
-			if (refundSideIfSiegeIsActive == SiegeSide.ATTACKERS)
-				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
-			else if (refundSideIfSiegeIsActive == SiegeSide.DEFENDERS)
-				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefender());
+			//Return warchest only if siege is not revolt
+			if(siege.getSiegeType() != SiegeType.REVOLT) {
+				if (refundSideIfSiegeIsActive == SiegeSide.ATTACKERS)
+					SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
+				else if (refundSideIfSiegeIsActive == SiegeSide.DEFENDERS)
+					SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefender());
+			}
 		}
 
 		Town town = siege.getTown();
