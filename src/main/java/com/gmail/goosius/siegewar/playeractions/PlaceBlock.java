@@ -197,13 +197,12 @@ public class PlaceBlock {
 			case SUPPRESSION:
 				if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
 					AbandonAttack.processAbandonAttackRequest(player, siege);
-					if (residentsTown == nearbyTown) {
-						SurrenderDefence.processSurrenderDefenceRequest(player, siege);
-					} else {
-						throw new TownyException(Translation.of("msg_err_action_disable"));
-					}
-					break;
+				} else if (residentsTown == nearbyTown) {
+					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
+				} else {
+					throw new TownyException(Translation.of("msg_err_action_disable"));
 				}
+				break;
 		}
 	}
 
