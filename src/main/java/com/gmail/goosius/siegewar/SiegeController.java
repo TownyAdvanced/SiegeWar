@@ -1,6 +1,13 @@
 package com.gmail.goosius.siegewar;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -88,7 +95,7 @@ public class SiegeController {
 
 	public static boolean loadAll() {
 		try {
-			System.out.println(SiegeWar.prefix + "Loading sieges...");
+			System.out.println(SiegeWar.prefix + "Loading SiegeList...");
 			clearSieges();
 			loadSiegeList();
 			loadSieges();
@@ -226,7 +233,7 @@ public class SiegeController {
 	//Remove a particular siege, and all associated data
 	public static void removeSiege(Siege siege, SiegeSide refundSideIfSiegeIsActive) {
 		//If siege is active, initiate siege immunity for town, and return war chest
-		if (siege.getStatus().isActive()) {
+		if(siege.getStatus().isActive()) {
 			siege.setActualEndTime(System.currentTimeMillis());
 			SiegeWarTimeUtil.activateSiegeImmunityTimer(siege.getTown(), siege);
 
@@ -244,7 +251,6 @@ public class SiegeController {
 		setSiege(town, false);
 		SiegeMetaDataController.removeSiegeMeta(town);
 		//Remove siege from collections
-		//sieges.remove(siege.getName().toLowerCase());
 		townSiegeMap.remove(town.getUUID());
 		siegedTowns.remove(siege.getTown());
 		siegedTownNames.remove(siege.getTown().getName());
@@ -360,6 +366,7 @@ public class SiegeController {
 				.filter(t -> getSiege(t).getStatus().isActive())
 				.filter(t -> TownyAPI.getInstance().getTownNationOrNull(t).equals(nation))
 				.collect(Collectors.toList());
+
 
 	}
 
