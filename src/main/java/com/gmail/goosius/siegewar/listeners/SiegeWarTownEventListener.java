@@ -290,7 +290,7 @@ public class SiegeWarTownEventListener implements Listener {
 			List<String> out = new ArrayList<>();
 			Town town = event.getTown();
 
-			//Occupying Nation: Empire of the Fluffy Bunnies'
+			//Occupying Nation: Empire of the Fluffy Bunnies
 			if(SiegeWarSettings.getWarSiegeInvadeEnabled() && TownOccupationController.isTownOccupied(town)) {
 				Nation townOccupier = TownOccupationController.getTownOccupier(town);
 				out.add(Translation.of("status_town_occupying_nation", townOccupier.getFormattedName()));
@@ -473,8 +473,8 @@ public class SiegeWarTownEventListener implements Listener {
 
     @EventHandler
     public void onTownUnconquer(TownUnconquerEvent event) {
-       if (SiegeWarSettings.getWarSiegeEnabled())
-               event.setCancelled(true);
+    	if (SiegeWarSettings.getWarSiegeEnabled())
+    		event.setCancelled(true);
     }
 
 	@EventHandler

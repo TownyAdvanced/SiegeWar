@@ -27,9 +27,9 @@ public class SiegeMetaDataController {
 
 	/*
 	 * The following 2 fields are no longer used in game
-	 * However it they used to clear up metadata
+	 * However they are used to clear up old metadata
 	 * Eventually they can be deleted,
-	 * because the old nation meta will not appear in sieges anymore
+	 * because sieges containing the old metadata will not be present on servers
 	 */
 	private static StringDataField siegeName = new StringDataField("siegewar_name", "");
 	private static StringDataField siegeNationUUID = new StringDataField("siegewar_nationUUID", "");

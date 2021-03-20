@@ -1,5 +1,8 @@
 package com.gmail.goosius.siegewar.tasks;
 
+import java.io.InputStream;
+import java.util.*;
+
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
@@ -20,9 +23,6 @@ import org.dynmap.markers.Marker;
 import org.dynmap.markers.MarkerAPI;
 import org.dynmap.markers.MarkerIcon;
 import org.dynmap.markers.MarkerSet;
-
-import java.io.InputStream;
-import java.util.*;
 
 public class DynmapTask {
 

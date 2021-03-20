@@ -290,88 +290,6 @@ public class PlaceBlock {
 		}
 	}
 
-
-
-
-		/*
-		// Fail early if this is not a siege-enabled world.
-		if(!SiegeWarSettings.getWarSiegeWorlds().contains(block.getWorld().getName()))
-			throw new TownyException(Translation.of("msg_err_siege_war_not_enabled_in_world"));
-		
-		List<TownBlock> nearbyCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
-
-		//Ensure that only one of the cardinal points has a townblock
-		if(nearbyCardinalTownBlocks.size() > 1)
-			throw new TownyException(Translation.of("msg_err_siege_war_too_many_adjacent_cardinal_town_blocks"));
-
-		//Get nearby town
-		Town town;
-		try {
-			town = nearbyCardinalTownBlocks.get(0).getTown();
-		} catch (NotRegisteredException e) {
-			return;
-		}
-
-		//Ensure that there is only one town adjacent
-		List<TownBlock> adjacentTownBlocks = new ArrayList<>();
-		adjacentTownBlocks.addAll(nearbyCardinalTownBlocks);
-		adjacentTownBlocks.addAll(SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block));
-		for(TownBlock adjacentTownBlock: adjacentTownBlocks) {
-			try {
-				if (adjacentTownBlock.getTown() != town)
-					throw new TownyException(Translation.of("msg_err_siege_war_too_many_adjacent_towns"));
-			} catch (NotRegisteredException nre) {}
-		}
-
-		//If the town has a siege where the player's nation is already attacking, 
-		//attempt invasion, otherwise attempt attack
-		if(SiegeController.hasSiege(town) && SiegeController.getSiege(town).getNation() == nation) {
-
-			if (!SiegeWarSettings.getWarSiegeInvadeEnabled())
-				return;
-
-			if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_INVADE.getNode()))
-				throw new TownyException(Translation.of("msg_err_command_disable"));
-
-			Siege siege = SiegeController.getSiege(town);
-			if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
-				throw new TownyException(Translation.of("msg_err_cannot_invade_without_victory"));
-			
-			if(attackingTown == town)
-				throw new TownyException(Translation.of("msg_err_cannot_invade_own_town"));
-			
-			InvadeTown.processInvadeTownRequest(nation, town, siege);
-
-		} else {
-
-			if (!SiegeWarSettings.getWarSiegeAttackEnabled())
-				return;
-
-			if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ATTACK.getNode()))
-				throw new TownyException(Translation.of("msg_err_command_disable"));
-			
-			if (TownyEconomyHandler.isActive() && !nation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.getSiegeCost(town)))
-				throw new TownyException(Translation.of("msg_err_no_money"));
-	        
-	        if(getNumActiveAttackSieges(nation) >= SiegeWarSettings.getWarSiegeMaxActiveSiegeAttacksPerNation())
-				throw new TownyException(Translation.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));
-			
-			if (attackingTown == town)
-                throw new TownyException(Translation.of("msg_err_siege_war_cannot_attack_own_town"));
-			
-			if(SiegeWarBlockUtil.isSupportBlockUnstable(block))
-				throw new TownyException(Translation.of("msg_err_siege_war_banner_support_block_not_stable"));
-
-			AttackTown.processAttackTownRequest(
-				attackingTown,
-				nation,
-				block,
-				nearbyCardinalTownBlocks.get(0),
-				town);
-		}
-
-*/
-
 	/**
 	 * Evaluates placing a chest.
 	 * Determines if the event will be considered as a plunder request.
@@ -407,15 +325,5 @@ public class PlaceBlock {
 		return block.getType() == Material.WHITE_BANNER  && ((Banner) block.getState()).getPatterns().size() == 0;
 	}
 
-	private static boolean isValidPlacement(Block block) {
-		if (!TownyAPI.getInstance().isWilderness(block)) {
-			if (isWhiteBanner(block))
-				return true;
-		} else {
-			if (SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block).size() > 0)
-				return true;
-		}
-		return false;
-	}
 }
 

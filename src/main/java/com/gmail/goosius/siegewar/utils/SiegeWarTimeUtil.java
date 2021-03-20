@@ -17,7 +17,7 @@ public class SiegeWarTimeUtil {
 	 * Activate the siege immunity timer after a siege ends
 	 * 
 	 * While this timer is active, the town cannot be attacked
-	 * 
+	 *
 	 * @param town the town
 	 * @param siege the siege which was previously in progress
 	 */

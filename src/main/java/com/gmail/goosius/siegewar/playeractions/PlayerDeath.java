@@ -8,11 +8,12 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.*;
+import com.gmail.goosius.siegewar.utils.CosmeticUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarScoringUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
-import com.palmergames.bukkit.towny.object.Government;
-import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.permissions.TownyPermissionSource;
@@ -55,7 +56,7 @@ public class PlayerDeath {
 	 * - Players from secretly-allied nations can contribute to battle points
 	 * - Devices (cannons, traps, bombs etc.) can be used to gain battle points
 	 *
-	 * @param deadPlayer       The player who died
+	 * @param deadPlayer The player who died
 	 * @param playerDeathEvent The player death event
 	 */
 	public static void evaluateSiegePlayerDeath(Player deadPlayer, PlayerDeathEvent playerDeathEvent) {
@@ -74,7 +75,7 @@ public class PlayerDeath {
 			 * it could never return a proper SiegeSide.
 			 */
 			if (!tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS.getNode())
-					&& !tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode()))
+				&& !tps.testPermission(deadPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode()))
 				return;
 
 			Town deadResidentTown = deadResident.getTown();
@@ -94,7 +95,7 @@ public class PlayerDeath {
 					return;
 
 				//Skip if player is not is siege-zone
-				if (!SiegeWarDistanceUtil.isInSiegeZone(deadPlayer, candidateSiege))
+				if(!SiegeWarDistanceUtil.isInSiegeZone(deadPlayer, candidateSiege))
 					continue;
 
 				//Is player eligible ?
@@ -117,7 +118,7 @@ public class PlayerDeath {
 			if (confirmedCandidateSiege != null) {
 
 				//Award penalty points w/ notification if siege is in progress
-				if (confirmedCandidateSiege.getStatus() == SiegeStatus.IN_PROGRESS) {
+				if(confirmedCandidateSiege.getStatus() == SiegeStatus.IN_PROGRESS) {
 					if (SiegeWarSettings.getWarSiegeDeathSpawnFireworkEnabled()) {
 						if (isBannerMissing(confirmedCandidateSiege.getFlagLocation()))
 							replaceMissingBanner(confirmedCandidateSiege.getFlagLocation());
@@ -125,7 +126,7 @@ public class PlayerDeath {
 						CosmeticUtil.spawnFirework(deadPlayer.getLocation().add(0, 2, 0), Color.RED, bannerColor, true);
 					}
 
-					if (confirmedCandidateSiegePlayerSide == SiegeSide.DEFENDERS) {
+					if(confirmedCandidateSiegePlayerSide == SiegeSide.DEFENDERS) {
 						SiegeWarScoringUtil.awardPenaltyPoints(
 								false,
 								deadPlayer,
@@ -147,7 +148,7 @@ public class PlayerDeath {
 				keepInventory(playerDeathEvent);
 				SiegeHUDManager.updateHUDs();
 
-				if (confirmedCandidateSiege.getBannerControlSessions().containsKey(deadPlayer)) { //If the player that died had an ongoing session, remove it.
+				if(confirmedCandidateSiege.getBannerControlSessions().containsKey(deadPlayer)) { //If the player that died had an ongoing session, remove it.
 					confirmedCandidateSiege.removeBannerControlSession(confirmedCandidateSiege.getBannerControlSessions().get(deadPlayer));
 					String errorMessage = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? Translation.of("msg_siege_war_banner_control_session_failure_with_altitude") : Translation.of("msg_siege_war_banner_control_session_failure");
 					Messaging.sendMsg(deadPlayer, errorMessage);

@@ -279,8 +279,9 @@ public enum ConfigNodes {
 			"war.siege.times.revolt_immunity_time_modifier",
 			"0.75",
 			"",
-			"# This value determines how long a town must wait before it can revolt against an occupying nation nation. The immunity time gets set to the given value if a town is invaded, or loses a revolt or suppression siege.",
-			"# The value represents a fraction of the actual immunity time.",
+			"# This value determines how long a town must wait before it can revolt against an occupying nation.",
+			"# Revolt immunity beings after a town is defeated in a siege.",
+			"# The configured value represents a fraction of the actual immunity time.",
 			"# Not that revolting can break through siege immunity",
 			"# WARNING: Do not set this to any higher than about 0.8, because that could lead to towns getting trapped in an endless cycle of invasions from which they could not free themselves."),
 	WAR_SIEGE_BANNER_CONTROL_SESSION_DURATION_MINUTES (
