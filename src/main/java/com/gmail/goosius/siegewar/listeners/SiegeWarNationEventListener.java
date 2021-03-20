@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -12,7 +13,6 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.*;
 import com.palmergames.bukkit.towny.event.NationBonusCalculationEvent;
 import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
@@ -104,15 +104,15 @@ public class SiegeWarNationEventListener implements Listener {
 			String[] formattedOccupiedForeignTowns = TownyFormatter.getFormattedNames(occupiedForeignTowns.toArray(new Town[0]));
 			out.addAll(new ArrayList<>(ChatTools.listArr(formattedOccupiedForeignTowns, Translation.of("status_nation_occupied_foreign_towns", occupiedForeignTowns.size()))));
 
-			// Siege Attacks [3]: TownA, TownB, TownC
-	        List<Town> siegeAttacks = getTownsUnderSiegeAttack(nation);
+			// Offensive Sieges [3]: TownA, TownB, TownC
+	        List<Town> siegeAttacks = getOffensiveSieges(nation);
 	        String[] formattedSiegeAttacks = TownyFormatter.getFormattedNames(siegeAttacks.toArray(new Town[0]));
-	        out.addAll(new ArrayList<>(ChatTools.listArr(formattedSiegeAttacks, Translation.of("status_nation_siege_attacks", siegeAttacks.size()))));
+	        out.addAll(new ArrayList<>(ChatTools.listArr(formattedSiegeAttacks, Translation.of("status_nation_offensive_sieges", siegeAttacks.size()))));
 
-	        // Siege Defences [3]: TownX, TownY, TownZ
-	        List<Town> siegeDefences = getTownsUnderSiegeDefence(nation);
+	        // Defensive Sieges [3]: TownX, TownY, TownZ
+	        List<Town> siegeDefences = getDefensiveSieges(nation);
 	        String[] formattedSiegeDefences = TownyFormatter.getFormattedNames(siegeDefences.toArray(new Town[0]));
-	        out.addAll(ChatTools.listArr(formattedSiegeDefences, Translation.of("status_nation_siege_defences", siegeDefences.size())));
+	        out.addAll(ChatTools.listArr(formattedSiegeDefences, Translation.of("status_nation_defensive_sieges", siegeDefences.size())));
 	        
 	        event.addLines(out);
 
@@ -122,25 +122,29 @@ public class SiegeWarNationEventListener implements Listener {
 			}
 		}
 	}
-    
-	public static List<Town> getTownsUnderSiegeAttack(Nation nation) {
+
+	public static List<Town> getOffensiveSieges(Nation nation) {
 		List<Town> result = new ArrayList<>();
 		for(Siege siege : SiegeController.getSieges(nation)) {
-			if(siege.getStatus().isActive())
+			if(siege.getStatus() == SiegeStatus.IN_PROGRESS
+				&& siege.getAttacker() == nation) {
 				result.add(siege.getTown());
+			}
 		}
 		return result;
 	}
 
-	public static List<Town> getTownsUnderSiegeDefence(Nation nation) {
-		List<Town> result = new ArrayList<Town>();
-		for(Town town: nation.getTowns()) {
-			if(SiegeController.hasActiveSiege(town))
-				result.add(town);
+	public static List<Town> getDefensiveSieges(Nation nation) {
+		List<Town> result = new ArrayList<>();
+		for(Siege siege : SiegeController.getSieges(nation)) {
+			if(siege.getStatus() == SiegeStatus.IN_PROGRESS
+					&& siege.getDefender() == nation) {
+				result.add(siege.getTown());
+			}
 		}
 		return result;
 	}
-	
+
 	/*
 	 * A nation being deleted with a siege means the siege ends,
 	 * and a king may receive a refund.

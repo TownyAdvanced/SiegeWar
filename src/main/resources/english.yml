@@ -99,10 +99,6 @@ status_town_siege_victory_timer: '&2 > Victory Timer: &a%s'
 status_town_banner_control: '&2 > Banner Control: %s &a[%s]&2: &f'
 status_town_banner_control_nobody: '&2 > Banner Control: %s'
 
-#Nation Info Siege Section
-status_nation_siege_attacks: '&2Siege Attacks &a[%s]&2: &f'
-status_nation_siege_defences: '&2Siege Defences &a[%s]&2: &f'
-
 #General
 msg_days: ' days'
 status_no_green: '&aNO'
@@ -327,6 +323,9 @@ status_town_siege_status_invaded: '   &2Town Invaded: %s'
 # Nation screen
 status_nation_occupied_home_towns: '&2Occupied Home Towns &a[%s]&2: &f'
 status_nation_occupied_foreign_towns: '&2Occupied Foreign Towns &a[%s]&2: &f'
+status_nation_offensive_sieges: '&2Offensive Sieges &a[%s]&2: &f'
+status_nation_defensive_sieges: '&2Defensive Sieges &a[%s]&2: &f'
+
 
 # Siege statuses
 siege_status_attacker_abandon: 'Attacker Abandon'
