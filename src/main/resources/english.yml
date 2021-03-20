@@ -377,10 +377,10 @@ msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and pla
 msg_err_siege_war_plunder_not_possible_rebels_won: '&cPlunder not possible because the town rebels won the siege.'
 
 # Releasing towns from occupation
-msg_err_cannot_release_town_not_occupied_by_nation: '&cYou cannot release the town because it is not occupied by your nation'
-msg_err_cannot_release_besieged_town: '&cYou cannot release a besieged town'
-msg_town_released_from_occupation: 'The town has been released from occupation by %s'
-msg_foreign_town_released_from_occupation: 'The nation released the town of %s from occupation'
+msg_err_cannot_release_town_not_occupied_by_nation: '&cYou cannot release the town because it is not occupied by your nation.'
+msg_err_cannot_release_besieged_town: '&cYou cannot release a besieged town.'
+msg_town_released_from_occupation: 'The town has been released from occupation by %s.'
+msg_foreign_town_released_from_occupation: 'The nation released the town of %s from occupation.'
 
 # Help
 nation_help_14 : 'Release the given town from occupation.'
@@ -395,13 +395,8 @@ msg_home_town_peacefully_occupied: "&bA home town, %s, has been peacefully occup
 msg_foreign_town_peacefully_occupied: "&bA foreign town, %s, has been peacefully occupied by your nation."
 
 msg_your_town_peacefully_released: "&bYour town has been peacefully released from occupation by %s."
-msg_home_town_peacefully_released: "&bA home town, %s has been peacefully released from occupation by %s."
-msg_foreign_town_peacefully_released: "&bA foreign town, %s has been peacefully released from occupation by the nation."
-
-
-
-
-
+msg_home_town_peacefully_released: "&bA home town, %s, has been peacefully released from occupation by %s."
+msg_foreign_town_peacefully_released: "&bA foreign town, %s, has been peacefully released from occupation by the nation."
 
 # Admin commands
 msg_err_swa_cannot_set_invade_due_to_siege_type: '&cYou cannot set the invaded flag for this type of siege.'
