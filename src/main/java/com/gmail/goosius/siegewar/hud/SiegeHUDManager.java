@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.hud;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -38,7 +39,7 @@ public class SiegeHUDManager {
     }
 
     public static void updateHUDs() {
-        for (Entry<Player, Siege> entry : warHudUsers.entrySet()) {
+        for (Entry<Player, Siege> entry : new ArrayList<>(warHudUsers.entrySet())) {
             if (entry.getKey().getScoreboard().getTeam("balance") == null) {
                 warHudUsers.remove(entry.getKey());
                 continue;
