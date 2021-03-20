@@ -101,7 +101,7 @@ public class StartSuppressionSiege {
                     nationOfSiegeStarter,
                     targetTown,
                     townOfSiegeStarter,
-                    false);
+                    true);
         } else {
             throw new TownyException(preSiegeWarStartEvent.getCancellationMsg());
         }

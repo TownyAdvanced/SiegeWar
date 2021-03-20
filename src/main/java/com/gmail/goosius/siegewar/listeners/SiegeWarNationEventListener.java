@@ -237,7 +237,7 @@ public class SiegeWarNationEventListener implements Listener {
 	 * All occupied foreign towns are counted
 	 */
 	/*
-	TODO - ENABLE ME WHEN THE REQUIRED TOWNY CODE GETS ON MAVEN
+	TODO - After Towny 0.96.7.9 is released, update towny in pom, and enable me
 	@EventHandler
 	public void on(NationListDisplayedNumTownBlocksCalculationEvent event) {
 		Nation effectiveNation = SiegeWarNationUtil.getEffectiveNation(event.getNation());

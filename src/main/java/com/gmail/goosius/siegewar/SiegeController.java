@@ -425,6 +425,11 @@ public class SiegeController {
 		//Set town pvp and explosions to true.
 		SiegeWarTownUtil.setTownPvpFlags(targetTown, true);
 
+		//Send global message;
+		try {
+			sendGlobalSiegeStartMessage(siege);
+		} catch (NotRegisteredException ignored) {}
+
 		//Pay into warchest
 		if (useWarchest) {
 			siege.setWarChestAmount(SiegeWarMoneyUtil.getSiegeCost(targetTown));
@@ -449,11 +454,6 @@ public class SiegeController {
 
 		//Save to DB
 		SiegeController.saveSiege(siege);
-
-		//Send global message;
-		try {
-			sendGlobalSiegeStartMessage(siege);
-		} catch (NotRegisteredException ignored) {}
 
 		//Call event
 		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, bannerBlock));
