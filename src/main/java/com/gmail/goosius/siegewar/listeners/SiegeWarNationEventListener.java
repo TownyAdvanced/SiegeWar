@@ -26,6 +26,7 @@ import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumOnlinePlayersCalculationEvent;
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumTownsCalculationEvent;
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumResidentsCalculationEvent;
+import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumTownBlocksCalculationEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
@@ -221,14 +222,11 @@ public class SiegeWarNationEventListener implements Listener {
 	 * All unoccupied home towns are counted
 	 * All occupied foreign towns are counted
 	 */
-	/*
-	TODO - After Towny 0.96.7.9 is released, update towny in pom, and enable me
 	@EventHandler
 	public void on(NationListDisplayedNumTownBlocksCalculationEvent event) {
 		Nation effectiveNation = SiegeWarNationUtil.getEffectiveNation(event.getNation());
 		event.setDisplayedValue(effectiveNation.getNumTownblocks());
 	}
-	*/
 
 	/**
 	 * Update the nation onlineplayers calculation when towny displays the nations list
