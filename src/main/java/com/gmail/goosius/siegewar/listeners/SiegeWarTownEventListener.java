@@ -431,12 +431,18 @@ public class SiegeWarTownEventListener implements Listener {
     private static String getInvadedPlunderedStatusLine(Siege siege) {
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
-			case SUPPRESSION:
 			case LIBERATION:
 				switch (siege.getStatus()) {
 					case ATTACKER_WIN:
 					case DEFENDER_SURRENDER:
 						return getPlunderStatusLine(siege) + getInvadeStatusLine(siege);
+				}
+				break;
+			case SUPPRESSION:
+				switch (siege.getStatus()) {
+					case ATTACKER_WIN:
+					case DEFENDER_SURRENDER:
+						return getPlunderStatusLine(siege);
 				}
 				break;
 			case REVOLT:

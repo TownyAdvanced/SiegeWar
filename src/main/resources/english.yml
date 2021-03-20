@@ -368,7 +368,7 @@ msg_pending_defender_victory: " Defender victory will be confirmed in %s."
 msg_err_cannot_invade_own_town: '&cYou cannot invade your own town.'
 msg_err_cannot_invade_without_victory: "&cYou cannot invade the town unless your nation is victorious in the siege."
 msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot invade while the siege is still in progress.'
-msg_err_cannot_invade_town_already_occupied: '&cYour nation already occupies the town.'
+msg_err_cannot_invade_town_already_occupied: '&cThere is no need to invade because your nation already occupies the town.'
 msg_err_cannot_invade_town_already_invaded: '&cYour nation has already invaded the town.'
 msg_neutral_town_invaded: '&b%s has been invaded by %s, and placed under occupation!'
 msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and placed under occupation!'
