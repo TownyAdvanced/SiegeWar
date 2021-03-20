@@ -249,7 +249,7 @@ public class TownPeacefulnessUtil {
 			//Get current occupier
 			Nation currentOccupier = TownOccupationController.getTownOccupier(peacefulTown);
 			//Remove occupation
-			TownOccupationController.setTownOccupation(peacefulTown, null);
+			TownOccupationController.removeTownOccupation(peacefulTown);
 			//Send messages
 			if(peacefulTown.hasNation()) {
 				TownyMessaging.sendPrefixedNationMessage(currentOccupier, Translation.of("msg_nation_town_peacefully_released", peacefulTown.getName(), peacefulTown.getNation().getName()));
@@ -295,17 +295,14 @@ public class TownPeacefulnessUtil {
 			//Town is not yet occupied
 			//Occupy town
 			TownOccupationController.setTownOccupation(peacefulTown, newOccupier);
+			//Send to peaceful town
+			TownyMessaging.sendPrefixedTownMessage(peacefulTown, Translation.of("msg_your_town_peacefully_occupied", newOccupier.getName()));
+			//Send to new occupier
+			TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_home_town_peacefully_occupied", peacefulTown.getName()));
 			//Send messages
 			if(peacefulTown.hasNation()) {
 				//Send to nation of peaceful town
-				TownyMessaging.sendPrefixedNationMessage(peacefulTown.getNation(), Translation.of("msg_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
-				//Send to occupier
-				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_nation_town_peacefully_occupied", peacefulTown.getName(), peacefulTown.getNation().getName(), newOccupier.getName()));
-			} else {
-				//Send to peaceful town
-				TownyMessaging.sendPrefixedTownMessage(peacefulTown, Translation.of("msg_neutral_town_peacefully_occupied", peacefulTown.getName()));
-				//Send to occupier
-				TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_neutral_town_peacefully_occupied", peacefulTown.getName()));
+				TownyMessaging.sendPrefixedNationMessage(peacefulTown.getNation(), Translation.of("msg_home_town_peacefully_occupied", peacefulTown.getName(), newOccupier.getName()));
 			}
 		}
 		return true; //Town switched

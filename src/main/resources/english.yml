@@ -394,6 +394,16 @@ msg_neutral_town_peacefully_released: "&b%s has been peacefully released from oc
 msg_nation_town_peacefully_occupied: "&b%s, belonging to %s, has been peacefully occupied by %s."
 msg_nation_town_peacefully_released: "&b%s, belonging to %s, has been peacefully released from occupation."
 
+
+msg_foreign_town_peacefully_occupied: "&bA foreign town, %s, has been peacefully occupied by your nation."
+msg_home_town_peacefully_occupied: "&bA home town, %s, has been peacefully occupied by %s."
+msg_your_town_peacefully_occupied: "&bYour town has been peacefully occupied by %s."
+
+
+
+
+
+
 # Admin commands
 msg_err_swa_cannot_set_invade_due_to_siege_type: '&cYou cannot set the invaded flag for this type of siege.'
 msg_err_swa_cannot_change_occupier_due_to_active_siege: '&cYou cannot change the occupier if the town has an active siege.'
