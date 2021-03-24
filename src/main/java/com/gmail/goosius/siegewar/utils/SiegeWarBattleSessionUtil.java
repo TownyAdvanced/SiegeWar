@@ -90,9 +90,9 @@ public class SiegeWarBattleSessionUtil {
 						}
 					} catch (Throwable t) {
 						try {
-							System.err.println("Problem ending battle for siege: " + siege.getName());
+							System.err.println("Problem ending battle for siege: " + siege.getTown().getName());
 						} catch (Throwable t2) {
-							System.err.println("Problem ending battle for siege: (could not read siege name)");
+							System.err.println("Problem ending battle for siege: (could not read town name)");
 						}
 						t.printStackTrace();
 					}
