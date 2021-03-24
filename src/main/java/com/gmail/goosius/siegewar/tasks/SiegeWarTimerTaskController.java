@@ -81,10 +81,8 @@ public class SiegeWarTimerTaskController {
 	 * Evaluate banner control for all sieges
 	 */
 	public static void evaluateBannerControl() {
-		if(BattleSession.getBattleSession().isActive()) {
-			for (Siege siege : SiegeController.getSieges()) {
-				SiegeWarBannerControlUtil.evaluateBannerControl(siege);
-			}
+		for (Siege siege : SiegeController.getSieges()) {
+			SiegeWarBannerControlUtil.evaluateBannerControl(siege);
 		}
 	}
 
