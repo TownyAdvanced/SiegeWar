@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.timeractions.AttackerWin;
@@ -92,8 +93,10 @@ public class SiegeWarTimerTaskController {
 	 * Evaluate banner control for all sieges
 	 */
 	public static void evaluateBannerControl() {
-		for (Siege siege : SiegeController.getSieges()) {
-			SiegeWarBannerControlUtil.evaluateBannerControl(siege);
+		if(BattleSession.getBattleSession().isActive()) {
+			for (Siege siege : SiegeController.getSieges()) {
+				SiegeWarBannerControlUtil.evaluateBannerControl(siege);
+			}
 		}
 	}
 
