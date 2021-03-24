@@ -543,7 +543,7 @@ public enum ConfigNodes {
 			"#"),
 	PEACEFUL_TOWNS_CONFIRMATION_REQUIREMENT_DAYS(
 			"peaceful_towns.confirmation_requirement_days",
-			"5",
+			"10",
 			"",
 			"# This value determines how long it takes to confirm a town peacefulness status change.",
 			"# It is recommended to be high, for use by genuinely peaceful towns, not just for war cost avoidance."),
