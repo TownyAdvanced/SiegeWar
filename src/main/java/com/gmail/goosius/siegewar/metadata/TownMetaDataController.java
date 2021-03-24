@@ -5,6 +5,8 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
+import com.palmergames.bukkit.towny.object.metadata.StringDataField;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 
@@ -19,7 +21,8 @@ public class TownMetaDataController {
 	private static BooleanDataField desiredPeacefulness = new BooleanDataField("siegewar_desiredPeaceSetting", false);
 	private static LongDataField revoltImmunityEndTime = new LongDataField("siegewar_revoltImmunityEndTime", 0l);
 	private static LongDataField siegeImmunityEndTime = new LongDataField("siegewar_siegeImmunityEndTime", 0l);
-	
+	private static StringDataField occupyingNationUUID = new StringDataField("siegewar_occupyingNationUUID", "");
+
 	public TownMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
 	}
@@ -102,6 +105,28 @@ public class TownMetaDataController {
 		} else {
 			town.addMetaData(new LongDataField("siegewar_siegeImmunityEndTime", time));
 		}
+	}
+
+	@Nullable
+	public static String getOccupyingNationUUID(Town town) {
+		StringDataField sdf = (StringDataField) occupyingNationUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			return MetaDataUtil.getString(town, sdf);
+		return null;
+	}
+
+	public static void setOccupyingNationUUID(Town town, String uuid) {
+		StringDataField sdf = (StringDataField) occupyingNationUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			MetaDataUtil.setString(town, sdf, uuid);
+		else
+			town.addMetaData(new StringDataField("siegewar_occupyingNationUUID", uuid));
+	}
+
+	public static void removeOccupationMetadata(Town town) {
+		StringDataField sdf = (StringDataField) occupyingNationUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			town.removeMetaData(sdf);
 	}
 
 }

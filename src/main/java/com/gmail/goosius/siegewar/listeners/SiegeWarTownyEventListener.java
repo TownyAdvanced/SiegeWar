@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
@@ -50,6 +51,7 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onTownyDatabaseLoad(TownyLoadedDatabaseEvent event) {
     	System.out.println(SiegeWar.prefix + "Towny database reload detected, reloading sieges...");
         SiegeController.loadAll();
+        TownOccupationController.loadAll();
     }
     
     /*
@@ -60,7 +62,7 @@ public class SiegeWarTownyEventListener implements Listener {
         if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
             TownPeacefulnessUtil.updateTownPeacefulnessCounters();
             if(SiegeWarSettings.getWarSiegeEnabled())
-                TownPeacefulnessUtil.evaluatePeacefulTownNationAssignments();
+                TownPeacefulnessUtil.evaluatePeacefulTownOccupationAssignments();
         }
     }
     
@@ -104,8 +106,8 @@ public class SiegeWarTownyEventListener implements Listener {
             if (destinationTown == null || res == null)
                 return;
             
-            // Don't block spawning for residents which belong to the Town, or to neutral towns.
-            if (destinationTown.hasResident(res) || (destinationTown.isNeutral() && SiegeWarSettings.getWarCommonPeacefulTownsPublicSpawning()))
+            // Don't block spawning for residents which belong to the Town
+            if (destinationTown.hasResident(res))
                 return;
 
             //Block TP if the target town is besieged
@@ -156,7 +158,7 @@ public class SiegeWarTownyEventListener implements Listener {
         }
 
         //Add to final explode list: town blocks if there is a cannon session in progress
-        if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginDetected()) {
+        if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginIntegrationEnabled()) {
             List<Block> vanillaExplodeList = event.getVanillaBlockList(); //original list of exploding blocks
             Town town;
             for (Block block : vanillaExplodeList) {
@@ -183,7 +185,7 @@ public class SiegeWarTownyEventListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGH)
     public void onExplosionDamageEntity(TownyExplosionDamagesEntityEvent event) {
-        if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginDetected()) {
+        if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginIntegrationEnabled()) {
             if (event.isCancelled()) {
                 Town town = TownyAPI.getInstance().getTown(event.getLocation());
                 if (town != null

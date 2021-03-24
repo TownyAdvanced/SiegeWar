@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.events;
 
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
@@ -12,22 +13,27 @@ import org.jetbrains.annotations.NotNull;
 public class PreSiegeWarStartEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
-    private final Town townOfAttackingPlayer;
-    private final Nation nationOfAttackingPlayer;
+    private final SiegeType siegeType;
+    private final Town townOfSiegeStarter;
+    private final Nation nation;
     private final Block flag;
     private final TownBlock townBlock;
-    private final Town defendingTown;
+    private final Town targetTown;
     private boolean isCancelled;
     private String cancellationMsg = "Siege prevented by another plugin.";
 
-    public PreSiegeWarStartEvent(Town townOfAttackingPlayer, Nation nationOfAttackingPlayer, Block flag, TownBlock townBlock, Town defendingTown){
-
-        this.townOfAttackingPlayer = townOfAttackingPlayer;
-        this.nationOfAttackingPlayer = nationOfAttackingPlayer;
+    public PreSiegeWarStartEvent(SiegeType siegeType,
+                                 Town targetTown,
+                                 Nation nation,
+                                 Town townOfSiegeStarter,
+                                 Block flag,
+                                 TownBlock townBlock){
+        this.siegeType = siegeType;
+        this.targetTown = targetTown;
+        this.townOfSiegeStarter = townOfSiegeStarter;
+        this.nation = nation;
         this.flag = flag;
         this.townBlock = townBlock;
-        this.defendingTown = defendingTown;
-
     }
 
     @NotNull
@@ -40,12 +46,12 @@ public class PreSiegeWarStartEvent extends Event implements Cancellable {
         return handlers;
     }
 
-    public Town getTownOfAttackingPlayer() {
-        return townOfAttackingPlayer;
+    public Town getTownOfSiegeStarter() {
+        return townOfSiegeStarter;
     }
 
-    public Nation getNationOfAttackingPlayer() {
-        return nationOfAttackingPlayer;
+    public Nation getNation() {
+        return nation;
     }
 
     public Block getFlag() {
@@ -56,8 +62,8 @@ public class PreSiegeWarStartEvent extends Event implements Cancellable {
         return townBlock;
     }
 
-    public Town getDefendingTown() {
-        return defendingTown;
+    public Town getTargetTown() {
+        return targetTown;
     }
 
     @Override
@@ -76,5 +82,9 @@ public class PreSiegeWarStartEvent extends Event implements Cancellable {
 
     public void setCancellationMsg(String cancellationMsg) {
         this.cancellationMsg = cancellationMsg;
+    }
+
+    public SiegeType getSiegeType() {
+        return siegeType;
     }
 }

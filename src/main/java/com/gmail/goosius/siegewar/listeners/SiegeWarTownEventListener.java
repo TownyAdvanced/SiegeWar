@@ -3,8 +3,12 @@ package com.gmail.goosius.siegewar.listeners;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.bukkit.towny.object.Nation;
+import net.md_5.bungee.chat.SelectorComponentSerializer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
@@ -30,11 +34,11 @@ import com.palmergames.bukkit.towny.event.RenameTownEvent;
 import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.TownStatusScreenEvent;
-import com.palmergames.bukkit.towny.event.time.dailytaxes.PreTownPaysNationTaxEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
 import com.palmergames.bukkit.towny.event.town.TownUnconquerEvent;
+import com.palmergames.bukkit.towny.event.town.TownMapColourCalculationEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleOpenEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownTogglePVPEvent;
@@ -220,7 +224,7 @@ public class SiegeWarTownEventListener implements Listener {
 					} catch (Exception e) {
 						//Problem with this particular siegezone. Ignore siegezone
 						try {
-							System.out.println("Problem with verifying claim against the following siege zone" + siege.getName() + ". Claim allowed.");
+							System.out.println("Problem with verifying claim against the following siege zone" + siege.getTown().getName() + ". Claim allowed.");
 						} catch (Exception e2) {
 							System.out.println("Problem with verifying claim against a siege zone (name could not be read). Claim allowed");
 						}
@@ -236,7 +240,7 @@ public class SiegeWarTownEventListener implements Listener {
 	 */
 	@EventHandler
 	public void onTownUnclaim(TownPreUnclaimCmdEvent event) {
-		if (SiegeWarSettings.getWarCommonOccupiedTownUnClaimingDisabled() && event.getTown().isConquered()) {
+		if (SiegeWarSettings.getWarCommonOccupiedTownUnClaimingDisabled() && TownOccupationController.isTownOccupied(event.getTown())) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_war_common_occupied_town_cannot_unclaim"));
 			return;
@@ -274,17 +278,7 @@ public class SiegeWarTownEventListener implements Listener {
 	@EventHandler
 	public void onDeleteTown(DeleteTownEvent event) {
 		if (SiegeController.hasSiege(event.getTownUUID()))
-			SiegeController.removeSiege(SiegeController.getSiege(event.getTownUUID()), SiegeSide.ATTACKERS);
-	}
-
-	/*
-	 * In SiegeWar neutral/peaceful towns do not pay their Nation tax. 
-	 */
-	@EventHandler
-	public void onTownPayNationTax(PreTownPaysNationTaxEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && event.getTown().isNeutral()) {
-			event.setCancelled(true);
-		}
+			SiegeController.removeSiege(SiegeController.getSiegeByTownUUID(event.getTownUUID()), SiegeSide.ATTACKERS);
 	}
 
 	/*
@@ -295,25 +289,41 @@ public class SiegeWarTownEventListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			List<String> out = new ArrayList<>();
 			Town town = event.getTown();
+
+			//Occupying Nation: Empire of the Fluffy Bunnies
+			if(SiegeWarSettings.getWarSiegeInvadeEnabled() && TownOccupationController.isTownOccupied(town)) {
+				Nation townOccupier = TownOccupationController.getTownOccupier(town);
+				out.add(Translation.of("status_town_occupying_nation", townOccupier.getFormattedName()));
+			}
 			
 	        //Revolt Immunity Timer: 71.8 hours
-	        if (SiegeWarSettings.getWarSiegeRevoltEnabled() && System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(town)) {        	
+	        if (SiegeWarSettings.getRevoltSiegesEnabled() && System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(town)) {
 	        	String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getRevoltImmunityEndTime(town)- System.currentTimeMillis());        	
 	            out.add(Translation.of("status_town_revolt_immunity_timer", time));
 	        }
 
 	        if (SiegeController.hasSiege(town)) {
-	            Siege siege = SiegeController.getSiege(town);
-	            String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getSiegeImmunityEndTime(town)- System.currentTimeMillis());
-	            switch (siege.getStatus()) {
+				Siege siege = SiegeController.getSiege(town);
+				SiegeStatus siegeStatus= siege.getStatus();
+				String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getSiegeImmunityEndTime(town)- System.currentTimeMillis());
+
+				//Siege:
+				out.add(Translation.of("status_town_siege"));
+
+				// > Type: Conquest
+				out.add(Translation.of("status_town_siege_type", siege.getSiegeType().getName()));
+
+				// > Status: In Progress
+				out.add(Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege)));
+
+				// > Attacker: Land of Darkness (Nation)
+				out.add(Translation.of("status_town_siege_attacker", siege.getAttacker().getFormattedName()));
+
+				// > Defender: Land of Light (Nation)
+				out.add(Translation.of("status_town_siege_defender", siege.getDefendingNationIfPossibleElseTown().getFormattedName()));
+
+				switch (siegeStatus) {
 	                case IN_PROGRESS:
-	                    //Siege:
-	                    String siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
-	                    out.add(siegeStatus);
-
-						// > Attacker: Land of Empire (Nation)
-						out.add(Translation.of("status_town_siege_status_besieger", siege.getAttackingNation().getFormattedName()));
-
 						// > Balance: 530
 						out.add(Translation.of("status_town_siege_status_siege_balance", siege.getSiegeBalance()));
 
@@ -360,7 +370,7 @@ public class SiegeWarTownEventListener implements Listener {
 							}
 
 							// > Points: +90 / -220
-							out.add(Translation.of("status_town_siege_battle_score", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
+							out.add(Translation.of("status_town_siege_battle_points", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
 
 							// > Time Remaining: 22 minutes
 							out.add(Translation.of("status_town_siege_battle_time_remaining", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
@@ -369,39 +379,27 @@ public class SiegeWarTownEventListener implements Listener {
 
 	                case ATTACKER_WIN:
 	                case DEFENDER_SURRENDER:
-	                    siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
-	                    String invadedYesNo = siege.isTownInvaded() ? Translation.of("status_yes") : Translation.of("status_no_green");
-	                    String plunderedYesNo = siege.isTownPlundered() ? Translation.of("status_yes") : Translation.of("status_no_green");
-	                    String invadedPlunderedStatus = Translation.of("status_town_siege_invaded_plundered_status", invadedYesNo, plunderedYesNo);
-	                    String siegeImmunityTimer = Translation.of("status_town_siege_immunity_timer", time);
-	                    out.add(siegeStatus);
-	                    out.add(invadedPlunderedStatus);
-	                    out.add(siegeImmunityTimer);
-	                    break;
+					case DEFENDER_WIN:
+					case ATTACKER_ABANDON:
+	                    String invadedPlunderedStatus = getInvadedPlunderedStatusLine(siege);
+						if(!invadedPlunderedStatus.isEmpty())
+							out.add(invadedPlunderedStatus);
 
-	                case DEFENDER_WIN:
-	                case ATTACKER_ABANDON:
-	                    siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
-	                    siegeImmunityTimer = Translation.of("status_town_siege_immunity_timer", time);
-	                    out.add(siegeStatus);
+	                    String siegeImmunityTimer = Translation.of("status_town_siege_immunity_timer", time);
 	                    out.add(siegeImmunityTimer);
 	                    break;
 
 	                case PENDING_DEFENDER_SURRENDER:
 	                case PENDING_ATTACKER_ABANDON:
-	                    siegeStatus = Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege));
-	                    out.add(siegeStatus);
-	                    break;
 					case UNKNOWN:
 						break;
 	            }
 	        } else {
-	            if (SiegeWarSettings.getWarSiegeAttackEnabled() 
-	            	&& !(SiegeController.hasActiveSiege(town))
+	            if(!SiegeController.hasActiveSiege(town)
 	            	&& System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(town)) {
 	                //Siege:
 	                // > Immunity Timer: 40.8 hours
-	                out.add(Translation.of("status_town_siege_status", ""));
+	                out.add(Translation.of("status_town_siege"));
 	                String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getSiegeImmunityEndTime(town)- System.currentTimeMillis()); 
 	                out.add(Translation.of("status_town_siege_immunity_timer", time));
 	            }
@@ -415,9 +413,9 @@ public class SiegeWarTownEventListener implements Listener {
             case IN_PROGRESS:
                 return Translation.of("status_town_siege_status_in_progress");
             case ATTACKER_WIN:
-                return Translation.of("status_town_siege_status_attacker_win", siege.getAttackingNation().getFormattedName());
+                return Translation.of("status_town_siege_status_attacker_win");
             case DEFENDER_SURRENDER:
-                return Translation.of("status_town_siege_status_defender_surrender", siege.getAttackingNation().getFormattedName());
+                return Translation.of("status_town_siege_status_defender_surrender");
             case DEFENDER_WIN:
                 return Translation.of("status_town_siege_status_defender_win");
             case ATTACKER_ABANDON:
@@ -430,7 +428,49 @@ public class SiegeWarTownEventListener implements Listener {
                 return "???";
         }
     }
-    
+
+    private static String getInvadedPlunderedStatusLine(Siege siege) {
+		switch(siege.getSiegeType()) {
+			case CONQUEST:
+			case LIBERATION:
+				switch (siege.getStatus()) {
+					case ATTACKER_WIN:
+					case DEFENDER_SURRENDER:
+						return getPlunderStatusLine(siege) + getInvadeStatusLine(siege);
+				}
+				break;
+			case SUPPRESSION:
+				switch (siege.getStatus()) {
+					case ATTACKER_WIN:
+					case DEFENDER_SURRENDER:
+						return getPlunderStatusLine(siege);
+				}
+				break;
+			case REVOLT:
+				switch (siege.getStatus()) {
+					case DEFENDER_WIN:
+					case ATTACKER_ABANDON:
+						return getPlunderStatusLine(siege);
+				}
+				break;
+		}
+		return "";
+	}
+
+	private static String getPlunderStatusLine(Siege siege) {
+		String plunderedYesNo = siege.isTownPlundered() ? Translation.of("status_yes") : Translation.of("status_no_green");
+		return Translation.of("status_town_siege_status_plundered", plunderedYesNo);
+	}
+
+	private static String getInvadeStatusLine(Siege siege) {
+		if(siege.getSiegeType() == SiegeType.REVOLT && siege.getSiegeType() == SiegeType.SUPPRESSION) {
+			return "";
+		} else {
+			String invadedYesNo = siege.isTownInvaded() ? Translation.of("status_yes") : Translation.of("status_no_green");
+			return Translation.of("status_town_siege_status_invaded", invadedYesNo);
+		}
+	}
+
     @EventHandler
     public void onTownUnconquer(TownUnconquerEvent event) {
     	if (SiegeWarSettings.getWarSiegeEnabled())
@@ -442,6 +482,14 @@ public class SiegeWarTownEventListener implements Listener {
 		if (SiegeController.hasSiege(event.getSuccumbingTown())) {
 			event.setCancelMessage(Translation.of("msg_err_cannot_merge_towns"));
 			event.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void on(TownMapColourCalculationEvent event) {
+		if(TownOccupationController.isTownOccupied(event.getTown())) {
+			String mapColorHexCode = TownOccupationController.getTownOccupier(event.getTown()).getMapColorHexCode();
+			event.setMapColorHexCode(mapColorHexCode);
 		}
 	}
 }

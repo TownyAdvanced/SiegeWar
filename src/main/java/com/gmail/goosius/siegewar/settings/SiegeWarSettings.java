@@ -37,16 +37,12 @@ public class SiegeWarSettings {
 		return worldsWithSiegeWarEnabled;
 	}
 
-	public static boolean getWarSiegeAttackEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_ATTACK_ENABLED);
-	}
-
 	public static boolean getWarSiegeAbandonEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_ABANDON_ENABLED);
 	}
 
 	public static boolean getWarSiegeSurrenderEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_TOWN_SURRENDER_ENABLED);
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_SURRENDER_ENABLED);
 	}
 
 	public static boolean getWarSiegeInvadeEnabled() {
@@ -61,12 +57,20 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MILITARY_SALARY_ENABLED);
 	}
 
-	public static boolean getWarSiegeRevoltEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_REVOLT_ENABLED);
+	public static boolean getConquestSiegesEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_CONQUEST_SIEGES_ENABLED);
 	}
 
-	public static boolean getWarSiegeTownLeaveDisabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_TOWN_LEAVE_DISABLED);
+	public static boolean getLiberationSiegesEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_LIBERATION_SIEGES_ENABLED);
+	}
+
+	public static boolean getRevoltSiegesEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_REVOLT_SIEGES_ENABLED);
+	}
+
+	public static boolean getSuppressionSiegesEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_SUPPRESSION_SIEGES_ENABLED);
 	}
 
 	public static boolean getWarSiegePvpAlwaysOnInBesiegedTowns() {
@@ -93,8 +97,8 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_SIEGE_IMMUNITY_TIME_MODIFIER);
 	}
 
-	public static double getWarSiegeRevoltImmunityTimeHours() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_REVOLT_IMMUNITY_TIME_HOURS);
+	public static double getWarSiegeRevoltImmunityTimeModifier() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_REVOLT_IMMUNITY_TIME_MODIFIER);
 	}
 
 	public static double getWarSiegeAttackerPlunderAmountPerPlot() {
@@ -321,10 +325,6 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_GUARDIAN_TOWN_MIN_DISTANCE_REQUIREMENT_TOWNBLOCKS);
 	}
 
-	public static boolean getWarCommonPeacefulTownsAllowedToMakeNation() {
-		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_ALLOWED_TO_MAKE_NATION);
-	}
-
 	public static int getWarCommonPeacefulTownsNewTownConfirmationRequirementDays() {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_NEW_TOWN_CONFIRMATION_REQUIREMENT_DAYS);
 	}
@@ -347,10 +347,6 @@ public class SiegeWarSettings {
 
 	public static double getWarSiegeCapitalCostIncreasePercentage() {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_CAPITAL_SIEGE_COST_INCREASE_PERCENTAGE);
-	}
-
-	public static boolean getWarCommonPeacefulTownsPublicSpawning() {
-		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_PUBLIC_SPAWNING);
 	}
 
 	public static boolean getWarSiegeNationStatisticsEnabled() {

@@ -1,69 +1,71 @@
 package com.gmail.goosius.siegewar.command;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-
+import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.BookUtil;
+import com.gmail.goosius.siegewar.utils.CosmeticUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.permissions.TownyPerms;
+import com.palmergames.bukkit.towny.utils.NameUtil;
+import com.palmergames.bukkit.util.ChatTools;
+import com.palmergames.util.StringMgmt;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
-import com.gmail.goosius.siegewar.settings.Translation;
-import com.gmail.goosius.siegewar.utils.BookUtil;
-import com.gmail.goosius.siegewar.utils.CosmeticUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.utils.NameUtil;
-import com.palmergames.bukkit.util.ChatTools;
-import com.palmergames.util.StringMgmt;
+
+import java.util.*;
 
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
 	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "nation", "hud", "guide", "preference", "version");
 	
-	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers");
+	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "release");
 
 	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("beacons");
 	
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
 		switch (args[0].toLowerCase()) {
-		case "nation":
-			if (args.length == 2)
-				return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
-		case "hud":
-			if (args.length == 2)
-				return NameUtil.filterByStart(new ArrayList<String>(SiegeController.getSiegedTownNames()), args[1]);
-		case "preference":
-			if (args.length == 2)
-				return NameUtil.filterByStart(siegewarPreferenceTabCompletes, args[1]);
-			if (args.length == 3)
-				return NameUtil.filterByStart(Arrays.asList("on", "off"), args[2]);
-		default:
-			if (args.length == 1)
-				return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
-			else
-				return Collections.emptyList();
+			case "nation":
+				if (args.length == 2)
+					return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
+				if (args.length == 3 && args[1].equalsIgnoreCase("release")) {
+					return NameUtil.filterByStart(new ArrayList<>(TownOccupationController.getAllOccupiedTownNames()), args[2]);
+				}
+				break;
+			case "hud":
+				if (args.length == 2)
+					return NameUtil.filterByStart(new ArrayList<>(SiegeController.getSiegedTownNames()), args[1]);
+				break;
+			case "preference":
+				if (args.length == 2)
+					return NameUtil.filterByStart(siegewarPreferenceTabCompletes, args[1]);
+				if (args.length == 3)
+					return NameUtil.filterByStart(Arrays.asList("on", "off"), args[2]);
+				break;
 		}
+
+		if (args.length == 1)
+			return NameUtil.filterByStart(siegewarTabCompletes, args[0]);
+		else
+			return Collections.emptyList();
 	}
 
 	private void showSiegeWarHelp(CommandSender sender) {
@@ -72,13 +74,15 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw guide", "", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw collect", "", Translation.of("nation_help_11")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "release [town]", Translation.of("nation_help_13")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw version", "", ""));
 	}
-	
+
 	private void showNationHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar nation"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "release [town]", Translation.of("nation_help_13")));
 	}
 
 	private void showPreferenceHelp(CommandSender sender) {
@@ -269,6 +273,49 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					Messaging.sendErrorMsg(player, ee.getMessage());
 				}
 				break;
+
+			case "release":
+				try {
+					String townName = args[1];
+
+					//Check for permission
+					if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_RELEASE.getNode()))
+						throw new TownyException(Translation.of("msg_err_action_disable"));
+
+					//Ensure resident has a town & nation
+					Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
+					if (resident == null || !resident.hasTown() || !resident.getTown().hasNation())
+						throw new TownyException(Translation.of("msg_err_command_disable"));
+
+					Town residentsTown = TownyAPI.getInstance().getResidentTownOrNull(resident);
+					Nation residentsNation = TownyAPI.getInstance().getTownNationOrNull(residentsTown);
+
+					//Ensure the specified town exists
+					if (!TownyUniverse.getInstance().hasTown(townName))
+						throw new TownyException(Translation.of("msg_err_unknown_town"));
+
+					//Ensure the specified town is occupied by the resident's nation
+					Town townToRelease = TownyUniverse.getInstance().getTown(townName);
+					if(!TownOccupationController.isTownOccupied(townToRelease))
+						throw new TownyException(Translation.of("msg_err_cannot_release_town_not_occupied_by_nation"));
+					if(TownOccupationController.getTownOccupier(townToRelease) != residentsNation)
+						throw new TownyException(Translation.of("msg_err_cannot_release_town_not_occupied_by_nation"));
+
+					//Ensure besieged towns cannot be released
+					if(SiegeController.hasActiveSiege(townToRelease))
+						throw new TownyException(Translation.of("msg_err_cannot_release_besieged_town"));
+
+					//Release town
+					TownOccupationController.removeTownOccupation(townToRelease);
+
+					//Send messages
+					TownyMessaging.sendPrefixedTownMessage(townToRelease, String.format(Translation.of("msg_town_released_from_occupation"), residentsNation));
+					TownyMessaging.sendPrefixedNationMessage(residentsNation, String.format(Translation.of("msg_foreign_town_released_from_occupation"), townToRelease.getName()));
+				} catch (Exception e) {
+					Messaging.sendErrorMsg(player, e.getMessage());
+				}
+				break;
+
 			default:
 				showNationHelp(player);
 		}

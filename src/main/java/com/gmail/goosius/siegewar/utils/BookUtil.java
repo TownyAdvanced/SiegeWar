@@ -15,7 +15,7 @@ public class BookUtil {
 	public static void buildBook(Player player) {
 
 		String text = "";
-		if (SiegeWarSettings.getWarSiegeAttackEnabled() && SiegeWarSettings.getWarSiegeEnabled()) {
+		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			text = siegeWarUserGuide(text);
 		} else 
 			text = "Siege War is disabled in the config...";
@@ -29,7 +29,6 @@ public class BookUtil {
 		 */
 		String activeSession = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * TimeMgmt.ONE_MINUTE_IN_MILLIS);
 		String maxSiege = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getWarSiegeMaxHoldoutTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS);
-		String occupationtime = TimeMgmt.getFormattedTimeValue((long) SiegeWarSettings.getWarSiegeRevoltImmunityTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS);
 		double counterPercent = SiegeWarSettings.getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercentage();
 		boolean bankruptcy = TownySettings.isTownBankruptcyEnabled();
 		boolean ruins = TownRuinSettings.getTownRuinsEnabled();
@@ -161,15 +160,11 @@ public class BookUtil {
 		// Capturing
 		text += "\nPOST-SIEGE ACTION: TOWN CAPTURE\n\n";
 		if (SiegeWarSettings.getWarSiegeInvadeEnabled()) {
-			text += "If the attacker has won the siege, the king (or a general) of the attacking nation may place a second coloured banner outside the town. This will capture the town, and forcibly add it to the victorious nation (which it cannot leave for " + occupationtime + ").\n\n";
-
-			if (SiegeWarSettings.getWarSiegeTownLeaveDisabled())
-				text += "An occupied town cannot leave their nation, but the nation can kick the town if they so desire.\n";
-
+			text += "If the attacker has won the siege, the king (or a general) of the attacking nation may place a second coloured banner outside the town. This will capture the town, and forcibly add it to the victorious nation.\n\n";
+			
 			// Revolt
-			if (SiegeWarSettings.getWarSiegeRevoltEnabled()) {
-				text += "An occupied town can revolt after " + occupationtime + ", freeing themselves from the occupying nation.\n";
-				text += "A town which has revolted from their occupying nation will receive " + SiegeWarSettings.getWarSiegeRevoltImmunityTimeHours() + " hours of siege immunity.\n\n";
+			if (SiegeWarSettings.getRevoltSiegesEnabled()) {
+				text += "An occupied town can revolt after " + SiegeWarSettings.getWarSiegeRevoltImmunityTimeModifier()  + "of the siege immunity duration, freeing themselves from the occupying nation.\n";
 			} else
 				text += "An occupied town can not revolt from their occupying nation.\n\n";
 		}
@@ -179,7 +174,6 @@ public class BookUtil {
 			text += "\nPEACEFUL TOWNS\n\n";
 			text += "Peaceful towns can opt out of war (by toggling peaceful, a town receives immunity from siege attacks & taxes. In return, its nation choice is more restricted, and its residents suffer from 'war allergy' if they approach a siege zone).\n";
 			text += "When a town chooses to toggle their peaceful status, it will take " + SiegeWarSettings.getWarCommonPeacefulTownsConfirmationRequirementDays() + " days for their decision to take effect.\n";
-			text += "Peaceful towns " + (SiegeWarSettings.getWarCommonPeacefulTownsAllowedToMakeNation() ? "are" : "are not") + " allowed to make nations.\n";
 			text += "Peaceful towns " + (SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP() ? "are" : "are not") + " allowed to toggle their pvp status.\n";
 			text += "Peaceful towns may fall under the jurisdiction of a Guardian Town. Guardian Towns are towns which have " + SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement() + " townblocks claimed, which are within " + SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement() + " townblocks of the peaceful town.\n";
 			text += "When a Guardian Town is within this distance the peaceful town will join the Guardian Town's nation.\n\n";

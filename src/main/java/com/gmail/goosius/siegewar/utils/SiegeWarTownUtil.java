@@ -4,10 +4,6 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownBlockType;
-import com.palmergames.bukkit.towny.object.TownyPermission;
-import com.palmergames.bukkit.towny.object.TownyPermission.ActionType;
-import com.palmergames.bukkit.towny.object.TownyPermission.PermLevel;
-import com.palmergames.bukkit.towny.object.TownyPermissionChange.Action;
 
 /**
  * Util class containing methods related to town flags/permssions.
@@ -27,24 +23,6 @@ public class SiegeWarTownUtil {
 			}
 		}
 		town.save();
-    }
-    
-    public static void disableNationPerms(Town town) {
-        town.getPermissions().change(Action.PERM_LEVEL, false, PermLevel.NATION);
-
-        for (TownBlock plot : town.getTownBlocks()) {
-            if (plot.hasResident())
-                continue;
-
-			TownyPermission plotPerm = plot.getPermissions();
-			if (plotPerm.getNationPerm(ActionType.BUILD) || plotPerm.getNationPerm(ActionType.DESTROY)
-				|| plotPerm.getNationPerm(ActionType.ITEM_USE) || plotPerm.getNationPerm(ActionType.SWITCH)) {
-			
-				plot.getPermissions().change(Action.PERM_LEVEL, false, PermLevel.NATION);
-				plot.save();
-			}
-        }
-        town.save();
     }
 
     /**

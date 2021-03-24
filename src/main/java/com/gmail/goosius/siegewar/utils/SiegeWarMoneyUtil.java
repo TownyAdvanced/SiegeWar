@@ -10,6 +10,7 @@ import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -21,50 +22,25 @@ import java.util.Map;
 
 public class SiegeWarMoneyUtil {
 
-	/**
-	 * This method gives the war chest to the attacking nation
-	 *
-	 * @param siege the siege
-	 */
-	public static void giveWarChestToAttackingNation(Siege siege) {
-		Nation winnerNation = siege.getAttackingNation();
-		if (TownyEconomyHandler.isActive()) {
-			try {
-				winnerNation.getAccount().deposit(siege.getWarChestAmount(), "War Chest Captured/Returned");
-				String message =
-					Translation.of("msg_siege_war_attack_recover_war_chest",
-					winnerNation.getFormattedName(),
-					TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
-
-				//Send message to nation(
-				TownyMessaging.sendPrefixedNationMessage(winnerNation, message);
-				//Send message to town
-				TownyMessaging.sendPrefixedTownMessage(siege.getDefendingTown(), message);
-			} catch (Exception e) {
-				System.out.println("Problem paying war chest(s) to winner nation");
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	/**
-	 * This method gives one war chest to the defending town
-	 *
-	 * @param siege the siege zone
-	 */
-	public static void giveWarChestToDefendingTown(Siege siege) {
-		Town winnerTown= siege.getDefendingTown();
+	public static void giveWarChestTo(Siege siege, Government government) {
 		if(TownyEconomyHandler.isActive()) {
-			winnerTown.getAccount().deposit(siege.getWarChestAmount(), "War Chest Captured");
+			government.getAccount().deposit(siege.getWarChestAmount(), "War Chest Captured");
 			String message =
-				Translation.of("msg_siege_war_attack_recover_war_chest",
-				winnerTown.getFormattedName(),
-				TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
+					Translation.of("msg_siege_war_attack_recover_war_chest",
+							government.getFormattedName(),
+							TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
 
-			//Send message to nation
-			TownyMessaging.sendPrefixedNationMessage(siege.getAttackingNation(), message);
-			//Send message to town
-			TownyMessaging.sendPrefixedTownMessage(winnerTown, message);
+			//Send message to attacker
+			if (siege.getAttacker() instanceof Nation)
+				TownyMessaging.sendPrefixedNationMessage((Nation)siege.getAttacker(), message);
+			else
+				TownyMessaging.sendPrefixedTownMessage((Town)siege.getAttacker(), message);
+
+			//Send message to defender
+			if (siege.getDefender() instanceof Nation)
+				TownyMessaging.sendPrefixedNationMessage((Nation)siege.getDefender(), message);
+			else
+				TownyMessaging.sendPrefixedTownMessage((Town)siege.getDefender(), message);
 		}
 	}
 

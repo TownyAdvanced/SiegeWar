@@ -62,6 +62,13 @@ permissions:
             siegewar.nation.siege.abandon: true
             siegewar.nation.siege.invade: true
             siegewar.nation.siege.plunder: true
+            siegewar.nation.siege.conquest.siege.start: true
+            siegewar.nation.siege.conquest.siege.abandon: true
+            siegewar.nation.siege.liberation.siege.start: true
+            siegewar.nation.siege.liberation.siege.abandon: true
+            siegewar.nation.siege.revolt.siege.abandon: true
+            siegewar.nation.siege.suppression.siege.start: true
+            siegewar.nation.siege.suppression.siege.abandon: true
 
     siegewar.town.siege.*:
         description: User holds all of the siegewar town nodes.
@@ -70,6 +77,10 @@ permissions:
             siegewar.town.siege.battle.points: true
             siegewar.town.siege.surrender: true
             siegewar.town.siege.startcannonsession: true
+            siegewar.town.siege.conquest.siege.surrender: true
+            siegewar.town.siege.revolt.siege.start: true
+            siegewar.town.siege.revolt.siege.abandon: true
+            siegewar.town.siege.suppression.siege.surrender: true
 
     siegewar.command.siegewar.guide:
         description: User is able to read guide book.

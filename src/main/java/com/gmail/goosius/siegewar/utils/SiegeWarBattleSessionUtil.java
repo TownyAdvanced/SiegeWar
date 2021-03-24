@@ -136,17 +136,17 @@ public class SiegeWarBattleSessionUtil {
 				if (battleResultEntry.getValue() > 0) {
 					resultLine =
 							Translation.of("msg_war_siege_battle_session_ended_attacker_result",
-									battleResultEntry.getKey().getDefendingTown().getName(),
+									battleResultEntry.getKey().getTown().getName(),
 									"+" + battleResultEntry.getValue());
 				} else if (battleResultEntry.getValue() < 0) {
 					resultLine =
 							Translation.of("msg_war_siege_battle_session_ended_defender_result",
-									battleResultEntry.getKey().getDefendingTown().getName(),
+									battleResultEntry.getKey().getTown().getName(),
 									"-" + Math.abs(battleResultEntry.getValue()));
 				} else {
 					resultLine =
 							Translation.of("msg_war_siege_battle_session_ended_draw_result",
-									battleResultEntry.getKey().getDefendingTown().getName());
+									battleResultEntry.getKey().getTown().getName());
 				}
 				lines.add(resultLine);
 			}
