@@ -92,7 +92,7 @@ public class SiegeWarBattleSessionUtil {
 						try {
 							System.err.println("Problem ending battle for siege: " + siege.getName());
 						} catch (Throwable t2) {
-							System.err.println("Problem ending battle session for siege: (could not read siege name)");
+							System.err.println("Problem ending battle for siege: (could not read siege name)");
 						}
 						t.printStackTrace();
 					}
