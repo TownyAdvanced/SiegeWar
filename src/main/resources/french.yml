@@ -285,6 +285,7 @@ siege_type_revolt: 'Revolt'
 siege_type_suppression: 'Suppression'
 
 # Dynmap
+
 dynmap_siege_title: 'Siege: %s vs %s'
 dynmap_siege_type: 'Type: %s'
 dynmap_siege_town: 'Town: %s'
