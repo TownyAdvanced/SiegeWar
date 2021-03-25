@@ -304,6 +304,9 @@ public class PlaceBlock {
 		
 		List<TownBlock> nearbyTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
 
+		if(nearbyTownBlocks.size() == 0) //No town nearby. Return.
+			return;
+
 		if (nearbyTownBlocks.size() > 1) //More than one town block nearby. Error
 			throw new TownyException(Translation.of("msg_err_siege_war_too_many_adjacent_towns"));
 
