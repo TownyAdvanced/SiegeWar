@@ -96,8 +96,8 @@ public class SiegeWarScoringUtil {
 		Nation nation = null;
 		if(siege.getDefender() instanceof Nation) {
 			nation = (Nation)siege.getDefender();
-		} else if (((Town)siege.getDefender()).hasNation()) {
-			nation = (Nation)siege.getDefender();
+		} else {
+			nation = TownyAPI.getInstance().getTownNationOrNull((Town)siege.getDefender());
 		}
 
 		if(nation != null) {
