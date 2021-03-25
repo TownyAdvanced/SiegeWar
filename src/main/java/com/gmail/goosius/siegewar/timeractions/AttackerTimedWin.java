@@ -23,6 +23,11 @@ public class AttackerTimedWin {
         String message = "";
         switch (siege.getSiegeType()) {
             case CONQUEST:
+                message = Translation.of(key,
+                        siege.getTown().getName(),
+                        siege.getAttacker().getName(),
+                        siege.getDefendingNationIfPossibleElseTown().getName());
+                break;
             case LIBERATION:
                 message = Translation.of(key,
                         siege.getTown().getName(),

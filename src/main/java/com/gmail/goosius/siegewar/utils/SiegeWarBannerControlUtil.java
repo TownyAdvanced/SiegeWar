@@ -62,9 +62,6 @@ public class SiegeWarBannerControlUtil {
 				resident = universe.getResident(player.getUniqueId());
 	            if (resident == null)
 	            	throw new TownyException(Translation.of("msg_err_not_registered_1", player.getName()));
-	            
-				if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
-					continue;
 
 				if(!BattleSession.getBattleSession().isActive()) {
 					String message = Translation.of("msg_war_siege_battle_session_break_cannot_get_banner_control",
@@ -72,6 +69,9 @@ public class SiegeWarBannerControlUtil {
 					Messaging.sendErrorMsg(player, message);
 					continue;
 				}
+
+				if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
+					continue;
 
 				if(siege.getBannerControlSessions().containsKey(player))
 					continue; // Player already has a control session
@@ -182,6 +182,9 @@ public class SiegeWarBannerControlUtil {
 	}
 
 	private static void evaluateExistingBannerControlSessions(Siege siege) {
+		if(!BattleSession.getBattleSession().isActive())
+			return;
+
 		BANNER_CONTROL_SESSIONS_LOOP:
 		for(BannerControlSession bannerControlSession: siege.getBannerControlSessions().values()) {
 			try {
@@ -291,6 +294,9 @@ public class SiegeWarBannerControlUtil {
 	}
 
 	private static void evaluateBannerControlEffects(Siege siege) {
+		if(!BattleSession.getBattleSession().isActive())
+			return;
+
 		//Evaluate the siege zone only if the siege is 'in progress'.
 		if(siege.getStatus() != SiegeStatus.IN_PROGRESS)
 			return;
