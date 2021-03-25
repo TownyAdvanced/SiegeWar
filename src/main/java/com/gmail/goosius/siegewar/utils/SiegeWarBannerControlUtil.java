@@ -63,15 +63,15 @@ public class SiegeWarBannerControlUtil {
 	            if (resident == null)
 	            	throw new TownyException(Translation.of("msg_err_not_registered_1", player.getName()));
 
+				if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
+					continue;
+
 				if(!BattleSession.getBattleSession().isActive()) {
 					String message = Translation.of("msg_war_siege_battle_session_break_cannot_get_banner_control",
-													SiegeWarBattleSessionUtil.getFormattedTimeUntilNextBattleSessionStarts());
+							SiegeWarBattleSessionUtil.getFormattedTimeUntilNextBattleSessionStarts());
 					Messaging.sendErrorMsg(player, message);
 					continue;
 				}
-
-				if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
-					continue;
 
 				if(siege.getBannerControlSessions().containsKey(player))
 					continue; // Player already has a control session
