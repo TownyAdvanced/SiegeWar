@@ -92,7 +92,7 @@ public class PlayerDeath {
 
 				//Skip if siege is not active
 				if (!candidateSiege.getStatus().isActive())
-					return;
+					continue;
 
 				//Skip if player is not is siege-zone
 				if(!SiegeWarDistanceUtil.isInSiegeZone(deadPlayer, candidateSiege))
