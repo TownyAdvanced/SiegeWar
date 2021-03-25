@@ -388,6 +388,8 @@ nation_help_14 : 'Release the given town from occupation.'
 # Peaceful towns
 msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks. The town may get automatically occupied by a nation with a strong presence in the local area. (see user-guide for more details). Residents cannot enter siege-zones or gain nation-military ranks.'
 msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to siege attacks. The town can no longer get automatically occupied. Residents can enter siege-zones and gain nation-military ranks.'
+msg_town_returned_to_pre_peaceful_occupier: " The town has been returned to the occupier it had before turning peaceful - %s."
+
 msg_peaceful_town_total_switches: '&b%d peaceful town%s %s been peacefully occupied, or released from occupation.'
 
 msg_your_town_peacefully_occupied: "&bYour town has been peacefully occupied by %s."
