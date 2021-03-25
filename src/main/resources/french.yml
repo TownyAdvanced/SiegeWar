@@ -335,9 +335,9 @@ status_town_siege_status_invaded: '   &2Town Invaded: %s'
 
 # Siege statuses
 siege_status_attacker_abandon: "Abandon de l'attaquant"
-siege_status_defender_surrender: "Capitulation du d<C3><A9>fenseur"
+siege_status_defender_surrender: "Capitulation du défenseur"
 siege_status_pending_attacker_abandon: "En attente de l'abandon de l'attaquant"
-siege_status_pending_defender_surrender: "En attente de la capitulation du d<C3><A9>fenseur"
+siege_status_pending_defender_surrender: "En attente de la capitulation du défenseur"
 
 # Nation screen
 status_nation_occupied_home_towns: '&2Occupied Home Towns &a[%s]&2: &f'
