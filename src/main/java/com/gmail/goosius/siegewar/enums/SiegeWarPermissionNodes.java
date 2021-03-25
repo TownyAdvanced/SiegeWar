@@ -1,7 +1,5 @@
 package com.gmail.goosius.siegewar.enums;
 
-import com.gmail.goosius.siegewar.objects.Siege;
-
 /**
  * 
  * @author LlmDl

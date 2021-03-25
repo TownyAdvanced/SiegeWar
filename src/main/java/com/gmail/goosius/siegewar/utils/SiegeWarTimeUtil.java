@@ -4,7 +4,6 @@ import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.util.TimeMgmt;
 
 /**
  * This class contains utility functions related siege timings
