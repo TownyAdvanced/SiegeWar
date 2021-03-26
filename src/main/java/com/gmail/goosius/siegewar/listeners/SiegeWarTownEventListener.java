@@ -436,6 +436,8 @@ public class SiegeWarTownEventListener implements Listener {
 					case ATTACKER_WIN:
 					case DEFENDER_SURRENDER:
 						return getPlunderStatusLine(siege) + getInvadeStatusLine(siege);
+					default:
+						break;
 				}
 				break;
 			case SUPPRESSION:
@@ -443,6 +445,8 @@ public class SiegeWarTownEventListener implements Listener {
 					case ATTACKER_WIN:
 					case DEFENDER_SURRENDER:
 						return getPlunderStatusLine(siege);
+					default:
+						break;
 				}
 				break;
 			case REVOLT:
@@ -450,6 +454,8 @@ public class SiegeWarTownEventListener implements Listener {
 					case DEFENDER_WIN:
 					case ATTACKER_ABANDON:
 						return getPlunderStatusLine(siege);
+					default:
+						break;
 				}
 				break;
 		}
