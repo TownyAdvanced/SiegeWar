@@ -100,10 +100,13 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	}
 
 	private void parseSiegeWarCommand(Player player, String[] args) {
-		
-		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR.getNode(args[0]))) {
-			Messaging.sendErrorMsg(player, Translation.of("msg_err_command_disable"));
-			return;
+
+		//This permission check handles all the perms checks except for nation
+		if(!args[0].equalsIgnoreCase("nation")) {
+			if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR.getNode(args[0]))) {
+				Messaging.sendErrorMsg(player, Translation.of("msg_err_command_disable"));
+				return;
+			}
 		}
 			
 		switch (args[0]) {
