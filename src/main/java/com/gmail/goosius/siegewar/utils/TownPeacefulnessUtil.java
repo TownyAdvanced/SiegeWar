@@ -336,8 +336,7 @@ public class TownPeacefulnessUtil {
 			List<Town> candidateTowns = new ArrayList<>(townyUniverse.getDataSource().getTowns());
 			for(Town candidateTown: candidateTowns) {
 				if(!candidateTown.isNeutral()
-					&& candidateTown.hasNation()
-					&& candidateTown.isOpen()
+					&& (candidateTown.hasNation() || TownOccupationController.isTownOccupied(candidateTown))
 					&& !SiegeController.hasActiveSiege(candidateTown)
 					&& candidateTown.getTownBlocks().size() >= guardianTownPlotsRequirement
 					&& SiegeWarDistanceUtil.areTownsClose(peacefulTown, candidateTown, guardianTownMaxDistanceRequirementTownblocks)) {
