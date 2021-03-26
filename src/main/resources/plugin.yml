@@ -52,6 +52,7 @@ permissions:
         default: false
         children:
             siegewar.command.siegewar.nation.paysoldiers: true
+            siegewar.command.siegewar.nation.release: true
 
     siegewar.nation.siege.*:
         description: User holds all of the siegewar nation nodes.
