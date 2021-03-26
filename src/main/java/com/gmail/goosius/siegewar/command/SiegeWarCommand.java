@@ -205,7 +205,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			player.sendMessage(Translation.of("msg_err_command_disable"));
 			return;
 		}
-
+			
 		switch (args[0]) {
 			case "paysoldiers":
 				try {
