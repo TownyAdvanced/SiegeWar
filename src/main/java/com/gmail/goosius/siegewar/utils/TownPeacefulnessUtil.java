@@ -267,7 +267,11 @@ public class TownPeacefulnessUtil {
 				topGuardianTown = guardianTown;
 			}
 		}
-		return topGuardianTown.getNation();
+		if(TownOccupationController.isTownOccupied(topGuardianTown)) {
+			return TownOccupationController.getTownOccupier(topGuardianTown);
+		} else {
+			return topGuardianTown.getNation();
+		}
 	}
 
 	private static boolean ensureTownIsPeacefullyUnoccupied(Town peacefulTown) throws NotRegisteredException {
@@ -334,7 +338,6 @@ public class TownPeacefulnessUtil {
 				if(!candidateTown.isNeutral()
 					&& candidateTown.hasNation()
 					&& candidateTown.isOpen()
-					&& !TownOccupationController.isTownOccupied(candidateTown)
 					&& !SiegeController.hasActiveSiege(candidateTown)
 					&& candidateTown.getTownBlocks().size() >= guardianTownPlotsRequirement
 					&& SiegeWarDistanceUtil.areTownsClose(peacefulTown, candidateTown, guardianTownMaxDistanceRequirementTownblocks)) {
