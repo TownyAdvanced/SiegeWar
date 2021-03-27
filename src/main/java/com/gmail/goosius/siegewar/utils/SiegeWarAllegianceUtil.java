@@ -71,4 +71,5 @@ public class SiegeWarAllegianceUtil {
             return false;
         }
     }
+
 }
