@@ -13,31 +13,48 @@ public class SiegeWarNotificationUtil {
 
 		try {
 			//Build list of who to inform
+			Nation nation;
 			Set<Nation> nationsToInform = new HashSet<>();
 			Set<Town> townsToInform= new HashSet<>();
 
-			//attackers
+			//Attackers
 			if(siege.getAttacker() instanceof Nation) {
-				nationsToInform.add((Nation)siege.getAttacker());
-				nationsToInform.addAll(((Nation)siege.getAttacker()).getMutualAllies());
+				//Attacker is a nation
+				nation = (Nation)siege.getAttacker();
+				nationsToInform.add(nation);
+				nationsToInform.addAll(nation.getMutualAllies());
+			} else if (((Town)siege.getAttacker()).hasNation()) {
+				//Attacker is a nation town
+				nation = ((Town)siege.getAttacker()).getNation();
+				nationsToInform.add(nation);
+				nationsToInform.addAll(nation.getMutualAllies());
 			} else {
+				//Attacker is a non-nation town
 				townsToInform.add((Town)siege.getAttacker());
 			}
 
-			//defender
+			//Defenders
 			if(siege.getDefender() instanceof Nation) {
-				nationsToInform.add((Nation)siege.getDefender());
-				nationsToInform.addAll(((Nation)siege.getDefender()).getMutualAllies());
+				//Defender is a nation
+				nation = (Nation)siege.getDefender();
+				nationsToInform.add(nation);
+				nationsToInform.addAll(nation.getMutualAllies());
+			} else if (((Town)siege.getDefender()).hasNation()) {
+				//Defender is a nation town
+				nation = ((Town)siege.getDefender()).getNation();
+				nationsToInform.add(nation);
+				nationsToInform.addAll(nation.getMutualAllies());
 			} else {
+				//Defender is a non-nation town
 				townsToInform.add((Town)siege.getDefender());
 			}
 
 			//Inform required towns and nations
-			for(Nation nation: nationsToInform) {
-				TownyMessaging.sendPrefixedNationMessage(nation, message);
+			for(Nation nationToInform: nationsToInform) {
+				TownyMessaging.sendPrefixedNationMessage(nationToInform, message);
 			}
-			for(Town town: townsToInform) {
-				TownyMessaging.sendPrefixedTownMessage(town, message);
+			for(Town townToInform: townsToInform) {
+				TownyMessaging.sendPrefixedTownMessage(townToInform, message);
 			}
 
 		} catch (Exception e) {
