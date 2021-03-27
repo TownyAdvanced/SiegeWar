@@ -52,14 +52,22 @@ public class SiegeWarAllegianceUtil {
     }
 
     private static boolean isNationSoldierOrAlliedSoldier(Player player, Town residentTown, Government governmentToCheck) throws NotRegisteredException {
-        if (residentTown.hasNation() && governmentToCheck instanceof Nation) {
+        if(!residentTown.hasNation())
+            return false;
 
-            if(!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode()))
-                return false;
+        if(!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode()))
+            return false;
 
+        if(governmentToCheck instanceof Nation) {
+            //The government-to-check is a nation
             return residentTown.getNation() == governmentToCheck
                     || residentTown.getNation().hasMutualAlly((Nation) governmentToCheck);
+        } else if (((Town)governmentToCheck).hasNation()) {
+            //The government-to-check is a nation town
+            return residentTown.getNation() == ((Town)governmentToCheck).getNation()
+                    || residentTown.getNation().hasMutualAlly(((Town)governmentToCheck).getNation());
         } else {
+            //The government-to-check is a non-nation town. Nation soldiers cannot contribute
             return false;
         }
     }
