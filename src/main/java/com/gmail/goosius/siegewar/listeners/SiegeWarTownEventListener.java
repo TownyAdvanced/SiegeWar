@@ -100,11 +100,27 @@ public class SiegeWarTownEventListener implements Listener {
 	@EventHandler
 	public void onTownTogglePVP(TownTogglePVPEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns() && SiegeController.hasActiveSiege(event.getTown()))  {
-				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
-				event.setCancelled(true);
-				return;
+			if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns()) {
+
+				//Is the town under siege
+				if (SiegeController.hasActiveSiege(event.getTown())) {
+					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
+					event.setCancelled(true);
+					return;
+				}
+
+				//Is the town affected by nation siege effects
+				try {
+					if(SiegeWarSettings.isNationSiegeEffectsEnabled()
+						&& event.getTown().hasNation()
+						&& SiegeController.doesNationHaveAnyActiveDefensiveSieges(event.getTown().getNation())) {
+							event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_toggle_pvp"));
+							event.setCancelled(true);
+							return;
+					}
+				} catch (NotRegisteredException ignored) {}
 			}
+
 			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
 					&& !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()
 					&& event.getTown().isNeutral()

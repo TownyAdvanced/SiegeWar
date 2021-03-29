@@ -393,6 +393,16 @@ public class SiegeController {
 		return result;
 	}
 
+	public static boolean doesNationHaveAnyActiveDefensiveSieges(Nation nation) {
+		for(Siege siege : SiegeController.getSieges(nation)) {
+			if(siege.getStatus().isActive()
+				&& siege.getDefender() == nation) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Start a siege
 	 *
@@ -433,8 +443,12 @@ public class SiegeController {
 		SiegeController.setSiege(targetTown, true);
 		SiegeController.putTownInSiegeMap(targetTown, siege);
 
-		//Set town pvp and explosions to true.
-		SiegeWarTownUtil.setTownPvpFlags(targetTown, true);
+		//Set town pvp to true.
+		if(SiegeWarSettings.isNationSiegeEffectsEnabled() && targetTown.hasNation()) {
+			SiegeWarTownUtil.setPvpFlagsOfAllNationTowns(targetTown, true);
+		} else {
+			SiegeWarTownUtil.setTownPvpFlags(targetTown, true);
+		}
 
 		//Send global message;
 		try {

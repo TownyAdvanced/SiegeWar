@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.15
+version: 0.16
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -407,3 +407,6 @@ msg_err_swa_home_nation_cannot_be_occupier: '&cYou cannot set the towns home nat
 msg_swa_set_invade_success: '&bSet invaded to %s for %s.'
 msg_swa_town_occupation_removal_success: '&bTown occupier removed for %s.'
 msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
+
+# Added in 0.16
+msg_err_siege_affected_nation_town_cannot_toggle_pvp: "&cWhen a nation town is under siege, PVP is forced ON."
