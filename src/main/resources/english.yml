@@ -83,8 +83,6 @@ msg_err_siege_war_town_already_plundered: '&cThis town has already been plundere
 #Block change
 msg_err_siege_war_cannot_destroy_siege_banner: "&cWhile the siege is in progress you cannot destroy the siege banner or the block it is attached to."
 msg_err_siege_war_banner_support_block_not_stable: "&cYou cannot place the banner on unstable ground e.g. sand or gravel."
-# Spawn
-msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone (unless the target town is peaceful).'
 #Banner control
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'You cannot use this item while in a banner control session.'
 
@@ -409,8 +407,12 @@ msg_swa_town_occupation_removal_success: '&bTown occupier removed for %s.'
 msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
 
 # Added in 0.16
-msg_err_siege_affected_nation_town_cannot_toggle_pvp: "&cWhen a nation town is under siege, PVP is forced ON."
-msg_err_siege_affected_town_cannot_recruit: "&cWhen a nation town is under siege, the town cannot recruit new residents."
-msg_err_siege_affected_town_cannot_toggle_open_off: "&cWhen a nation town is under siege, the town cannot open its doors to new residents."
-msg_err_siege_affected_town_cannot_claim: "&cWhen a nation town is under siege, it cannot claim new land."
+msg_err_siege_affected_nation_town_cannot_toggle_pvp: "&cWhen a nation is under siege, PVP is forced ON in all its towns."
+msg_err_siege_affected_nation_town_cannot_recruit: "&cWhen a nation is under siege, its towns cannot recruit new residents."
+msg_err_siege_affected_nation_town_cannot_toggle_open_off: "&cWhen a nation is under siege, its towns cannot open their doors to new residents."
+msg_err_siege_affected_nation_town_cannot_claim: "&cWhen a nation is under siege, its towns cannot claim new land."
+msg_err_siege_affected_nation_town_cannot_unclaim: "&cWhen a nation is under siege, its towns cannot un-claim land."
+msg_err_siege_affected_nation_town_can_only_accept_resident_tps: '&cWhen a nation is under siege, the only allowed teleporting is by town residents to their own towns.'
+msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town: '&cCannot start siege, because the home nation of the nearby town already has a besieged town.'
 
+msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone.'

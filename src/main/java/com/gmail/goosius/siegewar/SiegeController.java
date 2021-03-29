@@ -383,21 +383,26 @@ public class SiegeController {
 	}
 
 	/**
-	 * This method returns true if:
-	 * - the given town has a nation, and
-	 * - that nation is the defender in a siege
+	 * This method returns true
+	 * - The given town is in a nation, and
+	 * - Any of that nation's home towns are under siege .
 	 *
 	 * @param town the town to check
-	 * @return true if this is a town in a defending nation
+	 * @return true if any of the nation's home towns are under siege
 	 */
-	public static boolean isNationASiegeDefender(Town town) {
-		if(town.hasNation()) {
-			try {
-				return getActiveDefensiveSieges(town.getNation()).size() > 0;
-			} catch (NotRegisteredException ignored) {}
-		}
+	public static boolean doesHomeNationHaveABesiegedTown(Town town) {
+		try {
+			if(town.hasNation()) {
+				for(Town nationTown: town.getNation().getTowns()) {
+					if(SiegeController.hasActiveSiege(nationTown))
+						return true;
+				}
+			}
+		} catch (NotRegisteredException ignored) {}
 		return false;
 	}
+
+
 	/**
 	 * Start a siege
 	 *
@@ -553,4 +558,7 @@ public class SiegeController {
 				break;
 		}
 	}
+
+
+
 }

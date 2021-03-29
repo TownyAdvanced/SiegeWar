@@ -29,7 +29,6 @@ import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.event.DeleteTownEvent;
 import com.palmergames.bukkit.towny.event.NewTownEvent;
-import com.palmergames.bukkit.towny.event.RenameTownEvent;
 import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.TownStatusScreenEvent;
@@ -82,9 +81,9 @@ public class SiegeWarTownEventListener implements Listener {
 			}
 
 			if (SiegeWarSettings.isNationSiegeEffectsEnabled()
-					&& SiegeController.isNationASiegeDefender(event.getTown())) {
+					&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_town_cannot_recruit"));
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_recruit"));
 				return;
 			}
 		}
@@ -120,7 +119,7 @@ public class SiegeWarTownEventListener implements Listener {
 
 				//Is the town affected by nation siege effects
 				if(SiegeWarSettings.isNationSiegeEffectsEnabled()
-						&& SiegeController.isNationASiegeDefender(event.getTown())) {
+						&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
 					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_toggle_pvp"));
 					event.setCancelled(true);
 					return;
@@ -155,8 +154,8 @@ public class SiegeWarTownEventListener implements Listener {
 
 			//Is the town affected by nation siege effects
 			if(SiegeWarSettings.isNationSiegeEffectsEnabled()
-					&& SiegeController.isNationASiegeDefender(event.getTown())) {
-				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_town_cannot_toggle_open_off"));
+					&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
+				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_toggle_open_off"));
 				event.setCancelled(true);
 				return;
 			}
@@ -247,9 +246,9 @@ public class SiegeWarTownEventListener implements Listener {
 
 				//If the town is affected by nation siege effects, they cannot claim any land
 				if (SiegeWarSettings.isNationSiegeEffectsEnabled()
-						&& SiegeController.isNationASiegeDefender(event.getTown())) {
+						&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
 					event.setCancelled(true);
-					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_town_cannot_claim"));
+					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_claim"));
 					return;
 				}
 			}
@@ -290,28 +289,22 @@ public class SiegeWarTownEventListener implements Listener {
 		}
 			
 		if(SiegeWarSettings.getWarSiegeEnabled()
-			&& SiegeWarSettings.getWarSiegeBesiegedTownUnClaimingDisabled()
-			&& SiegeController.hasSiege(event.getTown())
-			&& (
-				SiegeController.getSiege(event.getTown()).getStatus().isActive()
-				|| SiegeController.getSiege(event.getTown()).getStatus() == SiegeStatus.ATTACKER_WIN
-				|| SiegeController.getSiege(event.getTown()).getStatus() == SiegeStatus.DEFENDER_SURRENDER
-				)
-			)
-		{
-			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_unclaim"));
-		}
-	}
-	
-	/*
-	 * Simply saving the siege will set the name of the siege.
-	 */
-	@EventHandler
-	public void onTownRename(RenameTownEvent event) {
-		if (SiegeController.hasSiege(event.getTown())) {
-			SiegeController.saveSiege(SiegeController.getSiege(event.getTown()));
-			SiegeController.renameSiegedTownName(event.getOldName(), event.getTown().getName());
+			&& SiegeWarSettings.getWarSiegeBesiegedTownUnClaimingDisabled()) {
+
+			//Town besieged
+			if(SiegeController.hasActiveSiege(event.getTown())) {
+				event.setCancelled(true);
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_unclaim"));
+				return;
+			}
+
+			//Nation siege effects
+			if (SiegeWarSettings.isNationSiegeEffectsEnabled()
+					&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
+				event.setCancelled(true);
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_unclaim"));
+				return;
+			}
 		}
 	}
 
