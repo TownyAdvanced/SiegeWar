@@ -325,6 +325,8 @@ public class TownPeacefulnessUtil {
 	}
 
 	public static Set<Town> getGuardianTowns(Town peacefulTown) {
+		Nation homeNationOfPeacefulTown;
+		Nation prevailingNationOfCandidateTown;
 		Set<Town> validGuardianTowns = new HashSet<>();
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 
@@ -340,7 +342,25 @@ public class TownPeacefulnessUtil {
 					&& !SiegeController.hasActiveSiege(candidateTown)
 					&& candidateTown.getTownBlocks().size() >= guardianTownPlotsRequirement
 					&& SiegeWarDistanceUtil.areTownsClose(peacefulTown, candidateTown, guardianTownMaxDistanceRequirementTownblocks)) {
-					validGuardianTowns.add(candidateTown);
+
+					/*
+					 * If the peaceful town has a nation,
+					 * then for the guardian town to qualify,
+					 * the prevailing nation of the guardian town must:
+					 * 1. Be the home nation of the peaceful town, or
+					 * 2. Consider the home nation of the peaceful town to be an enemy.
+					 */
+					if(peacefulTown.hasNation()) {
+						homeNationOfPeacefulTown = peacefulTown.getNation();
+						prevailingNationOfCandidateTown = candidateTown.hasNation() ? candidateTown.getNation() : TownOccupationController.getTownOccupier(candidateTown);
+
+						if (prevailingNationOfCandidateTown == homeNationOfPeacefulTown
+							|| prevailingNationOfCandidateTown.hasEnemy(homeNationOfPeacefulTown)) {
+							validGuardianTowns.add(candidateTown);
+						}
+					} else {
+						validGuardianTowns.add(candidateTown);
+					}
 				}
 			}
 		} catch (Exception e) {
