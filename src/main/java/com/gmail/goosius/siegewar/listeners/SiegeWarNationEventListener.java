@@ -4,12 +4,14 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -71,18 +73,7 @@ public class SiegeWarNationEventListener implements Listener {
 		}
 		
 	}
-	
-	/*
-	 * Simply saving the siege will set the name of the siege.
-	 */
-	@EventHandler
-	public void onNationRename(RenameNationEvent event) {
-		if (SiegeController.hasSieges(event.getNation())) {
-			for (Siege siege : SiegeController.getSieges(event.getNation()))
-				SiegeController.saveSiege(siege);
-		}
-	}
-	
+
 	/*
 	 * SiegeWar will disable nation-zones if the town has a siege.
 	 */
@@ -113,12 +104,12 @@ public class SiegeWarNationEventListener implements Listener {
 			out.addAll(new ArrayList<>(ChatTools.listArr(formattedOccupiedForeignTowns, Translation.of("status_nation_occupied_foreign_towns", occupiedForeignTowns.size()))));
 
 			// Offensive Sieges [3]: TownA, TownB, TownC
-	        List<Town> siegeAttacks = SiegeController.getActiveOffensiveSieges(nation);
+	        List<Town> siegeAttacks = new ArrayList<>(SiegeController.getActiveOffensiveSieges(nation).values());
 	        String[] formattedSiegeAttacks = TownyFormatter.getFormattedNames(siegeAttacks.toArray(new Town[0]));
 	        out.addAll(new ArrayList<>(ChatTools.listArr(formattedSiegeAttacks, Translation.of("status_nation_offensive_sieges", siegeAttacks.size()))));
 
 	        // Defensive Sieges [3]: TownX, TownY, TownZ
-	        List<Town> siegeDefences = SiegeController.getActiveDefensiveSieges(nation);
+	        List<Town> siegeDefences = new ArrayList<>(SiegeController.getActiveDefensiveSieges(nation).values());
 	        String[] formattedSiegeDefences = TownyFormatter.getFormattedNames(siegeDefences.toArray(new Town[0]));
 	        out.addAll(ChatTools.listArr(formattedSiegeDefences, Translation.of("status_nation_defensive_sieges", siegeDefences.size())));
 	        
@@ -163,19 +154,52 @@ public class SiegeWarNationEventListener implements Listener {
 
 	@EventHandler
 	public void onPreNationEnemyRemove(NationPreRemoveEnemyEvent event) {
+		boolean cancel = false;
 		Nation nation = event.getNation();
 		Nation enemyNation = event.getEnemy();
 
-		if (!SiegeController.hasSieges(nation))	
-			return;
-		
-		List<Town> enemyTownsUnderSiege = SiegeController.getSiegedTowns(enemyNation);
+		for(Siege siege: SiegeController.getSieges()) {
+			if (!siege.getStatus().isActive())
+				continue;
 
-		for (Siege siege : SiegeController.getSieges(nation)) {
-			if (enemyTownsUnderSiege.contains(siege.getTown())) {
-				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_remove_enemy"));
+			//Cancel if you are attacking them
+			if (siege.getAttacker() == nation
+					&& siege.getDefendingNationIfPossibleElseTown() == enemyNation) {
+				cancel = true;
+				break;
 			}
+
+			//Cancel if they are attacking you
+			if (siege.getAttacker() == enemyNation
+					&& siege.getDefendingNationIfPossibleElseTown() == nation) {
+				cancel = true;
+				break;
+			}
+
+			if (siege.getSiegeType() == SiegeType.REVOLT) {
+				try {
+					//Cancel if one of your towns is revolting against them
+					if (siege.getTown().hasNation()
+							&& siege.getTown().getNation() == nation
+							&& siege.getDefender() == enemyNation) {
+						cancel = true;
+						break;
+					}
+
+					//Cancel if one of their towns is revolting against you
+					if (siege.getTown().hasNation()
+							&& siege.getTown().getNation() == enemyNation
+							&& siege.getDefender() == nation) {
+						cancel = true;
+						break;
+					}
+				} catch (NotRegisteredException ignored) {}
+			}
+		}
+
+		if(cancel) {
+			event.setCancelled(true);
+			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_remove_enemy"));
 		}
 	}
 

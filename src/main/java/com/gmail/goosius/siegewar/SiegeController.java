@@ -1,13 +1,6 @@
 package com.gmail.goosius.siegewar;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -278,10 +271,6 @@ public class SiegeController {
 		return hasSiege(town) && getSiege(town).getStatus().isActive();
 	}
 
-	public static boolean hasSieges(Nation nation) {
-		return !getSieges(nation).isEmpty();
-	}
-
 	public static Collection<Town> getSiegedTowns() {
 		return Collections.unmodifiableCollection(siegedTowns);
 	}
@@ -293,17 +282,6 @@ public class SiegeController {
 	public static void renameSiegedTownName(String oldname, String newname) {
 		siegedTownNames.remove(oldname);
 		siegedTownNames.add(newname);
-	}
-
-	//Get all the sieges a nation is involved in
-	@Nullable
-	public static List<Siege> getSieges(Nation nation) {
-		List<Siege> siegeList = new ArrayList<>();
-		for (Siege siege : townSiegeMap.values()) {
-			if (siege.getAttacker().equals(nation) || siege.getDefender().equals(nation))
-				siegeList.add(siege);
-		}
-		return siegeList;
 	}
 
 	@Nullable
@@ -370,39 +348,56 @@ public class SiegeController {
 
 	}
 
-
-	public static List<Town> getActiveOffensiveSieges(Nation nation) {
-		List<Town> result = new ArrayList<>();
-		for(Siege siege : SiegeController.getSieges(nation)) {
+	public static Map<Siege, Town> getActiveOffensiveSieges(Nation nation) {
+		Map<Siege, Town> result = new HashMap<>();
+		for(Siege siege : SiegeController.getSieges()) {
 			if(siege.getStatus().isActive()
-					&& siege.getAttacker() == nation) {
-				result.add(siege.getTown());
+				&& siege.getAttacker() == nation) {
+					result.put(siege, siege.getTown());
 			}
 		}
 		return result;
 	}
 
-	public static List<Town> getActiveDefensiveSieges(Nation nation) {
-		List<Town> result = new ArrayList<>();
-		for(Siege siege : SiegeController.getSieges(nation)) {
-			if(siege.getStatus().isActive()
-					&& siege.getDefender() == nation) {
-				result.add(siege.getTown());
+	public static Map<Siege, Town> getActiveDefensiveSieges(Nation nation) {
+		Map<Siege, Town> result = new HashMap<>();
+		for(Siege siege : SiegeController.getSieges()) {
+			if(siege.getStatus().isActive()) {
+				if(siege.getDefender() instanceof Nation) {
+					if(siege.getDefender() == nation) {
+						//Defender is the given nation
+						result.put(siege, siege.getTown());
+					}
+				} else {
+					try {
+						if(siege.getTown().hasNation()
+							&& siege.getTown().getNation() == nation) {
+							//Defender is a town belonging to the given nation
+							result.put(siege, siege.getTown());
+						}
+					} catch (NotRegisteredException ignored) {}
+				}
 			}
 		}
 		return result;
 	}
 
-	public static boolean doesNationHaveAnyActiveDefensiveSieges(Nation nation) {
-		for(Siege siege : SiegeController.getSieges(nation)) {
-			if(siege.getStatus().isActive()
-				&& siege.getDefender() == nation) {
-				return true;
-			}
+	/**
+	 * This method returns true if:
+	 * - the given town has a nation, and
+	 * - that nation is the defender in a siege
+	 *
+	 * @param town the town to check
+	 * @return true if this is a town in a defending nation
+	 */
+	public static boolean isNationASiegeDefender(Town town) {
+		if(town.hasNation()) {
+			try {
+				return getActiveDefensiveSieges(town.getNation()).size() > 0;
+			} catch (NotRegisteredException ignored) {}
 		}
 		return false;
 	}
-
 	/**
 	 * Start a siege
 	 *

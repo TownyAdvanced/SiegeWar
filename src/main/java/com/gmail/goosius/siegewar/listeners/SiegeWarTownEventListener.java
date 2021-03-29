@@ -73,11 +73,20 @@ public class SiegeWarTownEventListener implements Listener {
 	 */
 	@EventHandler
 	public void onTownAddResident(TownPreAddResidentEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWarSettings.getWarSiegeBesiegedTownRecruitmentDisabled()
-				&& SiegeController.hasActiveSiege(event.getTown())) {
-			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_recruit"));
+		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeBesiegedTownRecruitmentDisabled()) {
+
+			if (SiegeController.hasActiveSiege(event.getTown())) {
+				event.setCancelled(true);
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_recruit"));
+				return;
+			}
+
+			if (SiegeWarSettings.isNationSiegeEffectsEnabled()
+					&& SiegeController.isNationASiegeDefender(event.getTown())) {
+				event.setCancelled(true);
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_town_cannot_recruit"));
+				return;
+			}
 		}
 	}
 
@@ -110,15 +119,12 @@ public class SiegeWarTownEventListener implements Listener {
 				}
 
 				//Is the town affected by nation siege effects
-				try {
-					if(SiegeWarSettings.isNationSiegeEffectsEnabled()
-						&& event.getTown().hasNation()
-						&& SiegeController.doesNationHaveAnyActiveDefensiveSieges(event.getTown().getNation())) {
-							event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_toggle_pvp"));
-							event.setCancelled(true);
-							return;
-					}
-				} catch (NotRegisteredException ignored) {}
+				if(SiegeWarSettings.isNationSiegeEffectsEnabled()
+						&& SiegeController.isNationASiegeDefender(event.getTown())) {
+					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_toggle_pvp"));
+					event.setCancelled(true);
+					return;
+				}
 			}
 
 			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
@@ -138,10 +144,22 @@ public class SiegeWarTownEventListener implements Listener {
 	@EventHandler
 	public void onTownToggleOpen(TownToggleOpenEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWarSettings.getWarSiegeBesiegedTownRecruitmentDisabled()
-				&& SiegeController.hasActiveSiege(event.getTown())) {
-			event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_open_off"));
-			event.setCancelled(true);
+			&& SiegeWarSettings.getWarSiegeBesiegedTownRecruitmentDisabled()) {
+
+			//If town is besieged
+			if(SiegeController.hasActiveSiege(event.getTown())) {
+				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_open_off"));
+				event.setCancelled(true);
+				return;
+			}
+
+			//Is the town affected by nation siege effects
+			if(SiegeWarSettings.isNationSiegeEffectsEnabled()
+					&& SiegeController.isNationASiegeDefender(event.getTown())) {
+				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_town_cannot_toggle_open_off"));
+				event.setCancelled(true);
+				return;
+			}
 		}
 	}
 	
@@ -218,12 +236,22 @@ public class SiegeWarTownEventListener implements Listener {
 	@EventHandler
 	public void onTownClaim(TownPreClaimEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			//If the claimer's town is under siege, they cannot claim any land
-			if (SiegeWarSettings.getWarSiegeBesiegedTownClaimingDisabled()
-				&& SiegeController.hasActiveSiege(event.getTown())) {
-				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_claim"));
-				return;
+			if (SiegeWarSettings.getWarSiegeBesiegedTownClaimingDisabled()) {
+
+				//If the claimer's town is under siege, they cannot claim any land
+				if (SiegeController.hasActiveSiege(event.getTown())) {
+					event.setCancelled(true);
+					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_claim"));
+					return;
+				}
+
+				//If the town is affected by nation siege effects, they cannot claim any land
+				if (SiegeWarSettings.isNationSiegeEffectsEnabled()
+						&& SiegeController.isNationASiegeDefender(event.getTown())) {
+					event.setCancelled(true);
+					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_town_cannot_claim"));
+					return;
+				}
 			}
 
 			//If the land is too near any active siege zone, it cannot be claimed.

@@ -62,43 +62,6 @@ public class SiegeWarDistanceUtil {
 		return blockElevation - averageTownElevation;
 	}
 
-
-	/**
-	 * This method finds the nearest siege to the given block, controlled by the given nation. 
-	 *
-	 * @param block the given block
-	 * @param nation the given nation
-	 * @return a SiegeZoneDistance object containing both the siege and distance. Null if not found.
-	 */
-	@Nullable
-	public static Siege findNearestSiegeForNation(Block block, Nation nation) {
-		//Find the nearest siege zone to the given block within the given radius belonging to the given nation.
-		Siege nearestSiege = null;
-		double distanceToNearestSiegeZone = -1;
-		for(Siege siege: SiegeController.getSieges(nation)) {
-
-			if(!block.getLocation().getWorld().getName().equalsIgnoreCase(siege.getFlagLocation().getWorld().getName())) {
-				continue;
-			}
-			
-			if(block.getLocation().distance(siege.getFlagLocation()) > TOWNBLOCKSIZE)
-				continue;
-
-			if (nearestSiege == null) {
-				nearestSiege = siege;
-				distanceToNearestSiegeZone = block.getLocation().distance(nearestSiege.getFlagLocation());
-			} else {
-				double distanceToNewTarget = block.getLocation().distance(siege.getFlagLocation());
-				if(distanceToNewTarget < distanceToNearestSiegeZone) {
-					nearestSiege = siege;
-					distanceToNearestSiegeZone = distanceToNewTarget;
-				}
-			}
-		}
-	
-		return nearestSiege;
-	}
-
 	/**
 	 * This method returns true if the given location is in an active siegezone
 	 *

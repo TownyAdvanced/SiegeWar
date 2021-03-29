@@ -410,3 +410,7 @@ msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
 
 # Added in 0.16
 msg_err_siege_affected_nation_town_cannot_toggle_pvp: "&cWhen a nation town is under siege, PVP is forced ON."
+msg_err_siege_affected_town_cannot_recruit: "&cWhen a nation town is under siege, the town cannot recruit new residents."
+msg_err_siege_affected_town_cannot_toggle_open_off: "&cWhen a nation town is under siege, the town cannot open its doors to new residents."
+msg_err_siege_affected_town_cannot_claim: "&cWhen a nation town is under siege, it cannot claim new land."
+
