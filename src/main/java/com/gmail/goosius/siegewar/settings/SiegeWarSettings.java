@@ -398,6 +398,12 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean isNationSiegeEffectsEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_NATION_SIEGE_EFFECTS_ENABLED);
+		return Settings.getBoolean(ConfigNodes.NATION_SIEGE_EFFECTS_ENABLED);
 	}
+
+	public static double getNationSiegeEffectsSiegeImmunityModifier() {
+		return Settings.getDouble(ConfigNodes.NATION_SIEGE_EFFECTS_SIEGE_IMMUNITY_MODIFIER);
+	}
+
+
 }
