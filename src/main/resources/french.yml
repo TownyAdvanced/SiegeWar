@@ -428,5 +428,5 @@ msg_err_siege_affected_home_nation_town_cannot_recruit: "&cWhen one of a nation'
 msg_err_siege_affected_home_nation_town_cannot_claim: "&cWhen one of a nation's home towns is under siege attack, none of its home towns can claim new land."
 msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cWhen one of a nation's home towns is under siege attack, none of its home towns can un-claim land."
 msg_err_siege_affected_home_nation_town_can_only_accept_resident_tps: "&cWhen one of a nation's home towns is under siege attack, only residents of those towns can spawn or teleport in."
-msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town: "&cCannot start siege on this nation town, because one of the nation's home towns is already under siege attack"
+msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town: "&cCannot start siege on this nation town, because one of the nation's home towns is already under siege attack."
 
