@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 
 /**
  * This class contains utility functions related to completing sieges
@@ -30,7 +31,11 @@ public class SiegeWarSiegeCompletionUtil {
 		siege.clearBannerControlSessions();
 		siege.setActualEndTime(System.currentTimeMillis());
 		SiegeWarTimeUtil.activateSiegeImmunityTimers(siege.getTown(), siege);
-		SiegeWarTownUtil.setTownPvpFlags(siege.getTown(), false);
+		if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled() && siege.getTown().hasNation()) {
+			SiegeWarTownUtil.setPvpFlagsOfAllNationHomeTowns(siege.getTown(), false);
+		} else {
+			SiegeWarTownUtil.setTownPvpFlags(siege.getTown(), false);
+		}
 		CosmeticUtil.removeFakeBeacons(siege);
 
 		//Save to db

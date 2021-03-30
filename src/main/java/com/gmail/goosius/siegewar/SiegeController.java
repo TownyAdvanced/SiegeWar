@@ -256,7 +256,12 @@ public class SiegeController {
 		siegedTowns.remove(siege.getTown());
 		siegedTownNames.remove(siege.getTown().getName());
 
-		SiegeWarTownUtil.setTownPvpFlags(town, false);
+		if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled() && town.hasNation()) {
+			SiegeWarTownUtil.setPvpFlagsOfAllNationHomeTowns(town, false);
+		} else {
+			SiegeWarTownUtil.setTownPvpFlags(town, false);
+		}
+
 		CosmeticUtil.removeFakeBeacons(siege);
 
 		//Save town

@@ -422,11 +422,11 @@ msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone.'
 
 #Home nation siege effects
-msg_err_siege_affected_home_nation_cannot_recruit: "&cWhen one of a nation's home towns is under siege attack, it cannot add new towns."
-msg_err_siege_affected_home_nation_town_cannot_toggle_pvp: "&cWhen one of a nation's home towns is under siege attack, all of its home towns have PVP forced on."
-msg_err_siege_affected_home_nation_town_cannot_recruit: "&cWhen one of a nation's home towns is under siege attack, none of its home towns can recruit new residents."
-msg_err_siege_affected_home_nation_town_cannot_claim: "&cWhen one of a nation's home towns is under siege attack, none of its home towns can claim new land."
-msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cWhen one of a nation's home towns is under siege attack, none of its home towns can un-claim land."
-msg_err_siege_affected_home_nation_town_can_only_accept_resident_tps: "&cWhen one of a nation's home towns is under siege attack, only residents of those towns can spawn or teleport in."
-msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town: "&cCannot start siege on this nation town, because one of the nation's home towns is already under siege attack."
+msg_err_siege_affected_home_nation_cannot_recruit: "&cThe nation cannot add new towns, because one of its home towns is under siege attack."
+msg_err_siege_affected_home_nation_town_cannot_toggle_pvp: "&cCannot toggle PVP, because one of your nation's home towns is under siege attack."
+msg_err_siege_affected_home_nation_town_cannot_recruit: "&cThe town cannot add new residents, because one of its nation's home towns is under siege attack."
+msg_err_siege_affected_home_nation_town_cannot_claim: "&cCannot claim land, because one of your nation's home towns is under siege attack."
+msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cCannot unclaim land, because one of your nation's home towns is under siege attack."
+msg_err_siege_affected_home_nation_town_can_only_accept_resident_tps: "&cCannot spawn/teleport to this nation town, because one of its nation's home towns is under siege attack."
+msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town: "&cCannot start siege on this nation town, because one of its nation's home towns is already under siege attack."
 
