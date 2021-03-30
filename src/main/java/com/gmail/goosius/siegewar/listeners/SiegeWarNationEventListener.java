@@ -19,10 +19,7 @@ import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyFormatter;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.event.NationBonusCalculationEvent;
-import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
-import com.palmergames.bukkit.towny.event.PreDeleteNationEvent;
-import com.palmergames.bukkit.towny.event.RenameNationEvent;
+import com.palmergames.bukkit.towny.event.*;
 import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
 import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumOnlinePlayersCalculationEvent;
@@ -285,5 +282,19 @@ public class SiegeWarNationEventListener implements Listener {
 		// We want to un-cancel it.
 		if (event.isCancelled())
 			event.setCancelled(false);
+	}
+
+	/*
+	 * If nation is under siege, it cannot add new towns
+	 */
+	@EventHandler
+	public void onTownAddResident(NationPreAddTownEvent event) {
+		if (SiegeWarSettings.getWarSiegeEnabled()
+				&& SiegeWarSettings.isHomeNationSiegeEffectsEnabled()
+				&& SiegeController.doesNationHaveABesiegedTown(event.getNation())) {
+			event.setCancelled(true);
+			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_cannot_recruit"));
+			return;
+		}
 	}
 }

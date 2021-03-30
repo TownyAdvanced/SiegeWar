@@ -176,7 +176,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 				//Check if nation siege effects apply to the town
 				if(SiegeWarSettings.isHomeNationSiegeEffectsEnabled()
 						&& SiegeController.doesHomeNationHaveABesiegedTown(destinationTown)) {
-					Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_siege_affected_nation_town_can_only_accept_resident_tps"));
+					Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_siege_affected_home_nation_town_can_only_accept_resident_tps"));
 					event.setCancelled(true);
 					return;
 				}

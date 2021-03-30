@@ -393,15 +393,26 @@ public class SiegeController {
 	public static boolean doesHomeNationHaveABesiegedTown(Town town) {
 		try {
 			if(town.hasNation()) {
-				for(Town nationTown: town.getNation().getTowns()) {
-					if(SiegeController.hasActiveSiege(nationTown))
-						return true;
-				}
+				return doesNationHaveABesiegedTown(town.getNation());
 			}
 		} catch (NotRegisteredException ignored) {}
 		return false;
 	}
 
+	/**
+	 * This method returns true
+	 * - Any of the given nation's home towns are under siege .
+	 *
+	 * @param nation the nation to check
+	 * @return true if any of the nation's home towns are under siege
+	 */
+	public static boolean doesNationHaveABesiegedTown(Nation nation) {
+		for(Town nationTown: nation.getTowns()) {
+			if(SiegeController.hasActiveSiege(nationTown))
+				return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Start a siege

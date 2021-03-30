@@ -66,7 +66,7 @@ public class SiegeWarTownEventListener implements Listener {
 		if (SiegeController.hasSiege(event.getTown()))
 			SiegeController.removeSiege(SiegeController.getSiege(event.getTown()), SiegeSide.ATTACKERS);
 	}
-	
+
 	/*
 	 * If town is under siege, town cannot recruit new members
 	 */
@@ -83,7 +83,7 @@ public class SiegeWarTownEventListener implements Listener {
 			if (SiegeWarSettings.isHomeNationSiegeEffectsEnabled()
 					&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_recruit"));
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_recruit"));
 				return;
 			}
 		}
@@ -120,7 +120,7 @@ public class SiegeWarTownEventListener implements Listener {
 				//Is the town affected by nation siege effects
 				if(SiegeWarSettings.isHomeNationSiegeEffectsEnabled()
 						&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
-					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_toggle_pvp"));
+					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_toggle_pvp"));
 					event.setCancelled(true);
 					return;
 				}
@@ -136,32 +136,7 @@ public class SiegeWarTownEventListener implements Listener {
 			}
 		}
 	}
-	
-	/*
-	 * On toggle open, SW will stop a town toggling open.
-	 */
-	@EventHandler
-	public void onTownToggleOpen(TownToggleOpenEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled()
-			&& SiegeWarSettings.getWarSiegeBesiegedTownRecruitmentDisabled()) {
 
-			//If town is besieged
-			if(SiegeController.hasActiveSiege(event.getTown())) {
-				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_open_off"));
-				event.setCancelled(true);
-				return;
-			}
-
-			//Is the town affected by nation siege effects
-			if(SiegeWarSettings.isHomeNationSiegeEffectsEnabled()
-					&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
-				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_toggle_open_off"));
-				event.setCancelled(true);
-				return;
-			}
-		}
-	}
-	
 	/*
 	 * On toggle neutral, SW will evaluate a number of things.
 	 */
@@ -248,7 +223,7 @@ public class SiegeWarTownEventListener implements Listener {
 				if (SiegeWarSettings.isHomeNationSiegeEffectsEnabled()
 						&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
 					event.setCancelled(true);
-					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_claim"));
+					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_claim"));
 					return;
 				}
 			}
@@ -302,7 +277,7 @@ public class SiegeWarTownEventListener implements Listener {
 			if (SiegeWarSettings.isHomeNationSiegeEffectsEnabled()
 					&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_unclaim"));
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_unclaim"));
 				return;
 			}
 		}
