@@ -348,6 +348,15 @@ public class SiegeController {
 
 	}
 
+	public static List<Siege> getActiveSieges() {
+		List<Siege> result = new ArrayList<>();
+		for(Siege siege : SiegeController.getSieges()) {
+			if(siege.getStatus().isActive())
+				result.add(siege);
+		}
+		return result;
+	}
+
 	public static Map<Siege, Town> getActiveOffensiveSieges(Nation nation) {
 		Map<Siege, Town> result = new HashMap<>();
 		for(Siege siege : SiegeController.getSieges()) {
@@ -385,15 +394,15 @@ public class SiegeController {
 	/**
 	 * This method returns true
 	 * - The given town is in a nation, and
-	 * - Any of that nation's home towns are under siege .
+	 * - One (or more) of the nation's home towns is a siege defender
 	 *
 	 * @param town the town to check
-	 * @return true if any of the nation's home towns are under siege
+	 * @return true if one (or more) of the nation's home towns is a siege defender
 	 */
-	public static boolean doesHomeNationHaveABesiegedTown(Town town) {
+	public static boolean isAnyHomeTownASiegeDefender(Town town) {
 		try {
 			if(town.hasNation()) {
-				return doesNationHaveABesiegedTown(town.getNation());
+				return isAnyHomeTownASiegeDefender(town.getNation());
 			}
 		} catch (NotRegisteredException ignored) {}
 		return false;
@@ -401,15 +410,21 @@ public class SiegeController {
 
 	/**
 	 * This method returns true
-	 * - Any of the given nation's home towns are under siege .
+	 * - One (or more) of the nation's home towns is a siege defender
 	 *
 	 * @param nation the nation to check
-	 * @return true if any of the nation's home towns are under siege
+	 * @return true if one (or more) of the nation's home towns is a siege defender
 	 */
-	public static boolean doesNationHaveABesiegedTown(Nation nation) {
-		for(Town nationTown: nation.getTowns()) {
-			if(SiegeController.hasActiveSiege(nationTown))
-				return true;
+	public static boolean isAnyHomeTownASiegeDefender(Nation nation) {
+		for(Siege siege: SiegeController.getSieges()) {
+			try {
+				if(siege.getStatus().isActive()
+					&& siege.getDefender() instanceof Town
+					&& ((Town)siege.getDefender()).hasNation()
+					&& siege.getTown().getNation() == nation) {
+					return true;
+				}
+			} catch (NotRegisteredException ignored) {}
 		}
 		return false;
 	}
@@ -455,7 +470,7 @@ public class SiegeController {
 		SiegeController.putTownInSiegeMap(targetTown, siege);
 
 		//Set town pvp to true.
-		if(SiegeWarSettings.isHomeNationSiegeEffectsEnabled() && targetTown.hasNation()) {
+		if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled() && targetTown.hasNation()) {
 			SiegeWarTownUtil.setPvpFlagsOfAllNationHomeTowns(targetTown, true);
 		} else {
 			SiegeWarTownUtil.setTownPvpFlags(targetTown, true);

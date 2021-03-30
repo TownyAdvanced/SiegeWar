@@ -33,8 +33,8 @@ public class SiegeWarTimeUtil {
         TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + immunityDurationMillis);
 
 		//Set siege immunity for nation home towns
-		if(SiegeWarSettings.isHomeNationSiegeEffectsEnabled() && town.hasNation()) {
-			double homeTownSiegeImmunityDurationDouble = (double)immunityDurationMillis * SiegeWarSettings.getHomeNationSiegeEffectsSiegeImmunityModifier();
+		if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled() && town.hasNation()) {
+			double homeTownSiegeImmunityDurationDouble = (double)immunityDurationMillis * SiegeWarSettings.getHomeDefenceSiegeEffectsSiegeImmunityModifier();
 			long homeTownSiegeImmunityDurationLong = (long)(homeTownSiegeImmunityDurationDouble + 0.5);
 			long homeTownSiegeImmunityEndTime = System.currentTimeMillis() + homeTownSiegeImmunityDurationLong;
 
@@ -44,7 +44,7 @@ public class SiegeWarTimeUtil {
 			} catch (NotRegisteredException ignored) {}
 
 			for(Town nationTown: nation.getTowns()) {
-				if(nationTown != town && TownMetaDataController.getSiegeImmunityEndTime(nationTown) < homeTownSiegeImmunityEndTime) {
+				if(TownMetaDataController.getSiegeImmunityEndTime(nationTown) < homeTownSiegeImmunityEndTime) {
 					TownMetaDataController.setSiegeImmunityEndTime(nationTown, homeTownSiegeImmunityEndTime);
 				}
 			}

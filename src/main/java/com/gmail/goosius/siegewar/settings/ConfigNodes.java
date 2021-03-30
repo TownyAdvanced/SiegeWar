@@ -706,17 +706,17 @@ public enum ConfigNodes {
 			"# The banner xyz text is an alternative to beacon markers for siege banners (but they can also be used together).",
 			"# If enabled, besieged towns will show the XYZ of the siege banner on their town screens."),
 
-	HOME_NATION_SIEGE_EFFECTS(
-		"nation_siege_effects",
+	HOME_DEFENCE_SIEGE_EFFECTS(
+		"home_defence_siege_effects",
 			"",
 			"############################################################",
 			"# +------------------------------------------------------------+ #",
-			"# |                   Home Nation Siege Effects                | #",
+			"# |                   Home Defence Siege Effects               | #",
 			"# +------------------------------------------------------------+ #",
 			"#######################################################################",
 			""),
-	HOME_NATION_SIEGE_EFFECTS_ENABLED(
-			"home_nation_siege_effects.enabled",
+	HOME_DEFENCE_SIEGE_EFFECTS_ENABLED(
+			"home_defence_siege_effects.enabled",
 			"true",
 			"",
 			"# If this setting is true, then if a nation town is attacked,",
@@ -744,19 +744,17 @@ public enum ConfigNodes {
       		"# - Residents cannot join.",
       		"# - Only residents can spawn.",
 			"# + No new siege attacks are possible.",
-  			"# + If a nation resident dies in a nation town,",
-			"#   they keep-env just like a soldier in a siege zone.",
   			"# + When the siege ends, the town gets some siege immunity."),
-	HOME_NATION_SIEGE_EFFECTS_SIEGE_IMMUNITY_MODIFIER(
-			"nation_siege_effects.siege_immunity_modifier",
+	HOME_DEFENCE_SIEGE_EFFECTS_SIEGE_IMMUNITY_MODIFIER(
+			"home_defence_siege_effects.siege_immunity_modifier",
 			"0.5",
 			"",
-			"# If nation siege effects are enabled,",
-			"# this setting determines how much siege-immunity each non-besieged nation town receives",
+			"# If home defence siege effects are enabled,",
+			"# this setting determines how much siege-immunity each non-besieged home nation town receives",
 			"# The value represents a fraction of the town siege immunity",
 			"# EXAMPLE:",
 			"# If the value is 0.5, and the besieged town gets 9 days of siege immunity,",
-			"# then the other nation towns will get 4.5 days of siege immunity.");
+			"# then the other home nation towns will get 4.5 days of siege immunity.");
 
 	private final String Root;
 	private final String Default;

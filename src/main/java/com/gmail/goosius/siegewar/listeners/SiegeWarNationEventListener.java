@@ -11,7 +11,6 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -290,7 +289,7 @@ public class SiegeWarNationEventListener implements Listener {
 	@EventHandler
 	public void onTownAddResident(NationPreAddTownEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWarSettings.isHomeNationSiegeEffectsEnabled()
+				&& SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled()
 				&& SiegeController.doesNationHaveABesiegedTown(event.getNation())) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_cannot_recruit"));
