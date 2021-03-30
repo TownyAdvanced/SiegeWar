@@ -733,7 +733,7 @@ public enum ConfigNodes {
 			"# 2.",
 			"# This feature gives each nation an option to take a genuine break from fighting.",
 			"# Nations who want to fight a lot can still do so, ",
-			"# because neither offensive sieges, nor revolts by occupied foreign towns, are restricted by the feature.",
+			"# because neither offensive sieges nor revolts are affected by the feature.",
 			"# ",
 			"# HOME NATION EFFECTS: ",
 			"# - Towns cannot join.",
