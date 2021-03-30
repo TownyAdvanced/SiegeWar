@@ -140,7 +140,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		//Check for siege-war related death effects
 		if(SiegeWarSettings.getWarSiegeEnabled()) {
-			PlayerDeath.evaluateSiegeZoneDeathEffects(event.getEntity(), event);
+			PlayerDeath.evaluateSiegePlayerDeath(event.getEntity(), event);
 		}
 	}
 	

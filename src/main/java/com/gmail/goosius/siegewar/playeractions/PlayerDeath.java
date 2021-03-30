@@ -59,7 +59,7 @@ public class PlayerDeath {
 	 * @param deadPlayer The player who died
 	 * @param playerDeathEvent The player death event
 	 */
-	public static void evaluateSiegeZoneDeathEffects(Player deadPlayer, PlayerDeathEvent playerDeathEvent) {
+	public static void evaluateSiegePlayerDeath(Player deadPlayer, PlayerDeathEvent playerDeathEvent) {
 		try {
 			if (!SiegeWarSettings.getWarSiegeWorlds().contains(playerDeathEvent.getEntity().getWorld().getName()))
 				return;
