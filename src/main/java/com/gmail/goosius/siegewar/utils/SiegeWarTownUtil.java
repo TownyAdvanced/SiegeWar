@@ -19,7 +19,7 @@ public class SiegeWarTownUtil {
 			if (plot.getPermissions().pvp) {
 				if (plot.getType() == TownBlockType.ARENA)
 					plot.setType(TownBlockType.RESIDENTIAL);
-			
+
 				plot.getPermissions().pvp = false;
 				plot.save();
 			}
@@ -29,7 +29,7 @@ public class SiegeWarTownUtil {
 
     /**
 	 * Sets pvp flags in a town to the desired setting.
-	 *
+	 * 
 	 * @param town The town to set the flags for.
 	 * @param desiredSetting The value to set pvp and explosions to.
 	 */
