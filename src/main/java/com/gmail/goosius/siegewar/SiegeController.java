@@ -444,8 +444,8 @@ public class SiegeController {
 		SiegeController.putTownInSiegeMap(targetTown, siege);
 
 		//Set town pvp to true.
-		if(SiegeWarSettings.isNationSiegeEffectsEnabled() && targetTown.hasNation()) {
-			SiegeWarTownUtil.setPvpFlagsOfAllNationTowns(targetTown, true);
+		if(SiegeWarSettings.isHomeNationSiegeEffectsEnabled() && targetTown.hasNation()) {
+			SiegeWarTownUtil.setPvpFlagsOfAllNationHomeTowns(targetTown, true);
 		} else {
 			SiegeWarTownUtil.setTownPvpFlags(targetTown, true);
 		}

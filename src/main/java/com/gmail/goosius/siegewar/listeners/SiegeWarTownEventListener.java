@@ -80,7 +80,7 @@ public class SiegeWarTownEventListener implements Listener {
 				return;
 			}
 
-			if (SiegeWarSettings.isNationSiegeEffectsEnabled()
+			if (SiegeWarSettings.isHomeNationSiegeEffectsEnabled()
 					&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_recruit"));
@@ -118,7 +118,7 @@ public class SiegeWarTownEventListener implements Listener {
 				}
 
 				//Is the town affected by nation siege effects
-				if(SiegeWarSettings.isNationSiegeEffectsEnabled()
+				if(SiegeWarSettings.isHomeNationSiegeEffectsEnabled()
 						&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
 					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_toggle_pvp"));
 					event.setCancelled(true);
@@ -153,7 +153,7 @@ public class SiegeWarTownEventListener implements Listener {
 			}
 
 			//Is the town affected by nation siege effects
-			if(SiegeWarSettings.isNationSiegeEffectsEnabled()
+			if(SiegeWarSettings.isHomeNationSiegeEffectsEnabled()
 					&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
 				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_toggle_open_off"));
 				event.setCancelled(true);
@@ -245,7 +245,7 @@ public class SiegeWarTownEventListener implements Listener {
 				}
 
 				//If the town is affected by nation siege effects, they cannot claim any land
-				if (SiegeWarSettings.isNationSiegeEffectsEnabled()
+				if (SiegeWarSettings.isHomeNationSiegeEffectsEnabled()
 						&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
 					event.setCancelled(true);
 					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_claim"));
@@ -299,7 +299,7 @@ public class SiegeWarTownEventListener implements Listener {
 			}
 
 			//Nation siege effects
-			if (SiegeWarSettings.isNationSiegeEffectsEnabled()
+			if (SiegeWarSettings.isHomeNationSiegeEffectsEnabled()
 					&& SiegeController.doesHomeNationHaveABesiegedTown(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_nation_town_cannot_unclaim"));

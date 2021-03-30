@@ -46,7 +46,7 @@ public class SiegeWarTownUtil {
 	 * @param nationTown A town belonging to the nation.
 	 * @param desiredSetting The value to set pvp and explosions to.
 	 */
-	public static void setPvpFlagsOfAllNationTowns(Town nationTown, boolean desiredSetting) {
+	public static void setPvpFlagsOfAllNationHomeTowns(Town nationTown, boolean desiredSetting) {
 		try {
 			Nation nation = nationTown.getNation();
 			for(Town town: nation.getTowns()) {
