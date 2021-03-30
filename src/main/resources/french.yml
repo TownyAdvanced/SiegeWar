@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.15
+version: 0.16
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -89,8 +89,6 @@ msg_err_siege_war_town_already_plundered: "&cCette ville a déjà été pillée.
 #Block change
 msg_err_siege_war_cannot_destroy_siege_banner: "&cPendant que le siège est en cours, vous ne pouvez pas détruire la bannière de siège ou le bloc auquel elle est attachée."
 msg_err_siege_war_banner_support_block_not_stable: "&cVous ne pouvez pas placer la bannière sur un sol instable, par ex. sable ou gravier."
-# Spawn
-msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: "&cSeuls les habitants de la ville peuvent spawn dans une ville assiégée ou une zone de siège (sauf si la ville cible est paisible)."
 #Banner control
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: "Vous ne pouvez pas utiliser cet item pendant une session de contrôle de bannière."
 
@@ -418,6 +416,20 @@ msg_err_swa_home_nation_cannot_be_occupier: '&cYou cannot set the towns home nat
 msg_swa_set_invade_success: '&bSet invaded to %s for %s.'
 msg_swa_town_occupation_removal_success: '&bTown occupier removed for %s.'
 msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
+
+# Added in 0.16
+
+#Siege effects
+msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone.'
+
+#Home nation siege effects
+msg_err_siege_affected_home_nation_cannot_recruit: "&cWhen a nation is under siege, it cannot add new towns."
+msg_err_siege_affected_home_nation_town_cannot_toggle_pvp: "&cWhen a nation is under siege, its home towns have PVP forced on."
+msg_err_siege_affected_home_nation_town_cannot_recruit: "&cWhen a nation is under siege, its home towns cannot recruit new residents."
+msg_err_siege_affected_home_nation_town_cannot_claim: "&cWhen a nation is under siege, its home towns cannot claim new land."
+msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cWhen a nation is under siege, its home towns cannot un-claim land."
+msg_err_siege_affected_home_nation_town_can_only_accept_resident_tps: '&cWhen a nation is under siege, spawning into its home towns is blocked, except for the residents of those towns.'
+msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town: '&cCannot start siege, because the home nation of the nearby town already has a besieged town.'
 
 
 

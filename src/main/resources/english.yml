@@ -406,6 +406,11 @@ msg_swa_town_occupation_removal_success: '&bTown occupier removed for %s.'
 msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
 
 # Added in 0.16
+
+#Siege effects
+msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone.'
+
+#Home nation siege effects
 msg_err_siege_affected_home_nation_cannot_recruit: "&cWhen a nation is under siege, it cannot add new towns."
 msg_err_siege_affected_home_nation_town_cannot_toggle_pvp: "&cWhen a nation is under siege, its home towns have PVP forced on."
 msg_err_siege_affected_home_nation_town_cannot_recruit: "&cWhen a nation is under siege, its home towns cannot recruit new residents."
@@ -414,4 +419,3 @@ msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cWhen a nation is unde
 msg_err_siege_affected_home_nation_town_can_only_accept_resident_tps: '&cWhen a nation is under siege, spawning into its home towns is blocked, except for the residents of those towns.'
 msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town: '&cCannot start siege, because the home nation of the nearby town already has a besieged town.'
 
-msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone.'
