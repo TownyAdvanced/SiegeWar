@@ -29,7 +29,7 @@ public class SiegeWarSiegeCompletionUtil {
 		siege.clearBannerControllingResidents();
 		siege.clearBannerControlSessions();
 		siege.setActualEndTime(System.currentTimeMillis());
-		SiegeWarTimeUtil.activateSiegeImmunityTimer(siege.getTown(), siege);
+		SiegeWarTimeUtil.activateSiegeImmunityTimers(siege.getTown(), siege);
 		SiegeWarTownUtil.setTownPvpFlags(siege.getTown(), false);
 		CosmeticUtil.removeFakeBeacons(siege);
 

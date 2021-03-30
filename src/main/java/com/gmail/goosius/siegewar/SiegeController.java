@@ -228,7 +228,7 @@ public class SiegeController {
 		//If siege is active, initiate siege immunity for town, and return war chest
 		if(siege.getStatus().isActive()) {
 			siege.setActualEndTime(System.currentTimeMillis());
-			SiegeWarTimeUtil.activateSiegeImmunityTimer(siege.getTown(), siege);
+			SiegeWarTimeUtil.activateSiegeImmunityTimers(siege.getTown(), siege);
 
 			//Return warchest only if siege is not revolt
 			if(siege.getSiegeType() != SiegeType.REVOLT) {
