@@ -65,7 +65,7 @@ public class SiegeWarTownEventListener implements Listener {
 		if (SiegeController.hasSiege(event.getTown()))
 			SiegeController.removeSiege(SiegeController.getSiege(event.getTown()), SiegeSide.ATTACKERS);
 	}
-
+	
 	/*
 	 * If town is under siege, town cannot recruit new members
 	 */
