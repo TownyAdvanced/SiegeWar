@@ -37,7 +37,9 @@ public class SiegeWarTownUtil {
 	public static void setTownPvpFlags(Town town, boolean desiredSetting) {
 		
 		if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled() && town.hasNation()) {
-			setPvpFlagsOfAllNationHomeTowns(town, false);
+			for(Town nationTown: TownyAPI.getInstance().getTownNationOrNull(town).getTowns()) {
+				setPvpFlag(nationTown, desiredSetting);
+			}
 		} else {
 			setPvpFlag(town, false);
 		}
@@ -56,19 +58,4 @@ public class SiegeWarTownUtil {
 			town.save();
 		}
 	}	
-
-	/**
-	 * Sets pvp flags of all the towns in a nation to the desired setting.
-	 *
-	 * @param nationTown A town belonging to the nation.
-	 * @param desiredSetting The value to set pvp and explosions to.
-	 */
-	private static void setPvpFlagsOfAllNationHomeTowns(Town nationTown, boolean desiredSetting) {
-		if (nationTown.hasNation())
-			return;
-
-		for(Town town: TownyAPI.getInstance().getTownNationOrNull(nationTown).getTowns()) {
-			setPvpFlag(town, desiredSetting);
-		}
-	}
 }
