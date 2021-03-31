@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
@@ -38,12 +39,7 @@ public class SiegeWarTimeUtil {
 			long homeTownSiegeImmunityDurationLong = (long)(homeTownSiegeImmunityDurationDouble + 0.5);
 			long homeTownSiegeImmunityEndTime = System.currentTimeMillis() + homeTownSiegeImmunityDurationLong;
 
-			Nation nation = null;
-			try {
-				nation = town.getNation();
-			} catch (NotRegisteredException ignored) {}
-
-			for(Town nationTown: nation.getTowns()) {
+			for(Town nationTown: TownyAPI.getInstance().getTownNationOrNull(town).getTowns()) {
 				if(TownMetaDataController.getSiegeImmunityEndTime(nationTown) < homeTownSiegeImmunityEndTime) {
 					TownMetaDataController.setSiegeImmunityEndTime(nationTown, homeTownSiegeImmunityEndTime);
 				}

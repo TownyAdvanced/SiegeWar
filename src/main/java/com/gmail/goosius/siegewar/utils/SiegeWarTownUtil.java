@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
@@ -47,14 +48,11 @@ public class SiegeWarTownUtil {
 	 * @param desiredSetting The value to set pvp and explosions to.
 	 */
 	public static void setPvpFlagsOfAllNationHomeTowns(Town nationTown, boolean desiredSetting) {
-		try {
-			Nation nation = nationTown.getNation();
-			for(Town town: nation.getTowns()) {
-				if (town.getPermissions().pvp != desiredSetting && SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns()) {
-					town.getPermissions().pvp = desiredSetting;
-					town.save();
-				}
-			}
-		} catch (NotRegisteredException ignored) {}
+		if (nationTown.hasNation())
+			return;
+
+		for(Town town: TownyAPI.getInstance().getTownNationOrNull(nationTown).getTowns()) {
+			setTownPvpFlags(town, desiredSetting);
+		}
 	}
 }
