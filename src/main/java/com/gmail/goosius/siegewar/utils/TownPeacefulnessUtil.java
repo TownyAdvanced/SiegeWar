@@ -228,21 +228,29 @@ public class TownPeacefulnessUtil {
 					townTransferred = ensureTownIsPeacefullyUnoccupied(peacefulTown);
 
 				} else {
-					//Find guardian nation
-					Nation guardianNation = getGuardianNation(guardianTowns);
+					//Find prevailing nation
+					Nation prevailingNation = getPrevailingNation(guardianTowns);
 
-					//If the guardian nation is the town's home nation, continue
-					//1. Do not occupy (because obviously)
-					//2. Do not release (because the king must always permit release)
-					if (peacefulTown.hasNation() && peacefulTown.getNation() == guardianNation)
-						continue;
-
-					//Ensure the town is occupied
-					townTransferred = ensureTownIsPeacefullyOccupied(peacefulTown, guardianNation);
+					//Consider occupying/unoccupying town
+					if (peacefulTown.hasNation() && peacefulTown.getNation() == prevailingNation) {
+						//Prevailing nation is the town's home nation
+						if (TownOccupationController.isTownOccupied(peacefulTown)
+								&& TownOccupationController.getTownOccupier(peacefulTown) != prevailingNation) {
+							//If the peaceful town is occupied by the foreign nation, release it.
+							townTransferred = ensureTownIsPeacefullyUnoccupied(peacefulTown);
+						} else {
+							//If the peaceful town is unoccupied OR occupied by the prevailing nation, do nothing.
+							townTransferred = false;
+						}
+					} else {
+						//Prevailing nation is not the town's home nation.
+						townTransferred = ensureTownIsPeacefullyOccupied(peacefulTown, prevailingNation);
+					}
 				}
 
 				if (townTransferred)
 					modifiedTowns += 1;
+
 			} catch (Exception e) {
 				try {
 					System.err.println("Problem evaluating peaceful town nation assignment for - " + peacefulTown.getName());
@@ -259,8 +267,8 @@ public class TownPeacefulnessUtil {
 		}
 	}
 
-	private static Nation getGuardianNation(Set<Town> guardianTowns) throws NotRegisteredException {
-		//Find the largest guardian town & thus guardian nation
+	private static Nation getPrevailingNation(Set<Town> guardianTowns) throws NotRegisteredException {
+		//Find the largest guardian town & thus prevailing nation
 		Town topGuardianTown = null;
 		for(Town guardianTown: guardianTowns) {
 			if(topGuardianTown == null || guardianTown.getTownBlocks().size() > topGuardianTown.getTownBlocks().size()) {
