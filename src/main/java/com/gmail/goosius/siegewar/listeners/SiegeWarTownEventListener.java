@@ -135,7 +135,7 @@ public class SiegeWarTownEventListener implements Listener {
 			}
 		}
 	}
-
+	
 	/*
 	 * On toggle neutral, SW will evaluate a number of things.
 	 */

@@ -72,7 +72,7 @@ public class SiegeWarNationEventListener implements Listener {
 		}
 		
 	}
-
+	
 	/*
 	 * SiegeWar will disable nation-zones if the town has a siege.
 	 */

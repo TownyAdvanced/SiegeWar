@@ -256,12 +256,7 @@ public class SiegeController {
 		siegedTowns.remove(siege.getTown());
 		siegedTownNames.remove(siege.getTown().getName());
 
-		if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled() && town.hasNation()) {
-			SiegeWarTownUtil.setPvpFlagsOfAllNationHomeTowns(town, false);
-		} else {
-			SiegeWarTownUtil.setTownPvpFlags(town, false);
-		}
-
+		SiegeWarTownUtil.setTownPvpFlags(town, false);
 		CosmeticUtil.removeFakeBeacons(siege);
 
 		//Save town
@@ -473,12 +468,8 @@ public class SiegeController {
 		SiegeController.setSiege(targetTown, true);
 		SiegeController.putTownInSiegeMap(targetTown, siege);
 
-		//Set town pvp to true.
-		if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled() && targetTown.hasNation()) {
-			SiegeWarTownUtil.setPvpFlagsOfAllNationHomeTowns(targetTown, true);
-		} else {
-			SiegeWarTownUtil.setTownPvpFlags(targetTown, true);
-		}
+		//Set town to true, potentially set the town's nation's towns as well.
+		SiegeWarTownUtil.setTownPvpFlags(targetTown, true);
 
 		//Send global message;
 		try {

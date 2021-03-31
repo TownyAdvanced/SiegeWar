@@ -2,8 +2,6 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
-import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownBlockType;
@@ -20,7 +18,7 @@ public class SiegeWarTownUtil {
 			if (plot.getPermissions().pvp) {
 				if (plot.getType() == TownBlockType.ARENA)
 					plot.setType(TownBlockType.RESIDENTIAL);
-
+			
 				plot.getPermissions().pvp = false;
 				plot.save();
 			}
@@ -29,17 +27,35 @@ public class SiegeWarTownUtil {
     }
 
     /**
-	 * Sets pvp flags in a town to the desired setting.
+	 * Wrapper method to set pvp flags in a town to the desired 
+	 * setting, as well as the nation if HomeDefence is enabled
+	 * and the town has a nation.
 	 * 
 	 * @param town The town to set the flags for.
 	 * @param desiredSetting The value to set pvp and explosions to.
 	 */
 	public static void setTownPvpFlags(Town town, boolean desiredSetting) {
+		
+		if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled() && town.hasNation()) {
+			setPvpFlagsOfAllNationHomeTowns(town, false);
+		} else {
+			setPvpFlag(town, false);
+		}
+	}
+	
+    /**
+	 * Sets pvp flags in a town to the desired setting.
+	 * 
+	 * @param town The town to set the flags for.
+	 * @param desiredSetting The value to set pvp and explosions to.
+	 */
+	private static void setPvpFlag(Town town, boolean desiredSetting) {
+		
 		if (town.getPermissions().pvp != desiredSetting && SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns()) {
 			town.getPermissions().pvp = desiredSetting;
 			town.save();
 		}
-	}
+	}	
 
 	/**
 	 * Sets pvp flags of all the towns in a nation to the desired setting.
@@ -47,12 +63,12 @@ public class SiegeWarTownUtil {
 	 * @param nationTown A town belonging to the nation.
 	 * @param desiredSetting The value to set pvp and explosions to.
 	 */
-	public static void setPvpFlagsOfAllNationHomeTowns(Town nationTown, boolean desiredSetting) {
+	private static void setPvpFlagsOfAllNationHomeTowns(Town nationTown, boolean desiredSetting) {
 		if (nationTown.hasNation())
 			return;
 
 		for(Town town: TownyAPI.getInstance().getTownNationOrNull(nationTown).getTowns()) {
-			setTownPvpFlags(town, desiredSetting);
+			setPvpFlag(town, desiredSetting);
 		}
 	}
 }

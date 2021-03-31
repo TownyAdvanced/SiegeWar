@@ -243,12 +243,12 @@ public class PlaceBlock {
 	 * e.g. by attacking two towns at the exact same moment.
 	 */
 	private static synchronized void evaluateStartNewSiegeAttempt(Player player,
-																 Town residentsTown,
-																 Nation residentsNation,
-													 			TownBlock nearbyTownBlock,
-													 			Town nearbyTown,
-													 			Block bannerBlock
-											         			) throws TownyException {
+																  Town residentsTown,
+																  Nation residentsNation,
+													 			  TownBlock nearbyTownBlock,
+													 			  Town nearbyTown,
+													 			  Block bannerBlock
+											         			  ) throws TownyException {
 		if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && nearbyTown.isNeutral())
 			throw new TownyException(Translation.of("msg_err_cannot_start_siege_attack_at_peaceful_town"));
 
