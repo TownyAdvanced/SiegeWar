@@ -183,9 +183,6 @@ msg_you_will_get_sickness: '&c&cYou are not a participant of this siege and cann
 msg_war_siege_peaceful_town_cannot_revolt_zero_or_one_unsieged_guardian_towns_nearby:  '&cYou cannot revolt at this time, because there are less than 2 unsieged guardian towns nearby (within %d chunks). A guardian town is a non-peaceful town in an open nation, with at least %d plots.'
 
 #Added in 0.08:
-status_nation_town_stats: '&2Towns Captured/Lost: &a%d&2/&a%d'
-status_nation_plunder_stats: '&2Plunder Gains/Losses: &a%d&2/&a%d'
-
 msg_swa_set_towns_gained_success: '&bSuccessfully set towns gained to %d for %s.'
 msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
 msg_swa_set_plunder_gained_success: '&bSuccessfully set plunder gained to %d for %s.'
@@ -418,6 +415,10 @@ msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
 
 # Added in 0.16
 
+#Nation war history
+status_nation_town_stats: '&2Town Invasion History - Foreign/Home: &a%d&2/&a%d'
+status_nation_plunder_stats: '&2Town Plunder History - Gains/Losses: &a%d&2/&a%d'
+
 #Siege effects
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone.'
 
@@ -429,4 +430,3 @@ msg_err_siege_affected_home_nation_town_cannot_claim: "&cCannot claim land, beca
 msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cCannot unclaim land, because one of your nation's home towns is under siege attack."
 msg_err_siege_affected_home_nation_town_can_only_accept_resident_tps: "&cCannot spawn/teleport to this nation town, because one of its nation's home towns is under siege attack."
 msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town: "&cCannot start siege on this nation town, because one of its nation's home towns is already under siege attack."
-

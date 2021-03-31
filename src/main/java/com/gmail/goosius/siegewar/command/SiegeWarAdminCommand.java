@@ -203,18 +203,23 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	}
 
 	private void parseSiegeWarImmunityCommand(CommandSender sender, String[] args) {
+		if (args.length < 2) {
+			showImmunityHelp(sender);
+			return;
+		}
+
 		try {
 			if (args[0].equalsIgnoreCase("alltowns"))
 				Integer.parseInt(args[1]);
 			else
 				Integer.parseInt(args[2]);
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
 			Messaging.sendMsg(sender, Translation.of("msg_error_must_be_num"));
 			showImmunityHelp(sender);
 			return;
 		}
 
-		if (args.length == 3 && args[0].equalsIgnoreCase("town")) {
+		if (args.length >= 3 && args[0].equalsIgnoreCase("town")) {
 			//town {townname} {hours}
 			Town town = TownyUniverse.getInstance().getTown(args[1]);
 			if (town == null) {
@@ -226,7 +231,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_set_siege_immunities_town", args[1], args[2]));
 			Messaging.sendMsg(sender, Translation.of("msg_set_siege_immunities_town", args[1], args[2]));
 
-		} else if (args.length == 3 && args[0].equalsIgnoreCase("nation")) {
+		} else if (args.length >= 3 && args[0].equalsIgnoreCase("nation")) {
 			//nation {nationname} {hours}
 			Nation nation = TownyUniverse.getInstance().getNation(args[1]);
 			if (nation == null) {
@@ -240,8 +245,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			TownyMessaging.sendPrefixedNationMessage(nation, Translation.of("msg_set_siege_immunities_nation", args[1], args[2]));
 			Messaging.sendMsg(sender, Translation.of("msg_set_siege_immunities_nation", args[1], args[2]));
 
-		} else if(args.length == 2
-			&& args[0].equalsIgnoreCase("alltowns")) {
+		} else if(args.length >= 2 && args[0].equalsIgnoreCase("alltowns")) {
 			//all towns
 			long durationMillis = (long)(Long.parseLong(args[1]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 			for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns()))  {
