@@ -644,11 +644,7 @@ public enum ConfigNodes {
 			"#    - While a cannon session is in effect, town cannons can be fired, and town explosion perm protections are forced off.",
 			"#    - The cannon session usually lasts just a few minutes (don't make it too long or the defender will often be too scared to fire).",
 			"#    - The max duration is configured below.",
-			"# ",
-			"# WARNING: ",
-			"# Do not enable this feature unless the following issue is resolved",
-			"# (Either in the Cannons plugin, Towny plugin, or your own custom branch of either) - ",
-			"# https://github.com/DerPavlov/Cannons/pull/37."),
+			"# "),
 	CANNONS_INTEGRATION_MAX_CANNON_SESSION_DURATION(
 			"cannons_integration.max_cannon_session_duration",
 			"9",
