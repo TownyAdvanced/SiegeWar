@@ -166,6 +166,22 @@ public class SiegeWarBukkitEventListener implements Listener {
 				if (destinationTown.hasResident(resident))
 					return;
 
+				//Check IF TP destination is a besieged town
+				if(SiegeController.hasActiveSiege(destinationTown)) {
+					Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
+					event.setCancelled(true);
+					return;
+				}
+
+				//Check if nation siege effects apply to the town
+				if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled()
+						&& SiegeController.isAnyHomeTownASiegeDefender(destinationTown)) {
+					Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_siege_affected_home_nation_town_can_only_accept_resident_tps"));
+					event.setCancelled(true);
+					return;
+				}
+
+				//Check if the destination is inside a siege zone
 				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
 					Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
 					event.setCancelled(true);

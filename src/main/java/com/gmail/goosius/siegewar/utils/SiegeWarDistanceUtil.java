@@ -6,7 +6,6 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Coord;
-import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyWorld;
@@ -15,7 +14,6 @@ import com.palmergames.bukkit.towny.object.WorldCoord;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * This class contains utility functions related to calculating and validating distances
@@ -60,43 +58,6 @@ public class SiegeWarDistanceUtil {
 		int averageTownElevation = totalElevation / 4;
 		
 		return blockElevation - averageTownElevation;
-	}
-
-
-	/**
-	 * This method finds the nearest siege to the given block, controlled by the given nation. 
-	 *
-	 * @param block the given block
-	 * @param nation the given nation
-	 * @return a SiegeZoneDistance object containing both the siege and distance. Null if not found.
-	 */
-	@Nullable
-	public static Siege findNearestSiegeForNation(Block block, Nation nation) {
-		//Find the nearest siege zone to the given block within the given radius belonging to the given nation.
-		Siege nearestSiege = null;
-		double distanceToNearestSiegeZone = -1;
-		for(Siege siege: SiegeController.getSieges(nation)) {
-
-			if(!block.getLocation().getWorld().getName().equalsIgnoreCase(siege.getFlagLocation().getWorld().getName())) {
-				continue;
-			}
-			
-			if(block.getLocation().distance(siege.getFlagLocation()) > TOWNBLOCKSIZE)
-				continue;
-
-			if (nearestSiege == null) {
-				nearestSiege = siege;
-				distanceToNearestSiegeZone = block.getLocation().distance(nearestSiege.getFlagLocation());
-			} else {
-				double distanceToNewTarget = block.getLocation().distance(siege.getFlagLocation());
-				if(distanceToNewTarget < distanceToNearestSiegeZone) {
-					nearestSiege = siege;
-					distanceToNearestSiegeZone = distanceToNewTarget;
-				}
-			}
-		}
-	
-		return nearestSiege;
 	}
 
 	/**

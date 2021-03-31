@@ -54,7 +54,6 @@ msg_town_destroyed_by_nation_tax_multiple: "&bLes villes suivantes ne pouvaient 
 #Town Toggling
 msg_err_siege_besieged_town_cannot_toggle_pvp: "&cLes villes assiégées ont le PVP forcé."
 #Recruiting
-msg_err_siege_besieged_town_cannot_toggle_open_off: "&cLes villes assiégées ne peuvent pas ouvrir leurs portes à de nouveaux résidents."
 msg_err_siege_besieged_town_cannot_recruit: "&cLes villes assiégées ne peuvent pas recruter de nouveaux résidents."
 #Claiming/Unclaiming
 msg_err_siege_claim_too_near_siege_zone: "&cLe claim est trop proche d'un siège."
@@ -89,8 +88,6 @@ msg_err_siege_war_town_already_plundered: "&cCette ville a déjà été pillée.
 #Block change
 msg_err_siege_war_cannot_destroy_siege_banner: "&cPendant que le siège est en cours, vous ne pouvez pas détruire la bannière de siège ou le bloc auquel elle est attachée."
 msg_err_siege_war_banner_support_block_not_stable: "&cVous ne pouvez pas placer la bannière sur un sol instable, par ex. sable ou gravier."
-# Spawn
-msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: "&cSeuls les habitants de la ville peuvent spawn dans une ville assiégée ou une zone de siège (sauf si la ville cible est paisible)."
 #Banner control
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: "Vous ne pouvez pas utiliser cet item pendant une session de contrôle de bannière."
 
@@ -416,6 +413,20 @@ msg_swa_set_invade_success: '&bSet invaded to %s for %s.'
 msg_swa_town_occupation_removal_success: '&bTown occupier removed for %s.'
 msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
 
-# Added in 1.16
+# Added in 0.16
+
+#Nation war history
 status_nation_town_stats: '&2Town Invasion History - Foreign/Home: &a%d&2/&a%d'
 status_nation_plunder_stats: '&2Town Plunder History - Gains/Losses: &a%d&2/&a%d'
+
+#Siege effects
+msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone.'
+
+#Home nation siege effects
+msg_err_siege_affected_home_nation_cannot_recruit: "&cThe nation cannot add new towns, because one of its home towns is under siege attack."
+msg_err_siege_affected_home_nation_town_cannot_toggle_pvp: "&cCannot toggle PVP, because one of your nation's home towns is under siege attack."
+msg_err_siege_affected_home_nation_town_cannot_recruit: "&cThe town cannot add new residents, because one of its nation's home towns is under siege attack."
+msg_err_siege_affected_home_nation_town_cannot_claim: "&cCannot claim land, because one of your nation's home towns is under siege attack."
+msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cCannot unclaim land, because one of your nation's home towns is under siege attack."
+msg_err_siege_affected_home_nation_town_can_only_accept_resident_tps: "&cCannot spawn/teleport to this nation town, because one of its nation's home towns is under siege attack."
+msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town: "&cCannot start siege on this nation town, because one of its nation's home towns is already under siege attack."

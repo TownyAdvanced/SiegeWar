@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Town;
 
 /**
@@ -13,17 +14,35 @@ import com.palmergames.bukkit.towny.object.Town;
 public class SiegeWarTimeUtil {
 
 	/**
-	 * Activate the siege immunity timer after a siege ends
-	 * 
-	 * While this timer is active, the town cannot be attacked
+	 * Activate the siege immunity timers after a siege ends
+	 * - The besieged town always gets it
+	 * - Home nation towns might also get it (if home nation siege effects are enabled)
 	 *
-	 * @param town the town
-	 * @param siege the siege which was previously in progress
+	 * If a town siege immunity timer is active, the town cannot be attacked.
+	 * Note however that siege immunity does not prevent the mayor starting a revolt siege.
+	 *
+	 * @param town the town under siege
+	 * @param siege the siege which was previously active
 	 */
-	public static void activateSiegeImmunityTimer(Town town, Siege siege) {
+	public static void activateSiegeImmunityTimers(Town town, Siege siege) {
+		//Set siege immunity for town
         double siegeDuration = siege.getActualEndTime() - siege.getStartTime();
-        double cooldownDuration = siegeDuration * SiegeWarSettings.getWarSiegeSiegeImmunityTimeModifier();
-        TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + (long)(cooldownDuration + 0.5));
+        double immunityDurationMillisDouble = siegeDuration * SiegeWarSettings.getWarSiegeSiegeImmunityTimeModifier();
+        long immunityDurationMillis = (long)(immunityDurationMillisDouble + 0.5);
+        TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + immunityDurationMillis);
+
+		//Set siege immunity for nation home towns
+		if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled() && town.hasNation()) {
+			double homeTownSiegeImmunityDurationDouble = (double)immunityDurationMillis * SiegeWarSettings.getHomeDefenceSiegeEffectsSiegeImmunityModifier();
+			long homeTownSiegeImmunityDurationLong = (long)(homeTownSiegeImmunityDurationDouble + 0.5);
+			long homeTownSiegeImmunityEndTime = System.currentTimeMillis() + homeTownSiegeImmunityDurationLong;
+
+			for(Town nationTown: TownyAPI.getInstance().getTownNationOrNull(town).getTowns()) {
+				if(TownMetaDataController.getSiegeImmunityEndTime(nationTown) < homeTownSiegeImmunityEndTime) {
+					TownMetaDataController.setSiegeImmunityEndTime(nationTown, homeTownSiegeImmunityEndTime);
+				}
+			}
+		}
     }
 
 	/**

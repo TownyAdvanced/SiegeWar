@@ -38,7 +38,6 @@ import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
  * @author Goosius
  */
 public class Siege {
-	private String name;
 	private SiegeType siegeType;
 	private Town town;
 	private Government attacker;
@@ -66,7 +65,6 @@ public class Siege {
 
 	public Siege(Town town) {
 		this.town = town;
-		name = "";
         siegeType = null;
         attacker = null;
         defender = null;
@@ -272,15 +270,6 @@ public class Siege {
 
 	public void addBannerControlSession(Player player, BannerControlSession bannerControlSession) {
 		bannerControlSessions.put(player, bannerControlSession);
-	}
-
-	public void setName(String newSiegeName) {
-		this.name = newSiegeName;
-	}
-	
-	@Override
-	public String toString() {
-		return name;
 	}
 
 	public double getBattlePointsModifierForSideWithLowestPopulation() {
