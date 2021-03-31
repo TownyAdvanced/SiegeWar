@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.15
+version: 0.16
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -186,9 +186,6 @@ msg_you_will_get_sickness: '&c&cYou are not a participant of this siege and cann
 msg_war_siege_peaceful_town_cannot_revolt_zero_or_one_unsieged_guardian_towns_nearby:  '&cYou cannot revolt at this time, because there are less than 2 unsieged guardian towns nearby (within %d chunks). A guardian town is a non-peaceful town in an open nation, with at least %d plots.'
 
 #Added in 0.08:
-status_nation_town_stats: '&2Towns Captured/Lost: &a%d&2/&a%d'
-status_nation_plunder_stats: '&2Plunder Gains/Losses: &a%d&2/&a%d'
-
 msg_swa_set_towns_gained_success: '&bSuccessfully set towns gained to %d for %s.'
 msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
 msg_swa_set_plunder_gained_success: '&bSuccessfully set plunder gained to %d for %s.'
@@ -419,9 +416,6 @@ msg_swa_set_invade_success: '&bSet invaded to %s for %s.'
 msg_swa_town_occupation_removal_success: '&bTown occupier removed for %s.'
 msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
 
-
-
-
-
-
-
+# Added in 1.16
+status_nation_town_stats: '&2Town Invasion History - Foreign/Home: &a%d&2/&a%d'
+status_nation_plunder_stats: '&2Town Plunder History - Gains/Losses: &a%d&2/&a%d'
