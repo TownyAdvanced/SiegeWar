@@ -62,8 +62,12 @@ public class SiegeWarTownEventListener implements Listener {
 
 	@EventHandler
 	public void onTownGoesToRuin(TownRuinedEvent event) {
+		//Remove siege if town has one
 		if (SiegeController.hasSiege(event.getTown()))
 			SiegeController.removeSiege(SiegeController.getSiege(event.getTown()), SiegeSide.ATTACKERS);
+		//Remove occupier if town has one
+		if (TownOccupationController.isTownOccupied(event.getTown()))
+			TownOccupationController.removeTownOccupation(event.getTown());
 	}
 	
 	/*
