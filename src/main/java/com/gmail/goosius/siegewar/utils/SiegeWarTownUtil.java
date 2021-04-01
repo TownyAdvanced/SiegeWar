@@ -38,7 +38,9 @@ public class SiegeWarTownUtil {
 		
 		if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled() && town.hasNation()) {
 			for(Town nationTown: TownyAPI.getInstance().getTownNationOrNull(town).getTowns()) {
-				setPvpFlag(nationTown, desiredSetting);
+				//Only non-peaceful towns are affected by the PVP change
+				if(!nationTown.isNeutral())
+					setPvpFlag(nationTown, desiredSetting);
 			}
 		} else {
 			setPvpFlag(town, false);

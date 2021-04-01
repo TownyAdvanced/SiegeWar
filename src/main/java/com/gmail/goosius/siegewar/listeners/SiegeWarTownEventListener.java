@@ -111,6 +111,16 @@ public class SiegeWarTownEventListener implements Listener {
 	@EventHandler
 	public void onTownTogglePVP(TownTogglePVPEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
+			//If the town is peaceful, it cannot toggle pvp
+			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
+					&& !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()
+					&& event.getTown().isNeutral()
+					&& !event.getTown().isPVP()) {
+				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_pvp_forced_off"));
+				event.setCancelled(true);
+				return;
+			}
+
 			if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns()) {
 
 				//Is the town under siege
@@ -127,15 +137,6 @@ public class SiegeWarTownEventListener implements Listener {
 					event.setCancelled(true);
 					return;
 				}
-			}
-
-			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
-					&& !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()
-					&& event.getTown().isNeutral()
-					&& !event.getTown().isPVP()) {
-				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_pvp_forced_off"));
-				event.setCancelled(true);
-				return;
 			}
 		}
 	}
