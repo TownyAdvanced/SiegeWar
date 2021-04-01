@@ -30,7 +30,7 @@ public class SiegeWarTownUtil {
 	 * Wrapper method to set pvp flags in a town to the desired 
 	 * setting, as well as the nation if HomeDefence is enabled
 	 * and the town has a nation.
-	 *
+	 * 
 	 * @param town The town to set the flags for.
 	 * @param desiredSetting The value to set pvp and explosions to.
 	 */
