@@ -428,5 +428,4 @@ msg_err_siege_affected_home_nation_town_cannot_toggle_pvp: "&cCannot toggle PVP,
 msg_err_siege_affected_home_nation_town_cannot_recruit: "&cThe town cannot add new residents, because one of its nation's home towns is under siege attack."
 msg_err_siege_affected_home_nation_town_cannot_claim: "&cCannot claim land, because one of your nation's home towns is under siege attack."
 msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cCannot unclaim land, because one of your nation's home towns is under siege attack."
-msg_err_siege_affected_home_nation_town_can_only_accept_resident_tps: "&cCannot spawn/teleport to this nation town, because one of its nation's home towns is under siege attack."
 msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town: "&cCannot start siege on this nation town, because one of its nation's home towns is already under siege attack."
