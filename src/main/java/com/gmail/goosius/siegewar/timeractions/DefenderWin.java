@@ -24,8 +24,10 @@ public class DefenderWin
 		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege, siegeStatus);
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
-			case LIBERATION:
 				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefendingNationIfPossibleElseTown());
+				break;
+			case LIBERATION:
+				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefender());
 				break;
 			case SUPPRESSION:
 				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefendingNationIfPossibleElseTown());
