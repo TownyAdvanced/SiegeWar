@@ -16,7 +16,7 @@ public class SiegeWarTimeUtil {
 	/**
 	 * Activate the siege immunity timers after a siege ends
 	 * - The besieged town always gets it
-	 * - Home nation towns might also get it (if home nation siege effects are enabled)
+	 * - Home nation towns might also get it (if all-nation-sieges are enabled)
 	 *
 	 * If a town siege immunity timer is active, the town cannot be attacked.
 	 * Note however that siege immunity does not prevent the mayor starting a revolt siege.
@@ -32,8 +32,8 @@ public class SiegeWarTimeUtil {
         TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + immunityDurationMillis);
 
 		//Set siege immunity for nation home towns
-		if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled() && town.hasNation()) {
-			double homeTownSiegeImmunityDurationDouble = (double)immunityDurationMillis * SiegeWarSettings.getHomeDefenceSiegeEffectsSiegeImmunityModifier();
+		if(SiegeWarSettings.isAllNationSiegesEnabled() && town.hasNation()) {
+			double homeTownSiegeImmunityDurationDouble = (double)immunityDurationMillis * SiegeWarSettings.getAllNationSiegesSiegeImmunityModifier();
 			long homeTownSiegeImmunityDurationLong = (long)(homeTownSiegeImmunityDurationDouble + 0.5);
 			long homeTownSiegeImmunityEndTime = System.currentTimeMillis() + homeTownSiegeImmunityDurationLong;
 

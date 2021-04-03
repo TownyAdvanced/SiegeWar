@@ -83,7 +83,7 @@ public class SiegeWarTownEventListener implements Listener {
 				return;
 			}
 
-			if (SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled()
+			if (SiegeWarSettings.isAllNationSiegesEnabled()
 					&& SiegeController.isAnyHomeTownASiegeDefender(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_recruit"));
@@ -130,8 +130,8 @@ public class SiegeWarTownEventListener implements Listener {
 					return;
 				}
 
-				//Is the town affected by nation siege effects
-				if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled()
+				//Is the town affected by an all-nation-siege
+				if(SiegeWarSettings.isAllNationSiegesEnabled()
 						&& SiegeController.isAnyHomeTownASiegeDefender(event.getTown())) {
 					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_toggle_pvp"));
 					event.setCancelled(true);
@@ -223,8 +223,8 @@ public class SiegeWarTownEventListener implements Listener {
 					return;
 				}
 
-				//If the town is affected by nation siege effects, they cannot claim any land
-				if (SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled()
+				//If the town is affected by an all-nation-siege, they cannot claim any land
+				if (SiegeWarSettings.isAllNationSiegesEnabled()
 						&& SiegeController.isAnyHomeTownASiegeDefender(event.getTown())) {
 					event.setCancelled(true);
 					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_claim"));
@@ -277,8 +277,8 @@ public class SiegeWarTownEventListener implements Listener {
 				return;
 			}
 
-			//Nation siege effects
-			if (SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled()
+			//Town affected by all-nation-siege
+			if (SiegeWarSettings.isAllNationSiegesEnabled()
 					&& SiegeController.isAnyHomeTownASiegeDefender(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_unclaim"));
