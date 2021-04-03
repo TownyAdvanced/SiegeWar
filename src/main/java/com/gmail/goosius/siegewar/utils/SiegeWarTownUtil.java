@@ -28,7 +28,7 @@ public class SiegeWarTownUtil {
 
     /**
 	 * Wrapper method to set pvp flags in a town to the desired 
-	 * setting, as well as the nation if HomeDefence is enabled
+	 * setting, as well as the nation if All-Nation-Sieges are enabled
 	 * and the town has a nation.
 	 * 
 	 * @param town The town to set the flags for.
@@ -36,7 +36,7 @@ public class SiegeWarTownUtil {
 	 */
 	public static void setTownPvpFlags(Town town, boolean desiredSetting) {
 		
-		if(SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled() && town.hasNation()) {
+		if(SiegeWarSettings.isAllNationSiegesEnabled() && town.hasNation()) {
 			for(Town nationTown: TownyAPI.getInstance().getTownNationOrNull(town).getTowns()) {
 				//Only non-peaceful towns are affected by the PVP change
 				if(!nationTown.isNeutral())

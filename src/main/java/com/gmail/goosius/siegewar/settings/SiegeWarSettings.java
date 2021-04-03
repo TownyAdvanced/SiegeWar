@@ -397,12 +397,12 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_SWITCHES_TRAP_WARFARE_MITIGATION_ENABLED);
 	}
 
-	public static boolean isHomeDefenceSiegeEffectsEnabled() {
-		return Settings.getBoolean(ConfigNodes.HOME_DEFENCE_SIEGE_EFFECTS_ENABLED);
+	public static boolean isAllNationSiegesEnabled() {
+		return Settings.getBoolean(ConfigNodes.ALL_NATION_SIEGES_ENABLED);
 	}
 
-	public static double getHomeDefenceSiegeEffectsSiegeImmunityModifier() {
-		return Settings.getDouble(ConfigNodes.HOME_DEFENCE_SIEGE_EFFECTS_SIEGE_IMMUNITY_MODIFIER);
+	public static double getAllNationSiegesSiegeImmunityModifier() {
+		return Settings.getDouble(ConfigNodes.ALL_NATION_SIEGES_SIEGE_IMMUNITY_MODIFIER);
 	}
 
 

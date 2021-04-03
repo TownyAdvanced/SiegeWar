@@ -292,7 +292,7 @@ public class SiegeWarNationEventListener implements Listener {
 	@EventHandler
 	public void on(NationPreAddTownEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWarSettings.isHomeDefenceSiegeEffectsEnabled()
+				&& SiegeWarSettings.isAllNationSiegesEnabled()
 				&& SiegeController.isAnyHomeTownASiegeDefender(event.getNation())) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_cannot_recruit"));
