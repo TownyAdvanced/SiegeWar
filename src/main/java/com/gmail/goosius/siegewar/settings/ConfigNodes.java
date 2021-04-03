@@ -746,12 +746,13 @@ public enum ConfigNodes {
 			"all_nation_sieges.siege_immunity_modifier",
 			"0.5",
 			"",
-			"# If home defence siege effects are enabled,",
+			"# If all-nation-sieges are enabled,",
 			"# this setting determines how much siege-immunity each non-besieged home nation town receives.",
-			"# The value represents a fraction of the town siege immunity.",
+			"# The value represents a fraction of the besieged town siege immunity.",
 			"# EXAMPLE:",
-			"# If the value is 0.5, and the besieged town gets 9 days of siege immunity,",
-			"# then the non-besieged towns will get 4.5 days of siege immunity.");
+			"# If the besieged town gets 9 days of siege immunity,",
+			"# and this value is 0.5",
+			"# then each non-besieged town will receive 4.5 days of siege immunity.");
 
 	private final String Root;
 	private final String Default;
