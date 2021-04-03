@@ -747,7 +747,7 @@ public enum ConfigNodes {
 			"0.5",
 			"",
 			"# If all-nation-sieges are enabled,",
-			"# this setting determines how much siege-immunity each non-besieged home nation town receives.",
+			"# this setting determines how much siege-immunity each non-besieged home nation town will receieve.",
 			"# The value represents a fraction of the besieged town siege immunity.",
 			"# EXAMPLE:",
 			"# If the besieged town gets 9 days of siege immunity,",
