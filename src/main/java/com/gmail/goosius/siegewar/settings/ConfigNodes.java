@@ -724,10 +724,10 @@ public enum ConfigNodes {
 			"#     - During the siege, some war restrictions apply to all towns.",
 			"# ",
 			"# Benefits to Nations:",
-			"#   * The nation cannot be forced to fight more than one siege at a time" +
-			"#	     (however it can choose to fight more, by attacking/occupying/revolting).",
+			"#   * The nation cannot be forced to fight more than one siege at a time",
+			"#		 (however it can choose to fight more, by attacking/occupying/revolting).",
 			"#   * After each home defence siege, the entire nation team gets a multi-day break from sieging",
-			"#       (default 4.5 days for a full 3 day siege).",
+			"#		 (default 4.5 days for a full 3 day siege).",
 			"# ",
 			"# Costs to Nation:",
 			"#   * During a home-defence siege, the nation cannot recruit new towns",
