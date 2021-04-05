@@ -430,5 +430,7 @@ msg_err_siege_affected_home_nation_town_cannot_claim: "&cCannot claim land, beca
 msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cCannot unclaim land, because one of your nation's home towns is under siege attack."
 msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town: "&cCannot start siege on this nation town, because one of its nation's home towns is already under siege attack."
 
+# Added in 0.17
+
 #Peaceful towns
 msg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
