@@ -43,7 +43,7 @@ public class SiegeWarTownUtil {
 					setPvpFlag(nationTown, desiredSetting);
 			}
 		} else {
-			setPvpFlag(town, false);
+			setPvpFlag(town, desiredSetting);
 		}
 	}
 	
