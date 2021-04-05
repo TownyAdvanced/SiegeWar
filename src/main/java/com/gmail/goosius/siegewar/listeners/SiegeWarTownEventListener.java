@@ -39,6 +39,7 @@ import com.palmergames.bukkit.towny.event.town.TownUnconquerEvent;
 import com.palmergames.bukkit.towny.event.town.TownMapColourCalculationEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownTogglePVPEvent;
+import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -284,6 +285,25 @@ public class SiegeWarTownEventListener implements Listener {
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_unclaim"));
 				return;
 			}
+		}
+	}
+
+	/*
+	 * If town is peaceful, it can't move homeblock.
+	 * otherwise it could be / definitely would be
+	 * used by players an an easy and hard-to-moderate exploit to escape occupation.
+	 *
+	 * If a town wants to move its homeblock,
+	 * it can toggle peaceful off, switch homeblock to new location,
+	 * then toggle peaceful on again.
+	 */
+	@EventHandler
+	public void on(TownPreSetHomeBlockEvent event) {
+		if (SiegeWarSettings.getWarSiegeEnabled()
+				&& SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
+				&& event.getTown().isNeutral()) {
+			event.setCancelled(true);
+			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_cannot_move_homeblock"));
 		}
 	}
 
