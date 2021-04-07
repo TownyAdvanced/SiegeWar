@@ -34,12 +34,14 @@ public class SiegeWarSiegeCompletionUtil {
 		CosmeticUtil.removeFakeBeacons(siege);
 		/*
 		 * The siege is now historical rather than active.
-		 * Thus, fix the attacker and defender as nations rather than towns.
-		 * Thus, even if the town switches nation,
-		 *       the correct historical nation participants will still be shown.
+		 * Thus, fix the attacker and defender as nations where possible,
+		 * rather than towns.
+		 *
+		 * Thus, even if the town switches nation after the siege,
+		 *   the correct historical nation participants will still be shown.
 		 */
-		siege.setAttacker(siege.getAtta);
-
+		siege.setAttacker(siege.getAttackingNationIfPossibleElseTown());
+		siege.setDefender(siege.getDefendingNationIfPossibleElseTown());
 		//Save to db
 		SiegeController.saveSiege(siege);
 	}
