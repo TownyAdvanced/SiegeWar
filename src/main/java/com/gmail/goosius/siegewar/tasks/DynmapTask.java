@@ -140,7 +140,7 @@ public class DynmapTask {
             //Add siege marker if required
             for (Siege siege : SiegeController.getSieges()) {
 
-                String name = Translation.of("dynmap_siege_title", siege.getAttacker().getName(), siege.getDefendingNationIfPossibleElseTown().getName());
+                String name = Translation.of("dynmap_siege_title", siege.getAttackingNationIfPossibleElseTown().getName(), siege.getDefendingNationIfPossibleElseTown().getName());
                 try {
                     if (siege.getStatus().isActive()) {
                         //If anyone is in a BC session or on the BC list, it is a fire & swords icon

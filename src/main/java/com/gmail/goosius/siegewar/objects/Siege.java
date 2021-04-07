@@ -196,6 +196,21 @@ public class Siege {
 		return defender;
 	}
 
+	/**
+	 * Get the attacking nation if there is one,
+	 * else get attacking town
+	 *
+	 * @return the attacker,
+	 */
+	public Government getAttackingNationIfPossibleElseTown() {
+		if(attacker instanceof Town && ((Town)attacker).hasNation()) {
+			try {
+				return ((Town)attacker).getNation();
+			} catch (NotRegisteredException ignored) {}
+		}
+		return defender;
+	}
+
 	public void setDefender(Government defender) {
 		this.defender = defender;
 	}
