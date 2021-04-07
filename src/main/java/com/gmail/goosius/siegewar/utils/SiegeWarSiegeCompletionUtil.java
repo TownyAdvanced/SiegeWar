@@ -32,6 +32,13 @@ public class SiegeWarSiegeCompletionUtil {
 		SiegeWarTimeUtil.activateSiegeImmunityTimers(siege.getTown(), siege);
 		SiegeWarTownUtil.setTownPvpFlags(siege.getTown(), false);
 		CosmeticUtil.removeFakeBeacons(siege);
+		/*
+		 * The siege is now historical rather than active.
+		 * Thus, fix the attacker and defender as nations rather than towns.
+		 * Thus, even if the town switches nation,
+		 *       the correct historical nation participants will still be shown.
+		 */
+		siege.setAttacker(siege.getAtta);
 
 		//Save to db
 		SiegeController.saveSiege(siege);
