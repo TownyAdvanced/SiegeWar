@@ -421,8 +421,11 @@ msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town: "&cCanno
 
 # Added in 0.17
 
-#Peaceful towns
+# Homeblock move restrictions
 msg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
 
+# Added in 0.18
+
+# Homeblock move restrictions
 msg_err_besieged_town_cannot_move_homeblock: "&cBesieged towns cannot move their homeblocks."
 msg_err_occupied_town_cannot_move_homeblock: "&cOccupied towns cannot move their homeblocks."

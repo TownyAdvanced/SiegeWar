@@ -311,8 +311,6 @@ public class SiegeWarTownEventListener implements Listener {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_occupied_town_cannot_move_homeblock"));
 			}
-
-
 		}
 	}
 
