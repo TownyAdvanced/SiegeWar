@@ -289,21 +289,28 @@ public class SiegeWarTownEventListener implements Listener {
 	}
 
 	/*
-	 * If town is peaceful, it can't move homeblock.
-	 * otherwise it could be / definitely would be
+	 * If town is peaceful, sieged, or occupied, it can't move homeblock.
+	 * otherwise the move homeblock command could be / definitely would be
 	 * used by players an an easy and hard-to-moderate exploit to escape occupation.
-	 *
-	 * If a town wants to move its homeblock,
-	 * it can toggle peaceful off, switch homeblock to new location,
-	 * then toggle peaceful on again.
 	 */
 	@EventHandler
 	public void on(TownPreSetHomeBlockEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
+		if (SiegeWarSettings.getWarSiegeEnabled()) {
+			if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
 				&& event.getTown().isNeutral()) {
-			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_cannot_move_homeblock"));
+				event.setCancelled(true);
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_cannot_move_homeblock"));
+			}
+
+			if(SiegeController.hasActiveSiege(event.getTown())) {
+				event.setCancelled(true);
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_besieged_town_cannot_move_homeblock"));
+			}
+
+			if(TownOccupationController.isTownOccupied(event.getTown())) {
+				event.setCancelled(true);
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_occupied_town_cannot_move_homeblock"));
+			}
 		}
 	}
 
