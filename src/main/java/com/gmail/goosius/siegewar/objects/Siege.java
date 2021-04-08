@@ -208,7 +208,7 @@ public class Siege {
 				return ((Town)attacker).getNation();
 			} catch (NotRegisteredException ignored) {}
 		}
-		return defender;
+		return attacker;
 	}
 
 	public void setDefender(Government defender) {
