@@ -726,6 +726,8 @@ public enum ConfigNodes {
 			"# Benefits to Nations:",
 			"#   * The nation cannot be forced to fight more than one siege at a time",
 			"#		 (however it can choose to fight more, by attacking/occupying/revolting).",
+			"#   * The bigger a nation is, the riskier it is to attack one of its towns",
+			"#       (bigger warchest)",
 			"#   * After each home defence siege, the entire nation team gets a multi-day break from sieging",
 			"#		 (default 4.5 days for a full 3 day siege).",
 			"# ",
@@ -752,7 +754,18 @@ public enum ConfigNodes {
 			"# EXAMPLE:",
 			"# If the besieged town gets 9 days of siege immunity,",
 			"# and this value is 0.5",
-			"# then each non-besieged town will receive 4.5 days of siege immunity.");
+			"# then each non-besieged town will receive 4.5 days of siege immunity."),
+	ALL_NATION_SIEGES_HOME_TOWN_CONTRIBUTION_TO_ATTACK_COST(
+			"all_nation_sieges.home_town_contribution_to_attack_cost",
+			"0.1",
+			"",
+			"# If this setting is higher than 0,",
+			"# then the larger a nation is, the higher the cost to attack it.",
+			"# EXAMPLE:",
+			"# If this setting is 0.1,",
+			"# and a nation home town is attacked,",
+			"# then for every home town in that nation (including the attacked one),",
+			"# the attack-cost(a.k.a warchest) requirement is increased by 10% of the amount it would take to attack that town.");
 
 	private final String Root;
 	private final String Default;

@@ -405,5 +405,7 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.ALL_NATION_SIEGES_SIEGE_IMMUNITY_MODIFIER);
 	}
 
-
+	public static double getAllNationSiegesHomeTownContributionToAttackCost() {
+		return Settings.getDouble(ConfigNodes.ALL_NATION_SIEGES_HOME_TOWN_CONTRIBUTION_TO_ATTACK_COST);
+	}
 }

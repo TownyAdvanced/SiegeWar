@@ -478,7 +478,7 @@ public class SiegeController {
 
 		//Pay into warchest
 		if (useWarchest) {
-			siege.setWarChestAmount(SiegeWarMoneyUtil.getSiegeCost(targetTown));
+			siege.setWarChestAmount(SiegeWarMoneyUtil.calculateSiegeCost(targetTown));
 			if (TownyEconomyHandler.isActive()) {
 				//Pay upfront cost into warchest now
 				attacker.getAccount().withdraw(siege.getWarChestAmount(), "Cost of starting a siege.");
