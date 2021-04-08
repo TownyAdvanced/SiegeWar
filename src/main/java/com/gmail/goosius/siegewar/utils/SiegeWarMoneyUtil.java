@@ -9,6 +9,7 @@ import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -199,16 +200,37 @@ public class SiegeWarMoneyUtil {
 				Translation.of("msg_siege_war_military_salary_available", TownyEconomyHandler.getFormattedBalance(militarySalaryAmount)));
 	}
 
-	public static double getSiegeCost(Town town) {
-		if (town.isCapital())
-			return SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
-				* (1 + SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage()/100)
-				* town.getTownBlocks().size()
-				* getMoneyMultiplier(town);
-		else
-			return SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
-			* town.getTownBlocks().size()
-			* getMoneyMultiplier(town);
+	public static double calculateSiegeCost(Town town) {
+		//Calculate base cost
+		double cost = SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
+						* town.getTownBlocks().size();
+
+		//Increase cost due to nation size
+		if(SiegeWarSettings.isAllNationSiegesEnabled()
+			&& SiegeWarSettings.getAllNationSiegesHomeTownContributionToAttackCost() > 0
+			&& town.hasNation()) {
+			try {
+				Nation nation = town.getNation();
+				for (Town nationHomeTown : nation.getTowns()) {
+					cost += SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
+							* nationHomeTown.getTownBlocks().size()
+							* SiegeWarSettings.getAllNationSiegesHomeTownContributionToAttackCost();
+				}
+			} catch (NotRegisteredException ignored) {}
+		}
+
+		//Increase cost if town is capitol
+		if(SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage() > 0
+			&& town.isCapital()) {
+			cost *= (1 + (SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage() / 100));
+		}
+
+		//Increase cost due to money multiplier & town size
+		if(SiegeWarSettings.getWarSiegeExtraMoneyPercentagePerTownLevel() > 0) {
+			cost *= getMoneyMultiplier(town);
+		}
+
+		return cost;
 	}
 
 	/**
