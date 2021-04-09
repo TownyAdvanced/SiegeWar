@@ -13,6 +13,7 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyFormatter;
@@ -24,6 +25,7 @@ import com.palmergames.bukkit.towny.event.PreDeleteNationEvent;
 import com.palmergames.bukkit.towny.event.NationPreAddTownEvent;
 import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
 import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
+import com.palmergames.bukkit.towny.event.nation.NationTownLeaveEvent;
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumOnlinePlayersCalculationEvent;
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumTownsCalculationEvent;
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumResidentsCalculationEvent;
@@ -284,6 +286,23 @@ public class SiegeWarNationEventListener implements Listener {
 		// We want to un-cancel it.
 		if (event.isCancelled())
 			event.setCancelled(false);
+	}
+
+	/**
+	 * When a besieged town leaves a nation,
+	 * pvp in the remaining towns is returned to the off state.
+	 */
+	@EventHandler
+	public void on(NationTownLeaveEvent event) {
+		if (SiegeWarSettings.getWarSiegeEnabled()
+			&& SiegeWarSettings.isAllNationSiegesEnabled()
+			&& SiegeController.hasActiveSiege(event.getTown())) {
+
+			for(Town nationTown: event.getNation().getTowns()) {
+				if(nationTown != event.getTown() && !nationTown.isNeutral())
+					SiegeWarTownUtil.setPvpFlag(nationTown, false);
+			}
+		}
 	}
 
 	/*
