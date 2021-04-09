@@ -53,7 +53,7 @@ public class SiegeWarTownUtil {
 	 * @param town The town to set the flags for.
 	 * @param desiredSetting The value to set pvp and explosions to.
 	 */
-	private static void setPvpFlag(Town town, boolean desiredSetting) {
+	public static void setPvpFlag(Town town, boolean desiredSetting) {
 		
 		if (town.getPermissions().pvp != desiredSetting && SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns()) {
 			town.getPermissions().pvp = desiredSetting;
