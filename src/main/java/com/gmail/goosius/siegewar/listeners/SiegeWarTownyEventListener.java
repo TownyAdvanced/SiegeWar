@@ -94,37 +94,6 @@ public class SiegeWarTownyEventListener implements Listener {
         }
 
     }
-    
-    /*
-     * SiegeWar prevents people from spawning to siege areas if they are not peaceful and do not belong to the town in question.
-     */
-    @EventHandler
-    public void onPlayerUsesTownySpawnCommand(SpawnEvent event) {
-        if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled()) {
-            Town destinationTown = TownyAPI.getInstance().getTown(event.getTo());
-            Resident res = TownyUniverse.getInstance().getResident(event.getPlayer().getUniqueId());
-            if (destinationTown == null || res == null)
-                return;
-            
-            // Don't block spawning for residents which belong to the Town
-            if (destinationTown.hasResident(res))
-                return;
-
-            //Block TP if the target town is besieged
-            if (SiegeController.hasActiveSiege(destinationTown)) {
-                event.setCancelled(true);
-                event.setCancelMessage(Translation.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
-                return;
-            }
-
-            //Block TP if the target spawn point is in a siege zone
-            if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
-                event.setCancelled(true);
-                event.setCancelMessage(Translation.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
-
-            }
-        }       
-    }
 
     /**
      * Do not explode the siege banner or its supporting block
