@@ -398,7 +398,7 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean isAllNationSiegesEnabled() {
-		return Settings.getBoolean(ConfigNodes.ALL_NATION_SIEGES_ENABLED);
+		return Settings.getBoolean(ConfigNodes.POST_WAR_NATION_IMMUNITY_ENABLED);
 	}
 
 	public static double getAllNationSiegesSiegeImmunityModifier() {
