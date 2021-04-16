@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownBlockType;
