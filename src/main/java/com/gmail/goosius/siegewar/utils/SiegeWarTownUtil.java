@@ -27,10 +27,10 @@ public class SiegeWarTownUtil {
     }
 
     /**
-	 * Sets pvp flags in a town to the desired setting.
+	 * Sets pvp flag in a town to the desired setting.
 	 * 
-	 * @param town The town to set the flags for.
-	 * @param desiredSetting The value to set pvp and explosions to.
+	 * @param town The town to set the flag for.
+	 * @param desiredSetting The value to set pvp to.
 	 */
 	public static void setPvpFlag(Town town, boolean desiredSetting) {
 		
