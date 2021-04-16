@@ -261,7 +261,7 @@ public class PlaceBlock {
 		if(SiegeWarBlockUtil.isSupportBlockUnstable(bannerBlock))
 			throw new TownyException(Translation.of("msg_err_siege_war_banner_support_block_not_stable"));
 
-		if (SiegeWarSettings.isAllNationSiegesEnabled()
+		if (SiegeWarSettings.isPostWarNationImmunityEnabled()
 				&& SiegeController.isAnyHomeTownASiegeDefender(nearbyTown)) {
 			throw new TownyException(Translation.of("msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town"));
 		}

@@ -206,7 +206,7 @@ public class SiegeWarMoneyUtil {
 						* town.getTownBlocks().size();
 
 		//Increase cost due to nation size
-		if(SiegeWarSettings.isAllNationSiegesEnabled()
+		if(SiegeWarSettings.isPostWarNationImmunityEnabled()
 			&& SiegeWarSettings.getAllNationSiegesHomeTownContributionToAttackCost() > 0
 			&& town.hasNation()) {
 			try {

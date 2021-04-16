@@ -32,7 +32,7 @@ public class SiegeWarTimeUtil {
         TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + immunityDurationMillis);
 
 		//Set siege immunity for nation home towns
-		if(SiegeWarSettings.isAllNationSiegesEnabled() && town.hasNation()) {
+		if(SiegeWarSettings.isPostWarNationImmunityEnabled() && town.hasNation()) {
 			double homeTownSiegeImmunityDurationDouble = (double)immunityDurationMillis * SiegeWarSettings.getAllNationSiegesSiegeImmunityModifier();
 			long homeTownSiegeImmunityDurationLong = (long)(homeTownSiegeImmunityDurationDouble + 0.5);
 			long homeTownSiegeImmunityEndTime = System.currentTimeMillis() + homeTownSiegeImmunityDurationLong;

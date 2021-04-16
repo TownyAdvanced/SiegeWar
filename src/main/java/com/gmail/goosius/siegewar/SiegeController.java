@@ -256,7 +256,7 @@ public class SiegeController {
 		siegedTowns.remove(siege.getTown());
 		siegedTownNames.remove(siege.getTown().getName());
 
-		SiegeWarTownUtil.setTownPvpFlags(town, false);
+		SiegeWarTownUtil.setPvpFlag(town, false);
 		CosmeticUtil.removeFakeBeacons(siege);
 
 		//Save town
@@ -469,7 +469,7 @@ public class SiegeController {
 		SiegeController.putTownInSiegeMap(targetTown, siege);
 
 		//Set town to true, potentially set the town's nation's towns as well.
-		SiegeWarTownUtil.setTownPvpFlags(targetTown, true);
+		SiegeWarTownUtil.setPvpFlag(targetTown, true);
 
 		//Send global message;
 		try {

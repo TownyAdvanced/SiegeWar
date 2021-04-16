@@ -397,15 +397,19 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_SWITCHES_TRAP_WARFARE_MITIGATION_ENABLED);
 	}
 
-	public static boolean isAllNationSiegesEnabled() {
+	public static boolean isPostWarNationImmunityEnabled() {
 		return Settings.getBoolean(ConfigNodes.POST_WAR_NATION_IMMUNITY_ENABLED);
 	}
 
-	public static double getAllNationSiegesSiegeImmunityModifier() {
-		return Settings.getDouble(ConfigNodes.ALL_NATION_SIEGES_SIEGE_IMMUNITY_MODIFIER);
+	public static double getPostWarNationImmunityMaxHomeDefenceSieges() {
+		return Settings.getInt(ConfigNodes.POST_WAR_NATION_IMMUNITY_MAX_HOME_DEFENCE_SIEGES);
 	}
 
-	public static double getAllNationSiegesHomeTownContributionToAttackCost() {
-		return Settings.getDouble(ConfigNodes.ALL_NATION_SIEGES_HOME_TOWN_CONTRIBUTION_TO_ATTACK_COST);
+	public static double getPostWarNationImmunityDurationModifier() {
+		return Settings.getDouble(ConfigNodes.POST_WAR_NATION_IMMUNITY_DURATION_MODIFIER);
+	}
+
+	public static double getPostWarNationImmunityHomeTownContributionToAttackCost() {
+		return Settings.getDouble(ConfigNodes.POST_WAR_NATION_IMMUNITY_HOME_TOWN_CONTRIBUTION_TO_ATTACK_COST);
 	}
 }

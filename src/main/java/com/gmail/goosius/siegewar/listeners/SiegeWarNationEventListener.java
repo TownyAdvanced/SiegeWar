@@ -295,7 +295,7 @@ public class SiegeWarNationEventListener implements Listener {
 	@EventHandler
 	public void on(NationTownLeaveEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()
-			&& SiegeWarSettings.isAllNationSiegesEnabled()
+			&& SiegeWarSettings.isPostWarNationImmunityEnabled()
 			&& SiegeController.hasActiveSiege(event.getTown())) {
 
 			for(Town nationTown: event.getNation().getTowns()) {
@@ -311,7 +311,7 @@ public class SiegeWarNationEventListener implements Listener {
 	@EventHandler
 	public void on(NationPreAddTownEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWarSettings.isAllNationSiegesEnabled()
+				&& SiegeWarSettings.isPostWarNationImmunityEnabled()
 				&& SiegeController.isAnyHomeTownASiegeDefender(event.getNation())) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_cannot_recruit"));
