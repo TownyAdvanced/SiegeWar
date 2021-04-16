@@ -2,11 +2,9 @@ package com.gmail.goosius.siegewar.metadata;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
-import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 
 public class NationMetaDataController {
     @SuppressWarnings("unused")
@@ -18,8 +16,7 @@ public class NationMetaDataController {
         townsGained = "siegewar_totaltownsgained",
         townsLost = "siegewar_totaltownslost";
 
-    private static final LongDataField currentWarStartTime = new LongDataField("siegewar_currentWarStartTime");
-    private static final IntegerDataField currentWarNumHomeDefenceSieges = new IntegerDataField("siegewar_currentWarNumHomeDefenceSieges");
+    private static final LongDataField pendingSiegeImmunityMillis = new LongDataField("siegewar_pendingSiegeImmunityMillis");
 
     public NationMetaDataController(SiegeWar plugin) {
         this.plugin = plugin;
@@ -82,33 +79,25 @@ public class NationMetaDataController {
         setIdf(nation, townsLost, num);
     }
 
-    public static long getCurrentWarStartTime(Nation nation) {
-        LongDataField ldf = (LongDataField) currentWarStartTime.clone();
+    public static long getPendingSiegeImmunityMillis(Nation nation) {
+        LongDataField ldf = (LongDataField) pendingSiegeImmunityMillis.clone();
         if (nation.hasMeta(ldf.getKey()))
             return MetaDataUtil.getLong(nation, ldf);
-        return 0l;
+        return 0L;
     }
 
-    public static void setCurrentWarStartTime(Nation nation, long num) {
-        LongDataField ldf = (LongDataField) currentWarStartTime.clone();
+    public static void setPendingSiegeImmunityMillis(Nation nation, long num) {
+        LongDataField ldf = (LongDataField) pendingSiegeImmunityMillis.clone();
         if (nation.hasMeta(ldf.getKey()))
             MetaDataUtil.setLong(nation, ldf, num);
         else
-            nation.addMetaData(new LongDataField(currentWarStartTime.getKey(), num));
+            nation.addMetaData(new LongDataField(pendingSiegeImmunityMillis.getKey(), num));
     }
 
-    public static int getCurrentWarNumHomeDefenceSieges(Nation nation) {
-        IntegerDataField idf = (IntegerDataField) currentWarNumHomeDefenceSieges.clone();
-        if (nation.hasMeta(idf.getKey()))
-            return MetaDataUtil.getInt(nation, idf);
-        return 0;
+    public static void removePendingSiegeImmunityMillis(Nation nation) {
+        LongDataField ldf = (LongDataField) pendingSiegeImmunityMillis.clone();
+        if (nation.hasMeta(ldf.getKey()))
+            nation.removeMetaData(ldf);
     }
 
-    public static void setCurrentWarNumHomeDefenceSieges(Nation nation, int num) {
-        IntegerDataField idf = (IntegerDataField) currentWarNumHomeDefenceSieges.clone();
-        if (nation.hasMeta(idf.getKey()))
-            MetaDataUtil.setInt(nation, idf, num);
-        else
-            nation.addMetaData(new IntegerDataField(currentWarNumHomeDefenceSieges.getKey(), num));
-    }
 }

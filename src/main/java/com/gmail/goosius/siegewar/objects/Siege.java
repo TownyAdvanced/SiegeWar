@@ -62,6 +62,7 @@ public class Siege {
 	private int defenderBattlePoints;
 	private Set<String> attackerBattleContributors;   //UUID's of attackers who contributed during the current battle
 	private Map<String, Integer> attackerSiegeContributors;  //UUID:numContributions map of attackers who contributed during current siege
+	private Map<String, Integer> homeDefenceContributors; //UUID:numContributions map of nations who contributed as home defenders during current siege
 
 	public Siege(Town town) {
 		this.town = town;
@@ -82,6 +83,7 @@ public class Siege {
 		defenderBattlePoints = 0;
 		attackerBattleContributors = new HashSet<>();
 		attackerSiegeContributors = new HashMap<>();
+		homeDefenceContributors = new HashMap<>();
     }
 
     public Town getTown() {
@@ -400,12 +402,21 @@ public class Siege {
 	public void clearAttackerBattleContributors() {
 		attackerBattleContributors.clear();
 	}
+
 	public Map<String, Integer> getAttackerSiegeContributors() {
 		return attackerSiegeContributors;
 	}
 
 	public void setAttackerSiegeContributors(Map<String, Integer> attackerSiegeContributors) {
 		this.attackerSiegeContributors = attackerSiegeContributors;
+	}
+
+	public Map<String, Integer> getHomeDefenceSiegeContributors() {
+		return homeDefenceContributors;
+	}
+
+	public void setHomeDefenceSiegeContributors(Map<String, Integer> homeDefenceContributions) {
+		this.homeDefenceContributors = homeDefenceContributions;
 	}
 
 	public void registerAttackerBattleContributorsFromBannerControl() {
@@ -444,5 +455,13 @@ public class Siege {
 		if(siegeType == null) //Safety feature
 			throw new RuntimeException("SiegeType cannot be null");
 		this.siegeType = siegeType;
+	}
+
+	public int getTotalBattles() {
+		int result = 0;
+		for(int numBattlesFromContributor: homeDefenceContributors.values()) {
+			result += numBattlesFromContributor;
+		}
+		return result;
 	}
 }

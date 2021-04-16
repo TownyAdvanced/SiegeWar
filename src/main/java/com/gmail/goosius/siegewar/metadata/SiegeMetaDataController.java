@@ -49,7 +49,8 @@ public class SiegeMetaDataController {
 	private static LongDataField endTime = new LongDataField("siegewar_endTime", 0l);
 	private static LongDataField actualEndTime = new LongDataField("siegewar_actualEndTime", 0l);
 	private static StringDataField attackerSiegeContributors = new StringDataField("siegewar_attackerSiegeContributors", "");
-	
+	private static StringDataField homeDefenceSiegeContributors = new StringDataField("siegewar_homeDefenceSiegeContributors", "");
+
 	public SiegeMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
 	}
@@ -360,6 +361,27 @@ public class SiegeMetaDataController {
 		}
 	}
 
+	public static Map<String, Integer> getHomeDefenceSiegeContributors(Town town) {
+		StringDataField sdf = (StringDataField) homeDefenceSiegeContributors .clone();
+
+		String dataAsString = null;
+		if (town.hasMeta(sdf.getKey()))
+			dataAsString = MetaDataUtil.getString(town, sdf);
+
+		if(dataAsString == null || dataAsString.length() == 0) {
+			return new HashMap<>();
+		} else {
+			Map<String, Integer> residentContributionsMap = new HashMap<>();
+			String[] residentContributionDataEntries = dataAsString.split(",");
+			String[] residentContributionDataPair;
+			for(String residentContributionDataEntry: residentContributionDataEntries) {
+				residentContributionDataPair = residentContributionDataEntry.split(":");
+				residentContributionsMap.put(residentContributionDataPair[0], Integer.parseInt(residentContributionDataPair[1]));
+			}
+			return residentContributionsMap;
+		}
+	}
+
 	public static void setAttackerSiegeContributors(Town town, Map<String,Integer> contributorsMap) {
 		StringBuilder mapAsStringBuilder = new StringBuilder();
 		boolean firstEntry = true;
@@ -377,5 +399,24 @@ public class SiegeMetaDataController {
 			MetaDataUtil.setString(town, sdf, mapAsStringBuilder.toString());
 		else
 			town.addMetaData(new StringDataField("siegewar_attackerSiegeContributors", mapAsStringBuilder.toString()));
+	}
+
+	public static void setHomeDefenceSiegeContributors(Town town, Map<String,Integer> contributorsMap) {
+		StringBuilder mapAsStringBuilder = new StringBuilder();
+		boolean firstEntry = true;
+		for(Map.Entry<String,Integer> contributorEntry: contributorsMap.entrySet()) {
+			if(firstEntry) {
+				firstEntry = false;
+			} else {
+				mapAsStringBuilder.append(",");
+			}
+			mapAsStringBuilder.append(contributorEntry.getKey()).append(":").append(contributorEntry.getValue());
+		}
+
+		StringDataField sdf = (StringDataField) homeDefenceSiegeContributors .clone();
+		if (town.hasMeta(sdf.getKey()))
+			MetaDataUtil.setString(town, sdf, mapAsStringBuilder.toString());
+		else
+			town.addMetaData(new StringDataField(homeDefenceSiegeContributors.getKey(), mapAsStringBuilder.toString()));
 	}
 }

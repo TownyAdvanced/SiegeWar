@@ -29,7 +29,8 @@ public class SiegeWarSiegeCompletionUtil {
 		siege.clearBannerControllingResidents();
 		siege.clearBannerControlSessions();
 		siege.setActualEndTime(System.currentTimeMillis());
-		SiegeWarTimeUtil.activateSiegeImmunityTimers(siege.getTown(), siege);
+		SiegeWarTownUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown(), siege);
+
 		SiegeWarTownUtil.setPvpFlag(siege.getTown(), false);
 		CosmeticUtil.removeFakeBeacons(siege);
 		/*
@@ -42,6 +43,7 @@ public class SiegeWarSiegeCompletionUtil {
 		 */
 		siege.setAttacker(siege.getAttackingNationIfPossibleElseTown());
 		siege.setDefender(siege.getDefendingNationIfPossibleElseTown());
+
 		//Save to db
 		SiegeController.saveSiege(siege);
 	}

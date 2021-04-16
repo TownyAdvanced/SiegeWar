@@ -35,7 +35,6 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -91,6 +90,7 @@ public class SiegeController {
 		SiegeMetaDataController.setEndTime(town, siege.getScheduledEndTime());
 		SiegeMetaDataController.setActualEndTime(town, siege.getActualEndTime());
 		SiegeMetaDataController.setAttackerSiegeContributors(town, siege.getAttackerSiegeContributors());
+		SiegeMetaDataController.setHomeDefenceSiegeContributors(town, siege.getHomeDefenceSiegeContributors());
 		town.save();
 	}
 
@@ -228,6 +228,9 @@ public class SiegeController {
 		siege.setActualEndTime(SiegeMetaDataController.getActualEndTime(town));
 
 		siege.setAttackerSiegeContributors(SiegeMetaDataController.getAttackerSiegeContributors(town));
+
+		siege.setHomeDefenceSiegeContributors(SiegeMetaDataController.getHomeDefenceSiegeContributors(town));
+
 		return true;
 	}
 
@@ -236,7 +239,7 @@ public class SiegeController {
 		//If siege is active, initiate siege immunity for town, and return war chest
 		if(siege.getStatus().isActive()) {
 			siege.setActualEndTime(System.currentTimeMillis());
-			SiegeWarTimeUtil.activateSiegeImmunityTimers(siege.getTown(), siege);
+			SiegeWarTownUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown(), siege);
 
 			//Return warchest only if siege is not revolt
 			if(siege.getSiegeType() != SiegeType.REVOLT) {
@@ -468,7 +471,7 @@ public class SiegeController {
 		SiegeController.setSiege(targetTown, true);
 		SiegeController.putTownInSiegeMap(targetTown, siege);
 
-		//Set town to true, potentially set the town's nation's towns as well.
+		//Set pvp to true in the besieged town
 		SiegeWarTownUtil.setPvpFlag(targetTown, true);
 
 		//Send global message;
@@ -578,5 +581,15 @@ public class SiegeController {
 				}
 				break;
 		}
+	}
+
+	public static boolean doesNationHaveAnyHomeDefenceContributionsInActiveSieges(Nation nation) {
+		for(Siege siege: townSiegeMap.values()) {
+			if(siege.getStatus().isActive()
+				&& siege.getHomeDefenceSiegeContributors().containsKey(nation.getUUID().toString())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
