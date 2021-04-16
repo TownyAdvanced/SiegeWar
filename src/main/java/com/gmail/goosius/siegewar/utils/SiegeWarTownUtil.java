@@ -67,17 +67,16 @@ public class SiegeWarTownUtil {
 		town.save();
 
 		/*
-		 * If the town was the defender,
+		 * If this was a town defence siege,
 		 * Grant siege immunity to any nations who were the home nation of the town during the siege
 		 */
-		if(SiegeWarSettings.isPostWarNationImmunityEnabled()
-			&& (siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION)) {
-			int totalBattles = siege.getTotalBattles();
+		if(SiegeWarSettings.isPostWarNationImmunityEnabled() && siege.isTownDefence()) {
+			int totalBattles = siege.getTotalTownDefenceBattles();
 			double immunityRewardDurationPerBattleInMillis = siegeDurationMillis / totalBattles * SiegeWarSettings.getPostWarNationImmunityDurationModifier();
 			int numBattlesFoughtByNation;
 			double siegeImmunityRewardInMillis;
-			for(Map.Entry<String,Integer> nationEntry: siege.getHomeDefenceSiegeContributors().entrySet()) {
-				if(!nationEntry.getKey().equals("TOWN") && !nationEntry.getKey().equals("NOBODY")) {
+			for(Map.Entry<String,Integer> nationEntry: siege.getTownDefenceHomeNations().entrySet()) {
+				if(!nationEntry.getKey().equals("NO_HOME_NATION")) {
 					Nation nation = TownyUniverse.getInstance().getNation(nationEntry.getKey());
 					if(nation != null) {
 						numBattlesFoughtByNation = nationEntry.getValue();

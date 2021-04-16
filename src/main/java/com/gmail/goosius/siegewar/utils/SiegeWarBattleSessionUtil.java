@@ -40,12 +40,25 @@ public class SiegeWarBattleSessionUtil {
 				//Schedule next session
 				scheduleNextBattleSession();
 
-				//Gather the results of all active battles, then end them
+				/*
+				 * Gather the results of all battles
+				 * End any active battles
+				 */
 				Map<Siege, Integer> battleResults = new HashMap<>();
 				for (Siege siege : SiegeController.getSieges()) {
 					try {
-						if (siege.getStatus() == SiegeStatus.IN_PROGRESS
-								&& (siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0)) {
+						if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
+							//Record home nation if this is a town defence siege
+							if(siege.isTownDefence())
+								siege.recordTownDefenceHomeNation();
+
+							//Continue to next siege if there were no battle points
+							if(siege.getAttackerBattlePoints() == 0 || siege.getDefenderBattlePoints() == 0) {
+								if(siege.isTownDefence())
+									SiegeController.saveSiege(siege);
+								continue;
+							}
+
 							//Calculate result
 							int battlePointsOfWinner;
 							if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()) {

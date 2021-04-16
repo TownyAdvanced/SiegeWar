@@ -62,7 +62,7 @@ public class Siege {
 	private int defenderBattlePoints;
 	private Set<String> attackerBattleContributors;   //UUID's of attackers who contributed during the current battle
 	private Map<String, Integer> attackerSiegeContributors;  //UUID:numContributions map of attackers who contributed during current siege
-	private Map<String, Integer> homeDefenceContributors; //UUID:numContributions map of nations who contributed as home defenders during current siege
+	private Map<String, Integer> townDefenceHomeNations; //UUID:numBattleSessions map of nations who served as the home nation of the town during the siege
 
 	public Siege(Town town) {
 		this.town = town;
@@ -83,7 +83,7 @@ public class Siege {
 		defenderBattlePoints = 0;
 		attackerBattleContributors = new HashSet<>();
 		attackerSiegeContributors = new HashMap<>();
-		homeDefenceContributors = new HashMap<>();
+		townDefenceHomeNations = new HashMap<>();
     }
 
     public Town getTown() {
@@ -411,12 +411,12 @@ public class Siege {
 		this.attackerSiegeContributors = attackerSiegeContributors;
 	}
 
-	public Map<String, Integer> getHomeDefenceSiegeContributors() {
-		return homeDefenceContributors;
+	public Map<String, Integer> getTownDefenceHomeNations() {
+		return townDefenceHomeNations;
 	}
 
-	public void setHomeDefenceSiegeContributors(Map<String, Integer> homeDefenceContributions) {
-		this.homeDefenceContributors = homeDefenceContributions;
+	public void setTownDefenceHomeNations(Map<String, Integer> townDefenceHomeNations) {
+		this.townDefenceHomeNations = townDefenceHomeNations;
 	}
 
 	public void registerAttackerBattleContributorsFromBannerControl() {
@@ -457,10 +457,45 @@ public class Siege {
 		this.siegeType = siegeType;
 	}
 
-	public int getTotalBattles() {
+	/**
+	 * Record who was the home nation of the town during a town defence battle session
+	 *
+	 * @throws NotRegisteredException
+	 */
+	public void recordTownDefenceHomeNation() throws NotRegisteredException {
+		//Identify key
+		String contributorKey;
+		if(town.hasNation())
+			contributorKey = town.getNation().getUUID().toString();
+		else
+			contributorKey = "NO_HOME_NATION";
+
+		//Record battle session contribution
+		if(townDefenceHomeNations.containsKey(contributorKey)) {
+			int numBattleSessions = townDefenceHomeNations.get(contributorKey);
+			numBattleSessions++;
+			townDefenceHomeNations.put(contributorKey, numBattleSessions);
+		} else {
+			townDefenceHomeNations.put(contributorKey, 1);
+		}
+	}
+
+	/**
+	 * Returns true if this siege is a "town defence"
+	 *
+	 * A town defence is a siege where the town itself is being attacked,
+	 * rather than a siege where the town occupier is being attacked
+	 *
+	 * @return true if the siege is a town defence
+	 */
+	public boolean isTownDefence() {
+		return siegeType == SiegeType.CONQUEST || siegeType == SiegeType.SUPPRESSION;
+	}
+
+	public int getTotalTownDefenceBattles() {
 		int result = 0;
-		for(int numBattlesFromContributor: homeDefenceContributors.values()) {
-			result += numBattlesFromContributor;
+		for(int homeNationContribution: townDefenceHomeNations.values()) {
+			result += homeNationContribution;
 		}
 		return result;
 	}
