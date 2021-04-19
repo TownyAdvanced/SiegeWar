@@ -411,6 +411,25 @@ public class SiegeController {
 	}
 
 	/**
+	 * This method returns the number of active home-town defences sieges,
+	 * which the nation is involved in.
+	 *
+	 * @param nation the nation to check
+	 * @return the number of home defences sieges
+	 */
+	public static int getNumActiveHomeDefenceSieges(Nation nation) {
+		int result = 0;
+		for(Siege siege: SiegeController.getSieges()) {
+			if((siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION)
+				&& siege.getStatus().isActive()
+				&& siege.getDefendingNationIfPossibleElseTown() == nation) {
+				result++;
+			}
+		}
+		return result;
+	}
+
+	/**
 	 * This method returns true
 	 * - One (or more) of the nation's home towns is a siege defender
 	 *

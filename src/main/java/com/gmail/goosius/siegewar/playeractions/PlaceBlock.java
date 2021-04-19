@@ -261,11 +261,6 @@ public class PlaceBlock {
 		if(SiegeWarBlockUtil.isSupportBlockUnstable(bannerBlock))
 			throw new TownyException(Translation.of("msg_err_siege_war_banner_support_block_not_stable"));
 
-		if (SiegeWarSettings.isPostWarNationImmunityEnabled()
-				&& SiegeController.isAnyHomeTownASiegeDefender(nearbyTown)) {
-			throw new TownyException(Translation.of("msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town"));
-		}
-
 		if (residentsTown == nearbyTown) {
 			//Revolt siege
 			StartRevoltSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
@@ -286,6 +281,12 @@ public class PlaceBlock {
 				Nation occupierOfNearbyTown = TownOccupationController.getTownOccupier(nearbyTown);
 				if (residentsNation == occupierOfNearbyTown) {
 					//Suppression siege
+					if (SiegeWarSettings.isPostWarNationImmunityEnabled()
+						&& nearbyTown.hasNation()
+						&& SiegeController.getNumActiveHomeDefenceSieges(nearbyTown.getNation()) > SiegeWarSettings.getPostWarNationImmunityMaxHomeDefenceSieges()) {
+						throw new TownyException(Translation.of("msg_err_target_nation_has_too_many_home_defences"));
+					}
+
 					StartSuppressionSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 				} else {
 					//Liberation siege
@@ -293,6 +294,12 @@ public class PlaceBlock {
 				}
 			} else {
 				//Conquest siege
+				if (SiegeWarSettings.isPostWarNationImmunityEnabled()
+					&& nearbyTown.hasNation()
+					&& SiegeController.getNumActiveHomeDefenceSieges(nearbyTown.getNation()) > SiegeWarSettings.getPostWarNationImmunityMaxHomeDefenceSieges()) {
+					throw new TownyException(Translation.of("msg_err_target_nation_has_too_many_home_defences"));
+				}
+
 				StartConquestSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 			}
 		}
