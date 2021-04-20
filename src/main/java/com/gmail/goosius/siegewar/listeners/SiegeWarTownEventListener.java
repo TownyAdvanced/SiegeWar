@@ -130,14 +130,6 @@ public class SiegeWarTownEventListener implements Listener {
 					event.setCancelled(true);
 					return;
 				}
-
-				//Is the town affected by an all-nation-siege
-				if(SiegeWarSettings.isPostWarNationImmunityEnabled()
-						&& SiegeController.isAnyHomeTownASiegeDefender(event.getTown())) {
-					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_toggle_pvp"));
-					event.setCancelled(true);
-					return;
-				}
 			}
 		}
 	}

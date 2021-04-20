@@ -284,7 +284,7 @@ public class PlaceBlock {
 					if (SiegeWarSettings.isPostWarNationImmunityEnabled()
 						&& nearbyTown.hasNation()
 						&& SiegeController.getNumActiveHomeDefenceSieges(nearbyTown.getNation()) > SiegeWarSettings.getPostWarNationImmunityMaxHomeDefenceSieges()) {
-						throw new TownyException(Translation.of("msg_err_target_nation_has_too_many_home_defences"));
+						throw new TownyException(Translation.of("msg_err_cannot_start_siege_target_nation_has_too_many_home_defences", SiegeWarSettings.getPostWarNationImmunityMaxHomeDefenceSieges()));
 					}
 
 					StartSuppressionSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
@@ -297,7 +297,7 @@ public class PlaceBlock {
 				if (SiegeWarSettings.isPostWarNationImmunityEnabled()
 					&& nearbyTown.hasNation()
 					&& SiegeController.getNumActiveHomeDefenceSieges(nearbyTown.getNation()) > SiegeWarSettings.getPostWarNationImmunityMaxHomeDefenceSieges()) {
-					throw new TownyException(Translation.of("msg_err_target_nation_has_too_many_home_defences"));
+					throw new TownyException(Translation.of("msg_err_cannot_start_siege_target_nation_has_too_many_home_defences", SiegeWarSettings.getPostWarNationImmunityMaxHomeDefenceSieges()));
 				}
 
 				StartConquestSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
