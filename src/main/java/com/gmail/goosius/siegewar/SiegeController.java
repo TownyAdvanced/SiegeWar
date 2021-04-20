@@ -394,60 +394,59 @@ public class SiegeController {
 	}
 
 	/**
-	 * This method returns true
-	 * - The given town is in a nation, and
-	 * - One (or more) of the nation's home towns is a siege defender
-	 *
 	 * @param town the town to check
-	 * @return true if one (or more) of the nation's home towns is a siege defender
+	 * @return true if the town has a nation & that nation is fighting a home-defence war
+	 *
+	 * Note: A home defence war is when one of the nation's towns is in an active non-revolt siege.
 	 */
-	public static boolean isAnyHomeTownASiegeDefender(Town town) {
+	public static boolean isTownsNationFightingAHomeDefenceWar(Town town) {
 		try {
 			if(town.hasNation()) {
-				return isAnyHomeTownASiegeDefender(town.getNation());
+				return isNationFightingAHomeDefenceWar(town.getNation());
 			}
 		} catch (NotRegisteredException ignored) {}
 		return false;
 	}
 
 	/**
-	 * This method returns the number of active home-town defences sieges,
-	 * which the nation is involved in.
-	 *
 	 * @param nation the nation to check
-	 * @return the number of home defences sieges
-	 */
-	public static int getNumActiveHomeDefenceSieges(Nation nation) {
-		int result = 0;
-		for(Siege siege: SiegeController.getSieges()) {
-			if((siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION)
-				&& siege.getStatus().isActive()
-				&& siege.getDefendingNationIfPossibleElseTown() == nation) {
-				result++;
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * This method returns true
-	 * - One (or more) of the nation's home towns is a siege defender
+	 * @return true if the given nation is fighting a home-defence war
 	 *
-	 * @param nation the nation to check
-	 * @return true if one (or more) of the nation's home towns is a siege defender
+	 * Note: A home defence war is when one of the nation's towns is in an active non-revolt siege.
 	 */
-	public static boolean isAnyHomeTownASiegeDefender(Nation nation) {
+	public static boolean isNationFightingAHomeDefenceWar(Nation nation) {
 		for(Siege siege: SiegeController.getSieges()) {
 			try {
 				if(siege.getStatus().isActive()
-					&& siege.getDefender() instanceof Town
-					&& ((Town)siege.getDefender()).hasNation()
+					&& siege.getSiegeType() != SiegeType.REVOLT
+					&& siege.getTown().hasNation()
 					&& siege.getTown().getNation() == nation) {
 					return true;
 				}
 			} catch (NotRegisteredException ignored) {}
 		}
 		return false;
+	}
+
+	/**
+	 * @param nation the nation to check
+	 * @return the number of home defences sieges which the nation is involved in
+	 *
+	 * NOTE: A home-defence siege occurs when a nation town is in an active non-revolt siege.
+	 */
+	public static int getNumActiveHomeDefenceSieges(Nation nation) {
+		int result = 0;
+		for(Siege siege: SiegeController.getSieges()) {
+			try {
+				if(siege.getStatus().isActive()
+					&& siege.getSiegeType() != SiegeType.REVOLT
+					&& siege.getTown().hasNation()
+					&& siege.getTown().getNation() == nation) {
+					result++;
+				}
+			} catch (NotRegisteredException ignored) {}
+		}
+		return result;
 	}
 
 	/**
