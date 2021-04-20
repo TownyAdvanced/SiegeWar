@@ -277,29 +277,22 @@ public class PlaceBlock {
 			if(SiegeController.getActiveOffensiveSieges(residentsNation).size() >= SiegeWarSettings.getWarSiegeMaxActiveSiegeAttacksPerNation())
 				throw new TownyException(Translation.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));
 
+            if (SiegeWarSettings.isPostWarNationImmunityEnabled()
+                    && nearbyTown.hasNation()
+                    && SiegeController.getNumActiveHomeDefenceSieges(nearbyTown.getNation()) > SiegeWarSettings.getPostWarNationImmunityMaxHomeDefenceSieges()) {
+                throw new TownyException(Translation.of("msg_err_cannot_attack_nation_too_many_towns_under_attack", SiegeWarSettings.getPostWarNationImmunityMaxHomeDefenceSieges()));
+            }
+
 			if (TownOccupationController.isTownOccupied(nearbyTown)) {
 				Nation occupierOfNearbyTown = TownOccupationController.getTownOccupier(nearbyTown);
 				if (residentsNation == occupierOfNearbyTown) {
 					//Suppression siege
-					if (SiegeWarSettings.isPostWarNationImmunityEnabled()
-						&& nearbyTown.hasNation()
-						&& SiegeController.getNumActiveHomeDefenceSieges(nearbyTown.getNation()) > SiegeWarSettings.getPostWarNationImmunityMaxHomeDefenceSieges()) {
-						throw new TownyException(Translation.of("msg_err_cannot_start_siege_target_nation_has_too_many_home_defences", SiegeWarSettings.getPostWarNationImmunityMaxHomeDefenceSieges()));
-					}
-
 					StartSuppressionSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 				} else {
 					//Liberation siege
 					StartLiberationSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 				}
 			} else {
-				//Conquest siege
-				if (SiegeWarSettings.isPostWarNationImmunityEnabled()
-					&& nearbyTown.hasNation()
-					&& SiegeController.getNumActiveHomeDefenceSieges(nearbyTown.getNation()) > SiegeWarSettings.getPostWarNationImmunityMaxHomeDefenceSieges()) {
-					throw new TownyException(Translation.of("msg_err_cannot_start_siege_target_nation_has_too_many_home_defences", SiegeWarSettings.getPostWarNationImmunityMaxHomeDefenceSieges()));
-				}
-
 				StartConquestSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 			}
 		}
