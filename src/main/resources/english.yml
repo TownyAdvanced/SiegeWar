@@ -427,8 +427,3 @@ msg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their
 # Homeblock move restrictions
 msg_err_besieged_town_cannot_move_homeblock: "&cBesieged towns cannot move their homeblocks."
 msg_err_occupied_town_cannot_move_homeblock: "&cOccupied towns cannot move their homeblocks."
-
-# Added in 0.19
-
-#Post-War Nation Immunity
-msg_err_cannot_attack_nation_too_many_towns_under_attack: "You cannot attack this town, because too many of its home nation's towns are already under attack."
