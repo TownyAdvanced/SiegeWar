@@ -15,6 +15,7 @@ import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -79,7 +80,18 @@ public class PlunderTown {
 			if(nationOfPlunderingResident != siege.getDefender())
 				throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
 
-			plunderTown(siege, townToBePlundered, (Nation)siege.getDefender());
+			switch (siege.getStatus()) {
+				case ATTACKER_WIN:
+					// Revolting Town won.
+					plunderGovernment(siege, (Nation)siege.getDefender(), townToBePlundered);
+					break;
+				case DEFENDER_WIN:
+					// Revolting Town lost.
+					plunderGovernment(siege, townToBePlundered, (Nation)siege.getDefender());
+					break;
+				default:
+			}
+			
 		} else {
 			if(siege.getStatus() != SiegeStatus.ATTACKER_WIN
 				&& siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER) {
@@ -88,9 +100,61 @@ public class PlunderTown {
 			if(nationOfPlunderingResident != siege.getAttacker())
 				throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_victory"));
 
-			plunderTown(siege, townToBePlundered, (Nation)siege.getAttacker());
+			plunderGovernment(siege, townToBePlundered, (Nation)siege.getAttacker());
 		}
     }
+    
+    private static void plunderGovernment(Siege siege, Government loser, Government winner) {
+    	if (loser instanceof Town) {
+    		/*
+    		 * This is a town being plundered by a Nation.
+    		 */
+    		plunderTown(siege, (Town) loser, (Nation) winner);
+    	} else {
+    		/*
+    		 * This is a nation being plundered by a Town in a successful REVOLT siege.
+    		 */
+    		plunderNation(siege, (Nation) loser, (Town) winner);
+    	}
+    	
+    }
+
+    private static void plunderNation(Siege siege, Nation nation, Town town) {
+    	//Get plunder cost from the capital's size.
+    	double totalPlunderAmount =
+				SiegeWarSettings.getWarSiegeAttackerPlunderAmountPerPlot()
+				* nation.getCapital().getTownBlocks().size()
+				* SiegeWarMoneyUtil.getMoneyMultiplier(town);
+    	
+    	//Lower amount to what the nation can afford if needed.
+    	try {
+    		if (!nation.getAccount().canPayFromHoldings(totalPlunderAmount))
+				totalPlunderAmount = nation.getAccount().getHoldingBalance();
+    	} catch (EconomyException ignored) {}
+    	
+    	//Calculate ratios for payment.
+		double totalPlunderForTown = getWinnerRatio(totalPlunderAmount);
+		double totalPlunderForSoldiers = totalPlunderAmount - totalPlunderForTown;
+
+		//Pay the town first.
+		try {
+			nation.getAccount().payTo(totalPlunderForTown, town, "Plunder for Town");
+			nation.getAccount().withdraw(totalPlunderForSoldiers, "Plunder for Soldiers");
+		} catch (EconomyException ignored) {}
+
+		//Pay the soldiers
+		boolean soldiersPaid = SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
+				totalPlunderForSoldiers,
+				town,
+				gatherResidentsShareMap(siege),
+				"Plunder",
+				false);
+
+		//If there were no soldiers, give money to town.
+		if(!soldiersPaid)
+			town.getAccount().deposit(totalPlunderForSoldiers, "Plunder meant for Soldiers");
+
+	}
 
     private static void plunderTown(Siege siege, Town town, Nation nation) {
 		boolean townNewlyBankrupted = false;
@@ -189,14 +253,8 @@ public class PlunderTown {
 	private static void transferPlunderToNation(Siege siege, Nation nation, double totalPlunderAmount, boolean removeMoneyFromTownBank) throws EconomyException {
 		Town town = siege.getTown();
 
-		String distributionRatio = SiegeWarSettings.getWarSiegePlunderDistributionRatio();
-
-		//Calculate total plunder for nation & soldiers
-		String[] nationSoldierRatios = distributionRatio.split(":");
-		int nationRatio = Integer.parseInt(nationSoldierRatios[0]);
-		int soldierRatio = Integer.parseInt(nationSoldierRatios[1]);
-		int totalRatio = nationRatio + soldierRatio;
-		double totalPlunderForNation = totalPlunderAmount / totalRatio * nationRatio;
+		//Calculate plunder ratios for nation & soldiers
+		double totalPlunderForNation = getWinnerRatio(totalPlunderAmount);
 		double totalPlunderForSoldiers = totalPlunderAmount - totalPlunderForNation;
 
 		//Pay nation
@@ -207,18 +265,10 @@ public class PlunderTown {
 		}
 
 		//Pay soldiers
-		Resident resident;
-		Map<Resident, Integer> residentSharesMap = new HashMap<>();
-		for(Map.Entry<String, Integer> uuidShareMapEntry: siege.getAttackerSiegeContributors().entrySet()) {
-			resident = TownyUniverse.getInstance().getResident(UUID.fromString(uuidShareMapEntry.getKey()));
-			if(resident != null) {
-				residentSharesMap.put(resident, uuidShareMapEntry.getValue());
-			}
-		}
 		boolean soldiersPaid = SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
 				totalPlunderForSoldiers,
 				town,
-				residentSharesMap,
+				gatherResidentsShareMap(siege),
 				"Plunder",
 				removeMoneyFromTownBank);
 
@@ -230,5 +280,24 @@ public class PlunderTown {
 				nation.getAccount().deposit(totalPlunderForSoldiers, "Plunder of " + town.getName());
 			}
 		}
+	}
+	
+	private static Map<Resident, Integer> gatherResidentsShareMap(Siege siege) {
+		Resident resident;
+		Map<Resident, Integer> residentSharesMap = new HashMap<>();
+		for(Map.Entry<String, Integer> uuidShareMapEntry: siege.getAttackerSiegeContributors().entrySet()) {
+			resident = TownyUniverse.getInstance().getResident(UUID.fromString(uuidShareMapEntry.getKey()));
+			if(resident != null)
+				residentSharesMap.put(resident, uuidShareMapEntry.getValue());
+		}
+		return residentSharesMap;
+	}
+	
+	private static double getWinnerRatio(double totalPlunderAmount) {
+		//Calculate amount that will be given to the winning government directly.
+		String[] ratios = SiegeWarSettings.getWarSiegePlunderDistributionRatio().split(":");
+		int govtRatio = Integer.parseInt(ratios[0]);
+		int soldierRatio = Integer.parseInt(ratios[1]);
+		return totalPlunderAmount / (govtRatio + soldierRatio) * govtRatio;
 	}
 }

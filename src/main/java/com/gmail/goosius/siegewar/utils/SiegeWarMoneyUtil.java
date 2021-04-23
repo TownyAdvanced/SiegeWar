@@ -8,7 +8,6 @@ import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Government;
@@ -241,13 +240,12 @@ public class SiegeWarMoneyUtil {
 	 * @param reason reason for payment
 	 * @param removeMoneyFromTownBank if true, remove money from town
 	 * @return true if money was paid. False if there were no soldiers
-	 * @throws EconomyException
 	 */
 	public static boolean distributeMoneyAmongSoldiers(double totalAmountForSoldiers,
 													Town town,
 													Map<Resident, Integer> soldierSharesMap,
 													String reason,
-													boolean removeMoneyFromTownBank) throws EconomyException {
+													boolean removeMoneyFromTownBank) {
 		if(soldierSharesMap.size() == 0)
 			return false;
 
