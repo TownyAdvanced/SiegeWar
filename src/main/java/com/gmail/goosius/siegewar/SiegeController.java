@@ -90,7 +90,7 @@ public class SiegeController {
 		SiegeMetaDataController.setStartTime(town, siege.getStartTime());
 		SiegeMetaDataController.setEndTime(town, siege.getScheduledEndTime());
 		SiegeMetaDataController.setActualEndTime(town, siege.getActualEndTime());
-		SiegeMetaDataController.setAttackerSiegeContributors(town, siege.getResidentTimedPointContributors());
+		SiegeMetaDataController.setResidentTimedPointContributors(town, siege.getResidentTimedPointContributors());
 		town.save();
 	}
 
@@ -227,7 +227,7 @@ public class SiegeController {
 
 		siege.setActualEndTime(SiegeMetaDataController.getActualEndTime(town));
 
-		siege.setResidentTimedPointContributors(SiegeMetaDataController.getAttackerSiegeContributors(town));
+		siege.setResidentTimedPointContributors(SiegeMetaDataController.getResidentTimedPointContributors(town));
 		return true;
 	}
 
