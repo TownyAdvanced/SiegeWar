@@ -60,7 +60,7 @@ public class SiegeWarBattleSessionUtil {
 							siege.adjustSiegeBalance(battlePointsOfWinner);
 
 							//Propagate attacker battle contributions to siege history
-							siege.propagateAttackerBattleContributorsToAttackerSiegeContributors();
+							siege.propagateAttackerBattleContributorsToResidentTimedPointContributors();
 
 							//Prepare result for messaging
 							battleResults.put(siege, battlePointsOfWinner);

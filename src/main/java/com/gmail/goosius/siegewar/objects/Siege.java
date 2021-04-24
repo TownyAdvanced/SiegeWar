@@ -61,7 +61,7 @@ public class Siege {
 	private int attackerBattlePoints;
 	private int defenderBattlePoints;
 	private Set<String> attackerBattleContributors;   //UUID's of attackers who contributed during the current battle
-	private Map<String, Integer> attackerSiegeContributors;  //UUID:numContributions map of attackers who contributed during current siege
+	private Map<String, Integer> residentTimedPointContributors;  //UUID:numContributions map of attackers who contributed during current siege
 
 	public Siege(Town town) {
 		this.town = town;
@@ -81,7 +81,7 @@ public class Siege {
 		attackerBattlePoints = 0;
 		defenderBattlePoints = 0;
 		attackerBattleContributors = new HashSet<>();
-		attackerSiegeContributors = new HashMap<>();
+		residentTimedPointContributors = new HashMap<>();
     }
 
     public Town getTown() {
@@ -400,12 +400,12 @@ public class Siege {
 	public void clearAttackerBattleContributors() {
 		attackerBattleContributors.clear();
 	}
-	public Map<String, Integer> getAttackerSiegeContributors() {
-		return attackerSiegeContributors;
+	public Map<String, Integer> getResidentTimedPointContributors() {
+		return residentTimedPointContributors;
 	}
 
-	public void setAttackerSiegeContributors(Map<String, Integer> attackerSiegeContributors) {
-		this.attackerSiegeContributors = attackerSiegeContributors;
+	public void setResidentTimedPointContributors(Map<String, Integer> residentTimedPointContributors) {
+		this.residentTimedPointContributors = residentTimedPointContributors;
 	}
 
 	public void registerAttackerBattleContributorsFromBannerControl() {
@@ -414,12 +414,12 @@ public class Siege {
 		}
 	}
 
-	public void propagateAttackerBattleContributorsToAttackerSiegeContributors() {
+	public void propagateAttackerBattleContributorsToResidentTimedPointContributors() {
 		for(String playerUuid: attackerBattleContributors) {
-			if(attackerSiegeContributors.containsKey(playerUuid)) {
-				attackerSiegeContributors.put(playerUuid, attackerSiegeContributors.get(playerUuid) + 1);
+			if(residentTimedPointContributors.containsKey(playerUuid)) {
+				residentTimedPointContributors.put(playerUuid, residentTimedPointContributors.get(playerUuid) + 1);
 			} else {
-				attackerSiegeContributors.put(playerUuid, 1);
+				residentTimedPointContributors.put(playerUuid, 1);
 			}
 		}
 	}
