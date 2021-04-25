@@ -717,14 +717,14 @@ public enum ConfigNodes {
 			"",
 			"# If this setting is true, then post-war nation immunity is enabled.",
 			"# ",
-			"# This feature gives each nation regular breaks from war, by granting siege-immunity to all its towns after a home-defence war.",
-			"# (A home-defence war occurs when one or more of a nation's towns are under a non-revolt siege)",
+			"# This feature gives each nation regular full-breaks from war, ",
+			"# by granting siege-immunity to all their towns after a home-defence war.",
+			"#  (A home-defence war occurs when one or ore of a nation's towns are under a non-revolt siege)",
 			"# ",
 			"# NOTES:",
 			"# 1. To mitigate exploits, nations suffer some mild negative effects while fighting a home-defence war - cannot claim/unclaim/recruit.",
 			"# 2. To mitigate annoyance-sieges, the cost to attack a nation's towns increases as that nation increases in size.",
-			"# 3. This feature only applies to the home towns of each nation (not occupied foreign towns).",
-			"# 4. If a town switches home nation during a home-defence war",
+			"# 3. If a town switches home nation during a home-defence war",
 			"#     then when the home-defence war ends, the post-war immunity from that town,",
 			"#     is distributed between all the home nations which the town had during the siege."),
 	POST_WAR_NATION_IMMUNITY_DURATION_MODIFIER(
@@ -750,7 +750,7 @@ public enum ConfigNodes {
 			"# ",
 			"# EXAMPLE:",
 			"# If this setting is 0.1,",
-			"# and a nation home town is attacked,",
+			"# and an attack is attempted on a nation town,",
 			"# then for every home town in that nation (including the attacked one),",
 			"# the attack-cost (i.e. warchest) requirement is increased by 10% of the amount it would take to attack that town.");
 
