@@ -60,7 +60,7 @@ public class SiegeWarBattleSessionUtil {
 							siege.adjustSiegeBalance(battlePointsOfWinner);
 
 							//Propagate attacker battle contributions to siege history
-							siege.propagateAttackerBattleContributorsToAttackerSiegeContributors();
+							siege.propagateSuccessfulBattleContributorsToResidentTimedPointContributors();
 
 							//Prepare result for messaging
 							battleResults.put(siege, battlePointsOfWinner);
@@ -83,7 +83,7 @@ public class SiegeWarBattleSessionUtil {
 							siege.clearBannerControlSessions();
 							siege.setAttackerBattlePoints(0);
 							siege.setDefenderBattlePoints(0);
-							siege.clearAttackerBattleContributors();
+							siege.clearSuccessfulBattleContributors();
 
 							//Save siege
 							SiegeController.saveSiege(siege);

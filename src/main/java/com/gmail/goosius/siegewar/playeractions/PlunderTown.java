@@ -189,14 +189,8 @@ public class PlunderTown {
 	private static void transferPlunderToNation(Siege siege, Nation nation, double totalPlunderAmount, boolean removeMoneyFromTownBank) throws EconomyException {
 		Town town = siege.getTown();
 
-		String distributionRatio = SiegeWarSettings.getWarSiegePlunderDistributionRatio();
-
-		//Calculate total plunder for nation & soldiers
-		String[] nationSoldierRatios = distributionRatio.split(":");
-		int nationRatio = Integer.parseInt(nationSoldierRatios[0]);
-		int soldierRatio = Integer.parseInt(nationSoldierRatios[1]);
-		int totalRatio = nationRatio + soldierRatio;
-		double totalPlunderForNation = totalPlunderAmount / totalRatio * nationRatio;
+		//Calculate plunder ratios for nation & soldiers
+		double totalPlunderForNation = getTotalPlunderForNationBank(totalPlunderAmount);
 		double totalPlunderForSoldiers = totalPlunderAmount - totalPlunderForNation;
 
 		//Pay nation
@@ -207,18 +201,10 @@ public class PlunderTown {
 		}
 
 		//Pay soldiers
-		Resident resident;
-		Map<Resident, Integer> residentSharesMap = new HashMap<>();
-		for(Map.Entry<String, Integer> uuidShareMapEntry: siege.getAttackerSiegeContributors().entrySet()) {
-			resident = TownyUniverse.getInstance().getResident(UUID.fromString(uuidShareMapEntry.getKey()));
-			if(resident != null) {
-				residentSharesMap.put(resident, uuidShareMapEntry.getValue());
-			}
-		}
 		boolean soldiersPaid = SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
 				totalPlunderForSoldiers,
 				town,
-				residentSharesMap,
+				gatherResidentsShareMap(siege),
 				"Plunder",
 				removeMoneyFromTownBank);
 
@@ -230,5 +216,24 @@ public class PlunderTown {
 				nation.getAccount().deposit(totalPlunderForSoldiers, "Plunder of " + town.getName());
 			}
 		}
+	}
+	
+	private static Map<Resident, Integer> gatherResidentsShareMap(Siege siege) {
+		Resident resident;
+		Map<Resident, Integer> residentSharesMap = new HashMap<>();
+		for(Map.Entry<String, Integer> uuidShareMapEntry: siege.getResidentTimedPointContributors().entrySet()) {
+			resident = TownyUniverse.getInstance().getResident(UUID.fromString(uuidShareMapEntry.getKey()));
+			if(resident != null)
+				residentSharesMap.put(resident, uuidShareMapEntry.getValue());
+		}
+		return residentSharesMap;
+	}
+	
+	private static double getTotalPlunderForNationBank(double totalPlunderAmount) {
+		//Calculate amount that will be given to the winning government directly.
+		String[] ratios = SiegeWarSettings.getWarSiegePlunderDistributionRatio().split(":");
+		int bankRatio = Integer.parseInt(ratios[0]);
+		int soldierRatio = Integer.parseInt(ratios[1]);
+		return totalPlunderAmount / (bankRatio + soldierRatio) * bankRatio;
 	}
 }
