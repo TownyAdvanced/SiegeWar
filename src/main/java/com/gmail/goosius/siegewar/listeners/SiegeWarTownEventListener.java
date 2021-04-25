@@ -84,6 +84,7 @@ public class SiegeWarTownEventListener implements Listener {
 				return;
 			}
 
+			//Cannot recruit if nation is fighting a home-defence war
 			if (SiegeWarSettings.isPostWarNationImmunityEnabled()
 					&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
 				event.setCancelled(true);
@@ -216,7 +217,7 @@ public class SiegeWarTownEventListener implements Listener {
 					return;
 				}
 
-				//If the town is affected by an all-nation-siege, they cannot claim any land
+				//If the town is fighting a home-defence war, they cannot claim any land
 				if (SiegeWarSettings.isPostWarNationImmunityEnabled()
 						&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
 					event.setCancelled(true);
@@ -270,7 +271,7 @@ public class SiegeWarTownEventListener implements Listener {
 				return;
 			}
 
-			//Town affected by all-nation-siege
+			//Town fighting a home-defence war
 			if (SiegeWarSettings.isPostWarNationImmunityEnabled()
 					&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
 				event.setCancelled(true);

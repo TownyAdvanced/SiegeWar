@@ -306,7 +306,7 @@ public class SiegeWarNationEventListener implements Listener {
 	}
 
 	/*
-	 * If nation is under siege, it cannot add new towns
+	 * If nation is fighting a home-defence war it cannot add new towns
 	 */
 	@EventHandler
 	public void on(NationPreAddTownEvent event) {
