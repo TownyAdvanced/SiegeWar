@@ -413,7 +413,7 @@ public class SiegeController {
 	 * @param nation the nation to check
 	 * @return true if the given nation is fighting a home-defence war
 	 *
-	 * Note: A home defence war is when one of the nation's towns is is under siege attack.
+	 * Note: A home defence war is when one of the nation's towns is is under a non-revolt siege.
 	 */
 	public static boolean isNationFightingAHomeDefenceWar(Nation nation) {
 		for(Siege siege: SiegeController.getSieges()) {
@@ -427,27 +427,6 @@ public class SiegeController {
 			} catch (NotRegisteredException ignored) {}
 		}
 		return false;
-	}
-
-	/**
-	 * @param nation the nation to check
-	 * @return the number of home defences sieges which the nation is involved in
-	 *
-	 * NOTE: A home-defence siege occurs when a nation town is under siege attack.
-	 */
-	public static int getNumActiveHomeDefenceSieges(Nation nation) {
-		int result = 0;
-		for(Siege siege: SiegeController.getSieges()) {
-			try {
-				if(siege.getStatus().isActive()
-					&& siege.getSiegeType() != SiegeType.REVOLT
-					&& siege.getTown().hasNation()
-					&& siege.getTown().getNation() == nation) {
-					result++;
-				}
-			} catch (NotRegisteredException ignored) {}
-		}
-		return result;
 	}
 
 	/**
