@@ -70,7 +70,7 @@ public class SiegeWarTownUtil {
 		 * If this was a town defence siege,
 		 * Grant siege immunity to any nations who were the home nation of the town during the siege
 		 */
-		if(SiegeWarSettings.isPostWarNationImmunityEnabled() && siege.isTownDefence()) {
+		if(SiegeWarSettings.isPostWarNationImmunityEnabled() && siege.getSiegeType() != SiegeType.REVOLT) {
 			int totalBattles = siege.getTotalTownDefenceBattles();
 			double immunityRewardDurationPerBattleInMillis = siegeDurationMillis / totalBattles * SiegeWarSettings.getPostWarNationImmunityDurationModifier();
 			int numBattlesFoughtByNation;

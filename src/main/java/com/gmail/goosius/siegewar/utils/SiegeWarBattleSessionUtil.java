@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -49,12 +50,12 @@ public class SiegeWarBattleSessionUtil {
 					try {
 						if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
 							//Record home nation if this is a town defence siege
-							if(siege.isTownDefence())
+							if(siege.getSiegeType() != SiegeType.REVOLT)
 								siege.recordTownDefenceHomeNation();
 
 							//Continue to next siege if there were no battle points
 							if(siege.getAttackerBattlePoints() == 0 || siege.getDefenderBattlePoints() == 0) {
-								if(siege.isTownDefence())
+								if(siege.getSiegeType() != SiegeType.REVOLT)
 									SiegeController.saveSiege(siege);
 								continue;
 							}

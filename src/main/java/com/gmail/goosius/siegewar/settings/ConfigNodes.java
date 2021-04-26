@@ -719,7 +719,7 @@ public enum ConfigNodes {
 			"# ",
 			"# This feature gives each nation regular full-breaks from war, ",
 			"# by granting siege-immunity to all their towns after a home-defence war.",
-			"#  (A home-defence war occurs when one or ore of a nation's towns are under non-revolt sieges)",
+			"#  (A home-defence war occurs when one or more of a nation's towns are under non-revolt sieges)",
 			"# ",
 			"# NOTES:",
 			"# 1. To mitigate exploits, nations suffer some mild negative effects while fighting a home-defence war - cannot claim/unclaim/recruit.",

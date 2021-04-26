@@ -480,18 +480,6 @@ public class Siege {
 		}
 	}
 
-	/**
-	 * Returns true if this siege is a "town defence"
-	 *
-	 * A town defence is a siege where the town itself is being attacked,
-	 * rather than a siege where the town occupier is being attacked
-	 *
-	 * @return true if the siege is a town defence
-	 */
-	public boolean isTownDefence() {
-		return siegeType == SiegeType.CONQUEST || siegeType == SiegeType.SUPPRESSION;
-	}
-
 	public int getTotalTownDefenceBattles() {
 		int result = 0;
 		for(int homeNationContribution: townDefenceHomeNations.values()) {
