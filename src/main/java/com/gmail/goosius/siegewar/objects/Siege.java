@@ -13,12 +13,7 @@ import com.palmergames.util.TimeMgmt;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
 
@@ -62,7 +57,7 @@ public class Siege {
 	private int defenderBattlePoints;
 	private Set<String> attackerBattleContributors;   //UUID's of attackers who contributed during the current battle
 	private Map<String, Integer> attackerSiegeContributors;  //UUID:numContributions map of attackers who contributed during current siege
-	private Map<String, Integer> townDefenceHomeNations; //UUID:numBattleSessions map of nations who served as the home nation of the town during the siege
+	private Map<UUID, Integer> townDefenceGovernments; //UUID:numBattleSessions map of governments who led the defence of the town. If town is in nation, nation UUID will be used. If town is nationless, town UUID will be used
 
 	public Siege(Town town) {
 		this.town = town;
@@ -83,7 +78,7 @@ public class Siege {
 		defenderBattlePoints = 0;
 		attackerBattleContributors = new HashSet<>();
 		attackerSiegeContributors = new HashMap<>();
-		townDefenceHomeNations = new HashMap<>();
+		townDefenceGovernments = new HashMap<>();
     }
 
     public Town getTown() {
@@ -411,12 +406,12 @@ public class Siege {
 		this.attackerSiegeContributors = attackerSiegeContributors;
 	}
 
-	public Map<String, Integer> getTownDefenceHomeNations() {
-		return townDefenceHomeNations;
+	public Map<UUID, Integer> getTownDefenceGovernments() {
+		return townDefenceGovernments;
 	}
 
-	public void setTownDefenceHomeNations(Map<String, Integer> townDefenceHomeNations) {
-		this.townDefenceHomeNations = townDefenceHomeNations;
+	public void setTownDefenceGovernments(Map<UUID, Integer> townDefenceGovernments) {
+		this.townDefenceGovernments = townDefenceGovernments;
 	}
 
 	public void registerAttackerBattleContributorsFromBannerControl() {
@@ -462,27 +457,27 @@ public class Siege {
 	 *
 	 * @throws NotRegisteredException
 	 */
-	public void recordTownDefenceHomeNation() throws NotRegisteredException {
+	public void recordTownDefenceGovernment() throws NotRegisteredException {
 		//Identify key
-		String contributorKey;
+		UUID governmentUUID;
 		if(town.hasNation())
-			contributorKey = town.getNation().getUUID().toString();
+			governmentUUID = town.getNation().getUUID();
 		else
-			contributorKey = "NO_HOME_NATION";
+			governmentUUID = town.getUUID();
 
 		//Record battle session contribution
-		if(townDefenceHomeNations.containsKey(contributorKey)) {
-			int numBattleSessions = townDefenceHomeNations.get(contributorKey);
+		if(townDefenceGovernments.containsKey(governmentUUID)) {
+			int numBattleSessions = townDefenceGovernments.get(governmentUUID);
 			numBattleSessions++;
-			townDefenceHomeNations.put(contributorKey, numBattleSessions);
+			townDefenceGovernments.put(governmentUUID, numBattleSessions);
 		} else {
-			townDefenceHomeNations.put(contributorKey, 1);
+			townDefenceGovernments.put(governmentUUID, 1);
 		}
 	}
 
-	public int getTotalTownDefenceBattles() {
+	public int getTotalTownDefenceBattleSessions() {
 		int result = 0;
-		for(int homeNationContribution: townDefenceHomeNations.values()) {
+		for(int homeNationContribution: townDefenceGovernments.values()) {
 			result += homeNationContribution;
 		}
 		return result;

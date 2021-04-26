@@ -12,6 +12,7 @@ import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 
@@ -49,7 +50,7 @@ public class SiegeMetaDataController {
 	private static LongDataField endTime = new LongDataField("siegewar_endTime", 0l);
 	private static LongDataField actualEndTime = new LongDataField("siegewar_actualEndTime", 0l);
 	private static StringDataField attackerSiegeContributors = new StringDataField("siegewar_attackerSiegeContributors", "");
-	private static StringDataField townDefenceHomeNations = new StringDataField("siegewar_townDefenceHomeNations", "");
+	private static StringDataField townDefenceGovernments = new StringDataField("siegewar_townDefenceGovernments", "");
 
 	public SiegeMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
@@ -361,8 +362,8 @@ public class SiegeMetaDataController {
 		}
 	}
 
-	public static Map<String, Integer> getTownDefenceHomeNations(Town town) {
-		StringDataField sdf = (StringDataField) townDefenceHomeNations.clone();
+	public static Map<UUID, Integer> getTownDefenceGovernments(Town town) {
+		StringDataField sdf = (StringDataField) townDefenceGovernments.clone();
 
 		String dataAsString = null;
 		if (town.hasMeta(sdf.getKey()))
@@ -371,14 +372,14 @@ public class SiegeMetaDataController {
 		if(dataAsString == null || dataAsString.length() == 0) {
 			return new HashMap<>();
 		} else {
-			Map<String, Integer> contributionsMap = new HashMap<>();
+			Map<UUID, Integer> governmentsMap = new HashMap<>();
 			String[] contributionDataEntries = dataAsString.split(",");
 			String[] contributionDataPair;
 			for(String contributionDataEntry: contributionDataEntries) {
 				contributionDataPair = contributionDataEntry.split(":");
-				contributionsMap.put(contributionDataPair[0], Integer.parseInt(contributionDataPair[1]));
+				governmentsMap.put(UUID.fromString(contributionDataPair[0]), Integer.parseInt(contributionDataPair[1]));
 			}
-			return contributionsMap;
+			return governmentsMap;
 		}
 	}
 
@@ -401,22 +402,22 @@ public class SiegeMetaDataController {
 			town.addMetaData(new StringDataField("siegewar_attackerSiegeContributors", mapAsStringBuilder.toString()));
 	}
 
-	public static void setTownDefenceHomeNations(Town town, Map<String,Integer> contributorsMap) {
+	public static void setTownDefenceGovernments(Town town, Map<UUID,Integer> governmentsMap) {
 		StringBuilder mapAsStringBuilder = new StringBuilder();
 		boolean firstEntry = true;
-		for(Map.Entry<String,Integer> contributorEntry: contributorsMap.entrySet()) {
+		for(Map.Entry<UUID,Integer> governmentEntry: governmentsMap.entrySet()) {
 			if(firstEntry) {
 				firstEntry = false;
 			} else {
 				mapAsStringBuilder.append(",");
 			}
-			mapAsStringBuilder.append(contributorEntry.getKey()).append(":").append(contributorEntry.getValue());
+			mapAsStringBuilder.append(governmentEntry.getKey()).append(":").append(governmentEntry.getValue());
 		}
 
-		StringDataField sdf = (StringDataField) townDefenceHomeNations.clone();
+		StringDataField sdf = (StringDataField) townDefenceGovernments.clone();
 		if (town.hasMeta(sdf.getKey()))
 			MetaDataUtil.setString(town, sdf, mapAsStringBuilder.toString());
 		else
-			town.addMetaData(new StringDataField(townDefenceHomeNations.getKey(), mapAsStringBuilder.toString()));
+			town.addMetaData(new StringDataField(townDefenceGovernments.getKey(), mapAsStringBuilder.toString()));
 	}
 }

@@ -13,6 +13,7 @@ import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownBlockType;
 
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Util class containing methods related to town flags/permssions.
@@ -71,15 +72,15 @@ public class SiegeWarTownUtil {
 		 * Grant siege immunity to any nations who were the home nation of the town during the siege
 		 */
 		if(SiegeWarSettings.isPostWarNationImmunityEnabled() && siege.getSiegeType() != SiegeType.REVOLT) {
-			int totalBattles = siege.getTotalTownDefenceBattles();
+			int totalBattles = siege.getTotalTownDefenceBattleSessions();
 			double immunityRewardDurationPerBattleInMillis = siegeDurationMillis / totalBattles * SiegeWarSettings.getPostWarNationImmunityDurationModifier();
 			int numBattlesFoughtByNation;
 			double siegeImmunityRewardInMillis;
-			for(Map.Entry<String,Integer> nationEntry: siege.getTownDefenceHomeNations().entrySet()) {
-				if(!nationEntry.getKey().equals("NO_HOME_NATION")) {
-					Nation nation = TownyUniverse.getInstance().getNation(nationEntry.getKey());
+			for(Map.Entry<UUID,Integer> townDefenceGovernmentEntry: siege.getTownDefenceGovernments().entrySet()) {
+				if(!townDefenceGovernmentEntry.getKey().equals(town.getUUID())) {
+					Nation nation = TownyUniverse.getInstance().getNation(townDefenceGovernmentEntry.getKey());
 					if(nation != null) {
-						numBattlesFoughtByNation = nationEntry.getValue();
+						numBattlesFoughtByNation = townDefenceGovernmentEntry.getValue();
 						siegeImmunityRewardInMillis = immunityRewardDurationPerBattleInMillis * numBattlesFoughtByNation;
 						grantSiegeImmunityToNation(nation, siegeImmunityRewardInMillis);
 					}
@@ -95,13 +96,15 @@ public class SiegeWarTownUtil {
 		 *
 		 * Otherwise, grant the immunity immediately.
 		 */
+		long pendingSiegeImmunityMillis = NationMetaDataController.getPendingSiegeImmunityMillis(nation);
+
 		if(SiegeController.doesNationHaveAnyHomeDefenceContributionsInActiveSieges(nation)) {
-			long pendingSiegeImmunityMillis = NationMetaDataController.getPendingSiegeImmunityMillis(nation);
+			//Make immunity pending
 			pendingSiegeImmunityMillis += siegeImmunityMillis;
 			NationMetaDataController.setPendingSiegeImmunityMillis(nation, pendingSiegeImmunityMillis);
 			nation.save();
 		} else {
-			long pendingSiegeImmunityMillis = NationMetaDataController.getPendingSiegeImmunityMillis(nation);
+			//Grant immunity immediately
 			long totalSiegeImmunityMillis = pendingSiegeImmunityMillis + (long)siegeImmunityMillis;
 
 			for(Town nationTown: nation.getTowns()) {
