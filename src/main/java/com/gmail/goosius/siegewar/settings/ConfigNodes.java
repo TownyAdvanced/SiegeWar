@@ -713,7 +713,7 @@ public enum ConfigNodes {
 			""),
 	POST_WAR_NATION_IMMUNITY_ENABLED(
 			"post_war_nation_immunity.enabled",
-			"true",
+			"false",
 			"",
 			"# If this setting is true, then post-war nation immunity is enabled.",
 			"# ",
