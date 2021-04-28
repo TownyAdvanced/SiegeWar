@@ -94,29 +94,28 @@ public class SiegeWarTownUtil {
 		}
 	}
 
-	private static void grantSiegeImmunityToNation(Nation nation, double siegeImmunityMillis) {
+	private static void grantSiegeImmunityToNation(Nation nation, double siegeImmunityDurationMillis) {
 		/*
 		 * If the nation has contributions in active sieges, make the immunity pending.
 		 * (i.e. wait until those sieges end until it is granted)
 		 *
 		 * Otherwise, grant the immunity immediately.
 		 */
-		long pendingSiegeImmunityMillis = NationMetaDataController.getPendingSiegeImmunityMillis(nation);
+		long pendingSiegeImmunityDurationMillis = NationMetaDataController.getPendingSiegeImmunityMillis(nation);
 
 		if(SiegeController.doesNationHaveAnyHomeDefenceContributionsInActiveSieges(nation)) {
 			//Make immunity pending
-			pendingSiegeImmunityMillis += siegeImmunityMillis;
-			NationMetaDataController.setPendingSiegeImmunityMillis(nation, pendingSiegeImmunityMillis);
+			pendingSiegeImmunityDurationMillis += siegeImmunityDurationMillis;
+			NationMetaDataController.setPendingSiegeImmunityMillis(nation, pendingSiegeImmunityDurationMillis);
 			nation.save();
 		} else {
 			//Grant immunity immediately
-			long siegeImmunityToGrantMillis = pendingSiegeImmunityMillis + (long)siegeImmunityMillis;
-			double currentSiegeImmunityMillis;
+			long totalSiegeImmunityDurationMillis = pendingSiegeImmunityDurationMillis + (long)siegeImmunityDurationMillis;
+			long siegeImmunityEndTime = System.currentTimeMillis() + totalSiegeImmunityDurationMillis;
 
 			for(Town nationTown: nation.getTowns()) {
-				currentSiegeImmunityMillis = TownMetaDataController.getSiegeImmunityEndTime(nationTown)- System.currentTimeMillis();
-				if(currentSiegeImmunityMillis < siegeImmunityToGrantMillis) {
-					TownMetaDataController.setSiegeImmunityEndTime(nationTown, siegeImmunityToGrantMillis);
+				if(siegeImmunityEndTime > TownMetaDataController.getSiegeImmunityEndTime(nationTown)) {
+					TownMetaDataController.setSiegeImmunityEndTime(nationTown, siegeImmunityEndTime);
 					nationTown.save();
 				}
 			}
