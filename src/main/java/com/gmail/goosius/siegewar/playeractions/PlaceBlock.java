@@ -287,6 +287,7 @@ public class PlaceBlock {
 					StartLiberationSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 				}
 			} else {
+				//Conquest siege
 				StartConquestSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 			}
 		}
