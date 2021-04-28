@@ -725,9 +725,10 @@ public enum ConfigNodes {
 			"# NOTES:",
 			"# 1. To mitigate exploits, nations suffer some mild negative effects while fighting a home-defence war - cannot claim/unclaim/recruit.",
 			"# 2. To mitigate annoyance-sieges, the cost to attack a nation's towns increases as that nation increases in size.",
-			"# 3. If a town switches home nation during a home-defence war",
+			"# 3. If a town switches nation during a home-defence war",
 			"#     then when the home-defence war ends, the post-war immunity from that town,",
-			"#     is distributed between all the home nations which the town had during the siege."),
+			"#     is distributed between all the nations which the town had during the siege",
+			"#     (but not any occupying nation)."),
 	NATION_SIEGE_IMMUNITY_DURATION_MODIFIER(
 			"nation_siege_immunity.duration_modifier",
 			"0.5",
@@ -741,7 +742,7 @@ public enum ConfigNodes {
 			"# A nation suffers a big home defence war, of 4 sieges, with each siege lasting 3 days.",
 			"# This gives a Total Siege Duration of 12 days",
 			"# If this value is 0.5, then immunity duration will be 6 days",
-			"# Thus each non-besieged nation town will get 6 days of siege immunity."),
+			"# Thus when the war ends, each non-besieged nation town will get 6 days of siege immunity."),
 	NATION_SIEGE_IMMUNITY_HOME_TOWN_CONTRIBUTION_TO_ATTACK_COST(
 			"nation_siege_immunity.home_town_contribution_to_attack_cost",
 			"0.1",
@@ -757,7 +758,7 @@ public enum ConfigNodes {
 			"# EXAMPLE:",
 			"# If this setting is 0.1,",
 			"# and an attack is attempted on a nation town,",
-			"# then for every home town in that nation (including the attacked one),",
+			"# then for every natural town (i.e. not occupied foreign towns) in that nation,",
 			"# the attack-cost (i.e. warchest) requirement is increased by 10% of the amount it would take to attack that town.");
 
 	private final String Root;

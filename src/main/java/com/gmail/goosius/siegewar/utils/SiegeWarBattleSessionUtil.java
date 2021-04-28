@@ -54,7 +54,7 @@ public class SiegeWarBattleSessionUtil {
 								siege.recordPrimaryTownGovernment();
 
 							//Continue to next siege if there were no battle points
-							if(siege.getAttackerBattlePoints() == 0 || siege.getDefenderBattlePoints() == 0) {
+							if(siege.getAttackerBattlePoints() == 0 && siege.getDefenderBattlePoints() == 0) {
 								if(SiegeWarSettings.isNationSiegeImmunityEnabled())
 									SiegeController.saveSiege(siege);
 								continue;
