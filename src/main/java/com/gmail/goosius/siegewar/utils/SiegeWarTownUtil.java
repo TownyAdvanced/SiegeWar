@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -71,7 +70,7 @@ public class SiegeWarTownUtil {
 		 * Grant siege immunity to any nations who were the home nation of the town during the siege
 		 */
 		if(SiegeWarSettings.isNationSiegeImmunityEnabled()) {
-			int totalBattles = siege.getTotalTownDefenceBattleSessions();
+			int totalBattles = siege.getTotalBattleSessions();
 			double immunityRewardDurationPerBattleInMillis = siegeDurationMillis / totalBattles * SiegeWarSettings.getNationSiegeImmunityDurationModifier();
 			int numBattleSessionsForNation;
 			double siegeImmunityRewardInMillis;

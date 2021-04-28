@@ -454,8 +454,8 @@ public class Siege {
 
 	/**
 	 * Record who is the primary government of the town
-	 * If the town has a nation, nation govt will be recorded,
-	 * otherwise town govt will be recorded
+	 * If the town has a nation, nation uuid will be recorded,
+	 * otherwise town uuid will be recorded.
 	 *
 	 * @throws NotRegisteredException
 	 */
@@ -477,7 +477,7 @@ public class Siege {
 		}
 	}
 
-	public int getTotalTownDefenceBattleSessions() {
+	public int getTotalBattleSessions() {
 		int result = 0;
 		for(int homeNationContribution: primaryTownGovernments.values()) {
 			result += homeNationContribution;
