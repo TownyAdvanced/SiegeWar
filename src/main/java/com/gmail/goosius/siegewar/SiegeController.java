@@ -409,7 +409,7 @@ public class SiegeController {
 	 * @param nation the nation to check
 	 * @return true if the given nation is fighting a home-defence war
 	 *
-	 * Note: A home defence war is when one of the nation's towns is is under a non-revolt siege.
+	 * Note: A home defence war is when one or more of the nation's natural towns (ie not occupied foreign towns) is under siege.
 	 */
 	public static boolean isNationFightingAHomeDefenceWar(Nation nation) {
 		for(Siege siege: SiegeController.getSieges()) {
