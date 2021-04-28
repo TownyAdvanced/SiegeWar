@@ -50,12 +50,12 @@ public class SiegeWarBattleSessionUtil {
 					try {
 						if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
 							//Record home nation if this is a town defence siege
-							if(siege.getSiegeType() != SiegeType.REVOLT)
+							if(SiegeWarSettings.isNationSiegeImmunityEnabled())
 								siege.recordTownDefenceGovernment();
 
 							//Continue to next siege if there were no battle points
 							if(siege.getAttackerBattlePoints() == 0 || siege.getDefenderBattlePoints() == 0) {
-								if(siege.getSiegeType() != SiegeType.REVOLT)
+								if(SiegeWarSettings.isNationSiegeImmunityEnabled())
 									SiegeController.saveSiege(siege);
 								continue;
 							}

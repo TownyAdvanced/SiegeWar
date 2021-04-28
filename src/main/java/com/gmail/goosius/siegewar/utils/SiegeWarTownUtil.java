@@ -71,15 +71,23 @@ public class SiegeWarTownUtil {
 		 * If this was a town defence siege,
 		 * Grant siege immunity to any nations who were the home nation of the town during the siege
 		 */
-		if(SiegeWarSettings.isPostWarNationImmunityEnabled() && siege.getSiegeType() != SiegeType.REVOLT) {
+		if(SiegeWarSettings.isNationSiegeImmunityEnabled()) {
 			int totalBattles = siege.getTotalTownDefenceBattleSessions();
-			double immunityRewardDurationPerBattleInMillis = siegeDurationMillis / totalBattles * SiegeWarSettings.getPostWarNationImmunityDurationModifier();
+			double immunityRewardDurationPerBattleInMillis = siegeDurationMillis / totalBattles * SiegeWarSettings.getNationSiegeImmunityDurationModifier();
 			int numBattlesFoughtByNation;
 			double siegeImmunityRewardInMillis;
+
+			System.out.println("xxxTotal Battles" + totalBattles);
+			System.out.println("xxxReward Per battle" + immunityRewardDurationPerBattleInMillis);
+
+
 			for(Map.Entry<UUID,Integer> townDefenceGovernmentEntry: siege.getTownDefenceGovernments().entrySet()) {
 				if(!townDefenceGovernmentEntry.getKey().equals(town.getUUID())) {
 					Nation nation = TownyUniverse.getInstance().getNation(townDefenceGovernmentEntry.getKey());
 					if(nation != null) {
+
+						System.out.println("Granting Immunity now");
+
 						numBattlesFoughtByNation = townDefenceGovernmentEntry.getValue();
 						siegeImmunityRewardInMillis = immunityRewardDurationPerBattleInMillis * numBattlesFoughtByNation;
 						grantSiegeImmunityToNation(nation, siegeImmunityRewardInMillis);
@@ -105,11 +113,13 @@ public class SiegeWarTownUtil {
 			nation.save();
 		} else {
 			//Grant immunity immediately
-			long totalSiegeImmunityMillis = pendingSiegeImmunityMillis + (long)siegeImmunityMillis;
+			long siegeImmunityToGrantMillis = pendingSiegeImmunityMillis + (long)siegeImmunityMillis;
+			double currentSiegeImmunityMillis;
 
 			for(Town nationTown: nation.getTowns()) {
-				if(TownMetaDataController.getSiegeImmunityEndTime(nationTown) < siegeImmunityMillis) {
-					TownMetaDataController.setSiegeImmunityEndTime(nationTown, totalSiegeImmunityMillis);
+				currentSiegeImmunityMillis = TownMetaDataController.getSiegeImmunityEndTime(nationTown)- System.currentTimeMillis();
+				if(currentSiegeImmunityMillis < siegeImmunityToGrantMillis) {
+					TownMetaDataController.setSiegeImmunityEndTime(nationTown, siegeImmunityToGrantMillis);
 					nationTown.save();
 				}
 			}
