@@ -121,7 +121,7 @@ public class SiegeWarTownUtil {
 				}
 			}
 
-			NationMetaDataController.setPendingSiegeImmunityMillis(nation, 0);
+			NationMetaDataController.removePendingSiegeImmunityMillis(nation);
 			nation.save();
 		}
 	}
