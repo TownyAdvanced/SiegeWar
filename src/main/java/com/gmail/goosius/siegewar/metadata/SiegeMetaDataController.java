@@ -50,7 +50,7 @@ public class SiegeMetaDataController {
 	private static LongDataField endTime = new LongDataField("siegewar_endTime", 0l);
 	private static LongDataField actualEndTime = new LongDataField("siegewar_actualEndTime", 0l);
 	private static StringDataField attackerSiegeContributors = new StringDataField("siegewar_attackerSiegeContributors", "");
-	private static StringDataField townDefenceGovernments = new StringDataField("siegewar_townDefenceGovernments", "");
+	private static StringDataField primaryTownGovernments = new StringDataField("siegewar_primaryTownGovernments", "");
 
 	public SiegeMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
@@ -362,8 +362,8 @@ public class SiegeMetaDataController {
 		}
 	}
 
-	public static Map<UUID, Integer> getTownDefenceGovernments(Town town) {
-		StringDataField sdf = (StringDataField) townDefenceGovernments.clone();
+	public static Map<UUID, Integer> getPrimaryTownGovernments(Town town) {
+		StringDataField sdf = (StringDataField) primaryTownGovernments.clone();
 
 		String dataAsString = null;
 		if (town.hasMeta(sdf.getKey()))
@@ -402,7 +402,7 @@ public class SiegeMetaDataController {
 			town.addMetaData(new StringDataField("siegewar_attackerSiegeContributors", mapAsStringBuilder.toString()));
 	}
 
-	public static void setTownDefenceGovernments(Town town, Map<UUID,Integer> governmentsMap) {
+	public static void setPrimaryTownGovernments(Town town, Map<UUID,Integer> governmentsMap) {
 		StringBuilder mapAsStringBuilder = new StringBuilder();
 		boolean firstEntry = true;
 		for(Map.Entry<UUID,Integer> governmentEntry: governmentsMap.entrySet()) {
@@ -414,10 +414,10 @@ public class SiegeMetaDataController {
 			mapAsStringBuilder.append(governmentEntry.getKey()).append(":").append(governmentEntry.getValue());
 		}
 
-		StringDataField sdf = (StringDataField) townDefenceGovernments.clone();
+		StringDataField sdf = (StringDataField) primaryTownGovernments.clone();
 		if (town.hasMeta(sdf.getKey()))
 			MetaDataUtil.setString(town, sdf, mapAsStringBuilder.toString());
 		else
-			town.addMetaData(new StringDataField(townDefenceGovernments.getKey(), mapAsStringBuilder.toString()));
+			town.addMetaData(new StringDataField(primaryTownGovernments.getKey(), mapAsStringBuilder.toString()));
 	}
 }

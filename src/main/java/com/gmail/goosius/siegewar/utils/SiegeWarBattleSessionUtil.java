@@ -49,9 +49,9 @@ public class SiegeWarBattleSessionUtil {
 				for (Siege siege : SiegeController.getSieges()) {
 					try {
 						if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
-							//Record home nation if this is a town defence siege
+							//Record primary government of besieged town
 							if(SiegeWarSettings.isNationSiegeImmunityEnabled())
-								siege.recordTownDefenceGovernment();
+								siege.recordPrimaryTownGovernment();
 
 							//Continue to next siege if there were no battle points
 							if(siege.getAttackerBattlePoints() == 0 || siege.getDefenderBattlePoints() == 0) {

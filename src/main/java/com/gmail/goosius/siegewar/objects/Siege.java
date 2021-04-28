@@ -57,7 +57,7 @@ public class Siege {
 	private int defenderBattlePoints;
 	private Set<String> attackerBattleContributors;   //UUID's of attackers who contributed during the current battle
 	private Map<String, Integer> attackerSiegeContributors;  //UUID:numContributions map of attackers who contributed during current siege
-	private Map<UUID, Integer> townDefenceGovernments; //UUID:numBattleSessions map of governments who led the defence of the town. If town is in nation, nation UUID will be used. If town is nationless, town UUID will be used
+	private Map<UUID, Integer> primaryTownGovernments; //UUID:numBattleSessions map of governments who led the town during the siege. If town was is a nation, nation UUID will be used, otherwise town UUID will be used
 
 	public Siege(Town town) {
 		this.town = town;
@@ -78,7 +78,7 @@ public class Siege {
 		defenderBattlePoints = 0;
 		attackerBattleContributors = new HashSet<>();
 		attackerSiegeContributors = new HashMap<>();
-		townDefenceGovernments = new HashMap<>();
+		primaryTownGovernments = new HashMap<>();
     }
 
     public Town getTown() {
@@ -406,12 +406,12 @@ public class Siege {
 		this.attackerSiegeContributors = attackerSiegeContributors;
 	}
 
-	public Map<UUID, Integer> getTownDefenceGovernments() {
-		return townDefenceGovernments;
+	public Map<UUID, Integer> getPrimaryTownGovernments() {
+		return primaryTownGovernments;
 	}
 
-	public void setTownDefenceGovernments(Map<UUID, Integer> townDefenceGovernments) {
-		this.townDefenceGovernments = townDefenceGovernments;
+	public void setPrimaryTownGovernments(Map<UUID, Integer> primaryTownGovernments) {
+		this.primaryTownGovernments = primaryTownGovernments;
 	}
 
 	public void registerAttackerBattleContributorsFromBannerControl() {
@@ -453,11 +453,13 @@ public class Siege {
 	}
 
 	/**
-	 * Record who was the home nation of the town during a town defence battle session
+	 * Record who is the primary government of the town
+	 * If the town has a nation, nation govt will be recorded,
+	 * otherwise town govt will be recorded
 	 *
 	 * @throws NotRegisteredException
 	 */
-	public void recordTownDefenceGovernment() throws NotRegisteredException {
+	public void recordPrimaryTownGovernment() throws NotRegisteredException {
 		//Identify key
 		UUID governmentUUID;
 		if(town.hasNation())
@@ -466,18 +468,18 @@ public class Siege {
 			governmentUUID = town.getUUID();
 
 		//Record battle session contribution
-		if(townDefenceGovernments.containsKey(governmentUUID)) {
-			int numBattleSessions = townDefenceGovernments.get(governmentUUID);
+		if(primaryTownGovernments.containsKey(governmentUUID)) {
+			int numBattleSessions = primaryTownGovernments.get(governmentUUID);
 			numBattleSessions++;
-			townDefenceGovernments.put(governmentUUID, numBattleSessions);
+			primaryTownGovernments.put(governmentUUID, numBattleSessions);
 		} else {
-			townDefenceGovernments.put(governmentUUID, 1);
+			primaryTownGovernments.put(governmentUUID, 1);
 		}
 	}
 
 	public int getTotalTownDefenceBattleSessions() {
 		int result = 0;
-		for(int homeNationContribution: townDefenceGovernments.values()) {
+		for(int homeNationContribution: primaryTownGovernments.values()) {
 			result += homeNationContribution;
 		}
 		return result;

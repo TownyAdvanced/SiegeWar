@@ -68,28 +68,26 @@ public class SiegeWarTownUtil {
 		town.save();
 
 		/*
-		 * If this was a town defence siege,
 		 * Grant siege immunity to any nations who were the home nation of the town during the siege
 		 */
 		if(SiegeWarSettings.isNationSiegeImmunityEnabled()) {
 			int totalBattles = siege.getTotalTownDefenceBattleSessions();
 			double immunityRewardDurationPerBattleInMillis = siegeDurationMillis / totalBattles * SiegeWarSettings.getNationSiegeImmunityDurationModifier();
-			int numBattlesFoughtByNation;
+			int numBattleSessionsForNation;
 			double siegeImmunityRewardInMillis;
 
 			System.out.println("xxxTotal Battles" + totalBattles);
 			System.out.println("xxxReward Per battle" + immunityRewardDurationPerBattleInMillis);
 
-
-			for(Map.Entry<UUID,Integer> townDefenceGovernmentEntry: siege.getTownDefenceGovernments().entrySet()) {
-				if(!townDefenceGovernmentEntry.getKey().equals(town.getUUID())) {
-					Nation nation = TownyUniverse.getInstance().getNation(townDefenceGovernmentEntry.getKey());
+			for(Map.Entry<UUID,Integer> primaryTownGovernmentEntry: siege.getPrimaryTownGovernments().entrySet()) {
+				if(!primaryTownGovernmentEntry.getKey().equals(town.getUUID())) {
+					Nation nation = TownyUniverse.getInstance().getNation(primaryTownGovernmentEntry.getKey());
 					if(nation != null) {
 
 						System.out.println("Granting Immunity now");
 
-						numBattlesFoughtByNation = townDefenceGovernmentEntry.getValue();
-						siegeImmunityRewardInMillis = immunityRewardDurationPerBattleInMillis * numBattlesFoughtByNation;
+						numBattleSessionsForNation = primaryTownGovernmentEntry.getValue();
+						siegeImmunityRewardInMillis = immunityRewardDurationPerBattleInMillis * numBattleSessionsForNation;
 						grantSiegeImmunityToNation(nation, siegeImmunityRewardInMillis);
 					}
 				}
