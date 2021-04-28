@@ -311,6 +311,9 @@ public class SiegeMetaDataController {
 		sdf = (StringDataField) attackerSiegeContributors.clone();
 		if (town.hasMeta(sdf.getKey()))
 			town.removeMetaData(sdf);
+		sdf = (StringDataField) primaryTownGovernments.clone();
+		if (town.hasMeta(sdf.getKey()))
+			town.removeMetaData(sdf);
 
 		IntegerDataField idf = (IntegerDataField) siegeBalance.clone();
 		if (town.hasMeta(idf.getKey()))
