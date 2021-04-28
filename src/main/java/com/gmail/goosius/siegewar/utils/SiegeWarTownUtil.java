@@ -75,16 +75,10 @@ public class SiegeWarTownUtil {
 			int numBattleSessionsForNation;
 			double siegeImmunityRewardInMillis;
 
-			System.out.println("xxxTotal Battles" + totalBattles);
-			System.out.println("xxxReward Per battle" + immunityRewardDurationPerBattleInMillis);
-
 			for(Map.Entry<UUID,Integer> primaryTownGovernmentEntry: siege.getPrimaryTownGovernments().entrySet()) {
 				if(!primaryTownGovernmentEntry.getKey().equals(town.getUUID())) {
 					Nation nation = TownyUniverse.getInstance().getNation(primaryTownGovernmentEntry.getKey());
 					if(nation != null) {
-
-						System.out.println("Granting Immunity now");
-
 						numBattleSessionsForNation = primaryTownGovernmentEntry.getValue();
 						siegeImmunityRewardInMillis = immunityRewardDurationPerBattleInMillis * numBattleSessionsForNation;
 						grantSiegeImmunityToNation(nation, siegeImmunityRewardInMillis);
