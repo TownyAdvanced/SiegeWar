@@ -55,8 +55,8 @@ public class Siege {
 	private int cannonSessionRemainingShortTicks;  //Short ticks remaining until standard cannon protections are restored
 	private int attackerBattlePoints;
 	private int defenderBattlePoints;
-	private Set<String> attackerBattleContributors;   //UUID's of attackers who contributed during the current battle
-	private Map<String, Integer> attackerSiegeContributors;  //UUID:numContributions map of attackers who contributed during current siege
+	private Set<String> successfulBattleContributors;   //UUID's of residents who contributed during the current battle
+	private Map<String, Integer> residentTimedPointContributors;  //UUID:numContributions map of residents who contributed during current siege
 	private Map<UUID, Integer> primaryTownGovernments; //UUID:numBattleSessions map of governments who led the town during the siege. If town was is a nation, nation UUID will be used, otherwise town UUID will be used
 
 	public Siege(Town town) {
@@ -76,8 +76,8 @@ public class Siege {
 		cannonSessionRemainingShortTicks = 0;
 		attackerBattlePoints = 0;
 		defenderBattlePoints = 0;
-		attackerBattleContributors = new HashSet<>();
-		attackerSiegeContributors = new HashMap<>();
+		successfulBattleContributors = new HashSet<>();
+		residentTimedPointContributors = new HashMap<>();
 		primaryTownGovernments = new HashMap<>();
     }
 
@@ -386,46 +386,34 @@ public class Siege {
 		}
 	}
 
-	public Set<String> getAttackerBattleContributors() {
-		return attackerBattleContributors;
+	public Set<String> getSuccessfulBattleContributors() {
+		return successfulBattleContributors;
 	}
 
-	public void setAttackerBattleContributors(Set<String> attackerBattleContributors) {
-		this.attackerBattleContributors = attackerBattleContributors;
+	public void clearSuccessfulBattleContributors() {
+		successfulBattleContributors.clear();
 	}
 
-	public void clearAttackerBattleContributors() {
-		attackerBattleContributors.clear();
+	public Map<String, Integer> getResidentTimedPointContributors() {
+		return residentTimedPointContributors;
 	}
 
-	public Map<String, Integer> getAttackerSiegeContributors() {
-		return attackerSiegeContributors;
+	public void setResidentTimedPointContributors(Map<String, Integer> residentTimedPointContributors) {
+		this.residentTimedPointContributors = residentTimedPointContributors;
 	}
 
-	public void setAttackerSiegeContributors(Map<String, Integer> attackerSiegeContributors) {
-		this.attackerSiegeContributors = attackerSiegeContributors;
-	}
-
-	public Map<UUID, Integer> getPrimaryTownGovernments() {
-		return primaryTownGovernments;
-	}
-
-	public void setPrimaryTownGovernments(Map<UUID, Integer> primaryTownGovernments) {
-		this.primaryTownGovernments = primaryTownGovernments;
-	}
-
-	public void registerAttackerBattleContributorsFromBannerControl() {
+	public void registerSuccessfulBattleContributorsFromBannerControl() {
 		for(Resident resident: bannerControllingResidents) {
-			attackerBattleContributors.add(resident.getUUID().toString());
+			successfulBattleContributors.add(resident.getUUID().toString());
 		}
 	}
 
-	public void propagateAttackerBattleContributorsToAttackerSiegeContributors() {
-		for(String playerUuid: attackerBattleContributors) {
-			if(attackerSiegeContributors.containsKey(playerUuid)) {
-				attackerSiegeContributors.put(playerUuid, attackerSiegeContributors.get(playerUuid) + 1);
+	public void propagateSuccessfulBattleContributorsToResidentTimedPointContributors() {
+		for(String playerUuid: successfulBattleContributors) {
+			if(residentTimedPointContributors.containsKey(playerUuid)) {
+				residentTimedPointContributors.put(playerUuid, residentTimedPointContributors.get(playerUuid) + 1);
 			} else {
-				attackerSiegeContributors.put(playerUuid, 1);
+				residentTimedPointContributors.put(playerUuid, 1);
 			}
 		}
 	}
@@ -476,6 +464,15 @@ public class Siege {
 			primaryTownGovernments.put(governmentUUID, 1);
 		}
 	}
+
+	public Map<UUID, Integer> getPrimaryTownGovernments() {
+		return primaryTownGovernments;
+	}
+
+	public void setPrimaryTownGovernments(Map<UUID, Integer> primaryTownGovernments) {
+		this.primaryTownGovernments = primaryTownGovernments;
+	}
+
 
 	public int getTotalBattleSessions() {
 		int result = 0;

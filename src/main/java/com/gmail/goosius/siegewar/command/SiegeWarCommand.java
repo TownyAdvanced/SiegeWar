@@ -15,7 +15,6 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -272,8 +271,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 				} catch (TownyException te) {
 					Messaging.sendErrorMsg(player, te.getMessage());
-				} catch (EconomyException ee) {
-					Messaging.sendErrorMsg(player, ee.getMessage());
 				}
 				break;
 

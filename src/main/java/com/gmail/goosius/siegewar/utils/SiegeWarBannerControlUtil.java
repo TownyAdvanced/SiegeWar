@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -35,7 +36,7 @@ public class SiegeWarBannerControlUtil {
 	public static void evaluateBannerControl(Siege siege) {
 		try {
 			if(siege.getStatus() == SiegeStatus.IN_PROGRESS) {
-				evaluateBannerControlEffects(siege);
+				evaluateBannerControlPoints(siege);
 				evaluateExistingBannerControlSessions(siege);
 				evaluateNewBannerControlSessions(siege);
 			}
@@ -290,7 +291,7 @@ public class SiegeWarBannerControlUtil {
 		}
 	}
 
-	private static void evaluateBannerControlEffects(Siege siege) {
+	private static void evaluateBannerControlPoints(Siege siege) {
 		if(!BattleSession.getBattleSession().isActive())
 			return;
 
@@ -305,12 +306,15 @@ public class SiegeWarBannerControlUtil {
 				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarBattlePointsForAttackerOccupation();
 				battlePoints = SiegeWarScoringUtil.applyBattlePointsAdjustmentForPopulationQuotient(true, battlePoints, siege);
 				siege.adjustAttackerBattlePoints(battlePoints);
-				siege.registerAttackerBattleContributorsFromBannerControl();
+				if (!siege.getSiegeType().equals(SiegeType.REVOLT))
+					siege.registerSuccessfulBattleContributorsFromBannerControl();
 			break;
 			case DEFENDERS:
 				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarBattlePointsForDefenderOccupation();
 				battlePoints = SiegeWarScoringUtil.applyBattlePointsAdjustmentForPopulationQuotient(false, battlePoints, siege);
 				siege.adjustDefenderBattlePoints(battlePoints);
+				if (siege.getSiegeType().equals(SiegeType.REVOLT))
+					siege.registerSuccessfulBattleContributorsFromBannerControl();
 			break;
 			default:
 		}
