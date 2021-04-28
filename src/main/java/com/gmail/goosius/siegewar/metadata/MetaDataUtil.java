@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.metadata;
 
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.TownyObject;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
 import com.palmergames.bukkit.towny.object.metadata.DecimalDataField;
@@ -30,15 +31,15 @@ class MetaDataUtil {
 		return false;
 	}
 
-	static long getLong(Town town, LongDataField ldf) {
-		CustomDataField<?> cdf = town.getMetadata(ldf.getKey());
+	static long getLong(TownyObject townyObject, LongDataField ldf) {
+		CustomDataField<?> cdf = townyObject.getMetadata(ldf.getKey());
 		if (cdf instanceof LongDataField)
 			return ((LongDataField) cdf).getValue();
 		return 0l;
 	}
 	
-	static int getInt(Town town, IntegerDataField idf) {
-		CustomDataField<?> cdf = town.getMetadata(idf.getKey());
+	static int getInt(TownyObject townyObject, IntegerDataField idf) {
+		CustomDataField<?> cdf = townyObject.getMetadata(idf.getKey());
 		if (cdf instanceof IntegerDataField) 
 			return ((IntegerDataField) cdf).getValue();
 		return 0;				
@@ -69,21 +70,21 @@ class MetaDataUtil {
 		}
 	}
 
-	static void setLong(Town town, LongDataField ldf, long num) {
-		CustomDataField<?> cdf = town.getMetadata(ldf.getKey());
+	static void setLong(TownyObject townyObject, LongDataField ldf, long num) {
+		CustomDataField<?> cdf = townyObject.getMetadata(ldf.getKey());
 		if (cdf instanceof LongDataField) {
 			LongDataField value = (LongDataField) cdf;
 			value.setValue(num);
-			town.save();
+			townyObject.save();
 		}
 	}
-	
-	static void setInt(Town town, IntegerDataField idf, int num) {
-		CustomDataField<?> cdf = town.getMetadata(idf.getKey());
+
+	static void setInt(TownyObject townyObject, IntegerDataField idf, int num) {
+		CustomDataField<?> cdf = townyObject.getMetadata(idf.getKey());
 		if (cdf instanceof IntegerDataField) {
 			IntegerDataField value = (IntegerDataField) cdf;
 			value.setValue(num);
-			town.save();
+			townyObject.save();
 		}
 	}
 	

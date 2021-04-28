@@ -288,34 +288,16 @@ public class SiegeWarNationEventListener implements Listener {
 			event.setCancelled(false);
 	}
 
-	/**
-	 * When a besieged town leaves a nation,
-	 * pvp in the remaining towns is returned to the off state.
-	 */
-	@EventHandler
-	public void on(NationTownLeaveEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled()
-			&& SiegeWarSettings.isAllNationSiegesEnabled()
-			&& SiegeController.hasActiveSiege(event.getTown())) {
-
-			for(Town nationTown: event.getNation().getTowns()) {
-				if(nationTown != event.getTown() && !nationTown.isNeutral())
-					SiegeWarTownUtil.setPvpFlag(nationTown, false);
-			}
-		}
-	}
-
 	/*
-	 * If nation is under siege, it cannot add new towns
+	 * If nation is fighting a home-defence war it cannot add new towns
 	 */
 	@EventHandler
 	public void on(NationPreAddTownEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWarSettings.isAllNationSiegesEnabled()
-				&& SiegeController.isAnyHomeTownASiegeDefender(event.getNation())) {
+				&& SiegeWarSettings.isNationSiegeImmunityEnabled()
+				&& SiegeController.isNationFightingAHomeDefenceWar(event.getNation())) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_cannot_recruit"));
-			return;
 		}
 	}
 }

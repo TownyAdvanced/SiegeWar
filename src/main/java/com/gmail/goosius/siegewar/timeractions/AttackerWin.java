@@ -5,7 +5,7 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 
 /**
  * This class is responsible for processing all types of attacker wins
@@ -26,7 +26,7 @@ public class AttackerWin {
 			case CONQUEST:
 			case SUPPRESSION:
 				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
-				SiegeWarTimeUtil.activateRevoltImmunityTimer(siege.getTown());
+				SiegeWarImmunityUtil.activateRevoltImmunityTimer(siege.getTown());
 				break;
 			case LIBERATION:
 				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());

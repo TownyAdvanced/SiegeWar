@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.UUID;
 
 import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
 
@@ -62,6 +63,7 @@ public class Siege {
 	private int defenderBattlePoints;
 	private Set<String> successfulBattleContributors;   //UUID's of residents who contributed during the current battle
 	private Map<String, Integer> residentTimedPointContributors;  //UUID:numContributions map of residents who contributed during current siege
+	private Map<UUID, Integer> primaryTownGovernments; //UUID:numBattleSessions map of governments who led the town during the siege. If town was is a nation, nation UUID will be used, otherwise town UUID will be used
 
 	public Siege(Town town) {
 		this.town = town;
@@ -82,6 +84,7 @@ public class Siege {
 		defenderBattlePoints = 0;
 		successfulBattleContributors = new HashSet<>();
 		residentTimedPointContributors = new HashMap<>();
+		primaryTownGovernments = new HashMap<>();
     }
 
     public Town getTown() {
@@ -396,6 +399,7 @@ public class Siege {
 	public void clearSuccessfulBattleContributors() {
 		successfulBattleContributors.clear();
 	}
+
 	public Map<String, Integer> getResidentTimedPointContributors() {
 		return residentTimedPointContributors;
 	}
@@ -440,5 +444,47 @@ public class Siege {
 		if(siegeType == null) //Safety feature
 			throw new RuntimeException("SiegeType cannot be null");
 		this.siegeType = siegeType;
+	}
+
+	/**
+	 * Record who is the primary government of the town
+	 * If the town has a nation, nation uuid will be recorded,
+	 * otherwise town uuid will be recorded.
+	 *
+	 * @throws NotRegisteredException
+	 */
+	public void recordPrimaryTownGovernment() throws NotRegisteredException {
+		//Identify key
+		UUID governmentUUID;
+		if(town.hasNation())
+			governmentUUID = town.getNation().getUUID();
+		else
+			governmentUUID = town.getUUID();
+
+		//Record battle session contribution
+		if(primaryTownGovernments.containsKey(governmentUUID)) {
+			int numBattleSessions = primaryTownGovernments.get(governmentUUID);
+			numBattleSessions++;
+			primaryTownGovernments.put(governmentUUID, numBattleSessions);
+		} else {
+			primaryTownGovernments.put(governmentUUID, 1);
+		}
+	}
+
+	public Map<UUID, Integer> getPrimaryTownGovernments() {
+		return primaryTownGovernments;
+	}
+
+	public void setPrimaryTownGovernments(Map<UUID, Integer> primaryTownGovernments) {
+		this.primaryTownGovernments = primaryTownGovernments;
+	}
+
+
+	public int getTotalBattleSessions() {
+		int result = 0;
+		for(int homeNationContribution: primaryTownGovernments.values()) {
+			result += homeNationContribution;
+		}
+		return result;
 	}
 }

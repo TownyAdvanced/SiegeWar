@@ -205,15 +205,15 @@ public class SiegeWarMoneyUtil {
 						* town.getTownBlocks().size();
 
 		//Increase cost due to nation size
-		if(SiegeWarSettings.isAllNationSiegesEnabled()
-			&& SiegeWarSettings.getAllNationSiegesHomeTownContributionToAttackCost() > 0
+		if(SiegeWarSettings.isNationSiegeImmunityEnabled()
+			&& SiegeWarSettings.getNationSiegeImmunityHomeTownContributionToAttackCost() > 0
 			&& town.hasNation()) {
 			try {
 				Nation nation = town.getNation();
 				for (Town nationHomeTown : nation.getTowns()) {
 					cost += SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
 							* nationHomeTown.getTownBlocks().size()
-							* SiegeWarSettings.getAllNationSiegesHomeTownContributionToAttackCost();
+							* SiegeWarSettings.getNationSiegeImmunityHomeTownContributionToAttackCost();
 				}
 			} catch (NotRegisteredException ignored) {}
 		}

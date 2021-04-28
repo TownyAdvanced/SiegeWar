@@ -84,8 +84,9 @@ public class SiegeWarTownEventListener implements Listener {
 				return;
 			}
 
-			if (SiegeWarSettings.isAllNationSiegesEnabled()
-					&& SiegeController.isAnyHomeTownASiegeDefender(event.getTown())) {
+			//Cannot recruit if nation is fighting a home-defence war
+			if (SiegeWarSettings.isNationSiegeImmunityEnabled()
+					&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_recruit"));
 				return;
@@ -127,14 +128,6 @@ public class SiegeWarTownEventListener implements Listener {
 				//Is the town under siege
 				if (SiegeController.hasActiveSiege(event.getTown())) {
 					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
-					event.setCancelled(true);
-					return;
-				}
-
-				//Is the town affected by an all-nation-siege
-				if(SiegeWarSettings.isAllNationSiegesEnabled()
-						&& SiegeController.isAnyHomeTownASiegeDefender(event.getTown())) {
-					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_toggle_pvp"));
 					event.setCancelled(true);
 					return;
 				}
@@ -224,9 +217,9 @@ public class SiegeWarTownEventListener implements Listener {
 					return;
 				}
 
-				//If the town is affected by an all-nation-siege, they cannot claim any land
-				if (SiegeWarSettings.isAllNationSiegesEnabled()
-						&& SiegeController.isAnyHomeTownASiegeDefender(event.getTown())) {
+				//If the town is fighting a home-defence war, they cannot claim any land
+				if (SiegeWarSettings.isNationSiegeImmunityEnabled()
+						&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
 					event.setCancelled(true);
 					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_claim"));
 					return;
@@ -278,9 +271,9 @@ public class SiegeWarTownEventListener implements Listener {
 				return;
 			}
 
-			//Town affected by all-nation-siege
-			if (SiegeWarSettings.isAllNationSiegesEnabled()
-					&& SiegeController.isAnyHomeTownASiegeDefender(event.getTown())) {
+			//Town fighting a home-defence war
+			if (SiegeWarSettings.isNationSiegeImmunityEnabled()
+					&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_unclaim"));
 				return;

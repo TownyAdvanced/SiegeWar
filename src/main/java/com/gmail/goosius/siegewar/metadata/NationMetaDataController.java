@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
+import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 
 public class NationMetaDataController {
     @SuppressWarnings("unused")
@@ -14,6 +15,8 @@ public class NationMetaDataController {
         plunderLost = "siegewar_totalplunderlost",
         townsGained = "siegewar_totaltownsgained",
         townsLost = "siegewar_totaltownslost";
+
+    private static final LongDataField pendingSiegeImmunityMillis = new LongDataField("siegewar_pendingSiegeImmunityMillis");
 
     public NationMetaDataController(SiegeWar plugin) {
         this.plugin = plugin;
@@ -75,4 +78,26 @@ public class NationMetaDataController {
     public static void setTotalTownsLost(Nation nation, int num) {
         setIdf(nation, townsLost, num);
     }
+
+    public static long getPendingSiegeImmunityMillis(Nation nation) {
+        LongDataField ldf = (LongDataField) pendingSiegeImmunityMillis.clone();
+        if (nation.hasMeta(ldf.getKey()))
+            return MetaDataUtil.getLong(nation, ldf);
+        return 0L;
+    }
+
+    public static void setPendingSiegeImmunityMillis(Nation nation, long num) {
+        LongDataField ldf = (LongDataField) pendingSiegeImmunityMillis.clone();
+        if (nation.hasMeta(ldf.getKey()))
+            MetaDataUtil.setLong(nation, ldf, num);
+        else
+            nation.addMetaData(new LongDataField(pendingSiegeImmunityMillis.getKey(), num));
+    }
+
+    public static void removePendingSiegeImmunityMillis(Nation nation) {
+        LongDataField ldf = (LongDataField) pendingSiegeImmunityMillis.clone();
+        if (nation.hasMeta(ldf.getKey()))
+            nation.removeMetaData(ldf);
+    }
+
 }

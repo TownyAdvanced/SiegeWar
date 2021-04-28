@@ -35,7 +35,7 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarTimeUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -91,6 +91,7 @@ public class SiegeController {
 		SiegeMetaDataController.setEndTime(town, siege.getScheduledEndTime());
 		SiegeMetaDataController.setActualEndTime(town, siege.getActualEndTime());
 		SiegeMetaDataController.setResidentTimedPointContributors(town, siege.getResidentTimedPointContributors());
+		SiegeMetaDataController.setPrimaryTownGovernments(town, siege.getPrimaryTownGovernments());
 		town.save();
 	}
 
@@ -228,6 +229,9 @@ public class SiegeController {
 		siege.setActualEndTime(SiegeMetaDataController.getActualEndTime(town));
 
 		siege.setResidentTimedPointContributors(SiegeMetaDataController.getResidentTimedPointContributors(town));
+
+		siege.setPrimaryTownGovernments(SiegeMetaDataController.getPrimaryTownGovernments(town));
+
 		return true;
 	}
 
@@ -236,7 +240,7 @@ public class SiegeController {
 		//If siege is active, initiate siege immunity for town, and return war chest
 		if(siege.getStatus().isActive()) {
 			siege.setActualEndTime(System.currentTimeMillis());
-			SiegeWarTimeUtil.activateSiegeImmunityTimers(siege.getTown(), siege);
+			SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown(), siege);
 
 			//Return warchest only if siege is not revolt
 			if(siege.getSiegeType() != SiegeType.REVOLT) {
@@ -256,7 +260,7 @@ public class SiegeController {
 		siegedTowns.remove(siege.getTown());
 		siegedTownNames.remove(siege.getTown().getName());
 
-		SiegeWarTownUtil.setTownPvpFlags(town, false);
+		SiegeWarTownUtil.setPvpFlag(town, false);
 		CosmeticUtil.removeFakeBeacons(siege);
 
 		//Save town
@@ -391,35 +395,31 @@ public class SiegeController {
 	}
 
 	/**
-	 * This method returns true
-	 * - The given town is in a nation, and
-	 * - One (or more) of the nation's home towns is a siege defender
-	 *
 	 * @param town the town to check
-	 * @return true if one (or more) of the nation's home towns is a siege defender
+	 * @return true if the town has a nation & that nation is fighting a home-defence war
+	 *
+	 * Note: A home defence war is when one or more of the nation's natural towns (ie not occupied foreign towns) is under siege.
 	 */
-	public static boolean isAnyHomeTownASiegeDefender(Town town) {
+	public static boolean isTownsNationFightingAHomeDefenceWar(Town town) {
 		try {
 			if(town.hasNation()) {
-				return isAnyHomeTownASiegeDefender(town.getNation());
+				return isNationFightingAHomeDefenceWar(town.getNation());
 			}
 		} catch (NotRegisteredException ignored) {}
 		return false;
 	}
 
 	/**
-	 * This method returns true
-	 * - One (or more) of the nation's home towns is a siege defender
-	 *
 	 * @param nation the nation to check
-	 * @return true if one (or more) of the nation's home towns is a siege defender
+	 * @return true if the given nation is fighting a home-defence war
+	 *
+	 * Note: A home defence war is when one or more of the nation's natural towns (ie not occupied foreign towns) is under siege.
 	 */
-	public static boolean isAnyHomeTownASiegeDefender(Nation nation) {
+	public static boolean isNationFightingAHomeDefenceWar(Nation nation) {
 		for(Siege siege: SiegeController.getSieges()) {
 			try {
 				if(siege.getStatus().isActive()
-					&& siege.getDefender() instanceof Town
-					&& ((Town)siege.getDefender()).hasNation()
+					&& siege.getTown().hasNation()
 					&& siege.getTown().getNation() == nation) {
 					return true;
 				}
@@ -468,8 +468,8 @@ public class SiegeController {
 		SiegeController.setSiege(targetTown, true);
 		SiegeController.putTownInSiegeMap(targetTown, siege);
 
-		//Set town to true, potentially set the town's nation's towns as well.
-		SiegeWarTownUtil.setTownPvpFlags(targetTown, true);
+		//Set pvp to true in the besieged town
+		SiegeWarTownUtil.setPvpFlag(targetTown, true);
 
 		//Send global message;
 		try {
@@ -578,5 +578,15 @@ public class SiegeController {
 				}
 				break;
 		}
+	}
+
+	public static boolean doesNationHaveAnyHomeDefenceContributionsInActiveSieges(Nation nation) {
+		for(Siege siege: townSiegeMap.values()) {
+			if(siege.getStatus().isActive()
+				&& siege.getPrimaryTownGovernments().containsKey(nation.getUUID())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

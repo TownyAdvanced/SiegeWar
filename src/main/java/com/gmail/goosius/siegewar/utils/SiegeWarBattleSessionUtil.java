@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -40,12 +41,25 @@ public class SiegeWarBattleSessionUtil {
 				//Schedule next session
 				scheduleNextBattleSession();
 
-				//Gather the results of all active battles, then end them
+				/*
+				 * Gather the results of all battles
+				 * End any active battles
+				 */
 				Map<Siege, Integer> battleResults = new HashMap<>();
 				for (Siege siege : SiegeController.getSieges()) {
 					try {
-						if (siege.getStatus() == SiegeStatus.IN_PROGRESS
-								&& (siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0)) {
+						if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
+							//Record primary government of besieged town
+							if(SiegeWarSettings.isNationSiegeImmunityEnabled())
+								siege.recordPrimaryTownGovernment();
+
+							//Continue to next siege if there were no battle points
+							if(siege.getAttackerBattlePoints() == 0 && siege.getDefenderBattlePoints() == 0) {
+								if(SiegeWarSettings.isNationSiegeImmunityEnabled())
+									SiegeController.saveSiege(siege);
+								continue;
+							}
+
 							//Calculate result
 							int battlePointsOfWinner;
 							if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()) {
