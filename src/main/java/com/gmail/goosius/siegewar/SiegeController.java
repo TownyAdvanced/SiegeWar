@@ -397,8 +397,7 @@ public class SiegeController {
 	 * @param town the town to check
 	 * @return true if the town has a nation & that nation is fighting a home-defence war
 	 *
-	 * Note: A home defence war is when one of the nation's towns is under siege attack.
-	 *       (In other words, it has an active siege of any type except Revolt.)
+	 * Note: A home defence war is when one or more of the nation's home towns is under siege.
 	 */
 	public static boolean isTownsNationFightingAHomeDefenceWar(Town town) {
 		try {
@@ -419,7 +418,6 @@ public class SiegeController {
 		for(Siege siege: SiegeController.getSieges()) {
 			try {
 				if(siege.getStatus().isActive()
-					&& siege.getSiegeType() != SiegeType.REVOLT
 					&& siege.getTown().hasNation()
 					&& siege.getTown().getNation() == nation) {
 					return true;
