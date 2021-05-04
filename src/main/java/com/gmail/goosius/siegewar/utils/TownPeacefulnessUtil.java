@@ -22,12 +22,8 @@ import com.palmergames.util.TimeTools;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.UUID;
+
+import java.util.*;
 
 public class TownPeacefulnessUtil {
 
@@ -188,16 +184,20 @@ public class TownPeacefulnessUtil {
 	 * - If town's has an incorrect occupation status, update occupation status.
 	 *
 	 * Rules for each peaceful town:
+	 * 1. If there are no nearby GT's, the peaceful town remains unoccupied
 	 *
-	 * 1. If there is a guardian town nearby which is:
-	 * - Unsieged
-	 * - Belonging to a foreign nation
-	 * - The largest guardian town in the area
-	 * =====> Then the peaceful town will be occupied
+	 * 2. If the peaceful town has no nation.
+	 *    the town is peacefully occupied by the nation of the largest GT.
 	 *
-	 * 2. If there is such town nearby:
-	 * =====> The the peaceful town will be unoccupied
+	 * 3. If the peaceful town has a nation,
+	 *    then an automatic contest occurs between:
+	 *    	i. GT's belonging to the home nation, and
+	 *      ii. GT's belonging to foreign nations who consider the home nation an enemy.
 	 *
+	 * 	  The winner is the nation with the largest guardian town.
+	 *
+	 * 	  If the home nation wins, the town is unoccupied.
+	 *    If a foreign nation wins, the town is peacefully occupied
 	 */
 	public static void evaluatePeacefulTownOccupationAssignments() {
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
@@ -219,16 +219,41 @@ public class TownPeacefulnessUtil {
 				if(peacefulTown.isRuined())
 					continue;
 
-				//Find guardian towns
-				Set<Town> guardianTowns = getGuardianTowns(peacefulTown);
+				//Find nearby guardian towns
+				Map<Town, Nation> guardianTowns = getAllNearbyGuardianTowns(peacefulTown);
 
-				//If there are no guardian towns, ensure the town is not occupied
+				//If there are no guardian towns nearby, ensure town is not occupied
 				if(guardianTowns.size() == 0) {
 					townTransferred = ensureTownIsPeacefullyUnoccupied(peacefulTown);
 
 				} else {
+					//Remove guardian towns which have no power here
+					removeIrrelevantGuardianTowns(peacefulTown, guardianTowns);
+
+
+
+					if(!peacefulTown.hasNation()) {
+						/*
+						 * Town has no nation.
+						 * 1. It gets occupied by nation of largest Guardian town
+						 */
+						Nation prevailingLocalNation = getNationOfLargestGuardianTown(guardianTowns);
+						townTransferred = ensureTownIsPeacefullyOccupied(peacefulTown, prevailingLocalNation);
+
+					} else {
+						/*
+						 * Town has a nation.
+						 * 1. Remove irrelevant guardian towns,
+						 *    leaving only home nation & enemy foreign nations
+						 * 2. The largest GT will decide the town's fate
+						 * 3. Occupy/unoccupy town as needed.
+						 */
+
+						Map<Town, Nation> =
+					}
+
+
 					//Find prevailing nation
-					Nation prevailingNation = getPrevailingNation(guardianTowns);
 
 					//Consider occupying/unoccupying town
 					if (peacefulTown.hasNation() && peacefulTown.getNation() == prevailingNation) {
@@ -266,8 +291,64 @@ public class TownPeacefulnessUtil {
 		}
 	}
 
+
+	private static Nation getNationOfLargestGuardianTown(Map<Town,Nation> guardianTowns) {
+		Map.Entry<Town,Nation> winningEntry = null;
+		for(Map.Entry<Town,Nation> mapEntry: guardianTowns.entrySet()) {
+			if(winningEntry == null) {
+				winningEntry = mapEntry;
+			} else {
+				if(mapEntry.getKey().getTownBlocks().size() > winningEntry.getKey().getTownBlocks().size())
+					winningEntry = mapEntry;
+			}
+		}
+		return winningEntry.getValue();
+	}
+
+	/*
+	 * Remove irrelevant guardian towns:
+	 * - If the town has no nation, all guardian towns are relevant.
+	 * - If the town has a nation, only the home nation & enemy foreign nations are relevant.
+	 */
+	private static void removeIrrelevantGuardianTowns(Town peacefulTown, Map<Town,Nation> guardianTowns) {
+
+	}
+
+	private static Nation getPrevailingNation(Town peacefulTown, Set<Town> guardianTowns) throws NotRegisteredException {
+
+		if(!peacefulTown.hasNation()) {
+			//Town has no nation. Return the nation of the largest guardian town
+			Town topGuardianTown = null;
+			for (Town guardianTown : guardianTowns) {
+				if (topGuardianTown == null || guardianTown.getTownBlocks().size() > topGuardianTown.getTownBlocks().size()) {
+					topGuardianTown = guardianTown;
+				}
+			}
+			if (TownOccupationController.isTownOccupied(topGuardianTown)) {
+				return TownOccupationController.getTownOccupier(topGuardianTown);
+			} else {
+				return topGuardianTown.getNation();
+			}
+
+		} else {
+
+			/*
+			if(peacefulTown.hasNation()) {
+				homeNationOfPeacefulTown = peacefulTown.getNation();
+				prevailingNationOfCandidateTown = candidateTown.hasNation() ? candidateTown.getNation() : TownOccupationController.getTownOccupier(candidateTown);
+
+				if (prevailingNationOfCandidateTown == homeNationOfPeacefulTown
+						|| prevailingNationOfCandidateTown.hasEnemy(homeNationOfPeacefulTown)) {
+					validGuardianTowns.add(candidateTown);
+				}
+*/
+				//Town has a nation.
+			//Consider only those
+		}
+	}
+
 	private static Nation getPrevailingNation(Set<Town> guardianTowns) throws NotRegisteredException {
-		//Find the largest guardian town & thus prevailing nation
+		//Return the nation of the largest guardian town
 		Town topGuardianTown = null;
 		for(Town guardianTown: guardianTowns) {
 			if(topGuardianTown == null || guardianTown.getTownBlocks().size() > topGuardianTown.getTownBlocks().size()) {
@@ -280,6 +361,7 @@ public class TownPeacefulnessUtil {
 			return topGuardianTown.getNation();
 		}
 	}
+
 
 	private static boolean ensureTownIsPeacefullyUnoccupied(Town peacefulTown) throws NotRegisteredException {
 		if(!TownOccupationController.isTownOccupied(peacefulTown)) {
@@ -331,10 +413,9 @@ public class TownPeacefulnessUtil {
 		return true; //Town switched
 	}
 
-	public static Set<Town> getGuardianTowns(Town peacefulTown) {
-		Nation homeNationOfPeacefulTown;
-		Nation prevailingNationOfCandidateTown;
-		Set<Town> validGuardianTowns = new HashSet<>();
+	public static Map<Town, Nation> getAllNearbyGuardianTowns(Town peacefulTown) {
+		Map<Town, Nation> nearbyGuardianTowns = new HashMap<>();
+		Nation prevailingNationOfGuardianTown;
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 
 		try {
@@ -349,24 +430,8 @@ public class TownPeacefulnessUtil {
 					&& candidateTown.getTownBlocks().size() >= guardianTownPlotsRequirement
 					&& SiegeWarDistanceUtil.areTownsClose(peacefulTown, candidateTown, guardianTownMaxDistanceRequirementTownblocks)) {
 
-					/*
-					 * If the peaceful town has a nation,
-					 * then for the guardian town to qualify,
-					 * the prevailing nation of the guardian town must:
-					 * 1. Be the home nation of the peaceful town, or
-					 * 2. Consider the home nation of the peaceful town to be an enemy.
-					 */
-					if(peacefulTown.hasNation()) {
-						homeNationOfPeacefulTown = peacefulTown.getNation();
-						prevailingNationOfCandidateTown = candidateTown.hasNation() ? candidateTown.getNation() : TownOccupationController.getTownOccupier(candidateTown);
-
-						if (prevailingNationOfCandidateTown == homeNationOfPeacefulTown
-							|| prevailingNationOfCandidateTown.hasEnemy(homeNationOfPeacefulTown)) {
-							validGuardianTowns.add(candidateTown);
-						}
-					} else {
-						validGuardianTowns.add(candidateTown);
-					}
+						prevailingNationOfGuardianTown = TownOccupationController.isTownOccupied(peacefulTown) ? TownOccupationController.getTownOccupier(peacefulTown) : peacefulTown.getNation()
+						nearbyGuardianTowns.put(candidateTown, prevailingNationOfGuardianTown);
 				}
 			}
 		} catch (Exception e) {
@@ -379,6 +444,6 @@ public class TownPeacefulnessUtil {
 		}
 
 		//Return result
-		return validGuardianTowns;
+		return nearbyGuardianTowns;
 	}
 }
