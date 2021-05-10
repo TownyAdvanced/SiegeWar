@@ -13,7 +13,6 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -101,48 +100,44 @@ public class PlunderTown {
 				* town.getTownBlocks().size()
 				* SiegeWarMoneyUtil.getMoneyMultiplier(town);
 		
-		try {
-			//Redistribute money
-			if(town.getAccount().canPayFromHoldings(totalPlunderAmount)) {
-				//Town can afford plunder
-				transferPlunderToNation(siege, nation, totalPlunderAmount, true);
+		//Redistribute money
+		if(town.getAccount().canPayFromHoldings(totalPlunderAmount)) {
+			//Town can afford plunder
+			transferPlunderToNation(siege, nation, totalPlunderAmount, true);
 
-				NationMetaDataController.setTotalPlunderGained(nation, NationMetaDataController.getTotalPlunderGained(nation) + (int) totalPlunderAmount);
-				if (town.hasNation()) {
-					Nation townNation = TownyAPI.getInstance().getTownNationOrNull(town);
-					NationMetaDataController.setTotalPlunderLost(townNation, NationMetaDataController.getTotalPlunderLost(townNation) + (int) totalPlunderAmount);
-				}
-			} else {
-				//Town cannot afford plunder
-				
-				if (TownySettings.isTownBankruptcyEnabled()) {
-					// If able, they will go into bankrupcty.
-
-					// Set the Town's debtcap fresh.
-					town.getAccount().setDebtCap(MoneyUtil.getEstimatedValueOfTown(town));
-
-					// Mark them as newly bankrupt for message later on.
-					townNewlyBankrupted = true;
-
-					// This will drop their actualPlunder amount to what the town's debt cap will allow. 
-					// Enabling a town to go only so far into debt to pay the plunder cost.
-					if (town.getAccount().getHoldingBalance() - totalPlunderAmount < town.getAccount().getDebtCap() * -1)
-						totalPlunderAmount = town.getAccount().getDebtCap() - Math.abs(town.getAccount().getHoldingBalance());
-						
-					// Charge the town (using .withdraw() which will allow for going into bankruptcy.)
-					town.getAccount().withdraw(totalPlunderAmount, "Plunder by " + nation.getName());
-					// And deposit it into the nation.
-					transferPlunderToNation(siege, nation, totalPlunderAmount, false);
-
-				} else {
-					// Not able to go bankrupt, they are destroyed, pay what they can.
-					totalPlunderAmount = town.getAccount().getHoldingBalance();
-					transferPlunderToNation(siege, nation, totalPlunderAmount, true);
-					townDestroyed = true;
-				}
+			NationMetaDataController.setTotalPlunderGained(nation, NationMetaDataController.getTotalPlunderGained(nation) + (int) totalPlunderAmount);
+			if (town.hasNation()) {
+				Nation townNation = TownyAPI.getInstance().getTownNationOrNull(town);
+				NationMetaDataController.setTotalPlunderLost(townNation, NationMetaDataController.getTotalPlunderLost(townNation) + (int) totalPlunderAmount);
 			}
-		} catch (EconomyException e) {
-			e.printStackTrace();
+		} else {
+			//Town cannot afford plunder
+			
+			if (TownySettings.isTownBankruptcyEnabled()) {
+				// If able, they will go into bankrupcty.
+
+				// Set the Town's debtcap fresh.
+				town.getAccount().setDebtCap(MoneyUtil.getEstimatedValueOfTown(town));
+
+				// Mark them as newly bankrupt for message later on.
+				townNewlyBankrupted = true;
+
+				// This will drop their actualPlunder amount to what the town's debt cap will allow. 
+				// Enabling a town to go only so far into debt to pay the plunder cost.
+				if (town.getAccount().getHoldingBalance() - totalPlunderAmount < town.getAccount().getDebtCap() * -1)
+					totalPlunderAmount = town.getAccount().getDebtCap() - Math.abs(town.getAccount().getHoldingBalance());
+					
+				// Charge the town (using .withdraw() which will allow for going into bankruptcy.)
+				town.getAccount().withdraw(totalPlunderAmount, "Plunder by " + nation.getName());
+				// And deposit it into the nation.
+				transferPlunderToNation(siege, nation, totalPlunderAmount, false);
+
+			} else {
+				// Not able to go bankrupt, they are destroyed, pay what they can.
+				totalPlunderAmount = town.getAccount().getHoldingBalance();
+				transferPlunderToNation(siege, nation, totalPlunderAmount, true);
+				townDestroyed = true;
+			}
 		}
 
 		//Set siege plundered flag
@@ -186,7 +181,7 @@ public class PlunderTown {
 		}
 	}
 
-	private static void transferPlunderToNation(Siege siege, Nation nation, double totalPlunderAmount, boolean removeMoneyFromTownBank) throws EconomyException {
+	private static void transferPlunderToNation(Siege siege, Nation nation, double totalPlunderAmount, boolean removeMoneyFromTownBank) {
 		Town town = siege.getTown();
 
 		//Calculate plunder ratios for nation & soldiers

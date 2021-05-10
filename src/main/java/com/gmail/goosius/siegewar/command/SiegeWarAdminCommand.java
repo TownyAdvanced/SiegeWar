@@ -13,9 +13,9 @@ import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.utils.NameUtil;
@@ -359,12 +359,9 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 					}
 
 					Nation occupier = TownyUniverse.getInstance().getNation(args[2].toLowerCase());
-					try {
-						if(town.hasNation() && town.getNation() == occupier) {
-							Messaging.sendErrorMsg(sender, Translation.of("msg_err_swa_home_nation_cannot_be_occupier"));
-							return;
-						}
-					} catch (NotRegisteredException ignored) {
+					if (town.hasNation() && TownyAPI.getInstance().getTownNationOrNull(town) == occupier) {
+						Messaging.sendErrorMsg(sender, Translation.of("msg_err_swa_home_nation_cannot_be_occupier"));
+						return;
 					}
 
 					TownOccupationController.setTownOccupation(town, occupier);

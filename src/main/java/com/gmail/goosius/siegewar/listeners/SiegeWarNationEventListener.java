@@ -13,7 +13,6 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyFormatter;
@@ -25,14 +24,12 @@ import com.palmergames.bukkit.towny.event.PreDeleteNationEvent;
 import com.palmergames.bukkit.towny.event.NationPreAddTownEvent;
 import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
 import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
-import com.palmergames.bukkit.towny.event.nation.NationTownLeaveEvent;
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumOnlinePlayersCalculationEvent;
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumTownsCalculationEvent;
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumResidentsCalculationEvent;
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumTownBlocksCalculationEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -178,23 +175,21 @@ public class SiegeWarNationEventListener implements Listener {
 			}
 
 			if (siege.getSiegeType() == SiegeType.REVOLT) {
-				try {
-					//Cancel if one of your towns is revolting against them
-					if (siege.getTown().hasNation()
-							&& siege.getTown().getNation() == nation
-							&& siege.getDefender() == enemyNation) {
-						cancel = true;
-						break;
-					}
+				//Cancel if one of your towns is revolting against them
+				if (siege.getTown().hasNation()
+						&& TownyAPI.getInstance().getTownNationOrNull(siege.getTown()) == nation
+						&& siege.getDefender() == enemyNation) {
+					cancel = true;
+					break;
+				}
 
-					//Cancel if one of their towns is revolting against you
-					if (siege.getTown().hasNation()
-							&& siege.getTown().getNation() == enemyNation
-							&& siege.getDefender() == nation) {
-						cancel = true;
-						break;
-					}
-				} catch (NotRegisteredException ignored) {}
+				//Cancel if one of their towns is revolting against you
+				if (siege.getTown().hasNation()
+						&& TownyAPI.getInstance().getTownNationOrNull(siege.getTown()) == enemyNation
+						&& siege.getDefender() == nation) {
+					cancel = true;
+					break;
+				}
 			}
 		}
 
@@ -267,11 +262,8 @@ public class SiegeWarNationEventListener implements Listener {
 		for(Player player: BukkitTools.getOnlinePlayers()) {
 			if(TownyUniverse.getInstance().hasResident(player.getUniqueId())) {
 				resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-				try {
-					if(resident.hasNation() && effectiveNation.getTowns().contains(resident.getTown())) {
-						effectiveNumOnlinePlayers++;
-					}
-				} catch (NotRegisteredException ignored) {}
+				if(resident.hasNation() && effectiveNation.getTowns().contains(TownyAPI.getInstance().getResidentTownOrNull(resident)))
+					effectiveNumOnlinePlayers++;
 			}
 		}
 		event.setDisplayedValue(effectiveNumOnlinePlayers);

@@ -4,11 +4,11 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -208,14 +208,12 @@ public class SiegeWarMoneyUtil {
 		if(SiegeWarSettings.isNationSiegeImmunityEnabled()
 			&& SiegeWarSettings.getNationSiegeImmunityHomeTownContributionToAttackCost() > 0
 			&& town.hasNation()) {
-			try {
-				Nation nation = town.getNation();
-				for (Town nationHomeTown : nation.getTowns()) {
-					cost += SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
-							* nationHomeTown.getTownBlocks().size()
-							* SiegeWarSettings.getNationSiegeImmunityHomeTownContributionToAttackCost();
-				}
-			} catch (NotRegisteredException ignored) {}
+			Nation nation = TownyAPI.getInstance().getTownNationOrNull(town);
+			for (Town nationHomeTown : nation.getTowns()) {
+				cost += SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
+						* nationHomeTown.getTownBlocks().size()
+						* SiegeWarSettings.getNationSiegeImmunityHomeTownContributionToAttackCost();
+			}
 		}
 
 		//Increase cost if town is capitol
