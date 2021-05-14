@@ -5,7 +5,7 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -191,11 +191,9 @@ public class Siege {
 	 * @return the defender,
 	 */
 	public Government getDefendingNationIfPossibleElseTown() {
-		if(defender instanceof Town && ((Town)defender).hasNation()) {
-			try {
-				return ((Town)defender).getNation();
-			} catch (NotRegisteredException ignored) {}
-		}
+		if(defender instanceof Town && ((Town)defender).hasNation())
+			return TownyAPI.getInstance().getTownNationOrNull((Town) defender);
+
 		return defender;
 	}
 
@@ -206,11 +204,8 @@ public class Siege {
 	 * @return the attacker,
 	 */
 	public Government getAttackingNationIfPossibleElseTown() {
-		if(attacker instanceof Town && ((Town)attacker).hasNation()) {
-			try {
-				return ((Town)attacker).getNation();
-			} catch (NotRegisteredException ignored) {}
-		}
+		if(attacker instanceof Town && ((Town)attacker).hasNation())
+			return TownyAPI.getInstance().getTownNationOrNull((Town) attacker);
 		return attacker;
 	}
 
@@ -450,14 +445,12 @@ public class Siege {
 	 * Record who is the primary government of the town
 	 * If the town has a nation, nation uuid will be recorded,
 	 * otherwise town uuid will be recorded.
-	 *
-	 * @throws NotRegisteredException
 	 */
-	public void recordPrimaryTownGovernment() throws NotRegisteredException {
+	public void recordPrimaryTownGovernment() {
 		//Identify key
 		UUID governmentUUID;
 		if(town.hasNation())
-			governmentUUID = town.getNation().getUUID();
+			governmentUUID = TownyAPI.getInstance().getTownNationOrNull(town).getUUID();
 		else
 			governmentUUID = town.getUUID();
 

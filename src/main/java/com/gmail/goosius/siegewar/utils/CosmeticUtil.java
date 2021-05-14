@@ -6,8 +6,8 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Resident;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -107,16 +107,9 @@ public class CosmeticUtil {
 		if (siege.getBannerControlSessions().containsKey(player))
 			return getCaptureColor();
 
-		SiegeSide siegeSide;
-		if(resident.hasTown()) {
-			try {
-				siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
-			} catch (NotRegisteredException e) {
-				siegeSide = SiegeSide.NOBODY;
-			}
-		} else {
-			siegeSide = SiegeSide.NOBODY;
-		}
+		SiegeSide siegeSide = SiegeSide.NOBODY;
+		if(resident.hasTown())
+			siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, TownyAPI.getInstance().getResidentTownOrNull(resident), siege);
 
 
 		if (siegeSide == SiegeSide.NOBODY || siege.getBannerControllingSide() == SiegeSide.NOBODY)
