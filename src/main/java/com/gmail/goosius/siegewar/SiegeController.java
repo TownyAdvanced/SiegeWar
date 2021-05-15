@@ -166,7 +166,10 @@ public class SiegeController {
 				case CONQUEST:
 				case LIBERATION:
 				case SUPPRESSION:
-					Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(SiegeMetaDataController.getNationUUID(town)));
+					String uuid = SiegeMetaDataController.getAttackerUUID(town);
+					if (uuid == null)
+						return false;
+					Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(uuid));
 					if (nation == null)
 						return false;
 					siege.setAttacker(nation);
@@ -183,7 +186,10 @@ public class SiegeController {
 					break;
 				case LIBERATION:
 				case REVOLT:
-					Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(SiegeMetaDataController.getNationUUID(town)));
+					String uuid = SiegeMetaDataController.getDefenderUUID(town);
+					if (uuid == null)
+						return false;
+					Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(uuid));
 					if (nation == null)
 						return false;
 					siege.setDefender(nation);
