@@ -39,6 +39,7 @@ import com.palmergames.bukkit.towny.event.town.TownUnconquerEvent;
 import com.palmergames.bukkit.towny.event.town.TownMapColourCalculationEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownTogglePVPEvent;
+import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -83,8 +84,9 @@ public class SiegeWarTownEventListener implements Listener {
 				return;
 			}
 
-			if (SiegeWarSettings.isAllNationSiegesEnabled()
-					&& SiegeController.isAnyHomeTownASiegeDefender(event.getTown())) {
+			//Cannot recruit if nation is fighting a home-defence war
+			if (SiegeWarSettings.isNationSiegeImmunityEnabled()
+					&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_recruit"));
 				return;
@@ -126,14 +128,6 @@ public class SiegeWarTownEventListener implements Listener {
 				//Is the town under siege
 				if (SiegeController.hasActiveSiege(event.getTown())) {
 					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
-					event.setCancelled(true);
-					return;
-				}
-
-				//Is the town affected by an all-nation-siege
-				if(SiegeWarSettings.isAllNationSiegesEnabled()
-						&& SiegeController.isAnyHomeTownASiegeDefender(event.getTown())) {
-					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_toggle_pvp"));
 					event.setCancelled(true);
 					return;
 				}
@@ -223,9 +217,9 @@ public class SiegeWarTownEventListener implements Listener {
 					return;
 				}
 
-				//If the town is affected by an all-nation-siege, they cannot claim any land
-				if (SiegeWarSettings.isAllNationSiegesEnabled()
-						&& SiegeController.isAnyHomeTownASiegeDefender(event.getTown())) {
+				//If the town is fighting a home-defence war, they cannot claim any land
+				if (SiegeWarSettings.isNationSiegeImmunityEnabled()
+						&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
 					event.setCancelled(true);
 					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_claim"));
 					return;
@@ -277,12 +271,38 @@ public class SiegeWarTownEventListener implements Listener {
 				return;
 			}
 
-			//Town affected by all-nation-siege
-			if (SiegeWarSettings.isAllNationSiegesEnabled()
-					&& SiegeController.isAnyHomeTownASiegeDefender(event.getTown())) {
+			//Town fighting a home-defence war
+			if (SiegeWarSettings.isNationSiegeImmunityEnabled()
+					&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_unclaim"));
 				return;
+			}
+		}
+	}
+
+	/*
+	 * If town is peaceful, sieged, or occupied, it can't move homeblock.
+	 * otherwise the move homeblock command could be / definitely would be
+	 * used by players an an easy and hard-to-moderate exploit to escape occupation.
+	 */
+	@EventHandler
+	public void on(TownPreSetHomeBlockEvent event) {
+		if (SiegeWarSettings.getWarSiegeEnabled()) {
+			if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
+				&& event.getTown().isNeutral()) {
+				event.setCancelled(true);
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_cannot_move_homeblock"));
+			}
+
+			if(SiegeController.hasActiveSiege(event.getTown())) {
+				event.setCancelled(true);
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_besieged_town_cannot_move_homeblock"));
+			}
+
+			if(TownOccupationController.isTownOccupied(event.getTown())) {
+				event.setCancelled(true);
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_occupied_town_cannot_move_homeblock"));
 			}
 		}
 	}
@@ -332,7 +352,7 @@ public class SiegeWarTownEventListener implements Listener {
 				out.add(Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege)));
 
 				// > Attacker: Land of Darkness (Nation)
-				out.add(Translation.of("status_town_siege_attacker", siege.getAttacker().getFormattedName()));
+				out.add(Translation.of("status_town_siege_attacker", siege.getAttackingNationIfPossibleElseTown().getFormattedName()));
 
 				// > Defender: Land of Light (Nation)
 				out.add(Translation.of("status_town_siege_defender", siege.getDefendingNationIfPossibleElseTown().getFormattedName()));

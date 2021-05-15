@@ -5,7 +5,7 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.UUID;
 
 import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
 
@@ -60,8 +61,9 @@ public class Siege {
 	private int cannonSessionRemainingShortTicks;  //Short ticks remaining until standard cannon protections are restored
 	private int attackerBattlePoints;
 	private int defenderBattlePoints;
-	private Set<String> attackerBattleContributors;   //UUID's of attackers who contributed during the current battle
-	private Map<String, Integer> attackerSiegeContributors;  //UUID:numContributions map of attackers who contributed during current siege
+	private Set<String> successfulBattleContributors;   //UUID's of residents who contributed during the current battle
+	private Map<String, Integer> residentTimedPointContributors;  //UUID:numContributions map of residents who contributed during current siege
+	private Map<UUID, Integer> primaryTownGovernments; //UUID:numBattleSessions map of governments who led the town during the siege. If town was is a nation, nation UUID will be used, otherwise town UUID will be used
 
 	public Siege(Town town) {
 		this.town = town;
@@ -80,8 +82,9 @@ public class Siege {
 		cannonSessionRemainingShortTicks = 0;
 		attackerBattlePoints = 0;
 		defenderBattlePoints = 0;
-		attackerBattleContributors = new HashSet<>();
-		attackerSiegeContributors = new HashMap<>();
+		successfulBattleContributors = new HashSet<>();
+		residentTimedPointContributors = new HashMap<>();
+		primaryTownGovernments = new HashMap<>();
     }
 
     public Town getTown() {
@@ -188,12 +191,22 @@ public class Siege {
 	 * @return the defender,
 	 */
 	public Government getDefendingNationIfPossibleElseTown() {
-		if(defender instanceof Town && ((Town)defender).hasNation()) {
-			try {
-				return ((Town)defender).getNation();
-			} catch (NotRegisteredException ignored) {}
-		}
+		if(defender instanceof Town && ((Town)defender).hasNation())
+			return TownyAPI.getInstance().getTownNationOrNull((Town) defender);
+
 		return defender;
+	}
+
+	/**
+	 * Get the attacking nation if there is one,
+	 * else get attacking town
+	 *
+	 * @return the attacker,
+	 */
+	public Government getAttackingNationIfPossibleElseTown() {
+		if(attacker instanceof Town && ((Town)attacker).hasNation())
+			return TownyAPI.getInstance().getTownNationOrNull((Town) attacker);
+		return attacker;
 	}
 
 	public void setDefender(Government defender) {
@@ -374,37 +387,34 @@ public class Siege {
 		}
 	}
 
-	public Set<String> getAttackerBattleContributors() {
-		return attackerBattleContributors;
+	public Set<String> getSuccessfulBattleContributors() {
+		return successfulBattleContributors;
 	}
 
-	public void setAttackerBattleContributors(Set<String> attackerBattleContributors) {
-		this.attackerBattleContributors = attackerBattleContributors;
+	public void clearSuccessfulBattleContributors() {
+		successfulBattleContributors.clear();
 	}
 
-	public void clearAttackerBattleContributors() {
-		attackerBattleContributors.clear();
-	}
-	public Map<String, Integer> getAttackerSiegeContributors() {
-		return attackerSiegeContributors;
+	public Map<String, Integer> getResidentTimedPointContributors() {
+		return residentTimedPointContributors;
 	}
 
-	public void setAttackerSiegeContributors(Map<String, Integer> attackerSiegeContributors) {
-		this.attackerSiegeContributors = attackerSiegeContributors;
+	public void setResidentTimedPointContributors(Map<String, Integer> residentTimedPointContributors) {
+		this.residentTimedPointContributors = residentTimedPointContributors;
 	}
 
-	public void registerAttackerBattleContributorsFromBannerControl() {
+	public void registerSuccessfulBattleContributorsFromBannerControl() {
 		for(Resident resident: bannerControllingResidents) {
-			attackerBattleContributors.add(resident.getUUID().toString());
+			successfulBattleContributors.add(resident.getUUID().toString());
 		}
 	}
 
-	public void propagateAttackerBattleContributorsToAttackerSiegeContributors() {
-		for(String playerUuid: attackerBattleContributors) {
-			if(attackerSiegeContributors.containsKey(playerUuid)) {
-				attackerSiegeContributors.put(playerUuid, attackerSiegeContributors.get(playerUuid) + 1);
+	public void propagateSuccessfulBattleContributorsToResidentTimedPointContributors() {
+		for(String playerUuid: successfulBattleContributors) {
+			if(residentTimedPointContributors.containsKey(playerUuid)) {
+				residentTimedPointContributors.put(playerUuid, residentTimedPointContributors.get(playerUuid) + 1);
 			} else {
-				attackerSiegeContributors.put(playerUuid, 1);
+				residentTimedPointContributors.put(playerUuid, 1);
 			}
 		}
 	}
@@ -429,5 +439,45 @@ public class Siege {
 		if(siegeType == null) //Safety feature
 			throw new RuntimeException("SiegeType cannot be null");
 		this.siegeType = siegeType;
+	}
+
+	/**
+	 * Record who is the primary government of the town
+	 * If the town has a nation, nation uuid will be recorded,
+	 * otherwise town uuid will be recorded.
+	 */
+	public void recordPrimaryTownGovernment() {
+		//Identify key
+		UUID governmentUUID;
+		if(town.hasNation())
+			governmentUUID = TownyAPI.getInstance().getTownNationOrNull(town).getUUID();
+		else
+			governmentUUID = town.getUUID();
+
+		//Record battle session contribution
+		if(primaryTownGovernments.containsKey(governmentUUID)) {
+			int numBattleSessions = primaryTownGovernments.get(governmentUUID);
+			numBattleSessions++;
+			primaryTownGovernments.put(governmentUUID, numBattleSessions);
+		} else {
+			primaryTownGovernments.put(governmentUUID, 1);
+		}
+	}
+
+	public Map<UUID, Integer> getPrimaryTownGovernments() {
+		return primaryTownGovernments;
+	}
+
+	public void setPrimaryTownGovernments(Map<UUID, Integer> primaryTownGovernments) {
+		this.primaryTownGovernments = primaryTownGovernments;
+	}
+
+
+	public int getTotalBattleSessions() {
+		int result = 0;
+		for(int homeNationContribution: primaryTownGovernments.values()) {
+			result += homeNationContribution;
+		}
+		return result;
 	}
 }

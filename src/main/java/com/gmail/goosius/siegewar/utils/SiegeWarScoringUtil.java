@@ -122,7 +122,7 @@ public class SiegeWarScoringUtil {
 		if(siege.getAttacker() instanceof Nation) {
 			nation = (Nation)siege.getAttacker();
 		} else if (((Town)siege.getAttacker()).hasNation()) {
-			nation = (Nation)siege.getAttacker();
+			nation = TownyAPI.getInstance().getTownNationOrNull((Town)siege.getAttacker());
 		}
 
 		if(nation != null) {

@@ -40,12 +40,25 @@ public class SiegeWarBattleSessionUtil {
 				//Schedule next session
 				scheduleNextBattleSession();
 
-				//Gather the results of all active battles, then end them
+				/*
+				 * Gather the results of all battles
+				 * End any active battles
+				 */
 				Map<Siege, Integer> battleResults = new HashMap<>();
 				for (Siege siege : SiegeController.getSieges()) {
 					try {
-						if (siege.getStatus() == SiegeStatus.IN_PROGRESS
-								&& (siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0)) {
+						if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
+							//Record primary government of besieged town
+							if(SiegeWarSettings.isNationSiegeImmunityEnabled())
+								siege.recordPrimaryTownGovernment();
+
+							//Continue to next siege if there were no battle points
+							if(siege.getAttackerBattlePoints() == 0 && siege.getDefenderBattlePoints() == 0) {
+								if(SiegeWarSettings.isNationSiegeImmunityEnabled())
+									SiegeController.saveSiege(siege);
+								continue;
+							}
+
 							//Calculate result
 							int battlePointsOfWinner;
 							if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()) {
@@ -60,7 +73,7 @@ public class SiegeWarBattleSessionUtil {
 							siege.adjustSiegeBalance(battlePointsOfWinner);
 
 							//Propagate attacker battle contributions to siege history
-							siege.propagateAttackerBattleContributorsToAttackerSiegeContributors();
+							siege.propagateSuccessfulBattleContributorsToResidentTimedPointContributors();
 
 							//Prepare result for messaging
 							battleResults.put(siege, battlePointsOfWinner);
@@ -83,7 +96,7 @@ public class SiegeWarBattleSessionUtil {
 							siege.clearBannerControlSessions();
 							siege.setAttackerBattlePoints(0);
 							siege.setDefenderBattlePoints(0);
-							siege.clearAttackerBattleContributors();
+							siege.clearSuccessfulBattleContributors();
 
 							//Save siege
 							SiegeController.saveSiege(siege);

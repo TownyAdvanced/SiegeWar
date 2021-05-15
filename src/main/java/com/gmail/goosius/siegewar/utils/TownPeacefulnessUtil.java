@@ -2,7 +2,6 @@ package com.gmail.goosius.siegewar.utils;
 
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -12,7 +11,6 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -267,7 +265,7 @@ public class TownPeacefulnessUtil {
 		}
 	}
 
-	private static Nation getPrevailingNation(Set<Town> guardianTowns) throws NotRegisteredException {
+	private static Nation getPrevailingNation(Set<Town> guardianTowns) {
 		//Find the largest guardian town & thus prevailing nation
 		Town topGuardianTown = null;
 		for(Town guardianTown: guardianTowns) {
@@ -278,11 +276,11 @@ public class TownPeacefulnessUtil {
 		if(TownOccupationController.isTownOccupied(topGuardianTown)) {
 			return TownOccupationController.getTownOccupier(topGuardianTown);
 		} else {
-			return topGuardianTown.getNation();
+			return TownyAPI.getInstance().getTownNationOrNull(topGuardianTown);
 		}
 	}
 
-	private static boolean ensureTownIsPeacefullyUnoccupied(Town peacefulTown) throws NotRegisteredException {
+	private static boolean ensureTownIsPeacefullyUnoccupied(Town peacefulTown) {
 		if(!TownOccupationController.isTownOccupied(peacefulTown)) {
 			return false;
 		}
@@ -299,12 +297,12 @@ public class TownPeacefulnessUtil {
 		TownyMessaging.sendPrefixedNationMessage(currentOccupier, Translation.of("msg_foreign_town_peacefully_released", peacefulTown.getName()));
 		//Send to nation of peaceful town
 		if(peacefulTown.hasNation())
-			TownyMessaging.sendPrefixedNationMessage(peacefulTown.getNation(), Translation.of("msg_home_town_peacefully_released", peacefulTown.getName(), currentOccupier.getName()));
+			TownyMessaging.sendPrefixedNationMessage(TownyAPI.getInstance().getTownNationOrNull(peacefulTown), Translation.of("msg_home_town_peacefully_released", peacefulTown.getName(), currentOccupier.getName()));
 
 		return true;
 	}
 
-	private static boolean ensureTownIsPeacefullyOccupied(Town peacefulTown, Nation newOccupier) throws NotRegisteredException {
+	private static boolean ensureTownIsPeacefullyOccupied(Town peacefulTown, Nation newOccupier) {
 		if(TownOccupationController.isTownOccupied(peacefulTown)) {
 			//Town is already occupied
 			Nation currentOccupier = TownOccupationController.getTownOccupier(peacefulTown);
@@ -327,7 +325,7 @@ public class TownPeacefulnessUtil {
 		TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_foreign_town_peacefully_occupied", peacefulTown.getName()));
 		//Send to nation of peaceful town
 		if(peacefulTown.hasNation())
-			TownyMessaging.sendPrefixedNationMessage(peacefulTown.getNation(), Translation.of("msg_home_town_peacefully_occupied", peacefulTown.getName(), newOccupier.getName()));
+			TownyMessaging.sendPrefixedNationMessage(TownyAPI.getInstance().getTownNationOrNull(peacefulTown), Translation.of("msg_home_town_peacefully_occupied", peacefulTown.getName(), newOccupier.getName()));
 
 		return true; //Town switched
 	}
@@ -347,7 +345,6 @@ public class TownPeacefulnessUtil {
 			for(Town candidateTown: candidateTowns) {
 				if(!candidateTown.isNeutral()
 					&& (candidateTown.hasNation() || TownOccupationController.isTownOccupied(candidateTown))
-					&& !SiegeController.hasActiveSiege(candidateTown)
 					&& candidateTown.getTownBlocks().size() >= guardianTownPlotsRequirement
 					&& SiegeWarDistanceUtil.areTownsClose(peacefulTown, candidateTown, guardianTownMaxDistanceRequirementTownblocks)) {
 

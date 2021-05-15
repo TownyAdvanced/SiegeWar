@@ -5,21 +5,17 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.PreNewDayEvent;
-import com.palmergames.bukkit.towny.event.SpawnEvent;
 import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyExplosionDamagesEntityEvent;
 import com.palmergames.bukkit.towny.event.time.NewHourEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
-import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -93,37 +89,6 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeWarTimerTaskController.evaluateBeacons();
         }
 
-    }
-    
-    /*
-     * SiegeWar prevents people from spawning to siege areas if they are not peaceful and do not belong to the town in question.
-     */
-    @EventHandler
-    public void onPlayerUsesTownySpawnCommand(SpawnEvent event) {
-        if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled()) {
-            Town destinationTown = TownyAPI.getInstance().getTown(event.getTo());
-            Resident res = TownyUniverse.getInstance().getResident(event.getPlayer().getUniqueId());
-            if (destinationTown == null || res == null)
-                return;
-            
-            // Don't block spawning for residents which belong to the Town
-            if (destinationTown.hasResident(res))
-                return;
-
-            //Block TP if the target town is besieged
-            if (SiegeController.hasActiveSiege(destinationTown)) {
-                event.setCancelled(true);
-                event.setCancelMessage(Translation.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
-                return;
-            }
-
-            //Block TP if the target spawn point is in a siege zone
-            if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
-                event.setCancelled(true);
-                event.setCancelMessage(Translation.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
-
-            }
-        }       
     }
 
     /**

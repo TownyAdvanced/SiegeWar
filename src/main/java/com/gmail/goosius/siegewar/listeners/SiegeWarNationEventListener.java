@@ -30,7 +30,6 @@ import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumResidents
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumTownBlocksCalculationEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -176,23 +175,21 @@ public class SiegeWarNationEventListener implements Listener {
 			}
 
 			if (siege.getSiegeType() == SiegeType.REVOLT) {
-				try {
-					//Cancel if one of your towns is revolting against them
-					if (siege.getTown().hasNation()
-							&& siege.getTown().getNation() == nation
-							&& siege.getDefender() == enemyNation) {
-						cancel = true;
-						break;
-					}
+				//Cancel if one of your towns is revolting against them
+				if (siege.getTown().hasNation()
+						&& TownyAPI.getInstance().getTownNationOrNull(siege.getTown()) == nation
+						&& siege.getDefender() == enemyNation) {
+					cancel = true;
+					break;
+				}
 
-					//Cancel if one of their towns is revolting against you
-					if (siege.getTown().hasNation()
-							&& siege.getTown().getNation() == enemyNation
-							&& siege.getDefender() == nation) {
-						cancel = true;
-						break;
-					}
-				} catch (NotRegisteredException ignored) {}
+				//Cancel if one of their towns is revolting against you
+				if (siege.getTown().hasNation()
+						&& TownyAPI.getInstance().getTownNationOrNull(siege.getTown()) == enemyNation
+						&& siege.getDefender() == nation) {
+					cancel = true;
+					break;
+				}
 			}
 		}
 
@@ -265,11 +262,8 @@ public class SiegeWarNationEventListener implements Listener {
 		for(Player player: BukkitTools.getOnlinePlayers()) {
 			if(TownyUniverse.getInstance().hasResident(player.getUniqueId())) {
 				resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-				try {
-					if(resident.hasNation() && effectiveNation.getTowns().contains(resident.getTown())) {
-						effectiveNumOnlinePlayers++;
-					}
-				} catch (NotRegisteredException ignored) {}
+				if(resident.hasNation() && effectiveNation.getTowns().contains(TownyAPI.getInstance().getResidentTownOrNull(resident)))
+					effectiveNumOnlinePlayers++;
 			}
 		}
 		event.setDisplayedValue(effectiveNumOnlinePlayers);
@@ -287,16 +281,15 @@ public class SiegeWarNationEventListener implements Listener {
 	}
 
 	/*
-	 * If nation is under siege, it cannot add new towns
+	 * If nation is fighting a home-defence war it cannot add new towns
 	 */
 	@EventHandler
 	public void on(NationPreAddTownEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWarSettings.isAllNationSiegesEnabled()
-				&& SiegeController.isAnyHomeTownASiegeDefender(event.getNation())) {
+				&& SiegeWarSettings.isNationSiegeImmunityEnabled()
+				&& SiegeController.isNationFightingAHomeDefenceWar(event.getNation())) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_cannot_recruit"));
-			return;
 		}
 	}
 }

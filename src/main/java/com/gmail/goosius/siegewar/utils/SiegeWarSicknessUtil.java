@@ -10,7 +10,6 @@ import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.util.TimeTools;
@@ -109,12 +108,7 @@ public class SiegeWarSicknessUtil {
         if (!resident.hasTown())
             return false;
 
-        SiegeSide siegeSide;
-        try {
-            siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
-        } catch (NotRegisteredException e) {
-            return false;
-        }
+        SiegeSide siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, TownyAPI.getInstance().getResidentTownOrNull(resident), siege);
 
         return siegeSide != SiegeSide.NOBODY;
     }

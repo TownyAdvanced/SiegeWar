@@ -1,8 +1,8 @@
 package com.gmail.goosius.siegewar;
 
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import org.jetbrains.annotations.NotNull;
@@ -94,10 +94,8 @@ public class TownOccupationController {
 
         for(Set<Town> occupiedTowns: nationTownsOccupationMapCopy.values()) {
             for(Town occupiedTown: occupiedTowns) {
-                try {
-                    if(occupiedTown.hasNation() && occupiedTown.getNation() == nation)
-                        occupiedHomeTowns.add(occupiedTown);
-                } catch (NotRegisteredException ignored) {}
+                if(occupiedTown.hasNation() && TownyAPI.getInstance().getTownNationOrNull(occupiedTown) == nation)
+				    occupiedHomeTowns.add(occupiedTown);
             }
         }
         return occupiedHomeTowns;

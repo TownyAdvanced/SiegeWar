@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownBlockType;
@@ -27,37 +26,17 @@ public class SiegeWarTownUtil {
     }
 
     /**
-	 * Wrapper method to set pvp flags in a town to the desired 
-	 * setting, as well as the nation if All-Nation-Sieges are enabled
-	 * and the town has a nation.
+	 * Sets pvp flag in a town to the desired setting.
 	 * 
-	 * @param town The town to set the flags for.
-	 * @param desiredSetting The value to set pvp and explosions to.
+	 * @param town The town to set the flag for.
+	 * @param desiredSetting The value to set pvp to.
 	 */
-	public static void setTownPvpFlags(Town town, boolean desiredSetting) {
-		
-		if(SiegeWarSettings.isAllNationSiegesEnabled() && town.hasNation()) {
-			for(Town nationTown: TownyAPI.getInstance().getTownNationOrNull(town).getTowns()) {
-				//Only non-peaceful towns are affected by the PVP change
-				if(!nationTown.isNeutral())
-					setPvpFlag(nationTown, desiredSetting);
-			}
-		} else {
-			setPvpFlag(town, false);
-		}
-	}
-	
-    /**
-	 * Sets pvp flags in a town to the desired setting.
-	 * 
-	 * @param town The town to set the flags for.
-	 * @param desiredSetting The value to set pvp and explosions to.
-	 */
-	private static void setPvpFlag(Town town, boolean desiredSetting) {
+	public static void setPvpFlag(Town town, boolean desiredSetting) {
 		
 		if (town.getPermissions().pvp != desiredSetting && SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns()) {
 			town.getPermissions().pvp = desiredSetting;
 			town.save();
 		}
-	}	
+	}
+
 }

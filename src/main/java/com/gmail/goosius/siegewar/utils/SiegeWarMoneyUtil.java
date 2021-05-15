@@ -4,11 +4,11 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.EconomyException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -199,16 +199,35 @@ public class SiegeWarMoneyUtil {
 				Translation.of("msg_siege_war_military_salary_available", TownyEconomyHandler.getFormattedBalance(militarySalaryAmount)));
 	}
 
-	public static double getSiegeCost(Town town) {
-		if (town.isCapital())
-			return SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
-				* (1 + SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage()/100)
-				* town.getTownBlocks().size()
-				* getMoneyMultiplier(town);
-		else
-			return SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
-			* town.getTownBlocks().size()
-			* getMoneyMultiplier(town);
+	public static double calculateSiegeCost(Town town) {
+		//Calculate base cost
+		double cost = SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
+						* town.getTownBlocks().size();
+
+		//Increase cost due to nation size
+		if(SiegeWarSettings.isNationSiegeImmunityEnabled()
+			&& SiegeWarSettings.getNationSiegeImmunityHomeTownContributionToAttackCost() > 0
+			&& town.hasNation()) {
+			Nation nation = TownyAPI.getInstance().getTownNationOrNull(town);
+			for (Town nationHomeTown : nation.getTowns()) {
+				cost += SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
+						* nationHomeTown.getTownBlocks().size()
+						* SiegeWarSettings.getNationSiegeImmunityHomeTownContributionToAttackCost();
+			}
+		}
+
+		//Increase cost if town is capitol
+		if(SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage() > 0
+			&& town.isCapital()) {
+			cost *= (1 + (SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage() / 100));
+		}
+
+		//Increase cost due to money multiplier & town size
+		if(SiegeWarSettings.getWarSiegeExtraMoneyPercentagePerTownLevel() > 0) {
+			cost *= getMoneyMultiplier(town);
+		}
+
+		return cost;
 	}
 
 	/**
@@ -219,13 +238,12 @@ public class SiegeWarMoneyUtil {
 	 * @param reason reason for payment
 	 * @param removeMoneyFromTownBank if true, remove money from town
 	 * @return true if money was paid. False if there were no soldiers
-	 * @throws EconomyException
 	 */
 	public static boolean distributeMoneyAmongSoldiers(double totalAmountForSoldiers,
 													Town town,
 													Map<Resident, Integer> soldierSharesMap,
 													String reason,
-													boolean removeMoneyFromTownBank) throws EconomyException {
+													boolean removeMoneyFromTownBank) {
 		if(soldierSharesMap.size() == 0)
 			return false;
 

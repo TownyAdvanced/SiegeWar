@@ -261,11 +261,6 @@ public class PlaceBlock {
 		if(SiegeWarBlockUtil.isSupportBlockUnstable(bannerBlock))
 			throw new TownyException(Translation.of("msg_err_siege_war_banner_support_block_not_stable"));
 
-		if (SiegeWarSettings.isAllNationSiegesEnabled()
-				&& SiegeController.isAnyHomeTownASiegeDefender(nearbyTown)) {
-			throw new TownyException(Translation.of("msg_err_cannot_start_siege_because_towns_home_nation_has_besieged_town"));
-		}
-
 		if (residentsTown == nearbyTown) {
 			//Revolt siege
 			StartRevoltSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
@@ -276,7 +271,7 @@ public class PlaceBlock {
 			if (System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(nearbyTown))
 				throw new TownyException(Translation.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
 
-			if (TownyEconomyHandler.isActive() && !residentsNation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.getSiegeCost(nearbyTown)))
+			if (TownyEconomyHandler.isActive() && !residentsNation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.calculateSiegeCost(nearbyTown)))
 				throw new TownyException(Translation.of("msg_err_no_money"));
 
 			if(SiegeController.getActiveOffensiveSieges(residentsNation).size() >= SiegeWarSettings.getWarSiegeMaxActiveSiegeAttacksPerNation())
