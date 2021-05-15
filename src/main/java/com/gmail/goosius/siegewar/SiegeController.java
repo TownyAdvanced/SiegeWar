@@ -96,13 +96,18 @@ public class SiegeController {
 
 	public static boolean loadAll() {
 		try {
-			System.out.println(SiegeWar.prefix + "Loading SiegeList...");
+			System.out.println(SiegeWar.prefix + "Loading Siege Data...");
 			clearSieges();
+			System.out.println(SiegeWar.prefix + "Loading Siege List Data...");
 			loadSiegeList();
-			loadSieges();
+			System.out.println(SiegeWar.prefix + "Loading Siege Detail Data...");
+			if(!loadSieges())
+				return false;
+			System.out.println(SiegeWar.prefix + "Siege Data Loaded Successfully.");
 			System.out.println(SiegeWar.prefix + SiegeController.getSieges().size() + " siege(s) loaded.");
 			return true;
 		} catch (Exception e) {
+			System.out.println(SiegeWar.prefix + "Problem Loading Siege Data...");
 			e.printStackTrace();
 			return false;
 		}
@@ -111,8 +116,8 @@ public class SiegeController {
 	public static void loadSiegeList() {
 		for (Town town : TownyUniverse.getInstance().getTowns())
 			if (SiegeMetaDataController.hasSiege(town)) {
-				System.out.println(SiegeWar.prefix + "Found siege in Town " + town.getName());
-				System.out.println(SiegeWar.prefix + "Loading siege of town " + town.getName());
+				System.out.println(SiegeWar.prefix + "Siege List Data: Found siege in Town " + town.getName());
+				System.out.println(SiegeWar.prefix + "Siege List Data: Loading siege of town " + town.getName());
 				newSiege(town);
 
 				setSiege(town, true);
@@ -122,8 +127,9 @@ public class SiegeController {
 
 	public static boolean loadSieges() {
 		for (Siege siege : townSiegeMap.values()) {
+			System.out.println(SiegeWar.prefix + "Siege Detail Data: Loading siege data for town '" + siege.getTown().getName() + "'");
 			if (!loadSiege(siege)) {
-				System.out.println(SiegeWar.prefix + "Loading Error: Could not read data for siege on '" + siege.getTown().getName() + "'.");
+				System.out.println(SiegeWar.prefix + "Siege Detail Data: Loading Error: Could not read siege data for town '" + siege.getTown().getName() + "'.");
 				return false;
 			}
 		}
