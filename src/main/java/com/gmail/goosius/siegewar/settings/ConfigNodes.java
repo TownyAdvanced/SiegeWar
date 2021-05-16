@@ -563,13 +563,13 @@ public enum ConfigNodes {
 			"",
 			"# If this setting is true, then peaceful towns can toggle PVP on and off."),
 	PEACEFUL_TOWNS_GUARDIAN_TOWN_PLOTS_REQUIREMENT(
-			"war.siege.peaceful_towns.guardian_town_plots_requirement",
+			"peaceful_towns.guardian_town_plots_requirement",
 			"30",
 			"",
 			"# This value determines how many plots a town has to have,",
 			"# to be considered a guardian town."),
 	PEACEFUL_TOWNS_GUARDIAN_TOWN_MIN_DISTANCE_REQUIREMENT_TOWNBLOCKS(
-			"war.siege.peaceful_towns.guardian_town_min_distance_requirement_townblocks",
+			"peaceful_towns.guardian_town_min_distance_requirement_townblocks",
 			"75",
 			"",
 			"# This value determines how close a town has to be to a peaceful town,",
