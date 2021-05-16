@@ -48,8 +48,8 @@ public class TownPeacefulnessUtil {
 			 * We are running in an Async thread so MUST verify all objects.
 			 */
 			if (townyUniverse.getDataSource().hasTown(town.getName())
-					&& !town.isRuined()
-					&& town.isNeutral() != TownMetaDataController.getDesiredPeacefulnessSetting(town))
+				&& !town.isRuined()
+				&& town.isNeutral() != TownMetaDataController.getDesiredPeacefulnessSetting(town))
 				updateTownPeacefulnessCounters(town);
 		}
 	}
@@ -73,7 +73,7 @@ public class TownPeacefulnessUtil {
 				message = Translation.of("msg_town_became_peaceful", town.getFormattedName());
 
 				//If town is occupied, record the occupier
-				if (TownOccupationController.isTownOccupied(town)) {
+				if(TownOccupationController.isTownOccupied(town)) {
 					TownMetaDataController.setPrePeacefulOccupierUUID(town, TownOccupationController.getTownOccupier(town).getUUID().toString());
 				}
 			} else {
@@ -86,12 +86,12 @@ public class TownPeacefulnessUtil {
 				 */
 				try {
 					String prePeacefulOccupierUUID = TownMetaDataController.getPrePeacefulOccupierUUID(town);
-					if (prePeacefulOccupierUUID != null) {
+					if(prePeacefulOccupierUUID != null) {
 						Nation prePeacefulOccupierNation = TownyUniverse.getInstance().getNation(UUID.fromString(prePeacefulOccupierUUID));
-						if (!(town.hasNation() && town.getNation() == prePeacefulOccupierNation)) {
-							TownOccupationController.setTownOccupation(town, prePeacefulOccupierNation);
-							TownMetaDataController.removePrePeacefulOccupierUUID(town);
-							message += Translation.of("msg_town_returned_to_pre_peaceful_occupier", prePeacefulOccupierNation.getName());
+							if (!(town.hasNation() && town.getNation() == prePeacefulOccupierNation)) {
+								TownOccupationController.setTownOccupation(town, prePeacefulOccupierNation);
+								TownMetaDataController.removePrePeacefulOccupierUUID(town);
+								message += Translation.of("msg_town_returned_to_pre_peaceful_occupier",prePeacefulOccupierNation.getName());
 						}
 					}
 				} catch (Throwable t) {
@@ -125,36 +125,38 @@ public class TownPeacefulnessUtil {
 		for(final Player player: BukkitTools.getOnlinePlayers()) {
 			try {
 				//Don't apply to towny admins
-				if (TownyUniverse.getInstance().getPermissionSource().isTownyAdmin(player))
+				if(TownyUniverse.getInstance().getPermissionSource().isTownyAdmin(player))
 					continue;
 
 				//Dont apply if player has the immunity perm
-				if(TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
+				if (TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
 					continue;
 
 				//Don't apply to non-peaceful players
 				Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-				if(resident == null || !(resident.hasTown() && resident.getTown().isNeutral()))
+				if(resident == null || !(resident.hasTown()&& resident.getTown().isNeutral()))
 					continue;
 
 				//Don't punish if the player is in a peaceful town
 				TownBlock townBlockAtPlayerLocation = TownyAPI.getInstance().getTownBlock(player.getLocation());
-				if (townBlockAtPlayerLocation != null
-					&& townBlockAtPlayerLocation.getTown().isNeutral()) {
+				if(townBlockAtPlayerLocation != null
+					&& townBlockAtPlayerLocation.getTown().isNeutral())
+				{
 					continue;
 				}
 
 				//Don't punish if the player is in their own town
-				if (resident.hasTown()
+				if(resident.hasTown()
 					&& townBlockAtPlayerLocation != null
-					&& resident.getTown() == townBlockAtPlayerLocation.getTown()) {
+					&& resident.getTown() == townBlockAtPlayerLocation.getTown())
+				{
 					continue;
 				}
 
 				//Punish if the player is in a siege zone
-				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
+				if(SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
 					TownyMessaging.sendMsg(player, Translation.of("msg_war_siege_peaceful_player_punished_for_being_in_siegezone"));
-					final int effectDurationTicks = (int) (TimeTools.convertToTicks(TownySettings.getShortInterval() + 5));
+					final int effectDurationTicks = (int)(TimeTools.convertToTicks(TownySettings.getShortInterval() + 5));
 					Towny.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(Towny.getPlugin(), new Runnable() {
 						public void run() {
 							List<PotionEffect> potionEffects = new ArrayList<>();
