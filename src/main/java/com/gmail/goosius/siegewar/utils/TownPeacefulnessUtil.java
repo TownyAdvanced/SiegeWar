@@ -22,8 +22,12 @@ import com.palmergames.util.TimeTools;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class TownPeacefulnessUtil {
 
@@ -109,41 +113,41 @@ public class TownPeacefulnessUtil {
 	/**
 	 * This method punishes any peaceful players who are in siege-zones
 	 * (except for their own town OR any peaceful town)
-	 * <p>
+	 *
 	 * A player is peaceful if they
 	 * 1. Are resident in a peaceful town
 	 * 2. Are resident in a declared (but not confirmed) peaceful town
-	 * <p>
+	 *
 	 * The punishment is a status effect (e.g. poison, nausea)
 	 * The punishment is refreshed every 20 seconds, until the player leaves the siege-zone
 	 */
 	public static void punishPeacefulPlayersInActiveSiegeZones() {
-		for (final Player player : BukkitTools.getOnlinePlayers()) {
+		for(final Player player: BukkitTools.getOnlinePlayers()) {
 			try {
 				//Don't apply to towny admins
 				if (TownyUniverse.getInstance().getPermissionSource().isTownyAdmin(player))
 					continue;
 
 				//Dont apply if player has the immunity perm
-				if (TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
+				if(TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
 					continue;
 
 				//Don't apply to non-peaceful players
 				Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-				if (resident == null || !(resident.hasTown() && resident.getTown().isNeutral()))
+				if(resident == null || !(resident.hasTown() && resident.getTown().isNeutral()))
 					continue;
 
 				//Don't punish if the player is in a peaceful town
 				TownBlock townBlockAtPlayerLocation = TownyAPI.getInstance().getTownBlock(player.getLocation());
 				if (townBlockAtPlayerLocation != null
-						&& townBlockAtPlayerLocation.getTown().isNeutral()) {
+					&& townBlockAtPlayerLocation.getTown().isNeutral()) {
 					continue;
 				}
 
 				//Don't punish if the player is in their own town
 				if (resident.hasTown()
-						&& townBlockAtPlayerLocation != null
-						&& resident.getTown() == townBlockAtPlayerLocation.getTown()) {
+					&& townBlockAtPlayerLocation != null
+					&& resident.getTown() == townBlockAtPlayerLocation.getTown()) {
 					continue;
 				}
 
@@ -189,7 +193,7 @@ public class TownPeacefulnessUtil {
 	 *    the influences of the home nation & foreign enemy nations are greatly amplified,
 	 *    such that they will always be stronger than the influences of foreign non-enemy nations.
 	 *
-	 * * 3. Possible Outcomes:
+	 * 3. Possible Outcomes:
 	 *    A. If there are zero influences on the peaceful town, it will become unoccupied.
 	 *    B. If the strongest influence belongs to the peaceful town's home nation, the town will become unoccupied.
 	 *    C. If the strongest influence belongs to a foreign nation, the town will get peacefully occupied by that nation.
