@@ -176,20 +176,21 @@ public class TownPeacefulnessUtil {
 
 	/**
 	 * This method is a cleanup of peaceful town occupation statuses
-	 * <p>
+	 *
 	 * How it works:
+	 *
 	 * 1. For each peaceful town, every guardian town within 75 townblocks exerts a "power-influence" on the peaceful town,
-	 * (a guardian town is defined as a non-peaceful nation town of size 30 townblocks or more)
-	 * <p>
-	 * 2. If the town has a nation, the influences of the home nation & foreign enemy nations,
-	 * are greatly amplified,
-	 * so that they will always be stronger than the influences of foreign non-enemy nations.
-	 * <p>
-	 * 3. Possible Outcomes:
-	 * A. If there are zero influences on the peaceful town, it becomes unoccupied.
-	 * B. If the strongest influence belongs to the peaceful town's home nation, the town becomes unoccupied.
-	 * C. If the strongest influence belongs to a nation different to the peaceful town's home nation,
-	 * the town gets peacefully occupied by that nation
+	 *    1.1. A guardian town is defined as a non-peaceful nation town of size 30 townblocks or more.
+	 *    1.2. An occupied guardian town exerts the influence for its occupier, not for its home nation.
+	 *
+	 * 2. If the peaceful town has a nation,
+	 *    the influences of the home nation & foreign enemy nations are greatly amplified,
+	 *    such that they will always be stronger than the influences of foreign non-enemy nations.
+	 *
+	 * * 3. Possible Outcomes:
+	 *    A. If there are zero influences on the peaceful town, it will become unoccupied.
+	 *    B. If the strongest influence belongs to the peaceful town's home nation, the town will become unoccupied.
+	 *    C. If the strongest influence belongs to a foreign nation, the town will get peacefully occupied by that nation.
 	 */
 	public static void evaluatePeacefulTownOccupationAssignments() {
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
