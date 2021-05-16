@@ -11,7 +11,6 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -269,13 +268,15 @@ public class TownPeacefulnessUtil {
 	/*
 	 * Amplify the influence of home & enemy nations
 	 */
-	private static Map<Nation, Long> amplifyInfluenceOfHomeAndEnemyNations(Map<Nation, Long> nationInfluenceMap, Town peacefulTown) throws NotRegisteredException {
+	private static Map<Nation, Long> amplifyInfluenceOfHomeAndEnemyNations(Map<Nation, Long> nationInfluenceMap, Town peacefulTown) {
 		Map<Nation, Long> result = new HashMap<>(nationInfluenceMap);
 		long amplifiedValue;
+		Nation nationOfPeacefulTown;
 		if (peacefulTown.hasNation()) {
+			nationOfPeacefulTown = TownyAPI.getInstance().getTownNationOrNull(peacefulTown);
 			for (Map.Entry<Nation, Long> mapEntry : nationInfluenceMap.entrySet()) {
-				if (mapEntry.getKey() == peacefulTown.getNation()
-						|| mapEntry.getKey().hasEnemy(peacefulTown.getNation())) {
+				if (mapEntry.getKey() == nationOfPeacefulTown
+						|| mapEntry.getKey().hasEnemy(nationOfPeacefulTown)) {
 					amplifiedValue = mapEntry.getValue() * 1000000;
 					result.put(mapEntry.getKey(), amplifiedValue);
 				}
@@ -298,7 +299,7 @@ public class TownPeacefulnessUtil {
 		return winningEntry.getKey();
 	}
 
-	private static boolean ensureTownIsPeacefullyUnoccupied(Town peacefulTown) throws NotRegisteredException {
+	private static boolean ensureTownIsPeacefullyUnoccupied(Town peacefulTown) {
 		if(!TownOccupationController.isTownOccupied(peacefulTown)) {
 			return false;
 		}
@@ -320,7 +321,7 @@ public class TownPeacefulnessUtil {
 		return true;
 	}
 
-	private static boolean ensureTownIsPeacefullyOccupied(Town peacefulTown, Nation newOccupier) throws NotRegisteredException {
+	private static boolean ensureTownIsPeacefullyOccupied(Town peacefulTown, Nation newOccupier) {
 		if(TownOccupationController.isTownOccupied(peacefulTown)) {
 			//Town is already occupied
 			Nation currentOccupier = TownOccupationController.getTownOccupier(peacefulTown);
