@@ -3,8 +3,8 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 public class SiegeWarAllegianceUtil {
 
-    public static SiegeSide calculateCandidateSiegePlayerSide(Player deadPlayer, Town deadResidentTown, Siege candidateSiege) throws NotRegisteredException {
+    public static SiegeSide calculateCandidateSiegePlayerSide(Player deadPlayer, Town deadResidentTown, Siege candidateSiege) {
 
         //Look for defender
         Government defendingGovernment = candidateSiege.getDefender();
@@ -51,21 +51,22 @@ public class SiegeWarAllegianceUtil {
                 && TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS.getNode());
     }
 
-    private static boolean isNationSoldierOrAlliedSoldier(Player player, Town residentTown, Government governmentToCheck) throws NotRegisteredException {
+    private static boolean isNationSoldierOrAlliedSoldier(Player player, Town residentTown, Government governmentToCheck) {
         if(!residentTown.hasNation())
             return false;
+        Nation nation = TownyAPI.getInstance().getTownNationOrNull(residentTown);
 
         if(!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS.getNode()))
             return false;
 
         if(governmentToCheck instanceof Nation) {
             //The government-to-check is a nation
-            return residentTown.getNation() == governmentToCheck
-                    || residentTown.getNation().hasMutualAlly((Nation) governmentToCheck);
+            return nation == governmentToCheck
+                    || nation.hasMutualAlly((Nation) governmentToCheck);
         } else if (((Town)governmentToCheck).hasNation()) {
             //The government-to-check is a nation town
-            return residentTown.getNation() == ((Town)governmentToCheck).getNation()
-                    || residentTown.getNation().hasMutualAlly(((Town)governmentToCheck).getNation());
+            return nation == TownyAPI.getInstance().getTownNationOrNull((Town) governmentToCheck)
+                    || nation.hasMutualAlly(TownyAPI.getInstance().getTownNationOrNull((Town) governmentToCheck));
         } else {
             //The government-to-check is a non-nation town. Nation soldiers cannot contribute
             return false;

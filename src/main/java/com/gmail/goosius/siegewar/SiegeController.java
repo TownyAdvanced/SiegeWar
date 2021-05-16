@@ -21,7 +21,6 @@ import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
@@ -97,13 +96,18 @@ public class SiegeController {
 
 	public static boolean loadAll() {
 		try {
-			System.out.println(SiegeWar.prefix + "Loading SiegeList...");
+			System.out.println(SiegeWar.prefix + "Loading Siege Data...");
 			clearSieges();
+			System.out.println(SiegeWar.prefix + "Loading Siege List Data...");
 			loadSiegeList();
-			loadSieges();
+			System.out.println(SiegeWar.prefix + "Loading Siege Detail Data...");
+			if(!loadSieges())
+				return false;
+			System.out.println(SiegeWar.prefix + "Siege Data Loaded Successfully.");
 			System.out.println(SiegeWar.prefix + SiegeController.getSieges().size() + " siege(s) loaded.");
 			return true;
 		} catch (Exception e) {
+			System.out.println(SiegeWar.prefix + "Problem Loading Siege Data...");
 			e.printStackTrace();
 			return false;
 		}
@@ -112,8 +116,7 @@ public class SiegeController {
 	public static void loadSiegeList() {
 		for (Town town : TownyUniverse.getInstance().getTowns())
 			if (SiegeMetaDataController.hasSiege(town)) {
-				System.out.println(SiegeWar.prefix + "Found siege in Town " + town.getName());
-				System.out.println(SiegeWar.prefix + "Loading siege of town " + town.getName());
+				System.out.println(SiegeWar.prefix + "Siege List Data: Found siege in Town " + town.getName());
 				newSiege(town);
 
 				setSiege(town, true);
@@ -123,8 +126,9 @@ public class SiegeController {
 
 	public static boolean loadSieges() {
 		for (Siege siege : townSiegeMap.values()) {
+			System.out.println(SiegeWar.prefix + "Siege Detail Data: Loading siege data for town '" + siege.getTown().getName() + "'");
 			if (!loadSiege(siege)) {
-				System.out.println(SiegeWar.prefix + "Loading Error: Could not read data for siege on '" + siege.getTown().getName() + "'.");
+				System.out.println(SiegeWar.prefix + "Siege Detail Data: Loading Error: Could not read siege data for town '" + siege.getTown().getName() + "'.");
 				return false;
 			}
 		}
@@ -147,12 +151,9 @@ public class SiegeController {
 			//Attacker data not found. Look for old data schema
 			if (SiegeMetaDataController.getNationUUID(town) != null) {
 				//Old data scheme found, hook up to new values
-				Nation nation;
-				try {
-					nation = TownyUniverse.getInstance().getDataSource().getNation(UUID.fromString(SiegeMetaDataController.getNationUUID(town)));
-				} catch (NotRegisteredException e) {
+				Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(SiegeMetaDataController.getNationUUID(town)));
+				if (nation == null)
 					return false;
-				}
 				siege.setAttacker(nation);
 				siege.setDefender(town);
 			} else {
@@ -161,40 +162,38 @@ public class SiegeController {
 			}
 
 		} else {
-			//Load Attacker as normal
-			try {
-				switch (siege.getSiegeType()) {
-					case CONQUEST:
-					case LIBERATION:
-					case SUPPRESSION:
-						Nation nation = TownyUniverse.getInstance().getDataSource().getNation(UUID.fromString(SiegeMetaDataController.getAttackerUUID(town)));
-						siege.setAttacker(nation);
-						break;
-					case REVOLT:
-						siege.setAttacker(town);
-						break;
-				}
-			} catch (NotRegisteredException e) {
-				e.printStackTrace();
-				return false;
+			switch (siege.getSiegeType()) {
+				case CONQUEST:
+				case LIBERATION:
+				case SUPPRESSION:
+					String uuid = SiegeMetaDataController.getAttackerUUID(town);
+					if (uuid == null)
+						return false;
+					Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(uuid));
+					if (nation == null)
+						return false;
+					siege.setAttacker(nation);
+					break;
+				case REVOLT:
+					siege.setAttacker(town);
+					break;
 			}
 
-			//Load Defender as normal
-			try {
-				switch (siege.getSiegeType()) {
-					case CONQUEST:
-					case SUPPRESSION:
-						siege.setDefender(town);
-						break;
-					case LIBERATION:
-					case REVOLT:
-						Nation nation = TownyUniverse.getInstance().getDataSource().getNation(UUID.fromString(SiegeMetaDataController.getDefenderUUID(town)));
-						siege.setDefender(nation);
-						break;
-				}
-			} catch (NotRegisteredException e) {
-				e.printStackTrace();
-				return false;
+			switch (siege.getSiegeType()) {
+				case CONQUEST:
+				case SUPPRESSION:
+					siege.setDefender(town);
+					break;
+				case LIBERATION:
+				case REVOLT:
+					String uuid = SiegeMetaDataController.getDefenderUUID(town);
+					if (uuid == null)
+						return false;
+					Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(uuid));
+					if (nation == null)
+						return false;
+					siege.setDefender(nation);
+					break;
 			}
 		}
 
@@ -381,13 +380,11 @@ public class SiegeController {
 						result.put(siege, siege.getTown());
 					}
 				} else {
-					try {
-						if(siege.getTown().hasNation()
-							&& siege.getTown().getNation() == nation) {
-							//Defender is a town belonging to the given nation
-							result.put(siege, siege.getTown());
-						}
-					} catch (NotRegisteredException ignored) {}
+					if(siege.getTown().hasNation()
+						&& TownyAPI.getInstance().getTownNationOrNull(siege.getTown()) == nation) {
+						//Defender is a town belonging to the given nation
+						result.put(siege, siege.getTown());
+					}
 				}
 			}
 		}
@@ -401,11 +398,9 @@ public class SiegeController {
 	 * Note: A home defence war is when one or more of the nation's natural towns (ie not occupied foreign towns) is under siege.
 	 */
 	public static boolean isTownsNationFightingAHomeDefenceWar(Town town) {
-		try {
-			if(town.hasNation()) {
-				return isNationFightingAHomeDefenceWar(town.getNation());
-			}
-		} catch (NotRegisteredException ignored) {}
+		if(town.hasNation()) {
+			return isNationFightingAHomeDefenceWar(TownyAPI.getInstance().getTownNationOrNull(town));
+		}
 		return false;
 	}
 
@@ -417,13 +412,11 @@ public class SiegeController {
 	 */
 	public static boolean isNationFightingAHomeDefenceWar(Nation nation) {
 		for(Siege siege: SiegeController.getSieges()) {
-			try {
-				if(siege.getStatus().isActive()
-					&& siege.getTown().hasNation()
-					&& siege.getTown().getNation() == nation) {
-					return true;
-				}
-			} catch (NotRegisteredException ignored) {}
+			if(siege.getStatus().isActive()
+				&& siege.getTown().hasNation()
+				&& TownyAPI.getInstance().getTownNationOrNull(siege.getTown()) == nation) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -471,10 +464,7 @@ public class SiegeController {
 		//Set pvp to true in the besieged town
 		SiegeWarTownUtil.setPvpFlag(targetTown, true);
 
-		//Send global message;
-		try {
-			sendGlobalSiegeStartMessage(siege);
-		} catch (NotRegisteredException ignored) {}
+		sendGlobalSiegeStartMessage(siege);
 
 		//Pay into warchest
 		if (useWarchest) {
@@ -505,19 +495,17 @@ public class SiegeController {
 		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, bannerBlock));
 	}
 
-	private static void sendGlobalSiegeStartMessage(Siege siege) throws NotRegisteredException {
+	private static void sendGlobalSiegeStartMessage(Siege siege) {
 		switch (siege.getSiegeType()) {
 
 			case CONQUEST:
 				if (siege.getTown().hasNation()) {
-					try {
-						Messaging.sendGlobalMessage(String.format(
-								Translation.of("msg_conquest_siege_started_nation_town"),
-								siege.getAttacker().getName(),
-								siege.getTown().getNation().getName(),
-								siege.getTown().getName()
-						));
-					} catch (NotRegisteredException ignored) {}
+					Messaging.sendGlobalMessage(String.format(
+							Translation.of("msg_conquest_siege_started_nation_town"),
+							siege.getAttacker().getName(),
+							TownyAPI.getInstance().getTownNationOrNull(siege.getTown()).getName(),
+							siege.getTown().getName()
+					));
 				} else {
 					Messaging.sendGlobalMessage(String.format(
 							Translation.of("msg_conquest_siege_started_neutral_town"),
@@ -548,7 +536,7 @@ public class SiegeController {
 					Messaging.sendGlobalMessage(String.format(
 							Translation.of("msg_revolt_siege_started_nation_town"),
 							siege.getTown().getName(),
-							siege.getTown().getNation().getName(),
+							TownyAPI.getInstance().getTownNationOrNull(siege.getTown()).getName(),
 							TownOccupationController.getTownOccupier(siege.getTown()).getName()
 					));
 				} else {
@@ -561,14 +549,12 @@ public class SiegeController {
 				break;
 			case SUPPRESSION:
 				if (siege.getTown().hasNation()) {
-					try {
-						Messaging.sendGlobalMessage(String.format(
-								Translation.of("msg_suppression_siege_started_nation_town"),
-								siege.getAttacker().getName(),
-								siege.getTown().getNation().getName(),
-								siege.getTown().getName()
-						));
-					} catch (NotRegisteredException ignored) {}
+					Messaging.sendGlobalMessage(String.format(
+							Translation.of("msg_suppression_siege_started_nation_town"),
+							siege.getAttacker().getName(),
+							TownyAPI.getInstance().getTownNationOrNull(siege.getTown()).getName(),
+							siege.getTown().getName()
+					));
 				} else {
 					Messaging.sendGlobalMessage(String.format(
 							Translation.of("msg_suppression_siege_started_neutral_town"),

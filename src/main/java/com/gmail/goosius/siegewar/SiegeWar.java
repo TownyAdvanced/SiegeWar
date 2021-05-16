@@ -29,7 +29,7 @@ public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
 	public static String prefix = "[SiegeWar] ";
-	private static Version requiredTownyVersion = Version.fromString("0.96.7.9");
+	private static Version requiredTownyVersion = Version.fromString("0.97.0.0");
 	private final static SiegeHUDManager SiegeHudManager = new SiegeHUDManager(plugin);
 	private static boolean siegeWarPluginError = false;
 	private static boolean cannonsPluginIntegrationEnabled = false;
