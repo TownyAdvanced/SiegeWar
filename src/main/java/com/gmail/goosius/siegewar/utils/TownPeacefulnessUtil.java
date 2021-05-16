@@ -43,9 +43,9 @@ public class TownPeacefulnessUtil {
 			 * Only adjust counter for this town if it really still exists.
 			 * We are running in an Async thread so MUST verify all objects.
 			 */
-			if (townyUniverse.getDataSource().hasTown(town.getName()) 
-				&& !town.isRuined()
-				&& town.isNeutral() != TownMetaDataController.getDesiredPeacefulnessSetting(town))
+			if (townyUniverse.getDataSource().hasTown(town.getName())
+					&& !town.isRuined()
+					&& town.isNeutral() != TownMetaDataController.getDesiredPeacefulnessSetting(town))
 				updateTownPeacefulnessCounters(town);
 		}
 	}
@@ -53,7 +53,7 @@ public class TownPeacefulnessUtil {
 	public static void updateTownPeacefulnessCounters(Town town) {
 		String message;
 
-		int days = TownMetaDataController.getPeacefulnessChangeConfirmationCounterDays(town); 
+		int days = TownMetaDataController.getPeacefulnessChangeConfirmationCounterDays(town);
 		if (days > 1) {
 			TownMetaDataController.setPeacefulnessChangeDays(town, --days);
 			return;
@@ -61,15 +61,15 @@ public class TownPeacefulnessUtil {
 		TownMetaDataController.setPeacefulnessChangeDays(town, 0);
 		town.setNeutral(!town.isNeutral());
 
-		if (town.isNeutral() && !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()) 
-			SiegeWarTownUtil.disableTownPVP(town);	
+		if (town.isNeutral() && !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP())
+			SiegeWarTownUtil.disableTownPVP(town);
 
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			if (town.isNeutral()) {
 				message = Translation.of("msg_town_became_peaceful", town.getFormattedName());
 
 				//If town is occupied, record the occupier
-				if(TownOccupationController.isTownOccupied(town)) {
+				if (TownOccupationController.isTownOccupied(town)) {
 					TownMetaDataController.setPrePeacefulOccupierUUID(town, TownOccupationController.getTownOccupier(town).getUUID().toString());
 				}
 			} else {
@@ -82,12 +82,12 @@ public class TownPeacefulnessUtil {
 				 */
 				try {
 					String prePeacefulOccupierUUID = TownMetaDataController.getPrePeacefulOccupierUUID(town);
-					if(prePeacefulOccupierUUID != null) {
+					if (prePeacefulOccupierUUID != null) {
 						Nation prePeacefulOccupierNation = TownyUniverse.getInstance().getNation(UUID.fromString(prePeacefulOccupierUUID));
-							if (!(town.hasNation() && town.getNation() == prePeacefulOccupierNation)) {
-								TownOccupationController.setTownOccupation(town, prePeacefulOccupierNation);
-								TownMetaDataController.removePrePeacefulOccupierUUID(town);
-								message += Translation.of("msg_town_returned_to_pre_peaceful_occupier",prePeacefulOccupierNation.getName());
+						if (!(town.hasNation() && town.getNation() == prePeacefulOccupierNation)) {
+							TownOccupationController.setTownOccupation(town, prePeacefulOccupierNation);
+							TownMetaDataController.removePrePeacefulOccupierUUID(town);
+							message += Translation.of("msg_town_returned_to_pre_peaceful_occupier", prePeacefulOccupierNation.getName());
 						}
 					}
 				} catch (Throwable t) {
@@ -109,19 +109,19 @@ public class TownPeacefulnessUtil {
 	/**
 	 * This method punishes any peaceful players who are in siege-zones
 	 * (except for their own town OR any peaceful town)
-	 * 
+	 * <p>
 	 * A player is peaceful if they
 	 * 1. Are resident in a peaceful town
 	 * 2. Are resident in a declared (but not confirmed) peaceful town
-	 *
+	 * <p>
 	 * The punishment is a status effect (e.g. poison, nausea)
 	 * The punishment is refreshed every 20 seconds, until the player leaves the siege-zone
 	 */
 	public static void punishPeacefulPlayersInActiveSiegeZones() {
-		for(final Player player: BukkitTools.getOnlinePlayers()) {
+		for (final Player player : BukkitTools.getOnlinePlayers()) {
 			try {
 				//Don't apply to towny admins
-				if(TownyUniverse.getInstance().getPermissionSource().isTownyAdmin(player))
+				if (TownyUniverse.getInstance().getPermissionSource().isTownyAdmin(player))
 					continue;
 
 				//Dont apply if player has the immunity perm
@@ -130,29 +130,27 @@ public class TownPeacefulnessUtil {
 
 				//Don't apply to non-peaceful players
 				Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-				if(resident == null || !(resident.hasTown()&& resident.getTown().isNeutral()))
+				if (resident == null || !(resident.hasTown() && resident.getTown().isNeutral()))
 					continue;
 
 				//Don't punish if the player is in a peaceful town
 				TownBlock townBlockAtPlayerLocation = TownyAPI.getInstance().getTownBlock(player.getLocation());
-				if(townBlockAtPlayerLocation != null
-					&& townBlockAtPlayerLocation.getTown().isNeutral())
-				{
+				if (townBlockAtPlayerLocation != null
+						&& townBlockAtPlayerLocation.getTown().isNeutral()) {
 					continue;
 				}
 
 				//Don't punish if the player is in their own town
-				if(resident.hasTown()
-					&& townBlockAtPlayerLocation != null
-					&& resident.getTown() == townBlockAtPlayerLocation.getTown())
-				{
+				if (resident.hasTown()
+						&& townBlockAtPlayerLocation != null
+						&& resident.getTown() == townBlockAtPlayerLocation.getTown()) {
 					continue;
 				}
 
 				//Punish if the player is in a siege zone
-				if(SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
+				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
 					TownyMessaging.sendMsg(player, Translation.of("msg_war_siege_peaceful_player_punished_for_being_in_siegezone"));
-					final int effectDurationTicks = (int)(TimeTools.convertToTicks(TownySettings.getShortInterval() + 5));
+					final int effectDurationTicks = (int) (TimeTools.convertToTicks(TownySettings.getShortInterval() + 5));
 					Towny.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(Towny.getPlugin(), new Runnable() {
 						public void run() {
 							List<PotionEffect> potionEffects = new ArrayList<>();
@@ -178,19 +176,20 @@ public class TownPeacefulnessUtil {
 
 	/**
 	 * This method is a cleanup of peaceful town occupation statuses
-	 *
+	 * <p>
 	 * How it works:
 	 * 1. For each peaceful town, every guardian town within 75 townblocks exerts a "power-influence" on the peaceful town,
-	 *    (a guardian town is defined as a non-peaceful nation town of size 30 townblocks or more)
-	 *
-	 * 2. If the peaceful town has a nation,
-	 *    the power-influence from non-enemy nations is completely neutralized.
-	 *
+	 * (a guardian town is defined as a non-peaceful nation town of size 30 townblocks or more)
+	 * <p>
+	 * 2. If the town has a nation, the influences of the home nation & foreign enemy nations,
+	 * are greatly amplified,
+	 * so that they will always be stronger than the influences of foreign non-enemy nations.
+	 * <p>
 	 * 3. Possible Outcomes:
-	 *    A. If there is zero power-influence on the peaceful town, the town becomes unoccupied.
-	 *    B. If the strongest power-influence is from the peaceful town's home nation, the town becomes unoccupied.
-	 *    C. If the strongest power-influence is from a nation different to the peaceful town's home nation,
-	 *       the town gets peacefully occupied by that nation
+	 * A. If there are zero influences on the peaceful town, it becomes unoccupied.
+	 * B. If the strongest influence belongs to the peaceful town's home nation, the town becomes unoccupied.
+	 * C. If the strongest influence belongs to a nation different to the peaceful town's home nation,
+	 * the town gets peacefully occupied by that nation
 	 */
 	public static void evaluatePeacefulTownOccupationAssignments() {
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
@@ -211,16 +210,16 @@ public class TownPeacefulnessUtil {
 					continue;
 
 				//Skip if town is ruined
-				if(peacefulTown.isRuined())
+				if (peacefulTown.isRuined())
 					continue;
 
 				//Find nearby nations with influence on the town (result is Map<nation, strength-of-influence>)
-				Map<Nation, Integer> nationsWithInfluence = findNearbyNationsWithInfluence(peacefulTown);
+				Map<Nation, Long> nationsWithInfluence = findNearbyNationsWithInfluence(peacefulTown);
 
-				//Filter out non-home/non-enemy nations
-				nationsWithInfluence = filterOutNonHomeNonEnemyNations(nationsWithInfluence, peacefulTown);
+				//Amplify influence of home & enemy nations
+				nationsWithInfluence = amplifyInfluenceOfHomeAndEnemyNations(nationsWithInfluence, peacefulTown);
 
-				if(nationsWithInfluence.size() == 0) {
+				if (nationsWithInfluence.size() == 0) {
 					//The town is not affected by influence.
 					//Ensure peaceful town is unoccupied.
 					townTransferred = ensureTownIsPeacefullyUnoccupied(peacefulTown);
@@ -258,27 +257,27 @@ public class TownPeacefulnessUtil {
 		}
 	}
 
-	 /*
-	 * Filter out guardian nations with no influence
-	 * - If the town has no nation, all guardian nations have influence
-	 * - If the town has a nation, only the home nation & enemy foreign nations have an influence
+	/*
+	 * Amplify the influence of home & enemy nations
 	 */
-	private static Map<Nation,Integer> filterOutNonHomeNonEnemyNations(Map<Nation,Integer> guardianNations, Town peacefulTown) throws NotRegisteredException {
-		Map<Nation,Integer> result = new HashMap<>();
-		if(peacefulTown.hasNation()) {
-			for(Map.Entry<Nation,Integer> mapEntry: guardianNations.entrySet()) {
-				if(mapEntry.getKey() == peacefulTown.getNation()
-					|| mapEntry.getKey().hasEnemy(peacefulTown.getNation())) {
-						result.put(mapEntry.getKey(), mapEntry.getValue());
+	private static Map<Nation, Long> amplifyInfluenceOfHomeAndEnemyNations(Map<Nation, Long> nationInfluenceMap, Town peacefulTown) throws NotRegisteredException {
+		Map<Nation, Long> result = new HashMap<>(nationInfluenceMap);
+		long amplifiedValue;
+		if (peacefulTown.hasNation()) {
+			for (Map.Entry<Nation, Long> mapEntry : nationInfluenceMap.entrySet()) {
+				if (mapEntry.getKey() == peacefulTown.getNation()
+						|| mapEntry.getKey().hasEnemy(peacefulTown.getNation())) {
+					amplifiedValue = mapEntry.getValue() * 1000000;
+					result.put(mapEntry.getKey(), amplifiedValue);
 				}
 			}
 		}
 		return result;
 	}
 
-	private static Nation calculateNationWithStrongestInfluence(Map<Nation, Integer> guardianNations) {
-		Map.Entry<Nation, Integer> winningEntry = null;
-		for(Map.Entry<Nation,Integer> mapEntry: guardianNations.entrySet()) {
+	private static Nation calculateNationWithStrongestInfluence(Map<Nation, Long> guardianNations) {
+		Map.Entry<Nation, Long> winningEntry = null;
+		for(Map.Entry<Nation,Long> mapEntry: guardianNations.entrySet()) {
 			if(winningEntry == null) {
 				winningEntry = mapEntry;
 			} else {
@@ -340,8 +339,8 @@ public class TownPeacefulnessUtil {
 		return true; //Town switched
 	}
 
-	public static Map<Nation, Integer> findNearbyNationsWithInfluence(Town peacefulTown) {
-		Map<Nation, Integer> guardianNations = new HashMap<>();
+	public static Map<Nation, Long> findNearbyNationsWithInfluence(Town peacefulTown) {
+		Map<Nation, Long> guardianNations = new HashMap<>();
 		Nation guardianNation;
 		int numTownBlocks;
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
@@ -364,7 +363,7 @@ public class TownPeacefulnessUtil {
 						if(guardianNations.containsKey(guardianNation)) {
 							guardianNations.put(guardianNation, guardianNations.get(guardianNation) + numTownBlocks);
 						} else {
-							guardianNations.put(guardianNation, numTownBlocks);
+							guardianNations.put(guardianNation, (long)numTownBlocks);
 						}
 				}
 			}
