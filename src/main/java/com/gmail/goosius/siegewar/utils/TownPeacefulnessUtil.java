@@ -180,14 +180,14 @@ public class TownPeacefulnessUtil {
 	 * This method is a cleanup of peaceful town occupation statuses
 	 *
 	 * How it works:
-	 * 1. For each peaceful town, every guardian town within 70 townblocks exerts a "power-influence" on the town,
+	 * 1. For each peaceful town, every guardian town within 70 townblocks exerts a "power-influence" on the peaceful town,
 	 *    (a guardian town is defined as a non-peaceful nation town of size 30 townblocks or more)
 	 *
 	 * 2. If the peaceful town has a nation,
 	 *    the power-influence from non-enemy nations is completely neutralized.
 	 *
 	 * 3. Possible Outcomes:
-	 *    A. If there is zero power-influence on the peaceful town, the town remains unoccupied.
+	 *    A. If there is zero power-influence on the peaceful town, the town becomes unoccupied.
 	 *    B. If the strongest power-influence is from the peaceful town's home nation, the town becomes unoccupied.
 	 *    C. If the strongest power-influence is from a nation different to the peaceful town's home nation,
 	 *       the town gets peacefully occupied by that nation
