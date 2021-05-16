@@ -66,7 +66,7 @@ public class TownPeacefulnessUtil {
 		town.setNeutral(!town.isNeutral());
 
 		if (town.isNeutral() && !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()) 
-			SiegeWarTownUtil.disableTownPVP(town);  
+			SiegeWarTownUtil.disableTownPVP(town);	
 
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			if (town.isNeutral()) {
