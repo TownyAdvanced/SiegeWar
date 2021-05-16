@@ -27,6 +27,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.Comparator;
 
 public class TownPeacefulnessUtil {
 
@@ -286,16 +287,9 @@ public class TownPeacefulnessUtil {
 	}
 
 	private static Nation calculateNationWithStrongestInfluence(Map<Nation, Long> guardianNations) {
-		Map.Entry<Nation, Long> winningEntry = null;
-		for(Map.Entry<Nation,Long> mapEntry: guardianNations.entrySet()) {
-			if(winningEntry == null) {
-				winningEntry = mapEntry;
-			} else {
-				if(mapEntry.getValue() > winningEntry.getValue()) {
-					winningEntry = mapEntry;
-				}
-			}
-		}
+		Map.Entry<Nation, Long> winningEntry = guardianNations.entrySet().stream()
+		.max(Comparator.comparingLong(Map.Entry::getValue))
+		.get();
 		return winningEntry.getKey();
 	}
 
