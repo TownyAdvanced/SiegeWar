@@ -114,7 +114,7 @@ public class TownPeacefulnessUtil {
 	 * This method punishes any peaceful players who are in siege-zones
 	 * (except for their own town OR any peaceful town)
 	 *
-	 * A player is peaceful if they
+	 * A player is peaceful if they 
 	 * 1. Are resident in a peaceful town
 	 * 2. Are resident in a declared (but not confirmed) peaceful town
 	 *
