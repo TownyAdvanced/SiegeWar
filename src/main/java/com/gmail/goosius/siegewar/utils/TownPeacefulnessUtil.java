@@ -179,9 +179,11 @@ public class TownPeacefulnessUtil {
 	 *
 	 * How it works:
 	 *
-	 * 1. For each peaceful town, every guardian town within 75 townblocks exerts a "power-influence" on the peaceful town,
-	 *    1.1. A guardian town is defined as a non-peaceful nation town of size 30 townblocks or more.
-	 *    1.2. An occupied guardian town exerts the influence for its occupier, not for its home nation.
+	 * 1. For each peaceful town, every nearby guardian town exerts a "power-influence" on the peaceful town.
+	 *    - "Nearby" is defined as 75 townblocks (configurable)
+	 *    - "Guardian Town" is defined as a non-peaceful nation town of size 30 townblocks (configurable) or more.
+	 *    - An occupied guardian town exerts influence for its occupier, not for its home nation.
+	 *    - The strength of the influence equals the num-townblocks of the guardian town.
 	 *
 	 * 2. If the peaceful town has a nation,
 	 *    the influences of the home nation & foreign enemy nations are greatly amplified,
