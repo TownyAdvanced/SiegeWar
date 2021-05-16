@@ -47,7 +47,7 @@ public class TownPeacefulnessUtil {
 			 * Only adjust counter for this town if it really still exists.
 			 * We are running in an Async thread so MUST verify all objects.
 			 */
-			if (townyUniverse.getDataSource().hasTown(town.getName())
+			if (townyUniverse.getDataSource().hasTown(town.getName()) 
 				&& !town.isRuined()
 				&& town.isNeutral() != TownMetaDataController.getDesiredPeacefulnessSetting(town))
 				updateTownPeacefulnessCounters(town);
@@ -57,7 +57,7 @@ public class TownPeacefulnessUtil {
 	public static void updateTownPeacefulnessCounters(Town town) {
 		String message;
 
-		int days = TownMetaDataController.getPeacefulnessChangeConfirmationCounterDays(town);
+		int days = TownMetaDataController.getPeacefulnessChangeConfirmationCounterDays(town); 
 		if (days > 1) {
 			TownMetaDataController.setPeacefulnessChangeDays(town, --days);
 			return;
@@ -65,8 +65,8 @@ public class TownPeacefulnessUtil {
 		TownMetaDataController.setPeacefulnessChangeDays(town, 0);
 		town.setNeutral(!town.isNeutral());
 
-		if (town.isNeutral() && !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP())
-			SiegeWarTownUtil.disableTownPVP(town);
+		if (town.isNeutral() && !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()) 
+			SiegeWarTownUtil.disableTownPVP(town);  
 
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			if (town.isNeutral()) {
@@ -113,8 +113,8 @@ public class TownPeacefulnessUtil {
 	/**
 	 * This method punishes any peaceful players who are in siege-zones
 	 * (except for their own town OR any peaceful town)
-	 *
-	 * A player is peaceful if they 
+	 * 
+	 * A player is peaceful if they
 	 * 1. Are resident in a peaceful town
 	 * 2. Are resident in a declared (but not confirmed) peaceful town
 	 *
