@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.playeractions.AbandonAttack;
 import com.gmail.goosius.siegewar.playeractions.SurrenderDefence;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
@@ -54,7 +55,7 @@ public class SiegeWarTimerTaskController {
 
 			case PENDING_ATTACKER_ABANDON:
 				if(siege.getTimeUntilAbandonConfirmationMillis() < 0)
-					SurrenderDefence.surrenderDefence(siege, 0);
+					AbandonAttack.abandonAttack(siege, 0);
 				break;
 
 			default:

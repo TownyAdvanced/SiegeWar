@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.gmail.goosius</groupId>
   <artifactId>SiegeWar</artifactId>
-  <version>0.3.8</version>
+  <version>0.3.9</version>
   <name>siegewar</name> <!-- Leave lower-cased -->
 
   <properties>
