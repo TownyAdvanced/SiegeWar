@@ -138,17 +138,47 @@ public class SiegeWarNationEventListener implements Listener {
 		}
 		
 		/*
-		 * Remove sieges in the following scenarios 
-		 * 1. Conquest/suppression/liberation  -> If the nation which started the attack is deleted
-         * 2. Revolt siege -> If the defending nation is deleted
+		 * Adjust sieges if needed
 		 */
 		for (Siege siege : SiegeController.getSieges()) {
-			if(siege.getSiegeType() != SiegeType.REVOLT) {
-				if(siege.getAttacker() == event.getNation())
-					SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);									
-			} else {
-				if(siege.getDefender() == event.getNation())
-					SiegeController.removeSiege(siege, SiegeSide.ATTACKERS);					
+			switch(siege.getSiegeType()) {
+				case CONQUEST:
+				case SUPPRESSION:
+					/* 
+					 * Conquest or Suppression:
+					 * If attacker (which is a nation) disappears, we must delete
+					 */
+					if(event.getNation() == siege.getAttacker()) { 
+						SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
+					}
+					break;
+				case LIBERATION:									
+					/*
+					 * Liberation:
+					 * If attacker (which is a nation) disappears, we must delete
+					 * If defender (which is a nation) disappears,
+					 *    we must ensure that the attacker does not lose any progress in the siege.
+					 *    We do this by transforming the siege into a conquest siege
+					 */
+					if(event.getNation() == siege.getAttacker()) { 
+						SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
+						break;
+			
+					} else if (event.getNation() == siege.getDefender()) { 
+						siege.setSiegeType(SiegeType.CONQUEST);
+						siege.setDefender(siege.getTown());
+						break;
+					}					
+					break;
+				case REVOLT:
+					/*
+					 * Revolt
+					 * If defender (which is a nation) disappears, we must delete
+					 */
+					if (event.getNation() == siege.getDefender()) { 
+						SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
+					}
+				break;
 			}
 		}
 
