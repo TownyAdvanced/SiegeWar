@@ -43,6 +43,8 @@ public class Siege {
 	private Town town;
 	private Government attacker;
 	private Government defender;
+	private String attackerName; //used only in siege aftermath
+	private String defenderName; //used only in siege aftermath
     private SiegeStatus status;
     private boolean townPlundered;
     private boolean townInvaded;
@@ -70,6 +72,8 @@ public class Siege {
         siegeType = null;
         attacker = null;
         defender = null;
+        attackerName = "";
+        defenderName = "";
         status = null;
 		siegeBalance = 0;
 		siegeBannerLocation = null;
@@ -208,6 +212,23 @@ public class Siege {
 			return TownyAPI.getInstance().getTownNationOrNull((Town) attacker);
 		return attacker;
 	}
+
+	public String getAttackerNameForDisplay() {
+		if(status.isActive()) {
+			return getAttackingNationIfPossibleElseTown().getName();
+		} else {
+			return getAttackerName();
+		}
+	}
+	
+	public String getDefenderNameForDisplay() {
+		if(status.isActive()) {
+			return getDefendingNationIfPossibleElseTown().getName();
+		} else {
+			return getDefenderName();
+		}
+	}
+
 
 	public void setDefender(Government defender) {
 		this.defender = defender;
@@ -479,5 +500,21 @@ public class Siege {
 			result += homeNationContribution;
 		}
 		return result;
+	}
+
+	public String getAttackerName() {
+		return attackerName;
+	}
+
+	public void setAttackerName(String attackerName) {
+		this.attackerName = attackerName;
+	}
+
+	public String getDefenderName() {
+		return defenderName;
+	}
+
+	public void setDefenderName(String defenderName) {
+		this.defenderName = defenderName;
 	}
 }

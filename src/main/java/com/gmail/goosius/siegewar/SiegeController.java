@@ -76,6 +76,8 @@ public class SiegeController {
 		SiegeMetaDataController.setTownUUID(town, siege.getTown().getUUID().toString());
 		SiegeMetaDataController.setAttackerUUID(town, siege.getAttacker().getUUID().toString());
 		SiegeMetaDataController.setDefenderUUID(town, siege.getDefender().getUUID().toString());
+		SiegeMetaDataController.setAttackerName(town, siege.getAttacker().getName());
+		SiegeMetaDataController.setDefenderName(town, siege.getDefender().getName());
 		SiegeMetaDataController.setFlagLocation(town, siege.getFlagLocation().getWorld().getName()
 				+ "!" + siege.getFlagLocation().getX()
 				+ "!" + siege.getFlagLocation().getY()
@@ -146,60 +148,62 @@ public class SiegeController {
 		else
 			siege.setSiegeType(SiegeType.parseString(siegeTypeString));
 
-		//Load Attacker & Defender
-		if (SiegeMetaDataController.getAttackerUUID(town) == null) {
-			//Attacker data not found. Look for old data schema
-			if (SiegeMetaDataController.getNationUUID(town) != null) {
-				//Old data scheme found, hook up to new values
-				Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(SiegeMetaDataController.getNationUUID(town)));
+		//Load Attacker
+		switch (siege.getSiegeType()) {
+			case CONQUEST:
+			case LIBERATION:
+			case SUPPRESSION:
+				String uuid = SiegeMetaDataController.getAttackerUUID(town);
+				if (uuid == null)
+					return false;
+				Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(uuid));
 				if (nation == null)
 					return false;
 				siege.setAttacker(nation);
-				siege.setDefender(town);
-			} else {
-				System.err.print("Neither attackerUUID nor nationUUID were found");
-				return false;
-			}
-
-		} else {
-			switch (siege.getSiegeType()) {
-				case CONQUEST:
-				case LIBERATION:
-				case SUPPRESSION:
-					String uuid = SiegeMetaDataController.getAttackerUUID(town);
-					if (uuid == null)
-						return false;
-					Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(uuid));
-					if (nation == null)
-						return false;
-					siege.setAttacker(nation);
-					break;
-				case REVOLT:
-					siege.setAttacker(town);
-					break;
-			}
-
-			switch (siege.getSiegeType()) {
-				case CONQUEST:
-				case SUPPRESSION:
-					siege.setDefender(town);
-					break;
-				case LIBERATION:
-				case REVOLT:
-					String uuid = SiegeMetaDataController.getDefenderUUID(town);
-					if (uuid == null)
-						return false;
-					Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(uuid));
-					if (nation == null)
-						return false;
-					siege.setDefender(nation);
-					break;
-			}
+				break;
+			case REVOLT:
+				siege.setAttacker(town);
+				break;
 		}
 
+		//Load defender
+		switch (siege.getSiegeType()) {
+			case CONQUEST:
+			case SUPPRESSION:
+				siege.setDefender(town);
+				break;
+			case LIBERATION:
+			case REVOLT:
+				String uuid = SiegeMetaDataController.getDefenderUUID(town);
+				if (uuid == null)
+					return false;
+				Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(uuid));
+				if (nation == null)
+					return false;
+				siege.setDefender(nation);
+				break;
+		}
+
+		//Load Status
 		if (SiegeMetaDataController.getSiegeStatus(town).isEmpty())
 			return false;
 		siege.setStatus(SiegeStatus.parseString(SiegeMetaDataController.getSiegeStatus(town)));
+
+		//Load attacker & defender name
+		if(!siege.getStatus().isActive() && SiegeMetaDataController.getAttackerName(town) == null) {
+			/* 
+			 * Migrate old data:
+			 * 1. If the siege is over but there is no attacker & defender name, 
+			 * then the data must be unavailable, 
+			 * likely due to a pre-0.10.0 data source.
+			 * 2. Thus, populate the fields now using the names of the current attacker and defender.
+			 */
+			siege.setAttackerName(siege.getAttacker().getName());
+			siege.setDefenderName(siege.getDefender().getName());
+		} else {
+			siege.setAttackerName(SiegeMetaDataController.getAttackerName(town));
+			siege.setDefenderName(SiegeMetaDataController.getDefenderName(town));
+		}
 
 		//Load flag location
 		if(SiegeMetaDataController.getFlagLocation(town).isEmpty())

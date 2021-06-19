@@ -351,11 +351,11 @@ public class SiegeWarTownEventListener implements Listener {
 				// > Status: In Progress
 				out.add(Translation.of("status_town_siege_status", getStatusTownSiegeSummary(siege)));
 
-				// > Attacker: Land of Darkness (Nation)
-				out.add(Translation.of("status_town_siege_attacker", siege.getAttackingNationIfPossibleElseTown().getFormattedName()));
+				// > Attacker: Darkness
+				out.add(Translation.of("status_town_siege_attacker", siege.getAttackerNameForDisplay()));
 
-				// > Defender: Land of Light (Nation)
-				out.add(Translation.of("status_town_siege_defender", siege.getDefendingNationIfPossibleElseTown().getFormattedName()));
+				// > Defender: Light
+				out.add(Translation.of("status_town_siege_defender", siege.getDefenderNameForDisplay()));
 
 				switch (siegeStatus) {
 	                case IN_PROGRESS:

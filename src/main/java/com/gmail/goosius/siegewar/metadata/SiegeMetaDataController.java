@@ -38,6 +38,9 @@ public class SiegeMetaDataController {
 	private static StringDataField siegeTownUUID = new StringDataField("siegewar_townUUID", "");
 	private static StringDataField siegeAttackerUUID = new StringDataField("siegewar_attackerUUID", "");
 	private static StringDataField siegeDefenderUUID = new StringDataField("siegewar_defenderUUID", "");
+	private static StringDataField siegeAttackerName = new StringDataField("siegewar_attackerName", "");
+	private static StringDataField siegeDefenderName = new StringDataField("siegewar_defenderName", "");
+	
 	private static StringDataField siegeFlagLocation = new StringDataField("siegewar_flagLocation", "");
 	private static StringDataField siegeStatus = new StringDataField("siegewar_status", "");
 	private static StringDataField siegeType = new StringDataField("siegewar_type", "");
@@ -97,6 +100,22 @@ public class SiegeMetaDataController {
 	}
 
 	@Nullable
+	public static String getAttackerName(Town town) {
+		StringDataField sdf = (StringDataField) siegeAttackerName.clone();
+		if (town.hasMeta(sdf.getKey()))
+			return MetaDataUtil.getString(town, sdf);
+		return null;
+	}
+
+	public static void setAttackerName(Town town, String name) {
+		StringDataField sdf = (StringDataField) siegeAttackerName.clone();
+		if (town.hasMeta(sdf.getKey()))
+			MetaDataUtil.setString(town, sdf, name);
+		else
+			town.addMetaData(new StringDataField("siegewar_attackerName", name));
+	}
+
+	@Nullable
 	public static String getDefenderUUID(Town town) {
 		StringDataField sdf = (StringDataField) siegeDefenderUUID.clone();
 		if (town.hasMeta(sdf.getKey()))
@@ -110,6 +129,22 @@ public class SiegeMetaDataController {
 			MetaDataUtil.setString(town, sdf, uuid);
 		else
 			town.addMetaData(new StringDataField("siegewar_defenderUUID", uuid));
+	}
+
+	@Nullable
+	public static String getDefenderName(Town town) {
+		StringDataField sdf = (StringDataField) siegeDefenderName.clone();
+		if (town.hasMeta(sdf.getKey()))
+			return MetaDataUtil.getString(town, sdf);
+		return null;
+	}
+
+	public static void setDefenderName(Town town, String name) {
+		StringDataField sdf = (StringDataField) siegeDefenderName.clone();
+		if (town.hasMeta(sdf.getKey()))
+			MetaDataUtil.setString(town, sdf, name);
+		else
+			town.addMetaData(new StringDataField("siegewar_defenderName", name));
 	}
 
 	@Nullable
