@@ -76,8 +76,10 @@ public class SiegeController {
 		SiegeMetaDataController.setTownUUID(town, siege.getTown().getUUID().toString());
 		SiegeMetaDataController.setAttackerUUID(town, siege.getAttacker().getUUID().toString());
 		SiegeMetaDataController.setDefenderUUID(town, siege.getDefender().getUUID().toString());
-		SiegeMetaDataController.setAttackerName(town, siege.getAttacker().getName());
-		SiegeMetaDataController.setDefenderName(town, siege.getDefender().getName());
+		if(siege.getAttackerName() != null)
+			SiegeMetaDataController.setAttackerName(town, siege.getAttackerName());
+		if(siege.getDefenderName() != null)
+			SiegeMetaDataController.setDefenderName(town, siege.getDefenderName());
 		SiegeMetaDataController.setFlagLocation(town, siege.getFlagLocation().getWorld().getName()
 				+ "!" + siege.getFlagLocation().getX()
 				+ "!" + siege.getFlagLocation().getY()
