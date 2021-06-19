@@ -32,9 +32,9 @@ import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
  * It typically lasts for a moderate duration (e.g. hours or days),
  * and can be ended n a number of ways, including when siege victory timer reaches 0, or abandon, or surrender.
  * 
- * After a siege ends, it enters an aftermath phase where the status is no longer "In Progress",
+ * After a siege ends, it enters an aftermath phase where it has an inactive type of siege status,
  * During this phase, the town cannot be attacked again,
- * and if an attacker has won, they have the options of "plunder" or "invade".
+ * and, depending on the siege type, the victor may have the options of "plunder" and/or "invade".
  *
  * @author Goosius
  */
@@ -43,8 +43,8 @@ public class Siege {
 	private Town town;
 	private Government attacker;
 	private Government defender;
-	private String attackerName; //Only used in non-active sieges
-	private String defenderName; //Only used in non-active sieges
+	private String attackerName; //Only used in the siege-aftermath
+	private String defenderName; //Only used in the siege-aftermath
     private SiegeStatus status;
     private boolean townPlundered;
     private boolean townInvaded;
