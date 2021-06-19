@@ -43,8 +43,8 @@ public class Siege {
 	private Town town;
 	private Government attacker;
 	private Government defender;
-	private String attackerName; //used only in siege aftermath
-	private String defenderName; //used only in siege aftermath
+	private String attackerName; //Only used in non-active sieges
+	private String defenderName; //Only used in non-active sieges
     private SiegeStatus status;
     private boolean townPlundered;
     private boolean townInvaded;
