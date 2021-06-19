@@ -313,18 +313,6 @@ public class SiegeController {
 		return null;
 	}
 
-	@Nullable
-	public static List<Siege> getSiegesByNationUUID(UUID uuid) {
-		List<Siege> siegeList = new ArrayList<>();
-		for (Siege siege : townSiegeMap.values()) {
-			if(siege.getAttacker().getUUID().equals(uuid)
-				|| siege.getDefender().getUUID().equals(uuid)) {
-				siegeList.add(siege);
-			}
-		}
-		return siegeList;
-	}
-
 	public static void setSiege(Town town, boolean bool) {
 		SiegeMetaDataController.setSiege(town, bool);
 	}

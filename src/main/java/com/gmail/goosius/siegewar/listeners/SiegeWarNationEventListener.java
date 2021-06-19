@@ -138,10 +138,18 @@ public class SiegeWarNationEventListener implements Listener {
 		}
 		
 		/*
-		 * Remove any siege if the nation is deleted, regardless of whether SW is currently enabled.
+		 * Remove sieges in the following scenarios 
+		 * 1. Conquest/suppression/liberation  -> If the nation which started the attack is deleted
+         * 2. Revolt siege -> If the defending nation is deleted
 		 */
-		for (Siege siege : SiegeController.getSiegesByNationUUID(event.getNation().getUUID())) {
-			SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
+		for (Siege siege : SiegeController.getSieges()) {
+			if(siege.getSiegeType() != SiegeType.REVOLT) {
+				if(siege.getAttacker() == event.getNation())
+					SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);									
+			} else {
+				if(siege.getDefender() == event.getNation())
+					SiegeController.removeSiege(siege, SiegeSide.ATTACKERS);					
+			}
 		}
 
 		/*
