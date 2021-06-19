@@ -167,6 +167,7 @@ public class SiegeWarNationEventListener implements Listener {
 					} else if (event.getNation() == siege.getDefender()) { 
 						siege.setSiegeType(SiegeType.CONQUEST);
 						siege.setDefender(siege.getTown());
+						SiegeController.saveSiege(siege);
 						break;
 					}					
 					break;
