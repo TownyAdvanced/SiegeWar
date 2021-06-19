@@ -146,7 +146,7 @@ public class SiegeWarNationEventListener implements Listener {
 				case SUPPRESSION:
 					/* 
 					 * Conquest or Suppression:
-					 * If attacker (which is a nation) disappears, we must delete
+					 * If attacker (which is a nation) disappears, we must delete the siege
 					 */
 					if(event.getNation() == siege.getAttacker()) { 
 						SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
@@ -155,7 +155,7 @@ public class SiegeWarNationEventListener implements Listener {
 				case LIBERATION:									
 					/*
 					 * Liberation:
-					 * If attacker (which is a nation) disappears, we must delete
+					 * If attacker (which is a nation) disappears, we must delete the siege
 					 * If defender (which is a nation) disappears,
 					 *    we must ensure that the attacker does not lose any progress in the siege.
 					 *    We do this by transforming the siege into a conquest siege
@@ -173,7 +173,7 @@ public class SiegeWarNationEventListener implements Listener {
 				case REVOLT:
 					/*
 					 * Revolt
-					 * If defender (which is a nation) disappears, we must delete
+					 * If defender (which is a nation) disappears, we must delete the siege
 					 */
 					if (event.getNation() == siege.getDefender()) { 
 						SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
