@@ -330,6 +330,12 @@ public class SiegeMetaDataController {
 		sdf = (StringDataField) siegeDefenderUUID.clone();
 		if (town.hasMeta(sdf.getKey()))
 			town.removeMetaData(sdf);
+		sdf = (StringDataField) siegeAttackerName.clone();
+		if (town.hasMeta(sdf.getKey()))
+			town.removeMetaData(sdf);
+		sdf = (StringDataField) siegeDefenderName.clone();
+		if (town.hasMeta(sdf.getKey()))
+			town.removeMetaData(sdf);
 
 		sdf = (StringDataField) siegeNationUUID.clone();
 		if (town.hasMeta(sdf.getKey()))
