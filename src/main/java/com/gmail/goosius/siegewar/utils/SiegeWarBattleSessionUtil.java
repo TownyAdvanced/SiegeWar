@@ -53,7 +53,7 @@ public class SiegeWarBattleSessionUtil {
 								siege.recordPrimaryTownGovernment();
 
 							//If any battle points were gained, calculate a result
-							if(siege.getAttackerBattlePoints() > 0 && siege.getDefenderBattlePoints() > 0) {
+							if(siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0) {
 								//Calculate result
 								int battlePointsOfWinner;
 								if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()) {
