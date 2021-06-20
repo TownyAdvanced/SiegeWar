@@ -181,7 +181,7 @@ public class SiegeWarBattleSessionUtil {
 		LocalDate candidateDate;
 		LocalDateTime candidateDateTime;
 		String[] startTimeHourMinutePair;
-		for (String startTime : SiegeWarSettings.getWarSiegeBattleSessionsStartTimesUtc()) {
+		for (String startTime : SiegeWarSettings.getBattleSessionStartTimesUtc()) {
 			if (startTime.contains(":")) {
 				startTimeHourMinutePair = startTime.split(":");
 				candidateTime = LocalTime.of(Integer.parseInt(startTimeHourMinutePair[0]), Integer.parseInt(startTimeHourMinutePair[1]));
