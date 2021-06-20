@@ -13,6 +13,7 @@ import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.*;
 import java.util.ArrayList;
@@ -21,11 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 public class SiegeWarBattleSessionUtil {
-	private static long scheduledStartTimeOfNextBattleSession;
-
-	public static void scheduleNextBattleSession() {
-		scheduledStartTimeOfNextBattleSession = System.currentTimeMillis() + getTimeUntilNextBattleSessionMillis();
-	}
 
 	public static void evaluateBattleSessions() {
 		BattleSession battleSession = BattleSession.getBattleSession();
@@ -36,9 +32,6 @@ public class SiegeWarBattleSessionUtil {
 			if(System.currentTimeMillis() > battleSession.getScheduledEndTime()) {
 				//Finish battle session
 				battleSession.setActive(false);
-
-				//Schedule next session
-				scheduleNextBattleSession();
 
 				/*
 				 * Gather the results of all battles
@@ -116,7 +109,7 @@ public class SiegeWarBattleSessionUtil {
 			 * Battle session is inactive. Check to see if it starts
 			 * If the time remaining is less than a minute, start it
 			 */
-			if (System.currentTimeMillis() > scheduledStartTimeOfNextBattleSession) {
+			if (System.currentTimeMillis() > getStartTimeOfNextBattleSessionToday()) {
 				//Start battle session
 				battleSession.setActive(true);
 				battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * 60000));
@@ -165,12 +158,32 @@ public class SiegeWarBattleSessionUtil {
 	}
 
 	public static String getFormattedTimeUntilNextBattleSessionStarts() {
-		long timeRemaining = scheduledStartTimeOfNextBattleSession - System.currentTimeMillis();
-		if(timeRemaining > 0) {
-			return TimeMgmt.getFormattedTimeValue(timeRemaining);
+		Long startTimeOfNextBattleSessionToday = getStartTimeOfNextBattleSessionToday();
+		if(startTimeOfNextBattleSessionToday == null) {
+			return "N/A";  //No more sessions today
 		} else {
-			return "0";
+			long timeRemaining = startTimeOfNextBattleSessionToday - System.currentTimeMillis();
+			if(timeRemaining > 0) {
+				return TimeMgmt.getFormattedTimeValue(timeRemaining);
+			} else {
+				return "0";
+			}			
 		}
+	}
+
+	@Nullable
+	private static Long getStartTimeOfNextBattleSessionToday() {
+		LocalTime candidateTime;
+		String[] startTimeHourMinutePair;
+
+		for (String startTime : SiegeWarSettings.getBattleSessionStartTimesForTodayUtc()) {
+			if (startTime.contains(":")) {
+				startTimeHourMinutePair = startTime.split(":");
+				candidateTime = LocalTime.of(Integer.parseInt(startTimeHourMinutePair[0]), Integer.parseInt(startTimeHourMinutePair[1]));
+			} else {
+				candidateTime = LocalTime.of(Integer.parseInt(startTime), 0);
+			}
+
 	}
 
 	private static long getTimeUntilNextBattleSessionMillis() {
@@ -181,7 +194,7 @@ public class SiegeWarBattleSessionUtil {
 		LocalDate candidateDate;
 		LocalDateTime candidateDateTime;
 		String[] startTimeHourMinutePair;
-		for (String startTime : SiegeWarSettings.getBattleSessionStartTimesUtc()) {
+		for (String startTime : SiegeWarSettings.getBattleSessionStartTimesForTodayUtc()) {
 			if (startTime.contains(":")) {
 				startTimeHourMinutePair = startTime.split(":");
 				candidateTime = LocalTime.of(Integer.parseInt(startTimeHourMinutePair[0]), Integer.parseInt(startTimeHourMinutePair[1]));

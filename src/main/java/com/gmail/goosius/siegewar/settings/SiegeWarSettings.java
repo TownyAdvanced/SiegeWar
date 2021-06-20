@@ -273,7 +273,7 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE);
 	}
 
-	public static List<String> getBattleSessionStartTimesUtc() {
+	public static List<String> getBattleSessionStartTimesForTodayUtc() {
 		//Determine if this is the weekend
 		Calendar today = Calendar.getInstance();
 		boolean isWeekend = today.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || today.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
