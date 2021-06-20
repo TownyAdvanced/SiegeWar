@@ -183,7 +183,6 @@ public class SiegeWarBannerControlUtil {
 		if(!BattleSession.getBattleSession().isActive())
 			return;
 
-		BANNER_CONTROL_SESSIONS_LOOP:
 		for(BannerControlSession bannerControlSession: siege.getBannerControlSessions().values()) {
 			try {
 				//Check if session failed
@@ -206,30 +205,6 @@ public class SiegeWarBannerControlUtil {
 
 				//Check if session succeeded
 				if(System.currentTimeMillis() > bannerControlSession.getSessionEndTime()) {
-
-					/*
-					 * Pause success if there are enemy soldiers nearby.
-					 * Instead of looking for soldiers/rank/allegiances etc.,
-					 * we take a shortcut and just check for:
-					 * - Any enemy soldiers in BC sessions
-					 * - Any enemy soldiers on the BC list who are still nearby
-					 */
-					for(BannerControlSession bcSession: siege.getBannerControlSessions().values()) {
-						if (bcSession.getSiegeSide() != bannerControlSession.getSiegeSide()) {
-							pauseBannerControlSession(bannerControlSession);
-							continue BANNER_CONTROL_SESSIONS_LOOP;
-						}
-					}
-					if(siege.getBannerControllingSide() != SiegeSide.NOBODY
-						&& siege.getBannerControllingSide() != bannerControlSession.getSiegeSide()) {
-						for(Resident resident: siege.getBannerControllingResidents()) {
-							Player player = resident.getPlayer();
-							if(player != null && doesPlayerMeetBasicSessionRequirements(siege, player, resident)) {
-								pauseBannerControlSession(bannerControlSession);
-								continue BANNER_CONTROL_SESSIONS_LOOP;
-							}
-						}
-					}
 
 					//Session success
 					siege.removeBannerControlSession(bannerControlSession);
@@ -321,24 +296,5 @@ public class SiegeWarBannerControlUtil {
 
 		//Record gained battle points for use by the 'Banner Control Reversal Bonus' feature
 		siege.adjustBattlePointsEarnedFromCurrentBannerControl(battlePoints);
-	}
-
-	private static void pauseBannerControlSession(BannerControlSession bannerControlSession) {
-		//Reapply glow for 1 short tick
-		long effectDurationSeconds = TownySettings.getShortInterval();
-		final int effectDurationTicks = (int)(TimeTools.convertToTicks(effectDurationSeconds));
-		Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-			public void run() {
-				List<PotionEffect> potionEffects = new ArrayList<>();
-				potionEffects.add(new PotionEffect(PotionEffectType.GLOWING, effectDurationTicks, 0));
-				bannerControlSession.getPlayer().addPotionEffects(potionEffects);
-			}
-		});
-		//Send message to player every 9 ticks (ie 3 minutes)
-		if(bannerControlSession.getShortTicksUntilNextPauseWarning() < 1) {
-			Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_paused"));
-			bannerControlSession.setShortTicksUntilNextPauseWarning(9);
-		}
-		bannerControlSession.decrementShortTicksUntilNextPauseWarning();
 	}
 }
