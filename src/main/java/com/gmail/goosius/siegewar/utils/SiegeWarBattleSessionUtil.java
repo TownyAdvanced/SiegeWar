@@ -199,23 +199,24 @@ public class SiegeWarBattleSessionUtil {
 	private static Long getStartTimeOfTodaysNextBattleSession() {
 		LocalTime currentTime = LocalTime.now(Clock.systemUTC());
 		LocalDate currentDate = LocalDate.now(Clock.systemUTC());
-		LocalTime candidateTime;
+		LocalTime candidateLocalTime;
 		String[] startTimeHourMinutePair;
 
 		for (String configuredStartTime : SiegeWarSettings.getBattleSessionStartTimesForTodayUtc()) {
 			//Parse configured time into LocalTime object
 			if (configuredStartTime.contains(":")) {
 				startTimeHourMinutePair = configuredStartTime.split(":");
-				candidateTime = LocalTime.of(Integer.parseInt(startTimeHourMinutePair[0]), Integer.parseInt(startTimeHourMinutePair[1]));
+				candidateLocalTime = LocalTime.of(Integer.parseInt(startTimeHourMinutePair[0]), Integer.parseInt(startTimeHourMinutePair[1]));
 			} else {
-				candidateTime = LocalTime.of(Integer.parseInt(configuredStartTime), 0);
+				candidateLocalTime = LocalTime.of(Integer.parseInt(configuredStartTime), 0);
 			}
 			
 			//If the candidate is a future time today, pick it
-			if(candidateTime.isAfter(currentTime)) {
-				LocalDateTime resultLocalDateTime = LocalDateTime.of(currentDate, currentTime);
-				long resultLong = resultLocalDateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
-				return resultLong; 
+			if(candidateLocalTime.isAfter(currentTime)) {
+				LocalDateTime candidateLocalDateTime = LocalDateTime.of(currentDate, candidateLocalTime);				
+				ZonedDateTime zdt = ZonedDateTime.of(candidateLocalDateTime, ZoneId.systemDefault());
+				long candidateMillis = zdt.toInstant().toEpochMilli();
+				return candidateMillis; 
 			}
 		}
 		
