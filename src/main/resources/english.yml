@@ -428,4 +428,4 @@ msg_err_besieged_town_cannot_move_homeblock: "&cBesieged towns cannot move their
 msg_err_occupied_town_cannot_move_homeblock: "&cOccupied towns cannot move their homeblocks."
 
 # Added in 0.20
-msg_tomorrow: "tomorrow"
+msg_err_no_more_battle_sessions_today_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts."

@@ -64,9 +64,15 @@ public class SiegeWarBannerControlUtil {
 				if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
 					continue;
 
-				if(!BattleSession.getBattleSession().isActive()) {
-					String message = Translation.of("msg_war_siege_battle_session_break_cannot_get_banner_control",
+				if(!BattleSession.getBattleSession().isActive()) {				
+					String message = 
+								BattleSession.getBattleSession().getScheduledStartTime() == null 
+								?
+								Translation.of("msg_err_no_more_battle_sessions_today_cannot_get_banner_control") 
+								:
+								Translation.of("msg_war_siege_battle_session_break_cannot_get_banner_control",
 													SiegeWarBattleSessionUtil.getFormattedTimeUntilNextBattleSessionStarts());
+
 					Messaging.sendErrorMsg(player, message);
 					continue;
 				}

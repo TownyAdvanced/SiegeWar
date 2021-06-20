@@ -272,6 +272,24 @@ public class SiegeWarSettings {
 	public static double getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercentage() {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE);
 	}
+	
+	public static List<String> getBattleSessionStartTimesForTomorrowUtc() {
+		//Determine if this is the weekend
+		Calendar today = Calendar.getInstance();
+		boolean isWeekend = today.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || today.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
+		
+		//Get the configured start times
+		String timesAsString = isWeekend ? 
+			getWarSiegeBattleSessionsWeekendStartTimesUtc() :
+			getWarSiegeBattleSessionsWeekdayStartTimesUtc();
+
+		//Transform the times into a list of strings			
+		List<String> timesAsList = new ArrayList<>();			
+		for(String time: timesAsString.split(",")) {
+			timesAsList.add(time.trim());
+		}
+		return timesAsList;
+	}
 
 	public static List<String> getBattleSessionStartTimesForTodayUtc() {
 		//Determine if this is the weekend

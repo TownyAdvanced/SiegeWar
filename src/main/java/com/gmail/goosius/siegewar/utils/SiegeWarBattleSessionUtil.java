@@ -174,29 +174,23 @@ public class SiegeWarBattleSessionUtil {
 		//Send message
 		Messaging.sendGlobalMessage(header, lines);
 	}
-
+												
 	public static String getFormattedTimeUntilNextBattleSessionStarts() {
 		Long startTimeOfTodaysNextBattleSession = BattleSession.getBattleSession().getScheduledStartTime();
-		if(startTimeOfTodaysNextBattleSession == null) {
-			return Translation.of("msg_tomorrow");  //No more sessions today. "tomorrow" is not necessarily accurate, but generally is.
+		long timeRemaining = startTimeOfTodaysNextBattleSession - System.currentTimeMillis();
+		if(timeRemaining > 0) {
+			return TimeMgmt.getFormattedTimeValue(timeRemaining);
 		} else {
-			long timeRemaining = startTimeOfTodaysNextBattleSession - System.currentTimeMillis();
-			if(timeRemaining > 0) {
-				return TimeMgmt.getFormattedTimeValue(timeRemaining);
-			} else {
-				return "0";
-			}			
-		}
+			return "0";
+		}			
 	}
 
 	/**
-	 * Get the start time of today's next scheduled battle session.
+	 * Get the start time of the next scheduled battle session.
 	 * 
 	 * @return start time, in millis.
-	 * 		   this will be null if there are no more battle sessions scheduled for today.
 	 */
-	@Nullable
-	private static Long getStartTimeOfTodaysNextBattleSession() {
+	private static Long getStartTimeOfNextBattleSession() {
 		LocalTime currentTime = LocalTime.now(Clock.systemUTC());
 		LocalDate currentDate = LocalDate.now(Clock.systemUTC());
 		LocalTime candidateLocalTime;
@@ -214,7 +208,7 @@ public class SiegeWarBattleSessionUtil {
 			//If the candidate is a future time today, pick it
 			if(candidateLocalTime.isAfter(currentTime)) {
 				LocalDateTime candidateLocalDateTime = LocalDateTime.of(currentDate, candidateLocalTime);				
-				ZonedDateTime zdt = ZonedDateTime.of(candidateLocalDateTime, ZoneId.systemDefault());
+				ZonedDateTime zdt = ZonedDateTime.of(candidateLocalDateTime, ZoneOffset.UTC);
 				long candidateMillis = zdt.toInstant().toEpochMilli();
 				return candidateMillis; 
 			}
