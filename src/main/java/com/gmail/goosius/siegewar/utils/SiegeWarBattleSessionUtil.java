@@ -213,7 +213,7 @@ public class SiegeWarBattleSessionUtil {
 			}
 		}
 		
-		//At this point, no future start time was found for today
+		//At this point, no future start time was found for today. Return null.
 		return null;
 	}
 
