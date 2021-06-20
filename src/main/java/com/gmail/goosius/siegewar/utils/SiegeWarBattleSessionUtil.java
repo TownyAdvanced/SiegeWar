@@ -52,32 +52,28 @@ public class SiegeWarBattleSessionUtil {
 							if(SiegeWarSettings.isNationSiegeImmunityEnabled())
 								siege.recordPrimaryTownGovernment();
 
-							//Continue to next siege if there were no battle points
-							if(siege.getAttackerBattlePoints() == 0 && siege.getDefenderBattlePoints() == 0) {
-								if(SiegeWarSettings.isNationSiegeImmunityEnabled())
-									SiegeController.saveSiege(siege);
-								continue;
+							//If any battle points were gained, calculate a battle result
+							if(siege.getAttackerBattlePoints() > 0 && siege.getDefenderBattlePoints() > 0) {
+								//Calculate result
+								int battlePointsOfWinner;
+								if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()) {
+									battlePointsOfWinner = siege.getAttackerBattlePoints();
+								} else if (siege.getAttackerBattlePoints() < siege.getDefenderBattlePoints()) {
+									battlePointsOfWinner = -siege.getDefenderBattlePoints();
+								} else {
+									battlePointsOfWinner = 0;
+								}
+	
+								//Apply the battle points of the winner to the siege balance
+								siege.adjustSiegeBalance(battlePointsOfWinner);
+	
+								//Propagate attacker battle contributions to siege history
+								siege.propagateSuccessfulBattleContributorsToResidentTimedPointContributors();
+	
+								//Prepare result for messaging
+								battleResults.put(siege, battlePointsOfWinner);							
 							}
-
-							//Calculate result
-							int battlePointsOfWinner;
-							if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()) {
-								battlePointsOfWinner = siege.getAttackerBattlePoints();
-							} else if (siege.getAttackerBattlePoints() < siege.getDefenderBattlePoints()) {
-								battlePointsOfWinner = -siege.getDefenderBattlePoints();
-							} else {
-								battlePointsOfWinner = 0;
-							}
-
-							//Apply the battle points of the winner to the siege balance
-							siege.adjustSiegeBalance(battlePointsOfWinner);
-
-							//Propagate attacker battle contributions to siege history
-							siege.propagateSuccessfulBattleContributorsToResidentTimedPointContributors();
-
-							//Prepare result for messaging
-							battleResults.put(siege, battlePointsOfWinner);
-
+							
 							//Remove glowing effects from players in bc sessions
 							for (Player player : siege.getBannerControlSessions().keySet()) {
 								if (player.isOnline() && player.hasPotionEffect(PotionEffectType.GLOWING)) {
