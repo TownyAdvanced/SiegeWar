@@ -52,7 +52,7 @@ public class SiegeWarBattleSessionUtil {
 							if(SiegeWarSettings.isNationSiegeImmunityEnabled())
 								siege.recordPrimaryTownGovernment();
 
-							//If any battle points were gained, calculate a battle result
+							//If any battle points were gained, calculate a result
 							if(siege.getAttackerBattlePoints() > 0 && siege.getDefenderBattlePoints() > 0) {
 								//Calculate result
 								int battlePointsOfWinner;
@@ -71,7 +71,10 @@ public class SiegeWarBattleSessionUtil {
 								siege.propagateSuccessfulBattleContributorsToResidentTimedPointContributors();
 	
 								//Prepare result for messaging
-								battleResults.put(siege, battlePointsOfWinner);							
+								battleResults.put(siege, battlePointsOfWinner);
+
+								//Save siege
+								SiegeController.saveSiege(siege);							
 							}
 							
 							//Remove glowing effects from players in bc sessions
@@ -93,9 +96,6 @@ public class SiegeWarBattleSessionUtil {
 							siege.setAttackerBattlePoints(0);
 							siege.setDefenderBattlePoints(0);
 							siege.clearSuccessfulBattleContributors();
-
-							//Save siege
-							SiegeController.saveSiege(siege);
 						}
 					} catch (Throwable t) {
 						try {
