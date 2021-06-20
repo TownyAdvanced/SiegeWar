@@ -40,6 +40,8 @@ public class BattleSession {
 	public BattleSession() {
 		active = false;
 		scheduledEndTIme = 0;
+		scheduledEndTIme = 0;
+		scheduledStartTime = null;
 	}
 
 	//Singleton

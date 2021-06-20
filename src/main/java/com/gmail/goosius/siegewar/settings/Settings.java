@@ -43,15 +43,6 @@ public class Settings {
 			loadSuccessFlag = false;
 		}
 
-		//Schedule next battle session
-		try {
-			SiegeWarBattleSessionUtil.scheduleNextBattleSession();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println(SiegeWar.prefix + "Problem Scheduling Battle Session! Disabling!");
-			loadSuccessFlag = false;
-		}
-
 		return loadSuccessFlag;
 	}
 	

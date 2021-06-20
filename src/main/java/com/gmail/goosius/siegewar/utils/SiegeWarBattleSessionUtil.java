@@ -115,7 +115,7 @@ public class SiegeWarBattleSessionUtil {
 				 * There is no battle session scheduled.
 				 * Attempt to schedule session now.
 				 */
-				battleSession.setScheduledStartTime(getStartTimeOfNextBattleSessionForToday());
+				battleSession.setScheduledStartTime(getStartTimeOfTodaysNextBattleSession());
 			}
 
 			if(battleSession.getScheduledStartTime() != null) {
@@ -176,11 +176,11 @@ public class SiegeWarBattleSessionUtil {
 	}
 
 	public static String getFormattedTimeUntilNextBattleSessionStarts() {
-		Long startTimeOfNextBattleSessionToday = getStartTimeOfNextBattleSessionForToday();
-		if(startTimeOfNextBattleSessionToday == null) {
-			return "N/A";  //No more sessions today
+		Long startTimeOfTodaysNextBattleSession = BattleSession.getBattleSession().getScheduledStartTime();
+		if(startTimeOfTodaysNextBattleSession == null) {
+			return Translation.of("msg_tomorrow");  //No more sessions today. "tomorrow" is not necessarily accurate, but generally is.
 		} else {
-			long timeRemaining = startTimeOfNextBattleSessionToday - System.currentTimeMillis();
+			long timeRemaining = startTimeOfTodaysNextBattleSession - System.currentTimeMillis();
 			if(timeRemaining > 0) {
 				return TimeMgmt.getFormattedTimeValue(timeRemaining);
 			} else {
@@ -189,8 +189,14 @@ public class SiegeWarBattleSessionUtil {
 		}
 	}
 
+	/**
+	 * Get the start time of today's next scheduled battle session.
+	 * 
+	 * @return start time, in millis.
+	 * 		   this will be null if there are no more battle sessions scheduled for today.
+	 */
 	@Nullable
-	private static Long getStartTimeOfNextBattleSessionForToday() {
+	private static Long getStartTimeOfTodaysNextBattleSession() {
 		LocalTime currentTime = LocalTime.now(Clock.systemUTC());
 		LocalDate currentDate = LocalDate.now(Clock.systemUTC());
 		LocalTime candidateTime;
@@ -215,41 +221,5 @@ public class SiegeWarBattleSessionUtil {
 		
 		//At this point, no future start time was found for today. Return null.
 		return null;
-	}
-
-	private static long getTimeUntilNextBattleSessionMillis() {
-		LocalDateTime currentDateTime = LocalDateTime.now(Clock.systemUTC());
-		Duration closestDuration = null;
-		Duration candidateDuration;
-		LocalTime candidateTime;
-		LocalDate candidateDate;
-		LocalDateTime candidateDateTime;
-		String[] startTimeHourMinutePair;
-		for (String startTime : SiegeWarSettings.getBattleSessionStartTimesForTodayUtc()) {
-			if (startTime.contains(":")) {
-				startTimeHourMinutePair = startTime.split(":");
-				candidateTime = LocalTime.of(Integer.parseInt(startTimeHourMinutePair[0]), Integer.parseInt(startTimeHourMinutePair[1]));
-			} else {
-				candidateTime = LocalTime.of(Integer.parseInt(startTime), 0);
-			}
-
-			//Convert candidate to local date time
-			if (candidateTime.isAfter(currentDateTime.toLocalTime())) {
-				candidateDate = LocalDate.now(Clock.systemUTC());
-			} else {
-				candidateDate = LocalDate.now(Clock.systemUTC()).plusDays(1);
-			}
-			candidateDateTime = LocalDateTime.of(candidateDate, candidateTime);
-
-			//Make this candidate our favourite if it is closer
-			candidateDuration = Duration.between(currentDateTime, candidateDateTime);
-			if (closestDuration == null) {
-				closestDuration = candidateDuration;
-			} else if (candidateDuration.getSeconds() < closestDuration.getSeconds())
-				closestDuration = candidateDuration;
-		}
-
-		//Return closest duration
-		return closestDuration.getSeconds() * 1000;
 	}
 }
