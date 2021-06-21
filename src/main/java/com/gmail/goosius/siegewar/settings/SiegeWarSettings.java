@@ -300,18 +300,20 @@ public class SiegeWarSettings {
 			getWarSiegeBattleSessionsWeekendStartTimesUtc() :
 			getWarSiegeBattleSessionsWeekdayStartTimesUtc();
 
-		//Transform the config file strings into a list of LocalDateTime objects		
-		String[] startTimeAsHourMinutePair;		
-		LocalDateTime startTime;
+		//Transform the config file strings into a list of LocalDateTime objects
 		List<LocalDateTime> startTimesAsList = new ArrayList<>();	
-		for(String startTimeAsString: startTimesAsString.split(",")) {
-			if (startTimeAsString.contains(":")) {
-				startTimeAsHourMinutePair = startTimeAsString.split(":");
-				startTime = LocalDateTime.of(day, LocalTime.of(Integer.parseInt(startTimeAsHourMinutePair[0]), Integer.parseInt(startTimeAsHourMinutePair[1])));
-			} else {
-				startTime = LocalDateTime.of(day, LocalTime.of(Integer.parseInt(startTimeAsString), 0));
+		if(startTimesAsString.length() > 0) {		
+			String[] startTimeAsHourMinutePair;		
+			LocalDateTime startTime;
+			for(String startTimeAsString: startTimesAsString.split(",")) {
+				if (startTimeAsString.contains(":")) {
+					startTimeAsHourMinutePair = startTimeAsString.split(":");
+					startTime = LocalDateTime.of(day, LocalTime.of(Integer.parseInt(startTimeAsHourMinutePair[0]), Integer.parseInt(startTimeAsHourMinutePair[1])));
+				} else {
+					startTime = LocalDateTime.of(day, LocalTime.of(Integer.parseInt(startTimeAsString), 0));
+				}
+				startTimesAsList.add(startTime);	
 			}
-			startTimesAsList.add(startTime);
 		}
 		return startTimesAsList;
 	}
