@@ -388,6 +388,16 @@ public enum ConfigNodes {
 			"# 4. In this example, the siege attacker will not get any points boosts."),
 
 	//Battle Sessions
+	WAR_SIEGE_BATTLE_SESSIONS(
+	"war.siege.battle_sessions",
+	"",
+	"",
+	"############################################################",
+	"# +------------------------------------------------------+ #",
+	"# |              Battle Session settings                 | #",
+	"# +------------------------------------------------------+ #",
+	"############################################################",
+	""),
 	WAR_SIEGE_BATTLE_SESSIONS_WEEKDAY_START_TIMES_UTC(
 			"war.siege.battle_sessions.weekday_start_times_utc",
 			"19:10,21:10",
