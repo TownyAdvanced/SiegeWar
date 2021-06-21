@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.settings;
 
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -8,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
+import org.jetbrains.annotations.Nullable;
 
 public class SiegeWarSettings {
 	
@@ -272,39 +274,44 @@ public class SiegeWarSettings {
 	public static double getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercentage() {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE);
 	}
-	
-	public static List<String> getBattleSessionStartTimesForTomorrowUtc() {
-		//Determine if this is the weekend
-		Calendar today = Calendar.getInstance();
-		boolean isWeekend = today.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || today.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
-		
-		//Get the configured start times
-		String timesAsString = isWeekend ? 
-			getWarSiegeBattleSessionsWeekendStartTimesUtc() :
-			getWarSiegeBattleSessionsWeekdayStartTimesUtc();
 
-		//Transform the times into a list of strings			
-		List<String> timesAsList = new ArrayList<>();			
-		for(String time: timesAsString.split(",")) {
-			timesAsList.add(time.trim());
-		}
-		return timesAsList;
+	public static List<LocalTime> getAllBattleSessionStartTimesForTodayUtc() {
+		LocalDate today = OffsetDateTime.now(ZoneOffset.UTC).toLocalDate();
+		return getAllBattleSessionStartTimesForDayUtc(today);
 	}
+	
+	@Nullable
+	public static LocalTime getFirstBattleSessionStartTimeForTomorrowUtc() {
+		LocalDate tomorrow = OffsetDateTime.now(ZoneOffset.UTC).plusDays(1).toLocalDate();
+		List<LocalTime> allBattleSessionStartTimesForTomorrow = getAllBattleSessionStartTimesForDayUtc(tomorrow); 
+		if(allBattleSessionStartTimesForTomorrow.size() != 0) {
+			return allBattleSessionStartTimesForTomorrow.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	private static List<LocalTime> getAllBattleSessionStartTimesForDayUtc(LocalDate day) {
+		//Determine if the given day is on the weekend
+		boolean isWeekend = day.getDayOfWeek() == DayOfWeek.SATURDAY || day.getDayOfWeek() == DayOfWeek.SUNDAY;
 
-	public static List<String> getBattleSessionStartTimesForTodayUtc() {
-		//Determine if this is the weekend
-		Calendar today = Calendar.getInstance();
-		boolean isWeekend = today.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || today.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
-		
 		//Get the configured start times
 		String timesAsString = isWeekend ? 
 			getWarSiegeBattleSessionsWeekendStartTimesUtc() :
 			getWarSiegeBattleSessionsWeekdayStartTimesUtc();
 
-		//Transform the times into a list of strings			
-		List<String> timesAsList = new ArrayList<>();			
-		for(String time: timesAsString.split(",")) {
-			timesAsList.add(time.trim());
+		//Transform the string times into a list of LocalTimes			
+		List<LocalTime> timesAsList = new ArrayList<>();	
+		String[] timeAsHourMinutePair;		
+		LocalTime localTime;
+		for(String timeAsString: timesAsString.split(",")) {
+			if (timeAsString.contains(":")) {
+				timeAsHourMinutePair = timeAsString.split(":");
+				localTime = LocalTime.of(Integer.parseInt(timeAsHourMinutePair[0]), Integer.parseInt(timeAsHourMinutePair[1]));
+			} else {
+				localTime = LocalTime.of(Integer.parseInt(timeAsString), 0);
+			}
+			timesAsList.add(localTime);
 		}
 		return timesAsList;
 	}

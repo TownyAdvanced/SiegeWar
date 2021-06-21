@@ -13,7 +13,6 @@ import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.*;
 import java.util.ArrayList;
@@ -115,20 +114,20 @@ public class SiegeWarBattleSessionUtil {
 				 * There is no battle session scheduled.
 				 * Attempt to schedule session now.
 				 */
-				battleSession.setScheduledStartTime(getStartTimeOfTodaysNextBattleSession());
+				battleSession.setScheduledStartTime(getStartTimeOfNextBattleSession());
 			}
 
 			if(battleSession.getScheduledStartTime() != null) {
 				/* 
-				 * A battle session is scheduled.
+				 * A battle session is scheduled
 				 * Start session if we hit the scheduled time.
 				 */
 				if (System.currentTimeMillis() > battleSession.getScheduledStartTime()) {
 					//Activate the session
 					battleSession.setActive(true);
-					//Set the end time
+					//Set the scheduled end time
 					battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * 60000));
-					//Clear the start time
+					//Clear the scheduled start time
 					battleSession.setScheduledStartTime(null);
 					//Send global message to let the server know that the battle session started
 					Messaging.sendGlobalMessage(Translation.of("msg_war_siege_battle_session_started"));
@@ -177,12 +176,16 @@ public class SiegeWarBattleSessionUtil {
 												
 	public static String getFormattedTimeUntilNextBattleSessionStarts() {
 		Long startTimeOfTodaysNextBattleSession = BattleSession.getBattleSession().getScheduledStartTime();
-		long timeRemaining = startTimeOfTodaysNextBattleSession - System.currentTimeMillis();
-		if(timeRemaining > 0) {
-			return TimeMgmt.getFormattedTimeValue(timeRemaining);
+		if(startTimeOfTodaysNextBattleSession == null) {
+			return "?"; // Rarely needed but can happen if a server configures only weekday/weekend sessions
 		} else {
-			return "0";
-		}			
+			long timeRemaining = startTimeOfTodaysNextBattleSession - System.currentTimeMillis();
+			if(timeRemaining > 0) {
+				return TimeMgmt.getFormattedTimeValue(timeRemaining);
+			} else {
+				return "0";
+			}		
+		}	
 	}
 
 	/**
@@ -193,28 +196,28 @@ public class SiegeWarBattleSessionUtil {
 	private static Long getStartTimeOfNextBattleSession() {
 		LocalTime currentTime = LocalTime.now(Clock.systemUTC());
 		LocalDate currentDate = LocalDate.now(Clock.systemUTC());
-		LocalTime candidateLocalTime;
-		String[] startTimeHourMinutePair;
+		LocalTime nextStartTime = null;
 
-		for (String configuredStartTime : SiegeWarSettings.getBattleSessionStartTimesForTodayUtc()) {
-			//Parse configured time into LocalTime object
-			if (configuredStartTime.contains(":")) {
-				startTimeHourMinutePair = configuredStartTime.split(":");
-				candidateLocalTime = LocalTime.of(Integer.parseInt(startTimeHourMinutePair[0]), Integer.parseInt(startTimeHourMinutePair[1]));
-			} else {
-				candidateLocalTime = LocalTime.of(Integer.parseInt(configuredStartTime), 0);
-			}
-			
-			//If the candidate is a future time today, pick it
-			if(candidateLocalTime.isAfter(currentTime)) {
-				LocalDateTime candidateLocalDateTime = LocalDateTime.of(currentDate, candidateLocalTime);				
-				ZonedDateTime zdt = ZonedDateTime.of(candidateLocalDateTime, ZoneOffset.UTC);
-				long candidateMillis = zdt.toInstant().toEpochMilli();
-				return candidateMillis; 
+		//Look for a next-start-time for today
+		for (LocalTime candidateStartTimeUtc : SiegeWarSettings.getAllBattleSessionStartTimesForTodayUtc()) {
+			if(candidateStartTimeUtc.isAfter(currentTime)) {
+				nextStartTime = candidateStartTimeUtc;
+				break;
 			}
 		}
+
+		//If no next-start-time was found for today, look for the first start time for tomorrow
+		if(nextStartTime == null) {
+			nextStartTime = SiegeWarSettings.getFirstBattleSessionStartTimeForTomorrowUtc();
+		}
 		
-		//At this point, no future start time was found for today. Return null.
-		return null;
+		//If a next-start-time is not null, transform to millis and return, else return null
+		if(nextStartTime != null) {
+			LocalDateTime nextStartDateTime = LocalDateTime.of(currentDate, nextStartTime);				
+			ZonedDateTime zdt = ZonedDateTime.of(nextStartDateTime, ZoneOffset.UTC);
+			return zdt.toInstant().toEpochMilli();
+		} else {
+			return null;
+		}
 	}
 }
