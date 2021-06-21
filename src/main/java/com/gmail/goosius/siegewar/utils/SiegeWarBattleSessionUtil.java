@@ -30,7 +30,7 @@ public class SiegeWarBattleSessionUtil {
 	 *     this method will set the battleSessions.scheduledStartTime variable to null.
 	 */
    	public static void attemptToScheduleNextBattleSession() {
-		Long startTimeOfNextSession = getStartTimeOfNextBattleSession();
+		Long startTimeOfNextSession = getConfiguredStartTimeOfNextBattleSession();
 		BattleSession.getBattleSession().setScheduledStartTime(startTimeOfNextSession);
    	}
        
@@ -192,16 +192,19 @@ public class SiegeWarBattleSessionUtil {
 	}
 
 	/**
-	 * Get the start time of the next scheduled battle session.
+	 * Get the configured start time, in millis, of the next battle session.
 	 * 
-	 * @return start time, in millis.
+	 * This method will only find the start time if it is later today or tomorrow.
+	 * If there are no start times later today or tomorrow, this method will return null
+	 * 
+	 * @return configured start time, in millis.
 	 */
-	private static Long getStartTimeOfNextBattleSession() {
+	private static Long getConfiguredStartTimeOfNextBattleSession() {
 		LocalTime currentTime = LocalTime.now(Clock.systemUTC());
 		LocalDate currentDate = LocalDate.now(Clock.systemUTC());
 		LocalTime nextStartTime = null;
 
-		//Look for a next-start-time for today
+		//Look for next configured-start-time for today
 		for (LocalTime candidateStartTimeUtc : SiegeWarSettings.getAllBattleSessionStartTimesForTodayUtc()) {
 			if(candidateStartTimeUtc.isAfter(currentTime)) {
 				nextStartTime = candidateStartTimeUtc;
@@ -209,12 +212,12 @@ public class SiegeWarBattleSessionUtil {
 			}
 		}
 
-		//If no next-start-time was found for today, look for the first start time for tomorrow
+		//If no configured-start-time was found, look for the first configured time for tomorrow
 		if(nextStartTime == null) {
 			nextStartTime = SiegeWarSettings.getFirstBattleSessionStartTimeForTomorrowUtc();
 		}
 		
-		//If a next-start-time is not null, transform to millis and return, else return null
+		//If nextStartTime is still null, return null, else transform it to millis and return
 		if(nextStartTime != null) {
 			LocalDateTime nextStartDateTime = LocalDateTime.of(currentDate, nextStartTime);				
 			ZonedDateTime zdt = ZonedDateTime.of(nextStartDateTime, ZoneOffset.UTC);
