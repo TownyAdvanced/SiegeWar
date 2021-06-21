@@ -388,33 +388,33 @@ public enum ConfigNodes {
 			"# 4. In this example, the siege attacker will not get any points boosts."),
 
 	//Battle Sessions
-	WAR_SIEGE_BATTLE_SESSIONS(
-	"war.siege.battle_sessions",
-	"",
-	"",
+	WAR_SIEGE_BATTLE_SESSION(
+			"war.siege.battle_session",
+			"",
+			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
 			"# |              Battle Session settings                 | #",
 			"# +------------------------------------------------------+ #",
 			"############################################################"),
-	WAR_SIEGE_BATTLE_SESSIONS_WEEKDAY_START_TIMES_UTC(
-			"war.siege.battle_sessions.weekday_start_times_utc",
+	WAR_SIEGE_BATTLE_SESSION_WEEKDAY_START_TIMES_UTC(
+			"war.siege.battle_session.weekday_start_times_utc",
 			"19:10,21:10",
 			"",
 			"# This value determines the UTC weekday times when each battle session will start.",
 			"# This setting applies to Monday, Tuesday, Wednesday, Thursday, and Friday.",
 			"# The format is HOUR:MINUTE.",
 			"# The default values are all at ten past the hour, so that the critical point of the battle (the final minutes), will fall on the hour."),
-	WAR_SIEGE_BATTLE_SESSIONS_WEEKEND_START_TIMES_UTC(
-			"war.siege.battle_sessions.weekend_start_times_utc",
+	WAR_SIEGE_BATTLE_SESSION_WEEKEND_START_TIMES_UTC(
+			"war.siege.battle_session.weekend_start_times_utc",
 			"12:10,14:10,16:10,18:10,20:10",
 			"",
 			"# This value determines the UTC weekend times when each battle session will start.",
 			"# This setting applies to Saturday and Sunday.",
 			"# The format is HOUR:MINUTE.",
 			"# The default values are all at ten past the hour, so that the critical point of the battle (the final minutes), will fall on the hour."),
-	WAR_SIEGE_BATTLE_SESSIONS_DURATION_MINUTES(
-			"war.siege.battle_sessions.duration_minutes",
+	WAR_SIEGE_BATTLE_SESSION_DURATION_MINUTES(
+			"war.siege.battle_session.duration_minutes",
 			"50",
 			"",
 			"# This value determines the duration of each battle session.",

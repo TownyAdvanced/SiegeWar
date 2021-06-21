@@ -2,7 +2,6 @@ package com.gmail.goosius.siegewar.settings;
 
 import java.time.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -297,8 +296,8 @@ public class SiegeWarSettings {
 
 		//Get the start times from the config file, in the form of a single string.
 		String startTimesAsString = isWeekend ? 
-			getWarSiegeBattleSessionsWeekendStartTimesUtc() :
-			getWarSiegeBattleSessionsWeekdayStartTimesUtc();
+			getWarSiegeBattleSessionWeekendStartTimesUtc() :
+			getWarSiegeBattleSessionWeekdayStartTimesUtc();
 
 		//Transform the config file strings into a list of LocalDateTime objects
 		List<LocalDateTime> startTimesAsList = new ArrayList<>();	
@@ -318,16 +317,16 @@ public class SiegeWarSettings {
 		return startTimesAsList;
 	}
 
-	public static String getWarSiegeBattleSessionsWeekdayStartTimesUtc() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_WEEKDAY_START_TIMES_UTC);
+	public static String getWarSiegeBattleSessionWeekdayStartTimesUtc() {
+		return Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_WEEKDAY_START_TIMES_UTC);
 	}
 
-	public static String getWarSiegeBattleSessionsWeekendStartTimesUtc() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_WEEKEND_START_TIMES_UTC);
+	public static String getWarSiegeBattleSessionWeekendStartTimesUtc() {
+		return Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_WEEKEND_START_TIMES_UTC);
 	}
 
-	public static int getWarSiegeBattleSessionsDurationMinutes() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_DURATION_MINUTES);
+	public static int getWarSiegeBattleSessionDurationMinutes() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_DURATION_MINUTES);
 	}
 
 	public static boolean isWarSiegeZoneBlockPlacementRestrictionsEnabled() {
