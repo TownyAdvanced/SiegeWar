@@ -22,6 +22,18 @@ import java.util.Map;
 
 public class SiegeWarBattleSessionUtil {
 
+	/**
+	 * Attempt to schedule the next battle session
+	 * 1. If there is a battle session configured to start later today, or tomorrow,
+	 *     this method will successfully set the battleSessions.scheduledStartTime variable.
+	 * 2. If there are no battle sessions configured to start later today, or tomorrow,
+	 *     this method will set the battleSessions.scheduledStartTime variable to null.
+	 */
+   	public static void attemptToScheduleNextBattleSession() {
+		Long startTimeOfNextSession = getStartTimeOfNextBattleSession();
+		BattleSession.getBattleSession().setScheduledStartTime(startTimeOfNextSession);
+   	}
+       
 	public static void evaluateBattleSessions() {
 		BattleSession battleSession = BattleSession.getBattleSession();
 
@@ -104,24 +116,15 @@ public class SiegeWarBattleSessionUtil {
 			}
 
 		} else {
-			/* 
-			 * Battle session is inactive. 
-			 * Determine whether to activate it
-			 */
-			 
+		    //Battle session is inactive.
+
+			//If there is no battle session scheduled, attempt to schedule session now.
 			if(battleSession.getScheduledStartTime() == null) {
-				/*
-				 * There is no battle session scheduled.
-				 * Attempt to schedule session now.
-				 */
-				battleSession.setScheduledStartTime(getStartTimeOfNextBattleSession());
+				attemptToScheduleNextBattleSession();
 			}
 
+			//If a battle session is scheduled, start it if we hit the scheduled time
 			if(battleSession.getScheduledStartTime() != null) {
-				/* 
-				 * A battle session is scheduled
-				 * Start session if we hit the scheduled time.
-				 */
 				if (System.currentTimeMillis() > battleSession.getScheduledStartTime()) {
 					//Activate the session
 					battleSession.setActive(true);
