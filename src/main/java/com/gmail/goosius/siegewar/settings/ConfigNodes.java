@@ -406,9 +406,9 @@ public enum ConfigNodes {
 			"# The format is HOUR:MINUTE.",
 			"# The default values are all at ten past the hour, so that the critical point of the battle (the final minutes), will fall on the hour."),
 	WAR_SIEGE_BATTLE_SESSIONS_WEEKEND_START_TIMES_UTC(
-			"",
 			"war.siege.battle_sessions.weekend_start_times_utc",
 			"12:10,14:10,16:10,18:10,20:10",
+			"",
 			"# This value determines the UTC weekend times when each battle session will start.",
 			"# This setting applies to Saturday and Sunday.",
 			"# The format is HOUR:MINUTE.",
