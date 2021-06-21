@@ -195,31 +195,29 @@ public class SiegeWarBattleSessionUtil {
 	 * Get the configured start time, in millis, of the next battle session.
 	 * 
 	 * This method will only find the start time if it is later today or tomorrow.
-	 * If there are no start times later today or tomorrow, this method will return null
+	 * If there are no start times later today or tomorrow, then this method will return null
 	 * 
 	 * @return configured start time, in millis.
 	 */
 	private static Long getConfiguredStartTimeOfNextBattleSession() {
-		LocalTime currentTime = LocalTime.now(Clock.systemUTC());
-		LocalDate currentDate = LocalDate.now(Clock.systemUTC());
-		LocalTime nextStartTime = null;
+		LocalDateTime currentTime = LocalDateTime.now(Clock.systemUTC());
+		LocalDateTime nextStartDateTime = null;
 
 		//Look for next configured-start-time for today
-		for (LocalTime candidateStartTimeUtc : SiegeWarSettings.getAllBattleSessionStartTimesForTodayUtc()) {
+		for (LocalDateTime candidateStartTimeUtc : SiegeWarSettings.getAllBattleSessionStartTimesForTodayUtc()) {
 			if(candidateStartTimeUtc.isAfter(currentTime)) {
-				nextStartTime = candidateStartTimeUtc;
+				nextStartDateTime = candidateStartTimeUtc;
 				break;
 			}
 		}
 
 		//If no configured-start-time was found, look for the first configured time for tomorrow
-		if(nextStartTime == null) {
-			nextStartTime = SiegeWarSettings.getFirstBattleSessionStartTimeForTomorrowUtc();
+		if(nextStartDateTime == null) {
+			nextStartDateTime = SiegeWarSettings.getFirstBattleSessionStartTimeForTomorrowUtc();
 		}
 		
 		//If nextStartTime is still null, return null, else transform it to millis and return
-		if(nextStartTime != null) {
-			LocalDateTime nextStartDateTime = LocalDateTime.of(currentDate, nextStartTime);				
+		if(nextStartDateTime != null) {
 			ZonedDateTime zdt = ZonedDateTime.of(nextStartDateTime, ZoneOffset.UTC);
 			return zdt.toInstant().toEpochMilli();
 		} else {

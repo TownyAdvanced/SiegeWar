@@ -275,15 +275,15 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE);
 	}
 
-	public static List<LocalTime> getAllBattleSessionStartTimesForTodayUtc() {
+	public static List<LocalDateTime> getAllBattleSessionStartTimesForTodayUtc() {
 		LocalDate today = OffsetDateTime.now(ZoneOffset.UTC).toLocalDate();
 		return getAllBattleSessionStartTimesForDayUtc(today);
 	}
 	
 	@Nullable
-	public static LocalTime getFirstBattleSessionStartTimeForTomorrowUtc() {
+	public static LocalDateTime getFirstBattleSessionStartTimeForTomorrowUtc() {
 		LocalDate tomorrow = OffsetDateTime.now(ZoneOffset.UTC).plusDays(1).toLocalDate();
-		List<LocalTime> allBattleSessionStartTimesForTomorrow = getAllBattleSessionStartTimesForDayUtc(tomorrow); 
+		List<LocalDateTime> allBattleSessionStartTimesForTomorrow = getAllBattleSessionStartTimesForDayUtc(tomorrow); 
 		if(allBattleSessionStartTimesForTomorrow.size() != 0) {
 			return allBattleSessionStartTimesForTomorrow.get(0);
 		} else {
@@ -291,29 +291,29 @@ public class SiegeWarSettings {
 		}
 	}
 	
-	private static List<LocalTime> getAllBattleSessionStartTimesForDayUtc(LocalDate day) {
+	private static List<LocalDateTime> getAllBattleSessionStartTimesForDayUtc(LocalDate day) {
 		//Determine if the given day is on the weekend
 		boolean isWeekend = day.getDayOfWeek() == DayOfWeek.SATURDAY || day.getDayOfWeek() == DayOfWeek.SUNDAY;
 
-		//Get the configured start times
-		String timesAsString = isWeekend ? 
+		//Get the start times from the config file, in the form of a single string.
+		String startTimesAsString = isWeekend ? 
 			getWarSiegeBattleSessionsWeekendStartTimesUtc() :
 			getWarSiegeBattleSessionsWeekdayStartTimesUtc();
 
-		//Transform the string times into a list of LocalTimes			
-		List<LocalTime> timesAsList = new ArrayList<>();	
-		String[] timeAsHourMinutePair;		
-		LocalTime localTime;
-		for(String timeAsString: timesAsString.split(",")) {
-			if (timeAsString.contains(":")) {
-				timeAsHourMinutePair = timeAsString.split(":");
-				localTime = LocalTime.of(Integer.parseInt(timeAsHourMinutePair[0]), Integer.parseInt(timeAsHourMinutePair[1]));
+		//Transform the config file strings into a list of LocalDateTime objects		
+		String[] startTimeAsHourMinutePair;		
+		LocalDateTime startTime;
+		List<LocalDateTime> startTimesAsList = new ArrayList<>();	
+		for(String startTimeAsString: startTimesAsString.split(",")) {
+			if (startTimeAsString.contains(":")) {
+				startTimeAsHourMinutePair = startTimeAsString.split(":");
+				startTime = LocalDateTime.of(day, LocalTime.of(Integer.parseInt(startTimeAsHourMinutePair[0]), Integer.parseInt(startTimeAsHourMinutePair[1])));
 			} else {
-				localTime = LocalTime.of(Integer.parseInt(timeAsString), 0);
+				startTime = LocalDateTime.of(day, LocalTime.of(Integer.parseInt(startTimeAsString), 0));
 			}
-			timesAsList.add(localTime);
+			startTimesAsList.add(startTime);
 		}
-		return timesAsList;
+		return startTimesAsList;
 	}
 
 	public static String getWarSiegeBattleSessionsWeekdayStartTimesUtc() {
