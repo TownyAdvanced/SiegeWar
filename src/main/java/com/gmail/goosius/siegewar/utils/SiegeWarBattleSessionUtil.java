@@ -58,24 +58,17 @@ public class SiegeWarBattleSessionUtil {
 
 							//If any battle points were gained, calculate a result
 							if(siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0) {
-								//Calculate result
-								int battlePointsOfWinner;
-								if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()) {
-									battlePointsOfWinner = siege.getAttackerBattlePoints();
-								} else if (siege.getAttackerBattlePoints() < siege.getDefenderBattlePoints()) {
-									battlePointsOfWinner = -siege.getDefenderBattlePoints();
-								} else {
-									battlePointsOfWinner = 0;
-								}
+								//Adjust the siege balance
+								int siegeBalanceAdjustment = calculateSiegeBalanceAdjustment(siege);
 	
 								//Apply the battle points of the winner to the siege balance
-								siege.adjustSiegeBalance(battlePointsOfWinner);
+								siege.adjustSiegeBalance(siegeBalanceAdjustment);
 	
 								//Propagate attacker battle contributions to siege history
 								siege.propagateSuccessfulBattleContributorsToResidentTimedPointContributors();
 	
 								//Prepare result for messaging
-								battleResults.put(siege, battlePointsOfWinner);
+								battleResults.put(siege, siegeBalanceAdjustment);
 
 								//Save siege
 								SiegeController.saveSiege(siege);							
@@ -137,6 +130,32 @@ public class SiegeWarBattleSessionUtil {
 				}
 			}
 		}
+	}
+
+	/** 
+	 * Determines the amount the siege points will be adjusted by.
+	 *
+	 * Overridden by the areBattlePointsWinnerTakesAll config setting.
+	 * 
+	 * @param siege the Siege to gather BattlePoints from.
+	 * @return points awarded to the winner.
+	 */
+	public static int calculateSiegeBalanceAdjustment(Siege siege) {
+		
+		// If Winner-Takes-All points are disabled return attacker points - defender points.
+		if (!SiegeWarSettings.areBattlePointsWinnerTakesAll()) 
+			return siege.getAttackerBattlePoints() - siege.getDefenderBattlePoints();
+		
+		// Attackers won the session.
+		if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints())
+			return siege.getAttackerBattlePoints();
+
+		// Defenders won the session.
+		if (siege.getAttackerBattlePoints() < siege.getDefenderBattlePoints())
+			return -siege.getDefenderBattlePoints();
+
+		// Session was a draw.
+		return 0;
 	}
 
 	/**

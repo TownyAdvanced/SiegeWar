@@ -122,6 +122,10 @@ public class SiegeWarSettings {
 	public static double getWarSiegeMinSiegeDurationBeforeAbandonHours() {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_MIN_SIEGE_DURATION_BEFORE_ABANDON_HOURS);
 	}
+	
+	public static boolean areBattlePointsWinnerTakesAll() {
+		return Settings.getBoolean(ConfigNodes.WAR_BATTLE_POINTS_DISTRIBUTION_WINNER_TAKES_ALL);
+	}
 
 	public static int getWarBattlePointsForAttackerOccupation() {
 		return Settings.getInt(ConfigNodes.WAR_BATTLE_POINTS_FOR_ATTACKER_OCCUPATION);

@@ -23,6 +23,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 import com.palmergames.bukkit.towny.TownyFormatter;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -358,9 +359,15 @@ public class SiegeWarTownEventListener implements Listener {
 				out.add(Translation.of("status_town_siege_defender", siege.getDefenderNameForDisplay()));
 
 				switch (siegeStatus) {
-	                case IN_PROGRESS:
-						// > Balance: 530
-						out.add(Translation.of("status_town_siege_status_siege_balance", siege.getSiegeBalance()));
+					case IN_PROGRESS:
+						// > Balance: 530 | Pending: +130
+						String balanceLine = Translation.of("status_town_siege_status_siege_balance", siege.getSiegeBalance());
+						// If the battle is active with points add the " | Pending: +130"
+						if (battleIsActive(siege)) {
+							int pending = SiegeWarBattleSessionUtil.calculateSiegeBalanceAdjustment(siege);
+							balanceLine += Translation.of("status_town_siege_pending_balance_adjustment", ((pending > 0 ? "+" : "") + pending));
+						}
+						out.add(balanceLine); 
 
 						if(SiegeWarSettings.isBannerXYZTextEnabled()) {
 							// > Banner XYZ: {2223,82,9877}
@@ -380,11 +387,7 @@ public class SiegeWarTownEventListener implements Listener {
 						String warChest = TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount());
 						out.add(Translation.of("status_town_siege_status_warchest", warChest));
 
-						if(BattleSession.getBattleSession().isActive()
-							&& (siege.getAttackerBattlePoints() > 0
-								|| siege.getDefenderBattlePoints() > 0
-								|| siege.getBannerControllingSide() != SiegeSide.NOBODY
-								|| siege.getBannerControlSessions().size() > 0)) {
+						if(battleIsActive(siege)) {
 
 							//Battle:
 							String battle = Translation.of("status_town_siege_battle");
@@ -532,5 +535,13 @@ public class SiegeWarTownEventListener implements Listener {
 			String mapColorHexCode = TownOccupationController.getTownOccupier(event.getTown()).getMapColorHexCode();
 			event.setMapColorHexCode(mapColorHexCode);
 		}
+	}
+
+	private static boolean battleIsActive(Siege siege) {
+		return BattleSession.getBattleSession().isActive()
+				&& (siege.getAttackerBattlePoints() > 0
+				 || siege.getDefenderBattlePoints() > 0
+				 || siege.getBannerControllingSide() != SiegeSide.NOBODY
+				 || siege.getBannerControlSessions().size() > 0);
 	}
 }
