@@ -359,14 +359,14 @@ public class SiegeWarTownEventListener implements Listener {
 				out.add(Translation.of("status_town_siege_defender", siege.getDefenderNameForDisplay()));
 
 				switch (siegeStatus) {
-	                case IN_PROGRESS:
+					case IN_PROGRESS:
 						// > Balance: 530 | Pending: +130
-	                	String balanceLine = Translation.of("status_town_siege_status_siege_balance", siege.getSiegeBalance());
+						String balanceLine = Translation.of("status_town_siege_status_siege_balance", siege.getSiegeBalance());
 						// If the session is active with points add the " | Pending: +130"
-	                	if (battleSessionIsActive(siege)) {
-	                		int pending = SiegeWarBattleSessionUtil.calculateSiegeBalanceAdjustment(siege);
-	                		balanceLine += Translation.of("status_town_siege_pending_balance_adjustment", ((pending > 0 ? "+" : "") + pending));
-	                	}
+						if (battleSessionIsActive(siege)) {
+							int pending = SiegeWarBattleSessionUtil.calculateSiegeBalanceAdjustment(siege);
+							balanceLine += Translation.of("status_town_siege_pending_balance_adjustment", ((pending > 0 ? "+" : "") + pending));
+						}
 						out.add(balanceLine); 
 
 						if(SiegeWarSettings.isBannerXYZTextEnabled()) {
