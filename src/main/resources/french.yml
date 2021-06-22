@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.19
+version: 0.20
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -437,3 +437,8 @@ msg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their
 # Homeblock move restrictions
 msg_err_besieged_town_cannot_move_homeblock: "&cBesieged towns cannot move their homeblocks."
 msg_err_occupied_town_cannot_move_homeblock: "&cOccupied towns cannot move their homeblocks."
+
+# Added in 0.20
+
+# Town status screen's winner's points
+status_town_siege_winner_gains: '&2 > Current Battle Session Reward: &a%s points'

@@ -59,14 +59,7 @@ public class SiegeWarBattleSessionUtil {
 							//If any battle points were gained, calculate a result
 							if(siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0) {
 								//Calculate result
-								int battlePointsOfWinner;
-								if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()) {
-									battlePointsOfWinner = siege.getAttackerBattlePoints();
-								} else if (siege.getAttackerBattlePoints() < siege.getDefenderBattlePoints()) {
-									battlePointsOfWinner = -siege.getDefenderBattlePoints();
-								} else {
-									battlePointsOfWinner = 0;
-								}
+								int battlePointsOfWinner = calcPointsForBattleSession(siege);
 	
 								//Apply the battle points of the winner to the siege balance
 								siege.adjustSiegeBalance(battlePointsOfWinner);
@@ -137,6 +130,40 @@ public class SiegeWarBattleSessionUtil {
 				}
 			}
 		}
+	}
+
+	/** 
+	 * Determines how many points are awarded to the winner of a Battle Session.
+	 *
+	 * Affected by the areBattlePointsWinnerTakesAll config setting.
+	 * 
+	 * @param siege the Siege to gather BattlePoints from.
+	 * @return points awarded to the winner.
+	 */
+	public static int calcPointsForBattleSession(Siege siege) {
+		int battlePointsOfWinner;
+		
+		// Attackers won the session.
+		if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()) {
+			
+			if (SiegeWarSettings.areBattlePointsWinnerTakesAll())
+				battlePointsOfWinner = siege.getAttackerBattlePoints();
+			else 
+				battlePointsOfWinner = siege.getAttackerBattlePoints() - siege.getDefenderBattlePoints();
+
+		// Defenders won the session.
+		} else if (siege.getAttackerBattlePoints() < siege.getDefenderBattlePoints()) {
+
+			if (SiegeWarSettings.areBattlePointsWinnerTakesAll())
+				battlePointsOfWinner = -siege.getDefenderBattlePoints();
+			else 
+				battlePointsOfWinner = -(siege.getDefenderBattlePoints() - siege.getAttackerBattlePoints());
+
+		// Session was a draw.
+		} else {
+			return 0;
+		}
+		return battlePointsOfWinner;
 	}
 
 	/**

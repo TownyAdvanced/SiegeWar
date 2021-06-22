@@ -313,6 +313,13 @@ public enum ConfigNodes {
 			"# Note that the horizontal distance is always the same as the Towny townblock size."),
 
 	//Battle points
+	WAR_BATTLE_POINTS_DISTRIBUTION_WINNER_TAKES_ALL(
+			"war.siege.scoring.winner_takes_all_points",
+			"true",
+			"",
+			"# When true, at the end of a successful battle session all points go to the winner of the session.",
+			"# When false, the losing side's points are deducted from the winners side, making the losing side's",
+			"# efforts during the session matter, and winners gain points slower."),
 	WAR_BATTLE_POINTS_FOR_ATTACKER_OCCUPATION(
 			"war.siege.scoring.points_for_attacker_occupation",
 			"10",
