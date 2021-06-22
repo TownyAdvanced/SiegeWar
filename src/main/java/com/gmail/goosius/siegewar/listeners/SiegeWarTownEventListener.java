@@ -360,8 +360,14 @@ public class SiegeWarTownEventListener implements Listener {
 
 				switch (siegeStatus) {
 	                case IN_PROGRESS:
-						// > Balance: 530
-						out.add(Translation.of("status_town_siege_status_siege_balance", siege.getSiegeBalance()));
+						// > Balance: 530 | Pending: +130
+	                	String balanceLine = Translation.of("status_town_siege_status_siege_balance", siege.getSiegeBalance());
+						// If the session is active with points add the " | Pending: +130"
+	                	if (battleSessionIsActive(siege)) {
+	                		int pending = SiegeWarBattleSessionUtil.calculateSiegeBalanceAdjustment(siege);
+	                		balanceLine += Translation.of("status_town_siege_pending_balance_adjustment", ((pending > 0 ? "+" : "") + pending));
+	                	}
+						out.add(balanceLine); 
 
 						if(SiegeWarSettings.isBannerXYZTextEnabled()) {
 							// > Banner XYZ: {2223,82,9877}
@@ -381,11 +387,7 @@ public class SiegeWarTownEventListener implements Listener {
 						String warChest = TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount());
 						out.add(Translation.of("status_town_siege_status_warchest", warChest));
 
-						if(BattleSession.getBattleSession().isActive()
-							&& (siege.getAttackerBattlePoints() > 0
-								|| siege.getDefenderBattlePoints() > 0
-								|| siege.getBannerControllingSide() != SiegeSide.NOBODY
-								|| siege.getBannerControlSessions().size() > 0)) {
+						if(battleSessionIsActive(siege)) {
 
 							//Battle:
 							String battle = Translation.of("status_town_siege_battle");
@@ -407,9 +409,6 @@ public class SiegeWarTownEventListener implements Listener {
 
 							// > Points: +90 / -220
 							out.add(Translation.of("status_town_siege_battle_points", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
-							
-							// > Pending Balance Adjustment: 420 points
-							out.add(Translation.of("status_town_siege_winner_gains", SiegeWarBattleSessionUtil.calculateSiegeBalanceAdjustment(siege)));
 
 							// > Time Remaining: 22 minutes
 							out.add(Translation.of("status_town_siege_battle_time_remaining", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
@@ -536,5 +535,13 @@ public class SiegeWarTownEventListener implements Listener {
 			String mapColorHexCode = TownOccupationController.getTownOccupier(event.getTown()).getMapColorHexCode();
 			event.setMapColorHexCode(mapColorHexCode);
 		}
+	}
+
+	private static boolean battleSessionIsActive(Siege siege) {
+		return BattleSession.getBattleSession().isActive()
+				&& (siege.getAttackerBattlePoints() > 0
+				 || siege.getDefenderBattlePoints() > 0
+				 || siege.getBannerControllingSide() != SiegeSide.NOBODY
+				 || siege.getBannerControlSessions().size() > 0);
 	}
 }

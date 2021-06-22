@@ -200,7 +200,14 @@ public class BookUtil {
 
 		//Battle sessions
 		text += "\nBATTLE SESSIONS\n\n";
-		text += "Fighting is organised into " + activeSession + " 'battle sessions'. During a battle session, each team (attackers/defenders) competes in 'battles' at each siege. Killing or banner control will give them a 'Battle Points'. When the battle session ends, at each battle, the team with the highest battle points wins the battle, and their battle points are applied to the siege balance. After a battle session ends, there is typically a break until the next battle session. In this break, nobody can gain battle points.\n\n";
+		text += "Fighting is organised into " + activeSession + " 'battle sessions'. During a battle session, each team (attackers/defenders) competes in 'battles' at each siege. Killing or banner control will give them a 'Battle Points'.\n";
+		text += "When the battle session ends, at each battle, ";
+		if (SiegeWarSettings.areBattlePointsWinnerTakesAll())
+			text += "the team with the highest battle points wins the battle, and their battle points are ";
+		else 
+			text += "the losing side's points are deducted from the winners side and the remainder is ";
+		text += "applied to the siege balance.\n";
+		text += "After a battle session ends, there is typically a break until the next battle session. In this break, nobody can gain battle points.\n\n";
 
 		return text;
 	}
