@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.objects;
 
 
 import com.palmergames.util.TimeMgmt;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * This class represents a "Battle Session".
@@ -33,11 +34,13 @@ public class BattleSession {
 
 	private static BattleSession battleSession = null;  //The singleton instance
 	private boolean active; 			//Is the session active, or is it on break ?
-	private long scheduledEndTIme;	//The time this battle session is scheduled to end
+	private long scheduledEndTime;	//The time this battle session is scheduled to end
+	private Long scheduledStartTime;  //The time this battle session is scheduled to start
 
 	public BattleSession() {
 		active = false;
-		scheduledEndTIme = 0;
+		scheduledEndTime = 0;
+		scheduledStartTime = null;
 	}
 
 	//Singleton
@@ -57,11 +60,11 @@ public class BattleSession {
 	}
 
 	public long getScheduledEndTime() {
-		return scheduledEndTIme;
+		return scheduledEndTime;
 	}
 
 	public void setScheduledEndTime(long t) {
-		scheduledEndTIme = t;
+		scheduledEndTime = t;
 	}
 
 	public String getFormattedTimeRemainingUntilBattleSessionEnds() {
@@ -69,11 +72,20 @@ public class BattleSession {
 	}
 
 	public long getTimeRemainingUntilBattleSessionEnds() {
-		long timeLeftMillis = scheduledEndTIme - System.currentTimeMillis();
+		long timeLeftMillis = scheduledEndTime - System.currentTimeMillis();
 		if (timeLeftMillis > 0) {
 			return timeLeftMillis;
 		} else {
 			return 0;
 		}
+	}
+
+	@Nullable
+	public Long getScheduledStartTime() {
+		return scheduledStartTime;
+	}
+
+	public void setScheduledStartTime(Long scheduledStartTime) {
+		this.scheduledStartTime = scheduledStartTime;
 	}
 }

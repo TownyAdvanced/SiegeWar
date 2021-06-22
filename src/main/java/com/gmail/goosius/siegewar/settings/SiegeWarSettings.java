@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.settings;
 
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
+import org.jetbrains.annotations.Nullable;
 
 public class SiegeWarSettings {
 	
@@ -272,17 +274,59 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE);
 	}
 
-	public static List<String> getWarSiegeBattleSessionsStartTimesUtc() {
-		List<String> timesAsList = new ArrayList<>();
-		String timesAsString = Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_START_TIMES_UTC);
-			for(String time: timesAsString.split(",")) {
-				timesAsList.add(time.trim());
+	public static List<LocalDateTime> getAllBattleSessionStartTimesForTodayUtc() {
+		LocalDate today = OffsetDateTime.now(ZoneOffset.UTC).toLocalDate();
+		return getAllBattleSessionStartTimesForDayUtc(today);
+	}
+	
+	@Nullable
+	public static LocalDateTime getFirstBattleSessionStartTimeForTomorrowUtc() {
+		LocalDate tomorrow = OffsetDateTime.now(ZoneOffset.UTC).plusDays(1).toLocalDate();
+		List<LocalDateTime> allBattleSessionStartTimesForTomorrow = getAllBattleSessionStartTimesForDayUtc(tomorrow); 
+		if(allBattleSessionStartTimesForTomorrow.size() != 0) {
+			return allBattleSessionStartTimesForTomorrow.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	private static List<LocalDateTime> getAllBattleSessionStartTimesForDayUtc(LocalDate day) {
+		//Determine if the given day is on the weekend
+		boolean isWeekend = day.getDayOfWeek() == DayOfWeek.SATURDAY || day.getDayOfWeek() == DayOfWeek.SUNDAY;
+
+		//Get the start times from the config file, in the form of a single string.
+		String startTimesAsString = isWeekend ? 
+			getWarSiegeBattleSessionWeekendStartTimesUtc() :
+			getWarSiegeBattleSessionWeekdayStartTimesUtc();
+
+		//Transform the config file strings into a list of LocalDateTime objects
+		List<LocalDateTime> startTimesAsList = new ArrayList<>();	
+		if(startTimesAsString.length() > 0) {		
+			String[] startTimeAsHourMinutePair;		
+			LocalDateTime startTime;
+			for(String startTimeAsString: startTimesAsString.split(",")) {
+				if (startTimeAsString.contains(":")) {
+					startTimeAsHourMinutePair = startTimeAsString.split(":");
+					startTime = LocalDateTime.of(day, LocalTime.of(Integer.parseInt(startTimeAsHourMinutePair[0]), Integer.parseInt(startTimeAsHourMinutePair[1])));
+				} else {
+					startTime = LocalDateTime.of(day, LocalTime.of(Integer.parseInt(startTimeAsString), 0));
+				}
+				startTimesAsList.add(startTime);	
 			}
-		return timesAsList;
+		}
+		return startTimesAsList;
 	}
 
-	public static int getWarSiegeBattleSessionsDurationMinutes() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_DURATION_MINUTES);
+	public static String getWarSiegeBattleSessionWeekdayStartTimesUtc() {
+		return Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_WEEKDAY_START_TIMES_UTC);
+	}
+
+	public static String getWarSiegeBattleSessionWeekendStartTimesUtc() {
+		return Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_WEEKEND_START_TIMES_UTC);
+	}
+
+	public static int getWarSiegeBattleSessionDurationMinutes() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_DURATION_MINUTES);
 	}
 
 	public static boolean isWarSiegeZoneBlockPlacementRestrictionsEnabled() {

@@ -21,12 +21,19 @@ import java.util.List;
 import java.util.Map;
 
 public class SiegeWarBattleSessionUtil {
-	private static long scheduledStartTimeOfNextBattleSession;
 
-	public static void scheduleNextBattleSession() {
-		scheduledStartTimeOfNextBattleSession = System.currentTimeMillis() + getTimeUntilNextBattleSessionMillis();
-	}
-
+	/**
+	 * Attempt to schedule the next battle session
+	 * 1. If there is a battle session configured to start later today, or tomorrow,
+	 *     this method will successfully set the battleSessions.scheduledStartTime variable.
+	 * 2. If there are no battle sessions configured to start later today, or tomorrow,
+	 *     this method will set the battleSessions.scheduledStartTime variable to null.
+	 */
+   	public static void attemptToScheduleNextBattleSession() {
+		Long startTimeOfNextSession = getConfiguredStartTimeOfNextBattleSession();
+		BattleSession.getBattleSession().setScheduledStartTime(startTimeOfNextSession);
+   	}
+       
 	public static void evaluateBattleSessions() {
 		BattleSession battleSession = BattleSession.getBattleSession();
 
@@ -36,9 +43,6 @@ public class SiegeWarBattleSessionUtil {
 			if(System.currentTimeMillis() > battleSession.getScheduledEndTime()) {
 				//Finish battle session
 				battleSession.setActive(false);
-
-				//Schedule next session
-				scheduleNextBattleSession();
 
 				/*
 				 * Gather the results of all battles
@@ -112,16 +116,25 @@ public class SiegeWarBattleSessionUtil {
 			}
 
 		} else {
-			/*
-			 * Battle session is inactive. Check to see if it starts
-			 * If the time remaining is less than a minute, start it
-			 */
-			if (System.currentTimeMillis() > scheduledStartTimeOfNextBattleSession) {
-				//Start battle session
-				battleSession.setActive(true);
-				battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * 60000));
-				//Send global message to let the server know that "it is on"
-				Messaging.sendGlobalMessage(Translation.of("msg_war_siege_battle_session_started"));
+		    //Battle session is inactive.
+
+			//If there is no battle session scheduled, attempt to schedule session now.
+			if(battleSession.getScheduledStartTime() == null) {
+				attemptToScheduleNextBattleSession();
+			}
+
+			//If a battle session is scheduled, start it if we hit the scheduled time
+			if(battleSession.getScheduledStartTime() != null) {
+				if (System.currentTimeMillis() > battleSession.getScheduledStartTime()) {
+					//Activate the session
+					battleSession.setActive(true);
+					//Set the scheduled end time
+					battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionDurationMinutes() * 60000));
+					//Clear the scheduled start time
+					battleSession.setScheduledStartTime(null);
+					//Send global message to let the server know that the battle session started
+					Messaging.sendGlobalMessage(Translation.of("msg_war_siege_battle_session_started"));
+				}
 			}
 		}
 	}
@@ -163,49 +176,52 @@ public class SiegeWarBattleSessionUtil {
 		//Send message
 		Messaging.sendGlobalMessage(header, lines);
 	}
-
+												
 	public static String getFormattedTimeUntilNextBattleSessionStarts() {
-		long timeRemaining = scheduledStartTimeOfNextBattleSession - System.currentTimeMillis();
-		if(timeRemaining > 0) {
-			return TimeMgmt.getFormattedTimeValue(timeRemaining);
+		Long startTimeOfTodaysNextBattleSession = BattleSession.getBattleSession().getScheduledStartTime();
+		if(startTimeOfTodaysNextBattleSession == null) {
+			return "?"; // Rarely needed but can happen if a server configures only weekday/weekend sessions
 		} else {
-			return "0";
-		}
+			long timeRemaining = startTimeOfTodaysNextBattleSession - System.currentTimeMillis();
+			if(timeRemaining > 0) {
+				return TimeMgmt.getFormattedTimeValue(timeRemaining);
+			} else {
+				return "0";
+			}		
+		}	
 	}
 
-	private static long getTimeUntilNextBattleSessionMillis() {
-		LocalDateTime currentDateTime = LocalDateTime.now(Clock.systemUTC());
-		Duration closestDuration = null;
-		Duration candidateDuration;
-		LocalTime candidateTime;
-		LocalDate candidateDate;
-		LocalDateTime candidateDateTime;
-		String[] startTimeHourMinutePair;
-		for (String startTime : SiegeWarSettings.getWarSiegeBattleSessionsStartTimesUtc()) {
-			if (startTime.contains(":")) {
-				startTimeHourMinutePair = startTime.split(":");
-				candidateTime = LocalTime.of(Integer.parseInt(startTimeHourMinutePair[0]), Integer.parseInt(startTimeHourMinutePair[1]));
-			} else {
-				candidateTime = LocalTime.of(Integer.parseInt(startTime), 0);
-			}
+	/**
+	 * Get the configured start time, in millis, of the next battle session.
+	 * 
+	 * This method will only find the start time if it is later today or tomorrow.
+	 * If there are no start times later today or tomorrow, then this method will return null
+	 * 
+	 * @return configured start time, in millis.
+	 */
+	private static Long getConfiguredStartTimeOfNextBattleSession() {
+		LocalDateTime currentTime = LocalDateTime.now(Clock.systemUTC());
+		LocalDateTime nextStartDateTime = null;
 
-			//Convert candidate to local date time
-			if (candidateTime.isAfter(currentDateTime.toLocalTime())) {
-				candidateDate = LocalDate.now(Clock.systemUTC());
-			} else {
-				candidateDate = LocalDate.now(Clock.systemUTC()).plusDays(1);
+		//Look for next configured-start-time for today
+		for (LocalDateTime candidateStartTimeUtc : SiegeWarSettings.getAllBattleSessionStartTimesForTodayUtc()) {
+			if(candidateStartTimeUtc.isAfter(currentTime)) {
+				nextStartDateTime = candidateStartTimeUtc;
+				break;
 			}
-			candidateDateTime = LocalDateTime.of(candidateDate, candidateTime);
-
-			//Make this candidate our favourite if it is closer
-			candidateDuration = Duration.between(currentDateTime, candidateDateTime);
-			if (closestDuration == null) {
-				closestDuration = candidateDuration;
-			} else if (candidateDuration.getSeconds() < closestDuration.getSeconds())
-				closestDuration = candidateDuration;
 		}
 
-		//Return closest duration
-		return closestDuration.getSeconds() * 1000;
+		//If no configured-start-time was found, look for the first configured time for tomorrow
+		if(nextStartDateTime == null) {
+			nextStartDateTime = SiegeWarSettings.getFirstBattleSessionStartTimeForTomorrowUtc();
+		}
+		
+		//If nextStartTime is still null, return null, else transform it to millis and return
+		if(nextStartDateTime != null) {
+			ZonedDateTime zdt = ZonedDateTime.of(nextStartDateTime, ZoneOffset.UTC);
+			return zdt.toInstant().toEpochMilli();
+		} else {
+			return null;
+		}
 	}
 }

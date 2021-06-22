@@ -388,17 +388,32 @@ public enum ConfigNodes {
 			"# 4. In this example, the siege attacker will not get any points boosts."),
 
 	//Battle Sessions
-	WAR_SIEGE_BATTLE_SESSIONS_START_TIMES_UTC(
-			"war.siege.battle_session.start_times_utc",
-			"0:10,1:10,2:10,3:10,4:10,5:10,6:10,7:10,8:10,9:10,10:10,11:10,12:10,13:10,14:10,15:10,16:10,17:10,18:10,19:10,20:10,21:10,22:10,23:10",
-			"# This value determines the times (in UTC) when each battle session will start.",
-			"# Integers can be used to signify hours, and minutes are used as follows: 4:20,5:20,6:35 etc.",
-			"# The default is every hour, at ten past the hour.",
-			"# The ten-past is so the critical point of the battle (the final minutes), will fall on the hour.",
-			"# In addition to controlling routine battle session start times,",
-			"# this config can also be used to prevent afk sieging at unusual times e.g. night-time sieges.",
-			"# But be careful with this, as it also restricts sieging by cross-timezone players."),
-	WAR_SIEGE_BATTLE_SESSIONS_DURATION_MINUTES(
+	WAR_SIEGE_BATTLE_SESSION(
+			"war.siege.battle_session",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |              Battle Session settings                 | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################"),
+	WAR_SIEGE_BATTLE_SESSION_WEEKDAY_START_TIMES_UTC(
+			"war.siege.battle_session.weekday_start_times_utc",
+			"19:10,21:10",
+			"",
+			"# This value determines the UTC weekday times when each battle session will start.",
+			"# This setting applies to Monday, Tuesday, Wednesday, Thursday, and Friday.",
+			"# The format is HOUR:MINUTE.",
+			"# The default values are all at ten past the hour, so that the critical point of the battle (the final minutes), will fall on the hour."),
+	WAR_SIEGE_BATTLE_SESSION_WEEKEND_START_TIMES_UTC(
+			"war.siege.battle_session.weekend_start_times_utc",
+			"12:10,14:10,16:10,18:10,20:10",
+			"",
+			"# This value determines the UTC weekend times when each battle session will start.",
+			"# This setting applies to Saturday and Sunday.",
+			"# The format is HOUR:MINUTE.",
+			"# The default values are all at ten past the hour, so that the critical point of the battle (the final minutes), will fall on the hour."),
+	WAR_SIEGE_BATTLE_SESSION_DURATION_MINUTES(
 			"war.siege.battle_session.duration_minutes",
 			"50",
 			"",

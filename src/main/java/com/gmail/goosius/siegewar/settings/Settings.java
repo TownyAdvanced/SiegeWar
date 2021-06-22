@@ -45,7 +45,7 @@ public class Settings {
 
 		//Schedule next battle session
 		try {
-			SiegeWarBattleSessionUtil.scheduleNextBattleSession();
+			SiegeWarBattleSessionUtil.attemptToScheduleNextBattleSession();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(SiegeWar.prefix + "Problem Scheduling Battle Session! Disabling!");
