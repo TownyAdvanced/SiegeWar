@@ -408,8 +408,8 @@ public class SiegeWarTownEventListener implements Listener {
 							// > Points: +90 / -220
 							out.add(Translation.of("status_town_siege_battle_points", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
 							
-							// > Current Battle Session Reward: 420 points
-							out.add(Translation.of("status_town_siege_winner_gains", SiegeWarBattleSessionUtil.calcPointsForBattleSession(siege)));
+							// > Pending Balance Adjustment: 420 points
+							out.add(Translation.of("status_town_siege_winner_gains", SiegeWarBattleSessionUtil.calculateSiegeBalanceAdjustment(siege)));
 
 							// > Time Remaining: 22 minutes
 							out.add(Translation.of("status_town_siege_battle_time_remaining", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
