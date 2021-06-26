@@ -597,12 +597,14 @@ public enum ConfigNodes {
 	SIEGE_DEATH_PENALTY(
 			"war.siege.death_penalty",
 			"",
-			"Fyi the keep-env true/false config is in the switches section.",
+			"",
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
 			"# |                Siege Death Penalties                 | #",
 			"# +------------------------------------------------------+ #",
+			"#                                                          #",
+			"# Fyi the keep-env true/false config is in the switches section.",
 			"############################################################",
 			""),
 	WAR_SIEGE_DEATH_PENALTY_DEGRADE_INVENTORY_ENABLED(
