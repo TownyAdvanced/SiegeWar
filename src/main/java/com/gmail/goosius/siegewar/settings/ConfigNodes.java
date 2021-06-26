@@ -19,10 +19,22 @@ public enum ConfigNodes {
 	WAR_SIEGE(
 			"war.siege",
 			"",
+			"",
+			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
 			"# |                   Siege-War settings                 | #",
-			"# |                                                      | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	WAR_SIEGE_SWITCHES(
+			"war.siege.switches",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                       Switches                       | #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
@@ -166,10 +178,26 @@ public enum ConfigNodes {
 			"# NOTE: ",
 			"# If you enable this feature, ",
 			"# make sure to also have a server rule preventing traps being created in the timed-point-zone BEFORE the banner is placed"),
-
-	//Monetary Values
-
-	//Plunder
+	WAR_SIEGE_DEATH_PENALTY_KEEP_INVENTORY_ENABLED(
+			"war.siege.switches.keep_inventory_on_siege_death",
+			"true",
+			"",
+			"# This is an essential feature for a good server experience, ",
+			"# as described in detail in the the online User Guide and FAQ.",
+			"# ",
+			"# If the setting is true then military ranked players keep inventory on siege-zone death.",
+			"# See the 'death penalties' section below for more settings in this area"),
+	WAR_SIEGE_MONEY(
+			"war.siege.money",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                       Money                          | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
 	WAR_SIEGE_ATTACKER_COST_UPFRONT_PER_PLOT(
 			"war.siege.money.attacker_cost_upfront_per_plot",
 			"20.0",
@@ -194,7 +222,6 @@ public enum ConfigNodes {
 			"# The value on the right is the ratio which will go to the contributing soldiers",
 			"# For each battle in which a soldier gained banner control at least once, that soldier receives 1 share.",
 			"# The total soldiers' share is distributed accordingly among the army."),
-
 	WAR_SIEGE_CAPITAL_SIEGE_COST_INCREASE_PERCENTAGE(
 			"war.siege.money.capital_siege_cost_increase_percentage",
 			"0",
@@ -227,18 +254,36 @@ public enum ConfigNodes {
 			"# Level 4 (12 residents), 80 plots. Cost = (20 * 80) + 150% = 4000",
 			"# ",
 			"# If the value is 0, then money amounts are not modified."),
-
-	//Non-Monetary Quantities
+	WAR_SIEGE_QUANTITIES(
+			"war.siege.quantities",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |              Non-Monetary Quantities                 | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
 	WAR_SIEGE_MAX_ACTIVE_SIEGE_ATTACKS_PER_NATION(
 		"war.siege.quantities.max_active_siege_attacks_per_nation",
 		"3",
 		"",
-		"# The value specifies the maximum number of active attack sieges allowed per nation." +
+			"# The value specifies the maximum number of active attack sieges allowed per nation." +
 			"# A low setting will generally reduce the aggression level on the server.",
 			"# A low setting will also rebalance the system in favour of smaller nations.",
 		 	"# This is because it will prevent larger nations from conducting as many sieges as their resources would otherwise allow."),
-
-	//Times
+	WAR_SIEGE_TIMES(
+			"war.siege.times",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                         Times                        | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
 	WAR_SIEGE_MAX_HOLDOUT_TIME_HOURS(
 			"war.siege.times.max_holdout_time_hours",
 			"72",
@@ -289,8 +334,17 @@ public enum ConfigNodes {
 			"7",
 			"",
 			"# This value determines the duration of each banner control session."),
-
-	//Distances
+	WAR_SIEGE_DISTANCES(
+			"war.siege.distances",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                      Distances                       | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
 	WAR_SIEGE_MAX_ALLOWED_BANNER_TO_TOWN_DOWNWARD_ELEVATION_DIFFERENCE(
 			"war.siege.distances.max_allowed_banner_to_town_downward_elevation_difference",
 			"15",
@@ -311,8 +365,17 @@ public enum ConfigNodes {
 			"",
 			"# This is the vertical distance a soldier must be from the banner to get banner control.",
 			"# Note that the horizontal distance is always the same as the Towny townblock size."),
-
-	//Battle points
+	WAR_SIEGE_SCORING(
+			"war.siege.scoring",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                      Scoring                         | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
 	WAR_BATTLE_POINTS_DISTRIBUTION_WINNER_TAKES_ALL(
 			"war.siege.scoring.winner_takes_all_points",
 			"true",
@@ -393,17 +456,17 @@ public enum ConfigNodes {
 			"# 2. Assume that a siege attacker greatly outnumbers a siege defender in population. (also counting allies)",
 			"# 3. In this example, if the siege defender scores any battle points, the points will be multiplied by 2.",
 			"# 4. In this example, the siege attacker will not get any points boosts."),
-
-	//Battle Sessions
 	WAR_SIEGE_BATTLE_SESSION(
 			"war.siege.battle_session",
 			"",
 			"",
+			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |              Battle Session settings                 | #",
+			"# |                  Battle Sessions                       | #",
 			"# +------------------------------------------------------+ #",
-			"############################################################"),
+			"############################################################",
+			""),
 	WAR_SIEGE_BATTLE_SESSION_WEEKDAY_START_TIMES_UTC(
 			"war.siege.battle_session.weekday_start_times_utc",
 			"19:10,21:10",
@@ -427,8 +490,17 @@ public enum ConfigNodes {
 			"# This value determines the duration of each battle session.",
 			"# After a battle session ends,",
 			"# the time period until the next battle session starts, is defined as a 'break'"),
-
-	//Banner Control Reversal Bonus
+	WAR_SIEGE_BANNER_CONTROL_REVERSAL_BONUS(
+			"war.siege.banner_control_reversal_bonus",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |           Banner Control Reversal Bonus              | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
 	WAR_SIEGE_BANNER_CONTROL_REVERSAL_BONUS_ENABLED(
 			"war.siege.banner_control_reversal_bonus.enabled",
 			"true",
@@ -446,8 +518,17 @@ public enum ConfigNodes {
 			"# then if team A has gained 420 battle points from banner control,",
 			"# and banner control is then reversed by Team B,",
 			"# then Team B will get an instant bonus of 840 battle points."),
-
-	//Siege zone block/use restrictions
+	WAR_SIEGE_ZONE_BLOCK_PLACEMENT_RESTRICTIONS(
+			"war.siege.zone_block_placement_restrictions",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |        Siegezone Block Placement Restrictions        | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
 	WAR_SIEGE_ZONE_BLOCK_PLACEMENT_RESTRICTIONS_ENABLED(
 			"war.siege.zone_block_placement_restrictions.enabled",
 			"true",
@@ -471,8 +552,17 @@ public enum ConfigNodes {
 			"lava_bucket, water_bucket, cod_bucket, pufferfish_bucket, salmon_bucket, tropical_fish_bucket",
 			"",
 			"# This setting is used to indicate the list of forbidden buckets"),
-
-	//Map Sneaking
+	WAR_SIEGE_MAP_SNEAKING(
+			"war.siege.map_sneaking",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                     Map Sneaking                     | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
 	//Todo - Eventually move this to another location as it works regardless of war system, or without.
 	WAR_SIEGE_MAP_SNEAKING_ENABLED(
 			"war.siege.switches.map_sneaking_enabled",
@@ -504,16 +594,17 @@ public enum ConfigNodes {
 			"# Example 2:  An entry with 'compass|diamond_sword' grants the feature to scouts/explorers.",
 			"# Example 3:  An entry with 'compass|air' grants the feature to very peaceful explorers.",
 			"# Example 4:  An entry with 'compass|any' grants the feature to many players including builders/miners/lumberjacks."),
-
-	//SIEGE DEATH PENALTIES
-	WAR_SIEGE_DEATH_PENALTY_KEEP_INVENTORY_ENABLED(
-			"war.siege.switches.keep_inventory_on_siege_death",
-			"true",
+	SIEGE_DEATH_PENALTY(
+			"war.siege.death_penalty",
 			"",
-			"# This is an essential feature for a good server experience, ",
-			"# as described in detail in the the online User Guide and FAQ.",
-			"# ",
-			"# If the setting is true then military ranked players keep inventory on siege-zone death."),
+			"Fyi the keep-env true/false config is in the switches section.",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                Siege Death Penalties                 | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
 	WAR_SIEGE_DEATH_PENALTY_DEGRADE_INVENTORY_ENABLED(
 			"war.siege.death_penalty.degrade_inventory.enabled",
 			"true",
@@ -535,16 +626,17 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If enabled, a firework will get spawned whenever a player dies inside a siege zone."),
-
 	PEACEFUL_TOWNS(
-		"peaceful_towns",
-		"",
-		"############################################################",
-		"# +------------------------------------------------------+ #",
-		"# |               Peaceful Towns settings                 | #",
-		"# +------------------------------------------------------+ #",
-		"############################################################",
-		""),
+			"peaceful_towns",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                   Peaceful Towns                     | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
 	PEACEFUL_TOWNS_ENABLED(
 			"peaceful_towns.enabled",
 			"true",
@@ -596,33 +688,34 @@ public enum ConfigNodes {
 			"",
 			"# This value determines how close a town has to be to a peaceful town,",
 			"# to be considered a guardian town."),
-
-	OCCUPIED_TOWNS("occupied_towns",
-		"",
-		"############################################################",
-		"# +------------------------------------------------------+ #",
-		"# |              Occupied Towns settings                 | #",
-		"# +------------------------------------------------------+ #",
-		"############################################################",
-		""),
-	//Occupied town unclaiming
+	OCCUPIED_TOWNS(
+			"occupied_towns",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                   Occupied Towns                     | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
 	OCCUPIED_TOWN_UNCLAIMING_DISABLED(
 			"occupied_towns.occupied_town_unclaiming_disabled",
 			"true",
 			"",
 			"# If this value is true, then a town under occupation cannot unclaim.",
 			"#  This setting is recommended, to avoid occupation escape exploits."),
-
 	PUNISH_NON_SIEGE_PARTICIPANTS_IN_SIEGE_ZONE(
 			"punish_non_siege_participants_in_siege_zone",
 			"",
+			"",
+			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |                     War Sickness                     | #",
+			"# |   Removing unofficial participants from siegezones   | #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-
 	ENABLE_SICKNESS(
 			"punish_non_siege_participants_in_siege_zone.enable_sickness",
 			"false",
@@ -635,7 +728,6 @@ public enum ConfigNodes {
 			"# Full sickness is given to all players that are not allied to either side, do not have a military rank, or is peaceful, and are not in their own town.",
 			"#   - Effects: Nausea V, Poison V, Weakness V, Slowness III, Mining Fatigue III"
 	),
-
 	SECONDS_BEFORE_SICKNESS(
 			"punish_non_siege_participants_in_siege_zone.seconds_warning",
 			"5",
@@ -643,12 +735,14 @@ public enum ConfigNodes {
 			"# This is how many seconds a player has to leave the siege zone before he gets war sickness",
 			"# If this is set to 0, no warn will be given and non-participants will receive war sickness instantly, if enabled"
 	),
-
-	CANNONS_INTEGRATION("cannons_integration",
+	CANNONS_INTEGRATION(
+			"cannons_integration",
+			"",
+			"",
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |              Cannons Integration                     | #",
+			"# |                 Cannons Integration                  | #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
@@ -671,9 +765,10 @@ public enum ConfigNodes {
 			"9",
 			"# This value determines the max duration of each cannon session,",
 			"# The duration is 'in short ticks', typically a short tick is 20 seconds."),
-	
 	BEACON_MARKERS(
 			"beacon_markers",
+			"",
+			"",
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
@@ -707,9 +802,10 @@ public enum ConfigNodes {
 			"# The color that the beacon will be for a player when the enemy side has control of the banner.",
 			"# See above for valid colors.",
 			"# Defaults to red if no valid color is entered."),
-
 	BANNER_XYZ_TEXT(
 			"banner_xyz_text",
+			"",
+			"",
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
@@ -722,15 +818,16 @@ public enum ConfigNodes {
 			"false",
 			"# The banner xyz text is an alternative to beacon markers for siege banners (but they can also be used together).",
 			"# If enabled, besieged towns will show the XYZ of the siege banner on their town screens."),
-
 	NATION_SIEGE_IMMUNITY(
 		"nation_siege_immunity",
 			"",
+			"",
+			"",
 			"############################################################",
-			"# +------------------------------------------------------------+ #",
-			"# |                   Nation Siege Immunity                    | #",
-			"# +------------------------------------------------------------+ #",
-			"#######################################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                 Nation Siege Immunity                  | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
 			""),
 	NATION_SIEGE_IMMUNITY_ENABLED(
 			"nation_siege_immunity.enabled",
