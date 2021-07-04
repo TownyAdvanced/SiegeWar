@@ -3,7 +3,9 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.events.SiegeEndEvent;
 import com.gmail.goosius.siegewar.objects.Siege;
+import org.bukkit.Bukkit;
 
 /**
  * This class contains utility functions related to completing sieges
@@ -47,5 +49,9 @@ public class SiegeWarSiegeCompletionUtil {
 
 		//Save to db
 		SiegeController.saveSiege(siege);
+
+		//Fire SiegeEnded event
+		SiegeEndEvent siegeEndEvent = new SiegeEndEvent(siege, siege.getTown().getName());
+		Bukkit.getPluginManager().callEvent(siegeEndEvent);
 	}
 }
