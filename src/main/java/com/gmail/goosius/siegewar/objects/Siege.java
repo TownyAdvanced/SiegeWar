@@ -63,8 +63,8 @@ public class Siege {
 	private int cannonSessionRemainingShortTicks;  //Short ticks remaining until standard cannon protections are restored
 	private int attackerBattlePoints;
 	private int defenderBattlePoints;
-	private Set<String> successfulBattleContributors;   //UUID's of residents who contributed during the current battle
-	private Map<String, Integer> residentTimedPointContributors;  //UUID:numContributions map of residents who contributed during current siege
+	private Set<String> successfulBattleContributors;   //UUID's of attacker-side residents who got BC at least once during the current battle
+	private Map<String, Integer> residentTimedPointContributors;  //UUID:numContributions map of attacker-side residents who got BC at least once during the current siege
 	private Map<UUID, Integer> primaryTownGovernments; //UUID:numBattleSessions map of governments who led the town during the siege. If town was is a nation, nation UUID will be used, otherwise town UUID will be used
 
 	public Siege(Town town) {
