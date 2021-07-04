@@ -384,8 +384,10 @@ public class SiegeWarTownEventListener implements Listener {
 						out.add(victoryTimer);
 
 						// >  War Chest: $12,800
-						String warChest = TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount());
-						out.add(Translation.of("status_town_siege_status_warchest", warChest));
+						if(TownyEconomyHandler.isActive()) {
+							String warChest = TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount());
+							out.add(Translation.of("status_town_siege_status_warchest", warChest));
+						}
 
 						if(battleIsActive(siege)) {
 
