@@ -25,7 +25,11 @@ public class SiegeWarHud {
         board.getTeam("defenders").setSuffix(SiegeHUDManager.checkLength(siege.getDefenderNameForDisplay()));
         board.getTeam("balance").setSuffix(siege.getSiegeBalance().toString());
         board.getTeam("timeRemaining").setSuffix(siege.getTimeRemaining());
-        board.getTeam("warchest").setSuffix(TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
+        if(TownyEconomyHandler.isActive()) {
+            board.getTeam("warchest").setSuffix(TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
+        } else {
+            board.getTeam("warchest").setSuffix("-");
+        }
         board.getTeam("bannerControl").setSuffix(siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase());
         board.getTeam("btAttackerPoints").setSuffix(siege.getFormattedAttackerBattlePoints());
         board.getTeam("btDefenderPoints").setSuffix(siege.getFormattedDefenderBattlePoints());
