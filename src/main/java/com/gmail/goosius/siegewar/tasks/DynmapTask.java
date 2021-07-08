@@ -196,13 +196,13 @@ public class DynmapTask {
      * It also un-hides players who are not.
      */
     private static void hideMapSneakingPlayers() {
-        if (!SiegeWarSettings.getWarSiegeMapSneakingEnabled())
+        if (!SiegeWarSettings.getWarSiegeMapHidingEnabled())
             return;
 
         List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
 
         for (Player player : onlinePlayers) {
-            if (player.hasMetadata(SiegeWarDynmapUtil.MAP_SNEAK_METADATA_ID)) {
+            if (player.hasMetadata(SiegeWarDynmapUtil.MAP_HIDING_METADATA_ID)) {
                 // Hide from dynmap if map sneaking
                 dynmapAPI.assertPlayerInvisibility(player, true, SiegeWar.getSiegeWar());
             } else {

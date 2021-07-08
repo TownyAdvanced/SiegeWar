@@ -187,12 +187,12 @@ public class BookUtil {
 		}
 
 		// Map Sneaking
-		if (SiegeWarSettings.getWarSiegeMapSneakingEnabled()) {
+		if (SiegeWarSettings.getWarSiegeMapHidingEnabled()) {
 			text += "\nMISCELLANEOUS FEATURE: \nMAP SNEAKING\n\n";
 			text += "Map Sneaking is a tactical system used to hide players from being seen on the server Dynmap website.\n";
 			text += "Players who are on the Banner Control list cannot map sneak.\n";
 			text += "To map sneak the player must be holding a combination of items in their hands, which are: \n";
-			for (HeldItemsCombination combo : SiegeWarSettings.getWarSiegeMapSneakingItems()) {
+			for (HeldItemsCombination combo : SiegeWarSettings.getWarSiegeMapHidingItems()) {
 				text += " - " + combo.getMainHandItemType().name() + " & " + combo.getOffHandItemType().name() + "\n";
 			}
 			text += "\n";

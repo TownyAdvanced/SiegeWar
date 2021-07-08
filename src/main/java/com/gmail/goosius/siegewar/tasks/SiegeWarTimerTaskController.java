@@ -72,8 +72,8 @@ public class SiegeWarTimerTaskController {
 	 * when using the 'map sneaking' feature
 	 */
 	public static void evaluateMapSneaking() {
-		if (SiegeWarSettings.getWarSiegeMapSneakingEnabled()) {
-			SiegeWarDynmapUtil.evaluatePlayerMapSneaking();
+		if (SiegeWarSettings.getWarSiegeMapHidingEnabled()) {
+			SiegeWarDynmapUtil.evaluatePlayerMapHiding();
 		}
 	}
 
