@@ -578,7 +578,7 @@ public enum ConfigNodes {
 			"",
 			"# This setting determines how map hiding will work on your server. Options:",
 			"# AUTOMATIC:",
-			"# - Map-hiding activates when a player is in the wilderness or a town where PVP is enabled.",
+			"# - Map-hiding activates when a player is in the wilderness, or in a besieged town.",
 			"# - See user guide for details on how this can affect gameplay.",
 			"# MANUAL:",
 			"# - Map-hiding activates when a player holds a specific combination of items in their hands.",

@@ -193,7 +193,7 @@ public class BookUtil {
 			text += "Players who are on the Banner Control list cannot get hidden on the map.\n";
 			switch (SiegeWarSettings.getWarSiegeMapHidingMode()) {
 				case AUTOMATIC:
-					text += "To get hidden on the map, the player must be either in the wilderness, or in town with PVP enabled. \n";
+					text += "To get hidden on the map, the player must be either in the wilderness, or in a besieged town. \n";
 				break;
 				case MANUAL:
 					text += "To get hidden on the map, the player must be holding a combination of items in their hands, which are: \n";

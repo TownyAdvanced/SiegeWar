@@ -48,6 +48,20 @@ public class SiegeWarDynmapUtil {
 					//Check map-hiding mode
 					switch(SiegeWarSettings.getWarSiegeMapHidingMode()) {
 					
+						//Automatic mode - player is hidden if in wilderness or besieged town
+						case AUTOMATIC:
+							town = TownyAPI.getInstance().getTown(player.getLocation());
+							if(town == null){
+								//Wilderness
+								hidePlayer = true;
+							} else {
+								//Town
+								if(SiegeController.hasActiveSiege(town)) {
+									hidePlayer = true;
+								}
+							}
+							break;
+
 						//Manual mode - player is hidden if holding a certain combo of items
 						case MANUAL:
 							for(HeldItemsCombination heldItemsCombination: SiegeWarSettings.getWarSiegeMapHidingItems()) {
@@ -60,20 +74,6 @@ public class SiegeWarDynmapUtil {
 								//Hide player
 								hidePlayer = true;
 								break;
-							}
-							break;
-							
-						//Automatic mode - player is hidden if in wilderness or pvp-enabled town
-						case AUTOMATIC:
-							town = TownyAPI.getInstance().getTown(player.getLocation());
-							if(town == null){
-								//Wilderness
-								hidePlayer = true;
-							} else {
-								//Town
-								if(town.isPVP()) {
-									hidePlayer = true;
-								}
 							}
 							break;
 					}					
