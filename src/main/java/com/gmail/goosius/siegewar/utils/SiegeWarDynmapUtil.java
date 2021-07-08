@@ -33,7 +33,7 @@ public class SiegeWarDynmapUtil {
 	 * 2. Automatic - triggered if the player is in the wilderness or in a townblock
 	 *                where pvp is enabled.
 	 */
-	public static void evaluatePlayerMapHiding() {
+	public static void evaluateMapHiding() {
 		boolean hidePlayer;
 		Town town;
 

@@ -249,7 +249,7 @@ public class SiegeWarSettings {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Problem reading map sneaking items list. The list is config.yml may be misconfigured.");
+			System.out.println("Problem reading map hiding items list. The list is config.yml may be misconfigured.");
 			e.printStackTrace();
 		}
 		return mapHidingItems;

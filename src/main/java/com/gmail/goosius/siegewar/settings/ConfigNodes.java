@@ -590,7 +590,7 @@ public enum ConfigNodes {
 			"diamond_sword|diamond_sword, diamond_axe|diamond_axe, diamond_shovel|diamond_shovel, bow|bow",
 			"",
 			"# This config only applies when the mode is MANUAL",
-			"# This list specifies the item combinations which allow players to map-sneak.",
+			"# This list specifies the item combinations which allow players to map-hide.",
 			"# Each list entry is in the form of <off-hand>|<main-hand>.",
 			"# ",
 			"# To specify that both items are required - e.g. 'compass|painting'" + 

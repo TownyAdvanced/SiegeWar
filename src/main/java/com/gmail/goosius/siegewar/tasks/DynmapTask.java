@@ -70,7 +70,7 @@ public class DynmapTask {
         stop = false;
         Bukkit.getScheduler().runTaskTimerAsynchronously(SiegeWar.getSiegeWar(), () -> {
             if (!stop) {
-                hideMapSneakingPlayers();
+                applyMapHidingToPlayers();
                 displaySieges();
             }
         }, 40l, 300l);
@@ -192,10 +192,10 @@ public class DynmapTask {
     }
 
     /**
-     * This method hides players who are 'map sneaking'.
-     * It also un-hides players who are not.
+     * This method hides players who have the map hiding metadata tag.
+     * It also un-hides players who do not hav it.
      */
-    private static void hideMapSneakingPlayers() {
+    private static void applyMapHidingToPlayers() {
         if (!SiegeWarSettings.getWarSiegeMapHidingEnabled())
             return;
 
@@ -203,10 +203,8 @@ public class DynmapTask {
 
         for (Player player : onlinePlayers) {
             if (player.hasMetadata(SiegeWarDynmapUtil.MAP_HIDING_METADATA_ID)) {
-                // Hide from dynmap if map sneaking
                 dynmapAPI.assertPlayerInvisibility(player, true, SiegeWar.getSiegeWar());
             } else {
-                // Otherwise don't hide
                 dynmapAPI.assertPlayerInvisibility(player, false, SiegeWar.getSiegeWar());
             }
         }
