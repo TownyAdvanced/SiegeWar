@@ -186,14 +186,21 @@ public class BookUtil {
 			text += "Nations which are disbanded for any reason (upkeep, plunder, capture) will be refunded " + SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() + "% of the nation cost, collected using '/sw nation refund'.\n";
 		}
 
-		// Map Sneaking
-		if (SiegeWarSettings.getWarSiegeMapSneakingEnabled()) {
-			text += "\nMISCELLANEOUS FEATURE: \nMAP SNEAKING\n\n";
-			text += "Map Sneaking is a tactical system used to hide players from being seen on the server Dynmap website.\n";
-			text += "Players who are on the Banner Control list cannot map sneak.\n";
-			text += "To map sneak the player must be holding a combination of items in their hands, which are: \n";
-			for (HeldItemsCombination combo : SiegeWarSettings.getWarSiegeMapSneakingItems()) {
-				text += " - " + combo.getMainHandItemType().name() + " & " + combo.getOffHandItemType().name() + "\n";
+		// Map Hiding
+		if (SiegeWarSettings.getWarSiegeMapHidingEnabled()) {
+			text += "\nMISCELLANEOUS HIDING: \nMAP HIDING\n\n";
+			text += "Map Hiding is a feature which hides players from being seen on the server Dynmap website.\n";
+			text += "Players who are on the Banner Control list cannot get hidden on the map.\n";
+			switch (SiegeWarSettings.getWarSiegeMapHidingMode()) {
+				case AUTOMATIC:
+					text += "To get hidden on the map, the player must be either in the wilderness, or in a besieged town. \n";
+				break;
+				case MANUAL:
+					text += "To get hidden on the map, the player must be holding a combination of items in their hands, which are: \n";
+					for (HeldItemsCombination combo : SiegeWarSettings.getWarSiegeMapHidingItems()) {
+						text += " - " + combo.getMainHandItemType().name() + " & " + combo.getOffHandItemType().name() + "\n";
+					}
+				break;
 			}
 			text += "\n";
 		}

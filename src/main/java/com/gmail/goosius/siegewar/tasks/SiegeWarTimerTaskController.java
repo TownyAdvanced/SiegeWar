@@ -68,12 +68,11 @@ public class SiegeWarTimerTaskController {
 	}
 
 	/**
-	 * Evaluate the visibility of players on the dynmap
-	 * when using the 'map sneaking' feature
+	 * Evaluate map hiding, to determine if any players should get hidden from dynnap
 	 */
-	public static void evaluateMapSneaking() {
-		if (SiegeWarSettings.getWarSiegeMapSneakingEnabled()) {
-			SiegeWarDynmapUtil.evaluatePlayerMapSneaking();
+	public static void evaluateMapHiding() {
+		if (SiegeWarSettings.getWarSiegeMapHidingEnabled()) {
+			SiegeWarDynmapUtil.evaluateMapHiding();
 		}
 	}
 

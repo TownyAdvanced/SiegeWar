@@ -4,6 +4,7 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.goosius.siegewar.enums.MapHidingMode;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
@@ -12,13 +13,13 @@ import org.jetbrains.annotations.Nullable;
 
 public class SiegeWarSettings {
 	
-	private static List<HeldItemsCombination> mapSneakingItems = new ArrayList<>();
+	private static List<HeldItemsCombination> mapHidingItems = new ArrayList<>();
 	private static List<String> worldsWithSiegeWarEnabled = new ArrayList<>();
 	private static List<Material> battleSessionsForbiddenBlockMaterials = new ArrayList<>();
 	private static List<Material> battleSessionsForbiddenBucketMaterials = new ArrayList<>();
 	
 	protected static void resetSpecialCaseVariables() {
-		mapSneakingItems.clear();
+		mapHidingItems.clear();
 		worldsWithSiegeWarEnabled.clear();
 		battleSessionsForbiddenBlockMaterials.clear();
 		battleSessionsForbiddenBucketMaterials.clear();
@@ -199,14 +200,18 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_EXTRA_MONEY_PERCENTAGE_PER_TOWN_LEVEL);
 	}
 
-	public static boolean getWarSiegeMapSneakingEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MAP_SNEAKING_ENABLED);
+	public static boolean getWarSiegeMapHidingEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MAP_HIDING_ENABLED);
 	}
 
-	public static List<HeldItemsCombination> getWarSiegeMapSneakingItems() {
+	public static MapHidingMode getWarSiegeMapHidingMode() {
+		return MapHidingMode.parseString(Settings.getString(ConfigNodes.WAR_SIEGE_MAP_HIDING_MODE));
+	}
+	
+	public static List<HeldItemsCombination> getWarSiegeMapHidingItems() {
 		try {
-			if (mapSneakingItems.isEmpty()) {
-				String itemsListAsString = Settings.getString(ConfigNodes.WAR_SIEGE_MAP_SNEAKING_ITEMS);
+			if (mapHidingItems.isEmpty()) {
+				String itemsListAsString = Settings.getString(ConfigNodes.WAR_SIEGE_MAP_HIDING_ITEMS);
 				String[] itemsListAsArray = itemsListAsString.split(",");
 				String[] itemPair;
 				boolean ignoreOffHand;
@@ -239,15 +244,15 @@ public class SiegeWarSettings {
 						mainHandItem = Material.matchMaterial(itemPair[1]);
 					}
 
-					mapSneakingItems.add(
+					mapHidingItems.add(
 						new HeldItemsCombination(offHandItem,mainHandItem,ignoreOffHand,ignoreMainHand));
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Problem reading map sneaking items list. The list is config.yml may be misconfigured.");
+			System.out.println("Problem reading map hiding items list. The list is config.yml may be misconfigured.");
 			e.printStackTrace();
 		}
-		return mapSneakingItems;
+		return mapHidingItems;
 	}
 
 	public static int getWarSiegeBannerControlSessionDurationMinutes() {
