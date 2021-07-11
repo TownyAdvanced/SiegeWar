@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.utils;
 import at.pavlov.cannons.cannon.Cannon;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
@@ -26,18 +27,17 @@ import java.util.Set;
 public class SiegeWarCannonsUtil {
 
 	/**
-	 * If any block of the cannon is located in the town
-	 * And the town is under active siege
-	 * And there is no cannon session in progress
-	 * then the event is prevented
+	 * The method determines if a town cannon can be fired.
 	 *
-	 * However if the player has the siegewar.siege.town.start.cannon.session permission,
-	 * then a cannon session starts
-	 * and the event is allowed
+	 * - Step 1: If a player is firing, and has the siegewar.siege.town.start.cannon.session permission,
+	 *   a cannon session starts/refreshes.
+	 *
+	 * - Step 2: If a cannon session is found to be active, event is allowed,
+	 *   otherwise it is prevented.
 	 *
 	 * @param player the player interacting with the cannon
 	 * @param cannon the cannon
-	 * @throws TownyException if the cannon use is not blocked
+	 * @throws TownyException if the cannon use is blocked
 	 */
 	public static void processPlayerCannonInteraction(Player player, Cannon cannon, String permissionErrorString) throws TownyException {
 		if (player == null)
@@ -54,46 +54,16 @@ public class SiegeWarCannonsUtil {
 			townWhereCannonIsLocated = (Town)cannonTowns.toArray()[0];
 		}
 
-		//Find the siege
-		Siege siege;
-		if(SiegeController.hasActiveSiege(townWhereCannonIsLocated)) {
-			siege = SiegeController.getSiege(townWhereCannonIsLocated);
-		} else {
-			return;
+		//If a player is firing and has the start-cannon-session permission, start/refresh the cannon session.
+		if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION.getNode())) {
+			Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
+			if (resident != null && resident.hasTown() && resident.getTown() == townWhereCannonIsLocated) {
+				TownMetaDataController.setCannonSessionRemainingShortTicks(townWhereCannonIsLocated, SiegeWarSettings.getMaxCannonSessionDuration());
+			}
 		}
 
-		Resident resident;
-		if (siege.getCannonSessionRemainingShortTicks() > 0) {
-			/*
-			 * Cannons are enabled.
-			 * Allow the event
-			 * Also If the resident is a member of the town, refresh cannons-enabled duration
-			 */
-			if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION.getNode())) {
-				resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-				if (resident.hasTown() && resident.getTown() == townWhereCannonIsLocated) {
-					siege.setCannonSessionRemainingShortTicks(SiegeWarSettings.getMaxCannonSessionDuration());
-				}
-			}
-			return;
-		} else {
-			/*
-			 * Cannons are disabled
-			 *
-			 * If the resident is a ranked member of the town:
-			 * - Start cannon session, turning on cannons for the town
-			 * - Turn on explosions in the town
-			 * - Return true, allowing the event
-			 *
-			 * If the resident is not a ranked member of the town, do not allow the firing
-			 */
-			if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION.getNode())) {
-				resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-				if (resident.hasTown() && resident.getTown() == townWhereCannonIsLocated) {
-					siege.setCannonSessionRemainingShortTicks(SiegeWarSettings.getMaxCannonSessionDuration());
-					return;
-				}
-			}
+		//If the town cannon session is inactive, prevent the event, otherwise allow the event.
+		if (TownMetaDataController.getCannonSessionRemainingShortTicks(townWhereCannonIsLocated) == 0) {
 			throw new TownyException(permissionErrorString);
 		}
 	}
@@ -112,10 +82,10 @@ public class SiegeWarCannonsUtil {
 	}
 
 	public static void evaluateCannonSessions() {
-		List<Siege> sieges = SiegeController.getSieges();
-		for(Siege siege: sieges) {
-			if(siege.getStatus().isActive() && siege.getCannonSessionRemainingShortTicks() > 0) {
-				siege.decrementCannonSessionRemainingShortTicks();
+		for(Town town: TownyUniverse.getInstance().getTowns()) {
+			if(TownMetaDataController.getCannonSessionRemainingShortTicks(town) != 0) {
+				//Decrement the remaining short ticks
+				TownMetaDataController.setCannonSessionRemainingShortTicks(town, TownMetaDataController.getCannonSessionRemainingShortTicks(town) -1);
 			}
 		}
 	}

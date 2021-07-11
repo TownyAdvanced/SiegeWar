@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
+import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
@@ -129,9 +130,7 @@ public class SiegeWarTownyEventListener implements Listener {
             for (Block block : vanillaExplodeList) {
                 if(!finalExplodeList.contains(block)) {
                     town = TownyAPI.getInstance().getTown(block.getLocation());
-                    if (town != null
-                        && SiegeController.hasActiveSiege(town)
-                        && SiegeController.getSiege(town).getCannonSessionRemainingShortTicks() > 0) {
+                    if (town != null && TownMetaDataController.getCannonSessionRemainingShortTicks(town) > 0) {
                         finalExplodeList.add(block);
                     }
                 }
@@ -153,9 +152,7 @@ public class SiegeWarTownyEventListener implements Listener {
         if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginIntegrationEnabled()) {
             if (event.isCancelled()) {
                 Town town = TownyAPI.getInstance().getTown(event.getLocation());
-                if (town != null
-                        && SiegeController.hasActiveSiege(town)
-                        && SiegeController.getSiege(town).getCannonSessionRemainingShortTicks() > 0) {
+                if (town != null && TownMetaDataController.getCannonSessionRemainingShortTicks(town) > 0) {
                     event.setCancelled(false);
                 }
             }

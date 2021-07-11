@@ -60,7 +60,6 @@ public class Siege {
 	private int timedBattlePointsEarnedFromCurrentBannerControl;
 	private boolean attackerHasLowestPopulation;
 	private double battlePointstModifierForSideWithLowestPopulation;
-	private int cannonSessionRemainingShortTicks;  //Short ticks remaining until standard cannon protections are restored
 	private int attackerBattlePoints;
 	private int defenderBattlePoints;
 	private Set<String> successfulBattleContributors;   //UUID's of attacker-side residents who got BC at least once during the current battle
@@ -83,7 +82,6 @@ public class Siege {
 		bannerControlSessions = new HashMap<>();
 		attackerHasLowestPopulation = false;
 		battlePointstModifierForSideWithLowestPopulation = 0;  //0 is the special starting value
-		cannonSessionRemainingShortTicks = 0;
 		attackerBattlePoints = 0;
 		defenderBattlePoints = 0;
 		successfulBattleContributors = new HashSet<>();
@@ -341,18 +339,6 @@ public class Siege {
 				timeLeft = 0;
 		}
 		return TimeMgmt.getFormattedTimeValue(timeLeft);
-	}
-
-	public int getCannonSessionRemainingShortTicks() {
-		return cannonSessionRemainingShortTicks;
-	}
-
-	public void setCannonSessionRemainingShortTicks(int val) {
-		cannonSessionRemainingShortTicks = val;
-	}
-
-	public void decrementCannonSessionRemainingShortTicks(){
-		cannonSessionRemainingShortTicks--;
 	}
 
 	public int getAttackerBattlePoints() {

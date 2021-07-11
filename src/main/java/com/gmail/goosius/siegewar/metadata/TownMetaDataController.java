@@ -18,6 +18,7 @@ public class TownMetaDataController {
 	@SuppressWarnings("unused")
 	private SiegeWar plugin;
 	private static IntegerDataField peacefulnessChangeConfirmationCounterDays = new IntegerDataField("siegewar_peacefuldays", 0, "Days To Peacefulness Status Change");
+	private static IntegerDataField cannonSessionRemainingShortTicks = new IntegerDataField("siegewar_cannonSessionRemainingShortTicket",0);
 	private static BooleanDataField desiredPeacefulness = new BooleanDataField("siegewar_desiredPeaceSetting", false);
 	private static LongDataField revoltImmunityEndTime = new LongDataField("siegewar_revoltImmunityEndTime", 0l);
 	private static LongDataField siegeImmunityEndTime = new LongDataField("siegewar_siegeImmunityEndTime", 0l);
@@ -37,6 +38,14 @@ public class TownMetaDataController {
 		return 0;
 	}
 
+	public static int getCannonSessionRemainingShortTicks(Town town) {
+		IntegerDataField idf = (IntegerDataField) cannonSessionRemainingShortTicks.clone();
+		if (town.hasMeta(idf.getKey())) {
+			return MetaDataUtil.getInt(town, idf);
+		}
+		return 0;
+	}
+
 	public static void setPeacefulnessChangeDays(Town town, int days) {
 		IntegerDataField idf = (IntegerDataField) peacefulnessChangeConfirmationCounterDays.clone();
 		if (town.hasMeta(idf.getKey())) {
@@ -49,7 +58,20 @@ public class TownMetaDataController {
 			town.addMetaData(new IntegerDataField("siegewar_peacefuldays", days, "Days To Peacefulness Status Change"));			
 		}
 	}
-	
+
+	public static void setCannonSessionRemainingShortTicks(Town town, int shortTicks) {
+		IntegerDataField idf = (IntegerDataField) cannonSessionRemainingShortTicks.clone();
+		if (town.hasMeta(idf.getKey())) {
+			if (shortTicks == 0) {
+				town.removeMetaData(idf);
+				return;
+			}
+			MetaDataUtil.setInt(town, idf, shortTicks);
+		} else if (shortTicks != 0) {
+			town.addMetaData(new IntegerDataField(cannonSessionRemainingShortTicks.getKey(), shortTicks));
+		}
+	}
+
 	public static boolean getDesiredPeacefulnessSetting(Town town) {
 		BooleanDataField bdf = (BooleanDataField) desiredPeacefulness.clone();
 		if (town.hasMeta(bdf.getKey())) {

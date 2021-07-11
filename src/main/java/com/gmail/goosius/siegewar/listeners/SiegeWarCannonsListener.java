@@ -5,6 +5,7 @@ import at.pavlov.cannons.event.CannonRedstoneEvent;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarCannonsUtil;
@@ -32,14 +33,13 @@ public class SiegeWarCannonsListener implements Listener {
 	}
 
 	/**
-	 * If any block of the cannon is located in the town
-	 * And the town is under active siege
-	 * And there is no cannon session in progress
-	 * then the event is prevented
+	 * If the cannon is located in a town:
 	 *
-	 * However if the player has the siegewar.siege.town.start.cannon.session permission,
-	 * then a cannon session starts
-	 * and the event is allowed
+	 * Step 1: If the player has the siegewar.siege.town.start.cannon.session permission,
+	 * then a cannon session starts / refreshes
+	 *
+	 * Step 2: If a cannon session is found to be active
+	 * then the event is allowed, otherwise it is prevented
 	 *
 	 * @param event the event
 	 */
@@ -66,8 +66,7 @@ public class SiegeWarCannonsListener implements Listener {
 	}
 
 	/**
-	 * If any block of the cannon is located in the town
-	 * And the town is under active siege
+	 * If the cannon is located in a town
 	 * And there is no cannon session in progress
 	 * then the event is prevented
 	 * @param event the event
@@ -87,9 +86,7 @@ public class SiegeWarCannonsListener implements Listener {
 					townWhereCannonIsLocated = (Town)cannonTowns.toArray()[0];
 				}
 
-				if (townWhereCannonIsLocated != null
-						&& SiegeController.hasActiveSiege(townWhereCannonIsLocated)
-						&& SiegeController.getSiege(townWhereCannonIsLocated).getCannonSessionRemainingShortTicks() == 0) {
+				if (townWhereCannonIsLocated != null && TownMetaDataController.getCannonSessionRemainingShortTicks(townWhereCannonIsLocated) > 0) {
 					event.setCancelled(true);
 				}
 			} catch (Exception e) {
