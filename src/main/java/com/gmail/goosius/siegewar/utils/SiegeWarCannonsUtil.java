@@ -1,10 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
 import at.pavlov.cannons.cannon.Cannon;
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
-import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -15,9 +12,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * This class contains utility functions related to the cannons plugin integration
@@ -25,6 +20,24 @@ import java.util.Set;
  * @author Goosius
  */
 public class SiegeWarCannonsUtil {
+
+	//List of all cannon sessions in the universe
+	private static Map<Town, Integer> cannonSessionsRemainingShortTicks = new HashMap<>();
+
+	//Synchronize this variable whenever you modify the above cannon sessions map
+	private static final Integer CANNONS_MAP_LOCK = 1;
+
+	/**
+	 * Check if the given town has a cannon session
+	 * 
+	 * Thread safe
+	 * 
+	 * @param town the town to check
+	 * @return true if the given town has a cannon session
+	 */
+	public static boolean doesTownHaveCannonSession(Town town) {
+		return (new HashMap<>(cannonSessionsRemainingShortTicks)).containsKey(town);		
+	}
 
 	/**
 	 * The method determines if a town cannon can be fired.
@@ -58,12 +71,15 @@ public class SiegeWarCannonsUtil {
 		if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION.getNode())) {
 			Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 			if (resident != null && resident.hasTown() && resident.getTown() == townWhereCannonIsLocated) {
-				TownMetaDataController.setCannonSessionRemainingShortTicks(townWhereCannonIsLocated, SiegeWarSettings.getMaxCannonSessionDuration());
+				synchronized (CANNONS_MAP_LOCK) {
+					//Add/refresh cannon session object
+					cannonSessionsRemainingShortTicks.put(townWhereCannonIsLocated, SiegeWarSettings.getMaxCannonSessionDuration());
+				}
 			}
 		}
 
-		//If the town cannon session is inactive, prevent the event, otherwise allow the event.
-		if (TownMetaDataController.getCannonSessionRemainingShortTicks(townWhereCannonIsLocated) == 0) {
+		//If the town has no cannon session, prevent the event.
+		if (!doesTownHaveCannonSession(townWhereCannonIsLocated)) {
 			throw new TownyException(permissionErrorString);
 		}
 	}
@@ -82,10 +98,15 @@ public class SiegeWarCannonsUtil {
 	}
 
 	public static void evaluateCannonSessions() {
-		for(Town town: TownyUniverse.getInstance().getTowns()) {
-			if(TownMetaDataController.getCannonSessionRemainingShortTicks(town) != 0) {
-				//Decrement the remaining short ticks
-				TownMetaDataController.setCannonSessionRemainingShortTicks(town, TownMetaDataController.getCannonSessionRemainingShortTicks(town) -1);
+		synchronized (CANNONS_MAP_LOCK) {
+			for(Map.Entry<Town, Integer> townTicks: new HashMap<>(cannonSessionsRemainingShortTicks).entrySet()) {
+				if(townTicks.getValue() > 1) {
+					//Decrement remaining duration
+					cannonSessionsRemainingShortTicks.put(townTicks.getKey(), townTicks.getValue()-1);
+				} else {
+					//Remove cannon session
+					cannonSessionsRemainingShortTicks.remove(townTicks.getKey());
+				}
 			}
 		}
 	}

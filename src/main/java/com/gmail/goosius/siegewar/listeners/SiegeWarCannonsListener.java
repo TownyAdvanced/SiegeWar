@@ -3,9 +3,7 @@ package com.gmail.goosius.siegewar.listeners;
 import at.pavlov.cannons.event.CannonFireEvent;
 import at.pavlov.cannons.event.CannonRedstoneEvent;
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarCannonsUtil;
@@ -85,9 +83,8 @@ public class SiegeWarCannonsListener implements Listener {
 				} else {
 					townWhereCannonIsLocated = (Town)cannonTowns.toArray()[0];
 				}
-
-				if (townWhereCannonIsLocated != null && TownMetaDataController.getCannonSessionRemainingShortTicks(townWhereCannonIsLocated) > 0) {
-					event.setCancelled(true);
+				if (!SiegeWarCannonsUtil.doesTownHaveCannonSession(townWhereCannonIsLocated)) {
+					event.setCancelled(true);  //No cannon session found. Cancel event
 				}
 			} catch (Exception e) {
 				event.setCancelled(true);
