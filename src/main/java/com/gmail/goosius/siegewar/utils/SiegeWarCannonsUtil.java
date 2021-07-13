@@ -99,11 +99,13 @@ public class SiegeWarCannonsUtil {
 
 	public static void evaluateCannonSessions() {
 		synchronized (CANNONS_MAP_LOCK) {
-			for(Map.Entry<Town, Integer> townTicks: new HashMap<>(cannonSessionsRemainingShortTicks).entrySet()) {
-				if(townTicks.getValue() > 1) {
+			for(Map.Entry<Town, Integer> townTicks: (new HashMap<>(cannonSessionsRemainingShortTicks)).entrySet()) {
+				if(townTicks.getValue() > 0) {
+					System.out.println("xxx"+ townTicks.getValue());
 					//Decrement remaining duration
 					cannonSessionsRemainingShortTicks.put(townTicks.getKey(), townTicks.getValue()-1);
 				} else {
+					System.out.println("yyy"+ townTicks.getValue());
 					//Remove cannon session
 					cannonSessionsRemainingShortTicks.remove(townTicks.getKey());
 				}
