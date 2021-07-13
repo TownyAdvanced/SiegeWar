@@ -49,7 +49,7 @@ public class TownMetaDataController {
 			town.addMetaData(new IntegerDataField("siegewar_peacefuldays", days, "Days To Peacefulness Status Change"));			
 		}
 	}
-
+	
 	public static boolean getDesiredPeacefulnessSetting(Town town) {
 		BooleanDataField bdf = (BooleanDataField) desiredPeacefulness.clone();
 		if (town.hasMeta(bdf.getKey())) {
