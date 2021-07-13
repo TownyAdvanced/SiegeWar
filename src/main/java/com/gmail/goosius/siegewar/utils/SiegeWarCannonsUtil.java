@@ -21,11 +21,11 @@ import java.util.*;
  */
 public class SiegeWarCannonsUtil {
 
-	//List of all cannon sessions in the universe
-	private static Map<Town, Integer> cannonSessionsRemainingShortTicks = new HashMap<>();
+	//List of all cannon sessions in the universe <Town UUID, Remaining duration in short ticks>
+	private static Map<UUID, Integer> cannonSessions = new HashMap<>();
 
-	//Synchronize this variable whenever you modify the above cannon sessions map
-	private static final Integer CANNONS_MAP_LOCK = 1;
+	//Synchronize this variable whenever you modify the above map
+	private static final Integer CANNON_SESSIONS_LOCK = 1;
 
 	/**
 	 * Check if the given town has a cannon session
@@ -36,7 +36,7 @@ public class SiegeWarCannonsUtil {
 	 * @return true if the given town has a cannon session
 	 */
 	public static boolean doesTownHaveCannonSession(Town town) {
-		return (new HashMap<>(cannonSessionsRemainingShortTicks)).containsKey(town);		
+		return (new HashMap<>(cannonSessions)).containsKey(town.getUUID());		
 	}
 
 	/**
@@ -71,9 +71,10 @@ public class SiegeWarCannonsUtil {
 		if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION.getNode())) {
 			Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 			if (resident != null && resident.hasTown() && resident.getTown() == townWhereCannonIsLocated) {
-				synchronized (CANNONS_MAP_LOCK) {
+				synchronized (CANNON_SESSIONS_LOCK) {
 					//Add/refresh cannon session object
-					cannonSessionsRemainingShortTicks.put(townWhereCannonIsLocated, SiegeWarSettings.getMaxCannonSessionDuration());
+					cannonSessions.put(townWhereCannonIsLocated.getUUID(), SiegeWarSettings.getMaxCannonSessionDuration());
+					return; //event allowed
 				}
 			}
 		}
@@ -98,16 +99,14 @@ public class SiegeWarCannonsUtil {
 	}
 
 	public static void evaluateCannonSessions() {
-		synchronized (CANNONS_MAP_LOCK) {
-			for(Map.Entry<Town, Integer> townTicks: (new HashMap<>(cannonSessionsRemainingShortTicks)).entrySet()) {
+		synchronized (CANNON_SESSIONS_LOCK) {
+			for(Map.Entry<UUID, Integer> townTicks: (new HashMap<>(cannonSessions)).entrySet()) {
 				if(townTicks.getValue() > 0) {
-					System.out.println("xxx"+ townTicks.getValue());
 					//Decrement remaining duration
-					cannonSessionsRemainingShortTicks.put(townTicks.getKey(), townTicks.getValue()-1);
+					cannonSessions.put(townTicks.getKey(), townTicks.getValue()-1);
 				} else {
-					System.out.println("yyy"+ townTicks.getValue());
 					//Remove cannon session
-					cannonSessionsRemainingShortTicks.remove(townTicks.getKey());
+					cannonSessions.remove(townTicks.getKey());
 				}
 			}
 		}
