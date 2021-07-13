@@ -32,9 +32,9 @@ public class SiegeWarCannonsListener implements Listener {
 
 	/**
 	 * Process a Cannon Fire Event, where a player fires a cannon
-	 * 
+	 *
 	 * - If the cannon is in the wilderness, it can be fired
-	 * 
+	 *
 	 * - If a player is firing from their town, 
 	 *   and has the siegewar.siege.town.start.cannon.session permission,
 	 *   then a cannon session starts/refreshes, and the event is allowed
@@ -68,12 +68,12 @@ public class SiegeWarCannonsListener implements Listener {
 
 	/**
 	 * Process a Redstone Cannon Fire Event
-	 * 
+	 *
 	 * - If the cannon is in the wilderness, it can be fired
 	 *
 	 * - Otherwise, we we look for a cannon session.
 	 *   If active, the event is allowed, otherwise it is prevented.
-	 *   
+	 *
 	 * @param event the event
 	 */
 	@EventHandler
