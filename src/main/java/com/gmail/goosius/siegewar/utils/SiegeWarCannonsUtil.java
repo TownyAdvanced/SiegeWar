@@ -43,8 +43,8 @@ public class SiegeWarCannonsUtil {
 	 * The method determines if a town cannon can be fired.
 	 *
 	 * - If the cannon is in the wilderness, it can be fired
-	 * 
-	 * - If a player is firing from their town, 
+	 *
+	 * - If a player is firing from their town,
 	 *   and has the siegewar.siege.town.start.cannon.session permission,
 	 *   then a cannon session starts/refreshes, and the event is allowed
 	 *
