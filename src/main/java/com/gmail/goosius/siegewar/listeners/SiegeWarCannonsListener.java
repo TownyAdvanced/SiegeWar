@@ -3,7 +3,6 @@ package com.gmail.goosius.siegewar.listeners;
 import at.pavlov.cannons.event.CannonFireEvent;
 import at.pavlov.cannons.event.CannonRedstoneEvent;
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
@@ -32,14 +31,16 @@ public class SiegeWarCannonsListener implements Listener {
 	}
 
 	/**
-	 * If any block of the cannon is located in the town
-	 * And the town is under active siege
-	 * And there is no cannon session in progress
-	 * then the event is prevented
+	 * Process a Cannon Fire Event, where a player fires a cannon
 	 *
-	 * However if the player has the siegewar.siege.town.start.cannon.session permission,
-	 * then a cannon session starts
-	 * and the event is allowed
+	 * - If the cannon is in the wilderness, it can be fired
+	 *
+	 * - If a player is firing from their town, 
+	 *   and has the siegewar.siege.town.start.cannon.session permission,
+	 *   then a cannon session starts/refreshes, and the event is allowed
+	 *
+	 * - If neither of the above applies, then we look for a cannon session.
+	 *   If active, the event is allowed, otherwise it is prevented.
 	 *
 	 * @param event the event
 	 */
@@ -66,10 +67,13 @@ public class SiegeWarCannonsListener implements Listener {
 	}
 
 	/**
-	 * If any block of the cannon is located in the town
-	 * And the town is under active siege
-	 * And there is no cannon session in progress
-	 * then the event is prevented
+	 * Process a Redstone Cannon Fire Event
+	 *
+	 * - If the cannon is in the wilderness, it can be fired
+	 *
+	 * - Otherwise, we we look for a cannon session.
+	 *   If active, the event is allowed, otherwise it is prevented.
+	 *
 	 * @param event the event
 	 */
 	@EventHandler
@@ -86,11 +90,8 @@ public class SiegeWarCannonsListener implements Listener {
 				} else {
 					townWhereCannonIsLocated = (Town)cannonTowns.toArray()[0];
 				}
-
-				if (townWhereCannonIsLocated != null
-						&& SiegeController.hasActiveSiege(townWhereCannonIsLocated)
-						&& SiegeController.getSiege(townWhereCannonIsLocated).getCannonSessionRemainingShortTicks() == 0) {
-					event.setCancelled(true);
+				if (!SiegeWarCannonsUtil.doesTownHaveCannonSession(townWhereCannonIsLocated)) {
+					event.setCancelled(true);  //No cannon session found. Cancel event
 				}
 			} catch (Exception e) {
 				event.setCancelled(true);

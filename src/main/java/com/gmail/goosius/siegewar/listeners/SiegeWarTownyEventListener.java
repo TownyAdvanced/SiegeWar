@@ -4,9 +4,11 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
+import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarCannonsUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -97,8 +99,8 @@ public class SiegeWarTownyEventListener implements Listener {
      * If trap mitigation is active,
      *  do not explode blocks below the siege banner altitude
      *
-     * If the cannons integration is active,
-     *  override any Towny protections of blocks which are within towns with active cannon sessions,
+     * If the Cannons integration is active,
+     *  override any Towny protections of blocks within towns where cannon sessions are in progress.
      *  and allow their explosion.
      *
      * @param event the TownyExplodingBlocksEvent event
@@ -122,16 +124,14 @@ public class SiegeWarTownyEventListener implements Listener {
             }
         }
 
-        //Add to final explode list: town blocks if there is a cannon session in progress
+        //Add to final explode list: town blocks if town has a cannon session in progress
         if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginIntegrationEnabled()) {
             List<Block> vanillaExplodeList = event.getVanillaBlockList(); //original list of exploding blocks
             Town town;
             for (Block block : vanillaExplodeList) {
                 if(!finalExplodeList.contains(block)) {
                     town = TownyAPI.getInstance().getTown(block.getLocation());
-                    if (town != null
-                        && SiegeController.hasActiveSiege(town)
-                        && SiegeController.getSiege(town).getCannonSessionRemainingShortTicks() > 0) {
+                    if (town != null && SiegeWarCannonsUtil.doesTownHaveCannonSession(town)) {
                         finalExplodeList.add(block);
                     }
                 }
@@ -144,7 +144,7 @@ public class SiegeWarTownyEventListener implements Listener {
     /**
      * If the cannons integration is active,
      *   SiegeWar will allow explosion damage,
-     *   if the entity is in a town which has an active cannon session.
+     *   if the entity is in a town which has a cannon session
      *
      * @param event the TownyExplosionDamagesEntityEvent event
      */
@@ -153,9 +153,7 @@ public class SiegeWarTownyEventListener implements Listener {
         if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginIntegrationEnabled()) {
             if (event.isCancelled()) {
                 Town town = TownyAPI.getInstance().getTown(event.getLocation());
-                if (town != null
-                        && SiegeController.hasActiveSiege(town)
-                        && SiegeController.getSiege(town).getCannonSessionRemainingShortTicks() > 0) {
+                if (town != null && SiegeWarCannonsUtil.doesTownHaveCannonSession(town)) {
                     event.setCancelled(false);
                 }
             }
