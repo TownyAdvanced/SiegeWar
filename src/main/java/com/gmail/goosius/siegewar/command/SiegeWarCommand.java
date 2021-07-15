@@ -35,7 +35,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
 	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "nation", "hud", "guide", "preference", "version");
 	
-	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "release");
+	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "endoccupation");
 
 	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("beacons");
 	
@@ -45,7 +45,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			case "nation":
 				if (args.length == 2)
 					return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
-				if (args.length == 3 && args[1].equalsIgnoreCase("release")) {
+				if (args.length == 3 && args[1].equalsIgnoreCase("endoccupation")) {
 					return NameUtil.filterByStart(new ArrayList<>(TownOccupationController.getAllOccupiedTownNames()), args[2]);
 				}
 				break;
@@ -73,7 +73,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw guide", "", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw collect", "", Translation.of("nation_help_11")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "release [town]", Translation.of("nation_help_13")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "endoccupation [town]", Translation.of("nation_help_13")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw version", "", ""));
 	}
@@ -81,7 +81,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void showNationHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar nation"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "release [town]", Translation.of("nation_help_13")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "endoccupation [town]", Translation.of("nation_help_13")));
 	}
 
 	private void showPreferenceHelp(CommandSender sender) {
@@ -274,12 +274,12 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				}
 				break;
 
-			case "release":
+			case "endoccupation":
 				try {
 					String townName = args[1];
 
 					//Check for permission
-					if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_RELEASE.getNode()))
+					if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_END_OCCUPATION.getNode()))
 						throw new TownyException(Translation.of("msg_err_action_disable"));
 
 					//Ensure resident has a town & nation
