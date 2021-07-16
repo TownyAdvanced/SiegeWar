@@ -359,7 +359,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					//Release town
 					TownOccupationController.removeTownOccupation(townToTransfer);
 					
-					//Ensure the specified nation exists
+					//Ensure the receiving nation exists
 					if (!TownyUniverse.getInstance().hasNation(nationName))
 						throw new TownyException(Translation.of("msg_err_unknown_nation"));
 
@@ -370,8 +370,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 					//Send messages
 					TownyMessaging.sendPrefixedTownMessage(townToTransfer, String.format(Translation.of("msg_swa_town_occupation_change_success"), newOccupier.getName(), townToTransfer.getName()));
-					TownyMessaging.sendPrefixedNationMessage(residentsNation, String.format(Translation.of("msg_foreign_town_released_from_occupation"), newOccupier.getName(), townToTransfer.getName()));
-					TownyMessaging.sendPrefixedNationMessage(newOccupier, String.format(Translation.of("msg_foreign_town_released_from_occupation"), newOccupier.getName(), townToTransfer.getName()));
+					TownyMessaging.sendPrefixedNationMessage(residentsNation, String.format(Translation.of("msg_swa_town_occupation_change_success"), newOccupier.getName(), townToTransfer.getName()));
+					TownyMessaging.sendPrefixedNationMessage(newOccupier, String.format(Translation.of("msg_swa_town_occupation_change_success"), newOccupier.getName(), townToTransfer.getName()));
 				} catch (Exception e) {
 					Messaging.sendErrorMsg(player, e.getMessage());
 				}
