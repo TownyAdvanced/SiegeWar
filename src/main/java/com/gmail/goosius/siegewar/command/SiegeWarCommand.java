@@ -35,7 +35,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
 	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "nation", "hud", "guide", "preference", "version");
 	
-	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "endoccupation", "transferoccupation");
+	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "removeoccupier", "transferoccupier");
 
 	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("beacons");
 	
@@ -45,13 +45,13 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			case "nation":
 				if (args.length == 2)
 					return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
-				if (args.length == 3 && args[1].equalsIgnoreCase("endoccupation")) {
+				if (args.length == 3 && args[1].equalsIgnoreCase("removeoccupier")) {
 					return NameUtil.filterByStart(new ArrayList<>(TownOccupationController.getAllOccupiedTownNames()), args[2]);
 				}
-				if (args.length == 3 && args[1].equalsIgnoreCase("transferoccupation")) {
+				if (args.length == 3 && args[1].equalsIgnoreCase("transferoccupier")) {
 					return NameUtil.filterByStart(new ArrayList<>(TownOccupationController.getAllOccupiedTownNames()), args[2]);
 				}
-				if (args.length == 4 && args[1].equalsIgnoreCase("transferoccupation")) {
+				if (args.length == 4 && args[1].equalsIgnoreCase("transferoccupier")) {
 					return SiegeWarAdminCommand.getTownyStartingWith(args[3], "n");
 				}
 				break;
@@ -79,8 +79,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw guide", "", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw collect", "", Translation.of("nation_help_11")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "endoccupation [town]", Translation.of("nation_help_14")));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "transferoccupation [town] [nation]", Translation.of("nation_help_15")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "removeoccupier [town]", Translation.of("nation_help_14")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "transferoccupier [town] [nation]", Translation.of("nation_help_15")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw version", "", ""));
 	}
@@ -88,8 +88,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void showNationHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar nation"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "endoccupation [town]", Translation.of("nation_help_14")));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "transferoccupation [town] [nation]", Translation.of("nation_help_15")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "removeoccupier [town]", Translation.of("nation_help_14")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "transferoccupier [town] [nation]", Translation.of("nation_help_15")));
 	}
 
 	private void showPreferenceHelp(CommandSender sender) {
@@ -282,7 +282,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				}
 				break;
 
-			case "endoccupation":
+			case "removeoccupier":
 				try {
 					String townName = args[1];
 
@@ -324,7 +324,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				}
 				break;
 
-			case "transferoccupation":
+			case "transferoccupier":
 				try {
 					String townName = args[1];
 					String nationName = args[2];
@@ -346,29 +346,32 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 						throw new TownyException(Translation.of("msg_err_unknown_town"));
 
 					//Ensure the specified town is occupied by the resident's nation
-					Town townToRelease = TownyUniverse.getInstance().getTown(townName);
-					if(!TownOccupationController.isTownOccupied(townToRelease))
+					Town townToTransfer = TownyUniverse.getInstance().getTown(townName);
+					if(!TownOccupationController.isTownOccupied(townToTransfer))
 						throw new TownyException(Translation.of("msg_err_cannot_release_town_not_occupied_by_nation"));
-					if(TownOccupationController.getTownOccupier(townToRelease) != residentsNation)
+					if(TownOccupationController.getTownOccupier(townToTransfer) != residentsNation)
 						throw new TownyException(Translation.of("msg_err_cannot_release_town_not_occupied_by_nation"));
 
 					//Ensure besieged towns cannot be released
-					if(SiegeController.hasActiveSiege(townToRelease))
-						throw new TownyException(Translation.of("msg_err_cannot_release_besieged_town"));
+					if(SiegeController.hasActiveSiege(townToTransfer))
+						throw new TownyException(Translation.of("msg_err_swa_cannot_change_occupier_due_to_active_siege"));
 
+					//Release town
+					TownOccupationController.removeTownOccupation(townToTransfer);
+					
 					//Ensure the specified nation exists
 					if (!TownyUniverse.getInstance().hasNation(nationName))
 						throw new TownyException(Translation.of("msg_err_unknown_nation"));
 
-					//Release town
-					TownOccupationController.removeTownOccupation(townToRelease);
-
 					//Occupy town
-					TODO
-					
+					//TODO - Invitation system etc.
+					Nation newOccupier = TownyUniverse.getInstance().getNation(nationName);
+					TownOccupationController.setTownOccupation(townToTransfer, newOccupier);					
+
 					//Send messages
-					TownyMessaging.sendPrefixedTownMessage(townToRelease, String.format(Translation.of("msg_town_released_from_occupation"), residentsNation));
-					TownyMessaging.sendPrefixedNationMessage(residentsNation, String.format(Translation.of("msg_foreign_town_released_from_occupation"), townToRelease.getName()));
+					TownyMessaging.sendPrefixedTownMessage(townToTransfer, String.format(Translation.of("msg_swa_town_occupation_change_success"), newOccupier.getName(), townToTransfer.getName()));
+					TownyMessaging.sendPrefixedNationMessage(residentsNation, String.format(Translation.of("msg_foreign_town_released_from_occupation"), newOccupier.getName(), townToTransfer.getName()));
+					TownyMessaging.sendPrefixedNationMessage(newOccupier, String.format(Translation.of("msg_foreign_town_released_from_occupation"), newOccupier.getName(), townToTransfer.getName()));
 				} catch (Exception e) {
 					Messaging.sendErrorMsg(player, e.getMessage());
 				}
