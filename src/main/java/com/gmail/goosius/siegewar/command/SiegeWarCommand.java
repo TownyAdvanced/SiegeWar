@@ -11,18 +11,21 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.BookUtil;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyEconomyHandler;
-import com.palmergames.bukkit.towny.TownyMessaging;
-import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.*;
+import com.palmergames.bukkit.towny.confirmations.Confirmation;
+import com.palmergames.bukkit.towny.event.nation.NationMergeEvent;
+import com.palmergames.bukkit.towny.event.nation.NationPreMergeEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import com.palmergames.bukkit.towny.utils.NameUtil;
+import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.StringMgmt;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -316,9 +319,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					//Release town
 					TownOccupationController.removeTownOccupation(townToRelease);
 
-					//Send messages
-					TownyMessaging.sendPrefixedTownMessage(townToRelease, String.format(Translation.of("msg_town_released_from_occupation"), residentsNation));
-					TownyMessaging.sendPrefixedNationMessage(residentsNation, String.format(Translation.of("msg_foreign_town_released_from_occupation"), townToRelease.getName()));
+					//Send global message
+					TownyMessaging.sendGlobalMessage(String.format(Translation.of("msg_end_occupation_success"), townToRelease.getName(), residentsNation.getName()));
 				} catch (Exception e) {
 					Messaging.sendErrorMsg(player, e.getMessage());
 				}
@@ -363,15 +365,31 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					if (!TownyUniverse.getInstance().hasNation(nationName))
 						throw new TownyException(Translation.of("msg_err_unknown_nation"));
 
-					//Occupy town
-					//TODO - Invitation system etc.
-					Nation newOccupier = TownyUniverse.getInstance().getNation(nationName);
-					TownOccupationController.setTownOccupation(townToTransfer, newOccupier);					
+					//Check distance
+					Nation receivingNation = TownyUniverse.getInstance().getNation(nationName);
+					if (TownySettings.getNationRequiresProximity() > 0) {
+						Coord capitalCoord = receivingNation.getCapital().getHomeBlock().getCoord();
+						Coord townCoord = townToTransfer.getHomeBlock().getCoord();
+						if (!residentsNation.getCapital().getHomeBlock().getWorld().getName().equals(townToTransfer.getHomeBlock().getWorld().getName())) {
+							throw new TownyException(Translation.of("msg_err_town_and_capital_too_far_apart", townToTransfer.getName(), receivingNation.getName()));
+						}
+						double distance = Math.sqrt(Math.pow(capitalCoord.getX() - townCoord.getX(), 2) + Math.pow(capitalCoord.getZ() - townCoord.getZ(), 2));
+						if (distance > TownySettings.getNationRequiresProximity()) {
+							throw new TownyException(Translation.of("msg_err_town_and_capital_too_far_apart", townToTransfer.getName(), receivingNation.getName()));
+						}						
+					}
 
-					//Send messages
-					TownyMessaging.sendPrefixedTownMessage(townToTransfer, String.format(Translation.of("msg_swa_town_occupation_change_success"), newOccupier.getName(), townToTransfer.getName()));
-					TownyMessaging.sendPrefixedNationMessage(residentsNation, String.format(Translation.of("msg_swa_town_occupation_change_success"), newOccupier.getName(), townToTransfer.getName()));
-					TownyMessaging.sendPrefixedNationMessage(newOccupier, String.format(Translation.of("msg_swa_town_occupation_change_success"), newOccupier.getName(), townToTransfer.getName()));
+					//Send request to king of receiving nation					
+					Resident kingOfReceivingNation = receivingNation.getKing();
+					TownyMessaging.sendMessage(BukkitTools.getPlayer(kingOfReceivingNation.getName()), com.palmergames.bukkit.towny.object.Translation.of("msg_would_you_accept_transfer_of_occupied_town", townName, residentsNation.getName()));							
+					Confirmation.runOnAccept(() -> {
+						//Transfer occupation
+						TownOccupationController.setTownOccupation(townToTransfer, receivingNation);					
+						//Send global message
+						TownyMessaging.sendGlobalMessage(Translation.of("msg_transfer_occupation_success", residentsNation.getName(), townToTransfer.getName(), receivingNation.getName()));
+					})	
+					.sendTo(BukkitTools.getPlayerExact(kingOfReceivingNation.getName()));
+
 				} catch (Exception e) {
 					Messaging.sendErrorMsg(player, e.getMessage());
 				}
