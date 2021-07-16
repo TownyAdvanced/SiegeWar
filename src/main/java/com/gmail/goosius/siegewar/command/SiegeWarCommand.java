@@ -287,7 +287,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					String townName = args[1];
 
 					//Check for permission
-					if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_END_OCCUPATION.getNode()))
+					if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_REMOVE_OCCUPIER.getNode()))
 						throw new TownyException(Translation.of("msg_err_action_disable"));
 
 					//Ensure resident has a town & nation
@@ -330,7 +330,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					String nationName = args[2];
 
 					//Check for permission
-					if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_TRANSFER_OCCUPATION.getNode()))
+					if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_TRANSFER_OCCUPIER.getNode()))
 						throw new TownyException(Translation.of("msg_err_action_disable"));
 
 					//Ensure resident has a town & nation
