@@ -319,7 +319,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				}
 				break;
 
-			case "transferoccupaton":
+			case "transferoccupation":
 				try {
 					String townName = args[1];
 					String nationName = args[2];
