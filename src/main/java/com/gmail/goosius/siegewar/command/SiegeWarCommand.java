@@ -127,8 +127,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 	private void parseSiegeWarCommand(Player player, String[] args) {
 
-		//This permission check handles all the perms checks except for nation
-		if(!args[0].equalsIgnoreCase("nation")) {
+		//This permission check handles all the perms checks except for nation & town
+		if(!args[0].equalsIgnoreCase("nation") && !args[0].equalsIgnoreCase("town")) {
 			if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR.getNode(args[0]))) {
 				Messaging.sendErrorMsg(player, Translation.of("msg_err_command_disable"));
 				return;
