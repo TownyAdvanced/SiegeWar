@@ -61,7 +61,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				if (args.length == 2)
 					return NameUtil.filterByStart(siegewarTownTabCompletes, args[1]);
 				if (args.length == 3 && args[1].equalsIgnoreCase("inviteccupation")) {
-					return NameUtil.filterByStart(new ArrayList<>(TownOccupationController.getAllOccupiedTownNames()), args[2]);
+					return SiegeWarAdminCommand.getTownyStartingWith(args[3], "n");
 				}
 				break;					
 			case "hud":
