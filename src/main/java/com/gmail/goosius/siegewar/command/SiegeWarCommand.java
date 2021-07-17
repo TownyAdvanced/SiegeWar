@@ -88,8 +88,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void showNationHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar nation"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "removeoccupier [town]", Translation.of("nation_help_14")));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "transferoccupier [town] [nation]", Translation.of("nation_help_15")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "removeoccupation [town]", Translation.of("nation_help_14")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "transferoccupation [town] [nation]", Translation.of("nation_help_15")));
 	}
 
 	private void showPreferenceHelp(CommandSender sender) {
@@ -286,10 +286,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				try {
 					String townName = args[1];
 
-					//Check for permission
-					if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_REMOVE_OCCUPATION.getNode()))
-						throw new TownyException(Translation.of("msg_err_action_disable"));
-
 					//Ensure resident has a town & nation
 					Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 					if (resident == null || !resident.hasTown() || !resident.getTown().hasNation())
@@ -327,10 +323,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				try {
 					String townName = args[1];
 					String nationName = args[2];
-
-					//Check for permission
-					if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION_TRANSFER_OCCUPATION.getNode()))
-						throw new TownyException(Translation.of("msg_err_action_disable"));
 
 					//Ensure resident has a town & nation
 					Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());

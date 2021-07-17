@@ -380,15 +380,6 @@ msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and pla
 # Plunder
 msg_err_siege_war_plunder_not_possible_rebels_won: '&cPlunder not possible because the town rebels won the siege.'
 
-# Releasing towns from occupation
-msg_err_cannot_release_town_not_occupied_by_nation: '&cYou cannot release the town because it is not occupied by your nation.'
-msg_err_cannot_release_besieged_town: '&cYou cannot release a besieged town.'
-msg_town_released_from_occupation: 'The town has been released from occupation by %s.'
-msg_foreign_town_released_from_occupation: 'The nation released the town of %s from occupation.'
-
-# Help
-nation_help_14 : 'Release the given town from occupation.'
-
 # Peaceful towns
 msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks. The town may get automatically occupied by a nation with a strong presence in the local area. (see user-guide for more details). Residents cannot enter siege-zones or gain nation-military ranks.'
 msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to siege attacks. The town can no longer get automatically occupied. Residents can enter siege-zones and gain nation-military ranks.'
@@ -407,7 +398,6 @@ msg_foreign_town_peacefully_released: "&bA foreign town, %s, has been peacefully
 # Admin commands
 msg_err_swa_cannot_set_invade_due_to_siege_type: '&cYou cannot set the invaded flag for this type of siege.'
 msg_err_swa_cannot_change_occupier_due_to_active_siege: '&cYou cannot change the occupier if the town has an active siege.'
-msg_err_swa_home_nation_cannot_be_occupier: '&cYou cannot set the towns home nation to be its occupier.'
 msg_swa_set_invade_success: '&bSet invaded to %s for %s.'
 msg_swa_town_occupation_removal_success: '&bTown occupier removed for %s.'
 msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
@@ -444,8 +434,18 @@ msg_err_occupied_town_cannot_move_homeblock: "&cOccupied towns cannot move their
 status_town_siege_pending_balance_adjustment: '&2 | Pending: &a%s'
 
 # Added in 0.21
+
+# General occupation error messages
+msg_err_cannot_change_occupation_town_not_occupied: '&cYou cannot change the occupation status because the town is not occupied.'
+msg_err_cannot_change_occupation_by_foreign_nation: '&cYou cannot change the occupation status because your nation is not the occupier.'
+msg_err_cannot_change_occupation_of_besieged_town: '&cYou cannot change the occupation status of a besieged town.'
 msg_err_town_and_capital_too_far_apart: "&cThe homeblock of %s is too far away from the homeblock of %s's capital."
-msg_end_occupation_success: '&bThe town %s has been released from occupation by %s.'
-nation_help_15 : 'Transfer the given town to the given nation.'
+
+# Remove occupation
+nation_help_14 : "Remove your nation's occupation of a town."
+msg_remove_occupation_success: '&bThe nation %s has removed its occupation of %s.'
+
+#Transfer occupation
+nation_help_15 : "Transfer your nation's occupation of a town to another nation"
 msg_would_you_accept_transfer_of_occupied_town: '&6Would you agree to transfer the occupation of %s, from %s to your nation ?. This will cause the town to become occupied by your nation.'
 msg_transfer_occupation_success: '&bThe nation %s has transferred its occupation of %s. The town is now under the occupation of %s.'

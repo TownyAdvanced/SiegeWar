@@ -348,6 +348,11 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 						return;
 					}
 
+					/*
+					 * This restriction is to prevent sieges getting messed up.
+					 * For example, if you removed an occupier in the middle of a liberation siege,
+					 * that siege would need to get deleted or transform to a conquest siege...
+					 */
 					if(SiegeController.hasActiveSiege(town)) {
 						Messaging.sendErrorMsg(sender, Translation.of("msg_err_swa_cannot_change_occupier_due_to_active_siege"));
 						return;
@@ -359,16 +364,16 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 					}
 
 					Nation occupier = TownyUniverse.getInstance().getNation(args[2].toLowerCase());
-					if (town.hasNation() && TownyAPI.getInstance().getTownNationOrNull(town) == occupier) {
-						Messaging.sendErrorMsg(sender, Translation.of("msg_err_swa_home_nation_cannot_be_occupier"));
-						return;
-					}
-
 					TownOccupationController.setTownOccupation(town, occupier);
 					Messaging.sendMsg(sender, Translation.of("msg_swa_town_occupation_change_success", occupier.getName(), town.getName()));
 					break;
 
 				case "removeoccupier":
+					/*
+					 * This restriction is to prevent sieges getting messed up.
+					 * For example, if you removed an occupier in the middle of a liberation siege,
+					 * that siege would need to get deleted or transform to a conquest siege...
+					 */
 					if(SiegeController.hasActiveSiege(town)) {
 						Messaging.sendErrorMsg(sender, Translation.of("msg_err_swa_cannot_change_occupier_due_to_active_siege"));
 						return;
