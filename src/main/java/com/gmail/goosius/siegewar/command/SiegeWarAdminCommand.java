@@ -351,7 +351,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 					/*
 					 * This restriction is to prevent sieges getting messed up.
 					 * For example, if you removed an occupier in the middle of a liberation siege,
-					 * that siege would need to get deleted or transform to a conquest siege...
+					 * that siege would need to get deleted or transformed to a conquest siege...
 					 */
 					if(SiegeController.hasActiveSiege(town)) {
 						Messaging.sendErrorMsg(sender, Translation.of("msg_err_swa_cannot_change_occupier_due_to_active_siege"));
@@ -372,7 +372,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 					/*
 					 * This restriction is to prevent sieges getting messed up.
 					 * For example, if you removed an occupier in the middle of a liberation siege,
-					 * that siege would need to get deleted or transform to a conquest siege...
+					 * that siege would need to get deleted or transformed to a conquest siege...
 					 */
 					if(SiegeController.hasActiveSiege(town)) {
 						Messaging.sendErrorMsg(sender, Translation.of("msg_err_swa_cannot_change_occupier_due_to_active_siege"));

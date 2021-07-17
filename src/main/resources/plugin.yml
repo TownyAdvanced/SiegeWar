@@ -39,7 +39,11 @@ permissions:
         default: false
         children:
             siegewar.command.siegewar.hud.*: true
+            siegewar.command.siegewar.town.*: true
             siegewar.command.siegewar.nation.*: true
+            siegewar.command.siegewar.guide: true
+            siegewar.command.siegewar.collect: true
+            siegewar.command.siegewar.preference: true
 
     siegewar.command.siegewar.hud.*:
         description: User is able to do all /siegewar hud commands.
@@ -47,12 +51,19 @@ permissions:
         children:
             siegewar.command.siegewar.hud: true
 
+    siegewar.command.siegewar.town.*:
+        description: User is able to do all /siegewar town commands.
+        default: false
+        children:
+            siegewar.command.siegewar.town.inviteoccupation: true
+
     siegewar.command.siegewar.nation.*:
         description: User is able to do all /siegewar nation commands.
         default: false
         children:
             siegewar.command.siegewar.nation.paysoldiers: true
-            siegewar.command.siegewar.nation.release: true
+            siegewar.command.siegewar.nation.removeoccupation: true
+            siegewar.command.siegewar.nation.transferoccupation: true
 
     siegewar.nation.siege.*:
         description: User holds all of the siegewar nation nodes.
