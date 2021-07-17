@@ -428,6 +428,7 @@ status_town_siege_pending_balance_adjustment: '&2 | Pending: &a%s'
 msg_err_cannot_change_occupation_town_not_occupied: '&cYou cannot change the occupation status because the town is not occupied.'
 msg_err_cannot_change_occupation_by_foreign_nation: '&cYou cannot change the occupation status because your nation is not the occupier.'
 msg_err_cannot_change_occupation_of_besieged_town: '&cYou cannot change the occupation status of a besieged town.'
+msg_err_cannot_change_occupation_peaceful_town: '&cYou cannot change the occupation status of a peaceful town via a command.'
 msg_err_town_and_capital_too_far_apart: "&cThe homeblock of %s is too far away from the homeblock of %s's capital."
 
 # Remove occupation command
