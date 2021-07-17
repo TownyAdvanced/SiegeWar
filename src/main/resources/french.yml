@@ -440,6 +440,7 @@ msg_err_cannot_change_occupation_town_not_occupied: '&cYou cannot change the occ
 msg_err_cannot_change_occupation_by_foreign_nation: '&cYou cannot change the occupation status because your nation is not the occupier.'
 msg_err_cannot_change_occupation_of_besieged_town: '&cYou cannot change the occupation status of a besieged town.'
 msg_err_town_and_capital_too_far_apart: "&cThe homeblock of %s is too far away from the homeblock of %s's capital."
+msg_err_cannot_run_command_king_not_online: "&cYou cannot run this command because the king of %s (%s) is not online."
 
 # Remove occupation
 nation_help_14 : "Remove your nation's occupation of a town."
