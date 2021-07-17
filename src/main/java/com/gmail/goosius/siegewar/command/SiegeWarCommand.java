@@ -365,9 +365,14 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 						}						
 					}
 
-					//Send request to king of receiving nation					
+					//Ensure the king of the receiving nation is online
 					Resident kingOfReceivingNation = receivingNation.getKing();
-					TownyMessaging.sendMessage(BukkitTools.getPlayer(kingOfReceivingNation.getName()), com.palmergames.bukkit.towny.object.Translation.of("msg_would_you_accept_transfer_of_occupied_town", townName, residentsNation.getName()));							
+					if (!BukkitTools.isOnline(kingOfReceivingNation.getName())) {
+						throw new TownyException(Translation.of("msg_err_cannot_run_command_king_not_online", receivingNation.getName(), kingOfReceivingNation.getName()));
+					}
+
+					//Send request to king of receiving nation					
+					TownyMessaging.sendMessage(BukkitTools.getPlayer(kingOfReceivingNation.getName()), Translation.of("msg_would_you_accept_transfer_of_occupied_town", townName, residentsNation.getName()));							
 					Confirmation.runOnAccept(() -> {
 						//Transfer occupation
 						TownOccupationController.setTownOccupation(townToTransfer, receivingNation);					
