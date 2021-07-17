@@ -60,7 +60,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			case "town":
 				if (args.length == 2)
 					return NameUtil.filterByStart(siegewarTownTabCompletes, args[1]);
-				if (args.length == 3 && args[1].equalsIgnoreCase("inviteccupation")) {
+				if (args.length == 3 && args[1].equalsIgnoreCase("inviteoccupation")) {
 					return SiegeWarAdminCommand.getTownyStartingWith(args[2], "n");
 				}
 				break;					
