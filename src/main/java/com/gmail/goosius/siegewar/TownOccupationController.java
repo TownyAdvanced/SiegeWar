@@ -88,7 +88,7 @@ public class TownOccupationController {
                     occupiedForeignTowns.add(occupiedTown);
                 }
             }
-            return occ;
+            return occupiedForeignTowns;
         } else {
             return new ArrayList<>();
         }
