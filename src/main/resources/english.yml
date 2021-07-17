@@ -436,6 +436,13 @@ msg_remove_occupation_success: '&bThe nation %s has removed its occupation of %s
 
 #Transfer occupation command
 nation_help_15 : "Transfer your nation's occupation of a town to another nation"
+msg_err_cannot_transfer_occupation_king_not_online: "&cThe occupation-transfer failed because the king of %s (%s) is not online."
 msg_would_you_accept_transfer_of_occupied_town: '&6Would you agree to transfer the occupation of %s, from %s to your nation ?. This will cause the town to become occupied by your nation.'
 msg_transfer_occupation_success: '&bThe nation %s has transferred its occupation of %s. The town is now under the occupation of %s.'
-msg_err_cannot_transfer_occupation_king_not_online: "&cThe occupation-transfer failed because the king of %s (%s) is not online."
+
+#Invite occupation command
+nation_help_16 : "Invite a nation to occupy your town"
+msg_err_cannot_invite_occupation_king_not_online: "&cThe occupation-invitation failed because the king of %s (%s) is not online."
+msg_would_you_accept_town_request_for_occupation: '&6Would you agree to occupy %s ?. This will cause the town to become occupied by your nation.'
+msg_invite_occupation_success: '&bThe town %s has come under the occupation of %s by its own request.'
+ 
