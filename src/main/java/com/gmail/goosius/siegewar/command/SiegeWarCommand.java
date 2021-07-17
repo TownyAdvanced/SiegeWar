@@ -320,6 +320,11 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				break;
 
 			case "transferoccupation":
+				if (args.length < 3) {
+					showNationHelp(player);
+					return;
+				}
+
 				try {
 					String townName = args[1];
 					String nationName = args[2];
