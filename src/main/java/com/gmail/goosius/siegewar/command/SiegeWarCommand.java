@@ -368,7 +368,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					//Ensure the king of the receiving nation is online
 					Resident kingOfReceivingNation = receivingNation.getKing();
 					if (!BukkitTools.isOnline(kingOfReceivingNation.getName())) {
-						throw new TownyException(Translation.of("msg_err_cannot_run_command_king_not_online", receivingNation.getName(), kingOfReceivingNation.getName()));
+						throw new TownyException(Translation.of("msg_err_cannot_transfer_occupation_king_not_online", receivingNation.getName(), kingOfReceivingNation.getName()));
 					}
 
 					//Send request to king of receiving nation					
