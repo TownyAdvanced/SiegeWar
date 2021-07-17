@@ -87,6 +87,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw guide", "", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw collect", "", Translation.of("nation_help_11")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw town", "inviteoccupation [nation]", Translation.of("nation_help_16")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translation.of("nation_help_12")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "removeoccupation [town]", Translation.of("nation_help_14")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "transferoccupation [town] [nation]", Translation.of("nation_help_15")));
