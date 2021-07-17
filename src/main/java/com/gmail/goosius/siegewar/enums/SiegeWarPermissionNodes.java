@@ -40,7 +40,7 @@ public enum SiegeWarPermissionNodes {
 	// ----- Player Command Nodes -----
 	SIEGEWAR_COMMAND_SIEGEWAR("siegewar.command.siegewar.*"),
 		SIEGEWAR_COMMAND_SIEGEWAR_TOWN("siegewar.command.siegewar.town.*"),
-			SIEGEWAR_COMMAND_SIEGEWAR_NATION_INVITE_OCCUPATION("siegewar.command.siegewar.town.inviteoccupation"),
+			SIEGEWAR_COMMAND_SIEGEWAR_TOWN_INVITE_OCCUPATION("siegewar.command.siegewar.town.inviteoccupation"),
 		SIEGEWAR_COMMAND_SIEGEWAR_NATION("siegewar.command.siegewar.nation.*"),
 			SIEGEWAR_COMMAND_SIEGEWAR_NATION_PAYSOLDIERS("siegewar.command.siegewar.nation.paysoldiers"),
 	    	SIEGEWAR_COMMAND_SIEGEWAR_NATION_REMOVE_OCCUPATION("siegewar.command.siegewar.nation.removeoccupation"),
