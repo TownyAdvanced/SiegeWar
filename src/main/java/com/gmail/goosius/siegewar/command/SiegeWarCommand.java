@@ -33,7 +33,7 @@ import java.util.*;
 
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
-	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "nation", "hud", "guide", "preference", "version");
+	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "guide", "preference", "version");
 	
 	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "removeoccupation", "transferoccupation");
 
@@ -437,8 +437,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					Town townToTransfer = TownyAPI.getInstance().getResidentTownOrNull(resident);
 
 					//Ensure the town is unoccupied
-					if(!TownOccupationController.isTownOccupied(townToTransfer))
-						throw new TownyException(Translation.of("msg_err_cannot_change_occupation_town_not_occupied"));
+					if(TownOccupationController.isTownOccupied(townToTransfer))
+						throw new TownyException(Translation.of("msg_err_cannot_invite_occupation_town_already_occupied"));
 
 					//Ensure town is not besieged
 					if(SiegeController.hasActiveSiege(townToTransfer))
