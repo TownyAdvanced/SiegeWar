@@ -432,7 +432,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			return;
 		}
 
-		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION.getNode(args[0]))) {
+		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_TOWN.getNode(args[0]))) {
 			player.sendMessage(Translation.of("msg_err_command_disable"));
 			return;
 		}
