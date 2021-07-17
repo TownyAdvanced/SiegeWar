@@ -79,10 +79,16 @@ public class TownOccupationController {
     }
 
     public static List<Town> getOccupiedForeignTowns(Nation nation) {
+        List<Town> occupiedForeignTowns = new ArrayList<>();
         Map<Nation, Set<Town>> nationTownsOccupationMapCopy = new HashMap<>(nationTownsOccupationMap);
 
         if (nationTownsOccupationMapCopy.containsKey(nation)) {
-            return new ArrayList<>(nationTownsOccupationMapCopy.get(nation));
+            for(Town occupiedTown: nationTownsOccupationMapCopy.get(nation)) {
+                if(!occupiedTown.hasNation() || TownyAPI.getInstance().getTownNationOrNull(occupiedTown) != nation) {
+                    occupiedForeignTowns.add(occupiedTown);
+                }
+            }
+            return occupiedForeignTowns;
         } else {
             return new ArrayList<>();
         }

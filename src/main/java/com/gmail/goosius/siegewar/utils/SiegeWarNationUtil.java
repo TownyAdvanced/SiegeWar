@@ -21,9 +21,9 @@ public class SiegeWarNationUtil {
         //Create an 'effective nation' object
         Nation effectiveNation = new Nation("effectiveNationDummyName");
 
-        //Count all home towns which are unoccupied;
+        //Count all home towns which are unoccupied or occupied by the nation;
         for(Town town: new ArrayList<>(nation.getTowns())) {
-            if(!TownOccupationController.isTownOccupied(town)) {
+            if(!TownOccupationController.isTownOccupied(town) || TownOccupationController.getTownOccupier(town) == nation) {
                 effectiveNation.addTown(town);
             }
         }
