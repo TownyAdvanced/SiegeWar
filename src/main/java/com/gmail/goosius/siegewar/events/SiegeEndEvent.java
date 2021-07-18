@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.events;
 
 import com.gmail.goosius.siegewar.objects.Siege;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
@@ -25,6 +26,7 @@ public class SiegeEndEvent extends Event {
 
     public SiegeEndEvent(Siege siege,
                          String besiegedTownName) {
+        super(!Bukkit.getServer().isPrimaryThread());
         this.siege = siege;
         this.besiegedTownName = besiegedTownName;
     }
