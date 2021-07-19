@@ -244,6 +244,10 @@ msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control se
 msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going into the town, or flying.'
 msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going below the altitude of the banner, going into the town, or flying.'
 
+#Added in poilet fork
+msg_swa_town_unsiegeable_set: "&bSuccessfully set town unsiegeable to %s for %s"
+msg_err_cannot_start_siege_at_unsiegeable_town: "&cCannot start siege at an unsiegeable town"
+
 ##### Added in 0.15
 
 # Town Merging

@@ -41,7 +41,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
-	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setoccupier","removeoccupier");
+	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setoccupier","removeoccupier","setunsiegeable");
 	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost");
 	private static final List<String> siegewaradminBattleSessionTabCompletes = Arrays.asList("end","start");
 
@@ -111,6 +111,9 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			if (args.length == 4) {
 				if (args[2].equalsIgnoreCase("setoccupier")) {
 					return getTownyStartingWith(args[3], "n");
+				}
+				if (args[2].equalsIgnoreCase("setunsiegeable")) {
+					return Arrays.asList("true","false");
 				}
 			}
 		case "nation":
@@ -354,6 +357,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		sender.sendMessage(ChatTools.formatTitle("/swa town"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupier [town]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] removeoccupier", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setunsiegeable", ""));
 	}
 
 	private void showNationHelp(CommandSender sender) {
@@ -635,6 +639,15 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					TownOccupationController.removeTownOccupation(town);
 					Messaging.sendMsg(sender, Translation.of("msg_swa_town_occupation_removal_success", town.getName()));
 					break;
+
+				case "setunsiegeable":
+					/*
+					 * This handles setting a town as unsiegeable
+					 */
+					Boolean unsiegeable = Boolean.parseBoolean(args[2]);
+					TownMetaDataController.setUnsiegeable(town, unsiegeable);
+					Messaging.sendMsg(sender, Translation.of("msg_swa_town_unsiegeable_set", unsiegeable, town.getName()));
+
 			}
 		} else
 			showTownHelp(sender);
