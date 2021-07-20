@@ -24,7 +24,6 @@ public class TownMetaDataController {
 	private static LongDataField revoltImmunityEndTime = new LongDataField("siegewar_revoltImmunityEndTime", 0l);
 	private static LongDataField siegeImmunityEndTime = new LongDataField("siegewar_siegeImmunityEndTime", 0l);
 	private static StringDataField occupyingNationUUID = new StringDataField("siegewar_occupyingNationUUID", "");
-	private static BooleanDataField unsiegeable = new BooleanDataField("siegewar_unsiegeable", false);
 	//The nation who was the occupier prior to peacefulness confirmation
 	private static StringDataField prePeacefulOccupierUUID = new StringDataField("siegewar_prePeacefulOccupierUUID", "");
 
@@ -67,23 +66,6 @@ public class TownMetaDataController {
 			MetaDataUtil.setBoolean(town, bdf, bool, true);
 		} else {
 			town.addMetaData(new BooleanDataField("siegewar_desiredPeaceSetting", bool));
-		}
-	}
-
-	public static boolean getUnsiegeable(Town town) {
-		BooleanDataField bdf = (BooleanDataField) unsiegeable.clone();
-		if(town.hasMeta(bdf.getKey())) {
-			return MetaDataUtil.getBoolean(town, bdf);
-		}
-		return false;
-	}
-
-	public static void setUnsiegeable(Town town, boolean bool) {
-		BooleanDataField bdf = (BooleanDataField) unsiegeable.clone();
-		if(town.hasMeta(bdf.getKey())) {
-			MetaDataUtil.setBoolean(town, bdf, bool);
-		} else {
-			town.addMetaData(new BooleanDataField("siegewar_unsiegeable", bool));
 		}
 	}
 	
