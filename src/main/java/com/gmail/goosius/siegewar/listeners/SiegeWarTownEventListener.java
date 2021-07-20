@@ -342,7 +342,6 @@ public class SiegeWarTownEventListener implements Listener {
 				Siege siege = SiegeController.getSiege(town);
 				SiegeStatus siegeStatus= siege.getStatus();
 				String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getSiegeImmunityEndTime(town)- System.currentTimeMillis());
-
 				//Siege:
 				out.add(Translation.of("status_town_siege"));
 
@@ -436,11 +435,17 @@ public class SiegeWarTownEventListener implements Listener {
 	            }
 	        } else {
 	            if(!SiegeController.hasActiveSiege(town)
-	            	&& System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(town)) {
+	            	&& (System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(town)
+					|| TownMetaDataController.getSiegeImmunityEndTime(town) == -1l)) {
 	                //Siege:
 	                // > Immunity Timer: 40.8 hours
 	                out.add(Translation.of("status_town_siege"));
-	                String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getSiegeImmunityEndTime(town)- System.currentTimeMillis()); 
+					String time;
+	                if (TownMetaDataController.getSiegeImmunityEndTime(town) != -1l) {
+						time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getSiegeImmunityEndTime(town)- System.currentTimeMillis());
+					} else {
+	                	time = "Permanent";
+					}
 	                out.add(Translation.of("status_town_siege_immunity_timer", time));
 	            }
 	        }
