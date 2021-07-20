@@ -310,6 +310,9 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity town [town_name] [hours]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity nation [nation_name] [hours]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity alltowns [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity town [town_name] [hours|permanent]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity nation [nation_name] [hours|permanent]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity alltowns [hours|permanent]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setbalance [points]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
@@ -354,7 +357,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		sender.sendMessage(ChatTools.formatTitle("/swa town"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupier [town]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] removeoccupier", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setunsiegeable", ""));
 	}
 
 	private void showNationHelp(CommandSender sender) {
