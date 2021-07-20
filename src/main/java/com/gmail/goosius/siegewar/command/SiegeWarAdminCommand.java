@@ -41,7 +41,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
-	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setoccupier","removeoccupier","setunsiegeable");
+	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setoccupier","removeoccupier");
 	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost");
 	private static final List<String> siegewaradminBattleSessionTabCompletes = Arrays.asList("end","start");
 
@@ -111,9 +111,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			if (args.length == 4) {
 				if (args[2].equalsIgnoreCase("setoccupier")) {
 					return getTownyStartingWith(args[3], "n");
-				}
-				if (args[2].equalsIgnoreCase("setunsiegeable")) {
-					return Arrays.asList("true","false");
 				}
 			}
 		case "nation":
