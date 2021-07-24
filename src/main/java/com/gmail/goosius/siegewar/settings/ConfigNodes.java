@@ -549,7 +549,7 @@ public enum ConfigNodes {
 			"# This setting is useful to help prevent extreme siege-zone grief such as obsidian forts or cobble monsters."),
 	WAR_SIEGE_ZONE_BUCKET_EMPTYING_RESTRICTIONS_MATERIALS(
 			"war.siege.zone_bucket_usage_restrictions.materials",
-			"lava_bucket, water_bucket, cod_bucket, pufferfish_bucket, salmon_bucket, tropical_fish_bucket",
+			"lava_bucket, water_bucket, cod_bucket, pufferfish_bucket, salmon_bucket, tropical_fish_bucket, axolotl_bucket",
 			"",
 			"# This setting is used to indicate the list of forbidden buckets"),
 	WAR_SIEGE_MAP_HIDING(
