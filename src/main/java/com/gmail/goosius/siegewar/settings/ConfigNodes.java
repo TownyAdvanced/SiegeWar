@@ -537,7 +537,7 @@ public enum ConfigNodes {
 			"# This setting is useful to help prevent extreme siege-zone grief such as obsidian forts."),
 	WAR_SIEGE_ZONE_BLOCK_PLACEMENT_RESTRICTIONS_MATERIALS(
 			"war.siege.zone_block_placement_restrictions.materials",
-			"obsidian",
+			"obsidian, ice, blue_ice",
 			"",
 			"# This setting is used to indicate the list of forbidden materials",
 			"# WARNING: Avoid putting 'common' blocks on this list as that may cause lag."),
