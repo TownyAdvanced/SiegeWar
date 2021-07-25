@@ -34,7 +34,7 @@ import java.util.List;
 
 public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
-	private static final List<String> siegewaradminTabCompletes = Arrays.asList("immunity","reload","siege","town","nation");
+	private static final List<String> siegewaradminTabCompletes = Arrays.asList("siegeimmunity","revoltimmunity","reload","siege","town","nation");
 	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
@@ -176,14 +176,22 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	private void showHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewaradmin"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "reload", Translation.of("admin_help_1")));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity town [town_name] [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity nation [nation_name] [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity alltowns [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity town [town_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity nation [nation_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity alltowns [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity town [town_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity nation [nation_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity alltowns [hours]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setbalance [points]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setcaptured [true/false]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupier [town]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] removeoccupier", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplundergained [amount]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplunderlost [amount]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownsgained [amount]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownslost [amount]", ""));
 	}
 	
 	private void showSiegeImmunityHelp(CommandSender sender) {
