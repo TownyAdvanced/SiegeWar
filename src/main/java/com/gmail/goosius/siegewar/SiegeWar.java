@@ -129,7 +129,7 @@ public class SiegeWar extends JavaPlugin {
     private String getTownyVersion() {
         return Bukkit.getPluginManager().getPlugin("Towny").getDescription().getVersion();
     }
-
+	
 	private void registerListeners() {
 		PluginManager pm = Bukkit.getServer().getPluginManager();
 		
