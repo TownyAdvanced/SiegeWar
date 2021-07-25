@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar;
 
-import com.gmail.goosius.siegewar.utils.VersioningUtil;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -126,6 +125,13 @@ public class SiegeWar extends JavaPlugin {
         return Version.fromString(version).compareTo(requiredTownyVersion) >= 0;
     }
 
+	 // Checks if the current towny version matches the given required version
+    private boolean doesCurrentTownyVersionMatchRequiredTownyVersion(String requiredTownyVersionString) {
+		Version currentTownyVersion = Version.fromString(getTownyVersion());		
+		Version requiredTownyVersion = Version.fromString(requiredTownyVersionString);    
+        return currentTownyVersion.compareTo(requiredTownyVersion) >= 0;
+    }
+
     private String getTownyVersion() {
         return Bukkit.getPluginManager().getPlugin("Towny").getDescription().getVersion();
     }
@@ -146,7 +152,7 @@ public class SiegeWar extends JavaPlugin {
 				pm.registerEvents(new SiegeWarTownyDynmapListener(this), this);
 			if(cannonsPluginIntegrationEnabled)
 				pm.registerEvents(new SiegeWarCannonsListener(this), this);
-			if(VersioningUtil.comparePluginVersions(getTownyVersion(), "0.97.0.14") > -1)
+			if(doesCurrentTownyVersionMatchRequiredTownyVersion( "0.97.0.14"))
 				pm.registerEvents(new SiegeWar_0_97_0_14_Listener(this), this);				
 		}
 	}
