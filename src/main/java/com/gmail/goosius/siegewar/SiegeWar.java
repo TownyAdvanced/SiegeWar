@@ -126,10 +126,10 @@ public class SiegeWar extends JavaPlugin {
     }
 
 	 // Checks if the current towny version matches the given required version
-    private boolean doesCurrentTownyVersionMatchRequiredTownyVersion(String requiredTownyVersionString) {
+    private boolean doesCurrentTownyVersionMatchGivenTownyVersion(String givenTownyVersionString) {
 		Version currentTownyVersion = Version.fromString(getTownyVersion());		
-		Version requiredTownyVersion = Version.fromString(requiredTownyVersionString);    
-        return currentTownyVersion.compareTo(requiredTownyVersion) >= 0;
+		Version givenTownyVersion = Version.fromString(givenTownyVersionString);    
+        return currentTownyVersion.compareTo(givenTownyVersion) >= 0;
     }
 
     private String getTownyVersion() {
@@ -152,7 +152,7 @@ public class SiegeWar extends JavaPlugin {
 				pm.registerEvents(new SiegeWarTownyDynmapListener(this), this);
 			if(cannonsPluginIntegrationEnabled)
 				pm.registerEvents(new SiegeWarCannonsListener(this), this);
-			if(doesCurrentTownyVersionMatchRequiredTownyVersion( "0.97.0.14"))
+			if(doesCurrentTownyVersionMatchGivenTownyVersion( "0.97.0.14"))
 				pm.registerEvents(new SiegeWar_0_97_0_14_Listener(this), this);				
 		}
 	}
