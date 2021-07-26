@@ -411,7 +411,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		try {
 			if (args[0].equalsIgnoreCase("alltowns") && !args[1].equalsIgnoreCase("permanent")) {
 				Integer.parseInt(args[1]);
-			} else if (!args[2].equalsIgnoreCase("permanent")){
+			} else if (!args[0].equalsIgnoreCase("alltowns") && !args[2].equalsIgnoreCase("permanent")){
 				Integer.parseInt(args[2]);
 			}
 		} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
@@ -420,6 +420,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			return;
 		}
 
+		String timeDuration;
 		if (args.length >= 3 && args[0].equalsIgnoreCase("town")) {
 			//town {townname} {hours}
 			Town town = TownyUniverse.getInstance().getTown(args[1]);
@@ -429,14 +430,14 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			}
 			if (args[2].equalsIgnoreCase("permanent")) {
 				TownMetaDataController.setSiegeImmunityEndTime(town, -1l);
-				TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_swa_town_unsiegeable_set", args[1]));
-				Messaging.sendMsg(sender, Translation.of("msg_swa_town_unsiegeable_set", args[1])); //this one
+				timeDuration = "permanent";
 			} else {
 				long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 				TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
-				TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_set_siege_immunities_town", args[1], args[2]));
-				Messaging.sendMsg(sender, Translation.of("msg_set_siege_immunities_town", args[1], args[2]));
+				timeDuration = (Long.parseLong(args[2]) == 1L) ? "1 hour" : String.format("%s hours", args[2]);
 			}
+			TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_set_siege_immunities_town", args[1], timeDuration));
+			Messaging.sendMsg(sender, Translation.of("msg_set_siege_immunities_town", args[1], timeDuration));
 		}
 		else if (args.length >= 3 && args[0].equalsIgnoreCase("nation")) {
 			//nation {nationname} {hours}
@@ -448,29 +449,33 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			long endTime;
 			if (args[2].equalsIgnoreCase("permanent")) {
 				endTime = -1l;
+				timeDuration = "permanent";
 			} else {
 				long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 				endTime = System.currentTimeMillis() + durationMillis;
+				timeDuration = (Long.parseLong(args[2]) == 1L) ? "1 hour" : String.format("%s hours", args[2]);
 			}
 			for (Town town : nation.getTowns()) {
 				TownMetaDataController.setSiegeImmunityEndTime(town, endTime);
 			}
-			TownyMessaging.sendPrefixedNationMessage(nation, Translation.of("msg_set_siege_immunities_nation", args[1], args[2]));
-			Messaging.sendMsg(sender, Translation.of("msg_set_siege_immunities_nation", args[1], args[2]));
+			TownyMessaging.sendPrefixedNationMessage(nation, Translation.of("msg_set_siege_immunities_nation", args[1], timeDuration));
+			Messaging.sendMsg(sender, Translation.of("msg_set_siege_immunities_nation", args[1], timeDuration));
 
 		} else if (args[0].equalsIgnoreCase("alltowns")) {
 			//all towns
 			long endTime;
 			if (args[1].equalsIgnoreCase("permanent")) {
 				endTime = -1l;
+				timeDuration = "permanent";
 			} else {
-				long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
+				long durationMillis = (long)(Long.parseLong(args[1]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 				endTime = System.currentTimeMillis() + durationMillis;
+				timeDuration = (Long.parseLong(args[1]) == 1L) ? "1 hour" : String.format("%s hours", args[1]);
 			}
 			for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns()))  {
 				TownMetaDataController.setSiegeImmunityEndTime(town, endTime);
 			}
-			Messaging.sendGlobalMessage(Translation.of("msg_set_siege_immunities_all", args[1]));
+			Messaging.sendGlobalMessage(Translation.of("msg_set_siege_immunities_all", timeDuration));
 
 		} else {
 			showSiegeImmunityHelp(sender);

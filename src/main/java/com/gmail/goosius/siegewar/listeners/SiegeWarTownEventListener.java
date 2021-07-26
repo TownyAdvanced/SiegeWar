@@ -339,7 +339,12 @@ public class SiegeWarTownEventListener implements Listener {
 	        if (SiegeController.hasSiege(town)) {
 				Siege siege = SiegeController.getSiege(town);
 				SiegeStatus siegeStatus= siege.getStatus();
-				String time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getSiegeImmunityEndTime(town)- System.currentTimeMillis());
+				String time;
+				if (TownMetaDataController.getSiegeImmunityEndTime(town) != -1l) {
+					time = TimeMgmt.getFormattedTimeValue(TownMetaDataController.getSiegeImmunityEndTime(town)- System.currentTimeMillis());
+				} else {
+					time = "Permanent";
+				}
 				//Siege:
 				out.add(Translation.of("status_town_siege"));
 
