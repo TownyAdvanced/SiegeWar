@@ -113,9 +113,9 @@ msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cWar-allergy ac
 msg_war_siege_err_cannot_attack_peaceful_town: '&cYou cannot attack a peaceful town.'
 
 #Siege immunities
-msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s hours.'
-msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s hours.'
-msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s hours.'
+msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s.'
+msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s.'
+msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s.'
 
 #Siege-zone block placement restrictions
 msg_war_siege_zone_block_placement_forbidden: '&cYou cannot place this type of block in the wilderness area of a siege zone.'
@@ -251,8 +251,8 @@ msg_siege_war_banner_control_session_failure: '&cBanner control session failed!.
 msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going below the altitude of the banner, going into the town, or flying.'
 
 #Unsiegeable towns strings
-msg_swa_town_unsiegeable_set: "&bSuccessfully set town %s as unsiegeable"
-msg_err_cannot_start_siege_at_unsiegeable_town: "&cCannot start siege at an unsiegeable town"
+msg_swa_town_unsiegeable_set: "&bSuccessfully set town %s as unsiegeable."
+msg_err_cannot_start_siege_at_unsiegeable_town: "&cCannot start siege at an unsiegeable town."
 
 ##### Added in 0.15
 
