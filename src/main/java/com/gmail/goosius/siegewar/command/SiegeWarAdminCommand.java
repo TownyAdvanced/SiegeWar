@@ -13,7 +13,6 @@ import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -35,8 +34,9 @@ import java.util.List;
 
 public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
-	private static final List<String> siegewaradminTabCompletes = Arrays.asList("immunity","reload","siege","town","nation");
-	private static final List<String> siegewaradminImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
+	private static final List<String> siegewaradminTabCompletes = Arrays.asList("siegeimmunity","revoltimmunity","reload","siege","town","nation");
+	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
+	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
 	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setoccupier","removeoccupier");
 	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost");
@@ -44,9 +44,9 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
 		switch (args[0].toLowerCase()) {
-		case "immunity":
+		case "siegeimmunity":
 			if (args.length == 2)
-				return NameUtil.filterByStart(siegewaradminImmunityTabCompletes, args[1]);
+				return NameUtil.filterByStart(siegewaradminSiegeImmunityTabCompletes, args[1]);
 			
 			if (args.length == 3) {
 				switch (args[1].toLowerCase()) {
@@ -62,6 +62,25 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			if (args.length == 4) {
 				if (args[1].equalsIgnoreCase("town") || args[1].equalsIgnoreCase("nation"))
 					return Arrays.asList("0","1","2","3","4","5","6","permanent");
+			}
+		case "revoltimmunity":
+			if (args.length == 2)
+				return NameUtil.filterByStart(siegewaradminRevoltImmunityTabCompletes, args[1]);
+
+			if (args.length == 3) {
+				switch (args[1].toLowerCase()) {
+				case "town":
+					return getTownyStartingWith(args[2], "t");
+				case "nation":
+					return getTownyStartingWith(args[2], "n");
+				case "alltowns":
+					return Arrays.asList("0","1","2","3","4","5","6");
+				}
+			}
+
+			if (args.length == 4) {
+				if (args[1].equalsIgnoreCase("town") || args[1].equalsIgnoreCase("nation"))
+					return Arrays.asList("0","1","2","3","4","5","6");
 			}
 		case "siege":
 			if (args.length == 2)
@@ -122,8 +141,11 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			case "reload":
 				parseSiegeWarReloadCommand(sender);
 				break;
-			case "immunity":
-				parseSiegeWarImmunityCommand(sender, StringMgmt.remFirstArg(args));
+			case "siegeimmunity":
+				parseSiegeWarSiegeImmunityCommand(sender, StringMgmt.remFirstArg(args));
+				break;
+			case "revoltimmunity":
+				parseSiegeWarRevoltImmunityCommand(sender, StringMgmt.remFirstArg(args));
 				break;
 			case "siege":
 				parseSiegeWarSiegeCommand(sender, StringMgmt.remFirstArg(args));
@@ -154,21 +176,36 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	private void showHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewaradmin"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "reload", Translation.of("admin_help_1")));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity town [town_name] [hours|permanent]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity nation [nation_name] [hours|permanent]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity alltowns [hours|permanent]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity town [town_name] [hours|permanent]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity nation [nation_name] [hours|permanent]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity alltowns [hours|permanent]", ""));
+    sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity town [town_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity nation [nation_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity alltowns [hours]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setbalance [points]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setcaptured [true/false]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupier [town]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] removeoccupier", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplundergained [amount]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplunderlost [amount]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownsgained [amount]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownslost [amount]", ""));
 	}
 	
-	private void showImmunityHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/swa immunity"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity town [town_name] [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity nation [nation_name] [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "immunity alltowns [hours]", ""));
+	private void showSiegeImmunityHelp(CommandSender sender) {
+		sender.sendMessage(ChatTools.formatTitle("/swa siegeimmunity"));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity town [town_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity nation [nation_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity alltowns [hours]", ""));
+	}
+
+	private void showRevoltImmunityHelp(CommandSender sender) {
+		sender.sendMessage(ChatTools.formatTitle("/swa revoltimmunity"));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity town [town_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity nation [nation_name] [hours]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity alltowns [hours]", ""));
 	}
 
 	private void showSiegeHelp(CommandSender sender) {
@@ -202,9 +239,9 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		Messaging.sendErrorMsg(sender, Translation.of("config_and_lang_file_could_not_be_loaded"));
 	}
 
-	private void parseSiegeWarImmunityCommand(CommandSender sender, String[] args) {
+	private void parseSiegeWarSiegeImmunityCommand(CommandSender sender, String[] args) {
 		if (args.length < 2) {
-			showImmunityHelp(sender);
+			showSiegeImmunityHelp(sender);
 			return;
 		}
 		try {
@@ -215,7 +252,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			}
 		} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
 			Messaging.sendMsg(sender, Translation.of("msg_error_must_be_num"));
-			showImmunityHelp(sender);
+			showSiegeImmunityHelp(sender);
 			return;
 		}
 
@@ -229,7 +266,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			}
 			if (args[2].equalsIgnoreCase("permanent")) {
 				TownMetaDataController.setSiegeImmunityEndTime(town, -1l);
-				timeDuration = Translation.of("msg_permanent");
+				timeDuration = "permanent";
 			} else {
 				long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 				TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
@@ -248,7 +285,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			long endTime;
 			if (args[2].equalsIgnoreCase("permanent")) {
 				endTime = -1l;
-				timeDuration = Translation.of("msg_permanent");
+				timeDuration = "permanent";
 			} else {
 				long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 				endTime = System.currentTimeMillis() + durationMillis;
@@ -265,7 +302,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			long endTime;
 			if (args[1].equalsIgnoreCase("permanent")) {
 				endTime = -1l;
-				timeDuration = Translation.of("msg_permanent");
+				timeDuration = "permanent";
 			} else {
 				long durationMillis = (long)(Long.parseLong(args[1]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 				endTime = System.currentTimeMillis() + durationMillis;
@@ -277,7 +314,63 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			Messaging.sendGlobalMessage(Translation.of("msg_set_siege_immunities_all", timeDuration));
 
 		} else {
-			showImmunityHelp(sender);
+			showSiegeImmunityHelp(sender);
+		}
+	}
+
+	private void parseSiegeWarRevoltImmunityCommand(CommandSender sender, String[] args) {
+		if (args.length < 2) {
+			showRevoltImmunityHelp(sender);
+			return;
+		}
+
+		try {
+			if (args[0].equalsIgnoreCase("alltowns"))
+				Integer.parseInt(args[1]);
+			else
+				Integer.parseInt(args[2]);
+		} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+			Messaging.sendMsg(sender, Translation.of("msg_error_must_be_num"));
+			showRevoltImmunityHelp(sender);
+			return;
+		}
+
+		if (args.length >= 3 && args[0].equalsIgnoreCase("town")) {
+			//town {townname} {hours}
+			Town town = TownyUniverse.getInstance().getTown(args[1]);
+			if (town == null) {
+				Messaging.sendErrorMsg(sender, Translation.of("msg_err_not_registered_1", args[1]));
+				return;
+			}
+			long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
+			TownMetaDataController.setRevoltImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
+			TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_set_revolt_immunities_town", args[1], args[2]));
+			Messaging.sendMsg(sender, Translation.of("msg_set_revolt_immunities_town", args[1], args[2]));
+
+		} else if (args.length >= 3 && args[0].equalsIgnoreCase("nation")) {
+			//nation {nationname} {hours}
+			Nation nation = TownyUniverse.getInstance().getNation(args[1]);
+			if (nation == null) {
+				Messaging.sendErrorMsg(sender, Translation.of("msg_err_not_registered_1", args[1]));
+				return;
+			}
+			long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
+			for (Town town : nation.getTowns()) {
+				TownMetaDataController.setRevoltImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
+			}
+			TownyMessaging.sendPrefixedNationMessage(nation, Translation.of("msg_set_revolt_immunities_nation", args[1], args[2]));
+			Messaging.sendMsg(sender, Translation.of("msg_set_revolt_immunities_nation", args[1], args[2]));
+
+		} else if(args.length >= 2 && args[0].equalsIgnoreCase("alltowns")) {
+			//all towns
+			long durationMillis = (long)(Long.parseLong(args[1]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
+			for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns()))  {
+				TownMetaDataController.setRevoltImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
+			}
+			Messaging.sendGlobalMessage(Translation.of("msg_set_revolt_immunities_all", args[1]));
+
+		} else {
+			showRevoltImmunityHelp(sender);
 		}
 	}
 

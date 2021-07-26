@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.gmail.goosius</groupId>
   <artifactId>SiegeWar</artifactId>
-  <version>0.4.3</version>
+  <version>0.4.4</version>
   <name>siegewar</name> <!-- Leave lower-cased -->
 
   <properties>
@@ -40,7 +40,7 @@
 	<dependency>
 	  <groupId>com.github.TownyAdvanced</groupId>
 	  <artifactId>Towny</artifactId>
-	  <version>0.97.0.0</version>
+	  <version>0.97.0.16</version>
 	  <scope>provided</scope>
 	</dependency>
     <dependency>
