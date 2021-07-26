@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.21
+version: 0.22
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -165,7 +165,7 @@ msg_inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to break
 msg_swa_remove_siege_success: '&bSuccessfully removed siege.'
 msg_war_siege_occupied_towns_cannot_surrender: '&cOccupied towns cannot surrender.'
 msg_you_received_war_sickness: '&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave to remove the war sickness. Common causes of war sickness: being in a peaceful town, not having a military rank or not being allied to either side.'
-msg_you_will_get_sickness: '&c&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave or you will receive war sickness in %s seconds.'
+msg_you_will_get_sickness: '&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave or you will receive war sickness in %s seconds.'
 
 #Added in 0.07:
 msg_war_siege_peaceful_town_cannot_revolt_zero_or_one_unsieged_guardian_towns_nearby:  '&cYou cannot revolt at this time, because there are less than 2 unsieged guardian towns nearby (within %d chunks). A guardian town is a non-peaceful town in an open nation, with at least %d plots.'
@@ -451,3 +451,10 @@ msg_err_cannot_invite_occupation_town_already_occupied: '&cYou cannot invite occ
 msg_err_cannot_invite_occupation_king_not_online: "&cThe occupation-invitation failed because the king of %s (%s) is not online."
 msg_would_you_accept_town_request_for_occupation: '&6Would you agree to occupy %s?. This will cause the town to become occupied by your nation.'
 msg_invite_occupation_success: '&bThe town %s has come under the occupation of %s, by its own request.'
+
+# Added in 0.22
+
+#Revolt immunities
+msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s hours.'
+msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s hours.'
+msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s hours.'
