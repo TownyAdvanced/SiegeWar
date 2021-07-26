@@ -251,7 +251,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 				Integer.parseInt(args[2]);
 			}
 		} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-			Messaging.sendMsg(sender, Translation.of("msg_error_must_be_num"));
+			Messaging.sendMsg(sender, Translation.of("msg_error_must_be_num_or_permanent"));
 			showSiegeImmunityHelp(sender);
 			return;
 		}
@@ -266,11 +266,11 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			}
 			if (args[2].equalsIgnoreCase("permanent")) {
 				TownMetaDataController.setSiegeImmunityEndTime(town, -1l);
-				timeDuration = "permanent";
+				timeDuration = Translation.of("msg_permanent");
 			} else {
 				long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 				TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
-				timeDuration = (Long.parseLong(args[2]) == 1L) ? "1 hour" : String.format("%s hours", args[2]);
+				timeDuration = Long.parseLong(args[2]) + com.palmergames.bukkit.towny.object.Translation.of("msg_hours");
 			}
 			TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_set_siege_immunities_town", args[1], timeDuration));
 			Messaging.sendMsg(sender, Translation.of("msg_set_siege_immunities_town", args[1], timeDuration));
@@ -285,11 +285,11 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			long endTime;
 			if (args[2].equalsIgnoreCase("permanent")) {
 				endTime = -1l;
-				timeDuration = "permanent";
+				timeDuration = Translation.of("msg_permanent");
 			} else {
 				long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 				endTime = System.currentTimeMillis() + durationMillis;
-				timeDuration = (Long.parseLong(args[2]) == 1L) ? "1 hour" : String.format("%s hours", args[2]);
+				timeDuration = Long.parseLong(args[2]) + com.palmergames.bukkit.towny.object.Translation.of("msg_hours");
 			}
 			for (Town town : nation.getTowns()) {
 				TownMetaDataController.setSiegeImmunityEndTime(town, endTime);
@@ -302,11 +302,11 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			long endTime;
 			if (args[1].equalsIgnoreCase("permanent")) {
 				endTime = -1l;
-				timeDuration = "permanent";
+				timeDuration = Translation.of("msg_permanent");
 			} else {
 				long durationMillis = (long)(Long.parseLong(args[1]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 				endTime = System.currentTimeMillis() + durationMillis;
-				timeDuration = (Long.parseLong(args[1]) == 1L) ? "1 hour" : String.format("%s hours", args[1]);
+				timeDuration = Long.parseLong(args[1]) + com.palmergames.bukkit.towny.object.Translation.of("msg_hours");
 			}
 			for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns()))  {
 				TownMetaDataController.setSiegeImmunityEndTime(town, endTime);
