@@ -430,7 +430,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			}
 			if (args[2].equalsIgnoreCase("permanent")) {
 				TownMetaDataController.setSiegeImmunityEndTime(town, -1l);
-				timeDuration = "permanent";
+				timeDuration = Translation.of("msg_permanent");
 			} else {
 				long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 				TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
@@ -449,7 +449,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			long endTime;
 			if (args[2].equalsIgnoreCase("permanent")) {
 				endTime = -1l;
-				timeDuration = "permanent";
+				timeDuration = Translation.of("msg_permanent");
 			} else {
 				long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 				endTime = System.currentTimeMillis() + durationMillis;
@@ -466,7 +466,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			long endTime;
 			if (args[1].equalsIgnoreCase("permanent")) {
 				endTime = -1l;
-				timeDuration = "permanent";
+				timeDuration = Translation.of("msg_permanent");
 			} else {
 				long durationMillis = (long)(Long.parseLong(args[1]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 				endTime = System.currentTimeMillis() + durationMillis;

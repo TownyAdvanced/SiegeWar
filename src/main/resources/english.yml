@@ -247,6 +247,7 @@ msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control se
 #Unsiegeable towns strings
 msg_swa_town_unsiegeable_set: "&bSuccessfully set town %s as unsiegeable."
 msg_err_cannot_start_siege_at_unsiegeable_town: "&cCannot start siege at an unsiegeable town."
+msg_permanent: "permanent"
 
 ##### Added in 0.15
 
