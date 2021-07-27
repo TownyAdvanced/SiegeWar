@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.22
+version: 0.23
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -250,10 +250,6 @@ msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control se
 msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going into the town, or flying.'
 msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going below the altitude of the banner, going into the town, or flying.'
 
-#Unsiegeable towns strings
-msg_permanent: "permanent"
-msg_error_must_be_num_or_permanent: '&cAmount must be a number or ''permanent''.'
-
 ##### Added in 0.15
 
 # Town Merging
@@ -458,3 +454,9 @@ msg_invite_occupation_success: '&bThe town %s has come under the occupation of %
 msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s hours.'
 msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s hours.'
 msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s hours.'
+
+#Added in 0.23
+
+#Unsiegeable towns strings
+msg_permanent: "permanent"
+msg_error_must_be_num_or_permanent: '&cAmount must be a number or ''permanent''.'
