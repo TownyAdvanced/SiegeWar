@@ -146,6 +146,9 @@ public class PlayerDeath {
 				//Keep and degrade inventory
 				degradeInventory(playerDeathEvent);
 				keepInventory(playerDeathEvent);
+				//Keep level
+				keepLevel(playerDeathEvent);
+
 				SiegeHUDManager.updateHUDs();
 
 				if(confirmedCandidateSiege.getBannerControlSessions().containsKey(deadPlayer)) { //If the player that died had an ongoing session, remove it.
@@ -199,6 +202,12 @@ public class PlayerDeath {
 		if(SiegeWarSettings.getWarSiegeDeathPenaltyKeepInventoryEnabled() && !playerDeathEvent.getKeepInventory()) {
 			playerDeathEvent.setKeepInventory(true);
 			playerDeathEvent.getDrops().clear();
+		}
+	}
+
+	private static void keepLevel(PlayerDeathEvent playerDeathEvent) {
+		if(SiegeWarSettings.getWarSiegeDeathPenaltyKeepLevelEnabled() && !playerDeathEvent.getKeepLevel()) {
+			playerDeathEvent.setKeepLevel(true);
 		}
 	}
 

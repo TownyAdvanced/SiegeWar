@@ -188,6 +188,10 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_DEATH_PENALTY_KEEP_INVENTORY_ENABLED);
 	}
 
+	public static boolean getWarSiegeDeathPenaltyKeepLevelEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_DEATH_PENALTY_KEEP_LEVEL_ENABLED);
+	}
+
 	public static boolean getWarSiegeDeathPenaltyDegradeInventoryEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_DEATH_PENALTY_DEGRADE_INVENTORY_ENABLED);
 	}
