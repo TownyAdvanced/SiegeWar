@@ -8,9 +8,7 @@ import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.gmail.goosius.siegewar.settings.ConfigNodes;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -217,13 +215,24 @@ public class SiegeWarBannerControlUtil {
 				} else {
 					//Session success
 					siege.removeBannerControlSession(bannerControlSession);
-
+					//Update beacon
+					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
+					//Remove glowing effect
+					if(bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
+						Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+							@Override
+							public void run() {
+								bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
+							}
+						});
+					}
+					//Update siege
 					if(bannerControlSession.getSiegeSide() == siege.getBannerControllingSide()) {
-						//The player contributes to ongoing banner control
+						//Player contributes to ongoing banner control
 						siege.addBannerControllingResident(bannerControlSession.getResident());
 						Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_success"));
 					} else {
-						//The player gains banner control for their side
+						//Player gains banner control for their side
 						boolean reversal = false;
 						int reversalBonusScore = 0;
 						if(siege.getBannerControllingSide() != SiegeSide.NOBODY
@@ -266,7 +275,6 @@ public class SiegeWarBannerControlUtil {
 							}
 						}
 						SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
-						CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
 					}
 				}
 			} catch (Exception e) {
