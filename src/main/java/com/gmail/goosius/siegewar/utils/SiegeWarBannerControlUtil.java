@@ -192,10 +192,19 @@ public class SiegeWarBannerControlUtil {
 				//Check if session failed
 				if (!doesPlayerMeetBasicSessionRequirements(siege, bannerControlSession.getPlayer(), bannerControlSession.getResident())) {
 					siege.removeBannerControlSession(bannerControlSession);
-
 					String errorMessage = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? Translation.of("msg_siege_war_banner_control_session_failure_with_altitude") : Translation.of("msg_siege_war_banner_control_session_failure");
 					Messaging.sendMsg(bannerControlSession.getPlayer(), errorMessage);
+					//Update beacon
 					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
+					//Remove glowing effect
+					if(bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
+						Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+							@Override
+							public void run() {
+								bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
+							}
+						});
+					}
 					continue;
 				}
 
