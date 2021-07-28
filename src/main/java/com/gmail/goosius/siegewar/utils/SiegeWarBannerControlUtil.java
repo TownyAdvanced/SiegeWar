@@ -9,7 +9,6 @@ import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -17,7 +16,10 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -39,6 +41,7 @@ public class SiegeWarBannerControlUtil {
 				evaluateBannerControlPoints(siege);
 				evaluateExistingBannerControlSessions(siege);
 				evaluateNewBannerControlSessions(siege);
+				evaluatePlayerGlowing(siege);
 			}
 		} catch (Exception e) {
 			try {
@@ -104,26 +107,21 @@ public class SiegeWarBannerControlUtil {
 			new BannerControlSession(resident, player, siegeSide, sessionEndTime);
 		siege.addBannerControlSession(player, bannerControlSession);
 
-		//Notify Player
+		//Notify Player in console
 		String messageKey = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? "msg_siege_war_banner_control_session_started_with_altitude" : "msg_siege_war_banner_control_session_started";
+		String sessionDurationText = TimeMgmt.getFormattedTimeValue(sessionDurationMillis);
 		Messaging.sendMsg(player, String.format(
 			Translation.of(messageKey),
 			TownySettings.getTownBlockSize(),
 			SiegeWarSettings.getBannerControlVerticalDistanceBlocks(),
-			TimeMgmt.getFormattedTimeValue(sessionDurationMillis)));
+			sessionDurationText));
+
+		//Notify player in action bar
+		ChatColor actionBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
+		String actionBarMessage = actionBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", sessionDurationText);
+		bannerControlSession.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(actionBarMessage));
 
 		CosmeticUtil.evaluateBeacon(player, siege);
-
-		//Make player glow (which also shows them a timer)
-		int effectDurationSeconds = (SiegeWarSettings.getWarSiegeBannerControlSessionDurationMinutes() * 60) + (int)TownySettings.getShortInterval(); 
-		final int effectDurationTicks = (int)(TimeTools.convertToTicks(effectDurationSeconds));
-		Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-			public void run() {
-				List<PotionEffect> potionEffects = new ArrayList<>();
-				potionEffects.add(new PotionEffect(PotionEffectType.GLOWING, effectDurationTicks, 0));
-				player.addPotionEffects(potionEffects);
-			}
-		});
 
 		//If this is a switching session, notify participating nations/towns
 		if(siegeSide != siege.getBannerControllingSide()) {
@@ -180,6 +178,10 @@ public class SiegeWarBannerControlUtil {
 	}
 
 	private static void evaluateExistingBannerControlSessions(Siege siege) {
+		String inProgressMessage;
+		String remainingSessionTime;
+		ChatColor actionBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
+
 		if(!BattleSession.getBattleSession().isActive())
 			return;
 
@@ -188,13 +190,14 @@ public class SiegeWarBannerControlUtil {
 				//Check if session failed
 				if (!doesPlayerMeetBasicSessionRequirements(siege, bannerControlSession.getPlayer(), bannerControlSession.getResident())) {
 					siege.removeBannerControlSession(bannerControlSession);
-
 					String errorMessage = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? Translation.of("msg_siege_war_banner_control_session_failure_with_altitude") : Translation.of("msg_siege_war_banner_control_session_failure");
 					Messaging.sendMsg(bannerControlSession.getPlayer(), errorMessage);
+					//Update beacon
 					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
-
-					if (bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
-						Towny.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(Towny.getPlugin(), new Runnable() {
+					//Remove glowing effect
+					if(bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
+						Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+							@Override
 							public void run() {
 								bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
 							}
@@ -203,18 +206,33 @@ public class SiegeWarBannerControlUtil {
 					continue;
 				}
 
-				//Check if session succeeded
-				if(System.currentTimeMillis() > bannerControlSession.getSessionEndTime()) {
-
+				//Check if session is in progress or succeeded. Countdown accurate to 1 second, not less
+				if((System.currentTimeMillis() / 1000) < (bannerControlSession.getSessionEndTime() / 1000)) {
+					//Session still in progress
+					remainingSessionTime = TimeMgmt.getFormattedTimeValue(bannerControlSession.getSessionEndTime() - System.currentTimeMillis());
+					inProgressMessage = actionBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", remainingSessionTime);
+					bannerControlSession.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(inProgressMessage));
+				} else {
 					//Session success
 					siege.removeBannerControlSession(bannerControlSession);
-
+					//Update beacon
+					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
+					//Remove glowing effect
+					if(bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
+						Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+							@Override
+							public void run() {
+								bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
+							}
+						});
+					}
+					//Update siege
 					if(bannerControlSession.getSiegeSide() == siege.getBannerControllingSide()) {
-						//The player contributes to ongoing banner control
+						//Player contributes to ongoing banner control
 						siege.addBannerControllingResident(bannerControlSession.getResident());
 						Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_success"));
 					} else {
-						//The player gains banner control for their side
+						//Player gains banner control for their side
 						boolean reversal = false;
 						int reversalBonusScore = 0;
 						if(siege.getBannerControllingSide() != SiegeSide.NOBODY
@@ -257,7 +275,6 @@ public class SiegeWarBannerControlUtil {
 							}
 						}
 						SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
-						CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
 					}
 				}
 			} catch (Exception e) {
@@ -296,5 +313,80 @@ public class SiegeWarBannerControlUtil {
 
 		//Record gained battle points for use by the 'Banner Control Reversal Bonus' feature
 		siege.adjustBattlePointsEarnedFromCurrentBannerControl(battlePoints);
+	}
+
+	/**
+	 * This method evaluates whether players should be made to glow
+	 * 
+	 * Glowing Rules:
+	 * - If both teams are within the timed point zone, all players in BC sessions glow.
+	 * - If no team, or just one, is within the timed point zone, nobody glows.
+	 * 
+	 * @param siege the siege
+	 */
+	private static void evaluatePlayerGlowing(Siege siege) throws Exception {
+		boolean attackersInTimedPointZone = false;
+		boolean defendersInTimedPointZone = false;
+		TownyUniverse universe = TownyUniverse.getInstance();
+		Resident resident;
+		SiegeSide siegeSide;
+
+		//Determine if both of the teams are within the timed point zone
+		PLAYER_LOOP:
+		for(Player player: Bukkit.getOnlinePlayers()) {
+			resident = universe.getResident(player.getUniqueId());
+			if (resident == null)
+				return;
+
+			if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
+				return;
+
+			siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
+			
+			switch (siegeSide) {
+				case ATTACKERS:
+					attackersInTimedPointZone = true;
+					if(defendersInTimedPointZone)
+						break PLAYER_LOOP;
+					break;
+				case DEFENDERS:
+					defendersInTimedPointZone = true;
+					if(attackersInTimedPointZone)
+						break PLAYER_LOOP;
+					break;
+				case NOBODY:
+					break;
+			}
+		}
+		
+		//Adjust player glow effects
+		if(attackersInTimedPointZone && defendersInTimedPointZone) {
+			//Calculate glow effect duration
+			int effectDurationSeconds = SiegeWarSettings.getWarSiegeBannerControlSessionDurationMinutes() * 60; 
+			final int effectDurationTicks = (int)(TimeTools.convertToTicks(effectDurationSeconds));
+			//Ensure players in BC sessions are glowing
+			for(Player player: siege.getBannerControlSessions().keySet()) {
+				if(!player.hasPotionEffect(PotionEffectType.GLOWING)) {
+					Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+						public void run() {
+							List<PotionEffect> potionEffects = new ArrayList<>();
+							potionEffects.add(new PotionEffect(PotionEffectType.GLOWING, effectDurationTicks, 0));
+							player.addPotionEffects(potionEffects);
+						}
+					});
+				}
+			}
+		} else {
+			//Ensure players in BC sessions are not glowing
+			for(Player player: siege.getBannerControlSessions().keySet()) {
+				if(player.hasPotionEffect(PotionEffectType.GLOWING)) {
+					Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+						public void run() {
+							player.removePotionEffect(PotionEffectType.GLOWING);
+						}
+					});
+				}				
+			}
+		}
 	}
 }
