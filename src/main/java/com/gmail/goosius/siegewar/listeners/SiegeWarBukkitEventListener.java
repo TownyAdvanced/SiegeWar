@@ -184,13 +184,15 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		if (SiegeController.getPlayersInBannerControlSessions().contains(event.getPlayer()) && event.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
-			Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-				@Override
-				public void run() {
-					event.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
-				}
-			});
+		if (SiegeWarSettings.getWarSiegeEnablePlayerGlowing()) {
+			if (SiegeController.getPlayersInBannerControlSessions().contains(event.getPlayer()) && event.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
+				Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+					@Override
+					public void run() {
+						event.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
+					}
+				});
+			}
 		}
 	}
 }

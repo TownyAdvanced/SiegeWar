@@ -75,14 +75,16 @@ public class SiegeWarBattleSessionUtil {
 							}
 							
 							//Remove glowing effects from players in bc sessions
-							for (Player player : siege.getBannerControlSessions().keySet()) {
-								if (player.isOnline() && player.hasPotionEffect(PotionEffectType.GLOWING)) {
-									Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-										@Override
-										public void run() {
-											player.removePotionEffect(PotionEffectType.GLOWING);
-										}
-									});
+							if (SiegeWarSettings.getWarSiegeEnablePlayerGlowing()) {
+								for (Player player : siege.getBannerControlSessions().keySet()) {
+									if (player.isOnline() && player.hasPotionEffect(PotionEffectType.GLOWING)) {
+										Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+											@Override
+											public void run() {
+												player.removePotionEffect(PotionEffectType.GLOWING);
+											}
+										});
+									}
 								}
 							}
 

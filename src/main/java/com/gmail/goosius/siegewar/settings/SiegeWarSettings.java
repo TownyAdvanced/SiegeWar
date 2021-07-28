@@ -184,6 +184,10 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BESIEGED_TOWN_UNCLAIMING_DISABLED);
 	}
 
+	public static boolean getWarSiegeEnablePlayerGlowing() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_ENABLE_PLAYER_GLOWING);
+	}
+
 	public static boolean getWarSiegeDeathPenaltyKeepInventoryEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_DEATH_PENALTY_KEEP_INVENTORY_ENABLED);
 	}

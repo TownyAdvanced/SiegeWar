@@ -178,6 +178,11 @@ public enum ConfigNodes {
 			"# NOTE: ",
 			"# If you enable this feature, ",
 			"# make sure to also have a server rule preventing traps being created in the timed-point-zone BEFORE the banner is placed"),
+	WAR_SIEGE_ENABLE_PLAYER_GLOWING(
+			"war.siege.switches.enable_player_glowing",
+			"true",
+			"",
+			"# If the setting is true, players starting banner control session will acquire glow effect."),
 	WAR_SIEGE_DEATH_PENALTY_KEEP_INVENTORY_ENABLED(
 			"war.siege.switches.keep_inventory_on_siege_death",
 			"true",

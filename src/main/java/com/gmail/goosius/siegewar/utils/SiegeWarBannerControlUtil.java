@@ -115,15 +115,17 @@ public class SiegeWarBannerControlUtil {
 		CosmeticUtil.evaluateBeacon(player, siege);
 
 		//Make player glow (which also shows them a timer)
-		int effectDurationSeconds = (SiegeWarSettings.getWarSiegeBannerControlSessionDurationMinutes() * 60) + (int)TownySettings.getShortInterval(); 
-		final int effectDurationTicks = (int)(TimeTools.convertToTicks(effectDurationSeconds));
-		Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-			public void run() {
-				List<PotionEffect> potionEffects = new ArrayList<>();
-				potionEffects.add(new PotionEffect(PotionEffectType.GLOWING, effectDurationTicks, 0));
-				player.addPotionEffects(potionEffects);
-			}
-		});
+		if (SiegeWarSettings.getWarSiegeEnablePlayerGlowing()) {
+			int effectDurationSeconds = (SiegeWarSettings.getWarSiegeBannerControlSessionDurationMinutes() * 60) + (int) TownySettings.getShortInterval();
+			final int effectDurationTicks = (int) (TimeTools.convertToTicks(effectDurationSeconds));
+			Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+				public void run() {
+					List<PotionEffect> potionEffects = new ArrayList<>();
+					potionEffects.add(new PotionEffect(PotionEffectType.GLOWING, effectDurationTicks, 0));
+					player.addPotionEffects(potionEffects);
+				}
+			});
+		}
 
 		//If this is a switching session, notify participating nations/towns
 		if(siegeSide != siege.getBannerControllingSide()) {
@@ -193,14 +195,16 @@ public class SiegeWarBannerControlUtil {
 					Messaging.sendMsg(bannerControlSession.getPlayer(), errorMessage);
 					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
 
-					if (bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
-						Towny.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(Towny.getPlugin(), new Runnable() {
-							public void run() {
-								bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
-							}
-						});
+					if (SiegeWarSettings.getWarSiegeEnablePlayerGlowing()) {
+						if (bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
+							Towny.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(Towny.getPlugin(), new Runnable() {
+								public void run() {
+									bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
+								}
+							});
+						}
+						continue;
 					}
-					continue;
 				}
 
 				//Check if session succeeded
