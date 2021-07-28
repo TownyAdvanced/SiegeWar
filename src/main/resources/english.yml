@@ -110,11 +110,6 @@ msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cUnable to
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cWar-allergy active. To remove this effect, leave the siege-zone immediately.'
 msg_war_siege_err_cannot_attack_peaceful_town: '&cYou cannot attack a peaceful town.'
 
-#Siege immunities
-msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s.'
-msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s.'
-msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s.'
-
 #Siege-zone block placement restrictions
 msg_war_siege_zone_block_placement_forbidden: '&cYou cannot place this type of block in the wilderness area of a siege zone.'
 msg_war_siege_zone_bucket_emptying_forbidden: '&cYou cannot use this type of bucket in the wilderness area of a siege zone.'
@@ -477,3 +472,8 @@ msg_town_immunity_expired: 'Your town's Siege Immunity has expired.'
 #Unsiegeable towns strings
 msg_permanent: "permanent"
 msg_error_must_be_num_or_permanent: '&cAmount must be a number or ''permanent''.'
+
+#Siege immunities
+msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s.'
+msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s.'
+msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s.'
