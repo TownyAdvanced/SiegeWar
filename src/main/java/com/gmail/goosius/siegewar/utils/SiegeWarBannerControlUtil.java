@@ -179,13 +179,18 @@ public class SiegeWarBannerControlUtil {
 			new BannerControlSession(resident, player, siegeSide, sessionEndTime);
 		siege.addBannerControlSession(player, bannerControlSession);
 
-		//Notify Player
+		//Notify Player in console
 		String messageKey = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? "msg_siege_war_banner_control_session_started_with_altitude" : "msg_siege_war_banner_control_session_started";
+		String sessionDurationText = TimeMgmt.getFormattedTimeValue(sessionDurationMillis);
 		Messaging.sendMsg(player, String.format(
 			Translation.of(messageKey),
 			TownySettings.getTownBlockSize(),
 			SiegeWarSettings.getBannerControlVerticalDistanceBlocks(),
-			TimeMgmt.getFormattedTimeValue(sessionDurationMillis)));
+			sessionDurationText));
+
+		//Notify player in action bar
+		String actionBarMessage = ChatColor.YELLOW + Translation.of("msg_siege_war_banner_control_remaining_session_time", sessionDurationText);
+		bannerControlSession.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(actionBarMessage));
 
 		CosmeticUtil.evaluateBeacon(player, siege);
 
