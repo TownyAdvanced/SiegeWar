@@ -892,7 +892,27 @@ public enum ConfigNodes {
 			"# If this setting is 0.1,",
 			"# and an attack is attempted on a nation town,",
 			"# then for every natural town (i.e. not occupied foreign towns) in that nation,",
-			"# the attack-cost (i.e. warchest) requirement is increased by 10% of the amount it would take to attack that town.");
+			"# the attack-cost (i.e. warchest) requirement is increased by 10% of the amount it would take to attack that town."),
+	BANNER_CONTROL(
+		"banner_control",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                    BANNER CONTROL                    | #",
+			"# +------------------------------------------------------+ #",
+			"#                                                          #",
+			"# FYI: Most banner-control-related settings are above,     #",
+			"# and not in this section.                                 #",
+			"############################################################",
+			""),
+	BANNER_CONTROL_CAPTURE_MESSAGE_COLOR(
+			"banner_control.capturing_message_color",
+			"yellow",
+			"",
+			"# This setting determines the color of the action bar message,",
+			"# which players see while they are capturing the banner.");
 
 	private final String Root;
 	private final String Default;

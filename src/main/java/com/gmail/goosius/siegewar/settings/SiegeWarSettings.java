@@ -465,4 +465,8 @@ public class SiegeWarSettings {
 	public static double getNationSiegeImmunityHomeTownContributionToAttackCost() {
 		return Settings.getDouble(ConfigNodes.NATION_SIEGE_IMMUNITY_HOME_TOWN_CONTRIBUTION_TO_ATTACK_COST);
 	}
+
+	public static String getBannerControlCaptureMessageColor() {
+		return Settings.getString(ConfigNodes.BANNER_CONTROL_CAPTURE_MESSAGE_COLOR);
+	}
 }

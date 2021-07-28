@@ -8,6 +8,7 @@ import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.settings.ConfigNodes;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -118,7 +119,8 @@ public class SiegeWarBannerControlUtil {
 			sessionDurationText));
 
 		//Notify player in action bar
-		String actionBarMessage = ChatColor.YELLOW + Translation.of("msg_siege_war_banner_control_remaining_session_time", sessionDurationText);
+		ChatColor actionBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
+		String actionBarMessage = actionBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", sessionDurationText);
 		bannerControlSession.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(actionBarMessage));
 
 		CosmeticUtil.evaluateBeacon(player, siege);
@@ -180,6 +182,7 @@ public class SiegeWarBannerControlUtil {
 	private static void evaluateExistingBannerControlSessions(Siege siege) {
 		String inProgressMessage;
 		String remainingSessionTime;
+		ChatColor actionBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
 
 		if(!BattleSession.getBattleSession().isActive())
 			return;
@@ -200,7 +203,7 @@ public class SiegeWarBannerControlUtil {
 				if(System.currentTimeMillis() < bannerControlSession.getSessionEndTime()) {
 					//Session still in progress
 					remainingSessionTime = TimeMgmt.getFormattedTimeValue(bannerControlSession.getSessionEndTime() - System.currentTimeMillis());
-					inProgressMessage = ChatColor.YELLOW + Translation.of("msg_siege_war_banner_control_remaining_session_time", remainingSessionTime);
+					inProgressMessage = actionBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", remainingSessionTime);
 					bannerControlSession.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(inProgressMessage));
 				} else {
 					//Session success
