@@ -206,8 +206,8 @@ public class SiegeWarBannerControlUtil {
 					continue;
 				}
 
-				//Check if session is in progress or succeeded
-				if(System.currentTimeMillis() < bannerControlSession.getSessionEndTime()) {
+				//Check if session is in progress or succeeded. Countdown accurate to 1 second, not less
+				if((System.currentTimeMillis() / 1000) < (bannerControlSession.getSessionEndTime() / 1000)) {
 					//Session still in progress
 					remainingSessionTime = TimeMgmt.getFormattedTimeValue(bannerControlSession.getSessionEndTime() - System.currentTimeMillis());
 					inProgressMessage = actionBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", remainingSessionTime);
