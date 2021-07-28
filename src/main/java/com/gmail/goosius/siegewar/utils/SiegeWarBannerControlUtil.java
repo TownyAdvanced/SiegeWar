@@ -17,7 +17,10 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -241,6 +244,9 @@ public class SiegeWarBannerControlUtil {
 	}
 
 	private static void evaluateExistingBannerControlSessions(Siege siege) {
+		String inProgressMessage;
+		String remainingSessionTime;
+
 		if(!BattleSession.getBattleSession().isActive())
 			return;
 
@@ -256,9 +262,13 @@ public class SiegeWarBannerControlUtil {
 					continue;
 				}
 
-				//Check if session succeeded
-				if(System.currentTimeMillis() > bannerControlSession.getSessionEndTime()) {
-
+				//Check if session is in progress or succeeded
+				if(System.currentTimeMillis() < bannerControlSession.getSessionEndTime()) {
+					//Session still in progress
+					remainingSessionTime = TimeMgmt.getFormattedTimeValue(bannerControlSession.getSessionEndTime() - System.currentTimeMillis());
+					inProgressMessage = ChatColor.YELLOW + Translation.of("msg_siege_war_banner_control_remaining_session_time", remainingSessionTime);
+					bannerControlSession.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(inProgressMessage));
+				} else {
 					//Session success
 					siege.removeBannerControlSession(bannerControlSession);
 
