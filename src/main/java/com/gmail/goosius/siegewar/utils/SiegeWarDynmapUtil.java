@@ -57,6 +57,10 @@ public class SiegeWarDynmapUtil {
 							} else {
 								//Town
 								if(SiegeController.hasActiveSiege(town)) {
+									//Besieged Town
+									hidePlayer = true;
+								} else if (town.isRuined()) {
+									//Ruined town
 									hidePlayer = true;
 								}
 							}
