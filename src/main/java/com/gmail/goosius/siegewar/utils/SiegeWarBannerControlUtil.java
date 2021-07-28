@@ -330,13 +330,17 @@ public class SiegeWarBannerControlUtil {
 		TownyUniverse universe = TownyUniverse.getInstance();
 		Resident resident;
 		SiegeSide siegeSide;
-	
+
+		//Determine if both of the teams are within the timed point zone
 		PLAYER_LOOP:
 		for(Player player: Bukkit.getOnlinePlayers()) {
 			resident = universe.getResident(player.getUniqueId());
 			if (resident == null)
-				throw new TownyException(Translation.of("msg_err_not_registered_1", player.getName()));
-	
+				return;
+
+			if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
+				return;
+
 			siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
 			
 			switch (siegeSide) {
