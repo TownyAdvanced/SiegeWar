@@ -282,7 +282,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			TownyMessaging.sendPrefixedNationMessage(nation, Translation.of("msg_set_siege_immunities_nation", args[1], args[2]));
 			Messaging.sendMsg(sender, Translation.of("msg_set_siege_immunities_nation", args[1], args[2]));
 
-		} else if(args.length >= 2 && args[0].equalsIgnoreCase("alltowns")) {
+		} else if (args[0].equalsIgnoreCase("alltowns")) {
 			//all towns
 			long durationMillis = (long)(Long.parseLong(args[1]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 			for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns()))  {
@@ -338,7 +338,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			TownyMessaging.sendPrefixedNationMessage(nation, Translation.of("msg_set_revolt_immunities_nation", args[1], args[2]));
 			Messaging.sendMsg(sender, Translation.of("msg_set_revolt_immunities_nation", args[1], args[2]));
 
-		} else if(args.length >= 2 && args[0].equalsIgnoreCase("alltowns")) {
+		} else if (args[0].equalsIgnoreCase("alltowns")) {
 			//all towns
 			long durationMillis = (long)(Long.parseLong(args[1]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
 			for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns()))  {
