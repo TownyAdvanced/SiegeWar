@@ -73,6 +73,7 @@ public class SiegeWarActionListener implements Listener {
 	@EventHandler
 	public void onBucketUse(TownyBuildEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled() 
+				&& !event.isCancelled()
 				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenBucketMaterials().contains(event.getMaterial())
 				&& event.isInWilderness() 
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getLocation())) {

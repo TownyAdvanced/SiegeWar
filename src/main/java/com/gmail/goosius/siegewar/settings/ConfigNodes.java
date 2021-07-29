@@ -554,6 +554,7 @@ public enum ConfigNodes {
 			"siege_material_restrictions.wilderness_explosion_prevention_entity_types",
 			"primed_tnt, minecart_tnt",
 			"",
+			"# This setting is useful to prevent the dropping of explosive tnt and tnt-minecarts onto the timed-point-zone.",
 			"# This setting is used to indicate the list of entity types which will not explode in the wilderness area of siegezones"),
 	WAR_SIEGE_MAP_HIDING(
 			"war.siege.map_hiding",
