@@ -25,7 +25,7 @@ public class Settings {
         }
 
 		// Some list variables do not reload upon loadConfig.
-		SiegeWarSettings.resetSpecialCaseVariables();
+		SiegeWarSettings.resetCachedSettings();
 		
 		try {
 			Translation.loadLanguage(sw.getDataFolder().getPath() + File.separator, "english.yml");

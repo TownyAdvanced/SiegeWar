@@ -72,12 +72,13 @@ public class SiegeWarActionListener implements Listener {
 	 */
 	@EventHandler
 	public void onBucketUse(TownyBuildEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled() && event.isInWilderness() && SiegeWarSettings.isWarSiegeZoneBucketEmptyingRestrictionsEnabled() && SiegeWarSettings.getWarSiegeZoneBucketEmptyingRestrictionsMaterials().contains(event.getMaterial())) {
-			if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getLocation())) {
-				event.setMessage(Translation.of("msg_war_siege_zone_bucket_emptying_forbidden"));
-				event.setCancelled(true);
-			}
+		if(SiegeWarSettings.getWarSiegeEnabled() 
+				&& !event.isCancelled()
+				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenBucketMaterials().contains(event.getMaterial())
+				&& event.isInWilderness() 
+				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getLocation())) {
+			event.setMessage(Translation.of("msg_war_siege_zone_bucket_emptying_forbidden"));
+			event.setCancelled(true);
 		}
 	}
-
 }

@@ -526,40 +526,36 @@ public enum ConfigNodes {
 			"# then if team A has gained 420 battle points from banner control,",
 			"# and banner control is then reversed by Team B,",
 			"# then Team B will get an instant bonus of 840 battle points."),
-	WAR_SIEGE_ZONE_BLOCK_PLACEMENT_RESTRICTIONS(
-			"war.siege.zone_block_placement_restrictions",
+	SIEGE_MATERIAL_RESTRICTIONS(
+			"siege_material_restrictions",
 			"",
 			"",
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |        Siegezone Block Placement Restrictions        | #",
+			"# |              Siege Material Restrictions             | #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	WAR_SIEGE_ZONE_BLOCK_PLACEMENT_RESTRICTIONS_ENABLED(
-			"war.siege.zone_block_placement_restrictions.enabled",
-			"true",
-			"",
-			"# If this setting is true, then certain blocks cannot be placed in the wilderness area of the siegezone.",
-			"# This setting is useful to help prevent extreme siege-zone grief such as obsidian forts."),
-	WAR_SIEGE_ZONE_BLOCK_PLACEMENT_RESTRICTIONS_MATERIALS(
-			"war.siege.zone_block_placement_restrictions.materials",
+	SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_BLOCK_PLACEMENT_PREVENTION_MATERIALS(
+			"siege_material_restrictions.wilderness_block_placement_prevention_materials",
 			"obsidian, ice",
 			"",
-			"# This setting is used to indicate the list of forbidden materials",
+			"# This setting is useful to help prevent extreme siege-zone grief such as obsidian forts.",
+			"# The list is used to indicate the list of blocks which cannot be placed in the wilderness area of siegezones.",
 			"# WARNING: Avoid putting 'common' blocks on this list as that may cause lag."),
-	WAR_SIEGE_ZONE_BUCKET_EMPTYING_RESTRICTIONS_ENABLED(
-			"war.siege.zone_bucket_usage_restrictions.enabled",
-			"true",
-			"",
-			"# If this setting is true, then certain buckets cannot be emptied in the wilderness area of the siegezone.",
-			"# This setting is useful to help prevent extreme siege-zone grief such as obsidian forts or cobble monsters."),
-	WAR_SIEGE_ZONE_BUCKET_EMPTYING_RESTRICTIONS_MATERIALS(
-			"war.siege.zone_bucket_usage_restrictions.materials",
+	SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_BUCKET_EMPTYING_PREVENTION_MATERIALS(
+			"siege_material_restrictions.wilderness_bucket_usage_prevention_materials",
 			"lava_bucket, water_bucket, cod_bucket, pufferfish_bucket, salmon_bucket, tropical_fish_bucket, axolotl_bucket",
 			"",
-			"# This setting is used to indicate the list of forbidden buckets"),
+			"# This setting is useful to help prevent extreme siege-zone grief such as obsidian forts or cobble monsters.",
+			"# The list is used to indicate the list of forbidden buckets"),
+	SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_EXPLOSION_PREVENTION_ENTITY_TYPES(
+			"siege_material_restrictions.wilderness_explosion_prevention_entity_types",
+			"primed_tnt, minecart_tnt",
+			"",
+			"# This setting is useful to prevent the dropping of explosive tnt and tnt-minecarts onto the timed-point-zone.",
+			"# This setting is used to indicate the list of entity types which will not explode in the wilderness area of siegezones"),
 	WAR_SIEGE_MAP_HIDING(
 			"war.siege.map_hiding",
 			"",
