@@ -538,20 +538,20 @@ public enum ConfigNodes {
 			"############################################################",
 			""),
 	SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_BLOCK_PLACEMENT_PREVENTION_MATERIALS(
-			"siege_material_restrictions.wilderness_block_placement_prevention.materials",
+			"siege_material_restrictions.wilderness_block_placement_prevention_materials",
 			"obsidian, ice",
 			"",
 			"# This setting is useful to help prevent extreme siege-zone grief such as obsidian forts.",
 			"# The list is used to indicate the list of blocks which cannot be placed in the wilderness area of siegezones.",
 			"# WARNING: Avoid putting 'common' blocks on this list as that may cause lag."),
 	SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_BUCKET_EMPTYING_PREVENTION_MATERIALS(
-			"siege_material_restrictions.wilderness_bucket_usage_prevention.materials",
+			"siege_material_restrictions.wilderness_bucket_usage_prevention_materials",
 			"lava_bucket, water_bucket, cod_bucket, pufferfish_bucket, salmon_bucket, tropical_fish_bucket, axolotl_bucket",
 			"",
 			"# This setting is useful to help prevent extreme siege-zone grief such as obsidian forts or cobble monsters.",
 			"# The list is used to indicate the list of forbidden buckets"),
 	SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_EXPLOSION_PREVENTION_MATERIALS(
-			"siege_material_restrictions.wilderness_explosion_prevention.materials",
+			"siege_material_restrictions.wilderness_explosion_prevention_materials",
 			"tnt, tnt_minecart",
 			"",
 			"# This setting is used to indicate the list of materials which will not explode in the wilderness area of siegezones"),
