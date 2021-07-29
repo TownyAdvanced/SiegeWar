@@ -400,7 +400,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 					SiegeController.saveSiege(siege);
 					Messaging.sendMsg(sender, Translation.of("msg_swa_set_plunder_success", Boolean.toString(plundered).toUpperCase(), town.getName()));
 					return;
-				case "setInvaded":
+				case "setinvaded":
 					if(siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.SUPPRESSION) {
 						Messaging.sendErrorMsg(sender, Translation.of("msg_err_swa_cannot_set_invade_due_to_siege_type", args[0]));
 						return;
