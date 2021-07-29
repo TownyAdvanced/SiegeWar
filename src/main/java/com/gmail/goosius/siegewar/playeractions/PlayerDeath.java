@@ -171,7 +171,7 @@ public class PlayerDeath {
 		Damageable damageable;
 		double maxDurability;
 		int currentDurability, damageToInflict, newDurability, durabilityWarning;
-		Boolean closeToBreaking = false;
+		boolean closeToBreaking = false;
 		if (SiegeWarSettings.getWarSiegeDeathPenaltyDegradeInventoryEnabled()) {
 			for (ItemStack itemStack : playerDeathEvent.getEntity().getInventory().getContents()) {
 				if (itemStack != null && itemStack.getType().getMaxDurability() != 0 && !itemStack.getItemMeta().isUnbreakable()) {
