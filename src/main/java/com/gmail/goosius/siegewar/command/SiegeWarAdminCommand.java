@@ -395,17 +395,17 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 						AttackerTimedWin.attackerTimedWin(siege);
 					return;
 				case "setplundered":
-					Boolean plundered = Boolean.parseBoolean(args[2]);
+					boolean plundered = Boolean.parseBoolean(args[2]);
 					siege.setTownPlundered(plundered);
 					SiegeController.saveSiege(siege);
-					Messaging.sendMsg(sender, Translation.of("msg_swa_set_plunder_success", plundered.toString().toUpperCase(), town.getName()));
+					Messaging.sendMsg(sender, Translation.of("msg_swa_set_plunder_success", Boolean.toString(plundered).toUpperCase(), town.getName()));
 					return;
 				case "setInvaded":
 					if(siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.SUPPRESSION) {
 						Messaging.sendErrorMsg(sender, Translation.of("msg_err_swa_cannot_set_invade_due_to_siege_type", args[0]));
 						return;
 					}
-					Boolean invaded = Boolean.parseBoolean(args[2]);
+					boolean invaded = Boolean.parseBoolean(args[2]);
 					if(invaded) {
 						siege.setTownInvaded(true);
 						TownOccupationController.setTownOccupation(town, (Nation)siege.getAttacker());
@@ -414,7 +414,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 						TownOccupationController.removeTownOccupation(town);
 					}
 					SiegeController.saveSiege(siege);
-					Messaging.sendMsg(sender, Translation.of("msg_swa_set_invade_success", invaded.toString().toUpperCase(), town.getName()));
+					Messaging.sendMsg(sender, Translation.of("msg_swa_set_invade_success", Boolean.toString(invaded).toUpperCase(), town.getName()));
 					return;
 				case "remove":
 					SiegeController.removeSiege(siege, SiegeSide.ATTACKERS);
