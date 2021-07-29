@@ -354,13 +354,11 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 	private void parseSiegeWarSiegeCommand(CommandSender sender, String[] args) {
 		if (args.length >= 2) {
 			Town town = TownyUniverse.getInstance().getTown(args[0]);
-			Siege siege = SiegeController.getSiege(town);
-			List<String> ignoreActiveSiegeArgs = Arrays.asList("setplundered","setcaptured","remove");
-
 			if (town == null) {
 				Messaging.sendErrorMsg(sender, Translation.of("msg_err_town_not_registered", args[0]));
 				return;
 			}
+			List<String> ignoreActiveSiegeArgs = Arrays.asList("setplundered","setcaptured","remove");
 			if (!SiegeController.hasActiveSiege(town) && !ignoreActiveSiegeArgs.contains(args[1].toLowerCase())) {
 				Messaging.sendErrorMsg(sender, Translation.of("msg_err_not_being_sieged", town.getName()));
 				return;
@@ -369,6 +367,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 				Messaging.sendErrorMsg(sender, Translation.of("msg_err_not_being_sieged", town.getName()));
 				return;				
 			}
+			Siege siege = SiegeController.getSiege(town);
 
 			switch(args[1].toLowerCase()) {
 				case "setbalance":
