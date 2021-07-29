@@ -13,16 +13,18 @@ import org.jetbrains.annotations.Nullable;
 
 public class SiegeWarSettings {
 	
-	private static List<HeldItemsCombination> mapHidingItems = new ArrayList<>();
-	private static List<String> worldsWithSiegeWarEnabled = new ArrayList<>();
-	private static List<Material> battleSessionsForbiddenBlockMaterials = new ArrayList<>();
-	private static List<Material> battleSessionsForbiddenBucketMaterials = new ArrayList<>();
+	private static List<HeldItemsCombination> mapHidingItems = null;
+	private static List<String> worldsWithSiegeWarEnabled = null;
+	private static List<Material> siegeZoneWildernessForbiddenBlockMaterials = null;
+	private static List<Material> siegeZoneWildernessForbiddenBucketMaterials = null;
+	private static List<Material> siegeZoneWildernessForbiddenExplodeMaterials = null;
 	
-	protected static void resetSpecialCaseVariables() {
-		mapHidingItems.clear();
-		worldsWithSiegeWarEnabled.clear();
-		battleSessionsForbiddenBlockMaterials.clear();
-		battleSessionsForbiddenBucketMaterials.clear();
+	protected static void resetCachedSettings() {
+		mapHidingItems = null;
+		worldsWithSiegeWarEnabled = null;
+		siegeZoneWildernessForbiddenBlockMaterials = null;
+		siegeZoneWildernessForbiddenBucketMaterials = null;
+		siegeZoneWildernessForbiddenExplodeMaterials = null;
 	}
 
 	public static boolean getWarSiegeEnabled() {
@@ -30,7 +32,8 @@ public class SiegeWarSettings {
 	}
 
 	public static List<String> getWarSiegeWorlds() {
-		if (worldsWithSiegeWarEnabled.isEmpty()) {
+		if (worldsWithSiegeWarEnabled == null) {
+			worldsWithSiegeWarEnabled = new ArrayList<>();
 			String[] worldNamesAsArray = Settings.getString(ConfigNodes.WAR_SIEGE_WORLDS).split(",");
 			for (String worldName : worldNamesAsArray) {
 				if (Bukkit.getServer().getWorld(worldName.trim()) != null)
@@ -214,7 +217,8 @@ public class SiegeWarSettings {
 	
 	public static List<HeldItemsCombination> getWarSiegeMapHidingItems() {
 		try {
-			if (mapHidingItems.isEmpty()) {
+			if (mapHidingItems == null) {
+				mapHidingItems = new ArrayList<>();
 				String itemsListAsString = Settings.getString(ConfigNodes.WAR_SIEGE_MAP_HIDING_ITEMS);
 				String[] itemsListAsArray = itemsListAsString.split(",");
 				String[] itemPair;
@@ -342,36 +346,43 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_DURATION_MINUTES);
 	}
 
-	public static boolean isWarSiegeZoneBlockPlacementRestrictionsEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_ZONE_BLOCK_PLACEMENT_RESTRICTIONS_ENABLED);
-	}
-
-	public static List<Material> getWarSiegeZoneBlockPlacementRestrictionsMaterials() {
-		if(battleSessionsForbiddenBlockMaterials.isEmpty()) {
-			String listAsString = Settings.getString(ConfigNodes.WAR_SIEGE_ZONE_BLOCK_PLACEMENT_RESTRICTIONS_MATERIALS);
+	public static List<Material> getSiegeZoneWildernessForbiddenBlockMaterials() {
+		if(siegeZoneWildernessForbiddenBlockMaterials == null) {
+			siegeZoneWildernessForbiddenBlockMaterials = new ArrayList<>();
+			String listAsString = Settings.getString(ConfigNodes.SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_BLOCK_PLACEMENT_PREVENTION_MATERIALS);
 			String[] listAsStringArray = listAsString.split(",");
 			for (String blockTypeAsString : listAsStringArray) {
 				Material material = Material.matchMaterial(blockTypeAsString.trim());
-				battleSessionsForbiddenBlockMaterials.add(material);
+				siegeZoneWildernessForbiddenBlockMaterials.add(material);
 			}
 		}
-		return battleSessionsForbiddenBlockMaterials;
+		return siegeZoneWildernessForbiddenBlockMaterials;
 	}
 
-	public static boolean isWarSiegeZoneBucketEmptyingRestrictionsEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_ZONE_BUCKET_EMPTYING_RESTRICTIONS_ENABLED);
-	}
-
-	public static List<Material> getWarSiegeZoneBucketEmptyingRestrictionsMaterials() {
-		if(battleSessionsForbiddenBucketMaterials.isEmpty()) {
-			String listAsString = Settings.getString(ConfigNodes.WAR_SIEGE_ZONE_BUCKET_EMPTYING_RESTRICTIONS_MATERIALS);
+	public static List<Material> getSiegeZoneWildernessForbiddenBucketMaterials() {
+		if(siegeZoneWildernessForbiddenBucketMaterials == null) {
+			siegeZoneWildernessForbiddenBucketMaterials = new ArrayList<>();
+			String listAsString = Settings.getString(ConfigNodes.SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_BUCKET_EMPTYING_PREVENTION_MATERIALS);
 			String[] listAsStringArray = listAsString.split(",");
 			for (String blockTypeAsString : listAsStringArray) {
 				Material material = Material.matchMaterial(blockTypeAsString.trim());
-				battleSessionsForbiddenBucketMaterials.add(material);
+				siegeZoneWildernessForbiddenBucketMaterials.add(material);
 			}
 		}
-		return battleSessionsForbiddenBucketMaterials;
+		return siegeZoneWildernessForbiddenBucketMaterials;
+	}
+
+	public static List<Material> getSiegeZoneWildernessForbiddenExplodeMaterials() {
+		if(siegeZoneWildernessForbiddenExplodeMaterials == null) {
+			siegeZoneWildernessForbiddenExplodeMaterials = new ArrayList<>();
+			String listAsString = Settings.getString(ConfigNodes.SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_EXPLOSION_PREVENTION_MATERIALS);
+			String[] listAsStringArray = listAsString.split(",");
+			for (String blockTypeAsString : listAsStringArray) {
+				Material material = Material.matchMaterial(blockTypeAsString.trim());
+				siegeZoneWildernessForbiddenExplodeMaterials.add(material);
+			}
+		}
+		return siegeZoneWildernessForbiddenExplodeMaterials;
 	}
 
 	public static int getPeacefulTownsGuardianTownPlotsRequirement() {

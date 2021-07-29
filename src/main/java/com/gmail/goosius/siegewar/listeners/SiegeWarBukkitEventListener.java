@@ -9,8 +9,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -184,13 +186,26 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		if (SiegeController.getPlayersInBannerControlSessions().contains(event.getPlayer()) && event.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
+		if(SiegeWarSettings.getWarSiegeEnabled()
+				&& SiegeController.getPlayersInBannerControlSessions().contains(event.getPlayer()) 
+				&& event.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
 				@Override
 				public void run() {
 					event.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
 				}
 			});
+		}
+	}
+	
+	@EventHandler
+	public void onBlockExplode(BlockExplodeEvent event) {
+		if(SiegeWarSettings.getWarSiegeEnabled()
+				&& !event.isCancelled()
+				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenExplodeMaterials().contains(event.getBlock().getType())
+				&& TownyAPI.getInstance().getTown(event.getBlock().getLocation()) == null
+				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getBlock().getLocation())) {
+			event.setCancelled(true);
 		}
 	}
 }

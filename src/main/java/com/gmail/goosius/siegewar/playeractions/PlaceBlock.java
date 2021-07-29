@@ -83,11 +83,11 @@ public class PlaceBlock {
 			}
 
 			//Check for forbidden siegezone block placement
-			if(SiegeWarSettings.isWarSiegeZoneBlockPlacementRestrictionsEnabled()
-					&& TownyAPI.getInstance().isWilderness(block)
-					&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(block.getLocation())
-					&& SiegeWarSettings.getWarSiegeZoneBlockPlacementRestrictionsMaterials().contains(mat))
+			if(SiegeWarSettings.getSiegeZoneWildernessForbiddenBlockMaterials().contains(mat)
+				&& TownyAPI.getInstance().isWilderness(block)
+				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(block.getLocation())) {
 					throw new TownyException(Translation.of("msg_war_siege_zone_block_placement_forbidden"));
+			}
 
 		} catch (TownyException e) {
 			event.setCancelled(true);
