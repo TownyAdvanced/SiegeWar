@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
+import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.Nullable;
 
 public class SiegeWarSettings {
@@ -17,14 +18,14 @@ public class SiegeWarSettings {
 	private static List<String> worldsWithSiegeWarEnabled = null;
 	private static List<Material> siegeZoneWildernessForbiddenBlockMaterials = null;
 	private static List<Material> siegeZoneWildernessForbiddenBucketMaterials = null;
-	private static List<Material> siegeZoneWildernessForbiddenExplodeMaterials = null;
+	private static List<EntityType> siegeZoneWildernessForbiddenExplodeEntityTypes = null;
 	
 	protected static void resetCachedSettings() {
 		mapHidingItems = null;
 		worldsWithSiegeWarEnabled = null;
 		siegeZoneWildernessForbiddenBlockMaterials = null;
 		siegeZoneWildernessForbiddenBucketMaterials = null;
-		siegeZoneWildernessForbiddenExplodeMaterials = null;
+		siegeZoneWildernessForbiddenExplodeEntityTypes = null;
 	}
 
 	public static boolean getWarSiegeEnabled() {
@@ -372,17 +373,17 @@ public class SiegeWarSettings {
 		return siegeZoneWildernessForbiddenBucketMaterials;
 	}
 
-	public static List<Material> getSiegeZoneWildernessForbiddenExplodeMaterials() {
-		if(siegeZoneWildernessForbiddenExplodeMaterials == null) {
-			siegeZoneWildernessForbiddenExplodeMaterials = new ArrayList<>();
-			String listAsString = Settings.getString(ConfigNodes.SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_EXPLOSION_PREVENTION_MATERIALS);
+	public static List<EntityType> getSiegeZoneWildernessForbiddenExplodeEntityTypes() {
+		if(siegeZoneWildernessForbiddenExplodeEntityTypes == null) {
+			siegeZoneWildernessForbiddenExplodeEntityTypes = new ArrayList<>();
+			String listAsString = Settings.getString(ConfigNodes.SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_EXPLOSION_PREVENTION_ENTITY_TYPES);
 			String[] listAsStringArray = listAsString.split(",");
-			for (String blockTypeAsString : listAsStringArray) {
-				Material material = Material.matchMaterial(blockTypeAsString.trim());
-				siegeZoneWildernessForbiddenExplodeMaterials.add(material);
+			for (String entityTypeAsString : listAsStringArray) {
+				EntityType entityType = EntityType.valueOf(entityTypeAsString.trim().toUpperCase());
+				siegeZoneWildernessForbiddenExplodeEntityTypes.add(entityType);
 			}
 		}
-		return siegeZoneWildernessForbiddenExplodeMaterials;
+		return siegeZoneWildernessForbiddenExplodeEntityTypes;
 	}
 
 	public static int getPeacefulTownsGuardianTownPlotsRequirement() {

@@ -12,8 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -197,15 +196,29 @@ public class SiegeWarBukkitEventListener implements Listener {
 			});
 		}
 	}
-	
+
+	//Stops TNT/Minecarts from destroying blocks in the siegezone wilderness
 	@EventHandler
-	public void onBlockExplode(BlockExplodeEvent event) {
+	public void on(EntityExplodeEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& !event.isCancelled()
-				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenExplodeMaterials().contains(event.getBlock().getType())
-				&& TownyAPI.getInstance().getTown(event.getBlock().getLocation()) == null
-				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getBlock().getLocation())) {
+				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenExplodeEntityTypes().contains(event.getEntityType())
+				&& TownyAPI.getInstance().getTown(event.getLocation()) == null
+				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getLocation())) {
 			event.setCancelled(true);
 		}
 	}
+	
+	//Stops TNT/Minecarts from injuring players in the siegezone wilderness
+	@EventHandler
+	public void on(EntityDamageByEntityEvent event) {	
+		if(SiegeWarSettings.getWarSiegeEnabled()
+				&& !event.isCancelled()
+				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenExplodeEntityTypes().contains(event.getDamager().getType())
+				&& TownyAPI.getInstance().getTown(event.getDamager().getLocation()) == null
+				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getDamager().getLocation())) {
+			event.setCancelled(true);
+		}
+	}
+
 }

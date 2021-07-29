@@ -550,11 +550,11 @@ public enum ConfigNodes {
 			"",
 			"# This setting is useful to help prevent extreme siege-zone grief such as obsidian forts or cobble monsters.",
 			"# The list is used to indicate the list of forbidden buckets"),
-	SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_EXPLOSION_PREVENTION_MATERIALS(
-			"siege_material_restrictions.wilderness_explosion_prevention_materials",
-			"tnt, tnt_minecart",
+	SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_EXPLOSION_PREVENTION_ENTITY_TYPES(
+			"siege_material_restrictions.wilderness_explosion_prevention_entity_types",
+			"primed_tnt, minecart_tnt",
 			"",
-			"# This setting is used to indicate the list of materials which will not explode in the wilderness area of siegezones"),
+			"# This setting is used to indicate the list of entity types which will not explode in the wilderness area of siegezones"),
 	WAR_SIEGE_MAP_HIDING(
 			"war.siege.map_hiding",
 			"",
