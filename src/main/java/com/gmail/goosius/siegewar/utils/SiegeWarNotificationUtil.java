@@ -1,9 +1,13 @@
 package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,6 +59,13 @@ public class SiegeWarNotificationUtil {
 			}
 			for(Town townToInform: townsToInform) {
 				TownyMessaging.sendPrefixedTownMessage(townToInform, message);
+			}
+
+			//Inform battlefield reporters
+			for(Player player: Bukkit.getOnlinePlayers()) {
+				if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_BATTLEFIELD_REPORTER.getNode())) {
+					TownyMessaging.sendMessage(player, message);
+				}
 			}
 
 		} catch (Exception e) {
