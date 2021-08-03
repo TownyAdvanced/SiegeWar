@@ -244,7 +244,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& !event.isCancelled()
 				&& event.getEntity() instanceof Player
-				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY_WHEN_UNARMOURED.getNode())
+				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY.getNode())
 				&& ((Player) event.getEntity()).getInventory().getArmorContents().length == 0
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
 			event.setCancelled(true);
@@ -275,6 +275,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		}
 	}	
 
+/*
 	//Stops battlefield reporters from picking up items
 	@EventHandler
 	public void on(EntityPickupItemEvent event) {
@@ -297,5 +298,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
 			event.setCancelled(true);
 		}
-	}	
+	}
+	*/	
+ 
 }
