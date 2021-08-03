@@ -116,8 +116,9 @@ permissions:
         children:
             siegewar.notifications.all: true
             siegewar.immune.to.war.nausea: true
-            siegewar.siegezone.damage.immunity: true
+            siegewar.siegezone.damage.immunity.when.unarmoured: true
             siegewar.siegezone.cannot.hit.players: true
             siegewar.siegezone.cannot.throw.potions: true
+            siegewar.siegezone.cannot.carry.drop.items: true
+            siegewar.siegezone.cannot.carry.pick.up.items: true          
             siegewar.siegezone.cannot.get.banner.control: true
-            siegewar.siegezone.cannot.carry.non.tool.items: true

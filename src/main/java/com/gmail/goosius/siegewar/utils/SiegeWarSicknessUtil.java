@@ -121,37 +121,5 @@ public class SiegeWarSicknessUtil {
             return false;
 
         return TownyAPI.getInstance().getTown(location).equals(TownyAPI.getInstance().getResidentTownOrNull(resident));
-    }
-
-	/**
-	 * Punish battlefield reporters in siegezones,
-	 * if they are carrying any non-tools (anything except shovel, axe, pick)
-	 */
-	public static void punishBattlefieldReportersCarryingNonToolsInSiegezones() {
-		for(Player player: Bukkit.getOnlinePlayers()) {
-			if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_CARRY_NON_TOOL_ITEMS.getNode())
-					&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
-               
-                for(ItemStack itemStack: player.getInventory().getContents()) {
-                    if(!itemStack.getType().toString().endsWith("AXE")
-                            && !itemStack.getType().toString().endsWith("SHOVEL")) {
-                        //Punish now
-                        TownyMessaging.sendMsg(player, Translation.of("msg_err_battlefield_reporter_punished_for_carrying_non_tools_in_siegezone"));
-					    final int effectDurationTicks = (int)(TimeTools.convertToTicks(TownySettings.getShortInterval() + 5));
-                        Towny.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(Towny.getPlugin(), new Runnable() {
-                            public void run() {
-                                List<PotionEffect> potionEffects = new ArrayList<>();
-                                potionEffects.add(new PotionEffect(PotionEffectType.CONFUSION, effectDurationTicks, 4));
-                                potionEffects.add(new PotionEffect(PotionEffectType.POISON, effectDurationTicks, 4));
-                                potionEffects.add(new PotionEffect(PotionEffectType.WEAKNESS, effectDurationTicks, 4));
-                                potionEffects.add(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 2));
-                                player.addPotionEffects(potionEffects);
-                                player.setHealth(1);
-                            }
-                        });
-				    }
-                }
-			}
-		}
 	}
 }

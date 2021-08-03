@@ -38,11 +38,13 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_IMMUNE_TO_WAR_NAUSEA("siegewar.immune.to.war.nausea"),
 
 	// Siegezone Restrictions
-	SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY("siegewar.siegezone.damage.immunity"),
+	SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY_WHEN_UNARMOURED("siegewar.siegezone.damage.immunity.when.unarmoured"),
 	SIEGEWAR_SIEGEZONE_CANNOT_HIT_PLAYERS("siegewar.siegezone.cannot.hit.players"),
 	SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS("siegewar.siegezone.cannot.throw.potions"),
 	SIEGEWAR_SIEGEZONE_CANNOT_GET_BANNER_CONTROL("siegewar.siegezone.cannot.get.banner.control"),
-	SIEGEWAR_SIEGEZONE_CANNOT_CARRY_NON_TOOL_ITEMS("siegewar.siegezone.cannot.carry.non.tool.items"),
+	SIEGEWAR_SIEGEZONE_CANNOT_CARRY_PICK_UP_ITEMS("siegewar.siegezone.cannot.pick.up.items"),
+	SIEGEWAR_SIEGEZONE_CANNOT_DROP_ITEMS("siegewar.siegezone.cannot.pick.up.items"),
+	
 
 	//Notifications
 	SIEGEWAR_NOTIFICATIONS_ALL("siegewar.notifications.all"),

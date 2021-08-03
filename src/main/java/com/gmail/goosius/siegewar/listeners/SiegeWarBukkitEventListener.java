@@ -238,13 +238,14 @@ public class SiegeWarBukkitEventListener implements Listener {
 		}
 	}
 
-	//Stops battlefield reporters from taking damage in siegezones
+	//Stops unarmoured battlefield reporters from taking damage in siegezones
 	@EventHandler
 	public void on(EntityDamageEvent event) {	
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& !event.isCancelled()
 				&& event.getEntity() instanceof Player
-				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY.getNode())
+				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY_WHEN_UNARMOURED.getNode())
+				&& ((Player) event.getEntity()).getInventory().getArmorContents().length == 0
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
 			event.setCancelled(true);
 		}
@@ -274,4 +275,27 @@ public class SiegeWarBukkitEventListener implements Listener {
 		}
 	}	
 
+	//Stops battlefield reporters from picking up items
+	@EventHandler
+	public void on(EntityPickupItemEvent event) {
+		if(SiegeWarSettings.getWarSiegeEnabled()
+				&& !event.isCancelled()
+				&& event.getEntity() instanceof Player
+				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_CARRY_PICK_UP_ITEMS.getNode())
+				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
+			event.setCancelled(true);
+		}
+	}	
+
+	//Stops battlefield reporters from dropping items
+	@EventHandler
+	public void on(EntityDropItemEvent event) {
+		if(SiegeWarSettings.getWarSiegeEnabled()
+				&& !event.isCancelled()
+				&& event.getEntity() instanceof Player
+				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_DROP_ITEMS.getNode())
+				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
+			event.setCancelled(true);
+		}
+	}	
 }

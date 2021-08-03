@@ -117,8 +117,4 @@ public class SiegeWarTimerTaskController {
 		if (SiegeWarSettings.getBeaconsEnabled())
 			CosmeticUtil.evaluateBeacons();
 	}
-	
-	public static void punishBadBattlefieldReportsInSiegeZones() {
-		SiegeWarSicknessUtil.punishBattlefieldReportersCarryingNonToolsInSiegezones();
-	}
 }
