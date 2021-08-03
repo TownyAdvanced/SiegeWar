@@ -238,14 +238,13 @@ public class SiegeWarBukkitEventListener implements Listener {
 		}
 	}
 
-	//Stops unarmoured battlefield reporters from taking damage in siegezones
+	//Stops battlefield reporters from taking damage in siegezones
 	@EventHandler
 	public void on(EntityDamageEvent event) {	
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& !event.isCancelled()
 				&& event.getEntity() instanceof Player
 				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY.getNode())
-				&& ((Player) event.getEntity()).getInventory().getArmorContents().length == 0
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
 			event.setCancelled(true);
 		}

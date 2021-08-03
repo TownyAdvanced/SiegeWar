@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.23
+version: 0.24
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -457,3 +457,6 @@ msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s hours.
 
 # Added in 0.23
 msg_siege_war_banner_control_remaining_session_time: 'Banner Cap Timer: %s'
+
+# Added in 0.24
+msg_you_can_only_carry_tools_in_siegezones: '&cYou have entered a siegezone. You cannot carry any items here except tools (shovel, axe, pickaxe). Drop all other items to continue your journey.'

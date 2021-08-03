@@ -147,8 +147,12 @@ public class SiegeWarSicknessUtil {
                 } 
                 
                 if(freezePlayer) {
-                    if(player.getWalkSpeed() != 0) 
-                        player.setWalkSpeed(0f);			        
+                    if(player.getWalkSpeed() != 0) {
+                        
+                        player.sendMessage(Translation.of("plugin_prefix") + Translation.of("msg_you_can_only_carry_tools_in_siegezones"));
+
+                        player.setWalkSpeed(0f);	
+                    }		        
                 } else {
                     if(player.getWalkSpeed() == 0) 
                         player.setWalkSpeed(0.2f);			                            
