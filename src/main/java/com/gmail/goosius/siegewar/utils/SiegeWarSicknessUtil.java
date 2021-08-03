@@ -32,10 +32,6 @@ public class SiegeWarSicknessUtil {
             if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
                 continue;
 
-            //Battlefield reporters won't be punished
-            if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_BATTLEFIELD_REPORTER.getNode()))
-                continue;
-
             List<Siege> sieges = SiegeController.getActiveSiegesAt(location);
 
             // not in a siege zone

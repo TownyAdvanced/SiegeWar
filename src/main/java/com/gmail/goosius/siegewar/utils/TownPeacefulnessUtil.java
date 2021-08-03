@@ -132,10 +132,6 @@ public class TownPeacefulnessUtil {
 				if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
 					continue;
 
-	            //Don't apply to battlefield reporters
-	            if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_BATTLEFIELD_REPORTER.getNode()))
-    	            continue;
-
 				//Don't apply to non-peaceful players
 				Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 				if(resident == null || !(resident.hasTown()&& resident.getTown().isNeutral()))

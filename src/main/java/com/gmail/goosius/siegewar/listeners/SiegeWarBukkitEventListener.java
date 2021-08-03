@@ -13,10 +13,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -213,15 +210,31 @@ public class SiegeWarBukkitEventListener implements Listener {
 		}
 	}
 	
-	//Stops TNT/Minecarts from injuring players in the siegezone wilderness
+	/*
+	 * Stops TNT/Minecarts from injuring players in the siegezone wilderness
+	 * Also stop battlefield reporters from hitting people in siegezones
+	 */
 	@EventHandler
 	public void on(EntityDamageByEntityEvent event) {	
-		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& !event.isCancelled()
-				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenExplodeEntityTypes().contains(event.getDamager().getType())
+		if(!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+
+		if(event.isCancelled())
+			return;
+
+		if (SiegeWarSettings.getSiegeZoneWildernessForbiddenExplodeEntityTypes().contains(event.getDamager().getType())
 				&& TownyAPI.getInstance().getTown(event.getDamager().getLocation()) == null
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getDamager().getLocation())) {
 			event.setCancelled(true);
+			return;
+		}
+
+		if(event.getDamager() instanceof Player
+				&& event.getEntity() instanceof Player
+				&& event.getDamager().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_HIT_PLAYERS.getNode())
+				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getDamager().getLocation())) {
+			event.setCancelled(true);
+			return;
 		}
 	}
 
@@ -231,9 +244,34 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& !event.isCancelled()
 				&& event.getEntity() instanceof Player
-				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_BATTLEFIELD_REPORTER.getNode())
+				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY.getNode())
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
 			event.setCancelled(true);
 		}
-	}				
+	}			
+
+	//Stops battlefield reporters from throwing potions in siegezones
+	@EventHandler
+	public void on(PotionSplashEvent event) {
+		if(SiegeWarSettings.getWarSiegeEnabled()
+				&& !event.isCancelled()
+				&& event.getEntity() instanceof Player
+				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS.getNode())
+				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
+			event.setCancelled(true);
+		}
+	}			
+
+	//Stops battlefield reporters from throwing lingering potions in siegezones
+	@EventHandler
+	public void on(LingeringPotionSplashEvent event) {
+		if(SiegeWarSettings.getWarSiegeEnabled()
+				&& !event.isCancelled()
+				&& event.getEntity() instanceof Player
+				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS.getNode())
+				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
+			event.setCancelled(true);
+		}
+	}	
+
 }

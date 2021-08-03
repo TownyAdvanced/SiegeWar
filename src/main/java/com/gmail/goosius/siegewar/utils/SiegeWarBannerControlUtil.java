@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -14,6 +15,7 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.permissions.PermissionNodes;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
 import net.md_5.bungee.api.ChatMessageType;
@@ -65,6 +67,9 @@ public class SiegeWarBannerControlUtil {
 	            	throw new TownyException(Translation.of("msg_err_not_registered_1", player.getName()));
 
 				if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
+					continue;
+
+				if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_GET_BANNER_CONTROL.getNode()))
 					continue;
 
 				if(!BattleSession.getBattleSession().isActive()) {
@@ -155,6 +160,9 @@ public class SiegeWarBannerControlUtil {
 		if(player.isDead())
 			return false; // Player is dead
 
+		if (player.getGameMode() == GameMode.SPECTATOR)
+			return false; //Player is spectating			
+
 		if(player.getWorld() != siege.getFlagLocation().getWorld())
 			return false; //Player not in same world as siege
 
@@ -163,9 +171,6 @@ public class SiegeWarBannerControlUtil {
 
 		if(player.isFlying() || player.isGliding())
 			return false;   // Player is flying
-
-		if (player.getGameMode() == GameMode.SPECTATOR)
-			return false; // Player is spectating
 
 		if(!SiegeWarScoringUtil.isPlayerInTimedPointZone(player, siege))
 			return false; //player is not in the timed point zone

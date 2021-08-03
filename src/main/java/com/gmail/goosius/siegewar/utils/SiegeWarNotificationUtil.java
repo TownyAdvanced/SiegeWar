@@ -63,7 +63,7 @@ public class SiegeWarNotificationUtil {
 
 			//Inform battlefield reporters
 			for(Player player: Bukkit.getOnlinePlayers()) {
-				if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_BATTLEFIELD_REPORTER.getNode())) {
+				if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NOTIFICATIONS_ALL.getNode())) {
 					TownyMessaging.sendMessage(player, message);
 				}
 			}

@@ -37,9 +37,16 @@ public enum SiegeWarPermissionNodes {
 	// Siegewar related war sickness immunities
 	SIEGEWAR_IMMUNE_TO_WAR_NAUSEA("siegewar.immune.to.war.nausea"),
 
-	// Battlefield reporter
-	SIEGEWAR_BATTLEFIELD_REPORTER("siegewar.battlefield.reporter"),
+	// Siegezone Restrictions
+	SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY("siegewar.siegezone.damage.immunity"),
+	SIEGEWAR_SIEGEZONE_CANNOT_HIT_PLAYERS("siegewar.siegezone.cannot.hit.players"),
+	SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS("siegewar.siegezone.cannot.throw.potions"),
+	SIEGEWAR_SIEGEZONE_CANNOT_GET_BANNER_CONTROL("siegewar.siegezone.cannot.get.banner.control"),
 
+
+	//Notifications
+	SIEGEWAR_NOTIFICATIONS_ALL("siegewar.notifications.all"),
+	
 	// ----- Player Command Nodes -----
 	SIEGEWAR_COMMAND_SIEGEWAR("siegewar.command.siegewar.*"),
 		SIEGEWAR_COMMAND_SIEGEWAR_TOWN("siegewar.command.siegewar.town.*"),
