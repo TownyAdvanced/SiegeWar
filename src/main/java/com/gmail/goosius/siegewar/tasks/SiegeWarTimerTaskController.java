@@ -101,7 +101,7 @@ public class SiegeWarTimerTaskController {
 		}
 	}
 
-	public static void punishNonSiegeParticipantsInSiegeZone() {
+	public static void punishNonSiegeParticipantsInSiegeZones() {
 		if (SiegeWarSettings.getPunishingNonSiegeParticipantsInSiegeZone()) {
 			SiegeWarSicknessUtil.punishNonSiegeParticipantsInSiegeZone();
 		}
@@ -118,7 +118,7 @@ public class SiegeWarTimerTaskController {
 			CosmeticUtil.evaluateBeacons();
 	}
 	
-	public static void dropNonToolItems() {
-		SiegeWarBlockUtil.dropNonToolItems();
+	public static void punishBadBattlefieldReportsInSiegeZones() {
+		SiegeWarSicknessUtil.punishBattlefieldReportersCarryingNonToolsInSiegezones();
 	}
 }

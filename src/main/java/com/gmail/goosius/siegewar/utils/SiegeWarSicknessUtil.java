@@ -124,9 +124,10 @@ public class SiegeWarSicknessUtil {
     }
 
 	/**
-	 * Punish battlefield reporters if they are carrying anything non-tools (anything except shovel, axe, pick)
+	 * Punish battlefield reporters in siegezones,
+	 * if they are carrying any non-tools (anything except shovel, axe, pick)
 	 */
-	public static void punishPlayersForCarryingNonTools() {
+	public static void punishBattlefieldReportersCarryingNonToolsInSiegezones() {
 		for(Player player: Bukkit.getOnlinePlayers()) {
 			if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_CARRY_NON_TOOL_ITEMS.getNode())
 					&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
