@@ -110,7 +110,7 @@ permissions:
         description: User is immune to war nausea.
         default: false
         
-    battlefield.reporter:
+    siegewar.battlefield.reporter:
         description: User holds all the nodes needed for battlefield reporting
         default: false
         children:
