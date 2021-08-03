@@ -59,7 +59,6 @@ public enum SiegeWarPermissionNodes {
 		SIEGEWAR_COMMAND_SIEGEWAR_HUD("siegewar.command.siegewar.hud"),
 		SIEGEWAR_COMMAND_SIEGEWAR_GUIDE("siegewar.command.siegewar.guide"),
 		SIEGEWAR_COMMAND_SIEGEWAR_PREFERENCE("siegewar.command.siegewar.preference"),
-		SIEGEWAR_COMMAND_SIEGEWAR_TELEPORT("siegewar.command.siegewar.teleport"),
 	
 	// ----- Admin Command Nodes -----
 	SIEGEWAR_COMMAND_SIEGEWARADMIN("siegewar.command.siegewaradmin.*"),
