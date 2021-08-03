@@ -42,14 +42,14 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_SIEGEZONE_CANNOT_HIT_PLAYERS("siegewar.siegezone.cannot.hit.players"),
 	SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS("siegewar.siegezone.cannot.throw.potions"),
 	SIEGEWAR_SIEGEZONE_CANNOT_GET_BANNER_CONTROL("siegewar.siegezone.cannot.get.banner.control"),
-
+	SIEGEWAR_SIEGEZONE_CANNOT_CARRY_NON_TOOL_ITEMS("siegewar.siegezone.cannot.carry.non.tool.items"),
 
 	//Notifications
 	SIEGEWAR_NOTIFICATIONS_ALL("siegewar.notifications.all"),
 	
 	// ----- Player Command Nodes -----
 	SIEGEWAR_COMMAND_SIEGEWAR("siegewar.command.siegewar.*"),
-		SIEGEWAR_COMMAND_SIEGEWAR_TOWN("siegewar.command.siegewar.town.*"),
+    	SIEGEWAR_COMMAND_SIEGEWAR_TOWN("siegewar.command.siegewar.town.*"),
 			SIEGEWAR_COMMAND_SIEGEWAR_TOWN_INVITE_OCCUPATION("siegewar.command.siegewar.town.inviteoccupation"),
 		SIEGEWAR_COMMAND_SIEGEWAR_NATION("siegewar.command.siegewar.nation.*"),
 			SIEGEWAR_COMMAND_SIEGEWAR_NATION_PAYSOLDIERS("siegewar.command.siegewar.nation.paysoldiers"),
@@ -59,7 +59,8 @@ public enum SiegeWarPermissionNodes {
 		SIEGEWAR_COMMAND_SIEGEWAR_HUD("siegewar.command.siegewar.hud"),
 		SIEGEWAR_COMMAND_SIEGEWAR_GUIDE("siegewar.command.siegewar.guide"),
 		SIEGEWAR_COMMAND_SIEGEWAR_PREFERENCE("siegewar.command.siegewar.preference"),
-
+		SIEGEWAR_COMMAND_SIEGEWAR_TELEPORT("siegewar.command.siegewar.teleport"),
+	
 	// ----- Admin Command Nodes -----
 	SIEGEWAR_COMMAND_SIEGEWARADMIN("siegewar.command.siegewaradmin.*"),
 		SIEGEWAR_COMMAND_SIEGEWARADMIN_IMMUNITY("siegewar.command.siegewaradmin.immunity"),

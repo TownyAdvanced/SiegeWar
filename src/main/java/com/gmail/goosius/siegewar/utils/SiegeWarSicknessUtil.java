@@ -6,15 +6,14 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
-import com.palmergames.bukkit.towny.Towny;
-import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownySettings;
-import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.*;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.util.TimeTools;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -124,4 +123,34 @@ public class SiegeWarSicknessUtil {
         return TownyAPI.getInstance().getTown(location).equals(TownyAPI.getInstance().getResidentTownOrNull(resident));
     }
 
+	/**
+	 * Punish battlefield reporters if they are carrying anything non-tools (anything except shovel, axe, pick)
+	 */
+	public static void punishPlayersForCarryingNonTools() {
+		for(Player player: Bukkit.getOnlinePlayers()) {
+			if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_CARRY_NON_TOOL_ITEMS.getNode())
+					&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
+               
+                for(ItemStack itemStack: player.getInventory().getContents()) {
+                    if(!itemStack.getType().toString().endsWith("AXE")
+                            && !itemStack.getType().toString().endsWith("SHOVEL")) {
+                        //Punish now
+                        TownyMessaging.sendMsg(player, Translation.of("msg_err_battlefield_reporter_punished_for_carrying_non_tools_in_siegezone"));
+					    final int effectDurationTicks = (int)(TimeTools.convertToTicks(TownySettings.getShortInterval() + 5));
+                        Towny.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(Towny.getPlugin(), new Runnable() {
+                            public void run() {
+                                List<PotionEffect> potionEffects = new ArrayList<>();
+                                potionEffects.add(new PotionEffect(PotionEffectType.CONFUSION, effectDurationTicks, 4));
+                                potionEffects.add(new PotionEffect(PotionEffectType.POISON, effectDurationTicks, 4));
+                                potionEffects.add(new PotionEffect(PotionEffectType.WEAKNESS, effectDurationTicks, 4));
+                                potionEffects.add(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 2));
+                                player.addPotionEffects(potionEffects);
+                                player.setHealth(1);
+                            }
+                        });
+				    }
+                }
+			}
+		}
+	}
 }
