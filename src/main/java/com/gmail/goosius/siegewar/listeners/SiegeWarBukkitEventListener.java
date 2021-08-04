@@ -275,17 +275,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 		}
 	}	
 	
-		@EventHandler
-	public void on( PlayerMoveEvent event) {
-	event.
-		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& !event.isCancelled()
-				&& event.getEntity() instanceof Player
-				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS.getNode())
-				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
-			event.setCancelled(true);
-		}
-	}	
 
 /*
 	//Stops battlefield reporters from picking up items
