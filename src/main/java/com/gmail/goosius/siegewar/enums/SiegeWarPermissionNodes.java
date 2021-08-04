@@ -37,8 +37,10 @@ public enum SiegeWarPermissionNodes {
 	// Siegewar related war sickness immunities
 	SIEGEWAR_IMMUNE_TO_WAR_NAUSEA("siegewar.immune.to.war.nausea"),
 
-	// Siegezone Restrictions
+	// Siegezone Immunity
 	SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY("siegewar.siegezone.damage.immunity"),
+
+	//Siegezone restrictions
 	SIEGEWAR_SIEGEZONE_CANNOT_HIT_PLAYERS("siegewar.siegezone.cannot.hit.players"),
 	SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS("siegewar.siegezone.cannot.throw.potions"),
 	SIEGEWAR_SIEGEZONE_CANNOT_GET_BANNER_CONTROL("siegewar.siegezone.cannot.get.banner.control"),	

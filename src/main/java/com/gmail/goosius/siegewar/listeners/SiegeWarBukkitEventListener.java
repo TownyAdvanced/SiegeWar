@@ -250,7 +250,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& !event.isCancelled()
 				&& event.getEntity() instanceof Player
-				&& !event.getEntity().isOp()
 				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY.getNode())
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
 			event.setCancelled(true);
