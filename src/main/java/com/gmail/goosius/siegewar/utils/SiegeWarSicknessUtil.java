@@ -123,41 +123,4 @@ public class SiegeWarSicknessUtil {
         return TownyAPI.getInstance().getTown(location).equals(TownyAPI.getInstance().getResidentTownOrNull(resident));
     }
 
-	/**
-	 * Freeze battlefield reporters in siegezones,
-	 * if they are carrying any non-tools (anything except shovel, axe, pick)
-	 */
-	public static void freezeUnfreezeBattlefieldReporters() {
-	    boolean freezePlayer;
-	
-		for(Player player: Bukkit.getOnlinePlayers()) {
-			if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_CARRY_NON_TOOL_ITEMS.getNode())) {
-			    freezePlayer = false;
-			    
-			    //Check if reporter in in siegezone with forbidden items
-			    if(SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
-                     for(ItemStack itemStack: player.getInventory().getStorageContents()) {
-                        if(!itemStack.getType().toString().endsWith("AXE")
-                            && !itemStack.getType().toString().endsWith("SHOVEL")) {
-                            //Forbidden item found
-                            freezePlayer = true;
-                            break;
-                        }
-                     }
-                } 
-                
-                if(freezePlayer) {
-                    if(player.getWalkSpeed() != 0) {
-                        
-                        player.sendMessage(Translation.of("plugin_prefix") + Translation.of("msg_you_can_only_carry_tools_in_siegezones"));
-
-                        player.setWalkSpeed(0f);	
-                    }		        
-                } else {
-                    if(player.getWalkSpeed() == 0) 
-                        player.setWalkSpeed(0.2f);			                            
-                }			   
-            }
-		}
-	}
 }
