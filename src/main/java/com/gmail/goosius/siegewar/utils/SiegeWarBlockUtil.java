@@ -14,7 +14,6 @@ import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-
 import java.util.ArrayList;
 import java.util.List;
 

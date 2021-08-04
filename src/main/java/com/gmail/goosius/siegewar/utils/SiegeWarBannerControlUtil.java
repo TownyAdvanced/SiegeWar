@@ -170,7 +170,7 @@ public class SiegeWarBannerControlUtil {
 			return false;   // Player is flying
 
 		if (player.getGameMode() == GameMode.SPECTATOR)
-			return false; //Player is spectating			
+			return false; // Player is spectating
 
 		if(!SiegeWarScoringUtil.isPlayerInTimedPointZone(player, siege))
 			return false; //player is not in the timed point zone
