@@ -33,9 +33,9 @@ public class SiegeWarBattlefieldReporterUtil {
                 for(ItemStack itemStack: player.getInventory().getStorageContents()) {
                     if(itemStack != null) {        
                         itemsToDrop.add(itemStack);
-                        xDelta.add((Math.random() * 10) - 5);
+                        xDelta.add((Math.random() * 20) - 10);
                         yDelta.add(Math.random() * 10);                        
-                        zDelta.add((Math.random() * 10) - 5);                  
+                        zDelta.add((Math.random() * 20) - 10);                  
                     }
                 }
 
