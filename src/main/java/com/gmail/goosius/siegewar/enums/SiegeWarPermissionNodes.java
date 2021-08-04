@@ -42,7 +42,7 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_SIEGEZONE_CANNOT_HIT_PLAYERS("siegewar.siegezone.cannot.hit.players"),
 	SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS("siegewar.siegezone.cannot.throw.potions"),
 	SIEGEWAR_SIEGEZONE_CANNOT_GET_BANNER_CONTROL("siegewar.siegezone.cannot.get.banner.control"),	
-	SIEGEWAR_SIEGEZONE_CANNOT_CARRY_NON_TOOL_ITEMS("siegewar.siegezone.cannot.carry.non.tool.items"),
+	SIEGEWAR_SIEGEZONE_CANNOT_CARRY_ITEMS("siegewar.siegezone.cannot.carry.items"),
 
 	//Notifications
 	SIEGEWAR_NOTIFICATIONS_ALL("siegewar.notifications.all"),

@@ -120,4 +120,4 @@ permissions:
             siegewar.siegezone.cannot.hit.players: true
             siegewar.siegezone.cannot.throw.potions: true
             siegewar.siegezone.cannot.get.banner.control: true
-            siegewar.siegezone.cannot.carry.non.tool.items: true
+            siegewar.siegezone.cannot.carry.items: true

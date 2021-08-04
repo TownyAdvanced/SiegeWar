@@ -470,4 +470,4 @@ msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s hours.
 msg_siege_war_banner_control_remaining_session_time: 'Banner Cap Timer: %s'
 
 # Added in 0.24
-msg_you_can_only_carry_tools_in_siegezones: '&cYou cannot carry any items in siegezone except tools (shovel, axe, pickaxe). All other items were automatically dropped.'
+msg_you_cannot_carry_items_in_siegezones: '&cYou cannot hold onto your inventory in siegezones. All items were automatically dropped.'

@@ -14,35 +14,42 @@ public class SiegeWarBattlefieldReporterUtil {
 
     /**
      * For battlefield reporters in siegezones,
-     * drop any non-tool items they are carrying
+     * drop any items they are carrying
      */
     public static void dropNonToolItemsFromBattlefieldReportersInSiegezones() {	
         List<ItemStack> itemsToDrop = new ArrayList<>();
-        for(Player player: Bukkit.getOnlinePlayers()) {
-            if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_CARRY_NON_TOOL_ITEMS.getNode())
+        List<Double> randomX = new ArrayList<>();
+        List<Double> randomZ = new ArrayList<>();
+        
+        for(Player player: Bukkit.getOnlinePlayers()) { 
+            if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_CARRY_ITEMS.getNode())
                && SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
                 //Identify non-tool items
                 itemsToDrop.clear();
+                randomX.clear();
+                randomZ.clear();;
                 for(ItemStack itemStack: player.getInventory().getStorageContents()) {
-                    if(itemStack != null
-                        && !itemStack.getType().toString().endsWith("AXE")
-                        && !itemStack.getType().toString().endsWith("SHOVEL")) {
-                        //Drop item
+                    if(itemStack != null) {        
                         itemsToDrop.add(itemStack);
+                        randomX.add((Math.random() * 10) - 5);
+                        randomZ.add((Math.random() * 10) - 5);                  
                     }
                 }
                 
                 if(itemsToDrop.size() != 0) {
-                    //Drop items
+                    //Drop items and scatter them around
                     Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
                         public void run() {
-                            for(ItemStack itemToDrop: itemsToDrop) {
-                                player.getWorld().dropItem(player.getLocation(), itemToDrop);
+                            for(int i = 0; i < itemsToDrop.size(); i++) {                            
+                                player.getWorld().dropItemNaturally(
+                                    player.getLocation().add(randomX.get(i), 0, randomZ.get(i)), 
+                                    itemsToDrop.get(i));
                             }
+                            player.getInventory().clear();
                         }
                     });                   
                     //Notify player
-                    player.sendMessage(Translation.of("plugin_prefix") + Translation.of("msg_you_can_only_carry_tools_in_siegezones"));
+                    player.sendMessage(Translation.of("plugin_prefix") + Translation.of("msg_you_cannot_carry_items_in_siegezones"));
                 }
             } 
         }
