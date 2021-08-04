@@ -260,8 +260,8 @@ public class SiegeWarBukkitEventListener implements Listener {
 	public void on(PotionSplashEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& !event.isCancelled()
-				&& event.getEntity() instanceof Player
-				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS.getNode())
+				&& event.getEntity().getShooter() instanceof Player
+				&& ((Player)event.getEntity().getShooter()).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS.getNode())
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
 			event.setCancelled(true);
 		}
@@ -272,8 +272,8 @@ public class SiegeWarBukkitEventListener implements Listener {
 	public void on(LingeringPotionSplashEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& !event.isCancelled()
-				&& event.getEntity() instanceof Player
-				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS.getNode())
+				&& event.getEntity().getShooter() instanceof Player
+				&& ((Player)event.getEntity().getShooter()).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS.getNode())
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
 			event.setCancelled(true);
 		}
