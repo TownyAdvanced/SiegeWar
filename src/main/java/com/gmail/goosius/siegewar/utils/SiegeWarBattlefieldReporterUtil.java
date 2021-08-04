@@ -25,6 +25,16 @@ public class SiegeWarBattlefieldReporterUtil {
         for(Player player: Bukkit.getOnlinePlayers()) { 
             if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_CARRY_ITEMS.getNode())
                && SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
+
+                //Player cannot carry food. So don't let them starve!.
+                if(player.getFoodLevel() < 20) {
+                    Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
+                        public void run() {
+                            player.setFoodLevel(20);
+                        }
+                    });
+                }
+
                 //Identify non-tool items
                 itemsToDrop.clear();
                 xDelta.clear();
