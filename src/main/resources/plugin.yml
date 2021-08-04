@@ -110,6 +110,14 @@ permissions:
         description: User is immune to war nausea.
         default: false
         
-    siegewar.immune.to.battle.fatigue:
-        description: User is immune to battle fatigue
+    siegewar.battlefield.reporter:
+        description: User holds all the nodes needed for battlefield reporting
         default: false
+        children:
+            siegewar.notifications.all: true
+            siegewar.immune.to.war.nausea: true
+            siegewar.siegezone.damage.immunity: true
+            siegewar.siegezone.cannot.hit.players: true
+            siegewar.siegezone.cannot.throw.potions: true
+            siegewar.siegezone.cannot.get.banner.control: true
+            siegewar.siegezone.cannot.carry.items: true

@@ -4,7 +4,6 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
-import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
@@ -85,10 +84,11 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeWarTimerTaskController.evaluateBannerControl();
             SiegeWarTimerTaskController.evaluateMapHiding();
             SiegeWarTimerTaskController.evaluateTimedSiegeOutcomes();
-            SiegeWarTimerTaskController.punishNonSiegeParticipantsInSiegeZone();
+            SiegeWarTimerTaskController.punishNonSiegeParticipantsInSiegeZones();
             SiegeHUDManager.updateHUDs();
             SiegeWarTimerTaskController.evaluateCannonSessions();
             SiegeWarTimerTaskController.evaluateBeacons();
+            SiegeWarTimerTaskController.evaluateBattlefieldReporters();
         }
 
     }

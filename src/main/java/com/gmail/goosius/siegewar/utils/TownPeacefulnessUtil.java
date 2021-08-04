@@ -129,7 +129,7 @@ public class TownPeacefulnessUtil {
 					continue;
 
 				//Dont apply if player has the immunity perm
-				if (TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
+				if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
 					continue;
 
 				//Don't apply to non-peaceful players
