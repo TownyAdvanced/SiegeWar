@@ -235,6 +235,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		}
 
 		if(event.getDamager() instanceof Player
+				&& !event.getDamager().isOp()
 				&& event.getEntity() instanceof Player
 				&& event.getDamager().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_HIT_PLAYERS.getNode())
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getDamager().getLocation())) {
@@ -249,6 +250,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& !event.isCancelled()
 				&& event.getEntity() instanceof Player
+				&& !event.getEntity().isOp()
 				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY.getNode())
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
 			event.setCancelled(true);
@@ -261,6 +263,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& !event.isCancelled()
 				&& event.getEntity().getShooter() instanceof Player
+				&& !((Player)event.getEntity().getShooter()).isOp()
 				&& ((Player)event.getEntity().getShooter()).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS.getNode())
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
 			event.setCancelled(true);
@@ -273,6 +276,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& !event.isCancelled()
 				&& event.getEntity().getShooter() instanceof Player
+				&& !((Player)event.getEntity().getShooter()).isOp()
 				&& ((Player)event.getEntity().getShooter()).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS.getNode())
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
 			event.setCancelled(true);

@@ -69,7 +69,7 @@ public class SiegeWarBannerControlUtil {
 				if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
 					continue;
 
-				if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_GET_BANNER_CONTROL.getNode()))
+				if(!player.isOp() && player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_GET_BANNER_CONTROL.getNode()))
 					continue;
 
 				if(!BattleSession.getBattleSession().isActive()) {

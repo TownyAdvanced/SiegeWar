@@ -23,8 +23,9 @@ public class SiegeWarBattlefieldReporterUtil {
         List<Double> zDelta = new ArrayList<>();
 
         for(Player player: Bukkit.getOnlinePlayers()) { 
-            if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_CARRY_ITEMS.getNode())
-               && SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
+            if(!player.isOp()
+                && player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_CARRY_ITEMS.getNode())
+                && SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
 
                 //Player cannot carry food. So don't let them starve!.
                 if(player.getFoodLevel() < 20) {
