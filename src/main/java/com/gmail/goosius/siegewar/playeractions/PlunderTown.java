@@ -124,9 +124,14 @@ public class PlunderTown {
 
 				// This will drop their actualPlunder amount to what the town's debt cap will allow. 
 				// Enabling a town to go only so far into debt to pay the plunder cost.
-				if (town.getAccount().getHoldingBalance() - totalPlunderAmount < town.getAccount().getDebtCap() * -1)
-					totalPlunderAmount = town.getAccount().getDebtCap() - Math.abs(town.getAccount().getHoldingBalance());
-					
+				if (town.getAccount().getHoldingBalance() - totalPlunderAmount < town.getAccount().getDebtCap() * -1) {
+					if(town.getAccount().getHoldingBalance() > 0) {
+						totalPlunderAmount = town.getAccount().getDebtCap() + Math.abs(town.getAccount().getHoldingBalance());
+					} else {
+						totalPlunderAmount = town.getAccount().getDebtCap() - Math.abs(town.getAccount().getHoldingBalance());
+						
+					}
+				}
 				// Charge the town (using .withdraw() which will allow for going into bankruptcy.)
 				town.getAccount().withdraw(totalPlunderAmount, "Plunder by " + nation.getName());
 				// And deposit it into the nation.
