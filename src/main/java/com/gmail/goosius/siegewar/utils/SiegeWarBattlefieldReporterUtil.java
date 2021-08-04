@@ -18,31 +18,34 @@ public class SiegeWarBattlefieldReporterUtil {
      */
     public static void dropNonToolItemsFromBattlefieldReportersInSiegezones() {	
         List<ItemStack> itemsToDrop = new ArrayList<>();
-        List<Double> randomX = new ArrayList<>();
-        List<Double> randomZ = new ArrayList<>();
-        
+        List<Double> xDelta = new ArrayList<>();
+        List<Double> yDelta = new ArrayList<>();
+        List<Double> zDelta = new ArrayList<>();
+
         for(Player player: Bukkit.getOnlinePlayers()) { 
             if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_CARRY_ITEMS.getNode())
                && SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
                 //Identify non-tool items
                 itemsToDrop.clear();
-                randomX.clear();
-                randomZ.clear();;
+                xDelta.clear();
+                yDelta.clear();
+                zDelta.clear();;
                 for(ItemStack itemStack: player.getInventory().getStorageContents()) {
                     if(itemStack != null) {        
                         itemsToDrop.add(itemStack);
-                        randomX.add((Math.random() * 10) - 5);
-                        randomZ.add((Math.random() * 10) - 5);                  
+                        xDelta.add((Math.random() * 10) - 5);
+                        yDelta.add(Math.random() * 10);                        
+                        zDelta.add((Math.random() * 10) - 5);                  
                     }
                 }
-                
+
                 if(itemsToDrop.size() != 0) {
                     //Drop items and scatter them around
                     Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
                         public void run() {
                             for(int i = 0; i < itemsToDrop.size(); i++) {                            
                                 player.getWorld().dropItemNaturally(
-                                    player.getLocation().add(randomX.get(i), 0, randomZ.get(i)), 
+                                    player.getLocation().add(xDelta.get(i), yDelta.get(i), zDelta.get(i)), 
                                     itemsToDrop.get(i));
                             }
                             player.getInventory().clear();
