@@ -13,9 +13,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.entity.LingeringPotionSplashEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
@@ -274,32 +278,4 @@ public class SiegeWarBukkitEventListener implements Listener {
 			event.setCancelled(true);
 		}
 	}	
-	
-
-/*
-	//Stops battlefield reporters from picking up items
-	@EventHandler
-	public void on(EntityPickupItemEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& !event.isCancelled()
-				&& event.getEntity() instanceof Player
-				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_CARRY_PICK_UP_ITEMS.getNode())
-				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
-			event.setCancelled(true);
-		}
-	}	
-
-	//Stops battlefield reporters from dropping items
-	@EventHandler
-	public void on(EntityDropItemEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& !event.isCancelled()
-				&& event.getEntity() instanceof Player
-				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_DROP_ITEMS.getNode())
-				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
-			event.setCancelled(true);
-		}
-	}
-	*/	
- 
 }

@@ -160,9 +160,6 @@ public class SiegeWarBannerControlUtil {
 		if(player.isDead())
 			return false; // Player is dead
 
-		if (player.getGameMode() == GameMode.SPECTATOR)
-			return false; //Player is spectating			
-
 		if(player.getWorld() != siege.getFlagLocation().getWorld())
 			return false; //Player not in same world as siege
 
@@ -171,6 +168,9 @@ public class SiegeWarBannerControlUtil {
 
 		if(player.isFlying() || player.isGliding())
 			return false;   // Player is flying
+
+		if (player.getGameMode() == GameMode.SPECTATOR)
+			return false; //Player is spectating			
 
 		if(!SiegeWarScoringUtil.isPlayerInTimedPointZone(player, siege))
 			return false; //player is not in the timed point zone
