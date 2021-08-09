@@ -13,9 +13,9 @@ public class NationMetaDataController {
         plunderLost = "siegewar_totalplunderlost",
         townsGained = "siegewar_totaltownsgained",
         townsLost = "siegewar_totaltownslost",
-        alignmentExpansionism = "siegewar_alignmentExpansionism",
-        alignmentMilitarism = "siegewar_alignmentMilitarism",
-        alignmentAggression = "siegewar_alignmentAggression",
+        alignmentExpansionism = "siegewar_alignmentExpansionism", //e.g. "1"
+        alignmentMilitarism = "siegewar_alignmentMilitarism",     //e.g. "-2"
+        alignmentAggression = "siegewar_alignmentAggression",     //e.g. "0"
         alliance = "siegewar_alliance",   //e.g. "green"
         objectives = "siegewar_objectives",  //e.g. "{town_uuid_12345,win_bonus_+5str,loss_penalty_+5upkeep},{...},...",
         surveyData = "siegewar_surveyData"; //e.g.  "{army_size_12},{...},..."

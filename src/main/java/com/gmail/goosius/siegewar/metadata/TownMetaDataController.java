@@ -3,7 +3,10 @@ package com.gmail.goosius.siegewar.metadata;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.metadata.*;
+import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
+import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
+import com.palmergames.bukkit.towny.object.metadata.LongDataField;
+import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -100,7 +103,7 @@ public class TownMetaDataController {
 		}
 		return 0l;
 	}
-
+	
 	public static void setSiegeImmunityEndTime(Town town, long time) {
 		LongDataField ldf = (LongDataField) siegeImmunityEndTime.clone();
 		if (time == 0) {

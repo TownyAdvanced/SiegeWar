@@ -146,5 +146,4 @@ class MetaDataUtil {
 			town.save();
 		}
 	}
-	
 }
