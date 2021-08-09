@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.metadata;
 
+import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownyObject;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
@@ -15,6 +16,55 @@ import com.palmergames.bukkit.towny.object.metadata.StringDataField;
  *
  */
 class MetaDataUtil {
+
+    public static int getIdf(Nation nation, String key) {
+        if (nation.hasMeta(key)) {
+            CustomDataField<?> cdf = nation.getMetadata(key);
+            if (cdf instanceof IntegerDataField)
+                return ((IntegerDataField) cdf).getValue();
+        }
+        return 0;
+    }
+
+    public static void setIdf(Nation nation, String key, int num) {
+        if (nation.hasMeta(key)) {
+            if (num == 0)
+                nation.removeMetaData(nation.getMetadata(key));
+            else {
+                CustomDataField<?> cdf = nation.getMetadata(key);
+                if (cdf instanceof IntegerDataField) {
+                    ((IntegerDataField) cdf).setValue(num);
+                    nation.save();
+                }
+                return;
+            }
+        } else if (num != 0)
+            nation.addMetaData(new IntegerDataField(key, num));
+    }
+
+    public static String getSdf(Nation nation, String key) {
+        if (nation.hasMeta(key)) {
+            CustomDataField<?> cdf = nation.getMetadata(key);
+            if (cdf instanceof StringDataField)
+                return ((StringDataField) cdf).getValue();
+        }
+        return "";
+    }
+
+    public static void setSdf(Nation nation, String key, String newValue) {
+        if (nation.hasMeta(key)) {
+            if (newValue.isEmpty())
+                nation.removeMetaData(nation.getMetadata(key));
+            else {
+                CustomDataField<?> cdf = nation.getMetadata(key);
+                if (cdf instanceof StringDataField) {
+                    ((StringDataField) cdf).setValue(newValue);
+                    nation.save();
+                }
+            }
+        } else if (!newValue.isEmpty())
+            nation.addMetaData(new StringDataField(key, newValue));
+    }
 
 	static String getString(Town town, StringDataField sdf) {
 		CustomDataField<?> cdf = town.getMetadata(sdf.getKey());
@@ -96,4 +146,5 @@ class MetaDataUtil {
 			town.save();
 		}
 	}
+	
 }

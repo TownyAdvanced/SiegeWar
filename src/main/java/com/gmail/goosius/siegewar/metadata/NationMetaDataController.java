@@ -2,19 +2,23 @@ package com.gmail.goosius.siegewar.metadata;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
-import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 
 public class NationMetaDataController {
     @SuppressWarnings("unused")
     private SiegeWar plugin;
 
-    private static String //IDF keys
+    private static String //Metadata Keys
         plunderGained = "siegewar_totalplundergained",
         plunderLost = "siegewar_totalplunderlost",
         townsGained = "siegewar_totaltownsgained",
-        townsLost = "siegewar_totaltownslost";
+        townsLost = "siegewar_totaltownslost",
+        alignmentExpansionism = "siegewar_alignmentExpansionism",
+        alignmentMilitarism = "siegewar_alignmentMilitarism",
+        alignmentAggression = "siegewar_alignmentAggression",
+        alliance = "siegewar_alliance",   //e.g. "green"
+        objectives = "siegewar_objectives",  //e.g. "{town_uuid_12345,win_bonus_+5str,loss_penalty_+5upkeep},{...},...",
+        surveyData = "siegewar_surveyData"; //e.g.  "{army_size_12},{...},..."
 
     private static final LongDataField pendingSiegeImmunityMillis = new LongDataField("siegewar_pendingSiegeImmunityMillis");
 
@@ -22,61 +26,84 @@ public class NationMetaDataController {
         this.plugin = plugin;
     }
 
-    public static int getIdf(Nation nation, String key) {
-        if (nation.hasMeta(key)) {
-            CustomDataField<?> cdf = nation.getMetadata(key);
-            if (cdf instanceof IntegerDataField)
-                return ((IntegerDataField) cdf).getValue();
-        }
-        return 0;
-    }
-
-    public static void setIdf(Nation nation, String key, int num) {
-        if (nation.hasMeta(key)) {
-            if (num == 0)
-                nation.removeMetaData(nation.getMetadata(key));
-            else {
-                CustomDataField<?> cdf = nation.getMetadata(key);
-                if (cdf instanceof IntegerDataField) {
-                    ((IntegerDataField) cdf).setValue(num);
-                    nation.save();
-                }
-                return;
-            }
-        } else if (num != 0)
-            nation.addMetaData(new IntegerDataField(key, num));
-    }
-
     public static int getTotalPlunderGained(Nation nation) {
-        return getIdf(nation, plunderGained);
+        return MetaDataUtil.getIdf(nation, plunderGained);
     }
 
     public static int getTotalPlunderLost(Nation nation) {
-        return getIdf(nation, plunderLost);
+        return MetaDataUtil.getIdf(nation, plunderLost);
     }
 
     public static int getTotalTownsGained(Nation nation) {
-        return getIdf(nation, townsGained);
+        return MetaDataUtil.getIdf(nation, townsGained);
     }
 
     public static int getTotalTownsLost(Nation nation) {
-        return getIdf(nation, townsLost);
+        return MetaDataUtil.getIdf(nation, townsLost);
+    }
+
+    public static int getAlignmentExpansionism(Nation nation) {
+        return MetaDataUtil.getIdf(nation, alignmentExpansionism);
+    }
+
+    public static int getAlignmentMilitarism(Nation nation) {
+        return MetaDataUtil.getIdf(nation, alignmentMilitarism);
+    }
+
+    public static int getAlignmentAggression(Nation nation) {
+        return MetaDataUtil.getIdf(nation, alignmentAggression);
+    }
+
+    public static String getAlliance (Nation nation) {
+        return MetaDataUtil.getSdf(nation, alliance);
+    }
+
+    public static String getObjectives (Nation nation) {
+        return MetaDataUtil.getSdf(nation, objectives);
+    }
+
+    public static String getSurveyData (Nation nation) {
+        return MetaDataUtil.getSdf(nation, surveyData);
     }
 
     public static void setTotalPlunderGained(Nation nation, int num) {
-        setIdf(nation, plunderGained, num);
+        MetaDataUtil.setIdf(nation, plunderGained, num);
     }
 
     public static void setTotalPlunderLost(Nation nation, int num) {
-        setIdf(nation, plunderLost, num);
+        MetaDataUtil.setIdf(nation, plunderLost, num);
     }
 
     public static void setTotalTownsGained(Nation nation, int num) {
-        setIdf(nation, townsGained, num);
+        MetaDataUtil.setIdf(nation, townsGained, num);
     }
 
     public static void setTotalTownsLost(Nation nation, int num) {
-        setIdf(nation, townsLost, num);
+        MetaDataUtil.setIdf(nation, townsLost, num);
+    }
+
+    public static void setAlignmentExpansionism(Nation nation, int num) {
+        MetaDataUtil.setIdf(nation, alignmentExpansionism, num);
+    }
+
+    public static void setAlignmentMilitarism(Nation nation, int num) {
+        MetaDataUtil.setIdf(nation, alignmentMilitarism, num);
+    }
+
+    public static void setAlignmentAggression(Nation nation, int num) {
+        MetaDataUtil.setIdf(nation, alignmentAggression, num);
+    }
+
+    public static void setAlliance(Nation nation, String val) {
+        MetaDataUtil.setSdf(nation, alliance, val);
+    }
+
+    public static void setObjectives(Nation nation, String val) {
+        MetaDataUtil.setSdf(nation, objectives, val);
+    }
+
+    public static void setSurveyData(Nation nation, String val) {
+        MetaDataUtil.setSdf(nation, surveyData, val);
     }
 
     public static long getPendingSiegeImmunityMillis(Nation nation) {
