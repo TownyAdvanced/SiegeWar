@@ -4,6 +4,7 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.MapHidingMode;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -258,7 +259,7 @@ public class SiegeWarSettings {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Problem reading map hiding items list. The list is config.yml may be misconfigured.");
+			SiegeWar.severe("Problem reading map hiding items list. The list is config.yml may be misconfigured.");
 			e.printStackTrace();
 		}
 		return mapHidingItems;

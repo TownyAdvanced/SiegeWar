@@ -20,7 +20,7 @@ public class Settings {
 		try {
 			Settings.loadConfig(sw.getDataFolder().getPath() + File.separator + "config.yml", sw.getVersion());
 		} catch (Exception e) {
-            System.err.println(SiegeWar.prefix + "Config.yml failed to load! Disabling!");
+			SiegeWar.severe("Config.yml failed to load! Disabling!");
 			loadSuccessFlag = false;
         }
 
@@ -30,7 +30,7 @@ public class Settings {
 		try {
 			Translation.loadLanguage(sw.getDataFolder().getPath() + File.separator, "english.yml");
 		} catch (Exception e) {
-	        System.err.println(SiegeWar.prefix + "Language file failed to load! Disabling!");
+			SiegeWar.severe("Language file failed to load! Disabling!");
 			loadSuccessFlag = false;
 	    }
 
@@ -39,7 +39,7 @@ public class Settings {
 			battleIconFile = FileMgmt.extractImageFile(BATTLE_BANNER_FILE_NAME);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println(SiegeWar.prefix + "Could not load images! Disabling!");
+			SiegeWar.severe("Could not load images! Disabling!");
 			loadSuccessFlag = false;
 		}
 
@@ -48,7 +48,7 @@ public class Settings {
 			SiegeWarBattleSessionUtil.attemptToScheduleNextBattleSession();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println(SiegeWar.prefix + "Problem Scheduling Battle Session! Disabling!");
+			SiegeWar.severe("Problem Scheduling Battle Session! Disabling!");
 			loadSuccessFlag = false;
 		}
 
@@ -127,7 +127,7 @@ public class Settings {
 
 	private static void sendError(String msg) {
 
-		System.out.println("Error could not read " + msg);
+		SiegeWar.severe("Error could not read " + msg);
 	}
 
 	public static boolean getBoolean(ConfigNodes node) {

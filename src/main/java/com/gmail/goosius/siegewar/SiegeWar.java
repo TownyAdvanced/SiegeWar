@@ -56,10 +56,10 @@ public class SiegeWar extends JavaPlugin {
     	printSickASCIIArt();
     	
         if (!townyVersionCheck(getTownyVersion())) {
-            System.err.println(prefix + "Towny version does not meet required minimum version: " + requiredTownyVersion.toString());
+            severe("Towny version does not meet required minimum version: " + requiredTownyVersion.toString());
             siegeWarPluginError = true;
         } else {
-            System.out.println(prefix + "Towny version " + getTownyVersion() + " found.");
+            info("Towny version " + getTownyVersion() + " found.");
         }
         
         if (!Settings.loadSettingsAndLang())
@@ -75,46 +75,46 @@ public class SiegeWar extends JavaPlugin {
 		}
 
 		if(siegeWarPluginError) {
-			System.err.println(prefix + "SiegeWar is in safe mode. Dynmap integration disabled.");
+			severe("SiegeWar is in safe mode. Dynmap integration disabled.");
 		} else {
 			Plugin dynmap = Bukkit.getPluginManager().getPlugin("dynmap");
 			if (dynmap != null) {
-				System.out.println(prefix + "SiegeWar found Dynmap plugin, enabling Dynmap support.");
+				info("SiegeWar found Dynmap plugin, enabling Dynmap support.");
 				DynmapTask.setupDynmapAPI((DynmapAPI) dynmap);
 				townyDynmapPluginIntegrationEnabled = true;
 			} else {
-				System.out.println(prefix + "Dynmap plugin not found.");
+				info("Dynmap plugin not found.");
 			}
 		}
 
 		if(siegeWarPluginError) {
-			System.err.println(prefix + "SiegeWar is in safe mode. Cannons integration disabled.");
+			severe("SiegeWar is in safe mode. Cannons integration disabled.");
 		} else {
 			Plugin cannons = Bukkit.getPluginManager().getPlugin("Cannons");
 			if (cannons != null) {
 				if (SiegeWarSettings.isCannonsIntegrationEnabled()) {
-					System.out.println(prefix + "SiegeWar found Cannons plugin, enabling Cannons support.");
-					System.out.println(prefix + "Cannons support enabled.");
+					info("SiegeWar found Cannons plugin, enabling Cannons support.");
+					info("Cannons support enabled.");
 					cannonsPluginIntegrationEnabled = true;
 				}
 			} else {
-				System.out.println(prefix + "Cannons plugin not found.");
+				info("Cannons plugin not found.");
 			}
 		}
 
 		registerListeners();
 
 		if(siegeWarPluginError) {
-			System.err.println(prefix + "SiegeWar did not load successfully, and is now in safe mode.");
+			severe("SiegeWar did not load successfully, and is now in safe mode.");
 		} else {
-			System.out.println(prefix + "SiegeWar loaded successfully.");
+			info("SiegeWar loaded successfully.");
 		}
     }
     
     @Override
     public void onDisable() {
     	DynmapTask.endDynmapTask();
-    	System.out.println(prefix + "Shutting down...");
+    	info("Shutting down...");
     }
 
 	public String getVersion() {
@@ -159,7 +159,7 @@ public class SiegeWar extends JavaPlugin {
 
 	private void registerCommands() {
 		if(siegeWarPluginError) {
-			System.err.println(prefix + "SiegeWar is in safe mode. SiegeWar commands not registered");
+			severe("SiegeWar is in safe mode. SiegeWar commands not registered");
 		} else {
 			getCommand("siegewar").setExecutor(new SiegeWarCommand());
 			getCommand("siegewaradmin").setExecutor(new SiegeWarAdminCommand());
@@ -167,20 +167,20 @@ public class SiegeWar extends JavaPlugin {
 	}
 
 	private void printSickASCIIArt() {
-		System.out.println("    _________.__                      ");
-		System.out.println("   /   _____/|__| ____   ____   ____  ");
-		System.out.println("   \\_____  \\ |  |/ __ \\ / ___\\_/ __ \\ ");
-		System.out.println("   /        \\|  \\  ___// /_/  >  ___/ ");
-		System.out.println("  /_______  /|__|\\___  >___  / \\___  >");
-		System.out.println("          \\/         \\/_____/      \\/ ");
-		System.out.println("       __      __                        ");
-		System.out.println("      /  \\    /  \\_____ _______          ");
-		System.out.println("      \\   \\/\\/   /\\__  \\\\_  __ \\         ");
-		System.out.println("       \\        /  / __ \\|  | \\/         ");
-		System.out.println("        \\__/\\  /  (____  /__|            ");
-		System.out.println("             \\/        \\/                ");
-		System.out.println("          By Goosius & LlmDl          ");
-		System.out.println("                                      ");
+		Bukkit.getLogger().info("    _________.__                      ");
+		Bukkit.getLogger().info("   /   _____/|__| ____   ____   ____  ");
+		Bukkit.getLogger().info("   \\_____  \\ |  |/ __ \\ / ___\\_/ __ \\ ");
+		Bukkit.getLogger().info("   /        \\|  \\  ___// /_/  >  ___/ ");
+		Bukkit.getLogger().info("  /_______  /|__|\\___  >___  / \\___  >");
+		Bukkit.getLogger().info("          \\/         \\/_____/      \\/ ");
+		Bukkit.getLogger().info("       __      __                        ");
+		Bukkit.getLogger().info("      /  \\    /  \\_____ _______          ");
+		Bukkit.getLogger().info("      \\   \\/\\/   /\\__  \\\\_  __ \\         ");
+		Bukkit.getLogger().info("       \\        /  / __ \\|  | \\/         ");
+		Bukkit.getLogger().info("        \\__/\\  /  (____  /__|            ");
+		Bukkit.getLogger().info("             \\/        \\/                ");
+		Bukkit.getLogger().info("          By Goosius & LlmDl          ");
+		Bukkit.getLogger().info("                                      ");
 	}
 
 	public static boolean getCannonsPluginIntegrationEnabled() {
@@ -189,5 +189,13 @@ public class SiegeWar extends JavaPlugin {
 	
 	public static boolean isError() {
 		return siegeWarPluginError;
+	}
+	
+	public static void info(String msg) {
+		plugin.getLogger().info(msg);
+	}
+	
+	public static void severe(String msg) {
+		plugin.getLogger().severe(msg);
 	}
 }

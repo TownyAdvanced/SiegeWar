@@ -41,7 +41,7 @@ public class FileMgmt {
 				}
 				reader.close();
 			} catch (IOException e) {
-				System.out.println("Exception ");
+				e.printStackTrace();
 			}
 			return writer.toString();
 		} else {
@@ -64,7 +64,7 @@ public class FileMgmt {
 			out.close();
 
 		} catch (IOException e) {
-			System.out.println("Exception ");
+			e.printStackTrace();
 		}
 	}
 

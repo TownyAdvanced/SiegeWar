@@ -100,18 +100,18 @@ public class SiegeController {
 
 	public static boolean loadAll() {
 		try {
-			System.out.println(SiegeWar.prefix + "Loading Siege Data...");
+			SiegeWar.info("Loading Siege Data...");
 			clearSieges();
-			System.out.println(SiegeWar.prefix + "Loading Siege List Data...");
+			SiegeWar.info("Loading Siege List Data...");
 			loadSiegeList();
-			System.out.println(SiegeWar.prefix + "Loading Siege Detail Data...");
+			SiegeWar.info("Loading Siege Detail Data...");
 			if(!loadSieges())
 				return false;
-			System.out.println(SiegeWar.prefix + "Siege Data Loaded Successfully.");
-			System.out.println(SiegeWar.prefix + SiegeController.getSieges().size() + " siege(s) loaded.");
+			SiegeWar.info("Siege Data Loaded Successfully.");
+			SiegeWar.info(SiegeController.getSieges().size() + " siege(s) loaded.");
 			return true;
 		} catch (Exception e) {
-			System.out.println(SiegeWar.prefix + "Problem Loading Siege Data...");
+			SiegeWar.severe("Problem Loading Siege Data...");
 			e.printStackTrace();
 			return false;
 		}
@@ -120,7 +120,7 @@ public class SiegeController {
 	public static void loadSiegeList() {
 		for (Town town : TownyUniverse.getInstance().getTowns())
 			if (SiegeMetaDataController.hasSiege(town)) {
-				System.out.println(SiegeWar.prefix + "Siege List Data: Found siege in Town " + town.getName());
+				SiegeWar.info("Siege List Data: Found siege in Town " + town.getName());
 				newSiege(town);
 
 				setSiege(town, true);
@@ -130,9 +130,9 @@ public class SiegeController {
 
 	public static boolean loadSieges() {
 		for (Siege siege : townSiegeMap.values()) {
-			System.out.println(SiegeWar.prefix + "Siege Detail Data: Loading siege data for town '" + siege.getTown().getName() + "'");
+			SiegeWar.info("Siege Detail Data: Loading siege data for town '" + siege.getTown().getName() + "'");
 			if (!loadSiege(siege)) {
-				System.out.println(SiegeWar.prefix + "Siege Detail Data: Loading Error: Could not read siege data for town '" + siege.getTown().getName() + "'.");
+				SiegeWar.severe("Siege Detail Data: Loading Error: Could not read siege data for town '" + siege.getTown().getName() + "'.");
 				return false;
 			}
 		}

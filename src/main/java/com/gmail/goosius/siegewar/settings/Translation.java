@@ -37,11 +37,11 @@ public final class Translation {
 		try {
 			newLanguage.loadFromString(FileMgmt.convertStreamToString("/" + res));
 		} catch (IOException e) {
-			System.out.println("[SiegeWar] Lang: Custom language file detected, not updating.");
-			System.out.println("[SiegeWar] Lang: " + res + " v" + Translation.of("version") + " loaded.");
+			SiegeWar.info("Lang: Custom language file detected, not updating.");
+			SiegeWar.info("Lang: " + res + " v" + Translation.of("version") + " loaded.");
 			return;
 		} catch (InvalidConfigurationException e) {
-			System.err.println(SiegeWar.prefix + "Invalid Configuration in language file detected.");
+			SiegeWar.severe("Invalid Configuration in language file detected.");
 			throw e;
 		}
 		
@@ -50,10 +50,10 @@ public final class Translation {
 
 		if (!langVersion.equalsIgnoreCase(resVersion)) {
 			language = newLanguage;
-			System.out.println("[SiegeWar] Lang: Language file replaced with updated version.");
+			SiegeWar.info("Lang: Language file replaced with updated version.");
 			FileMgmt.stringToFile(FileMgmt.convertStreamToString("/" + res), file);
 		}
-		System.out.println("[SiegeWar] Lang: " + res + " v" + Translation.of("version") + " loaded.");
+		SiegeWar.info("Lang: " + res + " v" + Translation.of("version") + " loaded.");
 	}
 
 	private static String parseSingleLineString(String str) {
@@ -70,7 +70,7 @@ public final class Translation {
 		String data = language.getString(key.toLowerCase());
 
 		if (data == null) {
-			System.err.println("[SiegeWar] Error could not read " + key.toLowerCase() + " from " + Settings.getString(ConfigNodes.LANGUAGE));
+			SiegeWar.severe("Error could not read " + key.toLowerCase() + " from " + Settings.getString(ConfigNodes.LANGUAGE));
 			return "";
 		}
 		return StringMgmt.translateHexColors(parseSingleLineString(data));

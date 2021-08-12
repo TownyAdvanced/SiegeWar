@@ -27,7 +27,7 @@ public class Messaging {
 	}
 	
 	public static void sendGlobalMessage(String message) {
-		System.out.println(prefix + message);
+		SiegeWar.info(message);
 		Bukkit.getOnlinePlayers().stream()
 				.filter(p -> p != null)
 				.filter(p -> TownyAPI.getInstance().isTownyWorld(p.getLocation().getWorld()))
@@ -35,9 +35,9 @@ public class Messaging {
 	}
 
 	public static void sendGlobalMessage(String header, List<String> lines) {
-		System.out.println(prefix + header);
+		SiegeWar.info(header);
 		for(String line: lines) {
-			System.out.println(line);
+			SiegeWar.info(line);
 		}
 		for(Player player: Bukkit.getOnlinePlayers()) {
 			if(player != null && TownyAPI.getInstance().isTownyWorld(player.getLocation().getWorld())) {

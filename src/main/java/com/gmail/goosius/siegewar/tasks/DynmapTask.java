@@ -39,7 +39,7 @@ public class DynmapTask {
         dynmapAPI = _api;
         markerapi = dynmapAPI.getMarkerAPI();
         if (markerapi == null) {
-            System.err.println(SiegeWar.prefix + "Error loading dynmap marker API!");
+        	SiegeWar.severe("Error loading dynmap marker API!");
             return;
         }
 
@@ -51,7 +51,7 @@ public class DynmapTask {
             siegeWarMarkerSet.setMarkerSetLabel("SiegeWar");
 
         if (siegeWarMarkerSet == null) {
-            System.err.println(SiegeWar.prefix + "Error creating dynmap marker set");
+        	SiegeWar.severe("Error creating dynmap marker set");
             return;
         }
 
@@ -63,7 +63,7 @@ public class DynmapTask {
         markerapi.createMarkerIcon(BATTLE_BANNER_ICON_ID, "BattleBanner", png);
 
         startDynmapTask();
-        System.out.println(SiegeWar.prefix + "Dynmap support enabled.");
+        SiegeWar.info("Dynmap support enabled.");
     }
 
     public static void startDynmapTask() {
@@ -184,7 +184,7 @@ public class DynmapTask {
                         townUUDToSiegeMarkerMap.put(siege.getTown().getUUID(), siegeMarker);
                     }
                 } catch (Exception ex) {
-                    System.err.println(SiegeWar.prefix + "Problem adding siege marker for siege: " + name);
+                	SiegeWar.severe("Problem adding siege marker for siege: " + name);
                     ex.printStackTrace();
                 }
             }

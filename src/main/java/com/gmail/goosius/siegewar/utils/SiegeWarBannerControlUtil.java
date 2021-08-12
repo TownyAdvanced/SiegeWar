@@ -15,7 +15,6 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.gmail.goosius.siegewar.settings.Translation;
-import com.palmergames.bukkit.towny.permissions.PermissionNodes;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
 import net.md_5.bungee.api.ChatMessageType;
@@ -47,9 +46,9 @@ public class SiegeWarBannerControlUtil {
 			}
 		} catch (Exception e) {
 			try {
-				System.err.println("Problem evaluating banner control for siege on town: " + siege.getTown().getName());
+				SiegeWar.severe("Problem evaluating banner control for siege on town: " + siege.getTown().getName());
 			} catch (Exception e2) {
-				System.err.println("Problem evaluating banner control for siege: (could not read town name)");
+				SiegeWar.severe("Problem evaluating banner control for siege: (could not read town name)");
 			}
 			e.printStackTrace();
 		}
@@ -99,7 +98,7 @@ public class SiegeWarBannerControlUtil {
 				}
 			}
 		} catch (Exception e) {
-			System.err.println("Problem evaluating new banner control sessions");
+			SiegeWar.severe("Problem evaluating new banner control sessions");
 			e.printStackTrace();
 		}
 	}
@@ -283,7 +282,7 @@ public class SiegeWarBannerControlUtil {
 					}
 				}
 			} catch (Exception e) {
-				System.err.println("Problem evaluating banner control session for player " + bannerControlSession.getPlayer().getName());
+				SiegeWar.severe("Problem evaluating banner control session for player " + bannerControlSession.getPlayer().getName());
 			}
 		}
 	}

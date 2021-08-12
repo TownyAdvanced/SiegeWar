@@ -56,11 +56,11 @@ public class SiegeWarCannonsListener implements Listener {
 				if (player != null) {
 					Messaging.sendErrorMsg(player, te.getMessage());
 				} else {
-					System.out.println("Problem Processing fire cannon event: " + te.getMessage());
+					SiegeWar.severe("Problem Processing fire cannon event: " + te.getMessage());
 				}
 			} catch (Exception e) {
 				event.setCancelled(true);
-				System.out.println("Problem Processing fire cannon event: " + e.getMessage());
+				SiegeWar.severe("Problem Processing fire cannon event: " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -95,7 +95,7 @@ public class SiegeWarCannonsListener implements Listener {
 				}
 			} catch (Exception e) {
 				event.setCancelled(true);
-				System.out.println("Error processing cannon redstone event. Cannon fire prevented: " + e.getMessage());
+				SiegeWar.severe("Error processing cannon redstone event. Cannon fire prevented: " + e.getMessage());
 				e.printStackTrace();
 			}
 		}

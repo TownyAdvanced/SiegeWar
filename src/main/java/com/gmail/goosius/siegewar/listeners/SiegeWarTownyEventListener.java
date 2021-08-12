@@ -46,7 +46,7 @@ public class SiegeWarTownyEventListener implements Listener {
      */
     @EventHandler
     public void onTownyDatabaseLoad(TownyLoadedDatabaseEvent event) {
-    	System.out.println(SiegeWar.prefix + "Towny database reload detected, reloading sieges...");
+    	SiegeWar.info(SiegeWar.prefix + "Towny database reload detected, reloading sieges...");
         SiegeController.loadAll();
         TownOccupationController.loadAll();
     }
