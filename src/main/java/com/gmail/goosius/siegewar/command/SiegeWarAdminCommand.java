@@ -289,9 +289,7 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			file.set("nations.ranks.assistant", groupNodes);
 		}
 		file.save();
-		
-		// TODO: make wiki page or link to section of install guide which lists the remaining nodes for staff/cannons/capital switching.
-		Messaging.sendMsg(sender, "Permission nodes installed: see wiki for nodes you should manually give, which cannot be done automatically: http://some.url.here");
+		Messaging.sendMsg(sender, "Permission nodes installed: see wiki for nodes you should give manually: https://git.io/JRSHW");
 	}
 
 	private void showHelp(CommandSender sender) {
