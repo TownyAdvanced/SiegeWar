@@ -52,6 +52,10 @@ public class PlaceBlock {
 	public static void evaluateSiegeWarPlaceBlockRequest(Player player, Block block, TownyBuildEvent event) {
 
 		try {
+			//Ensure siege is enabled in this world
+			if (!SiegeWarSettings.getWarSiegeWorlds().contains(block.getWorld().getName()))
+				return;
+
 			//Enforce Anti-Trap warfare build block if below siege banner altitude.
 			if (SiegeWarSettings.isTrapWarfareMitigationEnabled()
 					&& SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(event.getBlock().getLocation())) {
@@ -104,23 +108,6 @@ public class PlaceBlock {
 		if (!TownyAPI.getInstance().isWilderness(block))
 			return;
 
-		//Ensure there ia an adjacent town
-		List<TownBlock> adjacentTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
-		if (adjacentTownBlocks.size() == 0)
-			return;
-
-		//Ensure siege is enabled in this world
-		if (!SiegeWarSettings.getWarSiegeWorlds().contains(block.getWorld().getName()))
-			throw new TownyException(Translation.of("msg_err_siege_war_not_enabled_in_world"));
-
-		//Ensure that there is just 1 town nearby (or else we don't know which town to affect
-		if (adjacentTownBlocks.size() > 1)
-			throw new TownyException(Translation.of("msg_err_siege_war_too_many_adjacent_cardinal_town_blocks"));
-
-		//Ensure siege is enabled in this world
-		if (!SiegeWarSettings.getWarSiegeWorlds().contains(block.getWorld().getName()))
-			throw new TownyException(Translation.of("msg_err_siege_war_not_enabled_in_world"));
-
 		//Ensure the player has a town
 		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 		if (resident == null || !resident.hasTown())
@@ -132,10 +119,28 @@ public class PlaceBlock {
 		if (residentsTown.hasNation())
 			residentsNation = residentsTown.getNation();
 
-		if (isWhiteBanner(block)) {
-			evaluatePlaceWhiteBannerNearTown(player, residentsTown, residentsNation, adjacentTownBlocks.get(0).getTown());
+		//Ensure there is at least 1 adjacent town
+		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
+		List<TownBlock> adjacentNonCardinalTownBlocks = SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block);
+		if(adjacentCardinalTownBlocks.size() == 0 && adjacentNonCardinalTownBlocks.size() == 0)
+			return;
+
+		//Ensure there is just one cardinal town block
+		if (adjacentCardinalTownBlocks.size() > 1)
+			throw new TownyException(Translation.of("msg_err_siege_war_too_many_adjacent_towns"));
+
+		//Get 1st nearby townblock
+		TownBlock townBlock;
+		if(adjacentCardinalTownBlocks.size() > 0) {
+			townBlock = adjacentCardinalTownBlocks.get(0);
 		} else {
-			evaluatePlaceColouredBannerNearTown(player, residentsTown, residentsNation, adjacentTownBlocks.get(0), adjacentTownBlocks.get(0).getTown(), block);
+			townBlock = adjacentNonCardinalTownBlocks.get(0);
+		}
+
+		if (isWhiteBanner(block)) {
+			evaluatePlaceWhiteBannerNearTown(player, residentsTown, residentsNation, townBlock.getTownOrNull());
+		} else {
+			evaluatePlaceColouredBannerNearTown(player, residentsTown, residentsNation, townBlock, townBlock.getTownOrNull(), block);
 		}
 	}
 
@@ -305,19 +310,22 @@ public class PlaceBlock {
 		if(!TownyEconomyHandler.isActive())
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_economy"));
 		
-		List<TownBlock> nearbyTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
-
-		if(nearbyTownBlocks.size() == 0) //No town nearby. Return.
+		//Ensure there is at least 1 adjacent town
+		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
+		List<TownBlock> adjacentNonCardinalTownBlocks = SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block);
+		if(adjacentCardinalTownBlocks.size() == 0 && adjacentNonCardinalTownBlocks.size() == 0)
 			return;
 
-		if (nearbyTownBlocks.size() > 1) //More than one town block nearby. Error
+		//Ensure there is just one cardinal town block
+		if (adjacentCardinalTownBlocks.size() > 1)
 			throw new TownyException(Translation.of("msg_err_siege_war_too_many_adjacent_towns"));
 
-		//Get nearby town
-		Town town = null;
-		try {
-			town = nearbyTownBlocks.get(0).getTown();
-		} catch (NotRegisteredException ignored) {}
+		//Get 1st nearby town
+		Town town;
+		if(adjacentCardinalTownBlocks.size() > 0)
+			town = adjacentCardinalTownBlocks.get(0).getTownOrNull();
+		else
+			town = adjacentNonCardinalTownBlocks.get(0).getTownOrNull();
 
 		//If there is no siege, do normal block placement
 		if(!SiegeController.hasSiege(town))

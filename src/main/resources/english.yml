@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.24
+version: 0.25
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -66,7 +66,6 @@ msg_err_siege_war_cannot_attack_own_town: '&cYou cannot attack your own town.'
 msg_err_siege_war_cannot_attack_town_in_own_nation: '&cYou cannot attack a town in your own nation.'
 msg_err_siege_war_cannot_attack_non_enemy_nation: '&cYou cannot attack a town unless the nation of that town is an enemy of your nation.'
 msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cYou cannot perform this action because this chunk is facing more than one town block. Try placing the item in a different area.'
-msg_err_siege_war_too_many_adjacent_towns: '&cYou cannot perform this action because there are multiple towns adjacent to this chunk. Try placing the item in a different area.'
 msg_err_siege_war_nation_already_attacking_town: '&cYour nation is already attacking this town.'
 msg_err_siege_war_cannot_attack_siege_immunity: '&cThe target town has siege immunity. It cannot be attacked until the siege immunity expires.'
 msg_err_siege_war_cannot_place_banner_far_above_town: 'The siege banner cannot be placed on a much higher elevation than the town. Try placing the banner at a lower elevation'
@@ -460,3 +459,6 @@ msg_siege_war_banner_control_remaining_session_time: 'Banner Cap Timer: %s'
 
 # Added in 0.24
 msg_you_cannot_carry_items_in_siegezones: '&cYou cannot hold onto your inventory in siegezones. All items were automatically dropped.'
+
+# Added in 0.25
+msg_err_siege_war_too_many_adjacent_towns: '&cYou cannot perform this action because the target chunk faces too many townblocks. Try placing the item in a different area.'

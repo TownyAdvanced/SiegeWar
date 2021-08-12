@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.24
+version: 0.25
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -72,7 +72,6 @@ msg_err_siege_war_cannot_attack_own_town: "&cVous ne pouvez pas attaquer votre p
 msg_err_siege_war_cannot_attack_town_in_own_nation: "&cVous ne pouvez pas attaquer une ville de votre propre nation."
 msg_err_siege_war_cannot_attack_non_enemy_nation: "&cVous ne pouvez pas attaquer une ville à moins que la nation de cette ville ne soit un ennemi de votre nation."
 msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: "&cVous ne pouvez pas effectuer cette action car ce chunk fait face à plusieurs claims. Essayez de placer la bannière autre part."
-msg_err_siege_war_too_many_adjacent_towns: "&cVous ne pouvez pas effectuer cette action car il y a plusieurs villes adjacentes à ce chunk. Essayez de placer la bannière autre part."
 msg_err_siege_war_nation_already_attacking_town: "&cVotre nation attaque déjà cette ville."
 msg_err_siege_war_cannot_attack_siege_immunity: "&cLa ville cible bénéficie de l'immunité de siège. Elle ne peut pas être attaqué avant l'expiration de l'immunité de siège."
 msg_err_siege_war_cannot_place_banner_far_above_town: "La bannière de siège ne peut pas être placée à une altitude beaucoup plus élevée que la ville. Essayez de placer la bannière plus bas."
@@ -471,3 +470,6 @@ msg_siege_war_banner_control_remaining_session_time: 'Banner Cap Timer: %s'
 
 # Added in 0.24
 msg_you_cannot_carry_items_in_siegezones: '&cYou cannot hold onto your inventory in siegezones. All items were automatically dropped.'
+
+# Added in 0.25
+msg_err_siege_war_too_many_adjacent_towns: '&cYou cannot perform this action because the target chunk faces too many townblocks. Try placing the item in a different area.'
