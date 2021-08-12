@@ -64,7 +64,6 @@ msg_err_war_common_occupied_town_cannot_unclaim: "&cLes villes occupées ne peuv
 msg_err_siege_war_town_voluntary_leave_impossible: "&cLes villes ne peuvent pas quitter les nations sans accord. Pour quitter votre nation, persuadez le roi (ou un assistant) d'expulser votre ville."
 msg_err_siege_war_revolt_immunity_active: "&cVotre ville bénéficie d'une immunité à la révolte. Elle ne peut pas se révolter tant que l'immunité à la révolte n'est pas expirée."
 #Attack
-msg_err_siege_war_not_enabled_in_world: "&cLa guerre n'est pas activée dans ce monde."
 msg_err_siege_war_banner_must_be_placed_above_ground: "&cLa bannière de siège doit être placée au-dessus du sol."
 msg_err_siege_war_action_not_a_town_member: "&cVous devez être membre d'une ville pour effectuer cette action."
 msg_err_siege_war_action_not_a_nation_member: "&cVous devez être membre d'une nation pour effectuer cette action."

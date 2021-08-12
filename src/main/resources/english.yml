@@ -58,7 +58,6 @@ msg_err_war_common_occupied_town_cannot_unclaim: "&cOccupied towns cannot un-cla
 msg_err_siege_war_town_voluntary_leave_impossible: "&cTowns cannot leave nations without agreement. To leave your nation, persuade the king (or an assistant) to kick your town."
 msg_err_siege_war_revolt_immunity_active: "&cYour town has revolt immunity. It cannot revolt until the revolt immunity expires."
 #Attack
-msg_err_siege_war_not_enabled_in_world: '&cWar is not enabled in this world.'
 msg_err_siege_war_banner_must_be_placed_above_ground: '&cThe siege banner must be placed above ground.'
 msg_err_siege_war_action_not_a_town_member: '&cYou must be a member of a town to do this action.'
 NUKE ???? msg_err_siege_war_action_not_a_nation_member: '&cYou must be a member of a nation to do this action.'
