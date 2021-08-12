@@ -13,10 +13,12 @@ import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
+import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.StringMgmt;
@@ -34,7 +36,7 @@ import java.util.List;
 
 public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 
-	private static final List<String> siegewaradminTabCompletes = Arrays.asList("siegeimmunity","revoltimmunity","reload","siege","town","nation");
+	private static final List<String> siegewaradminTabCompletes = Arrays.asList("siegeimmunity","revoltimmunity","reload","siege","town","nation","installperms");
 	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
@@ -156,6 +158,9 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			case "nation":
 				parseSiegeWarNationCommand(sender, StringMgmt.remFirstArg(args));
 				break;
+			case "installperms":
+				parseInstallPermissionsCommand(sender);
+				break;
 
 			/*
 			 * Show help if no command found.
@@ -173,6 +178,122 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		}
 	}
 	
+	private void parseInstallPermissionsCommand(CommandSender sender) {
+		CommentedConfiguration file = TownyPerms.getTownyPermsFile();
+		List<String> groupNodes = new ArrayList<>();
+		String townpoints = "siegewar.town.siege.battle.points";
+		String nationpoints = "siegewar.nation.siege.battle.points";
+		
+		
+		// Add nodes to mayor rank.
+		groupNodes = TownyPerms.getPermsOfGroup("towns.mayor");
+		if (!groupNodes.contains("siegewar.town.siege.*"))
+			groupNodes.add("siegewar.town.siege.*");
+		if (!groupNodes.contains("siegewar.command.siegewar.town.*"))
+			groupNodes.add("siegewar.command.siegewar.town.*");
+		file.set("towns.mayor", groupNodes);
+		
+		// Add nodes to the town assistant rank.
+		if (TownyPerms.mapHasGroup("towns.ranks.assistant")) {
+			groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.assistant");
+			if (!groupNodes.contains("siegewar.town.siege.*"))
+				groupNodes.add("siegewar.town.siege.*");
+			if (!groupNodes.contains("siegewar.command.siegewar.town.*"))
+				groupNodes.add("siegewar.command.siegewar.town.*");
+			file.set("towns.ranks.assistant", groupNodes);
+		}
+		
+		// Add nodes to the sheriff rank.
+		if (TownyPerms.mapHasGroup("towns.ranks.sheriff")) {
+			groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.sheriff");
+			if (!groupNodes.contains(townpoints))
+				groupNodes.add(townpoints);
+			if (!groupNodes.contains("towny.command.town.rank.guard"))
+				groupNodes.add("towny.command.town.rank.guard");
+			file.set("towns.ranks.sheriff", groupNodes);
+		}
+		
+		// Create new ranks
+		file.createSection("towns.ranks.guard");
+		file.createSection("nations.ranks.private");
+		file.createSection("nations.ranks.sergeant");
+		file.createSection("nations.ranks.lieutenant");
+		file.createSection("nations.ranks.captain");
+		file.createSection("nations.ranks.major");
+		file.createSection("nations.ranks.colonel");
+		file.createSection("nations.ranks.general");
+
+		// Populate town guard rank.
+		groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.guard");
+		groupNodes.add(townpoints);		
+		file.set("towns.ranks.guard", groupNodes);
+		
+		// Populate nation ranks.
+		groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.private");
+		groupNodes.add(nationpoints);
+		groupNodes.add("towny.nation.siege.pay.grade.100");
+		file.set("nations.ranks.private", groupNodes);
+
+		groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.sergeant");
+		groupNodes.add(nationpoints);
+		groupNodes.add("towny.nation.siege.pay.grade.150");
+		file.set("nations.ranks.sergeant", groupNodes);
+
+		groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.lieutenant");
+		groupNodes.add(nationpoints);
+		groupNodes.add("towny.nation.siege.pay.grade.200");
+		file.set("nations.ranks.lieutenant", groupNodes);
+
+		groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.captain");
+		groupNodes.add(nationpoints);
+		groupNodes.add("towny.nation.siege.pay.grade.250");
+		file.set("nations.ranks.captain", groupNodes);
+
+
+		groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.major");
+		groupNodes.add(nationpoints);
+		groupNodes.add("towny.nation.siege.pay.grade.300");
+		file.set("nations.ranks.major", groupNodes);
+
+		groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.colonel");
+		groupNodes.add(nationpoints);
+		groupNodes.add("towny.nation.siege.pay.grade.400");
+		file.set("nations.ranks.colonel", groupNodes);
+
+		groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.general");
+		groupNodes.add("siegewar.nation.siege.*");
+		groupNodes.add("towny.command.nation.rank.private");
+		groupNodes.add("towny.command.nation.rank.sergeant");
+		groupNodes.add("towny.command.nation.rank.lieutenant");
+		groupNodes.add("towny.command.nation.rank.captain");
+		groupNodes.add("towny.command.nation.rank.major");
+		groupNodes.add("towny.command.nation.rank.colonel");
+		groupNodes.add("towny.nation.siege.pay.grade.500");
+		file.set("nations.ranks.general", groupNodes);
+		
+		// Add nodes to king rank.
+		groupNodes = TownyPerms.getPermsOfGroup("nations.king");
+		if (!groupNodes.contains("siegewar.nation.siege.*"))
+			groupNodes.add("siegewar.nation.siege.*");
+		if (!groupNodes.contains("siegewar.command.siegewar.nation.*"))
+			groupNodes.add("siegewar.command.siegewar.nation.*");
+		file.set("nations.king", groupNodes);
+		
+		// Add nodes to the nation assistant rank.
+		if (TownyPerms.mapHasGroup("nations.ranks.assistant")) {
+			groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.assistant");
+			if (!groupNodes.contains("siegewar.nation.siege.*"))
+				groupNodes.add("siegewar.nation.siege.*");
+			if (!groupNodes.contains("siegewar.command.siegewar.nation.*"))
+				groupNodes.add("siegewar.command.siegewar.nation.*");
+			file.set("nations.ranks.assistant", groupNodes);
+		}
+		file.save();
+		
+		// TODO: make wiki page or link to section of install guide which lists the remaining nodes for staff/cannons/capital switching.
+		Messaging.sendMsg(sender, "Permission nodes installed: see wiki for nodes you should manually give, which cannot be done automatically: http://some.url.here");
+	}
+
 	private void showHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewaradmin"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "reload", Translation.of("admin_help_1")));
