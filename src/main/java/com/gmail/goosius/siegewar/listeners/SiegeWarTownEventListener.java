@@ -37,7 +37,7 @@ import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
 import com.palmergames.bukkit.towny.event.town.TownUnconquerEvent;
-import com.palmergames.bukkit.towny.event.town.TownMapColourCalculationEvent;
+import com.palmergames.bukkit.towny.event.town.TownMapColourNationalCalculationEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownTogglePVPEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
@@ -530,7 +530,7 @@ public class SiegeWarTownEventListener implements Listener {
 	}
 
 	@EventHandler
-	public void on(TownMapColourCalculationEvent event) {
+	public void on(TownMapColourNationalCalculationEvent event) {
 		if(TownOccupationController.isTownOccupied(event.getTown())) {
 			String mapColorHexCode = TownOccupationController.getTownOccupier(event.getTown()).getMapColorHexCode();
 			event.setMapColorHexCode(mapColorHexCode);

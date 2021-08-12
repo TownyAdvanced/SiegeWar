@@ -22,7 +22,6 @@ import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarCannonsListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownyDynmapListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWar_0_97_0_14_Listener;
 
 import java.io.File;
 
@@ -30,7 +29,7 @@ public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
 	public static String prefix = "[SiegeWar] ";
-	private static Version requiredTownyVersion = Version.fromString("0.97.0.0");
+	private static Version requiredTownyVersion = Version.fromString("0.97.0.23");
 	private final static SiegeHUDManager SiegeHudManager = new SiegeHUDManager(plugin);
 	private static boolean siegeWarPluginError = false;
 	private static boolean cannonsPluginIntegrationEnabled = false;
@@ -152,8 +151,6 @@ public class SiegeWar extends JavaPlugin {
 				pm.registerEvents(new SiegeWarTownyDynmapListener(this), this);
 			if(cannonsPluginIntegrationEnabled)
 				pm.registerEvents(new SiegeWarCannonsListener(this), this);
-			if(doesCurrentTownyVersionMatchGivenTownyVersion( "0.97.0.14"))
-				pm.registerEvents(new SiegeWar_0_97_0_14_Listener(this), this);				
 		}
 	}
 
