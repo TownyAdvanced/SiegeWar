@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.utils;
 
 
 import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -95,7 +96,7 @@ public class TownPeacefulnessUtil {
 						}
 					}
 				} catch (Throwable t) {
-					System.out.println("Issue with re-assigning pre-peaceful occupier for town " + town.getName());
+					SiegeWar.severe("Issue with re-assigning pre-peaceful occupier for town " + town.getName());
 					t.printStackTrace();
 				}
 			}
@@ -171,9 +172,9 @@ public class TownPeacefulnessUtil {
 				}
 			} catch (Exception e) {
 				try {
-					System.err.println("Problem punishing peaceful player in siege zone - " + player.getName());
+					SiegeWar.severe("Problem punishing peaceful player in siege zone - " + player.getName());
 				} catch (Exception e2) {
-					System.err.println("Problem punishing peaceful player in siege zone (could not read player name)");
+					SiegeWar.severe("Problem punishing peaceful player in siege zone (could not read player name)");
 				}
 				e.printStackTrace();
 			}
@@ -252,9 +253,9 @@ public class TownPeacefulnessUtil {
 
 			} catch (Exception e) {
 				try {
-					System.err.println("Problem evaluating peaceful town nation assignment for - " + peacefulTown.getName());
+					SiegeWar.severe("Problem evaluating peaceful town nation assignment for - " + peacefulTown.getName());
 				} catch (Exception e2) {
-					System.err.println("Problem evaluating peaceful town nation assignment (could not read town name)");
+					SiegeWar.severe("Problem evaluating peaceful town nation assignment (could not read town name)");
 				}
 				e.printStackTrace();
 			}
@@ -373,9 +374,9 @@ public class TownPeacefulnessUtil {
 			}
 		} catch (Exception e) {
 			try {
-				System.err.println("Problem getting valid guardian towns for - " + peacefulTown.getName());
+				SiegeWar.severe("Problem getting valid guardian towns for - " + peacefulTown.getName());
 			} catch (Exception e2) {
-				System.err.println("Problem getting valid guardian towns (could not read peaceful town name)");
+				SiegeWar.severe("Problem getting valid guardian towns (could not read peaceful town name)");
 			}
 			e.printStackTrace();
 		}

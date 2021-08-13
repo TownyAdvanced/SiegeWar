@@ -20,9 +20,9 @@ public class TownOccupationController {
 
     public static boolean loadAll() {
         try {
-            System.out.println(SiegeWar.prefix + "Loading town occupation data...");
+            SiegeWar.info("Loading town occupation data...");
             loadTownOccupationData();
-            System.out.println(SiegeWar.prefix + "Town occupation data loaded.");
+            SiegeWar.info("Town occupation data loaded.");
             return true;
         } catch (Exception e) {
             e.printStackTrace();

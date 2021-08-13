@@ -73,7 +73,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 				}
 		
 			} catch (Exception e) {
-				System.out.println("Problem evaluating siege player consume event");
+				SiegeWar.severe("Problem evaluating siege player consume event");
 				e.printStackTrace();
 			}
 		}

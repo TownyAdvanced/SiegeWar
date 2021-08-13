@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -69,8 +70,8 @@ public class SiegeWarNotificationUtil {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Problem informing siege participants");
-			System.out.println("Message : " + message);
+			SiegeWar.severe("Problem informing siege participants");
+			SiegeWar.severe("Message : " + message);
 			e.printStackTrace();
 		}
 	}

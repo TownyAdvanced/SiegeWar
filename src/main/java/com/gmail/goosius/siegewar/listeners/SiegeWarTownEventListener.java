@@ -41,7 +41,6 @@ import com.palmergames.bukkit.towny.event.town.TownMapColourNationalCalculationE
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownTogglePVPEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.util.ChatTools;
@@ -238,9 +237,9 @@ public class SiegeWarTownEventListener implements Listener {
 					} catch (Exception e) {
 						//Problem with this particular siegezone. Ignore siegezone
 						try {
-							System.out.println("Problem with verifying claim against the following siege zone" + siege.getTown().getName() + ". Claim allowed.");
+							SiegeWar.severe("Problem with verifying claim against the following siege zone" + siege.getTown().getName() + ". Claim allowed.");
 						} catch (Exception e2) {
-							System.out.println("Problem with verifying claim against a siege zone (name could not be read). Claim allowed");
+							SiegeWar.severe("Problem with verifying claim against a siege zone (name could not be read). Claim allowed");
 						}
 						e.printStackTrace();
 					}

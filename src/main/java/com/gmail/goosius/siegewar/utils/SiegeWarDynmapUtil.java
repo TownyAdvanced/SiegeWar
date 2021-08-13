@@ -1,13 +1,12 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.WorldCoord;
 import com.palmergames.bukkit.util.BukkitTools;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -95,9 +94,9 @@ public class SiegeWarDynmapUtil {
 
 			} catch (Exception e) {
 				try {
-					System.out.println("Problem evaluating map hiding for player " + player.getName());
+					SiegeWar.severe("Problem evaluating map hiding for player " + player.getName());
 				} catch (Exception e2) {
-					System.out.println("Problem evaluating map hiding for a player (could not read player name)");
+					SiegeWar.severe("Problem evaluating map hiding for a player (could not read player name)");
 				}
 				e.printStackTrace();
 			}

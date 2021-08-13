@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
@@ -159,9 +160,9 @@ public class PlayerDeath {
 			}
 		} catch (Exception e) {
 			try {
-				System.out.println("Error evaluating siege death for player " + deadPlayer.getName());
+				SiegeWar.severe("Error evaluating siege death for player " + deadPlayer.getName());
 			} catch (Exception e2) {
-				System.out.println("Error evaluating siege death (could not read player name)");
+				SiegeWar.severe("Error evaluating siege death (could not read player name)");
 			}
 			e.printStackTrace();
 		}
