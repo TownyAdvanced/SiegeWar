@@ -1,6 +1,6 @@
 # SiegeWar
-* **Sieges**: War is executed by means of sieges. A siege occurs when a nation attacks a town.
-* **Automatic:** Sieges are started by players and managed automatically by the system. Daily staff management of war is not required.
+* **Sieges**: War is conducted by means of sieges. A siege occurs when a nation attacks a town.
+* **Automatic:** Sieges are started by players and automatically managed by the system. Daily staff management of war is not required.
 * **Geopolitical:** The whole server is involved, with no opt-outs. Nations and towns always have a *Peaceful* option, where they can become immune to attack, but vulnerable to peaceful occupation.
 * **Minimally Destructive:** During sieges, towns cannot be damaged or stolen from.
 * **Slow Burning:** Sieges last 3 days, giving defenders a chance to respond to attacks.
