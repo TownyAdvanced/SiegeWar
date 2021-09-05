@@ -4,7 +4,7 @@
 * **Geopolitical:** The whole server is involved, with no opt-outs. Nations and towns always have a *Peaceful* option, where they can become immune to attack, but vulnerable to peaceful occupation.
 * **Minimally Destructive:** During sieges, towns cannot be damaged or stolen from.
 * **Slow Burning:** Sieges last 3 days, giving defenders a chance to respond to attacks.
-* **Supports Casual Players:** Players can make a contribution even if their play-time limited.
+* **Supports Casual Players:** Players can make a contribution even if their play-time is limited.
 ### Links
 * [Download](https://github.com/TownyAdvanced/SiegeWar/releases)
 * [Installation Guide](https://github.com/TownyAdvanced/SiegeWar/wiki/Siege-War-Installation)
