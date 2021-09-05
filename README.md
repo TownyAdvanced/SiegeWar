@@ -1,10 +1,11 @@
 # SiegeWar
-* **Sieges**: War is conducted by means of sieges. A siege occurs when a nation attacks a town.
-* **Automatic:** Sieges are started by players and automatically managed by the system. Daily staff management of war is not required.
-* **Geopolitical:** The whole server is involved, with no opt-outs. Nations and towns always have a *Peaceful* option, where they can become immune to attack, but vulnerable to peaceful occupation.
+* **Sieges**: Wars are conducted by means of sieges. A siege occurs when a nation attacks a town.
+* **Automatic:** Sieges are started by players and automatically managed by the plugin. Daily staff management of war is not required.
 * **Minimally Destructive:** During sieges, towns cannot be damaged or stolen from.
-* **Slow Burning:** Sieges last 3 days, giving defenders a chance to respond to attacks.
-* **Supports Casual Players:** Players can get involved even if their play-time is limited.
+* **Geopolitical:** The whole server is involved, with no opt-outs. Nations and towns always have a *Peaceful* option, where they can become immune to attack, but vulnerable to peaceful occupation.
+* **Non-Toxic:** If you install the recommended [*TownyResources*](https://github.com/TownyAdvanced/TownyResources) plugin, wars become more focused on the strategic acquisition of material resources, rather than the settlement of personal grudges.
+* **Slow Paced:** Sieges last 3 days, giving defenders a chance to respond to attacks.
+* **Friendly to Casual Players:** Players can get involved even if their play-time is limited.
 ### Links
 * [Download](https://github.com/TownyAdvanced/SiegeWar/releases)
 * [Installation Guide](https://github.com/TownyAdvanced/SiegeWar/wiki/Siege-War-Installation)
