@@ -1,4 +1,6 @@
 # SiegeWar
+*SiegeWar* adds a war system to Towny.
+### Features
 * **Sieges**: Wars are conducted by means of sieges. A siege occurs when a nation attacks a town.
 * **Automatic:** Sieges are started by players and automatically managed by the plugin. Daily staff management of war is not required.
 * **Minimally Destructive:** During sieges, towns cannot be damaged or stolen from.
