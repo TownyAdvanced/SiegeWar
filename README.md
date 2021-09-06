@@ -5,7 +5,7 @@
 * 🤖 **Automatic:** Sieges are started by players and automatically managed by the plugin. Daily staff management of war is not required.
 * 🏙️ **Minimally Destructive:** During sieges, towns cannot be damaged or stolen from.
 * 🗺️ **Geopolitical:** The whole server is involved, with no opt-outs. Nations and towns always have a *Peaceful* option, where they can become immune to attack, but vulnerable to peaceful occupation.
-* 👨‍🔬 **Non-Toxic:** If you install the recommended [*TownyResources*](https://github.com/TownyAdvanced/TownyResources) plugin, wars become more focused on the strategic acquisition of material resources, instead of the toxic settlement of personal grudges.
+* 🍎 **Non-Toxic:** If you install the recommended [*TownyResources*](https://github.com/TownyAdvanced/TownyResources) plugin, wars become more focused on the strategic acquisition of material resources, instead of the toxic settlement of personal grudges.
 * 🚶 **Slow Paced:** Sieges last 3 days, giving defenders a chance to respond to attacks.
 * 🖥️ **Friendly to Casual Players:** Players can get involved even if their play-time is limited.
 ### Links
