@@ -127,21 +127,11 @@ public class PlayerDeath {
 						CosmeticUtil.spawnFirework(deadPlayer.getLocation().add(0, 2, 0), Color.RED, bannerColor, true);
 					}
 
-					if(confirmedCandidateSiegePlayerSide == SiegeSide.DEFENDERS) {
-						SiegeWarScoringUtil.awardPenaltyPoints(
-								false,
-								deadPlayer,
-								deadResident,
-								confirmedCandidateSiege,
-								Translation.of("msg_siege_war_defender_death"));
-					} else {
-						SiegeWarScoringUtil.awardPenaltyPoints(
-								true,
-								deadPlayer,
-								deadResident,
-								confirmedCandidateSiege,
-								Translation.of("msg_siege_war_attacker_death"));
-					}
+					boolean residentIsAttacker = confirmedCandidateSiegePlayerSide == SiegeSide.ATTACKERS;
+					SiegeWarScoringUtil.awardPenaltyPoints(
+						residentIsAttacker,
+						deadPlayer,
+						confirmedCandidateSiege);
 				}
 
 				//Keep and degrade inventory
