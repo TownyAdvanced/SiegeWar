@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.25
+version: 0.26
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -167,7 +167,7 @@ siege_status_attacker_win: "Victoire de l'Attaquant"
 siege_status_defender_win: "Victoire du Défenseur"
 siege_status_unknown: "Inconnu"
 
-dynmap_siege_banner_control: "Contrôle de la bannière: %s"
+dynmap_siege_banner_control: "Contrôle de la bannière: %s (%d)"
 dynmap_siege_time_left: "Temps restant: %s"
 
 #Added in 0.06:
