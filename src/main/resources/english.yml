@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.25
+version: 0.26
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -461,3 +461,6 @@ msg_you_cannot_carry_items_in_siegezones: '&cYou cannot hold onto your inventory
 
 # Added in 0.25
 msg_err_siege_war_too_many_adjacent_towns: '&cYou cannot perform this action because the target chunk faces too many townblocks. Try placing the item in a different area.'
+
+# Added in 0.26
+status_town_days_to_peacefulness_status_change: 'Days To Peacefulness Status Change'
