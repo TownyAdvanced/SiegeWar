@@ -209,6 +209,7 @@ public class PlayerDeath {
 	private static void keepLevel(PlayerDeathEvent playerDeathEvent) {
 		if(SiegeWarSettings.getWarSiegeDeathPenaltyKeepLevelEnabled() && !playerDeathEvent.getKeepLevel()) {
 			playerDeathEvent.setKeepLevel(true);
+			playerDeathEvent.setDroppedExp(0);
 		}
 	}
 
