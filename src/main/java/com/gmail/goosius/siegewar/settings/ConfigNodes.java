@@ -673,11 +673,6 @@ public enum ConfigNodes {
 			"",
 			"# This value determines how long it takes to confirm a town peacefulness status change.",
 			"# It is recommended to be high, for use by genuinely peaceful towns, not just for war cost avoidance."),
-	PEACEFUL_TOWNS_NEW_TOWN_PEACEFULNESS_ENABLED(
-			"peaceful_towns.new_town_peacefulness_enabled",
-			"false",
-			"",
-			"# If this setting is true, then new towns start peaceful"),
 	PEACEFUL_TOWNS_NEW_TOWN_CONFIRMATION_REQUIREMENT_DAYS(
 			"peaceful_towns.new_town_confirmation_requirement_days",
 			"2",
