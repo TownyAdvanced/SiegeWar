@@ -161,8 +161,8 @@ public class DynmapTask {
                         if(TownyEconomyHandler.isActive()) {
                             lines.add(Translation.of("dynmap_siege_war_chest", TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount())));
                         }
-                        lines.add(Translation.of("dynmap_siege_banner_control", 
-                            WordUtils.capitalizeFully(siege.getBannerControllingSide().name()) 
+                        lines.add(Translation.of("dynmap_siege_banner_control",
+                            WordUtils.capitalizeFully(siege.getBannerControllingSide().name())
                             + (siege.getBannerControllingSide() == SiegeSide.NOBODY ? "" :  " (" + siege.getBannerControllingResidents().size() + ")")));
                         lines.add(Translation.of("dynmap_siege_battle_points", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
                         lines.add(Translation.of("dynmap_siege_battle_time_left", siege.getFormattedBattleTimeRemaining()));
