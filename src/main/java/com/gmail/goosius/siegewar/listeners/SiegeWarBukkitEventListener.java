@@ -217,7 +217,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 	
 	/*
 	 * Stops TNT/Minecarts from injuring players in the siegezone wilderness
-	 * Also stop battlefield reporters from hitting people in siegezones
+	 * Also stop battlefield observers from hitting people in siegezones
 	 */
 	@EventHandler
 	public void on(EntityDamageByEntityEvent event) {	
@@ -244,7 +244,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		}
 	}
 
-	//Stops battlefield reporters from taking damage in siegezones
+	//Stops battlefield observers from taking damage in siegezones
 	@EventHandler
 	public void on(EntityDamageEvent event) {	
 		if(SiegeWarSettings.getWarSiegeEnabled()
@@ -256,7 +256,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		}
 	}			
 
-	//Stops battlefield reporters from throwing potions in siegezones
+	//Stops battlefield observers from throwing potions in siegezones
 	@EventHandler
 	public void on(PotionSplashEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled()
@@ -269,7 +269,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		}
 	}			
 
-	//Stops battlefield reporters from throwing lingering potions in siegezones
+	//Stops battlefield observers from throwing lingering potions in siegezones
 	@EventHandler
 	public void on(LingeringPotionSplashEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled()

@@ -154,7 +154,10 @@ public enum ConfigNodes {
 			"# as described in detail in the the online User Guide and FAQ.",
 			"#",
 			"# If this setting is false, then if a player from the banner controlling side dies,",
-			"# the death points are increased by a certain percentage. (see points section below)."),
+			"# the death points are increased by a certain percentage, configured in a separate section.",
+			"# ",
+			"# WARNING: Do not enable this feature without first reviewing the following config setting: ",
+			"# - counterattack_booster_extra_death_points_per_player_percentage"),
 	WAR_SIEGE_POPULATION_BASED_POINT_BOOSTS_ENABLED(
 			"war.siege.switches.population_based_point_boosts_enabled",
 			"false",
@@ -162,7 +165,11 @@ public enum ConfigNodes {
 			"# If this setting is true, then the siege side with the lower population gets a boost to their siege point gains.",
 			"# The attacking side population consists of the residents of the attacking nation, and allies.",
 			"# The defending side population consists of the residents of the defending town, and nation + allies if applicable.",
-			"# The level of the boost is configured in separate configs. See the scoring section of this file."),
+			"# The level of the boost is configured in a separate section.",
+			"# ",
+			"# WARNING: Do not enable this feature without first reviewing the following config setting: ",
+			"# - population_quotient_for_max_points_boost",
+			"# - max_population_based_points_boost"),
 	WAR_SIEGE_NATION_STATISTICS_ENABLED(
 			"war.siege.switches.nation_statistics_enabled",
 			"true",
@@ -673,11 +680,6 @@ public enum ConfigNodes {
 			"",
 			"# This value determines how long it takes to confirm a town peacefulness status change.",
 			"# It is recommended to be high, for use by genuinely peaceful towns, not just for war cost avoidance."),
-	PEACEFUL_TOWNS_NEW_TOWN_PEACEFULNESS_ENABLED(
-			"peaceful_towns.new_town_peacefulness_enabled",
-			"false",
-			"",
-			"# If this setting is true, then new towns start peaceful"),
 	PEACEFUL_TOWNS_NEW_TOWN_CONFIRMATION_REQUIREMENT_DAYS(
 			"peaceful_towns.new_town_confirmation_requirement_days",
 			"2",
