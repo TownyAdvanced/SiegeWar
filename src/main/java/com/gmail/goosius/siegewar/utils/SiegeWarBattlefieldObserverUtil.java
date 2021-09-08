@@ -43,7 +43,7 @@ public class SiegeWarBattlefieldObserverUtil {
                 xDelta.clear();
                 yDelta.clear();
                 zDelta.clear();;
-                for(ItemStack itemStack: player.getInventory().getStorageContents()) {
+                for(ItemStack itemStack: player.getInventory().getContents()) {
                     if(itemStack != null
                             && !itemStack.getType().toString().endsWith("AXE")
                             && !itemStack.getType().toString().endsWith("SHOVEL")
@@ -60,12 +60,13 @@ public class SiegeWarBattlefieldObserverUtil {
                     Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
                         public void run() {
                             for(int i = 0; i < itemsToDrop.size(); i++) {                            
-                                player.getInventory().remove(itemsToDrop.get(i));
                                 player.getWorld().dropItemNaturally(
                                     player.getLocation().add(xDelta.get(i), yDelta.get(i), zDelta.get(i)), 
                                     itemsToDrop.get(i));
                             }
+                            player.getInventory().removeItem(itemsToDrop.toArray(new ItemStack[0]));
                         }
+                       
                     });                   
                     //Notify player
                     player.sendMessage(Translation.of("plugin_prefix") + Translation.of("msg_you_cannot_carry_items_in_siegezones"));
