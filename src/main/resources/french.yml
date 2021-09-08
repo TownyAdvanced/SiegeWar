@@ -473,4 +473,4 @@ msg_err_siege_war_too_many_adjacent_towns: '&cYou cannot perform this action bec
 msg_siege_war_attacker_death: '&bSiege of %s > Attacker %s died > Battle Points -%d'
 msg_siege_war_defender_death: '&bSiege of %s > Defender %s died > Battle Points +%d'
 msg_siege_war_attacker_killed_by_player: '&bSiege of %s > Attacker %s was killed by %s > Battle Points -%d'
-msg_siege_war_defender_killed_by_player: '&bSiege of %s > Defender %s was killed by %s > Battle Points -%d'
+msg_siege_war_defender_killed_by_player: '&bSiege of %s > Defender %s was killed by %s > Battle Points +%d'
