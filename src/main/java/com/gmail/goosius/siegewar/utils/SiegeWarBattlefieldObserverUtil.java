@@ -60,11 +60,11 @@ public class SiegeWarBattlefieldObserverUtil {
                     Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
                         public void run() {
                             for(int i = 0; i < itemsToDrop.size(); i++) {                            
+                                player.getInventory().remove(itemsToDrop.get(i));
                                 player.getWorld().dropItemNaturally(
                                     player.getLocation().add(xDelta.get(i), yDelta.get(i), zDelta.get(i)), 
                                     itemsToDrop.get(i));
                             }
-                            player.getInventory().clear();
                         }
                     });                   
                     //Notify player
