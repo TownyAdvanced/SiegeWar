@@ -10,13 +10,15 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SiegeWarBattlefieldReporterUtil {
+public class SiegeWarBattlefieldObserverUtil {
 
     /**
-     * For battlefield reporters in siegezones,
-     * drop any items they are carrying
+     * For battlefield observers in siegezones:
+     *
+     * 1. Refill their hunger bar
+     * 2. Drop any items they are carrying, except for pick, axe, shovel, and shears
      */
-    public static void dropNonToolItemsFromBattlefieldReportersInSiegezones() {	
+    public static void evaluateBattlefieldObserversInSiegezones() {
         List<ItemStack> itemsToDrop = new ArrayList<>();
         List<Double> xDelta = new ArrayList<>();
         List<Double> yDelta = new ArrayList<>();
@@ -42,7 +44,10 @@ public class SiegeWarBattlefieldReporterUtil {
                 yDelta.clear();
                 zDelta.clear();;
                 for(ItemStack itemStack: player.getInventory().getStorageContents()) {
-                    if(itemStack != null) {        
+                    if(itemStack != null
+                            && !itemStack.getType().toString().endsWith("AXE")
+                            && !itemStack.getType().toString().endsWith("SHOVEL")
+                            && !itemStack.getType().toString().endsWith("SHEARS")) {
                         itemsToDrop.add(itemStack);
                         xDelta.add((Math.random() * 10) - 5);
                         yDelta.add((Math.random() * 10) + 5);                        

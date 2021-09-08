@@ -119,6 +119,6 @@ public class SiegeWarTimerTaskController {
 	}
 	
 	public static void evaluateBattlefieldReporters() {
-		SiegeWarBattlefieldReporterUtil.dropNonToolItemsFromBattlefieldReportersInSiegezones();
+		SiegeWarBattlefieldObserverUtil.evaluateBattlefieldObserversInSiegezones();
 	}
 }

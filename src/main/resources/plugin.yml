@@ -111,8 +111,8 @@ permissions:
         description: User is immune to war nausea.
         default: false
         
-    siegewar.battlefield.reporter:
-        description: User holds all the nodes needed for battlefield reporting
+    siegewar.battlefield.observer:
+        description: User holds all the nodes needed for non-interfering battlefield observing
         default: false
         children:
             siegewar.notifications.all: true
