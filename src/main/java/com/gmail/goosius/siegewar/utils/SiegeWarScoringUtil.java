@@ -5,11 +5,14 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,15 +47,12 @@ public class SiegeWarScoringUtil {
 	 *
 	 * @param residentIsAttacker is the resident an attacker or defender?
 	 * @param player the player who the penalty relates to
-	 * @param resident the resident who the penalty relates to
 	 * @param siege the siege to apply the penalty to
-	 * @param unformattedErrorMessage the error message to be shown if points are deducted
 	 */
 	public static void awardPenaltyPoints(boolean residentIsAttacker,
-											 Player player,
-											 Resident resident,
-											 Siege siege,
-											 String unformattedErrorMessage) {
+										  Player player,
+										  Siege siege) {
+
 		//No penalty points without an active battle session
 		if(!BattleSession.getBattleSession().isActive())
 			return;
@@ -71,13 +71,28 @@ public class SiegeWarScoringUtil {
 			siege.adjustAttackerBattlePoints(battlePoints);
 		}
 
-		//Send messages to siege participants
-		String message = String.format(
-			unformattedErrorMessage,
-			siege.getTown().getName(),
-			resident.getName(),
-			Math.abs(battlePoints));
+		//Generate message
+		String unformattedErrorMessage;
+		String message;
+		Player killer = getPlayerKiller(player);
+		if(killer != null) {
+			unformattedErrorMessage = residentIsAttacker ? 	Translation.of("msg_siege_war_attacker_killed_by_player") : Translation.of("msg_siege_war_defender_killed_by_player");
+			message = String.format(
+				unformattedErrorMessage,
+				siege.getTown().getName(),
+				player.getName(),
+				killer.getName(),
+				Math.abs(battlePoints));
+		} else {
+			unformattedErrorMessage = residentIsAttacker ? 	Translation.of("msg_siege_war_attacker_death") : Translation.of("msg_siege_war_defender_death");
+			message = String.format(
+				unformattedErrorMessage,
+				siege.getTown().getName(),
+				player.getName(),
+				Math.abs(battlePoints));
+		}
 
+		//Send messages to siege participants
 		SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
 	}
 
@@ -207,5 +222,29 @@ public class SiegeWarScoringUtil {
 		} else {
 			return battlePoints;
 		}
+	}
+
+	/**
+	 * If the given victim player was killed by another player, return the killer player.
+	 * Otherwise return null.
+     *
+	 * @return the player killer, if there was one
+	 */
+	private static Player getPlayerKiller(Player victim) {
+		if(victim.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
+			EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) victim.getLastDamageCause();
+			Entity attackerEntity = damageEvent.getDamager();
+
+			if (attackerEntity instanceof Projectile) { // Killed by projectile, try to narrow the true source of the kill.
+				Projectile projectile = (Projectile) attackerEntity;
+				if (projectile.getShooter() instanceof Player) { // Player shot a projectile.
+					return (Player) projectile.getShooter();
+				}
+			} else if (attackerEntity instanceof Player) {
+				// This was a player kill
+				return (Player) attackerEntity;
+			}
+		}
+		return null; //This was not a PVP death
 	}
 }

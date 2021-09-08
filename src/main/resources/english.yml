@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.25
+version: 0.26
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -206,10 +206,6 @@ msg_na: 'N/A'
 #Town screen
 status_town_siege_status_siege_balance: '&2 > Balance: &a%d'
 status_town_siege_status_warchest: '&2 > War Chest: &a%s'
-
-#Death points
-msg_siege_war_attacker_death: '&bSiege of %s > Attacker died > %s > Battle Points -%d'
-msg_siege_war_defender_death: '&bSiege of %s > Defender died > %s > Battle Points +%d'
 
 #Battle sessions
 status_town_siege_battle: '&2Battle'
@@ -461,3 +457,9 @@ msg_you_cannot_carry_items_in_siegezones: '&cYou cannot hold onto your inventory
 
 # Added in 0.25
 msg_err_siege_war_too_many_adjacent_towns: '&cYou cannot perform this action because the target chunk faces too many townblocks. Try placing the item in a different area.'
+
+# Added in 0.26
+msg_siege_war_attacker_death: '&bSiege of %s > Attacker %s died > Battle Points -%d'
+msg_siege_war_defender_death: '&bSiege of %s > Defender %s died > Battle Points +%d'
+msg_siege_war_attacker_killed_by_player: '&bSiege of %s > Attacker %s was killed by %s > Battle Points -%d'
+msg_siege_war_defender_killed_by_player: '&bSiege of %s > Defender %s was killed by %s > Battle Points +%d'
