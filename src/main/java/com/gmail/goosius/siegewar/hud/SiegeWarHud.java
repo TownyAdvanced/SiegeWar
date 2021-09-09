@@ -1,9 +1,11 @@
 package com.gmail.goosius.siegewar.hud;
 
+import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.util.Colors;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -29,8 +31,10 @@ public class SiegeWarHud {
             board.getTeam("warchest").setSuffix(TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
         } else {
             board.getTeam("warchest").setSuffix("-");
-        }
-        board.getTeam("bannerControl").setSuffix(siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase());
+        }        
+        board.getTeam("bannerControl").setSuffix(
+            WordUtils.capitalizeFully(siege.getBannerControllingSide().name())
+            + (siege.getBannerControllingSide() == SiegeSide.NOBODY ? "" :  " (" + siege.getBannerControllingResidents().size() + ")"));
         board.getTeam("btAttackerPoints").setSuffix(siege.getFormattedAttackerBattlePoints());
         board.getTeam("btDefenderPoints").setSuffix(siege.getFormattedDefenderBattlePoints());
         board.getTeam("btTimeRemaining").setSuffix(siege.getFormattedBattleTimeRemaining());
