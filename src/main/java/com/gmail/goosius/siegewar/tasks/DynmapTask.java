@@ -15,6 +15,7 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarDynmapUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.util.StringMgmt;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -160,7 +161,9 @@ public class DynmapTask {
                         if(TownyEconomyHandler.isActive()) {
                             lines.add(Translation.of("dynmap_siege_war_chest", TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount())));
                         }
-                        lines.add(Translation.of("dynmap_siege_banner_control", siege.getBannerControllingSide().name().charAt(0) + siege.getBannerControllingSide().name().substring(1).toLowerCase()));
+                        lines.add(Translation.of("dynmap_siege_banner_control",
+                            WordUtils.capitalizeFully(siege.getBannerControllingSide().name())
+                            + (siege.getBannerControllingSide() == SiegeSide.NOBODY ? "" :  " (" + siege.getBannerControllingResidents().size() + ")")));
                         lines.add(Translation.of("dynmap_siege_battle_points", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
                         lines.add(Translation.of("dynmap_siege_battle_time_left", siege.getFormattedBattleTimeRemaining()));
 
