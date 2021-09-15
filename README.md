@@ -6,7 +6,7 @@
 * 🏙️ **Minimally Destructive:** During sieges, towns cannot be damaged or stolen from.
 * 🚶 **Slow Paced:** Sieges last 3 days, giving defenders a chance to respond to attacks, and also making the system friendly to casual players.
 * 🗺️ **Geopolitical:** The whole server is involved, with no opt-outs. Nations and towns always have a *Peaceful* option, where they can become immune to attack, but vulnerable to peaceful occupation.
-* ♟️ **Strategic:** The system has many strategic elements (*e.g. deciding when/where/who to attack, organizing army composition/logisitics/movement, diplomacy/occupation/peacefulness etc*). This can be great for thoughful/mature playerbases, but for servers which require more simplistic PVP contests, alternative war systems should be considered.
+* ♟️ **Strategic:** The system has many strategic elements (*e.g. deciding when/where/who to attack, organizing army composition/logisitics/movement, and  diplomacy/occupation/peacefulness etc*). This can be great for thoughful/mature playerbases, but for servers which require more simplistic PVP contests, alternative war systems should be considered.
 * 🍎 **Non-Toxic:** If you install the recommended [*TownyResources*](https://github.com/TownyAdvanced/TownyResources) plugin, wars become more focused on the strategic acquisition of material resources, instead of the toxic settlement of personal grudges.
 ### Links
 * [Download](https://github.com/TownyAdvanced/SiegeWar/releases)
