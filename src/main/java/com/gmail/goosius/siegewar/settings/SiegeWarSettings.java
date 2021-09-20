@@ -213,15 +213,39 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MAP_HIDING_ENABLED);
 	}
 
-	public static MapHidingMode getWarSiegeMapHidingMode() {
-		return MapHidingMode.parseString(Settings.getString(ConfigNodes.WAR_SIEGE_MAP_HIDING_MODE));
+	public static boolean getWarSiegeMapHidingModeAutomaticModeEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MAP_HIDING_AUTOMATIC_MODE_ENABLED);
 	}
 	
-	public static List<HeldItemsCombination> getWarSiegeMapHidingItems() {
+	public static boolean getWarSiegeMapHidingModeAutomaticModeScopeWilderness() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MAP_HIDING_AUTOMATIC_MODE_SCOPE_WILDERNESS);
+	}
+
+	public static boolean getWarSiegeMapHidingModeAutomaticModeScopeBesiegedTowns() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MAP_HIDING_AUTOMATIC_MODE_SCOPE_BESIEGED_TOWNS);
+	}
+
+	public static boolean getWarSiegeMapHidingModeAutomaticModeScopeRuins() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MAP_HIDING_AUTOMATIC_MODE_SCOPE_RUINS);
+	}
+
+	public static boolean getWarSiegeMapHidingModeAutomaticModeScopeSiegezones() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MAP_HIDING_AUTOMATIC_MODE_SCOPE_SIEGEZONES);
+	}
+
+	public static double getWarSiegeMapHidingModeAutomaticModeScopeSiegezonesRadius() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_MAP_HIDING_AUTOMATIC_MODE_SCOPE_SIEGEZONES_RADIUS);
+	}
+
+	public static boolean getWarSiegeMapHidingTriggeringEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MAP_HIDING_TRIGGERING_ENABLED);
+	}
+
+	public static List<HeldItemsCombination> getWarSiegeMapHidingTriggeringItems() {
 		try {
 			if (mapHidingItems == null) {
 				mapHidingItems = new ArrayList<>();
-				String itemsListAsString = Settings.getString(ConfigNodes.WAR_SIEGE_MAP_HIDING_ITEMS);
+				String itemsListAsString = Settings.getString(ConfigNodes.WAR_SIEGE_MAP_HIDING_TRIGGERING_ITEMS);
 				String[] itemsListAsArray = itemsListAsString.split(",");
 				String[] itemPair;
 				boolean ignoreOffHand;

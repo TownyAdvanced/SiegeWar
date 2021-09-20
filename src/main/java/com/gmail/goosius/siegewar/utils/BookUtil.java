@@ -191,16 +191,26 @@ public class BookUtil {
 			text += "\nMISCELLANEOUS HIDING: \nMAP HIDING\n\n";
 			text += "Map Hiding is a feature which hides players from being seen on the server Dynmap website.\n";
 			text += "Players who are on the Banner Control list cannot get hidden on the map.\n";
-			switch (SiegeWarSettings.getWarSiegeMapHidingMode()) {
-				case AUTOMATIC:
-					text += "To get hidden on the map, the player must be either in the wilderness, or in a besieged town. \n";
-				break;
-				case MANUAL:
-					text += "To get hidden on the map, the player must be holding a combination of items in their hands, which are: \n";
-					for (HeldItemsCombination combo : SiegeWarSettings.getWarSiegeMapHidingItems()) {
-						text += " - " + combo.getMainHandItemType().name() + " & " + combo.getOffHandItemType().name() + "\n";
+			if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeEnabled()) {
+				if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeWilderness())
+					text += "If you are in the wilderness, you get hidden on the dynmap.\n";
+				if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeRuins())
+					text += "If you are in ruins, you get hidden on the dynmap.\n";
+				if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeBesiegedTowns())
+					text += "If you are in a besieged town, you get hidden on the dynmap.\n";
+				if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeSiegezones()) {
+					if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeSiegezonesRadius() == 1) {
+						text += "If you are in a siegezone, you get hidden on the dynmap.\n";
+					} else {
+						text += "If you are within " + SiegeWarSettings.getWarSiegeZoneRadiusBlocks() * SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeSiegezonesRadius() + " blocks of a siege banner, you get hidden on the dynmap\n";
 					}
-				break;
+				}
+			}
+			if (SiegeWarSettings.getWarSiegeMapHidingTriggeringEnabled()) {
+				text += "You can map-hide by holding a combination of items in their hands, which are: \n";
+				for (HeldItemsCombination combo : SiegeWarSettings.getWarSiegeMapHidingTriggeringItems()) {
+					text += " - " + combo.getMainHandItemType().name() + " & " + combo.getOffHandItemType().name() + "\n";
+				}
 			}
 			text += "\n";
 		}
