@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
+import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -76,9 +77,15 @@ public class SiegeWarDynmapUtil {
 					return true;
 			}
 
-			//Active siege zone
-			if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeSiegezones() && SiegeController.getActiveSiegesAt(player.getLocation()).size() > 0) {
-				return true;
+			//Active siege zone / near-siege-banner
+			if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeSiegezones()) {
+				int requiredRadiusBlocks = (int)(SiegeWarSettings.getWarSiegeZoneRadiusBlocks() * SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeSiegezonesRadius());				
+				for (Siege siege : SiegeController.getSieges()) {
+					if(siege.getStatus().isActive()
+						&& SiegeWarDistanceUtil.areLocationsCloseHorizontally(player.getLocation(), siege.getFlagLocation(), requiredRadiusBlocks)) {
+						return true;
+					}
+				}
 			}
 		}
 

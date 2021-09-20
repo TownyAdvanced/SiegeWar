@@ -133,7 +133,7 @@ public class SiegeWarDistanceUtil {
 	}
 
 	//Check horizontal distance only
-	private static boolean areLocationsCloseHorizontally(Location location1, Location location2, int radius) {
+	public static boolean areLocationsCloseHorizontally(Location location1, Location location2, int radius) {
 		if(!location1.getWorld().getName().equalsIgnoreCase(location2.getWorld().getName()))
 			return false;
 
