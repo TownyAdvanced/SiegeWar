@@ -77,7 +77,7 @@ public class SiegeWarDynmapUtil {
 			}
 
 			//Active siege zone
-			if(SiegeController.getActiveSiegesAt(player.getLocation()).size() > 0) {
+			if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeSiegezones() && SiegeController.getActiveSiegesAt(player.getLocation()).size() > 0) {
 				return true;
 			}
 		}
