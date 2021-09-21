@@ -369,7 +369,7 @@ public enum ConfigNodes {
 		     "# This setting prevents the banner being placed on a platform high in the air."),
 	WAR_SIEGE_ZONE_RADIUS_BLOCKS(
 			"war.siege.distances.zone_radius_blocks",
-			"150",
+			"300",
 			"",
 			"# The radius of the 'siege zone'.",
 			"# This radius applies only horizontally, so players can never get above a siegezone (e.g. to place lava there or something).",
