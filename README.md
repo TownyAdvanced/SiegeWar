@@ -16,8 +16,8 @@
 ### Credits:
 - *SiegeWar* was initially developed by [Goosius1](https://github.com/Goosius1), starting in the summer of 2019.
 - Originally *SiegeWar* was a fork of *Towny*, being built directly into *Towny*. The old forked-system jar can be found [here](https://github.com/TownyAdvanced/Towny/files/5766604/Towny-SeigeWar-0.96.5.12-SNAPSHOT%2B512690a.jar.zip). 
-- *SiegeWar* was later transformed by [LlmDl](https://github.com/LlmDl) & [Warrior](https://github.com/Warriorrrr) into the plugin which exists today. This work took about 2 months, and involved adding many many API events to *Towny*, and changing the entire *SiegeWar* database to use *Towny* metadata. The plugin was released in January 2021.
-- Following the release of the plugin, many new features and improvements were added, with key contributions from [Goosius1](https://github.com/Goosius1), [LlmDl](https://github.com/LlmDl), and [Warrior](https://github.com/Warriorrrr). Multiple other developers have contributed also, notably [Ceedric](https://github.com/ceeedric).
+- *SiegeWar* was later transformed by [LlmDl](https://github.com/LlmDl) & [Warriorrr](https://github.com/Warriorrrr) into the plugin which exists today. This work took about 2 months, and involved adding many many API events to *Towny*, and changing the entire *SiegeWar* database to use *Towny* metadata. The plugin was released in January 2021.
+- Following the release of the plugin, many new features and improvements were added, with key contributions from [Goosius1](https://github.com/Goosius1), [LlmDl](https://github.com/LlmDl), and [Warriorrr](https://github.com/Warriorrrr). Multiple other developers have contributed also, notably [Ceeedric](https://github.com/ceeedric).
 - Contributions from other developers continue to be welcome.
 - Special thanks to the servers *CCNET*, *DatBlock*, and *Nebula*, who pioneered the use of the system, and have provided much valuable information, feedback, and bug reports.
 - [Goosius1](https://github.com/Goosius1) is the maintainer of this repo for the TownyAdvanced org, and will be coding to his own schedule.
