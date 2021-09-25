@@ -5,6 +5,7 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
+import com.palmergames.bukkit.towny.utils.MetaDataUtil;
 
 public class NationMetaDataController {
     @SuppressWarnings("unused")
@@ -89,7 +90,7 @@ public class NationMetaDataController {
     public static void setPendingSiegeImmunityMillis(Nation nation, long num) {
         LongDataField ldf = (LongDataField) pendingSiegeImmunityMillis.clone();
         if (nation.hasMeta(ldf.getKey()))
-            MetaDataUtil.setLong(nation, ldf, num);
+            MetaDataUtil.setLong(nation, ldf, num, true);
         else
             nation.addMetaData(new LongDataField(pendingSiegeImmunityMillis.getKey(), num));
     }

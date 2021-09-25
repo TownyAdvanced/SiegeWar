@@ -7,6 +7,7 @@ import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
+import com.palmergames.bukkit.towny.utils.MetaDataUtil;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -45,7 +46,7 @@ public class TownMetaDataController {
 				town.removeMetaData(idf);
 				return;
 			}
-			MetaDataUtil.setInt(town, idf, days);
+			MetaDataUtil.setInt(town, idf, days, true);
 		} else if (days != 0) {
 			town.addMetaData(new IntegerDataField("siegewar_peacefuldays", days, Translation.of("status_town_days_to_peacefulness_status_change")));
 		}
@@ -62,7 +63,7 @@ public class TownMetaDataController {
 	public static void setDesiredPeacefulnessSetting(Town town, boolean bool) {
 		BooleanDataField bdf = (BooleanDataField) desiredPeacefulness.clone();
 		if (town.hasMeta(bdf.getKey())) {
-			MetaDataUtil.setBoolean(town, bdf, bool);
+			MetaDataUtil.setBoolean(town, bdf, bool, true);
 		} else {
 			town.addMetaData(new BooleanDataField("siegewar_desiredPeaceSetting", bool));
 		}
@@ -83,7 +84,7 @@ public class TownMetaDataController {
 			return;
 		}
 		if (town.hasMeta(ldf.getKey())) {
-			MetaDataUtil.setLong(town, ldf, time);
+			MetaDataUtil.setLong(town, ldf, time, true);
 		} else {
 			town.addMetaData(new LongDataField("siegewar_revoltImmunityEndTime", time));
 		}
@@ -104,7 +105,7 @@ public class TownMetaDataController {
 			return;
 		}
 		if (town.hasMeta(ldf.getKey())) {
-			MetaDataUtil.setLong(town, ldf, time);
+			MetaDataUtil.setLong(town, ldf, time, true);
 		} else {
 			town.addMetaData(new LongDataField("siegewar_siegeImmunityEndTime", time));
 		}
@@ -121,7 +122,7 @@ public class TownMetaDataController {
 	public static void setOccupyingNationUUID(Town town, String uuid) {
 		StringDataField sdf = (StringDataField) occupyingNationUUID.clone();
 		if (town.hasMeta(sdf.getKey()))
-			MetaDataUtil.setString(town, sdf, uuid);
+			MetaDataUtil.setString(town, sdf, uuid, true);
 		else
 			town.addMetaData(new StringDataField("siegewar_occupyingNationUUID", uuid));
 	}
@@ -143,7 +144,7 @@ public class TownMetaDataController {
 	public static void setPrePeacefulOccupierUUID(Town town, String uuid) {
 		StringDataField sdf = (StringDataField) prePeacefulOccupierUUID.clone();
 		if (town.hasMeta(sdf.getKey()))
-			MetaDataUtil.setString(town, sdf, uuid);
+			MetaDataUtil.setString(town, sdf, uuid, true);
 		else
 			town.addMetaData(new StringDataField("siegewar_prePeacefulOccupierUUID", uuid));
 	}
