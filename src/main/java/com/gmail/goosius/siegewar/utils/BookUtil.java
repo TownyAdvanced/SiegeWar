@@ -6,7 +6,6 @@ import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownySettings;
-import com.palmergames.bukkit.towny.war.common.townruin.TownRuinSettings;
 import com.palmergames.bukkit.util.BookFactory;
 import com.palmergames.util.TimeMgmt;
 
@@ -31,7 +30,7 @@ public class BookUtil {
 		String maxSiege = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getWarSiegeMaxHoldoutTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS);
 		double counterPercent = SiegeWarSettings.getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercentage();
 		boolean bankruptcy = TownySettings.isTownBankruptcyEnabled();
-		boolean ruins = TownRuinSettings.getTownRuinsEnabled();
+		boolean ruins = TownySettings.getTownRuinsEnabled();
 		boolean peaceful = SiegeWarSettings.getWarCommonPeacefulTownsEnabled();
 		boolean surrender = SiegeWarSettings.getWarSiegeSurrenderEnabled();
 		boolean abandon = SiegeWarSettings.getWarSiegeAbandonEnabled();

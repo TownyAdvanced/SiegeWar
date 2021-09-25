@@ -396,7 +396,8 @@ public class SiegeWarTownEventListener implements Listener {
 							if (siege.getBannerControllingSide() == SiegeSide.NOBODY) {
 								out.add(Translation.of("status_town_banner_control_nobody", siege.getBannerControllingSide().getFormattedName()));
 							} else {
-								String[] bannerControllingResidents = TownyFormatter.getFormattedNames(siege.getBannerControllingResidents());
+								
+								String[] bannerControllingResidents = TownyFormatter.getFormattedNames(siege.getBannerControllingResidents().toArray(new Resident[0]));
 								if (bannerControllingResidents.length > 34) {
 									String[] entire = bannerControllingResidents;
 									bannerControllingResidents = new String[36];
