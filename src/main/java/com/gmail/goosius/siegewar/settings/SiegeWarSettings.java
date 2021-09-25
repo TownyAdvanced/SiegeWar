@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.enums.MapHidingMode;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 

@@ -29,7 +29,7 @@ public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
 	public static String prefix = "[SiegeWar] ";
-	private static Version requiredTownyVersion = Version.fromString("0.97.0.23");
+	private static Version requiredTownyVersion = Version.fromString("0.97.2.0");
 	private final static SiegeHUDManager SiegeHudManager = new SiegeHUDManager(plugin);
 	private static boolean siegeWarPluginError = false;
 	private static boolean cannonsPluginIntegrationEnabled = false;
@@ -122,13 +122,6 @@ public class SiegeWar extends JavaPlugin {
 	
     private boolean townyVersionCheck(String version) {
         return Version.fromString(version).compareTo(requiredTownyVersion) >= 0;
-    }
-
-	 // Checks if the current towny version matches the given required version
-    private boolean doesCurrentTownyVersionMatchGivenTownyVersion(String givenTownyVersionString) {
-		Version currentTownyVersion = Version.fromString(getTownyVersion());		
-		Version givenTownyVersion = Version.fromString(givenTownyVersionString);    
-        return currentTownyVersion.compareTo(givenTownyVersion) >= 0;
     }
 
     private String getTownyVersion() {
