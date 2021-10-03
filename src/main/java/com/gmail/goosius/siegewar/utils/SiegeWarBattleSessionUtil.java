@@ -33,6 +33,85 @@ public class SiegeWarBattleSessionUtil {
 		Long startTimeOfNextSession = getConfiguredStartTimeOfNextBattleSession();
 		BattleSession.getBattleSession().setScheduledStartTime(startTimeOfNextSession);
    	}
+
+   public static void startBattleSession() {
+	   BattleSession battleSession = BattleSession.getBattleSession();
+	   battleSession.setActive(true);
+	   //Set the scheduled end time
+	   battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionDurationMinutes() * 60000));
+	   //Clear the scheduled start time
+	   battleSession.setScheduledStartTime(null);
+	   //Send global message to let the server know that the battle session started
+	   Messaging.sendGlobalMessage(Translation.of("msg_war_siege_battle_session_started"));
+   }
+
+	public static void endBattleSession() {
+		BattleSession battleSession = BattleSession.getBattleSession();
+		battleSession.setActive(false);
+
+		/*
+		 * Gather the results of all battles
+		 * End any active battles
+		 */
+		Map<Siege, Integer> battleResults = new HashMap<>();
+		for (Siege siege : SiegeController.getSieges()) {
+			try {
+				if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
+					//Record primary government of besieged town
+					if(SiegeWarSettings.isNationSiegeImmunityEnabled())
+						siege.recordPrimaryTownGovernment();
+
+					//If any battle points were gained, calculate a result
+					if(siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0) {
+						//Adjust the siege balance
+						int siegeBalanceAdjustment = calculateSiegeBalanceAdjustment(siege);
+
+						//Apply the battle points of the winner to the siege balance
+						siege.adjustSiegeBalance(siegeBalanceAdjustment);
+
+						//Propagate attacker battle contributions to siege history
+						siege.propagateSuccessfulBattleContributorsToResidentTimedPointContributors();
+
+						//Prepare result for messaging
+						battleResults.put(siege, siegeBalanceAdjustment);
+
+						//Save siege
+						SiegeController.saveSiege(siege);
+					}
+
+					//Remove glowing effects from players in bc sessions
+					for (Player player : siege.getBannerControlSessions().keySet()) {
+						if (player.isOnline() && player.hasPotionEffect(PotionEffectType.GLOWING)) {
+							Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+								@Override
+								public void run() {
+									player.removePotionEffect(PotionEffectType.GLOWING);
+								}
+							});
+						}
+					}
+
+					//Clear battle related stats from the siege
+					siege.setBannerControllingSide(SiegeSide.NOBODY);
+					siege.clearBannerControllingResidents();
+					siege.clearBannerControlSessions();
+					siege.setAttackerBattlePoints(0);
+					siege.setDefenderBattlePoints(0);
+					siege.clearSuccessfulBattleContributors();
+				}
+			} catch (Throwable t) {
+				try {
+					SiegeWar.severe("Problem ending battle for siege: " + siege.getTown().getName());
+				} catch (Throwable t2) {
+					SiegeWar.severe("Problem ending battle for siege: (could not read town name)");
+				}
+				t.printStackTrace();
+			}
+		}
+
+		//Send message
+		sendBattleSessionEndedMessage(battleResults);
+	}
        
 	public static void evaluateBattleSessions() {
 		BattleSession battleSession = BattleSession.getBattleSession();
@@ -42,70 +121,7 @@ public class SiegeWarBattleSessionUtil {
 
 			if(System.currentTimeMillis() > battleSession.getScheduledEndTime()) {
 				//Finish battle session
-				battleSession.setActive(false);
-
-				/*
-				 * Gather the results of all battles
-				 * End any active battles
-				 */
-				Map<Siege, Integer> battleResults = new HashMap<>();
-				for (Siege siege : SiegeController.getSieges()) {
-					try {
-						if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
-							//Record primary government of besieged town
-							if(SiegeWarSettings.isNationSiegeImmunityEnabled())
-								siege.recordPrimaryTownGovernment();
-
-							//If any battle points were gained, calculate a result
-							if(siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0) {
-								//Adjust the siege balance
-								int siegeBalanceAdjustment = calculateSiegeBalanceAdjustment(siege);
-	
-								//Apply the battle points of the winner to the siege balance
-								siege.adjustSiegeBalance(siegeBalanceAdjustment);
-	
-								//Propagate attacker battle contributions to siege history
-								siege.propagateSuccessfulBattleContributorsToResidentTimedPointContributors();
-	
-								//Prepare result for messaging
-								battleResults.put(siege, siegeBalanceAdjustment);
-
-								//Save siege
-								SiegeController.saveSiege(siege);							
-							}
-							
-							//Remove glowing effects from players in bc sessions
-							for (Player player : siege.getBannerControlSessions().keySet()) {
-								if (player.isOnline() && player.hasPotionEffect(PotionEffectType.GLOWING)) {
-									Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-										@Override
-										public void run() {
-											player.removePotionEffect(PotionEffectType.GLOWING);
-										}
-									});
-								}
-							}
-
-							//Clear battle related stats from the siege
-							siege.setBannerControllingSide(SiegeSide.NOBODY);
-							siege.clearBannerControllingResidents();
-							siege.clearBannerControlSessions();
-							siege.setAttackerBattlePoints(0);
-							siege.setDefenderBattlePoints(0);
-							siege.clearSuccessfulBattleContributors();
-						}
-					} catch (Throwable t) {
-						try {
-							SiegeWar.severe("Problem ending battle for siege: " + siege.getTown().getName());
-						} catch (Throwable t2) {
-							SiegeWar.severe("Problem ending battle for siege: (could not read town name)");
-						}
-						t.printStackTrace();
-					}
-				}
-
-				//Send message
-				sendBattleSessionEndedMessage(battleResults);
+				endBattleSession();
 			}
 
 		} else {
@@ -120,13 +136,7 @@ public class SiegeWarBattleSessionUtil {
 			if(battleSession.getScheduledStartTime() != null) {
 				if (System.currentTimeMillis() > battleSession.getScheduledStartTime()) {
 					//Activate the session
-					battleSession.setActive(true);
-					//Set the scheduled end time
-					battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionDurationMinutes() * 60000));
-					//Clear the scheduled start time
-					battleSession.setScheduledStartTime(null);
-					//Send global message to let the server know that the battle session started
-					Messaging.sendGlobalMessage(Translation.of("msg_war_siege_battle_session_started"));
+					startBattleSession();
 				}
 			}
 		}

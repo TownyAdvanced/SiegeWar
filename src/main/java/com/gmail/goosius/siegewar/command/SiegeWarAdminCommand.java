@@ -8,11 +8,13 @@ import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
+import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -23,10 +25,7 @@ import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -34,14 +33,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
+public class SiegeWarAdminCommand implements TabExecutor {
 
-	private static final List<String> siegewaradminTabCompletes = Arrays.asList("siegeimmunity","revoltimmunity","reload","siege","town","nation","installperms");
+	private static final List<String> siegewaradminTabCompletes = Arrays.asList("battlesession","installperms","nation","reload","revoltimmunity","siege","siegeimmunity","town");
 	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
 	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setoccupier","removeoccupier");
 	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost");
+	private static final List<String> siegewaradminBattleSessionTabCompletes = Arrays.asList("end","start");
 
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
@@ -117,6 +117,9 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 			
 			if (args.length == 3)
 				return NameUtil.filterByStart(siegewaradminNationTabCompletes, args[2]);
+		case "battlesession":
+			if (args.length == 2)
+				return NameUtil.filterByStart(siegewaradminBattleSessionTabCompletes, args[1]);
 		default:
 			if (args.length == 1)
 				return NameUtil.filterByStart(siegewaradminTabCompletes, args[0]);
@@ -160,6 +163,9 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 				break;
 			case "installperms":
 				parseInstallPermissionsCommand(sender);
+				break;
+			case "battlesession":
+				parseSiegeWarBattleSessionCommand(sender, StringMgmt.remFirstArg(args));
 				break;
 
 			/*
@@ -311,6 +317,12 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplunderlost [amount]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownsgained [amount]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownslost [amount]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "battlesession [start/end]", ""));
+	}
+
+	private void showBattleSessionHelp(CommandSender sender) {
+		sender.sendMessage(ChatTools.formatTitle("/swa battlesession"));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "battlesession [start/end]", ""));
 	}
 	
 	private void showSiegeImmunityHelp(CommandSender sender) {
@@ -356,6 +368,33 @@ public class SiegeWarAdminCommand implements CommandExecutor, TabCompleter {
 		}
 		
 		Messaging.sendErrorMsg(sender, Translation.of("config_and_lang_file_could_not_be_loaded"));
+	}
+
+	private void parseSiegeWarBattleSessionCommand(CommandSender sender, String[] args) {
+		if (args.length == 0) {
+			showBattleSessionHelp(sender);
+			return;
+		}
+
+		BattleSession battleSession = BattleSession.getBattleSession();
+
+		if (args[0].equalsIgnoreCase("start")) {
+			if (battleSession.isActive()) {
+				Messaging.sendMsg(sender, Translation.of("msg_err_battle_session_active"));
+				return;
+			}
+			SiegeWarBattleSessionUtil.startBattleSession();
+			Messaging.sendMsg(sender, Translation.of("msg_battle_session_force_start"));
+		} else if (args[0].equalsIgnoreCase("end")) {
+			if (!battleSession.isActive()) {
+				Messaging.sendMsg(sender, Translation.of("msg_err_battle_session_inactive"));
+				return;
+			}
+			SiegeWarBattleSessionUtil.endBattleSession();
+			Messaging.sendMsg(sender, Translation.of("msg_battle_session_force_end"));
+		} else {
+			showBattleSessionHelp(sender);
+		}
 	}
 
 	private void parseSiegeWarSiegeImmunityCommand(CommandSender sender, String[] args) {
