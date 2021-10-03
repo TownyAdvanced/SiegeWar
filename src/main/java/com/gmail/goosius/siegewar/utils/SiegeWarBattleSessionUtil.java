@@ -115,7 +115,7 @@ public class SiegeWarBattleSessionUtil {
 		}
 		
 		Bukkit.getPluginManager().callEvent(new BattleSessionEndedEvent());
-		
+
 		//Send message
 		sendBattleSessionEndedMessage(battleResults);
 	}
