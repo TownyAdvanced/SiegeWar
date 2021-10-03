@@ -301,6 +301,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 	private void showHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewaradmin"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "reload", Translation.of("admin_help_1")));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "installperms", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity town [town_name] [hours]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity nation [nation_name] [hours]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity alltowns [hours]", ""));
