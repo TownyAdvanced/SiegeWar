@@ -34,16 +34,16 @@ public class SiegeWarBattleSessionUtil {
 		BattleSession.getBattleSession().setScheduledStartTime(startTimeOfNextSession);
    	}
 
-   public static void startBattleSession() {
-	   BattleSession battleSession = BattleSession.getBattleSession();
-	   battleSession.setActive(true);
-	   //Set the scheduled end time
-	   battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionDurationMinutes() * 60000));
-	   //Clear the scheduled start time
-	   battleSession.setScheduledStartTime(null);
-	   //Send global message to let the server know that the battle session started
-	   Messaging.sendGlobalMessage(Translation.of("msg_war_siege_battle_session_started"));
-   }
+	public static void startBattleSession() {
+		BattleSession battleSession = BattleSession.getBattleSession();
+		battleSession.setActive(true);
+		//Set the scheduled end time
+		battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionDurationMinutes() * 60000));
+		//Clear the scheduled start time
+		battleSession.setScheduledStartTime(null);
+		//Send global message to let the server know that the battle session started
+		Messaging.sendGlobalMessage(Translation.of("msg_war_siege_battle_session_started"));
+	}
 
 	public static void endBattleSession() {
 		BattleSession battleSession = BattleSession.getBattleSession();
