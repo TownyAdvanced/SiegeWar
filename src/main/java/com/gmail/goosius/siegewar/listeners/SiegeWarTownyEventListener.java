@@ -15,6 +15,7 @@ import com.palmergames.bukkit.towny.event.PreNewDayEvent;
 import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyExplosionDamagesEntityEvent;
+import com.palmergames.bukkit.towny.event.teleport.OutlawTeleportEvent;
 import com.palmergames.bukkit.towny.event.time.NewHourEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import com.palmergames.bukkit.towny.object.Town;
@@ -158,5 +159,15 @@ public class SiegeWarTownyEventListener implements Listener {
                 }
             }
         }
+    }
+    
+    /**
+     * Prevent an outlaw being teleported away if the town they are outlawed in has an active siege.
+     * @param event OutlawTeleportEvent thrown by Towny.
+     */
+    @EventHandler
+    public void onOutlawTeleportEvent(OutlawTeleportEvent event) {
+    	if (SiegeWarSettings.getWarSiegeEnabled() && SiegeController.hasActiveSiege(event.getTown())) 
+    		event.setCancelled(true);
     }
 }
