@@ -80,7 +80,11 @@ public class SiegeWar extends JavaPlugin {
 			if (dynmap != null) {
 				info("SiegeWar found Dynmap plugin, enabling Dynmap support.");
 				DynmapTask.setupDynmapAPI((DynmapAPI) dynmap);
-				townyDynmapPluginIntegrationEnabled = true;
+				Plugin dynmaptowny = Bukkit.getPluginManager().getPlugin("Dynmap-Towny");
+				if (dynmaptowny != null) {
+					townyDynmapPluginIntegrationEnabled = true;
+					info("SiegeWar found Dynmap-Towny plugin, enabling Dynmap-Towny support.");
+				}
 			} else {
 				info("Dynmap plugin not found.");
 			}
