@@ -34,6 +34,7 @@ permissions:
             siegewar.command.siegewaradmin.town: true
             siegewar.command.siegewaradmin.nation: true
             siegewar.command.siegewaradmin.installperms: true
+            siegewar.command.siegewaradmin.battlesession: true
 
     siegewar.command.siegewar.*:
         description: User is able to do all /siegewar commands.
