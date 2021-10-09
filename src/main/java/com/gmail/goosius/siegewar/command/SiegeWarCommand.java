@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.BookUtil;
@@ -27,6 +28,8 @@ import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.StringMgmt;
+import com.palmergames.util.TimeMgmt;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -37,7 +40,7 @@ import java.util.*;
 
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
-	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "guide", "preference", "version");
+	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "guide", "preference", "version", "nextsession");
 	
 	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "removeoccupation", "transferoccupation");
 
@@ -96,6 +99,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "removeoccupation [town]", Translation.of("nation_help_14")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "transferoccupation [town] [nation]", Translation.of("nation_help_15")));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nextsession", "", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw version", "", ""));
 	}
 
@@ -149,6 +153,9 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		case "nation":
 			parseSiegeWarNationCommand(player, StringMgmt.remFirstArg(args));
 			break;
+		case "nextsession":
+			parseSiegeWarNextSessionCommand(player);
+			break;
 		case "town":
 			parseSiegeWarTownCommand(player, StringMgmt.remFirstArg(args));
 			break;
@@ -162,6 +169,17 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		default:
 			showSiegeWarHelp(player);
 		}
+	}
+
+	private void parseSiegeWarNextSessionCommand(Player player) {
+		BattleSession session = BattleSession.getBattleSession();
+		if (session.isActive())
+			Messaging.sendMsg(player, Translation.of("msg_session_is_active_now"));
+		else {
+			long timeRemaining = session.getScheduledStartTime() - System.currentTimeMillis(); 
+			Messaging.sendMsg(player, Translation.of("msg_next_siege_session_in_minutes", TimeMgmt.getFormattedTimeValue(timeRemaining)));
+		}
+		
 	}
 
 	private void parseSiegeWarGuideCommand(Player player) {
