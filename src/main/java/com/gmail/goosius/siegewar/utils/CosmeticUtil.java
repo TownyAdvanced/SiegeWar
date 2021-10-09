@@ -73,9 +73,9 @@ public class CosmeticUtil {
 			player.sendBlockChange(loc.clone().add(ironBlockLocations[i][0], -3, ironBlockLocations[i][1]), Bukkit.createBlockData(Material.IRON_BLOCK));
 		}
 
-		//Set any non-transparent blocks above the banner to glass.
-		for (int i = (int) loc.getY(); i < 256; i++) {
-			Block block = loc.getWorld().getBlockAt((int) loc.getX(), i, (int) loc.getZ());
+		// Set any non-transparent blocks above the banner to glass.
+		for (int i = loc.getBlockY(); i < loc.getWorld().getMaxHeight(); i++) {
+			Block block = loc.getWorld().getBlockAt(loc.getBlockX(), i, loc.getBlockZ());
 			if (block.getType().isBlock() && block.getType().isOccluding())
 				player.sendBlockChange(block.getLocation(), Bukkit.createBlockData(Material.GLASS));
 		}
@@ -90,8 +90,8 @@ public class CosmeticUtil {
 			player.sendBlockChange(loc.clone().add(ironBlockLocations[i][0], -3, ironBlockLocations[i][1]), Bukkit.createBlockData(loc.clone().add(ironBlockLocations[i][0], -3, ironBlockLocations[i][1]).getBlock().getType()));
 		}
 
-		for (int i = (int) loc.getY(); i < 256; i++) {
-			Block block = loc.getWorld().getBlockAt((int) loc.getX(), i, (int) loc.getZ());
+		for (int i = loc.getBlockY(); i < loc.getWorld().getMaxHeight(); i++) {
+			Block block = loc.getWorld().getBlockAt(loc.getBlockX(), i, loc.getBlockZ());
 			if (block.getType().isBlock() && block.getType().isOccluding())
 				player.sendBlockChange(block.getLocation(), Bukkit.createBlockData(block.getType()));
 		}
