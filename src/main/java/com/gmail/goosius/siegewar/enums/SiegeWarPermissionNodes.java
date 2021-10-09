@@ -15,8 +15,6 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_NATION_SIEGE_CONQUEST_SIEGE_ABANDON("siegewar.nation.siege.conquest.siege.abandon"),
 	SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_START("siegewar.nation.siege.liberation.siege.start"),
 	SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_ABANDON("siegewar.nation.siege.liberation.siege.abandon"),
-	SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_SURRENDER("siegewar.nation.siege.liberation.siege.surrender"),
-	SIEGEWAR_NATION_SIEGE_REVOLT_SIEGE_SURRENDER("siegewar.nation.siege.revolt.siege.surrender"),
 	SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_START("siegewar.nation.siege.suppression.siege.start"),
 	SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_ABANDON("siegewar.nation.siege.suppression.siege.abandon"),
 	//Post Siege Actions
@@ -27,10 +25,9 @@ public enum SiegeWarPermissionNodes {
 	//Battle points
 	SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS("siegewar.town.siege.battle.points"),
 	//Actions
-	SIEGEWAR_TOWN_SIEGE_CONQUEST_SIEGE_SURRENDER("siegewar.town.siege.conquest.siege.surrender"),
 	SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_START("siegewar.town.siege.revolt.siege.abandon"),
 	SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_ABANDON("siegewar.town.siege.revolt.siege.start"),
-	SIEGEWAR_TOWN_SIEGE_SUPPRESSION_SIEGE_SURRENDER("siegewar.town.siege.suppression.siege.surrender"),
+	SIEGEWAR_TOWN_SIEGE_SURRENDER("siegewar.town.siege.surrender"),
 
 	// Node related to cannon session integration
 	SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION("siegewar.town.siege.startcannonsession"),
@@ -140,21 +137,5 @@ public enum SiegeWarPermissionNodes {
 				throw new RuntimeException("Uknown siege type");
 		}
 	}
-
-	public static String getPermissionNodeToSurrenderDefence(SiegeType siegeType) {
-		switch (siegeType) {
-			case CONQUEST:
-				return SIEGEWAR_TOWN_SIEGE_CONQUEST_SIEGE_SURRENDER.getNode();
-			case LIBERATION:
-				return SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_SURRENDER.getNode();
-			case REVOLT:
-				return SIEGEWAR_NATION_SIEGE_REVOLT_SIEGE_SURRENDER.getNode();
-			case SUPPRESSION:
-				return SIEGEWAR_TOWN_SIEGE_SUPPRESSION_SIEGE_SURRENDER.getNode();
-			default:
-				throw new RuntimeException("Uknown siege type");
-		}
-	}
-
 
 }

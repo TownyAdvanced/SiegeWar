@@ -91,10 +91,8 @@ permissions:
             siegewar.town.siege.battle.points: true
             siegewar.town.siege.surrender: true
             siegewar.town.siege.startcannonsession: true
-            siegewar.town.siege.conquest.siege.surrender: true
             siegewar.town.siege.revolt.siege.start: true
             siegewar.town.siege.revolt.siege.abandon: true
-            siegewar.town.siege.suppression.siege.surrender: true
 
     siegewar.command.siegewar.guide:
         description: User is able to read guide book.
