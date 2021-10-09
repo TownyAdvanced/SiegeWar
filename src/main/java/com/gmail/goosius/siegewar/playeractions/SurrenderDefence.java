@@ -24,7 +24,7 @@ public class SurrenderDefence {
 		if(!SiegeWarSettings.getWarSiegeAbandonEnabled())
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToSurrenderDefence(siege.getSiegeType())))
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER.getNode()))
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
 		surrenderDefence(siege, siege.getTimeUntilSurrenderConfirmationMillis());
