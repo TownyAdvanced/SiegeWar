@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.events.BattleSessionEndedEvent;
+import com.gmail.goosius.siegewar.events.BattleSessionPreStartEvent;
 import com.gmail.goosius.siegewar.events.BattleSessionStartedEvent;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -41,10 +42,10 @@ public class SiegeWarBattleSessionUtil {
 		battleSession.setActive(true);
 		//Set the scheduled end time
 		battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionDurationMinutes() * 60000));
-		//Send up the Bukkit event for other plugins to listen for.
-		Bukkit.getPluginManager().callEvent(new BattleSessionStartedEvent());	
 		//Clear the scheduled start time
 		battleSession.setScheduledStartTime(null);
+		//Send up the Bukkit event for other plugins to listen for.
+		Bukkit.getPluginManager().callEvent(new BattleSessionStartedEvent());	
 		//Send global message to let the server know that the battle session started
 		Messaging.sendGlobalMessage(Translation.of("msg_war_siege_battle_session_started"));
 	}
@@ -141,6 +142,18 @@ public class SiegeWarBattleSessionUtil {
 			//If a battle session is scheduled, start it if we hit the scheduled time
 			if(battleSession.getScheduledStartTime() != null) {
 				if (System.currentTimeMillis() > battleSession.getScheduledStartTime()) {
+					
+					//Send up the Bukkit event for other plugins to listen for and potentially cancel.
+					BattleSessionPreStartEvent event = new BattleSessionPreStartEvent();
+					Bukkit.getPluginManager().callEvent(event);
+					if (event.isCancelled()) {
+						//Null the next scheduled time, so it can be reset on the next ShortTime.
+						battleSession.setScheduledStartTime(null);
+						//Broadcast a cancelled BatterlSession message.
+						Messaging.sendGlobalMessage(event.getCancellationMsg());
+						return;
+					}
+					
 					//Activate the session
 					startBattleSession();
 				}
