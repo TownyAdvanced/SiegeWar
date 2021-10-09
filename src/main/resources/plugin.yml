@@ -45,7 +45,18 @@ permissions:
             siegewar.command.siegewar.nation.*: true
             siegewar.command.siegewar.guide: true
             siegewar.command.siegewar.collect: true
-            siegewar.command.siegewar.preference: true
+
+    siegewar.command.siegewar.preference:
+        description: User is able to use /sw preference.
+        default: true
+    
+    siegewar.command.siegewar.nextsession:
+        description: User is able to use /sw nextsession.
+        default: true
+        
+    siegewar.command.siegewar.guide:
+        description: User is able to use /sw guide.
+        default: true
 
     siegewar.command.siegewar.hud.*:
         description: User is able to do all /siegewar hud commands.

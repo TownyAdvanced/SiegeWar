@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.26
+version: 0.27
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -463,6 +463,9 @@ msg_siege_war_defender_killed_by_player: '&bSiege of %s > Defender %s was killed
 msg_you_cannot_carry_items_in_siegezones: '&cYou cannot carry any items in siege-zones, except picks, axes, shovels, and shears. All other items were automatically dropped.'
 status_town_days_to_peacefulness_status_change: 'Days To Peacefulness Status Change'
 
+# Added in 0.27
+msg_next_siege_session_in_minutes: 'The next Siege Session is in %s.'
+msg_session_is_active_now: 'The Siege Session is active now!'
 msg_err_battle_session_active: "&cBattle session has already started."
 msg_err_battle_session_inactive: "&cBattle session has already ended."
 msg_battle_session_force_start: "&bBattle session has been force started."
