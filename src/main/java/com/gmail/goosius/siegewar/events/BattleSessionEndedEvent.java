@@ -11,14 +11,13 @@ public class BattleSessionEndedEvent extends Event {
 	public BattleSessionEndedEvent() {
 	}
 
+	@NotNull
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
 
-    @NotNull
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
 }
