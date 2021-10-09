@@ -5,6 +5,8 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.events.BattleSessionEndedEvent;
+import com.gmail.goosius.siegewar.events.BattleSessionStartedEvent;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -39,6 +41,8 @@ public class SiegeWarBattleSessionUtil {
 		battleSession.setActive(true);
 		//Set the scheduled end time
 		battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionDurationMinutes() * 60000));
+		//Send up the Bukkit event for other plugins to listen for.
+		Bukkit.getPluginManager().callEvent(new BattleSessionStartedEvent());	
 		//Clear the scheduled start time
 		battleSession.setScheduledStartTime(null);
 		//Send global message to let the server know that the battle session started
@@ -108,7 +112,9 @@ public class SiegeWarBattleSessionUtil {
 				t.printStackTrace();
 			}
 		}
-
+		
+		Bukkit.getPluginManager().callEvent(new BattleSessionEndedEvent());
+		
 		//Send message
 		sendBattleSessionEndedMessage(battleResults);
 	}
@@ -125,7 +131,7 @@ public class SiegeWarBattleSessionUtil {
 			}
 
 		} else {
-		    //Battle session is inactive.
+			//Battle session is inactive.
 
 			//If there is no battle session scheduled, attempt to schedule session now.
 			if(battleSession.getScheduledStartTime() == null) {
