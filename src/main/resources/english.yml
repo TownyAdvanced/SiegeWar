@@ -462,3 +462,8 @@ msg_siege_war_attacker_killed_by_player: '&bSiege of %s > Attacker %s was killed
 msg_siege_war_defender_killed_by_player: '&bSiege of %s > Defender %s was killed by %s > Battle Points +%d'
 msg_you_cannot_carry_items_in_siegezones: '&cYou cannot carry any items in siege-zones, except picks, axes, shovels, and shears. All other items were automatically dropped.'
 status_town_days_to_peacefulness_status_change: 'Days To Peacefulness Status Change'
+
+msg_err_battle_session_active: "&cBattle session has already started."
+msg_err_battle_session_inactive: "&cBattle session has already ended."
+msg_battle_session_force_start: "&bBattle session has been force started."
+msg_battle_session_force_end: "&bBattle session has been force ended."
