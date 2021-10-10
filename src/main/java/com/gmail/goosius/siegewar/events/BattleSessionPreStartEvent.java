@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -12,6 +13,7 @@ public class BattleSessionPreStartEvent extends Event implements Cancellable {
 	private String cancellationMsg = "Battle Session prevented by another plugin.";
 
 	public BattleSessionPreStartEvent() {
+		super(!Bukkit.getServer().isPrimaryThread());
 	}
 
 	@NotNull
