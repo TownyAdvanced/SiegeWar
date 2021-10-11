@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.27
+version: 0.28
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -470,3 +470,6 @@ msg_err_battle_session_active: "&cBattle session has already started."
 msg_err_battle_session_inactive: "&cBattle session has already ended."
 msg_battle_session_force_start: "&bBattle session has been force started."
 msg_battle_session_force_end: "&bBattle session has been force ended."
+
+# Added in 0.28
+msg_town_immunity_expired: 'Your town's Siege Immunity has expired.'

@@ -5,10 +5,13 @@ import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 
@@ -107,5 +110,20 @@ public class SiegeWarImmunityUtil {
             NationMetaDataController.removePendingSiegeImmunityMillis(nation);
             nation.save();
         }
+    }
+    
+    public static void evaluateExpiredImmunities() {
+    	if (!SiegeWarSettings.getWarSiegeEnabled())
+    		return;
+		final long olderThanAnHour = System.currentTimeMillis() - 3600000;
+    	for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns())) {
+			long expirationTime = TownMetaDataController.getSiegeImmunityEndTime(town);
+			// Expiration happened longer than an hour ago or MetaData returned 0l.
+			if (expirationTime < olderThanAnHour)
+				continue;
+			// Expired in the last hour.
+			if (expirationTime < System.currentTimeMillis())
+				TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_town_immunity_expired"));
+		}
     }
 }

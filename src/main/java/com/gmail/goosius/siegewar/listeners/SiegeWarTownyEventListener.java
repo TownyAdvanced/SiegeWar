@@ -9,6 +9,7 @@ import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarCannonsUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.PreNewDayEvent;
@@ -71,6 +72,7 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onNewHour(NewHourEvent event) {
         if(SiegeWarSettings.getWarSiegeEnabled()) {
             SiegeWarTimerTaskController.updatePopulationBasedBattlePointModifiers();
+            SiegeWarImmunityUtil.evaluateExpiredImmunities();
         }
     }
 
