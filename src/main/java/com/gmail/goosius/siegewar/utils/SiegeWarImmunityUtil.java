@@ -112,11 +112,9 @@ public class SiegeWarImmunityUtil {
         }
     }
     
-    public static void evaluateExpiredImmunities() {
-    	if (!SiegeWarSettings.getWarSiegeEnabled())
-    		return;
+	public static void evaluateExpiredImmunities() {
 		final long olderThanAnHour = System.currentTimeMillis() - 3600000;
-    	for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns())) {
+		for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns())) {
 			long expirationTime = TownMetaDataController.getSiegeImmunityEndTime(town);
 			// Expiration happened longer than an hour ago or MetaData returned 0l.
 			if (expirationTime < olderThanAnHour)
@@ -125,5 +123,5 @@ public class SiegeWarImmunityUtil {
 			if (expirationTime < System.currentTimeMillis())
 				TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_town_immunity_expired"));
 		}
-    }
+	}
 }
