@@ -100,22 +100,18 @@ public class SiegeWar extends JavaPlugin {
 		} else if (!SiegeWarSettings.getWarSiegeEnabled()) {
 			info("SiegeWar is disabled in config. Plugin integrations disabled.");
 		} else {
-			if (getServer().getPluginManager().isPluginEnabled("Cannons")) {
-				if (SiegeWarSettings.isCannonsIntegrationEnabled()) {
+			if (SiegeWarSettings.isCannonsIntegrationEnabled()) {
+				if (getServer().getPluginManager().isPluginEnabled("Cannons")) {
 					info("SiegeWar found Cannons plugin, enabling Cannons support.");
 					cannonsIntegration = new CannonsIntegration(this);
 				} else {
-					info("SiegeWar found Cannons plugin, but integration disabled in config.");
+					info("Cannons integration enabled in config, but Cannons plugin not found!");
 				}
-			} else {
-				info("Cannons plugin not found.");
 			}
 
 			if (getServer().getPluginManager().isPluginEnabled("dynmap")) {
 				info("SiegeWar found Dynmap plugin, enabling Dynmap support.");
 				dynmapIntegration = new DynmapIntegration(this);
-			} else {
-				info("Dynmap plugin not found.");
 			}
 		}
 	}
