@@ -80,7 +80,7 @@ public class DynmapIntegration {
         PluginManager pm = plugin.getServer().getPluginManager();
         if (pm.isPluginEnabled("Dynmap-Towny")) {
             SiegeWar.info("SiegeWar found Dynmap-Towny plugin, enabling Dynmap-Towny support.");
-            pm.registerEvents(new DynmapTownyListener(plugin), plugin);
+            pm.registerEvents(new DynmapTownyListener(), plugin);
         } else {
             SiegeWar.info("Dynmap-Towny plugin not found.");
         }
