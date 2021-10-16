@@ -272,7 +272,8 @@ public class PlaceBlock {
 			if (residentsNation == null)
 				throw new TownyException(Translation.of("msg_err_action_disable"));
 
-			if (System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(nearbyTown))
+			if (System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(nearbyTown)
+			|| TownMetaDataController.getSiegeImmunityEndTime(nearbyTown) == -1l)
 				throw new TownyException(Translation.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
 
 			if (TownyEconomyHandler.isActive() && !residentsNation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.calculateSiegeCost(nearbyTown)))
