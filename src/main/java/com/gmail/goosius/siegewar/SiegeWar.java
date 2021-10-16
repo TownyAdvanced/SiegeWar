@@ -59,12 +59,15 @@ public class SiegeWar extends JavaPlugin {
             info("Towny version " + getTownyVersion() + " found.");
         }
         
-        if (!(Settings.loadSettingsAndLang() && SiegeController.loadAll() && TownOccupationController.loadAll())) {
+        if (!(!Towny.getPlugin().isError()
+				&& Settings.loadSettingsAndLang()
+				&& SiegeController.loadAll()
+				&& TownOccupationController.loadAll())) {
 	        siegeWarPluginError = true;
         }
 
 		registerCommands();
-	    registerEvents();
+		registerEvents();
 		checkIntegrations();
 
 		if (siegeWarPluginError) {
