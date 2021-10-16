@@ -8,6 +8,8 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Town;
+
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,11 +23,9 @@ import java.util.Set;
  */
 public class CannonsListener implements Listener {
 
-	private final SiegeWar plugin;
 	private final CannonsIntegration integration;
 
-	public CannonsListener(SiegeWar instance, CannonsIntegration integration) {
-		plugin = instance;
+	public CannonsListener(CannonsIntegration integration) {
 		this.integration = integration;
 	}
 
@@ -48,7 +48,7 @@ public class CannonsListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
 			Player player = null;
 			try {
-				player = plugin.getServer().getPlayer(event.getPlayer());
+				player = Bukkit.getPlayer(event.getPlayer());
 				integration.processPlayerCannonInteraction(player, event.getCannon(), Translation.of("msg_err_cannot_fire_no_cannon_session"));
 			} catch (TownyException te) {
 				event.setCancelled(true);

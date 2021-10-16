@@ -33,7 +33,7 @@ public class CannonsIntegration {
     public CannonsIntegration(SiegeWar plugin) {
         this.plugin = plugin;
 
-        plugin.getServer().getPluginManager().registerEvents(new CannonsListener(plugin, this), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new CannonsListener(this), plugin);
         SiegeWar.info("Cannons support enabled.");
     }
 
