@@ -1,5 +1,13 @@
 package com.gmail.goosius.siegewar;
 
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import com.gmail.goosius.siegewar.settings.Settings;
+import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
@@ -12,15 +20,6 @@ import com.gmail.goosius.siegewar.listeners.SiegeWarPlotEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarSafeModeListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
-import com.gmail.goosius.siegewar.settings.Settings;
-import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-
-import com.palmergames.bukkit.towny.Towny;
-import com.palmergames.bukkit.util.Version;
-
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
