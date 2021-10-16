@@ -21,6 +21,12 @@ import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
 
 public class SiegeWarSafeModeListener implements Listener {
 
+	private final SiegeWar plugin;
+
+	public SiegeWarSafeModeListener(SiegeWar instance) {
+		plugin = instance;
+	}
+
 	private void sendErrorMessage(Player player, String message) {
 		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + message));
 	}
@@ -35,7 +41,7 @@ public class SiegeWarSafeModeListener implements Listener {
 
 	@EventHandler (priority=EventPriority.HIGHEST, ignoreCancelled=true)
 	public void onPlayerBreakDuringSafemode (BlockBreakEvent event) {
-		if (!SiegeWar.isError())
+		if (!plugin.isError())
 			return;
 		sendErrorMessage(event.getPlayer(), getActionErrMsg());
 		event.setCancelled(true);
@@ -43,7 +49,7 @@ public class SiegeWarSafeModeListener implements Listener {
 	
 	@EventHandler (priority=EventPriority.HIGHEST, ignoreCancelled=true)
 	public void onPlayerBuildDuringSafemode (BlockPlaceEvent event) {
-		if (!SiegeWar.isError())
+		if (!plugin.isError())
 			return;
 		sendErrorMessage(event.getPlayer(), getActionErrMsg());
 		event.setCancelled(true);
@@ -51,7 +57,7 @@ public class SiegeWarSafeModeListener implements Listener {
 	
 	@EventHandler (priority=EventPriority.HIGHEST, ignoreCancelled=true)
 	public void onTownClaimDuringSafemode (TownPreClaimEvent event) {
-		if (!SiegeWar.isError())
+		if (!plugin.isError())
 			return;
 		event.setCancelMessage(getActionErrMsg());
 		event.setCancelled(true);
@@ -59,7 +65,7 @@ public class SiegeWarSafeModeListener implements Listener {
 
 	@EventHandler (priority=EventPriority.HIGHEST, ignoreCancelled=true)
 	public void onTownLeaveNationDuringSafemode (NationPreTownLeaveEvent event) {
-		if (!SiegeWar.isError())
+		if (!plugin.isError())
 			return;
 		event.setCancelMessage(getActionErrMsg());
 		event.setCancelled(true);
@@ -67,7 +73,7 @@ public class SiegeWarSafeModeListener implements Listener {
 
 	@EventHandler
 	public void onShortTime(NewShortTimeEvent event) {
-		if (!SiegeWar.isError())
+		if (!plugin.isError())
 			return;
 		
 		Bukkit.getServer().getOnlinePlayers().stream()

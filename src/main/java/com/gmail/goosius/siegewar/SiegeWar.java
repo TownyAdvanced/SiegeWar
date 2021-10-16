@@ -1,18 +1,10 @@
 package com.gmail.goosius.siegewar;
 
-import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.dynmap.DynmapAPI;
-
-import com.gmail.goosius.siegewar.settings.Settings;
-import com.gmail.goosius.siegewar.tasks.DynmapTask;
-import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
+import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
+import com.gmail.goosius.siegewar.integration.dynmap.DynmapIntegration;
 import com.gmail.goosius.siegewar.listeners.SiegeWarActionListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarBukkitEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarNationEventListener;
@@ -20,20 +12,27 @@ import com.gmail.goosius.siegewar.listeners.SiegeWarPlotEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarSafeModeListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarCannonsListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarTownyDynmapListener;
+import com.gmail.goosius.siegewar.settings.Settings;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+
+import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.util.Version;
+
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
 public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
-	public static String prefix = "[SiegeWar] ";
-	private static Version requiredTownyVersion = Version.fromString("0.97.2.0");
-	private final static SiegeHUDManager SiegeHudManager = new SiegeHUDManager(plugin);
+	private final Version requiredTownyVersion = Version.fromString("0.97.2.0");
+	private static final SiegeHUDManager siegeHUDManager = new SiegeHUDManager();
+
 	private static boolean siegeWarPluginError = false;
-	private static boolean cannonsPluginIntegrationEnabled = false;
-	private static boolean townyDynmapPluginIntegrationEnabled = false;
+	private CannonsIntegration cannonsIntegration;
+	private DynmapIntegration dynmapIntegration;
 
 	public static SiegeWar getSiegeWar() {
 		return plugin;
@@ -44,7 +43,7 @@ public class SiegeWar extends JavaPlugin {
 	}
 
 	public static SiegeHUDManager getSiegeHUDManager() {
-		return SiegeHudManager;
+		return siegeHUDManager;
 	}
 	
     @Override
@@ -55,60 +54,22 @@ public class SiegeWar extends JavaPlugin {
     	printSickASCIIArt();
     	
         if (!townyVersionCheck(getTownyVersion())) {
-            severe("Towny version does not meet required minimum version: " + requiredTownyVersion.toString());
+            severe("Towny version does not meet required minimum version: " + requiredTownyVersion);
             siegeWarPluginError = true;
         } else {
             info("Towny version " + getTownyVersion() + " found.");
         }
         
-        if (!Settings.loadSettingsAndLang())
-        	siegeWarPluginError = true;
+        if (!(Settings.loadSettingsAndLang() && SiegeController.loadAll() && TownOccupationController.loadAll())) {
+	        siegeWarPluginError = true;
+        }
 
-        registerCommands();
-        
-        if (Bukkit.getPluginManager().getPlugin("Towny").isEnabled()) {
-        	if(!SiegeController.loadAll())
-        		siegeWarPluginError = true;
-        	if(!TownOccupationController.loadAll())
-        		siegeWarPluginError = true;
-		}
+		registerCommands();
+	    registerEvents();
+		checkIntegrations();
 
-		if(siegeWarPluginError) {
-			severe("SiegeWar is in safe mode. Dynmap integration disabled.");
-		} else {
-			Plugin dynmap = Bukkit.getPluginManager().getPlugin("dynmap");
-			if (dynmap != null) {
-				info("SiegeWar found Dynmap plugin, enabling Dynmap support.");
-				DynmapTask.setupDynmapAPI((DynmapAPI) dynmap);
-				Plugin dynmaptowny = Bukkit.getPluginManager().getPlugin("Dynmap-Towny");
-				if (dynmaptowny != null) {
-					townyDynmapPluginIntegrationEnabled = true;
-					info("SiegeWar found Dynmap-Towny plugin, enabling Dynmap-Towny support.");
-				}
-			} else {
-				info("Dynmap plugin not found.");
-			}
-		}
-
-		if(siegeWarPluginError) {
-			severe("SiegeWar is in safe mode. Cannons integration disabled.");
-		} else {
-			Plugin cannons = Bukkit.getPluginManager().getPlugin("Cannons");
-			if (cannons != null) {
-				if (SiegeWarSettings.isCannonsIntegrationEnabled()) {
-					info("SiegeWar found Cannons plugin, enabling Cannons support.");
-					info("Cannons support enabled.");
-					cannonsPluginIntegrationEnabled = true;
-				}
-			} else {
-				info("Cannons plugin not found.");
-			}
-		}
-
-		registerListeners();
-
-		if(siegeWarPluginError) {
-			severe("SiegeWar did not load successfully, and is now in safe mode.");
+		if (siegeWarPluginError) {
+			severe("SiegeWar did not load successfully, and is now in safe mode!");
 		} else {
 			info("SiegeWar loaded successfully.");
 		}
@@ -116,12 +77,11 @@ public class SiegeWar extends JavaPlugin {
     
     @Override
     public void onDisable() {
-    	DynmapTask.endDynmapTask();
     	info("Shutting down...");
     }
 
 	public String getVersion() {
-		return this.getDescription().getVersion();
+		return getDescription().getVersion();
 	}
 	
     private boolean townyVersionCheck(String version) {
@@ -129,14 +89,40 @@ public class SiegeWar extends JavaPlugin {
     }
 
     private String getTownyVersion() {
-        return Bukkit.getPluginManager().getPlugin("Towny").getDescription().getVersion();
+        return Towny.getPlugin().getDescription().getVersion();
     }
+
+	private void checkIntegrations() {
+		if (siegeWarPluginError) {
+			severe("SiegeWar is in safe mode! Plugin integrations disabled.");
+		} else if (!SiegeWarSettings.getWarSiegeEnabled()) {
+			info("SiegeWar is disabled in config. Plugin integrations disabled.");
+		} else {
+			if (getServer().getPluginManager().isPluginEnabled("Cannons")) {
+				if (SiegeWarSettings.isCannonsIntegrationEnabled()) {
+					info("SiegeWar found Cannons plugin, enabling Cannons support.");
+					cannonsIntegration = new CannonsIntegration(this);
+				} else {
+					info("SiegeWar found Cannons plugin, but integration disabled in config.");
+				}
+			} else {
+				info("Cannons plugin not found.");
+			}
+
+			if (getServer().getPluginManager().isPluginEnabled("dynmap")) {
+				info("SiegeWar found Dynmap plugin, enabling Dynmap support.");
+				dynmapIntegration = new DynmapIntegration(this);
+			} else {
+				info("Dynmap plugin not found.");
+			}
+		}
+	}
 	
-	private void registerListeners() {
-		PluginManager pm = Bukkit.getServer().getPluginManager();
+	private void registerEvents() {
+		PluginManager pm = getServer().getPluginManager();
 		
 		if (siegeWarPluginError)
-			pm.registerEvents(new SiegeWarSafeModeListener(), this);
+			pm.registerEvents(new SiegeWarSafeModeListener(this), this);
 		else {
 			pm.registerEvents(new SiegeWarActionListener(this), this);
 			pm.registerEvents(new SiegeWarBukkitEventListener(this), this);		
@@ -144,16 +130,12 @@ public class SiegeWar extends JavaPlugin {
 			pm.registerEvents(new SiegeWarNationEventListener(this), this);
 			pm.registerEvents(new SiegeWarTownEventListener(this), this);
 			pm.registerEvents(new SiegeWarPlotEventListener(this), this);
-			if(townyDynmapPluginIntegrationEnabled)
-				pm.registerEvents(new SiegeWarTownyDynmapListener(this), this);
-			if(cannonsPluginIntegrationEnabled)
-				pm.registerEvents(new SiegeWarCannonsListener(this), this);
 		}
 	}
 
 	private void registerCommands() {
-		if(siegeWarPluginError) {
-			severe("SiegeWar is in safe mode. SiegeWar commands not registered");
+		if (siegeWarPluginError) {
+			severe("SiegeWar is in safe mode! Commands not registered.");
 		} else {
 			getCommand("siegewar").setExecutor(new SiegeWarCommand());
 			getCommand("siegewaradmin").setExecutor(new SiegeWarAdminCommand());
@@ -177,11 +159,11 @@ public class SiegeWar extends JavaPlugin {
 		Bukkit.getLogger().info("                                      ");
 	}
 
-	public static boolean getCannonsPluginIntegrationEnabled() {
-		return cannonsPluginIntegrationEnabled;
+	public static boolean getCannonsIntegrationEnabled() {
+		return plugin.cannonsIntegration != null;
 	}
 	
-	public static boolean isError() {
+	public boolean isError() {
 		return siegeWarPluginError;
 	}
 	
