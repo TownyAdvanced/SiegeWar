@@ -144,7 +144,7 @@ public class SiegeWarTownEventListener implements Listener {
 		if (!SiegeWarSettings.getWarSiegeEnabled())
 			return;
 		
-		if(!SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
+		if(!SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && !event.isAdminAction()) {
 			event.setCancellationMsg(Translation.of("msg_err_command_disable"));
 			event.setCancelled(true);
 			return;
