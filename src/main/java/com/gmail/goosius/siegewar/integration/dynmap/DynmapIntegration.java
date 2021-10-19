@@ -48,7 +48,7 @@ public class DynmapIntegration {
         markerapi = dynmapAPI.getMarkerAPI();
 
         addMarkerSet();
-        registerEvent();
+        registerDynmapTownyListener();
         startDynmapTask();
         SiegeWar.info("Dynmap support enabled.");
     }
@@ -76,7 +76,7 @@ public class DynmapIntegration {
         markerapi.createMarkerIcon(BATTLE_BANNER_ICON_ID, "BattleBanner", plugin.getResource(Settings.BATTLE_BANNER_FILE_NAME));
     }
 
-    private void registerEvent() {
+    private void registerDynmapTownyListener() {
         PluginManager pm = plugin.getServer().getPluginManager();
         if (pm.isPluginEnabled("Dynmap-Towny")) {
             SiegeWar.info("SiegeWar found Dynmap-Towny plugin, enabling Dynmap-Towny support.");

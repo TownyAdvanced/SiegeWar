@@ -28,8 +28,8 @@ public class SiegeWarMapUtil {
 	public static void evaluateMapHiding() {
 		for(Player player: BukkitTools.getOnlinePlayers()) {
 			try {
-				if (shouldPlayerBeMapHidden(player)) {
-					if (!player.hasMetadata(MAP_HIDING_METADATA_ID)) {
+				if(shouldPlayerBeMapHidden(player)) {
+					if(!player.hasMetadata(MAP_HIDING_METADATA_ID)) {
 						player.setMetadata(MAP_HIDING_METADATA_ID, MAP_HIDING_FIXED_METADATA_VALUE);
 					}
 				} else {

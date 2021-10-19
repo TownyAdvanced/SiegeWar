@@ -31,7 +31,6 @@ public class SiegeWar extends JavaPlugin {
 
 	private static boolean siegeWarPluginError = false;
 	private CannonsIntegration cannonsIntegration;
-	private DynmapIntegration dynmapIntegration;
 
 	public static SiegeWar getSiegeWar() {
 		return plugin;
@@ -59,18 +58,15 @@ public class SiegeWar extends JavaPlugin {
             info("Towny version " + getTownyVersion() + " found.");
         }
         
-        if (!(!Towny.getPlugin().isError()
-				&& Settings.loadSettingsAndLang()
-				&& SiegeController.loadAll()
-				&& TownOccupationController.loadAll())) {
+        if (!loadAll()) {
 	        siegeWarPluginError = true;
         }
 
 		registerCommands();
-		registerEvents();
+		registerListeners();
 		checkIntegrations();
 
-		if (siegeWarPluginError) {
+		if(siegeWarPluginError) {
 			severe("SiegeWar did not load successfully, and is now in safe mode!");
 		} else {
 			info("SiegeWar loaded successfully.");
@@ -80,6 +76,13 @@ public class SiegeWar extends JavaPlugin {
     @Override
     public void onDisable() {
     	info("Shutting down...");
+    }
+    
+    private boolean loadAll() {
+    	return !Towny.getPlugin().isError()
+				&& Settings.loadSettingsAndLang()
+				&& SiegeController.loadAll()
+				&& TownOccupationController.loadAll();
     }
 
 	public String getVersion() {
@@ -111,12 +114,12 @@ public class SiegeWar extends JavaPlugin {
 
 			if (getServer().getPluginManager().isPluginEnabled("dynmap")) {
 				info("SiegeWar found Dynmap plugin, enabling Dynmap support.");
-				dynmapIntegration = new DynmapIntegration(this);
+				new DynmapIntegration(this);
 			}
 		}
 	}
 	
-	private void registerEvents() {
+	private void registerListeners() {
 		PluginManager pm = getServer().getPluginManager();
 		
 		if (siegeWarPluginError)
@@ -132,8 +135,8 @@ public class SiegeWar extends JavaPlugin {
 	}
 
 	private void registerCommands() {
-		if (siegeWarPluginError) {
-			severe("SiegeWar is in safe mode! Commands not registered.");
+		if(siegeWarPluginError) {
+			severe("SiegeWar is in safe mode. SiegeWar commands not registered");
 		} else {
 			getCommand("siegewar").setExecutor(new SiegeWarCommand());
 			getCommand("siegewaradmin").setExecutor(new SiegeWarAdminCommand());
@@ -157,7 +160,7 @@ public class SiegeWar extends JavaPlugin {
 		Bukkit.getLogger().info("                                      ");
 	}
 
-	public static boolean getCannonsIntegrationEnabled() {
+	public static boolean getCannonsPluginIntegrationEnabled() {
 		return plugin.cannonsIntegration != null;
 	}
 	

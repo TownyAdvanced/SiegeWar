@@ -128,11 +128,11 @@ public class SiegeWarTownyEventListener implements Listener {
         }
 
         //Add to final explode list: town blocks if town has a cannon session in progress
-        if (SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsIntegrationEnabled()) {
+        if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginIntegrationEnabled()) {
             List<Block> vanillaExplodeList = event.getVanillaBlockList(); //original list of exploding blocks
             Town town;
             for (Block block : vanillaExplodeList) {
-                if (!finalExplodeList.contains(block)) {
+                if(!finalExplodeList.contains(block)) {
                     town = TownyAPI.getInstance().getTown(block.getLocation());
                     if (town != null && CannonsIntegration.doesTownHaveCannonSession(town)) {
                         finalExplodeList.add(block);
@@ -153,7 +153,7 @@ public class SiegeWarTownyEventListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGH)
     public void onExplosionDamageEntity(TownyExplosionDamagesEntityEvent event) {
-        if (SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsIntegrationEnabled()) {
+        if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginIntegrationEnabled()) {
             if (event.isCancelled()) {
                 Town town = TownyAPI.getInstance().getTown(event.getLocation());
                 if (town != null && CannonsIntegration.doesTownHaveCannonSession(town)) {

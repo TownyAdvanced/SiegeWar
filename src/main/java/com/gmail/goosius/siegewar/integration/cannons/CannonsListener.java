@@ -23,10 +23,10 @@ import java.util.Set;
  */
 public class CannonsListener implements Listener {
 
-	private final CannonsIntegration integration;
+	private final CannonsIntegration cannonsIntegration;
 
 	public CannonsListener(CannonsIntegration integration) {
-		this.integration = integration;
+		this.cannonsIntegration = integration;
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class CannonsListener implements Listener {
 			Player player = null;
 			try {
 				player = Bukkit.getPlayer(event.getPlayer());
-				integration.processPlayerCannonInteraction(player, event.getCannon(), Translation.of("msg_err_cannot_fire_no_cannon_session"));
+				cannonsIntegration.processPlayerCannonInteraction(player, event.getCannon(), Translation.of("msg_err_cannot_fire_no_cannon_session"));
 			} catch (TownyException te) {
 				event.setCancelled(true);
 				if (player != null) {
@@ -80,7 +80,7 @@ public class CannonsListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
 			try {
 				Town townWhereCannonIsLocated;
-				Set<Town> cannonTowns = integration.getTownsWhereCannonIsLocated(event.getCannon());
+				Set<Town> cannonTowns = cannonsIntegration.getTownsWhereCannonIsLocated(event.getCannon());
 				if (cannonTowns.size() == 0) {
 					return; //cannon is not in a town
 				} else if (cannonTowns.size() > 1) {

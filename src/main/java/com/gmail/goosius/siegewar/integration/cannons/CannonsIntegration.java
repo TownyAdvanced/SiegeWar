@@ -22,8 +22,6 @@ import java.util.UUID;
 
 public class CannonsIntegration {
 
-    private final SiegeWar plugin;
-
     //List of all cannon sessions in the universe <Town UUID, Remaining duration in short ticks>
     private static final Map<UUID, Integer> cannonSessions = new HashMap<>();
 
@@ -31,8 +29,6 @@ public class CannonsIntegration {
     private static final Integer CANNON_SESSIONS_LOCK = 1;
 
     public CannonsIntegration(SiegeWar plugin) {
-        this.plugin = plugin;
-
         plugin.getServer().getPluginManager().registerEvents(new CannonsListener(this), plugin);
         SiegeWar.info("Cannons support enabled.");
     }
