@@ -1,4 +1,4 @@
-package com.gmail.goosius.siegewar.listeners;
+package com.gmail.goosius.siegewar.integration.cannons;
 
 import at.pavlov.cannons.event.CannonFireEvent;
 import at.pavlov.cannons.event.CannonRedstoneEvent;
@@ -6,10 +6,10 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
-import com.gmail.goosius.siegewar.utils.SiegeWarCannonsUtil;
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Town;
+
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,13 +21,12 @@ import java.util.Set;
  * @author Goosius
  *
  */
-public class SiegeWarCannonsListener implements Listener {
+public class CannonsListener implements Listener {
 
-	@SuppressWarnings("unused")
-	private final SiegeWar plugin;
+	private final CannonsIntegration cannonsIntegration;
 
-	public SiegeWarCannonsListener(SiegeWar instance) {
-		plugin = instance;
+	public CannonsListener(CannonsIntegration integration) {
+		this.cannonsIntegration = integration;
 	}
 
 	/**
@@ -49,18 +48,18 @@ public class SiegeWarCannonsListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
 			Player player = null;
 			try {
-				player = Towny.getPlugin().getServer().getPlayer(event.getPlayer());
-				SiegeWarCannonsUtil.processPlayerCannonInteraction(player, event.getCannon(), Translation.of("msg_err_cannot_fire_no_cannon_session"));
+				player = Bukkit.getPlayer(event.getPlayer());
+				cannonsIntegration.processPlayerCannonInteraction(player, event.getCannon(), Translation.of("msg_err_cannot_fire_no_cannon_session"));
 			} catch (TownyException te) {
 				event.setCancelled(true);
 				if (player != null) {
 					Messaging.sendErrorMsg(player, te.getMessage());
 				} else {
-					SiegeWar.severe("Problem Processing fire cannon event: " + te.getMessage());
+					SiegeWar.severe("Problem processing fire cannon event: " + te.getMessage());
 				}
 			} catch (Exception e) {
 				event.setCancelled(true);
-				SiegeWar.severe("Problem Processing fire cannon event: " + e.getMessage());
+				SiegeWar.severe("Problem processing fire cannon event: " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -71,7 +70,7 @@ public class SiegeWarCannonsListener implements Listener {
 	 *
 	 * - If the cannon is in the wilderness, it can be fired
 	 *
-	 * - Otherwise, we we look for a cannon session.
+	 * - Otherwise, we look for a cannon session.
 	 *   If active, the event is allowed, otherwise it is prevented.
 	 *
 	 * @param event the event
@@ -81,7 +80,7 @@ public class SiegeWarCannonsListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
 			try {
 				Town townWhereCannonIsLocated;
-				Set<Town> cannonTowns = SiegeWarCannonsUtil.getTownsWhereCannonIsLocated(event.getCannon());
+				Set<Town> cannonTowns = cannonsIntegration.getTownsWhereCannonIsLocated(event.getCannon());
 				if (cannonTowns.size() == 0) {
 					return; //cannon is not in a town
 				} else if (cannonTowns.size() > 1) {
@@ -90,7 +89,7 @@ public class SiegeWarCannonsListener implements Listener {
 				} else {
 					townWhereCannonIsLocated = (Town)cannonTowns.toArray()[0];
 				}
-				if (!SiegeWarCannonsUtil.doesTownHaveCannonSession(townWhereCannonIsLocated)) {
+				if (!CannonsIntegration.doesTownHaveCannonSession(townWhereCannonIsLocated)) {
 					event.setCancelled(true);  //No cannon session found. Cancel event
 				}
 			} catch (Exception e) {

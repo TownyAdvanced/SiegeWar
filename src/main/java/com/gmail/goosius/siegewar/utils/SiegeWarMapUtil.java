@@ -13,17 +13,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
 /**
- * This class contains utility functions related to the dynmap
+ * This class contains utility functions related to the online map integrations
  *
  * @author Goosius
  */
-public class SiegeWarDynmapUtil {
+public class SiegeWarMapUtil {
 
-	public static String MAP_HIDING_METADATA_ID = "tacticallyInvisible";
-	public static FixedMetadataValue MAP_HIDING_FIXED_METADATA_VALUE = new FixedMetadataValue(Towny.getPlugin(), true);
+	public static final String MAP_HIDING_METADATA_ID = "tacticallyInvisible";
+	public static final FixedMetadataValue MAP_HIDING_FIXED_METADATA_VALUE = new FixedMetadataValue(Towny.getPlugin(), true);
 	
 	/**
-	 * Evaluate players to see if they are should be hidden on the dynamp.
+	 * Evaluate players to see if they are should be hidden on the map.
 	 */
 	public static void evaluateMapHiding() {
 		for(Player player: BukkitTools.getOnlinePlayers()) {

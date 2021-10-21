@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.gmail.goosius.siegewar.SiegeWar;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -17,7 +16,7 @@ public class SiegeHUDManager {
 
     static Map<Player, Siege> warHudUsers;
 
-    public SiegeHUDManager(SiegeWar plugin) {
+    public SiegeHUDManager() {
         warHudUsers = new HashMap<>();
     }
 
