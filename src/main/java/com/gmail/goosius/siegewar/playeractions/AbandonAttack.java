@@ -9,6 +9,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.timeractions.DefenderWin;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.confirmations.Confirmation;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
@@ -34,7 +35,10 @@ public class AbandonAttack {
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToAbandonAttack(siege.getSiegeType())))
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
-		abandonAttack(siege, siege.getTimeUntilAbandonConfirmationMillis());
+		Confirmation
+			.runOnAccept(()-> abandonAttack(siege, siege.getTimeUntilAbandonConfirmationMillis()))
+			.runOnCancel(()-> Messaging.sendMsg(player, Translation.of("msg_abandon_action_cancelled")))
+			.sendTo(player);
 	}
 
     public static void abandonAttack(Siege siege, long timeUntilOfficialAbandon) {

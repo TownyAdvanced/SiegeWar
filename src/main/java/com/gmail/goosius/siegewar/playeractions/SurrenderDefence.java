@@ -9,6 +9,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.timeractions.AttackerWin;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.confirmations.Confirmation;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
@@ -26,8 +27,11 @@ public class SurrenderDefence {
 
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER.getNode()))
 			throw new TownyException(Translation.of("msg_err_action_disable"));
-
-		surrenderDefence(siege, siege.getTimeUntilSurrenderConfirmationMillis());
+		
+		Confirmation
+			.runOnAccept(()-> surrenderDefence(siege, siege.getTimeUntilSurrenderConfirmationMillis()))
+			.runOnCancel(()-> Messaging.sendMsg(player, Translation.of("msg_surrender_action_cancelled")))
+			.sendTo(player);
 	}
 
     public static void surrenderDefence(Siege siege, long timeUntilSurrenderConfirmation) {
