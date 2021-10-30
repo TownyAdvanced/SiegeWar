@@ -68,7 +68,8 @@ public class PlaceBlock {
 			//Standing Banner placement
 			if (Tag.BANNERS.isTagged(mat) && !mat.toString().contains("_W")) {
 				try {
-					evaluatePlaceStandingBanner(player, block);
+					if (evaluatePlaceStandingBanner(player, block))
+						event.setCancelled(false);
 				} catch (TownyException e1) {
 					Messaging.sendErrorMsg(player, e1.getMessage());
 				}
@@ -102,10 +103,10 @@ public class PlaceBlock {
 	 * Evaluates placing a standing banner
 	 * @throws TownyException if the banner will not be allowed.
 	 */
-	private static void evaluatePlaceStandingBanner(Player player, Block block) throws TownyException {
+	private static boolean evaluatePlaceStandingBanner(Player player, Block block) throws TownyException {
 		//Ensure the the banner is placed in wilderness
 		if (!TownyAPI.getInstance().isWilderness(block))
-			return;
+			return false;
 
 		//Ensure the player has a town
 		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
@@ -122,7 +123,7 @@ public class PlaceBlock {
 		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
 		List<TownBlock> adjacentNonCardinalTownBlocks = SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block);
 		if(adjacentCardinalTownBlocks.size() == 0 && adjacentNonCardinalTownBlocks.size() == 0)
-			return;
+			return false;
 
 		//Ensure there is just one cardinal town block
 		if (adjacentCardinalTownBlocks.size() > 1)
@@ -141,6 +142,7 @@ public class PlaceBlock {
 		} else {
 			evaluatePlaceColouredBannerNearTown(player, residentsTown, residentsNation, townBlock, townBlock.getTownOrNull(), block);
 		}
+		return true;
 	}
 
 		/**
