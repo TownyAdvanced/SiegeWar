@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.timeractions;
 
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
@@ -21,6 +22,7 @@ public class DefenderWin
 	 * @param siegeStatus the siege status
 	 */
     public static void defenderWin(Siege siege, SiegeStatus siegeStatus) {
+    	siege.setSiegeWinner(SiegeSide.DEFENDERS);
 		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege, siegeStatus);
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
