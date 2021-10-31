@@ -22,13 +22,20 @@ public class SiegeEndEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
     private final Siege siege;
+    private final String siegeType;
+    private final String siegeWinner;
+    private final String attackerName;
+    private final String defenderName;
     private final String besiegedTownName;
 
-    public SiegeEndEvent(Siege siege,
-                         String besiegedTownName) {
+    public SiegeEndEvent(Siege siege) {
         super(!Bukkit.getServer().isPrimaryThread());
         this.siege = siege;
-        this.besiegedTownName = besiegedTownName;
+        this.siegeType = siege.getSiegeType().getName();
+        this.siegeWinner = siege.getSiegeWinner().name();
+        this.attackerName = siege.getAttackerName();
+        this.defenderName = siege.getDefenderName();
+        this.besiegedTownName = siege.getTown().getName();
     }
 
     @NotNull
@@ -41,11 +48,45 @@ public class SiegeEndEvent extends Event {
         return handlers;
     }
 
+    /**
+     * @return Siege object
+     */
     public Siege getSiege() {
         return siege;
     }
 
-    public String getBesiegedTownName() {
+    /**
+	 * @return the siegeType as a String
+	 */
+	public String getSiegeType() {
+		return siegeType;
+	}
+
+	/**
+	 * @return the siegeWinner as a String
+	 */
+	public String getSiegeWinner() {
+		return siegeWinner;
+	}
+
+	/**
+	 * @return the attackerName
+	 */
+	public String getAttackerName() {
+		return attackerName;
+	}
+
+	/**
+	 * @return besiegedTownName;
+	 */
+	public String getBesiegedTownName() {
         return besiegedTownName;
     }
+
+	/**
+	 * @return the defenderName
+	 */
+	public String getDefenderName() {
+		return defenderName;
+	}
 }

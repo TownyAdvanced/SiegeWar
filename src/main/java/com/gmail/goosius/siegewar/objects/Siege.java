@@ -56,6 +56,7 @@ public class Siege {
 	private double warChestAmount;
 	private List<Resident> bannerControllingResidents;  //Soldiers currently controlling the banner
 	private SiegeSide bannerControllingSide;
+	private SiegeSide siegeWinner;    //For when a siege is over, holds the winning side.
 	private Map<Player, BannerControlSession> bannerControlSessions;
 	private int timedBattlePointsEarnedFromCurrentBannerControl;
 	private boolean attackerHasLowestPopulation;
@@ -486,6 +487,14 @@ public class Siege {
 			result += homeNationContribution;
 		}
 		return result;
+	}
+
+	public SiegeSide getSiegeWinner() {
+		return siegeWinner;
+	}
+
+	public void setSiegeWinner(SiegeSide siegeWinner) {
+		this.siegeWinner = siegeWinner;
 	}
 
 	public String getAttackerName() {
