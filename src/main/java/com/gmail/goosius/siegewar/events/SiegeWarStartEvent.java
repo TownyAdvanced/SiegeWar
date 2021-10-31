@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.events;
 
-import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
@@ -12,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class SiegeWarStartEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
-    private final SiegeType siegeType;
+    private final String siegeType;
     private final Siege siege;
     private final Town townOfSiegeStarter;
     private final Nation nation;
@@ -21,7 +20,7 @@ public class SiegeWarStartEvent extends Event {
 
     public SiegeWarStartEvent(
             Siege siege,
-            SiegeType siegeType,
+            String siegeType,
             Town targetTown,
             Nation nation,
             Town townOfSiegeStarter,
@@ -56,7 +55,7 @@ public class SiegeWarStartEvent extends Event {
         return flag;
     }
 
-	public SiegeType getSiegeType() {
+	public String getSiegeType() {
 		return siegeType;
 	}
 

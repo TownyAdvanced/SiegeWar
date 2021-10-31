@@ -489,7 +489,7 @@ public class SiegeController {
 		//Call event
 		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(
 				siege,
-				siege.getSiegeType(),
+				siege.getSiegeType().getName(),
 				siege.getTown(),
 				nation,
 				townOfSiegeStarter,
