@@ -485,15 +485,8 @@ public class SiegeController {
 		//Save to DB
 		SiegeController.saveSiege(siege);
 
-		Nation nation =  siege.getSiegeType().equals(SiegeType.REVOLT) ? TownOccupationController.getTownOccupier(targetTown) : (Nation)siege.getAttackingNationIfPossibleElseTown();
 		//Call event
-		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(
-				siege,
-				siege.getSiegeType().getName(),
-				siege.getTown(),
-				nation,
-				townOfSiegeStarter,
-				bannerBlock));
+		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter));
 	}
 
 	private static void sendGlobalSiegeStartMessage(Siege siege) {

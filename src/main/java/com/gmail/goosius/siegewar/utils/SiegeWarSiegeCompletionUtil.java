@@ -51,12 +51,6 @@ public class SiegeWarSiegeCompletionUtil {
 		SiegeController.saveSiege(siege);
 
 		//Fire SiegeEnded event
-		Bukkit.getPluginManager().callEvent(new SiegeEndEvent(
-				siege,
-				siege.getSiegeType().getName(),
-				siege.getSiegeWinner().name(),
-				siege.getAttackerName(),
-				siege.getDefenderName(),
-				siege.getTown().getName()));
+		Bukkit.getPluginManager().callEvent(new SiegeEndEvent(siege));
 	}
 }

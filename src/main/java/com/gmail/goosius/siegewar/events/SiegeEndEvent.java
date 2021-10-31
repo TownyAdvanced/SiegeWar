@@ -28,19 +28,14 @@ public class SiegeEndEvent extends Event {
     private final String defenderName;
     private final String besiegedTownName;
 
-    public SiegeEndEvent(Siege siege,
-                         String siegeType,
-                         String siegeWinner,
-                         String attackerName,
-                         String defenderName,
-                         String besiegedTownName) {
+    public SiegeEndEvent(Siege siege) {
         super(!Bukkit.getServer().isPrimaryThread());
         this.siege = siege;
-        this.siegeType = siegeType;
-        this.siegeWinner = siegeWinner;
-        this.attackerName = attackerName;
-        this.defenderName = defenderName;
-        this.besiegedTownName = besiegedTownName;
+        this.siegeType = siege.getSiegeType().getName();
+        this.siegeWinner = siege.getSiegeWinner().name();
+        this.attackerName = siege.getAttackerName();
+        this.defenderName = siege.getDefenderName();
+        this.besiegedTownName = siege.getTown().getName();
     }
 
     @NotNull
