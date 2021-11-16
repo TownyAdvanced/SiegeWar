@@ -33,10 +33,14 @@ import com.gmail.goosius.siegewar.playeractions.PlayerDeath;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+
+import net.citizensnpcs.api.CitizensAPI;
+
 import com.gmail.goosius.siegewar.settings.Translation;
 
 /**
@@ -156,6 +160,10 @@ public class SiegeWarBukkitEventListener implements Listener {
 		
 		// Don't stop admins/ops. towny.admin.spawn is part of towny.admin.
 		if (event.getPlayer().hasPermission("towny.admin.spawn") || event.getPlayer().isOp())
+			return;
+		
+		// Let's ignore Citizens NPCs
+		if (Towny.getPlugin().isCitizens2() && CitizensAPI.getNPCRegistry().isNPC(event.getPlayer()))
 			return;
 		
 		if (SiegeWarSettings.getWarSiegeEnabled()
