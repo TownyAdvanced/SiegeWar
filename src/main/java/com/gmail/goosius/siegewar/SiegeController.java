@@ -605,12 +605,12 @@ public class SiegeController {
 	public static void beginSiegeCamp(SiegeCamp camp) throws TownyException {
 		// Another SiegeCamp is already present.
 		if (SiegeWarDistanceUtil.campTooClose(camp.getBannerBlock().getLocation()))
-			throw new TownyException("Too close to another Siege Camp!");
+			throw new TownyException(Translation.of("msg_err_siegecamp_too_close_to_another_siegecamp"));
 		
 		// Town initiating the SiegeCamp has a failed SiegeCamp on this 
 		// town and not enough time has passed. 
 		if (SiegeCampUtil.hasFailedCamp(camp.getTargetTown(), camp.getTownOfSiegeStarter()))
-			throw new TownyException("Too soon since you last failed SiegeCamp!");
+			throw new TownyException(Translation.of("msg_err_too_soon_since_your_last_siegecamp"));
 
 		// Add to SiegeCamp list and begin Evaluating this SiegeCamp for success.
 		addSiegeCamp(camp);

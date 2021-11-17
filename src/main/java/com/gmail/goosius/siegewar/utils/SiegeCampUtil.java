@@ -10,9 +10,12 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
+import com.gmail.goosius.siegewar.settings.Settings;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
 
 public class SiegeCampUtil {
@@ -83,7 +86,8 @@ public class SiegeCampUtil {
 			camp.startSiege();
 		// Attackers were thwarted, they are penalized with a cooldown on making another SiegeCamp on this town.
 		} else {
-			Messaging.sendErrorMsg(camp.getPlayer(), "Your Siege Camp failed to score enough points, you may not attempt another siege for 12 hours.");
+			String timeString = TimeMgmt.formatCountdownTime(Settings.getSiegeCampCooldown());
+			Messaging.sendErrorMsg(camp.getPlayer(), Translation.of("msg_err_your_siegecamp_failed_you_must_wait_x", timeString));
 			
 			String failedCamps = TownMetaDataController.getFailedSiegeCampList(camp.getTargetTown());
 			// No metadata, start a new failedCamps string.
