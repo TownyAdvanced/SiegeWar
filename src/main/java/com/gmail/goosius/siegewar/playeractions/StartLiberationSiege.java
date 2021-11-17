@@ -72,8 +72,6 @@ public class StartLiberationSiege {
             }
         }
         
-        SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.LIBERATION, targetTown, targetTown, nationOfSiegeStarter, townOfSiegeStarter, false, townBlock); 
-        if (!SiegeController.beginSiegeCamp(camp))
-        	throw new TownyException("Too close to another Siege Camp!");
+        SiegeController.beginSiegeCamp(new SiegeCamp(player, bannerBlock, SiegeType.LIBERATION, targetTown, targetTown, nationOfSiegeStarter, townOfSiegeStarter, false, townBlock));
     }
 }

@@ -40,6 +40,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 
@@ -585,13 +586,14 @@ public class SiegeController {
 		siegeCamps.remove(camp);
 	}
 	
-	public static boolean beginSiegeCamp(SiegeCamp camp) {
-		if (SiegeWarDistanceUtil.campTooClose(camp.getBannerBlock().getLocation())) {
-			return false;
-		} else {
-			addSiegeCamp(camp);
-			Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> SiegeCampUtil.evaluateCamp(camp));
-			return true;
-		}
+	public static void beginSiegeCamp(SiegeCamp camp) throws TownyException {
+		if (SiegeWarDistanceUtil.campTooClose(camp.getBannerBlock().getLocation()))
+			throw new TownyException("Too close to another Siege Camp!");
+		
+		if (SiegeCampUtil.hasFailedCamp(camp.getTargetTown(), camp.getTownOfSiegeStarter()))
+			throw new TownyException("Too soon since you last failed SiegeCamp!");
+
+		addSiegeCamp(camp);
+		Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> SiegeCampUtil.evaluateCamp(camp));
 	}
 }

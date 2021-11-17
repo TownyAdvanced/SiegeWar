@@ -26,9 +26,31 @@ public class TownMetaDataController {
 	private static StringDataField occupyingNationUUID = new StringDataField("siegewar_occupyingNationUUID", "");
 	//The nation who was the occupier prior to peacefulness confirmation
 	private static StringDataField prePeacefulOccupierUUID = new StringDataField("siegewar_prePeacefulOccupierUUID", "");
-
+	private static StringDataField failedCampList = new StringDataField("siegewar_failedCampList", "");
+	
 	public TownMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
+	}
+	
+	@Nullable
+	public static String getFailedSiegeCampList(Town town) {
+		StringDataField sdf = (StringDataField) failedCampList.clone();
+		if (town.hasMeta(sdf.getKey())) {
+			return MetaDataUtil.getString(town, sdf);
+		}
+		return null;
+	}
+	
+	public static void setFailedCampSiegeList(Town town, String string) {
+		StringDataField sdf = (StringDataField) failedCampList.clone();
+		if (town.hasMeta(sdf.getKey()))
+			MetaDataUtil.setString(town, sdf, string, true);
+		else
+			town.addMetaData(new StringDataField("siegewar_failedCampList", string));
+	}
+	
+	public static void removeFailedCampSiegeList(Town town) {
+		town.removeMetaData((StringDataField) failedCampList.clone());
 	}
 	
 	public static int getPeacefulnessChangeConfirmationCounterDays(Town town) {

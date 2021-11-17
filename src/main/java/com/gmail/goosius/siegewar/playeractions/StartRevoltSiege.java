@@ -61,8 +61,6 @@ public class StartRevoltSiege {
 
         Nation occupierNation = TownOccupationController.getTownOccupier(targetTown);
         
-        SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, occupierNation, townOfSiegeStarter, false, townBlock); 
-        if (!SiegeController.beginSiegeCamp(camp))
-        	throw new TownyException("Too close to another Siege Camp!");
+        SiegeController.beginSiegeCamp(new SiegeCamp(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, occupierNation, townOfSiegeStarter, false, townBlock));
     }
 }

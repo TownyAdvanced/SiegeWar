@@ -77,8 +77,6 @@ public class StartConquestSiege {
 			}
 		}
 
-		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.CONQUEST, targetTown, targetTown, nationOfSiegeStarter, townOfSiegeStarter, false, townBlock);
-		if (!SiegeController.beginSiegeCamp(camp))
-			throw new TownyException("Too close to another Siege Camp!");
+		SiegeController.beginSiegeCamp(new SiegeCamp(player, bannerBlock, SiegeType.CONQUEST, targetTown, targetTown, nationOfSiegeStarter, townOfSiegeStarter, false, townBlock));
 	}
 }
