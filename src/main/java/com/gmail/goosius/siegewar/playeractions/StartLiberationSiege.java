@@ -4,7 +4,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.events.PreSiegeWarStartEvent;
+import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -14,7 +14,6 @@ import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
-import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -72,23 +71,9 @@ public class StartLiberationSiege {
                 throw new TownyException(Translation.of("msg_err_siege_war_town_not_close_enough_to_nation"));
             }
         }
-
-        //Call event
-        PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(SiegeType.LIBERATION, targetTown, nationOfSiegeStarter, townOfSiegeStarter, bannerBlock, townBlock);
-        Bukkit.getPluginManager().callEvent(preSiegeWarStartEvent);
-
-        //Setup attack
-        if (!preSiegeWarStartEvent.isCancelled()) {
-            SiegeController.startSiege(
-                    bannerBlock,
-                    SiegeType.LIBERATION,
-                    targetTown,
-                    nationOfSiegeStarter,
-                    occupierNation,
-                    townOfSiegeStarter,
-                    true);
-        } else {
-            throw new TownyException(preSiegeWarStartEvent.getCancellationMsg());
-        }
+        
+        SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.LIBERATION, targetTown, targetTown, nationOfSiegeStarter, townOfSiegeStarter, false, townBlock); 
+        if (!SiegeController.beginSiegeCamp(camp))
+        	throw new TownyException("Too close to another Siege Camp!");
     }
 }

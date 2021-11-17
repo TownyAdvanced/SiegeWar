@@ -18,6 +18,7 @@ import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
+import com.gmail.goosius.siegewar.utils.SiegeCampUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -33,6 +34,7 @@ import org.jetbrains.annotations.Nullable;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
@@ -53,6 +55,7 @@ public class SiegeController {
 	private static Map<UUID, Siege> townSiegeMap = new ConcurrentHashMap<>();
 	private static List<Town> siegedTowns = new ArrayList<>();
 	private static List<String> siegedTownNames = new ArrayList<>();
+	private static List<SiegeCamp> siegeCamps = new ArrayList<>();
 
 	public static void newSiege(Town town) {
 		Siege siege = new Siege(town);
@@ -568,5 +571,27 @@ public class SiegeController {
 			}
 		}
 		return false;
+	}
+	
+	public static List<SiegeCamp> getSiegeCamps() {
+		return Collections.unmodifiableList(siegeCamps);
+	}
+	
+	public static void addSiegeCamp(SiegeCamp camp) {
+		siegeCamps.add(camp);
+	}
+	
+	public static void removeSiegeCamp(SiegeCamp camp) {
+		siegeCamps.remove(camp);
+	}
+	
+	public static boolean beginSiegeCamp(SiegeCamp camp) {
+		if (SiegeWarDistanceUtil.campTooClose(camp.getBannerBlock().getLocation())) {
+			return false;
+		} else {
+			addSiegeCamp(camp);
+			Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> SiegeCampUtil.evaluateCamp(camp));
+			return true;
+		}
 	}
 }

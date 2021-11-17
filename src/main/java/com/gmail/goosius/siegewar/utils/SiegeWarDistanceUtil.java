@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -168,5 +169,16 @@ public class SiegeWarDistanceUtil {
 
 	public static boolean isBelowSiegeBannerAltitude(Location location, Siege siege) {
 		return location.getY() < siege.getFlagLocation().getY();
+	}
+	
+	public static boolean campTooClose(Location location) {
+		for (SiegeCamp camp : SiegeController.getSiegeCamps())
+			if (isInSiegeCampZone(location, camp))
+				return true;
+		return false;
+	}
+	
+	public static boolean isInSiegeCampZone(Location location, SiegeCamp camp) {
+		return areLocationsClose(location, camp.getBannerBlock().getLocation(), TownySettings.getTownBlockSize(), SiegeWarSettings.getBannerControlVerticalDistanceBlocks());
 	}
 }
