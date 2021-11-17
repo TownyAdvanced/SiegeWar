@@ -72,6 +72,7 @@ public class StartLiberationSiege {
             }
         }
         
+		// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest.
         SiegeController.beginSiegeCamp(new SiegeCamp(player, bannerBlock, SiegeType.LIBERATION, targetTown, targetTown, nationOfSiegeStarter, townOfSiegeStarter, false, townBlock));
     }
 }

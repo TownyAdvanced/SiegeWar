@@ -171,6 +171,10 @@ public class SiegeWarDistanceUtil {
 		return location.getY() < siege.getFlagLocation().getY();
 	}
 	
+	/**
+	 * Is there a {@link SiegeCamp} too close to the given {@link Location}.
+	 * @param location {@link Location} to check against.
+	 */
 	public static boolean campTooClose(Location location) {
 		for (SiegeCamp camp : SiegeController.getSiegeCamps())
 			if (isInSiegeCampZone(location, camp))
@@ -178,6 +182,11 @@ public class SiegeWarDistanceUtil {
 		return false;
 	}
 	
+	/**
+	 * Is the location inside of a {@link SiegeCamp}'s TimedPointZone.
+	 * @param location {@link Location}.
+	 * @param camp {@link SiegeCamp} to check against.
+	 */
 	public static boolean isInSiegeCampZone(Location location, SiegeCamp camp) {
 		return areLocationsClose(location, camp.getBannerBlock().getLocation(), TownySettings.getTownBlockSize(), SiegeWarSettings.getBannerControlVerticalDistanceBlocks());
 	}

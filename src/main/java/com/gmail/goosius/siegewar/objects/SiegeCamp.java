@@ -118,6 +118,9 @@ public class SiegeCamp {
 		this.attackerPoints = attackerPoints;
 	}
 
+	/**
+	 * Starts the Siege after the success of the SiegeCamp.
+	 */
 	public void startSiege() {
 
 		// Call event

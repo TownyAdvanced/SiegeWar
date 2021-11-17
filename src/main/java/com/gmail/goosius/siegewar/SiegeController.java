@@ -574,25 +574,45 @@ public class SiegeController {
 		return false;
 	}
 	
+	/**
+	 * List of {@link SiegeCamp}s, objects which precede a Siege.
+	 */
 	public static List<SiegeCamp> getSiegeCamps() {
 		return Collections.unmodifiableList(siegeCamps);
 	}
 	
+	/**
+	 * Add a {@link SiegeCamp} to the SiegeCamp list.
+	 * @param camp {@link SiegeCamp} to add.
+	 */
 	public static void addSiegeCamp(SiegeCamp camp) {
 		siegeCamps.add(camp);
 	}
 	
+	/**
+	 * Remove a {@link SiegeCamp} from the SiegeCamp list.
+	 * @param camp {@link SiegeCamp} to remove.
+	 */
 	public static void removeSiegeCamp(SiegeCamp camp) {
 		siegeCamps.remove(camp);
 	}
 	
+	/**
+	 * Initiates a {@link SiegeCamp}, leads to a {@link Siege} if successfully camped.
+	 * @param camp {@link SiegeCamp} to begin.
+	 * @throws TownyException if SiegeCamp is denied.
+	 */
 	public static void beginSiegeCamp(SiegeCamp camp) throws TownyException {
+		// Another SiegeCamp is already present.
 		if (SiegeWarDistanceUtil.campTooClose(camp.getBannerBlock().getLocation()))
 			throw new TownyException("Too close to another Siege Camp!");
 		
+		// Town initiating the SiegeCamp has a failed SiegeCamp on this 
+		// town and not enough time has passed. 
 		if (SiegeCampUtil.hasFailedCamp(camp.getTargetTown(), camp.getTownOfSiegeStarter()))
 			throw new TownyException("Too soon since you last failed SiegeCamp!");
 
+		// Add to SiegeCamp list and begin Evaluating this SiegeCamp for success.
 		addSiegeCamp(camp);
 		Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> SiegeCampUtil.evaluateCamp(camp));
 	}
