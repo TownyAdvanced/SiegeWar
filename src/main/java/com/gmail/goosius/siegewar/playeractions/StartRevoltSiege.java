@@ -60,8 +60,13 @@ public class StartRevoltSiege {
             throw new TownyException(Translation.of("msg_err_siege_war_revolt_immunity_active"));
 
         Nation occupierNation = TownOccupationController.getTownOccupier(targetTown);
-        
-		// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest.
-        SiegeController.beginSiegeCamp(new SiegeCamp(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, occupierNation, townOfSiegeStarter, false, townBlock));
+
+		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, occupierNation, townOfSiegeStarter, false, townBlock);
+		if (SiegeWarSettings.areSiegeCampsEnabled())
+			// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest. 
+			SiegeController.beginSiegeCamp(camp);
+		else 
+			// SiegeCamps are disabled, just do the Siege.
+			camp.startSiege();
     }
 }

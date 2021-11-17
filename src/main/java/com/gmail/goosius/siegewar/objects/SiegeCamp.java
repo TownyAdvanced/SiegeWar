@@ -8,6 +8,7 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.events.PreSiegeWarStartEvent;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
@@ -38,7 +39,7 @@ public class SiegeCamp {
 		this.townOfSiegeStarter = townOfSiegeStarter;
 		this.useWarChest = useWarChest;
 		this.townBlock = townBlock;
-		this.endTime = System.currentTimeMillis() + TimeTools.getMillis("10m");
+		this.endTime = System.currentTimeMillis() + TimeTools.getMillis(SiegeWarSettings.getSiegeCampDurationInMinutes() + "m");
 	}
 
 	/**

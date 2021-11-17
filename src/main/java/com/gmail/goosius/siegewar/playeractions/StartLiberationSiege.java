@@ -71,8 +71,13 @@ public class StartLiberationSiege {
                 throw new TownyException(Translation.of("msg_err_siege_war_town_not_close_enough_to_nation"));
             }
         }
-        
-		// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest.
-        SiegeController.beginSiegeCamp(new SiegeCamp(player, bannerBlock, SiegeType.LIBERATION, targetTown, targetTown, nationOfSiegeStarter, townOfSiegeStarter, false, townBlock));
+
+		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.LIBERATION, targetTown, targetTown, nationOfSiegeStarter, townOfSiegeStarter, false, townBlock);
+		if (SiegeWarSettings.areSiegeCampsEnabled())
+			// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest.
+			SiegeController.beginSiegeCamp(camp);
+		else
+			// SiegeCamps are disabled, just do the Siege.
+			camp.startSiege();
     }
 }

@@ -505,4 +505,24 @@ public class SiegeWarSettings {
 	public static String getBannerControlCaptureMessageColor() {
 		return Settings.getString(ConfigNodes.BANNER_CONTROL_CAPTURE_MESSAGE_COLOR);
 	}
+
+	public static boolean areSiegeCampsEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_SIEGECAMPS_ENABLED);
+	}
+	
+	public static long getFailedSiegeCampCooldown() {
+		return Settings.getSeconds(ConfigNodes.WAR_SIEGE_SIEGECAMPS_COOLDOWN);
+	}
+	
+	public static int getSiegeCampPointsForSuccess() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_SIEGECAMPS_POINTS);
+	}
+	
+	public static int getSiegeCampPointsPerMinute() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_SIEGECAMPS_POINTS_PER_MINUTE);
+	}
+	
+	public static int getSiegeCampDurationInMinutes() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_SIEGECAMPS_DURATION_IN_MINUTES);
+	}
 }

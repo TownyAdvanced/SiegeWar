@@ -10,13 +10,12 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
-import com.gmail.goosius.siegewar.settings.Settings;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.util.TimeMgmt;
-import com.palmergames.util.TimeTools;
 
 public class SiegeCampUtil {
 
@@ -26,16 +25,16 @@ public class SiegeCampUtil {
 	 */
 	public static void evaluateCamp(SiegeCamp camp) {
 		
-		// Stop if a Siege has begun in the area, shouldn't happen.
 		if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(camp.getBannerBlock().getLocation())) {
+			// Stop if a Siege has begun in the area, shouldn't happen but you never know.
 			SiegeController.removeSiegeCamp(camp);
-		// If the time duration of a SiegeCamp has passed, finish the SiegeCamp by evaluating the attacker's points.
 		} else if (camp.getEndTime() < System.currentTimeMillis()) {
+			// If the time duration of a SiegeCamp has passed, finish the SiegeCamp by evaluating the attacker's points.
 			finishSiegeCamp(camp);
-		// SiegeCamp is ongoing, evaluate players around the SiegeCamp and reschedule the next evaluation.
 		} else {
+			// SiegeCamp is ongoing, evaluate players around the SiegeCamp and reschedule the next evaluation in one minute.
 			evaluatePlayers(camp);
-			Bukkit.getScheduler().runTaskLater(SiegeWar.getSiegeWar(), ()-> evaluateCamp(camp), 20*60);
+			Bukkit.getScheduler().runTaskLater(SiegeWar.getSiegeWar(), ()-> evaluateCamp(camp), 1200l);
 		}	
 	}
 
@@ -70,7 +69,8 @@ public class SiegeCampUtil {
 				continue;
 			
 			// At least one attacker is present, give attacker points and break out of the loop.
-			camp.setAttackerPoints(camp.getAttackerPoints() + 7);
+			camp.setAttackerPoints(camp.getAttackerPoints() + SiegeWarSettings.getSiegeCampPointsPerMinute());
+			Messaging.sendGlobalMessage(Translation.of("attackers_scored_points_towards_siege_camp_x_of_x", camp.getTownOfSiegeStarter(), camp.getAttackerPoints(), SiegeWarSettings.getSiegeCampPointsForSuccess()));
 			break;
 		}
 	}
@@ -81,21 +81,23 @@ public class SiegeCampUtil {
 	 * @param camp {@link SiegeCamp} to finish.
 	 */
 	private static void finishSiegeCamp(SiegeCamp camp) {
-		// Attackers scored enough points to start the Siege in ernest.
-		if (camp.getAttackerPoints() >= 50) {
+
+		if (camp.getAttackerPoints() >= SiegeWarSettings.getSiegeCampPointsForSuccess()) {
+			// Attackers scored enough points to start the Siege in ernest.
 			camp.startSiege();
-		// Attackers were thwarted, they are penalized with a cooldown on making another SiegeCamp on this town.
+
 		} else {
-			String timeString = TimeMgmt.formatCountdownTime(Settings.getSiegeCampCooldown());
-			Messaging.sendErrorMsg(camp.getPlayer(), Translation.of("msg_err_your_siegecamp_failed_you_must_wait_x", timeString));
-			
+			// Attackers were thwarted, they are penalized with a cooldown on making another SiegeCamp on this town.
+			Messaging.sendErrorMsg(camp.getPlayer(), Translation.of("msg_err_your_siegecamp_failed_you_must_wait_x", TimeMgmt.formatCountdownTime(SiegeWarSettings.getFailedSiegeCampCooldown())));
+
 			String failedCamps = TownMetaDataController.getFailedSiegeCampList(camp.getTargetTown());
-			// No metadata, start a new failedCamps string.
-			if (failedCamps == null)
+			if (failedCamps == null) {
+				// No metadata, start a new failedCamps string.
 				failedCamps = camp.getTargetTown().getUUID() + ":" + System.currentTimeMillis();
-			// This target town already had at least one failed siegecamp.
-			else 
-				failedCamps += "," + camp.getTargetTown().getUUID() + ":" + System.currentTimeMillis() + TimeTools.getMillis("12h");
+			} else {
+				// This target town already had at least one failed siegecamp.
+				failedCamps += "," + camp.getTargetTown().getUUID() + ":" + System.currentTimeMillis() + (SiegeWarSettings.getFailedSiegeCampCooldown() * 1000);
+			}
 
 			// Set the metadata on the target town.
 			TownMetaDataController.setFailedCampSiegeList(camp.getTargetTown(), failedCamps);
