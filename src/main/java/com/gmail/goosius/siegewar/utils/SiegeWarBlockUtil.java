@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
@@ -111,6 +112,42 @@ public class SiegeWarBlockUtil {
 		return false;
 	}
 
+	/**
+	 * 	Determine if the block is a siege banner during a SiegeCamp session, or the support block.
+	 * 	
+	 * 	First look at the material of both the target block and the block above it.
+	 * 	Return false if neither is a standing banner.
+	 * 	
+	 * 	Then look at all SiegeCamps and determine if it is the block.
+	 * 	
+	 * 	Note that we don't try to look at the nearby townblocks to find nearby siege zones,
+	 * 	....because mayor may have unclaimed townblocks after the siege started.
+	 *
+	 * @param block the block to be considered
+	 * @return true if the block is near an active siege banner
+	 */
+	public static boolean isBlockNearAnActiveSiegeCampBanner(Block block) {
+		
+		//If either the target block or block above it is a standing coloured banner, continue, else return false
+		if(isStandingColouredBanner(block) || isStandingColouredBanner(block.getRelative(BlockFace.UP))) {
+			
+			//Look through all siegecamps
+			Location locationOfBlock = block.getLocation();
+			Location locationOfBlockAbove = block.getRelative(BlockFace.UP).getLocation();
+			Location locationOfSiegeBanner;
+			for (SiegeCamp siegeCamp : SiegeController.getSiegeCamps()) {
+
+				locationOfSiegeBanner = siegeCamp.getBannerBlock().getLocation();
+				if (locationOfBlock.equals(locationOfSiegeBanner) || locationOfBlockAbove.equals(locationOfSiegeBanner)) {
+					return true;
+				}
+			}
+		}
+		
+		//No siegecamp banner found near given block
+		return false;
+	}
+	
 	static Location getSurfaceLocation(Location topLocation) {
 		return topLocation.getWorld().getHighestBlockAt(topLocation).getLocation();
 	}

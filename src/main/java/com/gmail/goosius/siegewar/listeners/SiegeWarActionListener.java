@@ -50,7 +50,8 @@ public class SiegeWarActionListener implements Listener {
 				event.setCancelled(true);
 				return;
 			}
-			if (SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(event.getBlock())) {
+			if (SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(event.getBlock())
+			|| SiegeWarBlockUtil.isBlockNearAnActiveSiegeCampBanner(event.getBlock())) {
 				event.setMessage(Translation.of("msg_err_siege_war_cannot_destroy_siege_banner"));
 				event.setCancelled(true);
 				return;
