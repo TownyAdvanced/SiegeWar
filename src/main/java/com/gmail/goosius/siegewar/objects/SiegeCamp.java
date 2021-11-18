@@ -27,7 +27,7 @@ public class SiegeCamp {
 	private final Government attacker;
 	private final Government defender;
 	private final Town townOfSiegeStarter;
-	private TownBlock townBlock;
+	private final TownBlock townBlock;
 	private int attackerPoints = 0;
 	private final long endTime;
 
@@ -91,6 +91,13 @@ public class SiegeCamp {
 	 */
 	public Town getTownOfSiegeStarter() {
 		return townOfSiegeStarter;
+	}
+
+	/**
+	 * @return the townBlock
+	 */
+	public TownBlock getTownBlock() {
+		return townBlock;
 	}
 
 	/**

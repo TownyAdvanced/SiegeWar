@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
@@ -13,6 +14,8 @@ import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
+
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -78,6 +81,12 @@ public class StartSuppressionSiege {
         }
 
 		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.SUPPRESSION, targetTown, nationOfSiegeStarter, targetTown, townOfSiegeStarter, townBlock);
+
+		PreSiegeCampEvent event = new PreSiegeCampEvent(camp);
+		Bukkit.getPluginManager().callEvent(event);
+		if (event.isCancelled())
+			throw new TownyException(event.getCancellationMsg());
+
 		if (SiegeWarSettings.areSiegeCampsEnabled())
 			// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest.
 			SiegeController.beginSiegeCamp(camp);
