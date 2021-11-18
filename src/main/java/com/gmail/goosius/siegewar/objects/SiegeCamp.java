@@ -9,6 +9,10 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.events.PreSiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
+import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
@@ -23,13 +27,12 @@ public class SiegeCamp {
 	private final Government attacker;
 	private final Government defender;
 	private final Town townOfSiegeStarter;
-	private final boolean useWarChest;
 	private TownBlock townBlock;
 	private int attackerPoints = 0;
 	private final long endTime;
 
 	public SiegeCamp(Player player, Block bannerBlock, SiegeType siegeType, Town targetTown, Government attacker,
-			Government defender, Town townOfSiegeStarter, boolean useWarChest, TownBlock townBlock) {
+			Government defender, Town townOfSiegeStarter,TownBlock townBlock) {
 		this.player = player;
 		this.bannerBlock = bannerBlock;
 		this.siegeType = siegeType;
@@ -37,7 +40,6 @@ public class SiegeCamp {
 		this.attacker = attacker;
 		this.defender = defender;
 		this.townOfSiegeStarter = townOfSiegeStarter;
-		this.useWarChest = useWarChest;
 		this.townBlock = townBlock;
 		this.endTime = System.currentTimeMillis() + TimeTools.getMillis(SiegeWarSettings.getSiegeCampDurationInMinutes() + "m");
 	}
@@ -92,13 +94,6 @@ public class SiegeCamp {
 	}
 
 	/**
-	 * @return the useWarChest
-	 */
-	public boolean isUseWarChest() {
-		return useWarChest;
-	}
-
-	/**
 	 * @return the endTime
 	 */
 	public long getEndTime() {
@@ -123,6 +118,14 @@ public class SiegeCamp {
 	 * Starts the Siege after the success of the SiegeCamp.
 	 */
 	public void startSiege() {
+		
+		// Retest that the nation can still pay the warchest.
+		if (!siegeType.equals(SiegeType.REVOLT) && TownyEconomyHandler.isActive() && !attacker.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.calculateSiegeCost(targetTown))) {
+			TownyMessaging.sendPrefixedNationMessage((Nation)attacker, Translation.of("msg_err_no_money"));
+			return;
+		}
+			
+		
 		Nation eventNation = siegeType.equals(SiegeType.REVOLT) ? (Nation) defender : (Nation) attacker;  
 		// Call event
 		PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(siegeType, targetTown, eventNation, townOfSiegeStarter, bannerBlock, townBlock);
@@ -137,7 +140,7 @@ public class SiegeCamp {
 					attacker, 
 					defender,
 					townOfSiegeStarter, 
-					false);
+					!siegeType.equals(SiegeType.REVOLT));
 		} else {
 			Messaging.sendErrorMsg(player, preSiegeWarStartEvent.getCancellationMsg());
 		}

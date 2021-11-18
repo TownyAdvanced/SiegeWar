@@ -61,7 +61,7 @@ public class StartRevoltSiege {
 
         Nation occupierNation = TownOccupationController.getTownOccupier(targetTown);
 
-		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, occupierNation, townOfSiegeStarter, false, townBlock);
+		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, occupierNation, townOfSiegeStarter, townBlock);
 		if (SiegeWarSettings.areSiegeCampsEnabled())
 			// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest. 
 			SiegeController.beginSiegeCamp(camp);
