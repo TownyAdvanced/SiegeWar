@@ -233,7 +233,7 @@ public class PlaceBlock {
 
 		//Check whether nearby town has a current or recent siege
 		if (SiegeController.hasSiege(nearbyTown)) {
-			//If there is no siege, it is an attempt to invade the town
+			//If there is a siege, it is an attempt to invade the town
 			Siege siege = SiegeController.getSiege(nearbyTown);
 			InvadeTown.processInvadeTownRequest(player, residentsNation, nearbyTown, siege);
 		} else {

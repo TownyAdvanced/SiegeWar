@@ -4,8 +4,9 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.events.PreSiegeWarStartEvent;
+import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
+import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -13,6 +14,7 @@ import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
+
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -62,22 +64,18 @@ public class StartRevoltSiege {
 
         Nation occupierNation = TownOccupationController.getTownOccupier(targetTown);
 
-        //Call event
-        PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(SiegeType.REVOLT, targetTown, occupierNation, townOfSiegeStarter, bannerBlock, townBlock);
-        Bukkit.getPluginManager().callEvent(preSiegeWarStartEvent);
+		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, occupierNation, townOfSiegeStarter, townBlock);
 
-        //Setup attack
-        if (!preSiegeWarStartEvent.isCancelled()) {
-            SiegeController.startSiege(
-                    bannerBlock,
-                    SiegeType.REVOLT,
-                    targetTown,
-                    targetTown,
-                    occupierNation,
-                    townOfSiegeStarter,
-                    false);
-        } else {
-            throw new TownyException(preSiegeWarStartEvent.getCancellationMsg());
-        }
+		PreSiegeCampEvent event = new PreSiegeCampEvent(camp);
+		Bukkit.getPluginManager().callEvent(event);
+		if (event.isCancelled())
+			throw new TownyException(event.getCancellationMsg());
+
+		if (SiegeWarSettings.areSiegeCampsEnabled())
+			// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest. 
+			SiegeController.beginSiegeCamp(camp);
+		else 
+			// SiegeCamps are disabled, just do the Siege.
+			camp.startSiege();
     }
 }

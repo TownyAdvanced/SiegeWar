@@ -7,6 +7,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 
 import com.gmail.goosius.siegewar.utils.FileMgmt;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
+import com.palmergames.util.TimeTools;
 
 public class Settings {
 	private static CommentedConfiguration config, newConfig;
@@ -158,6 +159,16 @@ public class Settings {
 	public static String getString(ConfigNodes node) {
 
 		return config.getString(node.getRoot().toLowerCase(), node.getDefault());
+	}
+	
+	public static long getSeconds(ConfigNodes  node) {
+
+		try {
+			return TimeTools.getSeconds(getString(node));
+		} catch (NumberFormatException e) {
+			sendError(node.getRoot().toLowerCase() + " from config.yml");
+			return 1;
+		}
 	}
 
 	public static void setLastRunVersion(String currentVersion) {
