@@ -77,7 +77,7 @@ public class StartConquestSiege {
 			}
 		}
 
-		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.CONQUEST, targetTown, targetTown, nationOfSiegeStarter, townOfSiegeStarter, false, townBlock);
+		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.CONQUEST, targetTown, nationOfSiegeStarter, targetTown, townOfSiegeStarter, false, townBlock);
 		if (SiegeWarSettings.areSiegeCampsEnabled())
 			// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest. 
 			SiegeController.beginSiegeCamp(camp);

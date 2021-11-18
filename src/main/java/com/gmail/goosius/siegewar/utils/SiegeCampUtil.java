@@ -21,10 +21,10 @@ public class SiegeCampUtil {
 
 	/**
 	 * Evaluates a {@link SiegeCamp}.
-	 * @param camp SiegeCamp to evaluate. 
+	 * @param camp SiegeCamp to evaluate.
+	 * @param firstRun true causes it to skip scoring points. 
 	 */
-	public static void evaluateCamp(SiegeCamp camp) {
-		
+	public static void evaluateCamp(SiegeCamp camp, boolean firstRun) {
 		if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(camp.getBannerBlock().getLocation())) {
 			// Stop if a Siege has begun in the area, shouldn't happen but you never know.
 			SiegeController.removeSiegeCamp(camp);
@@ -33,8 +33,9 @@ public class SiegeCampUtil {
 			finishSiegeCamp(camp);
 		} else {
 			// SiegeCamp is ongoing, evaluate players around the SiegeCamp and reschedule the next evaluation in one minute.
-			evaluatePlayers(camp);
-			Bukkit.getScheduler().runTaskLater(SiegeWar.getSiegeWar(), ()-> evaluateCamp(camp), 1200l);
+			if (!firstRun)
+				evaluatePlayers(camp);
+			Bukkit.getScheduler().runTaskLater(SiegeWar.getSiegeWar(), ()-> evaluateCamp(camp, false), 1200l);
 		}	
 	}
 
@@ -52,9 +53,9 @@ public class SiegeCampUtil {
 			// We only care about residents which are part of the attacking town or nation.
 			if (res == null 
 				|| !res.hasTown()
-				|| !camp.getAttacker().hasResident(res.getName()))
+				|| !camp.getTownOfSiegeStarter().hasResident(res.getName()))
 				continue;
-			
+
 			// Various things which would prevent a player from otherwise being part of a real Siege.
 			if (!player.isOnline()
 				|| player.isDead()
@@ -67,7 +68,7 @@ public class SiegeCampUtil {
 			// Weed out the player who aren't in the area of the SiegeCamp.
 			if (!TownyAPI.getInstance().isWilderness(player.getLocation()) || !SiegeWarDistanceUtil.isInSiegeCampZone(player.getLocation(), camp))
 				continue;
-			
+
 			// At least one attacker is present, give attacker points and break out of the loop.
 			camp.setAttackerPoints(camp.getAttackerPoints() + SiegeWarSettings.getSiegeCampPointsPerMinute());
 			Messaging.sendGlobalMessage(Translation.of("attackers_scored_points_towards_siege_camp_x_of_x", camp.getTownOfSiegeStarter(), camp.getAttackerPoints(), SiegeWarSettings.getSiegeCampPointsForSuccess()));
@@ -88,7 +89,7 @@ public class SiegeCampUtil {
 
 		} else {
 			// Attackers were thwarted, they are penalized with a cooldown on making another SiegeCamp on this town.
-			Messaging.sendErrorMsg(camp.getPlayer(), Translation.of("msg_err_your_siegecamp_failed_you_must_wait_x", TimeMgmt.formatCountdownTime(SiegeWarSettings.getFailedSiegeCampCooldown())));
+			Messaging.sendGlobalMessage(Translation.of("msg_err_your_siegecamp_failed_you_must_wait_x", TimeMgmt.formatCountdownTime(SiegeWarSettings.getFailedSiegeCampCooldown())));
 
 			String failedCamps = TownMetaDataController.getFailedSiegeCampList(camp.getTargetTown());
 			if (failedCamps == null) {
@@ -101,6 +102,8 @@ public class SiegeCampUtil {
 
 			// Set the metadata on the target town.
 			TownMetaDataController.setFailedCampSiegeList(camp.getTargetTown(), failedCamps);
+			// Remove the SiegeCamp.
+			SiegeController.removeSiegeCamp(camp);
 		}
 	}
 	

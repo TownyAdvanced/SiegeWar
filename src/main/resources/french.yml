@@ -497,4 +497,4 @@ msg_err_siegecamp_too_close_to_another_siegecamp: 'SiegeCamp too lose to another
 msg_err_too_soon_since_your_last_siegecamp: 'It has been too soon since you last tried to make a SiegeCamp on this town!'
 msg_err_your_siegecamp_failed_you_must_wait_x: 'Your SiegeCamp failed to score enough points, you may not attempt another siege for %s.'
 attackers_scored_points_towards_siege_camp_x_of_x: '%s has scored points towards their SiegeCamp session: %s/%s.'
-attacker_has_begun_a_siegecamp_session: '%s has begun a SiegeCamp session against %s. If successful a Siege will begin!'
+attacker_has_begun_a_siegecamp_session: '%s has begun a SiegeCamp session against %s. If successful a Siege will begin! The attackers must score %s points within %s minutes.'

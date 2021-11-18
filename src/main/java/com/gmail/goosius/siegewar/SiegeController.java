@@ -613,9 +613,9 @@ public class SiegeController {
 			throw new TownyException(Translation.of("msg_err_too_soon_since_your_last_siegecamp"));
 
 		// Broadcast a message
-		Messaging.sendGlobalMessage(Translation.of("attacker_has_begun_a_siegecamp_session", camp.getTownOfSiegeStarter(), camp.getTargetTown()));
+		Messaging.sendGlobalMessage(Translation.of("attacker_has_begun_a_siegecamp_session", camp.getTownOfSiegeStarter(), camp.getTargetTown(), SiegeWarSettings.getSiegeCampPointsForSuccess(), SiegeWarSettings.getSiegeCampDurationInMinutes()));
 		// Add to SiegeCamp list and begin Evaluating this SiegeCamp for success.
 		addSiegeCamp(camp);
-		Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> SiegeCampUtil.evaluateCamp(camp));
+		Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> SiegeCampUtil.evaluateCamp(camp, true));
 	}
 }
