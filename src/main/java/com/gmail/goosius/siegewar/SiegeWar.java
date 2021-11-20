@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gmail.goosius.siegewar.settings.Settings;
 import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
@@ -144,22 +145,16 @@ public class SiegeWar extends JavaPlugin {
 	}
 
 	private void printSickASCIIArt() {
-		Bukkit.getLogger().info("    _________.__                      ");
-		Bukkit.getLogger().info("   /   _____/|__| ____   ____   ____  ");
-		Bukkit.getLogger().info("   \\_____  \\ |  |/ __ \\ / ___\\_/ __ \\ ");
-		Bukkit.getLogger().info("   /        \\|  \\  ___// /_/  >  ___/ ");
-		Bukkit.getLogger().info("  /_______  /|__|\\___  >___  / \\___  >");
-		Bukkit.getLogger().info("          \\/         \\/_____/      \\/ ");
-		Bukkit.getLogger().info("       __      __                        ");
-		Bukkit.getLogger().info("      /  \\    /  \\_____ _______          ");
-		Bukkit.getLogger().info("      \\   \\/\\/   /\\__  \\\\_  __ \\         ");
-		Bukkit.getLogger().info("       \\        /  / __ \\|  | \\/         ");
-		Bukkit.getLogger().info("        \\__/\\  /  (____  /__|            ");
-		Bukkit.getLogger().info("             \\/        \\/                ");
-		Bukkit.getLogger().info("          By Goosius & LlmDl          ");
-		Bukkit.getLogger().info("                                      ");
+		String art = System.lineSeparator() + "#2DE2E6            _________.__                     #FF6C11__      __" +
+					 System.lineSeparator() + "#2DE2E6           /   _____/|__| ____   ____   ____#FF6C11/  \\    /  \\_____ _______" +
+					 System.lineSeparator() + "#2DE2E6           \\_____  \\ |  |/ __ \\ / ___\\_/ __ #FF6C11\\   \\/\\/   /\\__  \\\\_  __ \\" +
+					 System.lineSeparator() + "#2DE2E6           /        \\|  \\  ___// /_/  >  ___/#FF6C11\\        /  / __ \\|  | \\/" +
+					 System.lineSeparator() + "#2DE2E6          /_______  /|__|\\___  >___  / \\___  >#FF6C11\\__/\\  /  (____  /__|   " +
+					 System.lineSeparator() + "#2DE2E6                  \\/         \\/_____/      \\/      #FF6C11\\/        \\/" +
+					 System.lineSeparator() + "#791E94                                By Goosius & LlmDl" + System.lineSeparator(); 
+		Bukkit.getLogger().info(Colors.translateColorCodes(art));
 	}
-
+	
 	public static boolean getCannonsPluginIntegrationEnabled() {
 		return plugin.cannonsIntegration != null;
 	}
