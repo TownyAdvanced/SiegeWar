@@ -52,7 +52,7 @@ public class PlaceBlock {
 
 		try {
 			//Ensure siege is enabled in this world
-			if (!SiegeWarSettings.getWarSiegeWorlds().contains(block.getWorld().getName()))
+			if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
 				return;
 
 			//Enforce Anti-Trap warfare build block if below siege banner altitude.
