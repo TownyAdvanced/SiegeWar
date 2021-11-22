@@ -17,8 +17,6 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -123,7 +121,7 @@ public class SiegeWarBannerControlUtil {
 		//Notify player in action bar
 		ChatColor actionBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
 		String actionBarMessage = actionBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", sessionDurationText);
-		bannerControlSession.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(actionBarMessage));
+		BossBarUtil.updateBannerCapBossBar(bannerControlSession.getPlayer(), actionBarMessage, bannerControlSession);
 
 		CosmeticUtil.evaluateBeacon(player, siege);
 
@@ -188,6 +186,9 @@ public class SiegeWarBannerControlUtil {
 
 		if(!BattleSession.getBattleSession().isActive())
 			return;
+		
+		// Update the BattleSession bossbar.
+		BossBarUtil.updateBattleSessionBossBar();
 
 		for(BannerControlSession bannerControlSession: siege.getBannerControlSessions().values()) {
 			try {
@@ -215,12 +216,14 @@ public class SiegeWarBannerControlUtil {
 					//Session still in progress
 					remainingSessionTime = TimeMgmt.getFormattedTimeValue(bannerControlSession.getSessionEndTime() - System.currentTimeMillis());
 					inProgressMessage = actionBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", remainingSessionTime);
-					bannerControlSession.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(inProgressMessage));
+					BossBarUtil.updateBannerCapBossBar(bannerControlSession.getPlayer(), inProgressMessage, bannerControlSession);
 				} else {
 					//Session success
 					siege.removeBannerControlSession(bannerControlSession);
 					//Update beacon
 					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
+					//Remove bossbar
+					BossBarUtil.removesBannerCapBossBar(bannerControlSession.getPlayer());
 					//Remove glowing effect
 					if(bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
 						Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
