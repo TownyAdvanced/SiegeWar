@@ -422,8 +422,12 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_NEW_TOWN_CONFIRMATION_REQUIREMENT_DAYS);
 	}
 
-	public static int getBannerControlVerticalDistanceBlocks() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BANNER_CONTROL_VERTICAL_DISTANCE_BLOCKS);
+	public static int getBannerControlVerticalDistanceUpBlocks() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BANNER_CONTROL_VERTICAL_DISTANCE_UP_BLOCKS);
+	}
+	
+	public static int getBannerControlVerticalDistanceDownBlocks() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BANNER_CONTROL_VERTICAL_DISTANCE_DOWN_BLOCKS);
 	}
 
 	public static boolean getWarCommonPeacefulTownsAllowedToTogglePVP() {
