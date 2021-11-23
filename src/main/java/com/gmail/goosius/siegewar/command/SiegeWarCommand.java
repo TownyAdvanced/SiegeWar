@@ -10,6 +10,7 @@ import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.BookUtil;
+import com.gmail.goosius.siegewar.utils.BossBarUtil;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -46,7 +47,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 	private static final List<String> siegewarTownTabCompletes = Arrays.asList("inviteoccupation");
 
-	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("beacons");
+	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("beacons", "bossbars");
 	
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
@@ -118,6 +119,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void showPreferenceHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/siegewar preference"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference beacons [on/off]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference bossbars [on/off]", ""));
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -524,19 +526,27 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 	private void parseSiegewarPreferenceCommand(Player player, String[] args) {
 		if (args.length >= 2) {
+			if (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off")) {
+				Messaging.sendMsg(player, Translation.of("msg_err_invalid_bool"));
+				return;
+			}
 			Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 			switch(args[0].toLowerCase()) {
 				case "beacons": {
-					if (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off")) {
-						Messaging.sendMsg(player, Translation.of("msg_err_invalid_bool"));
-						return;
-					}
 					boolean current = ResidentMetaDataController.getBeaconsDisabled(resident);
 					boolean disabled = args[1].equalsIgnoreCase("off");
 					ResidentMetaDataController.setBeaconsDisabled(resident, disabled);
 					if (current != disabled)
 						CosmeticUtil.removeFakeBeacons(player);
 					Messaging.sendMsg(player, Translation.of("msg_beacon_preference_set", args[1].toUpperCase()));
+					break;
+				}
+				case "bossbars": {
+					boolean disabled = args[1].equalsIgnoreCase("off");
+					ResidentMetaDataController.setBossBarsDisabled(resident, disabled);
+					if (disabled)
+						BossBarUtil.removeBossBars(player);
+					Messaging.sendMsg(player, Translation.of("msg_bossbar_preference_set", args[1].toUpperCase()));
 					break;
 				}
 				default:

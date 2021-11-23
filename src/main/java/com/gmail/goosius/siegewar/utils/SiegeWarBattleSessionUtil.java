@@ -122,7 +122,7 @@ public class SiegeWarBattleSessionUtil {
 		sendBattleSessionEndedMessage(battleResults);
 		
 		//Remove BossBar
-		BossBarUtil.removesBattleSessionBossBars();
+		BossBarUtil.removeBattleSessionBossBars();
 	}
        
 	public static void evaluateBattleSessions() {

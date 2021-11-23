@@ -19,8 +19,8 @@ public class ResidentMetaDataController {
 	private static IntegerDataField plunderAmount = new IntegerDataField("siegewar_plunder", 0, "Plunder");
 	private static IntegerDataField militarySalaryAmount = new IntegerDataField("siegewar_militarysalary", 0, "Military Salary");
 
-	static String
-		beaconsDisabled = "siegewar_beaconsdisabled";
+	static String beaconsDisabled = "siegewar_beaconsdisabled";
+	static String bossBarsDisabled = "siegewar_bossBarsdisabled";
 
 
 	public ResidentMetaDataController(SiegeWar plugin) {
@@ -154,5 +154,13 @@ public class ResidentMetaDataController {
 
 	public static boolean getBeaconsDisabled(Resident resident) {
 		return getBoolean(resident, beaconsDisabled);
+	}
+	
+	public static void setBossBarsDisabled(Resident resident, boolean disabled) {
+		setBoolean(resident, bossBarsDisabled, disabled);
+	}
+
+	public static boolean getBossBarsDisabled(Resident resident) {
+		return getBoolean(resident, bossBarsDisabled);
 	}
 }

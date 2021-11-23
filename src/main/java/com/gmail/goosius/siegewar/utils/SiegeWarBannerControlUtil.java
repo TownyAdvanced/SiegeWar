@@ -223,7 +223,7 @@ public class SiegeWarBannerControlUtil {
 					//Update beacon
 					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
 					//Remove bossbar
-					BossBarUtil.removesBannerCapBossBar(bannerControlSession.getPlayer());
+					BossBarUtil.removeBannerCapBossBar(bannerControlSession.getPlayer());
 					//Remove glowing effect
 					if(bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
 						Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
