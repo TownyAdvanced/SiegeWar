@@ -78,13 +78,13 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				case "nation":
 					return getTownyStartingWith(args[2], "n");
 				case "alltowns":
-					return Arrays.asList("0","1","2","3","4","5","6");
+					return Arrays.asList("0","1","2","3","4","5","6","permanent");
 				}
 			}
 
 			if (args.length == 4) {
 				if (args[1].equalsIgnoreCase("town") || args[1].equalsIgnoreCase("nation"))
-					return Arrays.asList("0","1","2","3","4","5","6");
+					return Arrays.asList("0","1","2","3","4","5","6","permanent");
 			}
 		case "siege":
 			if (args.length == 2)
@@ -483,9 +483,9 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		}
 
 		try {
-			if (args[0].equalsIgnoreCase("alltowns"))
+			if (args[0].equalsIgnoreCase("alltowns") && !args[1].equalsIgnoreCase("permanent"))
 				Integer.parseInt(args[1]);
-			else
+			else if (!args[0].equalsIgnoreCase("alltowns") && !args[2].equalsIgnoreCase("permanent"))
 				Integer.parseInt(args[2]);
 		} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
 			Messaging.sendMsg(sender, Translation.of("msg_error_must_be_num"));
@@ -493,6 +493,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			return;
 		}
 
+		String timeDuration;
 		if (args.length >= 3 && args[0].equalsIgnoreCase("town")) {
 			//town {townname} {hours}
 			Town town = TownyUniverse.getInstance().getTown(args[1]);
@@ -500,10 +501,16 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				Messaging.sendErrorMsg(sender, Translation.of("msg_err_not_registered_1", args[1]));
 				return;
 			}
-			long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
-			TownMetaDataController.setRevoltImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
-			TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_set_revolt_immunities_town", args[1], args[2]));
-			Messaging.sendMsg(sender, Translation.of("msg_set_revolt_immunities_town", args[1], args[2]));
+			
+			if (args[2].equalsIgnoreCase("permanent")) {
+				TownMetaDataController.setRevoltImmunityEndTime(town, -1L);
+				timeDuration = Translation.of("msg_permanent");
+			} else  {
+				TownMetaDataController.setRevoltImmunityEndTime(town, System.currentTimeMillis() + (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS));
+				timeDuration = Long.parseLong(args[2]) + com.palmergames.bukkit.towny.object.Translation.of("msg_hours");
+			}
+			TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_set_revolt_immunities_town", town, timeDuration));
+			Messaging.sendMsg(sender, Translation.of("msg_set_revolt_immunities_town", town, timeDuration));
 
 		} else if (args.length >= 3 && args[0].equalsIgnoreCase("nation")) {
 			//nation {nationname} {hours}
@@ -512,20 +519,35 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				Messaging.sendErrorMsg(sender, Translation.of("msg_err_not_registered_1", args[1]));
 				return;
 			}
-			long durationMillis = (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
-			for (Town town : nation.getTowns()) {
-				TownMetaDataController.setRevoltImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
+			long endTime;
+			if (args[2].equalsIgnoreCase("permanent")) {
+				endTime = -1l;
+				timeDuration = Translation.of("msg_permanent");
+			} else {
+				endTime = System.currentTimeMillis() + (long)(Long.parseLong(args[2]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
+				timeDuration = Long.parseLong(args[2]) + com.palmergames.bukkit.towny.object.Translation.of("msg_hours");
 			}
-			TownyMessaging.sendPrefixedNationMessage(nation, Translation.of("msg_set_revolt_immunities_nation", args[1], args[2]));
-			Messaging.sendMsg(sender, Translation.of("msg_set_revolt_immunities_nation", args[1], args[2]));
+			
+			for (Town town : nation.getTowns()) {
+				TownMetaDataController.setRevoltImmunityEndTime(town, endTime);
+			}
+			TownyMessaging.sendPrefixedNationMessage(nation, Translation.of("msg_set_revolt_immunities_nation", nation, timeDuration));
+			Messaging.sendMsg(sender, Translation.of("msg_set_revolt_immunities_nation", nation, timeDuration));
 
 		} else if (args[0].equalsIgnoreCase("alltowns")) {
 			//all towns
-			long durationMillis = (long)(Long.parseLong(args[1]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
-			for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns()))  {
-				TownMetaDataController.setRevoltImmunityEndTime(town, System.currentTimeMillis() + durationMillis);
+			long endTime;
+			if (args[1].equalsIgnoreCase("permanent")) {
+				endTime = -1l;
+				timeDuration = Translation.of("msg_permanent");
+			} else {
+				endTime = System.currentTimeMillis() + (long)(Long.parseLong(args[1]) * TimeMgmt.ONE_HOUR_IN_MILLIS);
+				timeDuration = Long.parseLong(args[1]) + com.palmergames.bukkit.towny.object.Translation.of("msg_hours");
 			}
-			Messaging.sendGlobalMessage(Translation.of("msg_set_revolt_immunities_all", args[1]));
+			for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns()))  {
+				TownMetaDataController.setRevoltImmunityEndTime(town, endTime);
+			}
+			Messaging.sendGlobalMessage(Translation.of("msg_set_revolt_immunities_all", timeDuration));
 
 		} else {
 			showRevoltImmunityHelp(sender);

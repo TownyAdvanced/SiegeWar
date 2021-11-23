@@ -59,7 +59,10 @@ public class StartRevoltSiege {
         if(!TownOccupationController.isTownOccupied(targetTown))
             throw new TownyException(Translation.of("msg_err_cannot_start_revolt_siege_as_town_is_unoccupied"));
 
-        if (System.currentTimeMillis() < TownMetaDataController.getRevoltImmunityEndTime(targetTown))
+        long immunity = TownMetaDataController.getRevoltImmunityEndTime(targetTown);
+        if (immunity == -1L)
+        	throw new TownyException(Translation.of("msg_err_siege_war_revolt_immunity_permanent"));
+        if (System.currentTimeMillis() < immunity)
             throw new TownyException(Translation.of("msg_err_siege_war_revolt_immunity_active"));
 
         Nation occupierNation = TownOccupationController.getTownOccupier(targetTown);
