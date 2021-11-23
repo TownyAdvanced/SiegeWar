@@ -979,7 +979,7 @@ public enum ConfigNodes {
 			"banner_control.capturing_message_color",
 			"yellow",
 			"",
-			"# This setting determines the color of the action bar message,",
+			"# This setting determines the color of the boss bar message,",
 			"# which players see while they are capturing the banner.");
 
 	private final String Root;

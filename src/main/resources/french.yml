@@ -501,3 +501,4 @@ attacker_has_begun_a_siegecamp_session: '%s has begun a SiegeCamp session agains
 
 # Added in 0.30
 msg_bossbar_preference_set: "&bBossBar preference set to %s."
+bossbar_msg_battle_time_remaining: '&2Battle Session Time Remaining: &a%s'

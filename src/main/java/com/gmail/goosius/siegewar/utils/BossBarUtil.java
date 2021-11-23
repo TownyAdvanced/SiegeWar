@@ -36,7 +36,7 @@ public class BossBarUtil {
 	
 	public static void updateBattleSessionBossBar() {
 		BattleSession session = BattleSession.getBattleSession();
-		TextComponent comp = Component.text(Translation.of("status_town_siege_battle_time_remaining", session.getFormattedTimeRemainingUntilBattleSessionEnds()));
+		TextComponent comp = Component.text(Translation.of("bossbar_msg_battle_time_remaining", session.getFormattedTimeRemainingUntilBattleSessionEnds()));
 		float remaining = getRemainder(session.getScheduledEndTime(), SiegeWarSettings.getWarSiegeBattleSessionDurationMinutes() * 60000);
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			Resident resident = TownyAPI.getInstance().getResident(player);

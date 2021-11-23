@@ -119,8 +119,8 @@ public class SiegeWarBannerControlUtil {
 			sessionDurationText));
 
 		//Notify player in action bar
-		ChatColor actionBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
-		String actionBarMessage = actionBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", sessionDurationText);
+		ChatColor bossBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
+		String actionBarMessage = bossBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", sessionDurationText);
 		BossBarUtil.updateBannerCapBossBar(bannerControlSession.getPlayer(), actionBarMessage, bannerControlSession);
 
 		CosmeticUtil.evaluateBeacon(player, siege);
@@ -182,7 +182,7 @@ public class SiegeWarBannerControlUtil {
 	private static void evaluateExistingBannerControlSessions(Siege siege) {
 		String inProgressMessage;
 		String remainingSessionTime;
-		ChatColor actionBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
+		ChatColor bossBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
 
 		if(!BattleSession.getBattleSession().isActive())
 			return;
@@ -215,7 +215,7 @@ public class SiegeWarBannerControlUtil {
 				if((System.currentTimeMillis() / 1000) < (bannerControlSession.getSessionEndTime() / 1000)) {
 					//Session still in progress
 					remainingSessionTime = TimeMgmt.getFormattedTimeValue(bannerControlSession.getSessionEndTime() - System.currentTimeMillis());
-					inProgressMessage = actionBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", remainingSessionTime);
+					inProgressMessage = bossBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", remainingSessionTime);
 					BossBarUtil.updateBannerCapBossBar(bannerControlSession.getPlayer(), inProgressMessage, bannerControlSession);
 				} else {
 					//Session success
