@@ -17,8 +17,6 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -121,9 +119,9 @@ public class SiegeWarBannerControlUtil {
 			sessionDurationText));
 
 		//Notify player in action bar
-		ChatColor actionBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
-		String actionBarMessage = actionBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", sessionDurationText);
-		bannerControlSession.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(actionBarMessage));
+		ChatColor bossBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
+		String actionBarMessage = bossBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", sessionDurationText);
+		BossBarUtil.updateBannerCapBossBar(bannerControlSession.getPlayer(), actionBarMessage, bannerControlSession);
 
 		CosmeticUtil.evaluateBeacon(player, siege);
 
@@ -184,10 +182,13 @@ public class SiegeWarBannerControlUtil {
 	private static void evaluateExistingBannerControlSessions(Siege siege) {
 		String inProgressMessage;
 		String remainingSessionTime;
-		ChatColor actionBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
+		ChatColor bossBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
 
 		if(!BattleSession.getBattleSession().isActive())
 			return;
+		
+		// Update the BattleSession bossbar.
+		BossBarUtil.updateBattleSessionBossBar();
 
 		for(BannerControlSession bannerControlSession: siege.getBannerControlSessions().values()) {
 			try {
@@ -195,6 +196,7 @@ public class SiegeWarBannerControlUtil {
 				if (!doesPlayerMeetBasicSessionRequirements(siege, bannerControlSession.getPlayer(), bannerControlSession.getResident())) {
 					siege.removeBannerControlSession(bannerControlSession);
 					String errorMessage = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? Translation.of("msg_siege_war_banner_control_session_failure_with_altitude") : Translation.of("msg_siege_war_banner_control_session_failure");
+					BossBarUtil.removeBannerCapBossBar(bannerControlSession.getPlayer());
 					Messaging.sendMsg(bannerControlSession.getPlayer(), errorMessage);
 					//Update beacon
 					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
@@ -214,13 +216,15 @@ public class SiegeWarBannerControlUtil {
 				if((System.currentTimeMillis() / 1000) < (bannerControlSession.getSessionEndTime() / 1000)) {
 					//Session still in progress
 					remainingSessionTime = TimeMgmt.getFormattedTimeValue(bannerControlSession.getSessionEndTime() - System.currentTimeMillis());
-					inProgressMessage = actionBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", remainingSessionTime);
-					bannerControlSession.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(inProgressMessage));
+					inProgressMessage = bossBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", remainingSessionTime);
+					BossBarUtil.updateBannerCapBossBar(bannerControlSession.getPlayer(), inProgressMessage, bannerControlSession);
 				} else {
 					//Session success
 					siege.removeBannerControlSession(bannerControlSession);
 					//Update beacon
 					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
+					//Remove bossbar
+					BossBarUtil.removeBannerCapBossBar(bannerControlSession.getPlayer());
 					//Remove glowing effect
 					if(bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
 						Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {

@@ -48,6 +48,8 @@ public class SiegeWarBattleSessionUtil {
 		Bukkit.getPluginManager().callEvent(new BattleSessionStartedEvent());	
 		//Send global message to let the server know that the battle session started
 		Messaging.sendGlobalMessage(Translation.of("msg_war_siege_battle_session_started"));
+		//Start the bossbar for the Battle Session
+		BossBarUtil.updateBattleSessionBossBar();
 	}
 
 	public static void endBattleSession() {
@@ -118,6 +120,9 @@ public class SiegeWarBattleSessionUtil {
 		
 		//Send message
 		sendBattleSessionEndedMessage(battleResults);
+		
+		//Remove BossBar
+		BossBarUtil.removeBattleSessionBossBars();
 	}
        
 	public static void evaluateBattleSessions() {
