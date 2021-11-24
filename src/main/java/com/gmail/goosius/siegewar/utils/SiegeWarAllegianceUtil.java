@@ -19,11 +19,11 @@ public class SiegeWarAllegianceUtil {
         switch (candidateSiege.getSiegeType()) {
             case CONQUEST:
             case SUPPRESSION:
+            case LIBERATION:
                 //In the above sieges, defenders can be town guards
                 if (isTownGuard(deadPlayer, deadResidentTown, defendingGovernment))
                     return SiegeSide.DEFENDERS;
             case REVOLT:
-            case LIBERATION:
                 //In the above sieges, defenders can be nation/allied soldiers
                 if (isNationSoldierOrAlliedSoldier(deadPlayer, deadResidentTown, defendingGovernment))
                     return SiegeSide.DEFENDERS;
