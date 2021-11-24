@@ -11,6 +11,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyWorld;
 import com.palmergames.bukkit.towny.object.WorldCoord;
+import com.palmergames.util.MathUtil;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -86,7 +87,7 @@ public class SiegeWarDistanceUtil {
 	}
 
 	public static boolean isInTimedPointZone(Location location, Siege siege) {
-		return areLocationsClose(location, siege.getFlagLocation(), TownySettings.getTownBlockSize(), SiegeWarSettings.getBannerControlVerticalDistanceBlocks());
+		return areLocationsClose(location, siege.getFlagLocation(), TownySettings.getTownBlockSize());
 	}
 
 	public static boolean areTownsClose(Town town1, Town town2, int radiusTownblocks) {
@@ -116,18 +117,21 @@ public class SiegeWarDistanceUtil {
 		return distanceTownblocks < radiusTownblocks;
 	}
 
-	private static boolean areLocationsClose(Location location1, Location location2, int maxHorizontalDistance, int maxVerticalDistance) {
+	private static boolean areLocationsClose(Location location1, Location location2, int maxHorizontalDistance) {
 		if(!location1.getWorld().getName().equalsIgnoreCase(location2.getWorld().getName()))
 			return false;
 
 		//Check horizontal distance
-		double xzDistance = Math.sqrt(Math.pow(location1.getX() - location2.getX(), 2) + Math.pow(location1.getZ() - location2.getZ(), 2));
+		double xzDistance = MathUtil.distance(location1.getX(), location2.getX(), location1.getZ(), location2.getZ());
 		if(xzDistance > maxHorizontalDistance)
 			return false;
 
 		//Check vertical distance
-		double yDistance = Math.abs(Math.abs(location1.getY() - location2.getY()));
-		if(yDistance > maxVerticalDistance)
+		if (location1.getY() == location2.getY())
+			return true;
+		if (location1.getY() > location2.getY() && location1.getY() - location2.getY() > SiegeWarSettings.getBannerControlVerticalDistanceUpBlocks())
+			return false;
+		if (location2.getY() > location1.getY() && location2.getY() - location1.getY() > SiegeWarSettings.getBannerControlVerticalDistanceDownBlocks())
 			return false;
 
 		return true;
@@ -139,8 +143,7 @@ public class SiegeWarDistanceUtil {
 			return false;
 
 		//Check horizontal distance
-		double xzDistance = Math.sqrt(Math.pow(location1.getX() - location2.getX(), 2) + Math.pow(location1.getZ() - location2.getZ(), 2));
-		return xzDistance < radius;
+		return MathUtil.distance(location1.getX(), location2.getX(), location1.getZ(), location2.getZ()) < radius;
 	}
 
 	private static Location getTopNorthWestCornerLocation(WorldCoord worldCoord) {
@@ -188,6 +191,6 @@ public class SiegeWarDistanceUtil {
 	 * @param camp {@link SiegeCamp} to check against.
 	 */
 	public static boolean isInSiegeCampZone(Location location, SiegeCamp camp) {
-		return areLocationsClose(location, camp.getBannerBlock().getLocation(), TownySettings.getTownBlockSize(), SiegeWarSettings.getBannerControlVerticalDistanceBlocks());
+		return areLocationsClose(location, camp.getBannerBlock().getLocation(), TownySettings.getTownBlockSize());
 	}
 }
