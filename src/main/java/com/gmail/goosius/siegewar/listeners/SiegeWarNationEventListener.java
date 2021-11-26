@@ -1,22 +1,18 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
-import com.gmail.goosius.siegewar.utils.ChatTools;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
-import com.palmergames.bukkit.towny.TownyFormatter;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.NationBonusCalculationEvent;
@@ -31,19 +27,15 @@ import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumResidents
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumTownBlocksCalculationEvent;
 import com.palmergames.bukkit.towny.event.nation.DisplayedNationsListSortEvent;
 
-import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.util.BukkitTools;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -54,8 +46,6 @@ import java.util.List;
  */
 public class SiegeWarNationEventListener implements Listener {
 
-	@SuppressWarnings("unused")
-	private final SiegeWar plugin;
 
 	private static final Comparator<Nation> BY_NUM_RESIDENTS = (n1, n2) -> {
         return SiegeWarNationUtil.getEffectiveNation(n2).getResidents().size() 
@@ -76,11 +66,6 @@ public class SiegeWarNationEventListener implements Listener {
 		return TownyAPI.getInstance().getOnlinePlayers(SiegeWarNationUtil.getEffectiveNation(n2)).size() 
 			   - TownyAPI.getInstance().getOnlinePlayers(SiegeWarNationUtil.getEffectiveNation(n1)).size();
     };
-
-	public SiegeWarNationEventListener(SiegeWar instance) {
-
-		plugin = instance;
-	}
 
 	@EventHandler
 	public void onNationRankGivenToPlayer(NationRankAddEvent event) {
@@ -106,43 +91,6 @@ public class SiegeWarNationEventListener implements Listener {
 		}
 	}
 	
-	/*
-	 * SiegeWar will add lines to Nation which have a siege
-	 */
-    @EventHandler
-	public void onNationStatusScreen(NationStatusScreenEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			Nation nation = event.getNation();
-
-			// Occupied Home Towns[3]: Town1, Town2, Town3
-			List<Town> occupiedHomeTowns = TownOccupationController.getOccupiedHomeTowns(nation);
-			String[] formattedOccupiedHomeTowns = TownyFormatter.getFormattedNames(occupiedHomeTowns.toArray(new Town[0]));
-			List<String> out = new ArrayList<>(ChatTools.listArr(formattedOccupiedHomeTowns, Translation.of("status_nation_occupied_home_towns", occupiedHomeTowns.size())));
-
-			// Occupied Foreign Towns[3]: Town4, Town5, Town6
-			List<Town> occupiedForeignTowns = TownOccupationController.getOccupiedForeignTowns(nation);
-			String[] formattedOccupiedForeignTowns = TownyFormatter.getFormattedNames(occupiedForeignTowns.toArray(new Town[0]));
-			out.addAll(new ArrayList<>(ChatTools.listArr(formattedOccupiedForeignTowns, Translation.of("status_nation_occupied_foreign_towns", occupiedForeignTowns.size()))));
-
-			// Offensive Sieges [3]: TownA, TownB, TownC
-	        List<Town> siegeAttacks = new ArrayList<>(SiegeController.getActiveOffensiveSieges(nation).values());
-	        String[] formattedSiegeAttacks = TownyFormatter.getFormattedNames(siegeAttacks.toArray(new Town[0]));
-	        out.addAll(new ArrayList<>(ChatTools.listArr(formattedSiegeAttacks, Translation.of("status_nation_offensive_sieges", siegeAttacks.size()))));
-
-	        // Defensive Sieges [3]: TownX, TownY, TownZ
-	        List<Town> siegeDefences = new ArrayList<>(SiegeController.getActiveDefensiveSieges(nation).values());
-	        String[] formattedSiegeDefences = TownyFormatter.getFormattedNames(siegeDefences.toArray(new Town[0]));
-	        out.addAll(ChatTools.listArr(formattedSiegeDefences, Translation.of("status_nation_defensive_sieges", siegeDefences.size())));
-	        
-	        event.addLines(out);
-
-			if (SiegeWarSettings.getWarSiegeNationStatisticsEnabled()) {
-				event.addLines(Arrays.asList(Translation.of("status_nation_town_stats", NationMetaDataController.getTotalTownsGained(nation), NationMetaDataController.getTotalTownsLost(nation)),
-											Translation.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation))));
-			}
-		}
-	}
-
 	/*
 	 * A nation being deleted with a siege means the siege ends,
 	 * and a king may receive a refund.
