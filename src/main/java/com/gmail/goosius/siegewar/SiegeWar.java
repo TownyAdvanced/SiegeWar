@@ -11,6 +11,7 @@ import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
+import com.gmail.goosius.siegewar.command.SiegeWarNationAddonCommand;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
 import com.gmail.goosius.siegewar.integration.dynmap.DynmapIntegration;
@@ -143,6 +144,7 @@ public class SiegeWar extends JavaPlugin {
 		} else {
 			getCommand("siegewar").setExecutor(new SiegeWarCommand());
 			getCommand("siegewaradmin").setExecutor(new SiegeWarAdminCommand());
+			new SiegeWarNationAddonCommand();
 		}
 	}
 

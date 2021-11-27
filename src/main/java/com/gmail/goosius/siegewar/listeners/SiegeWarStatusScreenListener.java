@@ -71,22 +71,32 @@ public class SiegeWarStatusScreenListener implements Listener {
 	/*
 	 * SiegeWar will add lines to Nation which have a siege
 	 */
-    @EventHandler
+	@EventHandler
 	public void onNationStatusScreen(NationStatusScreenEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			Nation nation = event.getNation();
 			List<String> out = new ArrayList<>();
 			// Occupied Home Towns[3]: Town1, Town2, Town3
 			List<Town> occupiedHomeTowns = TownOccupationController.getOccupiedHomeTowns(nation);
-			if (occupiedHomeTowns.size() > 0)
-				out.add(Translation.of("status_nation_occupied_home_towns", occupiedHomeTowns.size())
-					+ getFormattedTownList(occupiedHomeTowns));
+			if (occupiedHomeTowns.size() > 0) {
+				TextComponent comp = Component.newline()
+						.append(Component.text(Translation.of("status_nation_occupied_home_towns", occupiedHomeTowns.size())
+							+ getFormattedTownList(occupiedHomeTowns))
+						.clickEvent(ClickEvent.runCommand("/nation siegewar occupiedhometowns " + nation.getName()))
+						.hoverEvent(HoverEvent.showText(Component.text(com.palmergames.bukkit.towny.object.Translation.of("status_hover_click_for_more")))));
+				event.getStatusScreen().addComponentOf("siegeWarNationOccupiedHomeTowns", comp);
+			}
 
 			// Occupied Foreign Towns[3]: Town4, Town5, Town6
 			List<Town> occupiedForeignTowns = TownOccupationController.getOccupiedForeignTowns(nation);
-			if (occupiedForeignTowns.size() > 0)
-				out.add(Translation.of("status_nation_occupied_foreign_towns", occupiedForeignTowns.size()) 
-					+ getFormattedTownList(occupiedForeignTowns));
+			if (occupiedForeignTowns.size() > 0) {
+				TextComponent comp = Component.newline()
+						.append(Component.text(Translation.of("status_nation_occupied_foreign_towns", occupiedForeignTowns.size())
+							+ getFormattedTownList(occupiedForeignTowns))
+						.clickEvent(ClickEvent.runCommand("/nation siegewar occupiedforeigntowns " + nation.getName()))
+						.hoverEvent(HoverEvent.showText(Component.text(com.palmergames.bukkit.towny.object.Translation.of("status_hover_click_for_more")))));
+				event.getStatusScreen().addComponentOf("siegeWarNationOccupiedForeignTowns", comp);
+			}
 
 			// Offensive Sieges [3]: TownA, TownB, TownC
 	        List<Town> siegeAttacks = new ArrayList<>(SiegeController.getActiveOffensiveSieges(nation).values());
@@ -105,10 +115,10 @@ public class SiegeWarStatusScreenListener implements Listener {
 				out.add(Translation.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation)));
 			}
 			
-			TextComponent comp = Component.newline();
+			TextComponent comp = Component.empty();
 			for (String line : out)
 				comp = comp.append(Component.text(line)).append(Component.newline());
-			event.getStatusScreen().addComponentOf("siegeWarOccupiedForeignTowns", comp);
+			event.getStatusScreen().addComponentOf("siegeWarNation", comp);
 		}
 	}
 	
@@ -347,9 +357,14 @@ public class SiegeWarStatusScreenListener implements Listener {
 	
 	private static String getFormattedTownList(List<Town> towns) {
 		List<String> lines = new ArrayList<>();
-		boolean longname = towns.size() < 20;
+		int i = 0;
 		for (Town town : towns) {
-			lines.add(longname ? town.getFormattedName() : town.getName());
+			i++;
+			if (i == 11) {
+				lines.add(com.palmergames.bukkit.towny.object.Translation.of("status_town_reslist_overlength"));
+				return StringMgmt.join(lines, ", ");
+			}
+			lines.add(town.getName());
 		}
 		return StringMgmt.join(lines, ", ");
 	}
