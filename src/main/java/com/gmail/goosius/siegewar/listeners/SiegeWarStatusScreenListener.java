@@ -38,6 +38,11 @@ import com.palmergames.util.TimeMgmt;
 
 public class SiegeWarStatusScreenListener implements Listener {
 
+	/*
+	 * SiegeWar will show a resident if they can collect their nation refund, plunder
+	 * or military salary, via the resident status screen. Components are clickable to
+	 * claim monies owed.
+	 */
 	@EventHandler
 	public void onResidentStatusScreen(ResidentStatusScreenEvent event) {
 		int refund = ResidentMetaDataController.getNationRefundAmount(event.getResident());
@@ -243,7 +248,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 							.append(Component.text(Translation.of("status_town_siege")))
 							.append(Component.newline())
 							.append(Component.text(Translation.of("status_town_siege_immunity_timer", time))); 
-	                event.getStatusScreen().addComponentOf("siegeWar_siegeImmunity", immunityComp);
+					event.getStatusScreen().addComponentOf("siegeWar_siegeImmunity", immunityComp);
 	            }
 	        }
 		}
