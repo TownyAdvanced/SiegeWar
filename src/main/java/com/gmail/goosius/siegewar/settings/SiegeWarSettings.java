@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.settings;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 import org.bukkit.Bukkit;
@@ -403,7 +404,7 @@ public class SiegeWarSettings {
 			String listAsString = Settings.getString(ConfigNodes.SIEGE_MATERIAL_RESTRICTIONS_WILDERNESS_EXPLOSION_PREVENTION_ENTITY_TYPES);
 			String[] listAsStringArray = listAsString.split(",");
 			for (String entityTypeAsString : listAsStringArray) {
-				EntityType entityType = EntityType.valueOf(entityTypeAsString.trim().toUpperCase());
+				EntityType entityType = EntityType.valueOf(entityTypeAsString.trim().toUpperCase(Locale.ROOT));
 				siegeZoneWildernessForbiddenExplodeEntityTypes.add(entityType);
 			}
 		}
