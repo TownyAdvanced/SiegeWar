@@ -11,6 +11,7 @@ import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
+import com.gmail.goosius.siegewar.command.SiegeWarNationAddonCommand;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
 import com.gmail.goosius.siegewar.integration.dynmap.DynmapIntegration;
@@ -19,6 +20,7 @@ import com.gmail.goosius.siegewar.listeners.SiegeWarBukkitEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarNationEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarPlotEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarSafeModeListener;
+import com.gmail.goosius.siegewar.listeners.SiegeWarStatusScreenListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 
@@ -129,9 +131,10 @@ public class SiegeWar extends JavaPlugin {
 			pm.registerEvents(new SiegeWarActionListener(this), this);
 			pm.registerEvents(new SiegeWarBukkitEventListener(this), this);		
 			pm.registerEvents(new SiegeWarTownyEventListener(this), this);
-			pm.registerEvents(new SiegeWarNationEventListener(this), this);
+			pm.registerEvents(new SiegeWarNationEventListener(), this);
 			pm.registerEvents(new SiegeWarTownEventListener(this), this);
 			pm.registerEvents(new SiegeWarPlotEventListener(this), this);
+			pm.registerEvents(new SiegeWarStatusScreenListener(), this);
 		}
 	}
 
@@ -141,6 +144,7 @@ public class SiegeWar extends JavaPlugin {
 		} else {
 			getCommand("siegewar").setExecutor(new SiegeWarCommand());
 			getCommand("siegewaradmin").setExecutor(new SiegeWarAdminCommand());
+			new SiegeWarNationAddonCommand();
 		}
 	}
 
