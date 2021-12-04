@@ -135,6 +135,8 @@ public class SiegeWarBattleSessionUtil {
 				//Finish battle session
 				endBattleSession();
 			}
+			
+			BossBarUtil.updateBattleSessionBossBar();
 
 		} else {
 			//Battle session is inactive.
