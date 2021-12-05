@@ -26,7 +26,6 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import com.palmergames.bukkit.towny.utils.NameUtil;
-import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
@@ -422,19 +421,19 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 					//Ensure the king of the receiving nation is online
 					Resident kingOfReceivingNation = receivingNation.getKing();
-					if (!BukkitTools.isOnline(kingOfReceivingNation.getName())) {
+					if (!kingOfReceivingNation.isOnline()){
 						throw new TownyException(Translation.of("msg_err_cannot_transfer_occupation_king_not_online", receivingNation.getName(), kingOfReceivingNation.getName()));
 					}
 
 					//Send request to king of receiving nation					
-					TownyMessaging.sendMessage(BukkitTools.getPlayer(kingOfReceivingNation.getName()), Translation.of("msg_would_you_accept_transfer_of_occupied_town", townName, residentsNation.getName()));							
+					TownyMessaging.sendMessage(kingOfReceivingNation, Translation.of("msg_would_you_accept_transfer_of_occupied_town", townName, residentsNation.getName()));
 					Confirmation.runOnAccept(() -> {
 						//Transfer occupation
 						TownOccupationController.setTownOccupation(townToTransfer, receivingNation);					
 						//Send global message
 						TownyMessaging.sendGlobalMessage(Translation.of("msg_transfer_occupation_success", residentsNation.getName(), townToTransfer.getName(), receivingNation.getName()));
 					})	
-					.sendTo(BukkitTools.getPlayerExact(kingOfReceivingNation.getName()));
+					.sendTo(kingOfReceivingNation.getPlayer());
 
 				} catch (Exception e) {
 					Messaging.sendErrorMsg(player, e.getMessage());
@@ -500,19 +499,19 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 					//Ensure the king of the receiving nation is online
 					Resident kingOfReceivingNation = receivingNation.getKing();
-					if (!BukkitTools.isOnline(kingOfReceivingNation.getName())) {
+					if (!kingOfReceivingNation.isOnline()) {
 						throw new TownyException(Translation.of("msg_err_cannot_invite_occupation_king_not_online", receivingNation.getName(), kingOfReceivingNation.getName()));
 					}
 
-					//Send request to king of receiving nation					
-					TownyMessaging.sendMessage(BukkitTools.getPlayer(kingOfReceivingNation.getName()), Translation.of("msg_would_you_accept_town_request_for_occupation", townToTransfer));							
+					//Send request to king of receiving nation
+					TownyMessaging.sendMessage(kingOfReceivingNation, Translation.of("msg_would_you_accept_town_request_for_occupation", townToTransfer));
 					Confirmation.runOnAccept(() -> {
 						//Occupy town
-						TownOccupationController.setTownOccupation(townToTransfer, receivingNation);					
+						TownOccupationController.setTownOccupation(townToTransfer, receivingNation);
 						//Send global message
 						TownyMessaging.sendGlobalMessage(Translation.of("msg_invite_occupation_success", townToTransfer.getName(), receivingNation.getName()));
-					})	
-					.sendTo(BukkitTools.getPlayerExact(kingOfReceivingNation.getName()));
+					})
+					.sendTo(kingOfReceivingNation.getPlayer());
 
 				} catch (Exception e) {
 					Messaging.sendErrorMsg(player, e.getMessage());

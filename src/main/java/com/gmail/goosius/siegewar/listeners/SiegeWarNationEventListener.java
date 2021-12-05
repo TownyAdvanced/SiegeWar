@@ -30,7 +30,7 @@ import com.palmergames.bukkit.towny.event.nation.DisplayedNationsListSortEvent;
 import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.util.BukkitTools;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -269,7 +269,7 @@ public class SiegeWarNationEventListener implements Listener {
 		int effectiveNumOnlinePlayers = 0;
 		Resident resident;
 		Nation effectiveNation = SiegeWarNationUtil.getEffectiveNation(event.getNation());
-		for(Player player: BukkitTools.getOnlinePlayers()) {
+		for(Player player: Bukkit.getOnlinePlayers()) {
 			if(TownyUniverse.getInstance().hasResident(player.getUniqueId())) {
 				resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 				if(resident.hasNation() && effectiveNation.getTowns().contains(TownyAPI.getInstance().getResidentTownOrNull(resident)))

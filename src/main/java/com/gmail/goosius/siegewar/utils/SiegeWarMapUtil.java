@@ -8,7 +8,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.util.BukkitTools;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
@@ -26,7 +26,7 @@ public class SiegeWarMapUtil {
 	 * Evaluate players to see if they are should be hidden on the map.
 	 */
 	public static void evaluateMapHiding() {
-		for(Player player: BukkitTools.getOnlinePlayers()) {
+		for(Player player: Bukkit.getOnlinePlayers()) {
 			try {
 				if(shouldPlayerBeMapHidden(player)) {
 					if(!player.hasMetadata(MAP_HIDING_METADATA_ID)) {

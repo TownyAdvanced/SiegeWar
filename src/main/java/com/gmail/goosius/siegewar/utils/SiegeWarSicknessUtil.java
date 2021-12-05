@@ -11,8 +11,9 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.util.TimeTools;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -25,7 +26,7 @@ public class SiegeWarSicknessUtil {
 
     public static void punishNonSiegeParticipantsInSiegeZone() {
 
-        for (Player player : BukkitTools.getOnlinePlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             Location location = player.getLocation();
 
             // Players immune to war nausea won't be punished

@@ -17,8 +17,9 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.gmail.goosius.siegewar.settings.Translation;
-import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.util.TimeTools;
+
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -123,7 +124,7 @@ public class TownPeacefulnessUtil {
 	 * The punishment is refreshed every 20 seconds, until the player leaves the siege-zone
 	 */
 	public static void punishPeacefulPlayersInActiveSiegeZones() {
-		for(final Player player: BukkitTools.getOnlinePlayers()) {
+		for(final Player player: Bukkit.getOnlinePlayers()) {
 			try {
 				//Don't apply to towny admins
 				if(TownyUniverse.getInstance().getPermissionSource().isTownyAdmin(player))
