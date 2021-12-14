@@ -34,6 +34,7 @@ public class BookUtil {
 		boolean peaceful = SiegeWarSettings.getWarCommonPeacefulTownsEnabled();
 		boolean surrender = SiegeWarSettings.getWarSiegeSurrenderEnabled();
 		boolean abandon = SiegeWarSettings.getWarSiegeAbandonEnabled();
+		boolean siegeCamps = SiegeWarSettings.areSiegeCampsEnabled();
 		String bannerCost = "zero";
 		String plunderCost = "zero";
 		if (TownyEconomyHandler.isActive()) {
@@ -65,6 +66,19 @@ public class BookUtil {
 		if(peaceful)
 			text += "Peaceful towns cannot be sieged at all.\n\n";
 
+		/*
+		 * Siege Camps
+		 */
+		if (siegeCamps) {
+			text += "\nSiegeCamps\n\n";
+			text += "SiegeCamps precede Sieges, begun when a banner is first placed by an attacker.\n\n";
+			text += "SiegeCamps last " + SiegeWarSettings.getSiegeCampDurationInMinutes() + " minutes, in which the attacking town must score " 
+					+ SiegeWarSettings.getSiegeCampPointsForSuccess() + " points. \n\n";
+			text += "Points are scored by standing near to the banner. " + SiegeWarSettings.getSiegeCampPointsPerMinute() + " points are given per minute.\n\n";
+			text += "If the required number of points are scored, the siege will begin. If the attacker fails to score enough points they will be unable to attempt a new siege for "
+					+ TimeMgmt.formatCountdownTime(SiegeWarSettings.getFailedSiegeCampCooldown()) + ".\n\n";
+		}
+		
 		/*
 		 * Siege participants info
 		 */
