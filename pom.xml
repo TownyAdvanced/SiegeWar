@@ -22,7 +22,7 @@
 	</repository>
     <repository>
       <id>dynmap-repo</id>
-      <url>http://repo.mikeprimm.com/</url>
+      <url>https://repo.mikeprimm.com/</url>
     </repository>
     <repository>
       <id>cannons-repo</id>
