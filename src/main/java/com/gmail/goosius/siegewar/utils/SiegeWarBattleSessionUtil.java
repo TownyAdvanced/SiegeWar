@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 public class SiegeWarBattleSessionUtil {
+	
+	private static Map<Siege, Integer> battleResults = new HashMap<>();
 
 	/**
 	 * Attempt to schedule the next battle session
@@ -55,66 +57,13 @@ public class SiegeWarBattleSessionUtil {
 	public static void endBattleSession() {
 		BattleSession battleSession = BattleSession.getBattleSession();
 		battleSession.setActive(false);
-
+		battleResults.clear();
 		/*
 		 * Gather the results of all battles
 		 * End any active battles
 		 */
-		Map<Siege, Integer> battleResults = new HashMap<>();
-		for (Siege siege : SiegeController.getSieges()) {
-			try {
-				if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
-					//Record primary government of besieged town
-					if(SiegeWarSettings.isNationSiegeImmunityEnabled())
-						siege.recordPrimaryTownGovernment();
-
-					//If any battle points were gained, calculate a result
-					if(siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0) {
-						//Adjust the siege balance
-						int siegeBalanceAdjustment = calculateSiegeBalanceAdjustment(siege);
-
-						//Apply the battle points of the winner to the siege balance
-						siege.adjustSiegeBalance(siegeBalanceAdjustment);
-
-						//Propagate attacker battle contributions to siege history
-						siege.propagateSuccessfulBattleContributorsToResidentTimedPointContributors();
-
-						//Prepare result for messaging
-						battleResults.put(siege, siegeBalanceAdjustment);
-
-						//Save siege
-						SiegeController.saveSiege(siege);
-					}
-
-					//Remove glowing effects from players in bc sessions
-					for (Player player : siege.getBannerControlSessions().keySet()) {
-						if (player.isOnline() && player.hasPotionEffect(PotionEffectType.GLOWING)) {
-							Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-								@Override
-								public void run() {
-									player.removePotionEffect(PotionEffectType.GLOWING);
-								}
-							});
-						}
-					}
-
-					//Clear battle related stats from the siege
-					siege.setBannerControllingSide(SiegeSide.NOBODY);
-					siege.clearBannerControllingResidents();
-					siege.clearBannerControlSessions();
-					siege.setAttackerBattlePoints(0);
-					siege.setDefenderBattlePoints(0);
-					siege.clearSuccessfulBattleContributors();
-				}
-			} catch (Throwable t) {
-				try {
-					SiegeWar.severe("Problem ending battle for siege: " + siege.getTown().getName());
-				} catch (Throwable t2) {
-					SiegeWar.severe("Problem ending battle for siege: (could not read town name)");
-				}
-				t.printStackTrace();
-			}
-		}
+		for (Siege siege : SiegeController.getSieges())
+			endBattleSessionForSiege(siege);
 		
 		Bukkit.getPluginManager().callEvent(new BattleSessionEndedEvent());
 		
@@ -124,7 +73,62 @@ public class SiegeWarBattleSessionUtil {
 		//Remove BossBar
 		BossBarUtil.removeBattleSessionBossBars();
 	}
-       
+
+	public static void endBattleSessionForSiege(Siege siege) {
+		try {
+			if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
+				//Record primary government of besieged town
+				if(SiegeWarSettings.isNationSiegeImmunityEnabled())
+					siege.recordPrimaryTownGovernment();
+
+				//If any battle points were gained, calculate a result
+				if(siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0) {
+					//Adjust the siege balance
+					int siegeBalanceAdjustment = calculateSiegeBalanceAdjustment(siege);
+
+					//Apply the battle points of the winner to the siege balance
+					siege.adjustSiegeBalance(siegeBalanceAdjustment);
+
+					//Propagate attacker battle contributions to siege history
+					siege.propagateSuccessfulBattleContributorsToResidentTimedPointContributors();
+
+					//Prepare result for messaging
+					battleResults.put(siege, siegeBalanceAdjustment);
+
+					//Save siege
+					SiegeController.saveSiege(siege);
+				}
+
+				//Remove glowing effects from players in bc sessions
+				for (Player player : siege.getBannerControlSessions().keySet()) {
+					if (player.isOnline() && player.hasPotionEffect(PotionEffectType.GLOWING)) {
+						Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+							@Override
+							public void run() {
+								player.removePotionEffect(PotionEffectType.GLOWING);
+							}
+						});
+					}
+				}
+
+				//Clear battle related stats from the siege
+				siege.setBannerControllingSide(SiegeSide.NOBODY);
+				siege.clearBannerControllingResidents();
+				siege.clearBannerControlSessions();
+				siege.setAttackerBattlePoints(0);
+				siege.setDefenderBattlePoints(0);
+				siege.clearSuccessfulBattleContributors();
+			}
+		} catch (Throwable t) {
+			try {
+				SiegeWar.severe("Problem ending battle for siege: " + siege.getTown().getName());
+			} catch (Throwable t2) {
+				SiegeWar.severe("Problem ending battle for siege: (could not read town name)");
+			}
+			t.printStackTrace();
+		}
+	}
+
 	public static void evaluateBattleSessions() {
 		BattleSession battleSession = BattleSession.getBattleSession();
 

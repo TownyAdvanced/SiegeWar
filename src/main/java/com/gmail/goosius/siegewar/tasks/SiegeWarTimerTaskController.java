@@ -41,6 +41,7 @@ public class SiegeWarTimerTaskController {
 			case IN_PROGRESS:
 				//If scheduled end time has arrived, choose winner
 				if (System.currentTimeMillis() > siege.getScheduledEndTime()) {
+					SiegeWarBattleSessionUtil.endBattleSessionForSiege(siege);
 					if (siege.getSiegeBalance() > 0) {
 						AttackerTimedWin.attackerTimedWin(siege);
 					} else {
