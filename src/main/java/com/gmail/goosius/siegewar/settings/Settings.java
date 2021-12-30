@@ -7,6 +7,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 
 import com.gmail.goosius.siegewar.utils.FileMgmt;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
+import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.util.TimeTools;
 
 public class Settings {
@@ -61,7 +62,7 @@ public class Settings {
 			File file = new File(filepath);
 
 			// read the config.yml into memory
-			config = new CommentedConfiguration(file);
+			config = new CommentedConfiguration(file.toPath());
 			if (!config.load())
 				throw new IOException("Failed to load Config!");
 
@@ -98,7 +99,7 @@ public class Settings {
 	 */
 	private static void setDefaults(String version, File file) {
 
-		newConfig = new CommentedConfiguration(file);
+		newConfig = new CommentedConfiguration(file.toPath());
 		newConfig.load();
 
 		for (ConfigNodes root : ConfigNodes.values()) {
