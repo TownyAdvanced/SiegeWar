@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.settings;
 
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.towny.command.HelpMenu;
 import com.palmergames.bukkit.util.Colors;
 import com.palmergames.util.StringMgmt;
@@ -29,10 +30,10 @@ public final class Translation {
 		File file = FileMgmt.unpackResourceFile(fullPath, res, defaultRes);
 
 		// read the (language).yml into memory
-		language = new CommentedConfiguration(file);
+		language = new CommentedConfiguration(file.toPath());
 		language.load();
 		HelpMenu.loadMenus();
-		CommentedConfiguration newLanguage = new CommentedConfiguration(file);
+		CommentedConfiguration newLanguage = new CommentedConfiguration(file.toPath());
 		
 		try {
 			newLanguage.loadFromString(FileMgmt.convertStreamToString("/" + res));
