@@ -319,6 +319,16 @@ public class SiegeController {
 		return null;
 	}
 
+	@Nullable
+	public static Siege getSiegeAtLocation(Location loc) {
+		for (Siege siege : getSieges()) {
+			if (siege.getStatus().isActive() 
+				&& SiegeWarDistanceUtil.isInSiegeZone(loc, siege))
+				return siege;
+		}
+		return null;
+	}
+	
 	public static void setSiege(Town town, boolean bool) {
 		SiegeMetaDataController.setSiege(town, bool);
 	}
