@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.30
+version: 0.31
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -508,3 +508,6 @@ status_nation_refund: "Nation Refund: "
 status_plunder: "Plunder: "
 status_military_salary: "Military Salary: "
 hover_message_click_to_claim: "Click to claim money owed to you."
+
+#Added in 0.31
+msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
