@@ -28,6 +28,10 @@
       <id>cannons-repo</id>
       <url>https://github.com/DerPavlov/mvn-repo/raw/master/</url>
     </repository>
+    <repository>
+      <id>citizens-repo</id>
+      <url>https://repo.citizensnpcs.co/</url>
+    </repository>
   </repositories>
   
   <dependencies>
