@@ -177,8 +177,12 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		if (session.isActive())
 			Messaging.sendMsg(player, Translation.of("msg_session_is_active_now"));
 		else {
-			long timeRemaining = session.getScheduledStartTime() - System.currentTimeMillis(); 
-			Messaging.sendMsg(player, Translation.of("msg_next_siege_session_in_minutes", TimeMgmt.getFormattedTimeValue(timeRemaining)));
+			String message = Translation.of("msg_next_session_cannot_be_determined");
+			if (session.getScheduledStartTime() != null) {
+				long timeRemaining = session.getScheduledStartTime() - System.currentTimeMillis(); 
+				message = Translation.of("msg_next_siege_session_in_minutes", TimeMgmt.getFormattedTimeValue(timeRemaining));
+			}
+			Messaging.sendMsg(player, message);
 		}
 		
 	}
