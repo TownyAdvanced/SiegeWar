@@ -336,7 +336,7 @@ public class SiegeWarBattleSessionUtil {
 			}
 		}
 		
-		//Save list if it has changed (This will happen only if an entry has dropped off)
+		//Save list if it has changed (This will happen if one or more entries have dropped off)
 		if(recentBattleSessionsList.size() != recalculatedRecentBattleSessionsList.size()) {
 			ResidentMetaDataController.setRecentBattleSessions(resident, recalculatedRecentBattleSessionsList);
 			resident.save();
