@@ -24,7 +24,10 @@ public class ResidentMetaDataController {
 	private static IntegerDataField refundAmount = new IntegerDataField("siegewar_nationrefund", 0);
 	private static IntegerDataField plunderAmount = new IntegerDataField("siegewar_plunder", 0);
 	private static IntegerDataField militarySalaryAmount = new IntegerDataField("siegewar_militarysalary", 0);
-	//A list of battle sessions the player was recently involved in
+	/*
+	 * A list of battle sessions the player was recently involved in
+	 * Sessions are identified by their start times (in millis)
+	 */
 	private static StringDataField recentBattleSessions = new StringDataField("siegewar_recentbattlesessions", "");
 
 	static String beaconsDisabled = "siegewar_beaconsdisabled";
