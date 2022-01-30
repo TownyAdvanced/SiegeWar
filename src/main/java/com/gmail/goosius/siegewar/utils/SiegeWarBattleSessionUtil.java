@@ -328,18 +328,22 @@ public class SiegeWarBattleSessionUtil {
 		if(recentBattleSessionsList.contains(startTimeOfCurrentBattleSessionAsString)) 
 			return false;			
 		
-		//Recalculate recent-sessions list, keeping only entries which are less then 24 hours old
+		//Recalculate recent-sessions list, keeping only entries which are newer then 24 hours old
 		List<String> recalculatedRecentBattleSessionsList = new ArrayList<>();
 		for(String battleSessionStartTime: recentBattleSessionsList) {
 			if(System.currentTimeMillis() - Long.parseLong(battleSessionStartTime) < ONE_DAY_IN_MILLIS) {
 				recalculatedRecentBattleSessionsList.add(battleSessionStartTime);
 			}
 		}
-		ResidentMetaDataController.setRecentBattleSessions(resident, recalculatedRecentBattleSessionsList);
-		resident.save();
+		
+		//Save list if it has changed (This will happen only if an entry has dropped off)
+		if(recentBattleSessionsList.size() != recalculatedRecentBattleSessionsList.size()) {
+			ResidentMetaDataController.setRecentBattleSessions(resident, recalculatedRecentBattleSessionsList);
+			resident.save();
+		}
 		
 		//Check if player is at their daily limit
-		if(recentBattleSessionsList.size() >= maxDailyPlayerBattleSessions) {
+		if(recalculatedRecentBattleSessionsList.size() >= maxDailyPlayerBattleSessions) {
 			//Player at or over the limit. Return true
 			return true;
 		} else {
