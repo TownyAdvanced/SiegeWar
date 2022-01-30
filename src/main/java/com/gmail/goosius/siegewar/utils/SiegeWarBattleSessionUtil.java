@@ -354,7 +354,12 @@ public class SiegeWarBattleSessionUtil {
 		}
 	}
 
-
+	/**
+	 * Gets the formatted time until a player is no longer limited by the max-daily-battle-sessions feature
+	 *
+	 * @param resident the resident
+	 * @return formatted time e.g.  11.2 minutes, 12.8 hours,
+	 */
 	public static String getFormattedTimeUntilPlayerBattleSessionLimitExpires(Resident resident) {
 		//Get list of recent sessions
 		String recentBattleSessionsString = ResidentMetaDataController.getRecentBattleSessions(resident);
