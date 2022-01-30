@@ -64,7 +64,7 @@ public class SiegeWarScoringUtil {
 		Player killer = getPlayerKiller(player);
 		if(killer != null)  {
 			Resident killerResident = TownyUniverse.getInstance().getResident(killer.getUniqueId());
-			if(killerResident != null || SiegeWarBattleSessionUtil.isDailyBattleSessionLimitActiveForResident(killerResident)) {
+			if(killerResident != null && SiegeWarBattleSessionUtil.isDailyBattleSessionLimitActiveForResident(killerResident)) {
 					String message = Translation.of("msg_war_siege_max_daily_player_battle_sessions_reached_cannot_get_kill_points",
 												SiegeWarSettings.getMaxDailyPlayerBattleSessions(),
 												SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(killerResident));
