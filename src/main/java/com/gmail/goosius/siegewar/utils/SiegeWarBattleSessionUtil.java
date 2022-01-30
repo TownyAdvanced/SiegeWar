@@ -8,20 +8,19 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.events.BattleSessionEndedEvent;
 import com.gmail.goosius.siegewar.events.BattleSessionPreStartEvent;
 import com.gmail.goosius.siegewar.events.BattleSessionStartedEvent;
+import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 import java.time.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SiegeWarBattleSessionUtil {
 	
@@ -282,5 +281,72 @@ public class SiegeWarBattleSessionUtil {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * Checks if the daily battle session limit is active for the given player
+	 * 
+	 * 
+	 */
+	public static boolean isDailyBattleSessionLimitActiveForPlayer(Player player)  {
+		//Return false if daily battle session limits are disabled in config
+		if(SiegeWarSettings.isDailyBattleSessionLimitsEnabled())
+			return false;
+
+		//Return false if current battle session is inactive
+		if(BattleSession.getBattleSession().isActive())
+			return false;
+		
+		//Return false if current sessions has no start time
+		if(BattleSession.getBattleSession().getScheduledStartTime() == null)
+			return false;
+		
+		//If player's recent-sessions list is null, initialize it
+		String recentBattleSessionsString = ResidentMetaDataController.getRecentBattleSessions(resident);
+		if(recentBattleSessionsString == null) {
+			ResidentMetaDataController.setRecentBattleSessions(resident,"");
+			recentBattleSessionsString = "";
+		}
+		
+		//Transform recent battle sessions string into List
+		List<String> recentBattleSessionsList;
+		if(recentBattleSessionsString.length() == 0) {
+			recentBattleSessionsList = new ArrayList<>();		
+		} else {
+			String[] recentBattleSessionsArray = recentBattleSessionsString.replaceAll(" ","").split(",");
+			recentBattleSessionsList = Arrays.asList(recentBattleSessionsArray);
+		}
+		
+		//Return true if current session is in the player's recent-sessions list
+		String startTimeOfCurrentBattleSessionAsString = BattleSession.getBattleSession().getScheduledStartTime().toString();
+		if(recentBattleSessionsList.contains(startTimeOfCurrentBattleSessionAsString)) 
+			return true;			
+		
+		//Recalculate recent-sessions list, keeping only entries which are less then 24 hours old
+		List<String> recalculatedRecentBattleSessionsList = new ArrayList<>();
+		for(String battleSessionStartTime: recentBattleSessionsList) {
+			if(Long.parseLong(battleSessionStartTime) > System.currentTimeMillis() - 86400000) {
+				recalculatedRecentBattleSessionsList.add(battleSessionStartTime);
+			}
+		}
+		ResidentMetaDataController.setRecentBattleSessions(resident, Arrays.toString(recalculatedRecentBattleSessionsList.toArray()));
+		
+		//Check if player is at their daily bs-limit
+		int maxAllowedDailyBattlesSessions = getMaxAllowedDailyBattleSessions();
+		if(recentBattleSessionsList.size() >= maxAllowedDailyBattlesSessions) {
+			//Player at the limit. Return true
+			return true;
+		} else {
+			//Player not at the limit. Add the current session to the recent-sessions list, then return false 
+			recalculatedRecentBattleSessionsList.add(BattleSession.getBattleSession().getScheduledStartTime().toString());		
+			ResidentMetaDataController.setRecentBattleSessions(resident, Arrays.toString(recalculatedRecentBattleSessionsList.toArray()));
+			return false;
+		}
+	}
+
+	private static int getMaxAllowedDailyBattleSessions() {
+		//todo - determine if weekend or weekday (use utc)
+		//Depending on this, get max allowed
+		return 2;
 	}
 }
