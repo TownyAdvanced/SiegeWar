@@ -513,5 +513,5 @@ hover_message_click_to_claim: "Click to claim money owed to you."
 msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
 
 #Added in 0.32
-msg_war_siege_max_daily_player_battle_sessions_reached_cannot_get_banner_control: "Banner capture failed because you have reached your daily battle session limit (%d). Try again in %s."
-msg_war_siege_max_daily_player_battle_sessions_reached_cannot_get_kill_points: "Battle points not awarded because you have reached your daily battle session limit (%d). Try again in %s."
+msg_war_siege_max_daily_player_battle_sessions_reached_cannot_get_banner_control: "&cBanner capture failed because you have reached your daily battle session limit (%d). Try again in %s."
+msg_war_siege_max_daily_player_battle_sessions_reached_cannot_get_kill_points: "&cBattle points not awarded because you have reached your daily battle session limit (%d). Try again in %s."

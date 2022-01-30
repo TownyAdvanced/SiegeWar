@@ -10,6 +10,8 @@ import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 /**
  * 
  * @author LlmDl
@@ -176,6 +178,11 @@ public class ResidentMetaDataController {
 		if (resident.hasMeta(sdf.getKey()))
 			return MetaDataUtil.getString(resident, sdf);
 		return null;
+	}
+	
+	public static void setRecentBattleSessions(Resident resident, List<String> listOfStrings) {
+		String valueAsString = listOfStrings.toString().replaceAll("\\[","").replaceAll("]","");
+		setRecentBattleSessions(resident,valueAsString);
 	}
 	
 	public static void setRecentBattleSessions(Resident resident, String value) {
