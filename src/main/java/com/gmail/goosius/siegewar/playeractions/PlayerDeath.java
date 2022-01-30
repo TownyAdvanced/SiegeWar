@@ -128,6 +128,7 @@ public class PlayerDeath {
 					}
 
 					boolean residentIsAttacker = confirmedCandidateSiegePlayerSide == SiegeSide.ATTACKERS;
+
 					SiegeWarScoringUtil.awardPenaltyPoints(
 						residentIsAttacker,
 						deadPlayer,

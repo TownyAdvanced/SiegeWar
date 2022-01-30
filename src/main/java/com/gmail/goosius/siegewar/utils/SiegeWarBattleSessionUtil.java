@@ -25,6 +25,7 @@ import java.util.*;
 public class SiegeWarBattleSessionUtil {
 	
 	private static Map<Siege, Integer> battleResults = new HashMap<>();
+	private static final long ONE_DAY_IN_MILLIS = 86400000;
 
 	/**
 	 * Attempt to schedule the next battle session
@@ -284,20 +285,25 @@ public class SiegeWarBattleSessionUtil {
 	}
 
 	/**
-	 * Checks if the daily battle session limit is active for the given player
+	 * Checks if the daily battle session limit is active for the given resident
 	 * 
-	 * 
+	 * @return true if the limit is active, false if the limit is inactive
 	 */
-	public static boolean isDailyBattleSessionLimitActiveForPlayer(Player player)  {
-		//Return false if daily battle session limits are disabled in config
-		if(SiegeWarSettings.isDailyBattleSessionLimitsEnabled())
+	public static boolean isDailyBattleSessionLimitActiveForResident(Resident resident)  {
+		//Return false if there are no limits
+		int maxDailyPlayerBattleSessions = SiegeWarSettings.getMaxDailyPlayerBattleSessions();
+		if(maxDailyPlayerBattleSessions == -1)
 			return false;
+			
+		//Return true if the limit is 0
+		if(maxDailyPlayerBattleSessions == 0)
+			return true;
 
 		//Return false if current battle session is inactive
 		if(BattleSession.getBattleSession().isActive())
 			return false;
 		
-		//Return false if current sessions has no start time
+		//Return false if current session has no start time
 		if(BattleSession.getBattleSession().getScheduledStartTime() == null)
 			return false;
 		
@@ -305,10 +311,11 @@ public class SiegeWarBattleSessionUtil {
 		String recentBattleSessionsString = ResidentMetaDataController.getRecentBattleSessions(resident);
 		if(recentBattleSessionsString == null) {
 			ResidentMetaDataController.setRecentBattleSessions(resident,"");
+			resident.save();
 			recentBattleSessionsString = "";
 		}
 		
-		//Transform recent battle sessions string into List
+		//Transform recent-sessions string into List
 		List<String> recentBattleSessionsList;
 		if(recentBattleSessionsString.length() == 0) {
 			recentBattleSessionsList = new ArrayList<>();		
@@ -325,28 +332,52 @@ public class SiegeWarBattleSessionUtil {
 		//Recalculate recent-sessions list, keeping only entries which are less then 24 hours old
 		List<String> recalculatedRecentBattleSessionsList = new ArrayList<>();
 		for(String battleSessionStartTime: recentBattleSessionsList) {
-			if(Long.parseLong(battleSessionStartTime) > System.currentTimeMillis() - 86400000) {
+			if(System.currentTimeMillis() - Long.parseLong(battleSessionStartTime) < ONE_DAY_IN_MILLIS) {
 				recalculatedRecentBattleSessionsList.add(battleSessionStartTime);
 			}
 		}
 		ResidentMetaDataController.setRecentBattleSessions(resident, Arrays.toString(recalculatedRecentBattleSessionsList.toArray()));
+		resident.save();
 		
-		//Check if player is at their daily bs-limit
-		int maxAllowedDailyBattlesSessions = getMaxAllowedDailyBattleSessions();
-		if(recentBattleSessionsList.size() >= maxAllowedDailyBattlesSessions) {
-			//Player at the limit. Return true
+		//Check if player is at their daily limit
+		if(recentBattleSessionsList.size() >= maxDailyPlayerBattleSessions) {
+			//Player at or over the limit. Return true
 			return true;
 		} else {
 			//Player not at the limit. Add the current session to the recent-sessions list, then return false 
 			recalculatedRecentBattleSessionsList.add(BattleSession.getBattleSession().getScheduledStartTime().toString());		
 			ResidentMetaDataController.setRecentBattleSessions(resident, Arrays.toString(recalculatedRecentBattleSessionsList.toArray()));
+			resident.save();
 			return false;
 		}
 	}
 
-	private static int getMaxAllowedDailyBattleSessions() {
-		//todo - determine if weekend or weekday (use utc)
-		//Depending on this, get max allowed
-		return 2;
+
+	public static String getFormattedTimeUntilPlayerBattleSessionLimitExpires(Resident resident) {
+		//Get list of recent sessions
+		String recentBattleSessionsString = ResidentMetaDataController.getRecentBattleSessions(resident);
+
+		//If player's recent-sessions list is null, initialize it
+		if(recentBattleSessionsString == null) {
+			ResidentMetaDataController.setRecentBattleSessions(resident,"");
+			resident.save();
+			recentBattleSessionsString = "";
+		}
+		
+		/*
+		 * If the list is blank at this point, it means that the server has limited player sessions to 0
+		 * This should be ideally be done via the scheduler
+		 * But in any case, lets return something
+		*/
+		if(recentBattleSessionsString.length()== 0)
+			return "?";
+
+		//The 1st entry will be the oldest one. Find out when it will drop off the list
+		String stringStartTimeOfOldestSession = recentBattleSessionsString.replace(" ", "").split(",")[0];
+		long longStartTimeOfOldestSession = Long.parseLong(stringStartTimeOfOldestSession);
+		long millisSinceOldestSessionStarted = System.currentTimeMillis() - longStartTimeOfOldestSession; //will be less than 24 hrs
+		long millisUntilOldestSessionDropsOffList = ONE_DAY_IN_MILLIS - millisSinceOldestSessionStarted;
+		
+		return TimeMgmt.getFormattedTimeValue(millisUntilOldestSessionDropsOffList);	
 	}
 }

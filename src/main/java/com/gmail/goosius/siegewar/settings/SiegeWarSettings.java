@@ -530,4 +530,24 @@ public class SiegeWarSettings {
 	public static int getSiegeCampDurationInMinutes() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_SIEGECAMPS_DURATION_IN_MINUTES);
 	}
+
+	public static int getMaxDailyPlayerBattleSessions() {
+		DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
+		boolean weekend = dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
+		
+		if(weekend) {
+			return getWeekendMaxDailyPlayerBattleSessions();
+		} else {
+			return getWeekdayMaxDailyPlayerBattleSessions();			
+		}
+	}
+
+	private static int getWeekdayMaxDailyPlayerBattleSessions() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_WEEKDAY_MAX_DAILY_PLAYER_BATTLE_SESSIONS);
+	}
+
+	private static int getWeekendMaxDailyPlayerBattleSessions() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_WEEKEND_MAX_DAILY_PLAYER_BATTLE_SESSIONS);
+	}
+	
 }

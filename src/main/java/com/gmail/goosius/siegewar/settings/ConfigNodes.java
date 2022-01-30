@@ -533,7 +533,7 @@ public enum ConfigNodes {
 			""),
 	WAR_SIEGE_BATTLE_SESSION_WEEKDAY_START_TIMES_UTC(
 			"war.siege.battle_session.weekday_start_times_utc",
-			"19:10,21:10",
+			"12:10,14:10,16:10,18:10,20:10",
 			"",
 			"# This value determines the UTC weekday times when each battle session will start.",
 			"# This setting applies to Monday, Tuesday, Wednesday, Thursday, and Friday.",
@@ -554,6 +554,20 @@ public enum ConfigNodes {
 			"# This value determines the duration of each battle session.",
 			"# After a battle session ends,",
 			"# the time period until the next battle session starts, is defined as a 'break'"),
+	WAR_SIEGE_BATTLE_SESSION_WEEKDAY_MAX_DAILY_PLAYER_BATTLE_SESSIONS(
+			"war.siege.battle_session.weekday_max_daily_player_battle_sessions",
+			"2",
+			"",
+			"# This value determines the maximum number of daily battle sessions allowed per player.",
+			"# This value applies on week-days.",
+			"# Set this value to -1 to disable the limit"),
+	WAR_SIEGE_BATTLE_SESSION_WEEKEND_MAX_DAILY_PLAYER_BATTLE_SESSIONS(
+			"war.siege.battle_session.weekend_max_daily_player_battle_sessions",
+			"5",
+			"",
+			"# This value determines the maximum number of daily battle sessions allowed per player.",
+			"# This value applies on weekend-days.",
+			"# Set this value to -1 to disable the limit"),
 	WAR_SIEGE_BANNER_CONTROL_REVERSAL_BONUS(
 			"war.siege.banner_control_reversal_bonus",
 			"",
