@@ -89,11 +89,11 @@ public class BattleSession {
 	public void setScheduledStartTime(Long scheduledStartTime) {
 		this.scheduledStartTime = scheduledStartTime;
 	}
-	
+
 	public Long getStartTime() {
 		return startTime;
 	}
-	
+
 	public void setStartTime(long startTime) {
 		this.startTime = startTime;
 	}

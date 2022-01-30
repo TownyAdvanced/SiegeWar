@@ -89,7 +89,7 @@ public class SiegeWarBannerControlUtil {
 					Messaging.sendErrorMsg(player, message);
 					continue;
 				}
-					
+
 				SiegeSide siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
 
 				switch(siegeSide) {

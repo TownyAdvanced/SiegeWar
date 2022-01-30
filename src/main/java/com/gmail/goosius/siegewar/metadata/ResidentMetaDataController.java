@@ -171,7 +171,7 @@ public class ResidentMetaDataController {
 	public static boolean getBossBarsDisabled(Resident resident) {
 		return getBoolean(resident, bossBarsDisabled);
 	}
-	
+
 	@Nullable
 	public static String getRecentBattleSessions(Resident resident) {
 		StringDataField sdf = (StringDataField) recentBattleSessions.clone();
@@ -179,12 +179,12 @@ public class ResidentMetaDataController {
 			return MetaDataUtil.getString(resident, sdf);
 		return null;
 	}
-	
+
 	public static void setRecentBattleSessions(Resident resident, List<String> listOfStrings) {
 		String valueAsString = listOfStrings.toString().replaceAll("\\[","").replaceAll("]","");
 		setRecentBattleSessions(resident,valueAsString);
 	}
-	
+
 	public static void setRecentBattleSessions(Resident resident, String value) {
 		StringDataField sdf = (StringDataField) recentBattleSessions.clone();
 		if (resident.hasMeta(sdf.getKey()))

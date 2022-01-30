@@ -291,17 +291,16 @@ public class SiegeWarBattleSessionUtil {
 	 * 
 	 * @return true if the limit is active, false if the limit is inactive
 	 */
-	public static boolean isDailyBattleSessionLimitActiveForResident(Resident resident)  {	
+	public static boolean isDailyBattleSessionLimitActiveForResident(Resident resident)  {
 		//Return false if there are no limits
 		int maxDailyPlayerBattleSessions = SiegeWarSettings.getMaxDailyPlayerBattleSessions();
-		
 		if(maxDailyPlayerBattleSessions == -1)
 			return false;
-		
+
 		//Return true if the limit is 0
 		if(maxDailyPlayerBattleSessions == 0)
 			return true;
-		
+
 		//Return false if current battle session is inactive
 		if(!BattleSession.getBattleSession().isActive())
 			return false;
@@ -327,7 +326,7 @@ public class SiegeWarBattleSessionUtil {
 		String startTimeOfCurrentBattleSessionAsString = BattleSession.getBattleSession().getStartTime().toString();
 		if(recentBattleSessionsList.contains(startTimeOfCurrentBattleSessionAsString)) 
 			return false;			
-		
+
 		//Recalculate recent-sessions list, keeping only entries which are newer then 24 hours old
 		List<String> recalculatedRecentBattleSessionsList = new ArrayList<>();
 		for(String battleSessionStartTime: recentBattleSessionsList) {
@@ -336,19 +335,19 @@ public class SiegeWarBattleSessionUtil {
 			}
 		}
 		
-		//Save list if it has changed (This will happen if one or more entries have dropped off)
+		//Save recent-session list if it has changed (will happen if one or more entries have dropped off)
 		if(recentBattleSessionsList.size() != recalculatedRecentBattleSessionsList.size()) {
 			ResidentMetaDataController.setRecentBattleSessions(resident, recalculatedRecentBattleSessionsList);
 			resident.save();
 		}
-		
+
 		//Check if player is at their daily limit
 		if(recalculatedRecentBattleSessionsList.size() >= maxDailyPlayerBattleSessions) {
 			//Player at or over the limit. Return true
 			return true;
 		} else {
 			//Player not at the limit. Add the current session to the recent-sessions list, then return false 
-			recalculatedRecentBattleSessionsList.add(BattleSession.getBattleSession().getStartTime().toString());		
+			recalculatedRecentBattleSessionsList.add(BattleSession.getBattleSession().getStartTime().toString());
 			ResidentMetaDataController.setRecentBattleSessions(resident, recalculatedRecentBattleSessionsList);
 			resident.save();
 			return false;
@@ -366,7 +365,7 @@ public class SiegeWarBattleSessionUtil {
 			resident.save();
 			recentBattleSessionsString = "";
 		}
-		
+
 		/*
 		 * If the list is blank at this point, it means that the server has limited player sessions to 0
 		 * This should be ideally be done via the scheduler
@@ -380,7 +379,7 @@ public class SiegeWarBattleSessionUtil {
 		long longStartTimeOfOldestSession = Long.parseLong(stringStartTimeOfOldestSession);
 		long millisSinceOldestSessionStarted = System.currentTimeMillis() - longStartTimeOfOldestSession; //will be less than 24 hrs
 		long millisUntilOldestSessionDropsOffList = ONE_DAY_IN_MILLIS - millisSinceOldestSessionStarted;
-		
-		return TimeMgmt.getFormattedTimeValue(millisUntilOldestSessionDropsOffList);	
+
+		return TimeMgmt.getFormattedTimeValue(millisUntilOldestSessionDropsOffList);
 	}
 }

@@ -69,10 +69,10 @@ public class SiegeWarScoringUtil {
 												SiegeWarSettings.getMaxDailyPlayerBattleSessions(),
 												SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(killerResident));
 					Messaging.sendErrorMsg(killer, message);
-					return;				
+					return;
 			}
 		}
-		
+
 		//Give battle points to opposing side
 		int battlePoints;
 		if (residentIsAttacker) {

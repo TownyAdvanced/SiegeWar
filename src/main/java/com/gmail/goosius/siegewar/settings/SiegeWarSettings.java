@@ -534,11 +534,11 @@ public class SiegeWarSettings {
 	public static int getMaxDailyPlayerBattleSessions() {
 		DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
 		boolean weekend = dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
-		
+
 		if(weekend) {
 			return getWeekendMaxDailyPlayerBattleSessions();
 		} else {
-			return getWeekdayMaxDailyPlayerBattleSessions();			
+			return getWeekdayMaxDailyPlayerBattleSessions();
 		}
 	}
 
@@ -549,5 +549,5 @@ public class SiegeWarSettings {
 	private static int getWeekendMaxDailyPlayerBattleSessions() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_WEEKEND_MAX_DAILY_PLAYER_BATTLE_SESSIONS);
 	}
-	
+
 }
