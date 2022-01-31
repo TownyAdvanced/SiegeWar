@@ -345,10 +345,10 @@ public class SiegeWarBannerControlUtil {
 		for(Player player: Bukkit.getOnlinePlayers()) {
 			resident = universe.getResident(player.getUniqueId());
 			if (resident == null)
-				return;
+				continue;
 
 			if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
-				return;
+				continue;
 
 			siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
 			
