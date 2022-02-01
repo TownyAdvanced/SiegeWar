@@ -24,13 +24,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.UUID;
-import java.util.Comparator;
+
+import java.util.*;
 
 public class TownPeacefulnessUtil {
 
@@ -390,21 +385,19 @@ public class TownPeacefulnessUtil {
 	
 	
     /**
-     * Calculates the amount of Towny-Influence, on the target town, by the given nation
-     *
+     * Calculates the Towny-Influence map for the target town
+     * 
      * @param targetTown targetTown
-     * @param givenNation given nation
      *
-     * @return Towny influence amount
+     * @return Towny-Influence map ....in the form: NationX:Amt, NationY:Amt, NationZ:Amt ....etc.
+     *         The map is sorted in descending order, with the highest influence nation being first
      */
-    public static int calculateTownyInfluenceAmount(Town targetTown, Nation givenNation) {
-		TownyUniverse townyUniverse = TownyUniverse.getInstance();
-		List<Town> allTowns = new ArrayList<>(townyUniverse.getDataSource().getTowns());
+    public static Map<Nation,Integer> calculateTownyInfluenceMap(Town targetTown) {
+		Map<Nation,Integer> result = new LinkedHashMap<>();
+		List<Town> allTowns = new ArrayList<>(TownyUniverse.getInstance().getDataSource().getTowns());
 		ListIterator<Town> allTownsItr = allTowns.listIterator();
 		Town town;
-		int modifiedTowns = 0;
-		boolean townTransferred;
-		Nation nationWithStrongestInfluence;
+		Nation nation;
 
 		//Cycle all towns
 		while (allTownsItr.hasNext()) {
@@ -419,77 +412,78 @@ public class TownPeacefulnessUtil {
 				if(town.isNeutral())
 					continue;
 				
+				//Skip is town has no nation
+				if(!town.hasNation())
+					continue;
+				
 				//Skip if town is besieged
 				if(SiegeController.hasActiveSiege(town))
 					continue;
 					
-				
+				//Skip if town is too far from target town
+				int townyInfluenceRadiusInTownBlocks = SiegeWarSettings.getPeacefulTownsTownyInfluenceRadius() / TownySettings.getTownBlockSize();
+				if(!SiegeWarDistanceUtil.areTownsClose(town, targetTown, townyInfluenceRadiusInTownBlocks))
+					continue;					
 					
-				//Skip if town neither belongs to, nor is occupied by, given nation
-				if(
-					!(
-						(town.hasNation() && town.getNation() == givenNation)
-							||
-						(TownOccupationController.isTownOccupied(town) && TownOccupationController.getTownOccupier(town) == givenNation)
-					)
-				) {
-					continue;
-				}
-
-					
-
-				//Find nearby nations with influence on the town (result is Map<nation, strength-of-influence>)
-				Map<Nation, Long> nationsWithInfluence = findNearbyNationsWithInfluence(peacefulTown);
-
-				//Amplify influence of home & enemy nations
-				nationsWithInfluence = amplifyInfluenceOfHomeAndEnemyNations(nationsWithInfluence, peacefulTown);
-
-				if (nationsWithInfluence.size() == 0) {
-					//The town is not affected by influence.
-					//Ensure peaceful town is unoccupied.
-					townTransferred = ensureTownIsPeacefullyUnoccupied(peacefulTown);
+				//Update towny-influence map
+				nation = town.getNation();
+				if(result.containsKey(nation)) {
+					result.put(nation, result.get(nation) + town.getTownBlocks().size());
 				} else {
-					//The town is affected by influence
-					//Get the nation with the strongest influence
-					nationWithStrongestInfluence = calculateNationWithStrongestInfluence(nationsWithInfluence);
-
-					//Set town occupation status
-					if (peacefulTown.hasNation() && peacefulTown.getNation() == nationWithStrongestInfluence) {
-						//Strongest nation is the town's home nation. Ensure town is unoccupied.
-						townTransferred = ensureTownIsPeacefullyUnoccupied(peacefulTown);
-					} else {
-						//Strongest nation is not the town's home nation. Ensure town is occupied by that nation.
-						townTransferred = ensureTownIsPeacefullyOccupied(peacefulTown, nationWithStrongestInfluence);
-					}
+					result.put(nation, town.getTownBlocks().size());
 				}
-
-				if (townTransferred)
-					modifiedTowns += 1;
-
 			} catch (Exception e) {
 				try {
-					SiegeWar.severe("Problem evaluating peaceful town nation assignment for - " + peacefulTown.getName());
+					SiegeWar.severe("Problem evaluating towny-influence map generation for town: " + targetTown.getName());
 				} catch (Exception e2) {
-					SiegeWar.severe("Problem evaluating peaceful town nation assignment (could not read town name)");
+					SiegeWar.severe("Problem evaluating towny-influence map generation for town (could not read town name)");
 				}
 				e.printStackTrace();
 			}
 		}
-		//Send a global message with how many towns were modified.
-		if (modifiedTowns > 0) {
-			boolean one = modifiedTowns == 1;
-			Messaging.sendGlobalMessage(Translation.of("msg_peaceful_town_total_switches", modifiedTowns, one ? "" : "s", one ? "has" : "have"));
-		}
+		//Sort result, highest result first
+		result = sortTownyInfluenceMap(result);
+		//Return result
+		return result;
     }
 
-    /**
-     * Calculates the nation with the highest Towny-Influence on the given town
-     * Returns null if no towns have any Towny-Influence on the given town
-     * 
-     * @param town the given town
-     * @return result nation, or null if no nations have Towny-Influence
-     */
-    public static Nation calculateNationWithHighestTownyInfluence(Town town) {
+	/**
+	 * Sort the influence map in descending order, so that the nation with the highest value,
+	 * is first in the map.
+	 * 
+	 * @param unsortedTownyInfluenceMap the given unsorted map
+	 * @return sorted towny-influence map
+	 */
+	private static Map<Nation,Integer> sortTownyInfluenceMap(Map<Nation,Integer> unsortedTownyInfluenceMap) {
+ 		// Now, getting all entries from map and
+        // convert it to a list using entrySet() method
+        List<Map.Entry<Nation, Integer>> list = new ArrayList<>(unsortedTownyInfluenceMap.entrySet());
+ 
+        // Using collections class sort method
+        // and inside which we are using
+        // custom comparator to compare value of map
+        Collections.sort(
+            list,
+            new Comparator<Map.Entry<Nation, Integer> >() {
+                // Comparing two entries by value
+                public int compare(
+                    Map.Entry<Nation, Integer> entry1,
+                    Map.Entry<Nation, Integer> entry2)
+                { 
+                    // Subtracting the entries
+                    return entry2.getValue()
+                        - entry1.getValue();
+                }
+            });
+            
+		// Iterating over the sorted map
+        // using the for each method
+		Map<Nation, Integer> result = new LinkedHashMap<>(); 
+        for (Map.Entry<Nation, Integer> mapEntry : list) {
+ 			result.put(mapEntry.getKey(), mapEntry.getValue());
+        }
         
-    }
+       return result;
+ 	}
+
 }

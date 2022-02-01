@@ -4,13 +4,17 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.listeners.SiegeWarPlotEventListener;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.entity.Player;
+
+import java.util.Map;
 
 /**
  * This class is responsible for processing requests by towns to peacefully revolt.
@@ -72,9 +76,11 @@ public class PeacefullyRevolt {
 	 * @throws TownyException if the occupier has more than zero Towny-Influence.
 	 */
     private static void verifyThatOccupierHasZeroTownyInfluence(Town revoltingTown) throws TownyException {
+        Map<Nation, Integer> townyInfluenceMap = TownPeacefulnessUtil.calculateTownyInfluenceMap(revoltingTown);
         Nation occupier = TownOccupationController.getTownOccupier(revoltingTown);        
-        if(TownOccupationController.calculateTownyInfluenceAmount(revoltingTown, occupier) > 0) {
-            throw new TownyException(Translation.of("msg_err_cannot_peacefully_revolt_because_occupier_has_influence", occupier.getName()));
+        if(townyInfluenceMap.containsKey(occupier)) {
+            int occupierInfluence = townyInfluenceMap.get(occupier);
+            throw new TownyException(Translation.of("msg_err_cannot_peacefully_revolt_because_occupier_has_influence", occupier.getName(), occupierInfluence));
         }
     }
 }

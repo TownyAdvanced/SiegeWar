@@ -499,5 +499,8 @@ msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town
 msg_town_returned_to_pre_peaceful_occupier: " The town has been returned to the occupier it had before it turned peaceful - %s."
 msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already occupies it."
 msg_err_cannot_subvert_towns_in_own_nation: "&cYou cannot subvert towns which are in your own nation."
+msg_err_cannot_subvert_town_zero_influence: "&cYou cannot subvert this town, because your nation has no Towny-Influence in the local area."
+msg_err_cannot_subvert_town_insufficient_influence: "&cYou cannot subvert this town, because %s has more Towny-Influence in the local area (%d), than your nation (%d)."
 msg_err_cannot_invite_peaceful_town_occupation: "&cYou cannot invite occupation if your town is peaceful."
 msg_err_cannot_peacefully_revolt_because_unoccupied: "&cThere is no need to peacefully revolt, because your town is not occupied."
+msg_err_cannot_peacefully_revolt_because_occupier_has_influence: "&cYour town cannot peacefully revolt, because its occupier, %s, still has some Towny-Influence in the local area (%d)."

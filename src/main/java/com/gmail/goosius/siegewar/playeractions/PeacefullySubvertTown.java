@@ -7,6 +7,7 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
+import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -14,6 +15,9 @@ import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.entity.Player;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * This class is responsible for processing requests by nations to peacefully 'subvert' towns.
@@ -23,7 +27,6 @@ import org.bukkit.entity.Player;
  * @author Goosius
  */
 public class PeacefullySubvertTown {
-
 
 	/**
 	 * Process a subvert town request
@@ -82,15 +85,28 @@ public class PeacefullySubvertTown {
 
 	/**
 	 * Verify if the given nation has enough Towny-Influence to subvert the given town
-	 * 
+	 *
+	 * @param nation the nation attempting subversion
+	 * @param targetTown the town targeted for subversion
+	 *
 	 * @throws TownyException if the nation does not have enough Towny-Influence
 	 */
-	private static void verifyThatNationHasEnoughTownyInfluenceToSubvertTown(Nation residentsNation, Town targetTown) throws TownyException {
-	
-	
-	msg_err_cannot_subvert_town_zero_influence	
+	private static void verifyThatNationHasEnoughTownyInfluenceToSubvertTown(Nation nation, Town targetTown) throws TownyException {
+	    Map<Nation, Integer> townyInfluenceMap = TownPeacefulnessUtil.calculateTownyInfluenceMap(targetTown);
+        if(townyInfluenceMap.size() == 0) {
+        	//No nation has towny-influence in the local area
+            throw new TownyException(Translation.of("msg_err_cannot_subvert_town_zero_influence"));
+        } else {
+        	Nation topNation = townyInfluenceMap.keySet().iterator().next();
+        	if(topNation != nation) {
+        		//A different nation is top of the towny-influence map
+        		int nationScore = townyInfluenceMap.get(nation) != null ? townyInfluenceMap.get(nation) : 0;
+        		int topNationScore = townyInfluenceMap.get(topNation);
+	            throw new TownyException(Translation.of("msg_err_cannot_subvert_town_insufficient_influence", topNation.getName(), topNationScore, nationScore));    		
+			}
+		}
 	}
-	
+
 	/**
 	 * Subvert the town
 	 *
@@ -103,7 +119,7 @@ public class PeacefullySubvertTown {
 
 		//Save to db
         targetTown.save();
-		
+
 		/*
 		 * Messaging
 		 *
