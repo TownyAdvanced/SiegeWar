@@ -16,7 +16,6 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.entity.Player;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**

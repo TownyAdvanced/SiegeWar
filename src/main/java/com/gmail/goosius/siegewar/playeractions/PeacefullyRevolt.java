@@ -79,8 +79,8 @@ public class PeacefullyRevolt {
         Map<Nation, Integer> townyInfluenceMap = TownPeacefulnessUtil.calculateTownyInfluenceMap(revoltingTown);
         Nation occupier = TownOccupationController.getTownOccupier(revoltingTown);        
         if(townyInfluenceMap.containsKey(occupier)) {
-            int occupierInfluence = townyInfluenceMap.get(occupier);
-            throw new TownyException(Translation.of("msg_err_cannot_peacefully_revolt_because_occupier_has_influence", occupier.getName(), occupierInfluence));
+            int occupierInfluenceAmount = townyInfluenceMap.get(occupier);
+            throw new TownyException(Translation.of("msg_err_cannot_peacefully_revolt_because_occupier_has_influence", occupier.getName(), occupierInfluenceAmount));
         }
     }
 }
