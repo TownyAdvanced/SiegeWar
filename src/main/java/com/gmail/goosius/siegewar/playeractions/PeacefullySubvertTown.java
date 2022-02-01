@@ -20,8 +20,8 @@ import java.util.Map;
 
 /**
  * This class is responsible for processing requests by nations to peacefully 'subvert' towns.
- * 
- * If such a request successful, the target town gets subverted immediately a.k.a occupied.
+ *
+ * If such a request is successful, the target town gets subverted immediately a.k.a occupied.
  *
  * @author Goosius
  */
@@ -33,11 +33,11 @@ public class PeacefullySubvertTown {
 	 * @param player the player attempting the subvert.
 	 * @param residentsNation the nation of the player (can be null)
 	 * @param targetTown the target town. We know the player is not a resident.
-	 * 
+	 *
 	 * @throws TownyException if subvert is not allowed
 	 */
 	public static void processActionRequest(Player player, Nation residentsNation, Town targetTown) throws TownyException {
-		if(!SiegeWarSettings.getPeacefulTownsSubvertEnabled())
+		if(!SiegeWarSettings.isPeacefulTownsSubvertEnabled())
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SUBVERTPEACEFULTOWN.getNode()))
@@ -93,15 +93,15 @@ public class PeacefullySubvertTown {
 	private static void verifyThatNationHasEnoughTownyInfluenceToSubvertTown(Nation nation, Town targetTown) throws TownyException {
 	    Map<Nation, Integer> townyInfluenceMap = TownPeacefulnessUtil.calculateTownyInfluenceMap(targetTown);
         if(townyInfluenceMap.size() == 0) {
-        	//No nation has towny-influence in the local area
-            throw new TownyException(Translation.of("msg_err_cannot_subvert_town_zero_influence"));
+			//No nation has towny-influence in the local area
+			throw new TownyException(Translation.of("msg_err_cannot_subvert_town_zero_influence"));
         } else {
-        	Nation topNation = townyInfluenceMap.keySet().iterator().next();
-        	if(topNation != nation) {
-        		//A different nation is top of the towny-influence map
-        		int nationScore = townyInfluenceMap.get(nation) != null ? townyInfluenceMap.get(nation) : 0;
-        		int topNationScore = townyInfluenceMap.get(topNation);
-	            throw new TownyException(Translation.of("msg_err_cannot_subvert_town_insufficient_influence", topNation.getName(), topNationScore, nationScore));    		
+			Nation topNation = townyInfluenceMap.keySet().iterator().next();
+			if(topNation != nation) {
+				//A different nation is top of the towny-influence map
+				int nationScore = townyInfluenceMap.get(nation) != null ? townyInfluenceMap.get(nation) : 0;
+				int topNationScore = townyInfluenceMap.get(topNation);
+				throw new TownyException(Translation.of("msg_err_cannot_subvert_town_insufficient_influence", topNation.getName(), topNationScore, nationScore));
 			}
 		}
 	}

@@ -25,12 +25,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.UUID;
+import java.util.Comparator;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+
 
 public class TownPeacefulnessUtil {
 
 	/**
-	 * This method adjust the peacefulness counters of all towns, where required
+	 * This method adjusts the peacefulness counters of all towns, where required
 	 */
 	public static void updateTownPeacefulnessCounters() {
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
@@ -53,7 +62,7 @@ public class TownPeacefulnessUtil {
 	}
 
 	/**
-	 * This method adjust the peacefulness counter of a single town
+	 * This method adjusts the peacefulness counter of a single town
 	 */
 	public static void updateTownPeacefulnessCounters(Town town) {
 		String message;
@@ -220,7 +229,7 @@ public class TownPeacefulnessUtil {
 				//Skip if town is too far from target town
 				int townyInfluenceRadiusInTownBlocks = SiegeWarSettings.getPeacefulTownsTownyInfluenceRadius() / TownySettings.getTownBlockSize();
 				if(!SiegeWarDistanceUtil.areTownsClose(town, targetTown, townyInfluenceRadiusInTownBlocks))
-					continue;					
+					continue;
 
 				//Update towny-influence map
 				nation = town.getNation();
@@ -247,15 +256,15 @@ public class TownPeacefulnessUtil {
 	/**
 	 * Sort the influence map in descending order, so that the nation with the highest value,
 	 * is first in the map.
-	 * 
+	 *
 	 * @param unsortedTownyInfluenceMap the given unsorted map
 	 * @return sorted towny-influence map
 	 */
 	private static Map<Nation,Integer> sortTownyInfluenceMap(Map<Nation,Integer> unsortedTownyInfluenceMap) {
- 		// Now, getting all entries from map and
+		// Now, getting all entries from map and
         // convert it to a list using entrySet() method
         List<Map.Entry<Nation, Integer>> list = new ArrayList<>(unsortedTownyInfluenceMap.entrySet());
- 
+
         // Using collections class sort method
         // and inside which we are using
         // custom comparator to compare value of map
@@ -266,21 +275,20 @@ public class TownPeacefulnessUtil {
                 public int compare(
                     Map.Entry<Nation, Integer> entry1,
                     Map.Entry<Nation, Integer> entry2)
-                { 
+                {
                     // Subtracting the entries
                     return entry2.getValue()
                         - entry1.getValue();
                 }
             });
-            
-		// Iterating over the sorted map
-        // using the for each method
-		Map<Nation, Integer> result = new LinkedHashMap<>(); 
-        for (Map.Entry<Nation, Integer> mapEntry : list) {
- 			result.put(mapEntry.getKey(), mapEntry.getValue());
-        }
-        
-       return result;
- 	}
 
+		// Iterating over the sorted map
+		// using the for each method
+		Map<Nation, Integer> result = new LinkedHashMap<>();
+		for (Map.Entry<Nation, Integer> mapEntry : list) {
+			result.put(mapEntry.getKey(), mapEntry.getValue());
+		}
+
+		return result;
+	}
 }

@@ -234,7 +234,7 @@ public class PlaceBlock {
 														   Town nearbyTown,
 														   Block bannerBlock) throws TownyException {
 		if(nearbyTown.isNeutral()) {
-			//Town is peaceful, so this action is a subversion or peaceful-revolt attempt 
+			//Town is peaceful, so this action is a subversion or peaceful-revolt attempt
 			if(residentsTown == nearbyTown) {
 				PeacefullyRevolt.processActionRequest(player, nearbyTown);
 			} else {

@@ -177,16 +177,6 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_CONFIRMATION_REQUIREMENT_DAYS);
 	}
 
-	public static boolean getPeacefulTownsSubvertEnabled() {
-		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_SUBVERT_ENABLED);
-	}
-	
-	public static boolean getPeacefulTownsRevoltEnabled() {
-		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_REVOLT_ENABLED);
-	}
-	
-
-
 	public static boolean getWarSiegeBesiegedTownRecruitmentDisabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BESIEGED_TOWN_RECRUITMENT_DISABLED);
 	}
@@ -426,9 +416,9 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean isPeacefulTownsRevoltEnabled() {
-		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_REVOLT_ENABLED);		
+		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_REVOLT_ENABLED);
 	}
-	
+
 	public static int getPeacefulTownsTownyInfluenceRadius() {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_TOWNY_INFLUENCE_RADIUS);
 	}
