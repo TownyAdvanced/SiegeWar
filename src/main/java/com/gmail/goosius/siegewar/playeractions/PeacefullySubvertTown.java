@@ -86,7 +86,9 @@ public class PeacefullySubvertTown {
 	 * @throws TownyException if the nation does not have enough Towny-Influence
 	 */
 	private static void verifyThatNationHasEnoughTownyInfluenceToSubvertTown(Nation residentsNation, Town targetTown) throws TownyException {
-		
+	
+	
+	msg_err_cannot_subvert_town_zero_influence	
 	}
 	
 	/**

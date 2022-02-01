@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.utils;
 
 
 import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
@@ -386,4 +387,109 @@ public class TownPeacefulnessUtil {
 		//Return result
 		return guardianNations;
 	}
+	
+	
+    /**
+     * Calculates the amount of Towny-Influence, on the target town, by the given nation
+     *
+     * @param targetTown targetTown
+     * @param givenNation given nation
+     *
+     * @return Towny influence amount
+     */
+    public static int calculateTownyInfluenceAmount(Town targetTown, Nation givenNation) {
+		TownyUniverse townyUniverse = TownyUniverse.getInstance();
+		List<Town> allTowns = new ArrayList<>(townyUniverse.getDataSource().getTowns());
+		ListIterator<Town> allTownsItr = allTowns.listIterator();
+		Town town;
+		int modifiedTowns = 0;
+		boolean townTransferred;
+		Nation nationWithStrongestInfluence;
+
+		//Cycle all towns
+		while (allTownsItr.hasNext()) {
+			town = allTownsItr.next();
+
+			try {
+				//Skip if town is ruined
+				if (town.isRuined())
+					continue;
+					
+				//Skip if town is peaceful
+				if(town.isNeutral())
+					continue;
+				
+				//Skip if town is besieged
+				if(SiegeController.hasActiveSiege(town))
+					continue;
+					
+				
+					
+				//Skip if town neither belongs to, nor is occupied by, given nation
+				if(
+					!(
+						(town.hasNation() && town.getNation() == givenNation)
+							||
+						(TownOccupationController.isTownOccupied(town) && TownOccupationController.getTownOccupier(town) == givenNation)
+					)
+				) {
+					continue;
+				}
+
+					
+
+				//Find nearby nations with influence on the town (result is Map<nation, strength-of-influence>)
+				Map<Nation, Long> nationsWithInfluence = findNearbyNationsWithInfluence(peacefulTown);
+
+				//Amplify influence of home & enemy nations
+				nationsWithInfluence = amplifyInfluenceOfHomeAndEnemyNations(nationsWithInfluence, peacefulTown);
+
+				if (nationsWithInfluence.size() == 0) {
+					//The town is not affected by influence.
+					//Ensure peaceful town is unoccupied.
+					townTransferred = ensureTownIsPeacefullyUnoccupied(peacefulTown);
+				} else {
+					//The town is affected by influence
+					//Get the nation with the strongest influence
+					nationWithStrongestInfluence = calculateNationWithStrongestInfluence(nationsWithInfluence);
+
+					//Set town occupation status
+					if (peacefulTown.hasNation() && peacefulTown.getNation() == nationWithStrongestInfluence) {
+						//Strongest nation is the town's home nation. Ensure town is unoccupied.
+						townTransferred = ensureTownIsPeacefullyUnoccupied(peacefulTown);
+					} else {
+						//Strongest nation is not the town's home nation. Ensure town is occupied by that nation.
+						townTransferred = ensureTownIsPeacefullyOccupied(peacefulTown, nationWithStrongestInfluence);
+					}
+				}
+
+				if (townTransferred)
+					modifiedTowns += 1;
+
+			} catch (Exception e) {
+				try {
+					SiegeWar.severe("Problem evaluating peaceful town nation assignment for - " + peacefulTown.getName());
+				} catch (Exception e2) {
+					SiegeWar.severe("Problem evaluating peaceful town nation assignment (could not read town name)");
+				}
+				e.printStackTrace();
+			}
+		}
+		//Send a global message with how many towns were modified.
+		if (modifiedTowns > 0) {
+			boolean one = modifiedTowns == 1;
+			Messaging.sendGlobalMessage(Translation.of("msg_peaceful_town_total_switches", modifiedTowns, one ? "" : "s", one ? "has" : "have"));
+		}
+    }
+
+    /**
+     * Calculates the nation with the highest Towny-Influence on the given town
+     * Returns null if no towns have any Towny-Influence on the given town
+     * 
+     * @param town the given town
+     * @return result nation, or null if no nations have Towny-Influence
+     */
+    public static Nation calculateNationWithHighestTownyInfluence(Town town) {
+        
+    }
 }
