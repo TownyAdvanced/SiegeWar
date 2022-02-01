@@ -233,24 +233,23 @@ public class PlaceBlock {
 														   TownBlock nearbyTownBlock,
 														   Town nearbyTown,
 														   Block bannerBlock) throws TownyException {
-
-		//If the town is peaceful, then this action is a peaceful subversion/revolt attempt 
 		if(nearbyTown.isNeutral()) {
+			//Town is peaceful, so this action is a subversion or peaceful-revolt attempt 
 			if(residentsTown == nearbyTown) {
 				PeacefullyRevolt.processActionRequest(player, nearbyTown, bannerBlock);
 			} else {
 				PeacefullySubvertTown.processActionRequest(player, residentsNation, nearbyTown);
 			}
-		}
-
-		//Check whether nearby town has a current or recent siege
-		if (SiegeController.hasSiege(nearbyTown)) {
-			//If there is a siege, it is an attempt to invade the town
-			Siege siege = SiegeController.getSiege(nearbyTown);
-			InvadeTown.processInvadeTownRequest(player, residentsNation, nearbyTown, siege);
 		} else {
-			//If there is no siege, it is an attempt to start a new siege
-			evaluateStartNewSiegeAttempt(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
+			//Town is not peaceful, so this action is a start-siege or invade-town request
+			if (SiegeController.hasSiege(nearbyTown)) {
+				//If there is a siege, it is an attempt to invade the town
+				Siege siege = SiegeController.getSiege(nearbyTown);
+				InvadeTown.processInvadeTownRequest(player, residentsNation, nearbyTown, siege);
+			} else {
+				//If there is no siege, it is an attempt to start a new siege
+				evaluateStartNewSiegeAttempt(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
+			}
 		}
 	}
 
@@ -267,9 +266,6 @@ public class PlaceBlock {
 													 			  Town nearbyTown,
 													 			  Block bannerBlock
 											         			  ) throws TownyException {
-		if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && nearbyTown.isNeutral())
-			throw new TownyException(Translation.of("msg_err_cannot_start_siege_attack_at_peaceful_town"));
-
 		if (!SiegeWarDistanceUtil.isBannerToTownElevationDifferenceOk(bannerBlock, nearbyTownBlock))
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_place_banner_far_above_town"));
 

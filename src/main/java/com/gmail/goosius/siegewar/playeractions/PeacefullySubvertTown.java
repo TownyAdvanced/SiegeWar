@@ -43,6 +43,9 @@ public class PeacefullySubvertTown {
 		if(residentsNation == null)
 			throw new TownyException(Translation.of("msg_err_action_disable"));  //Can't subvert if nationless
 
+		if(targetTown.hasNation() && targetTown.getNation() == residentsNation)
+			throw new TownyException(Translation.of("msg_err_cannot_subvert_towns_in_own_nation"));
+
 		if(TownOccupationController.isTownOccupied(targetTown) && TownOccupationController.getTownOccupier(targetTown) == residentsNation)
 			throw new TownyException(Translation.of("msg_err_cannot_subvert_town_already_occupied"));
 
@@ -66,7 +69,6 @@ public class PeacefullySubvertTown {
 			}
 		}
 
-		//Verify if the nation has enough "Towny Influence" to subvert the town
 		verifyIfNationHasEnoughTownyInfluenceToSubvertTown(residentsNation, targetTown);
 
 		//Subvert town now

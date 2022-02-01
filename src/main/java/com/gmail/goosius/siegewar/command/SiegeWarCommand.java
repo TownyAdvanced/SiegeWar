@@ -343,12 +343,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					if (!TownyUniverse.getInstance().hasTown(townName))
 						throw new TownyException(Translation.of("msg_err_unknown_town"));
 
-					//Ensure the specified town is not peaceful
-					Town townToRelease = TownyUniverse.getInstance().getTown(townName);
-					if (townToRelease.isNeutral())
-						throw new TownyException(Translation.of("msg_err_cannot_change_occupation_peaceful_town"));
-
 					//Ensure the specified town is occupied by the resident's nation
+					Town townToRelease = TownyUniverse.getInstance().getTown(townName);
 					if(!TownOccupationController.isTownOccupied(townToRelease))
 						throw new TownyException(Translation.of("msg_err_cannot_change_occupation_town_not_occupied"));
 					if(TownOccupationController.getTownOccupier(townToRelease) != residentsNation)
@@ -390,12 +386,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					if (!TownyUniverse.getInstance().hasTown(townName))
 						throw new TownyException(Translation.of("msg_err_unknown_town"));
 
-					//Ensure the specified town is not peaceful
-					Town townToTransfer = TownyUniverse.getInstance().getTown(townName);
-					if (townToTransfer.isNeutral())
-						throw new TownyException(Translation.of("msg_err_cannot_change_occupation_peaceful_town"));
-
 					//Ensure the specified town is occupied by the resident's nation
+					Town townToTransfer = TownyUniverse.getInstance().getTown(townName);
 					if(!TownOccupationController.isTownOccupied(townToTransfer))
 						throw new TownyException(Translation.of("msg_err_cannot_change_occupation_town_not_occupied"));
 					if(TownOccupationController.getTownOccupier(townToTransfer) != residentsNation)
@@ -472,7 +464,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					//Ensure the specified town is not peaceful
 					Town townToTransfer = TownyAPI.getInstance().getResidentTownOrNull(resident);
 					if (townToTransfer.isNeutral())
-						throw new TownyException(Translation.of("msg_err_cannot_change_occupation_peaceful_town"));
+						throw new TownyException(Translation.of("msg_err_cannot_invite_peaceful_town_occupation"));
 
 					//Ensure the town is unoccupied
 					if(TownOccupationController.isTownOccupied(townToTransfer))

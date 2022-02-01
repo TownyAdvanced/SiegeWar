@@ -32,12 +32,12 @@ public class PeacefullyRevolt {
      * Process a request by a town member to peacefully revolt.
      *
      * @param player               the player
-     * @param targetPeacefulTown   the target peaceful town, where we already know the player is a resident
+     * @param targetTown           the target peaceful town, where we already know the player is a resident
      * @param bannerBlock          the banner block
      * @throws TownyException if the revolt request fails.
      */
     public static void processActionRequest(Player player,
-                                            Town targetPeacefulTown,
+                                            Town targetTown,
                                             Block bannerBlock) throws TownyException {
 
         if (!SiegeWarSettings.isPeacefulTownsRevoltEnabled())
@@ -46,29 +46,29 @@ public class PeacefullyRevolt {
         if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_REVOLT_PEACEFULLY.getNode()))
             throw new TownyException(Translation.of("msg_err_action_disable"));
 
-        if(!TownOccupationController.isTownOccupied(targetTown))
-            throw new TownyException(Translation.of("msg_err_cannot_start_revolt_siege_as_town_is_unoccupied"));
+//        if(!TownOccupationController.isTownOccupied(targetTown))
+  //          throw new TownyException(Translation.of("msg_err_cannot_start_revolt_siege_as_town_is_unoccupied"));
 
-        long immunity = TownMetaDataController.getRevoltImmunityEndTime(targetTown);
-        if (immunity == -1L)
-        	throw new TownyException(Translation.of("msg_err_siege_war_revolt_immunity_permanent"));
-        if (System.currentTimeMillis() < immunity)
-            throw new TownyException(Translation.of("msg_err_siege_war_revolt_immunity_active"));
+    //    long immunity = TownMetaDataController.getRevoltImmunityEndTime(targetTown);
+      //  if (immunity == -1L)
+        //	throw new TownyException(Translation.of("msg_err_siege_war_revolt_immunity_permanent"));
+        //if (System.currentTimeMillis() < immunity)
+         //   throw new TownyException(Translation.of("msg_err_siege_war_revolt_immunity_active"));
 
         Nation occupierNation = TownOccupationController.getTownOccupier(targetTown);
 
-		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, occupierNation, townOfSiegeStarter, townBlock);
+		//SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, occupierNation, townOfSiegeStarter, townBlock);
 
-		PreSiegeCampEvent event = new PreSiegeCampEvent(camp);
-		Bukkit.getPluginManager().callEvent(event);
-		if (event.isCancelled())
-			throw new TownyException(event.getCancellationMsg());
+		//PreSiegeCampEvent event = new PreSiegeCampEvent(camp);
+		//Bukkit.getPluginManager().callEvent(event);
+		//if (event.isCancelled())
+		//	throw new TownyException(event.getCancellationMsg());
 
-		if (SiegeWarSettings.areSiegeCampsEnabled())
+		//if (SiegeWarSettings.areSiegeCampsEnabled())
 			// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest. 
-			SiegeController.beginSiegeCamp(camp);
-		else 
+//			SiegeController.beginSiegeCamp(camp);
+//		else 
 			// SiegeCamps are disabled, just do the Siege.
-			camp.startSiege();
+//			camp.startSiege();
     }
 }

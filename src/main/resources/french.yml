@@ -176,9 +176,6 @@ msg_war_siege_occupied_towns_cannot_surrender: '&cOccupied towns cannot surrende
 msg_you_received_war_sickness: '&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave to remove the war sickness. Common causes of war sickness: being in a peaceful town, not having a military rank or not being allied to either side.'
 msg_you_will_get_sickness: '&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave or you will receive war sickness in %s seconds.'
 
-#Added in 0.07:
-msg_war_siege_peaceful_town_cannot_revolt_zero_or_one_unsieged_guardian_towns_nearby:  '&cYou cannot revolt at this time, because there are less than 2 unsieged guardian towns nearby (within %d chunks). A guardian town is a non-peaceful town in an open nation, with at least %d plots.'
-
 #Added in 0.08:
 msg_swa_set_towns_gained_success: '&bSuccessfully set towns gained to %d for %s.'
 msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
@@ -285,7 +282,6 @@ hud_battle_attacker_points: 'ATK BAT Points: '
 hud_battle_defender_points: 'DEF BAT Points: '
 
 # Starting sieges
-msg_err_cannot_start_siege_attack_at_peaceful_town: '&cYou cannot start a siege at a peaceful town.'
 msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruined town.'
 msg_err_cannot_start_siege_due_to_siege_immunity: '&cYou cannot start a siege now, because the nearby town has siege immunity.'
 msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cYou cannot start a revolt siege because the town is not in an occupied state.'
@@ -417,7 +413,6 @@ status_town_siege_pending_balance_adjustment: '&2 | Pending: &a%s'
 msg_err_cannot_change_occupation_town_not_occupied: '&cYou cannot change the occupation status because the town is not occupied.'
 msg_err_cannot_change_occupation_by_foreign_nation: '&cYou cannot change the occupation status because your nation is not the occupier.'
 msg_err_cannot_change_occupation_of_besieged_town: '&cYou cannot change the occupation status of a besieged town.'
-msg_err_cannot_change_occupation_peaceful_town: '&cYou cannot use a command to change the occupation status of a peaceful town.'
 msg_err_town_and_capital_too_far_apart: "&cThe homeblock of %s is too far away from the homeblock of %s's capital."
 
 # Remove occupation command
@@ -503,3 +498,5 @@ msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now 
 msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can enter siege-zones and gain nation-military ranks.'
 msg_town_returned_to_pre_peaceful_occupier: " The town has been returned to the occupier it had before it turned peaceful - %s."
 msg_err_cannot_subvert_town_already_occupied: '&cThere is no need to subvert because your nation already occupies the town.'
+msg_err_cannot_subvert_towns_in_own_nation: "&cYou cannot subvert towns which are in your own nation."
+msg_err_cannot_invite_peaceful_town_occupation: "&cYou cannot invite occupation if your town is peaceful."
