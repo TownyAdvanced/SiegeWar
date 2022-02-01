@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.31
+version: 0.32
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -511,3 +511,7 @@ hover_message_click_to_claim: "Click to claim money owed to you."
 
 #Added in 0.31
 msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
+
+#Addedd in 0.32
+msg_peaceful_town_subverted: "&b%s has been peacefully subverted, and occupied by %s."
+msg_peaceful_town_revolted: "&b%s has peacefully revolted against %s, and freed itself from occupation."

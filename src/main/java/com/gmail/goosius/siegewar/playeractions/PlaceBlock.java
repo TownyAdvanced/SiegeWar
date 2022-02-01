@@ -11,6 +11,7 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
+import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -215,7 +216,10 @@ public class PlaceBlock {
 	/**
 	 * Evaluates coloured banner near a town
 	 *
-	 * Effects depend on the allegiances of the town and of the banner placer
+	 * Effects depend on multiple factors, including:
+	 *  - Whether the town is peaceful or not
+	 *  - Whether there is already a siege at the town.
+	 *  - The allegiances of the town and of the banner placer
 	 *
 	 * @param player the player placing the banner
 	 * @param residentsTown the town of the player placing the banner
@@ -230,6 +234,15 @@ public class PlaceBlock {
 														   TownBlock nearbyTownBlock,
 														   Town nearbyTown,
 														   Block bannerBlock) throws TownyException {
+
+		//If the town is peaceful, this action is a peaceful subversion/revolt attempt 
+		if(nearbyTown.isNeutral()) {
+			if(residentsTown == nearbyTown) {
+				PeacefullyRevolt.processPeacefulRevoltRequest();
+			} else {
+				PeacefullySubvertTown.processPeacefulSubvertRequest();
+			}
+		}
 
 		//Check whether nearby town has a current or recent siege
 		if (SiegeController.hasSiege(nearbyTown)) {
