@@ -238,9 +238,9 @@ public class PlaceBlock {
 		//If the town is peaceful, this action is a peaceful subversion/revolt attempt 
 		if(nearbyTown.isNeutral()) {
 			if(residentsTown == nearbyTown) {
-				PeacefullyRevolt.processPeacefulRevoltRequest();
+				PeacefullyRevolt.processRevoltRequest();
 			} else {
-				PeacefullySubvertTown.processPeacefulSubvertRequest();
+				PeacefullySubvertTown.processSubvertTownRequest();
 			}
 		}
 

@@ -767,12 +767,24 @@ public enum ConfigNodes {
 			"false",
 			"",
 			"# If this setting is true, then peaceful towns can toggle PVP on and off."),
-	PEACEFUL_TOWNS_GUARDIAN_TOWN_PLOTS_REQUIREMENT(
-			"peaceful_towns.guardian_town_plots_requirement",
-			"30",
+	PEACEFUL_TOWNS_SUBVERT_ENABLED(
+			"peaceful_towns.subvert_enabled",
+			"true",
 			"",
-			"# This value determines how many plots a town has to have,",
-			"# to be considered a guardian town."),
+			"# If this setting is true, then peaceful subversion (instant occupation) of peaceful towns is enabled."),
+	PEACEFUL_TOWNS_REVOLT_ENABLED(
+			"peaceful_towns.revolt_enabled",
+			"true",
+			"",
+			"# If this setting is true, then peaceful revolts (instant de-occupation) by peaceful towns are enabled."),
+	PEACEFUL_TOWNS_TOWNY_INFLUENCE_RADIUS(
+			"peaceful_towns.towny_influence_radius",
+			"1200",
+			"",
+			"# This setting describes a circular area surrounding each peaceful town.",
+			"# The peaceful town feels the effect of all 'Towny-Influence' in that area.",
+			"# Each nearby automatically generates Towny-Influence in its non-peaceful, non-sieged towns in the area. The value is measured in num-townblocks.",
+			"# The nation with the highest Towny-Influence can subvert (peacefully occupy) the peaceful town, if it wishes to do so."),
 	PEACEFUL_TOWNS_GUARDIAN_TOWN_MIN_DISTANCE_REQUIREMENT_TOWNBLOCKS(
 			"peaceful_towns.guardian_town_min_distance_requirement_townblocks",
 			"75",
