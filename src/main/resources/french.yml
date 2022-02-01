@@ -119,7 +119,6 @@ msg_war_common_town_declared_non_peaceful: "&bNon-pacificité déclarée! La vil
 msg_war_common_town_peacefulness_countdown_cancelled: "&bLe compte à rebours du changement de statut de paix a été annulé."
 msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: "&cImpossible d'ajouter un grade militaire aux résidents, car ils sont dans une ville paisible."
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: "&cAllergie de guerre active. Pour supprimer cet effet, quittez immédiatement la zone de siège."
-msg_war_siege_err_cannot_attack_peaceful_town: "&cVous ne pouvez pas attaquer une ville pacifique."
 
 #Siege immunities
 msg_set_siege_immunities_town: "L'immunité au siège de la ville %s est définie sur %s heures."
@@ -374,21 +373,6 @@ msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and pla
 # Plunder
 msg_err_siege_war_plunder_not_possible_rebels_won: '&cPlunder not possible because the town rebels won the siege.'
 
-# Peaceful towns
-msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks. The town may get automatically occupied by a nation with a strong presence in the local area. (see user-guide for more details). Residents cannot enter siege-zones or gain nation-military ranks.'
-msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to siege attacks. The town can no longer get automatically occupied. Residents can enter siege-zones and gain nation-military ranks.'
-msg_town_returned_to_pre_peaceful_occupier: " The town has been returned to the occupier it had before turning peaceful - %s."
-
-msg_peaceful_town_total_switches: '&b%d peaceful town%s %s been peacefully occupied, or released from occupation.'
-
-msg_your_town_peacefully_occupied: "&bYour town has been peacefully occupied by %s."
-msg_home_town_peacefully_occupied: "&bA home town, %s, has been peacefully occupied by %s."
-msg_foreign_town_peacefully_occupied: "&bA foreign town, %s, has been peacefully occupied by your nation."
-
-msg_your_town_peacefully_released: "&bYour town has been peacefully released from occupation by %s."
-msg_home_town_peacefully_released: "&bA home town, %s, has been peacefully released from occupation by %s."
-msg_foreign_town_peacefully_released: "&bA foreign town, %s, has been peacefully released from occupation by the nation."
-
 # Admin commands
 msg_err_swa_cannot_set_invade_due_to_siege_type: '&cYou cannot set the invaded flag for this type of siege.'
 msg_err_swa_cannot_change_occupier_due_to_active_siege: '&cYou cannot change the occupier if the town has an active siege.'
@@ -512,6 +496,9 @@ hover_message_click_to_claim: "Click to claim money owed to you."
 #Added in 0.31
 msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
 
-#Addedd in 0.32
-msg_peaceful_town_subverted: "&b%s has been peacefully subverted, and occupied by %s."
+#Added in 0.32
+msg_peaceful_town_subverted: "&b%s has been peacefully subverted and occupied by %s."
 msg_peaceful_town_revolted: "&b%s has peacefully revolted against %s, and freed itself from occupation."
+msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot enter siege-zones or gain nation-military ranks.'
+msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can enter siege-zones and gain nation-military ranks.'
+msg_town_returned_to_pre_peaceful_occupier: " The town has been returned to the occupier it had before it turned peaceful - %s."
