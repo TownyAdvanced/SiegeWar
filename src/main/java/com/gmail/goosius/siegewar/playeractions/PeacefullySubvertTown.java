@@ -1,16 +1,11 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
-import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
-import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -20,9 +15,9 @@ import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.entity.Player;
 
 /**
- * This class is responsible for processing requests to peacefully 'subvert' towns.
+ * This class is responsible for processing requests by nations to peacefully 'subvert' towns.
  * 
- * If successful, such a request results in the town becoming occupied
+ * If such a request successful, the target town gets subverted immediately a.k.a occupied.
  *
  * @author Goosius
  */
@@ -32,44 +27,35 @@ public class PeacefullySubvertTown {
 	/**
 	 * Process a subvert town request
 	 *
-	 * @param siege the siege of the town.
-	 * @throws TownyException when the invasion wont be allowed.
+	 * @param player the player attempting the subvert.
+	 * @param residentsNation the nation of the player (can be null)
+	 * @param targetTown the target town. We know the player is not a resident.
+	 * 
+	 * @throws TownyException if subvert is not allowed
 	 */
-	public static void processSubvertTownRequest(Player player, Nation residentsNation, Town nearbyTown, Siege siege) throws TownyException {
-		if(!SiegeWarSettings.getWarSiegeInvadeEnabled())
+	public static void processActionRequest(Player player, Nation residentsNation, Town targetTown) throws TownyException {
+		if(!SiegeWarSettings.getPeacefulTownsSubvertEnabled())
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_INVADE.getNode()))
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SUBVERTPEACEFULTOWN.getNode()))
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
 		if(residentsNation == null)
-			throw new TownyException(Translation.of("msg_err_action_disable"));  //Can't invade if nationless
+			throw new TownyException(Translation.of("msg_err_action_disable"));  //Can't subvert if nationless
 
-		if(siege.getStatus().isActive())
-			throw new TownyException(Translation.of("msg_err_cannot_invade_siege_still_in_progress"));
-
-		if(TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation)
-			throw new TownyException(Translation.of("msg_err_cannot_invade_town_already_occupied"));
-
-		if(residentsNation != siege.getAttacker())
-			throw new TownyException(Translation.of("msg_err_action_disable"));  //Can't invade unless you are the attacker
-
-		if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
-			throw new TownyException(Translation.of("msg_err_cannot_invade_without_victory"));
-
-		if (siege.isTownInvaded())
-			throw new TownyException(Translation.of("msg_err_town_already_invaded"));
+		if(TownOccupationController.isTownOccupied(targetTown) && TownOccupationController.getTownOccupier(targetTown) == residentsNation)
+			throw new TownyException(Translation.of("msg_err_cannot_subvert_town_already_occupied"));
 
 		if (TownySettings.getNationRequiresProximity() > 0) {
 			Coord capitalCoord = residentsNation.getCapital().getHomeBlock().getCoord();
-			Coord townCoord = nearbyTown.getHomeBlock().getCoord();
-			if (!residentsNation.getCapital().getHomeBlock().getWorld().getName().equals(nearbyTown.getHomeBlock().getWorld().getName())) {
+			Coord townCoord = targetTown.getHomeBlock().getCoord();
+			if (!residentsNation.getCapital().getHomeBlock().getWorld().getName().equals(targetTown.getHomeBlock().getWorld().getName())) {
 				throw new TownyException(Translation.of("msg_err_nation_homeblock_in_another_world"));
 			}
 			double distance;
 			distance = Math.sqrt(Math.pow(capitalCoord.getX() - townCoord.getX(), 2) + Math.pow(capitalCoord.getZ() - townCoord.getZ(), 2));
 			if (distance > TownySettings.getNationRequiresProximity()) {
-				throw new TownyException(String.format(Translation.of("msg_err_town_not_close_enough_to_nation"), nearbyTown.getName()));
+				throw new TownyException(String.format(Translation.of("msg_err_town_not_close_enough_to_nation"), targetTown.getName()));
 			}
 		}
 
@@ -80,52 +66,46 @@ public class PeacefullySubvertTown {
 			}
 		}
 
-		invadeTown(residentsNation, nearbyTown, siege);
+		//Verify if the nation has enough "Towny Influence" to subvert the town
+		verifyIfNationHasEnoughTownyInfluenceToSubvertTown(residentsNation, targetTown);
+
+		//Subvert town now
+		subvertTown(residentsNation, targetTown);
 	}
 
 	/**
-	 * Invade the town
-	 *
-	 * @param siege the siege
+	 * Verify if the given nation has enough Towny-Influence to subvert the given town
+	 * 
+	 * @throws TownyException if the nation does not have enough Towny-Influence
 	 */
-    private static void invadeTown(Nation invadingNation, Town invadedTown, Siege siege) {
-		Nation nationOfInvadedTown = null;
-
-        if(invadedTown.hasNation()) {
-			//Update stats of defeated nation
-            nationOfInvadedTown = TownyAPI.getInstance().getTownNationOrNull(invadedTown);
-			NationMetaDataController.setTotalTownsLost(nationOfInvadedTown, NationMetaDataController.getTotalTownsLost(nationOfInvadedTown) + 1);
-        }
-
+	private static void verifyIfNationHasEnoughTownyInfluenceToSubvertTown(Nation residentsNation, Town targetTown) throws TownyException {
+		
+	}
+	
+	/**
+	 * Subvert the town
+	 *
+	 * @param subvertingNation the nation doing the subverting
+	 * @param targetTown the target town
+	 */
+    private static void subvertTown(Nation subvertingNation, Town targetTown) {
 		//Set town to occupied
-		TownOccupationController.setTownOccupation(invadedTown, invadingNation);
-        //Update siege flags
-		siege.setTownInvaded(true);
-		//Update stats of victorious nation
-		NationMetaDataController.setTotalTownsGained(invadingNation, NationMetaDataController.getTotalTownsGained(invadingNation) + 1);
+		TownOccupationController.setTownOccupation(targetTown, subvertingNation);
 
 		//Save to db
-        SiegeController.saveSiege(siege);
-		invadedTown.save();
-		invadingNation.save();
-		if(nationOfInvadedTown != null) {
-			nationOfInvadedTown.save();
-		}
+		subvertingNation.save();
+        targetTown.save();
 		
-		//Messaging
-		if(nationOfInvadedTown == null) {
-			Messaging.sendGlobalMessage(
-					Translation.of("msg_neutral_town_invaded",
-							invadedTown.getName(),
-							invadingNation.getName()
-					));
-		} else {
-			Messaging.sendGlobalMessage(
-					Translation.of("msg_nation_town_invaded",
-							invadedTown.getName(),
-							nationOfInvadedTown.getName(),
-							invadingNation.getName()
-					));
-		}
+		/*
+		 * Messaging
+		 *
+		 * Note that we do not publicly mention the nation (if any) of the subverted town.
+		 * Because the logic is simpler, and because subverting is generally less 'aggressive' than invasion.
+		 */
+		Messaging.sendGlobalMessage(
+			Translation.of("msg_peaceful_town_subverted",
+					targetTown.getName(),
+					subvertingNation.getName()
+		));
     }
 }

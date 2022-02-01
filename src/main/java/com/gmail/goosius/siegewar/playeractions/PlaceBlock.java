@@ -11,7 +11,6 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -235,12 +234,12 @@ public class PlaceBlock {
 														   Town nearbyTown,
 														   Block bannerBlock) throws TownyException {
 
-		//If the town is peaceful, this action is a peaceful subversion/revolt attempt 
+		//If the town is peaceful, then this action is a peaceful subversion/revolt attempt 
 		if(nearbyTown.isNeutral()) {
 			if(residentsTown == nearbyTown) {
-				PeacefullyRevolt.processRevoltRequest();
+				PeacefullyRevolt.processActionRequest(player, nearbyTown, bannerBlock);
 			} else {
-				PeacefullySubvertTown.processSubvertTownRequest();
+				PeacefullySubvertTown.processActionRequest(player, residentsNation, nearbyTown);
 			}
 		}
 

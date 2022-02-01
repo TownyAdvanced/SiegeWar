@@ -56,6 +56,9 @@ public class TownPeacefulnessUtil {
 		}
 	}
 
+	/**
+	 * This method adjust the peacefulness counter of a single town
+	 */
 	public static void updateTownPeacefulnessCounters(Town town) {
 		String message;
 
@@ -352,15 +355,13 @@ public class TownPeacefulnessUtil {
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 
 		try {
-			int guardianTownMinPlotsRequirement = SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement();
-			int guardianTownMaxDistanceRequirementTownblocks = SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement();
+			int guardianTownMaxDistanceRequirementTownblocks = SiegeWarSettings.getPeacefulTownsTownyInfluenceRadius();
 	
 			//Identify Guardian nations
 			List<Town> candidateTowns = new ArrayList<>(townyUniverse.getDataSource().getTowns());
 			for(Town candidateTown: candidateTowns) {
 				if(!candidateTown.isNeutral()
 					&& (candidateTown.hasNation() || TownOccupationController.isTownOccupied(candidateTown))
-					&& candidateTown.getTownBlocks().size() >= guardianTownMinPlotsRequirement
 					&& SiegeWarDistanceUtil.areTownsClose(peacefulTown, candidateTown, guardianTownMaxDistanceRequirementTownblocks)) {
 
 						guardianNation = TownOccupationController.isTownOccupied(candidateTown) ? TownOccupationController.getTownOccupier(candidateTown) : candidateTown.getNation();
