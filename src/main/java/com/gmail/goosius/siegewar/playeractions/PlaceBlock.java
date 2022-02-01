@@ -236,7 +236,7 @@ public class PlaceBlock {
 		if(nearbyTown.isNeutral()) {
 			//Town is peaceful, so this action is a subversion or peaceful-revolt attempt 
 			if(residentsTown == nearbyTown) {
-				PeacefullyRevolt.processActionRequest(player, nearbyTown, bannerBlock);
+				PeacefullyRevolt.processActionRequest(player, nearbyTown);
 			} else {
 				PeacefullySubvertTown.processActionRequest(player, residentsNation, nearbyTown);
 			}

@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -43,6 +44,10 @@ public class PeacefullySubvertTown {
 		if(residentsNation == null)
 			throw new TownyException(Translation.of("msg_err_action_disable"));  //Can't subvert if nationless
 
+		if(SiegeController.hasActiveSiege(targetTown)) {
+			throw new TownyException(Translation.of("msg_err_cannot_change_occupation_of_besieged_town"));
+		}
+
 		if(targetTown.hasNation() && targetTown.getNation() == residentsNation)
 			throw new TownyException(Translation.of("msg_err_cannot_subvert_towns_in_own_nation"));
 
@@ -69,7 +74,7 @@ public class PeacefullySubvertTown {
 			}
 		}
 
-		verifyIfNationHasEnoughTownyInfluenceToSubvertTown(residentsNation, targetTown);
+		verifyThatNationHasEnoughTownyInfluenceToSubvertTown(residentsNation, targetTown);
 
 		//Subvert town now
 		subvertTown(residentsNation, targetTown);
@@ -80,7 +85,7 @@ public class PeacefullySubvertTown {
 	 * 
 	 * @throws TownyException if the nation does not have enough Towny-Influence
 	 */
-	private static void verifyIfNationHasEnoughTownyInfluenceToSubvertTown(Nation residentsNation, Town targetTown) throws TownyException {
+	private static void verifyThatNationHasEnoughTownyInfluenceToSubvertTown(Nation residentsNation, Town targetTown) throws TownyException {
 		
 	}
 	
@@ -95,7 +100,6 @@ public class PeacefullySubvertTown {
 		TownOccupationController.setTownOccupation(targetTown, subvertingNation);
 
 		//Save to db
-		subvertingNation.save();
         targetTown.save();
 		
 		/*

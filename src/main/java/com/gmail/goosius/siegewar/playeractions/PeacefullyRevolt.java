@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.playeractions;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeType;
@@ -32,13 +33,11 @@ public class PeacefullyRevolt {
      * Process a request by a town member to peacefully revolt.
      *
      * @param player               the player
-     * @param targetTown           the target peaceful town, where we already know the player is a resident
-     * @param bannerBlock          the banner block
+     * @param targetTown           the revolting peaceful town, where we already know the player is a resident
      * @throws TownyException if the revolt request fails.
      */
     public static void processActionRequest(Player player,
-                                            Town targetTown,
-                                            Block bannerBlock) throws TownyException {
+                                            Town targetTown) throws TownyException {
 
         if (!SiegeWarSettings.isPeacefulTownsRevoltEnabled())
             throw new TownyException(Translation.of("msg_err_action_disable"));
@@ -46,29 +45,40 @@ public class PeacefullyRevolt {
         if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_REVOLT_PEACEFULLY.getNode()))
             throw new TownyException(Translation.of("msg_err_action_disable"));
 
-//        if(!TownOccupationController.isTownOccupied(targetTown))
-  //          throw new TownyException(Translation.of("msg_err_cannot_start_revolt_siege_as_town_is_unoccupied"));
+        if(!TownOccupationController.isTownOccupied(targetTown))
+            throw new TownyException(Translation.of("msg_err_cannot_peacefully_revolt_because_unoccupied"));
 
-    //    long immunity = TownMetaDataController.getRevoltImmunityEndTime(targetTown);
-      //  if (immunity == -1L)
-        //	throw new TownyException(Translation.of("msg_err_siege_war_revolt_immunity_permanent"));
-        //if (System.currentTimeMillis() < immunity)
-         //   throw new TownyException(Translation.of("msg_err_siege_war_revolt_immunity_active"));
+		if(SiegeController.hasActiveSiege(targetTown)) {
+			throw new TownyException(Translation.of("msg_err_cannot_change_occupation_of_besieged_town"));
+		}
 
-        Nation occupierNation = TownOccupationController.getTownOccupier(targetTown);
+		verifyThatOccupierHasZeroTownyInfluence(targetTown);
 
-		//SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, occupierNation, townOfSiegeStarter, townBlock);
+        peacefullyRevolt(targetTown);
+    }
+    
+    private static void peacefullyRevolt(Town revoltingTown) {
+        //Remove occupation
+        Nation occupier = TownOccupationController.getTownOccupier(revoltingTown);
+        TownOccupationController.removeTownOccupation(revoltingTown);
+        
+        //Save to db
+        revoltingTown.save();
+		
+        //Messaging
+		Messaging.sendGlobalMessage(
+			Translation.of("msg_peaceful_town_revolted",
+					revoltingTown.getName(),
+					occupier.getName()
+		));
+    }
 
-		//PreSiegeCampEvent event = new PreSiegeCampEvent(camp);
-		//Bukkit.getPluginManager().callEvent(event);
-		//if (event.isCancelled())
-		//	throw new TownyException(event.getCancellationMsg());
-
-		//if (SiegeWarSettings.areSiegeCampsEnabled())
-			// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest. 
-//			SiegeController.beginSiegeCamp(camp);
-//		else 
-			// SiegeCamps are disabled, just do the Siege.
-//			camp.startSiege();
+    /**
+	 * Verify that the current occupier has zero Towny-Influence.
+	 * 
+	 * @throws TownyException if the occupier has more than zero Towny-Influence.
+	 */
+    private static void verifyThatOccupierHasZeroTownyInfluence(Town revoltingTown) throws TownyException {
+        Nation occupier = TownOccupationController.getTownOccupier(revoltingTown);        
     }
 }
