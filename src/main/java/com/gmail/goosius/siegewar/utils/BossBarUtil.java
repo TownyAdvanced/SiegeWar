@@ -27,9 +27,7 @@ public class BossBarUtil {
 	
 	public static void removeBattleSessionBossBars() {
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			if (bossBarBattleSessionMap.containsKey(player)) {
-				Towny.getAdventure().player(player).hideBossBar(bossBarBattleSessionMap.get(player));
-			}
+			Towny.getAdventure().player(player).hideBossBar(bossBarBattleSessionMap.get(player));
 		}
 		bossBarBattleSessionMap.clear();
 	}
