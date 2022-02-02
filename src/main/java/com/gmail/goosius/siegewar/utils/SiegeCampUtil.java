@@ -13,6 +13,9 @@ import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyMessaging;
+import com.palmergames.bukkit.towny.object.Government;
+import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.util.TimeMgmt;
@@ -89,7 +92,11 @@ public class SiegeCampUtil {
 
 		} else {
 			// Attackers were thwarted, they are penalized with a cooldown on making another SiegeCamp on this town.
-			Messaging.sendGlobalMessage(Translation.of("msg_err_your_siegecamp_failed_you_must_wait_x", TimeMgmt.formatCountdownTime(SiegeWarSettings.getFailedSiegeCampCooldown())));
+			Government attacker = camp.getAttacker();
+			if (attacker instanceof Town)
+				TownyMessaging.sendPrefixedTownMessage((Town) attacker, Translation.of("msg_err_your_siegecamp_failed_you_must_wait_x", TimeMgmt.formatCountdownTime(SiegeWarSettings.getFailedSiegeCampCooldown())));
+			else if (attacker instanceof Nation)
+				TownyMessaging.sendPrefixedNationMessage((Nation) attacker, Translation.of("msg_err_your_siegecamp_failed_you_must_wait_x", TimeMgmt.formatCountdownTime(SiegeWarSettings.getFailedSiegeCampCooldown())));
 
 			String failedCamps = TownMetaDataController.getFailedSiegeCampList(camp.getTargetTown());
 			if (failedCamps == null) {
