@@ -218,8 +218,8 @@ public class TownPeacefulnessUtil {
 				if(town.isNeutral())
 					continue;
 
-				//Skip is town has no nation
-				if(!town.hasNation())
+				//Skip if town has no natural or occupying nation
+				if(!town.hasNation() && !TownOccupationController.isTownOccupied(town))
 					continue;
 
 				//Skip if town is besieged
@@ -232,7 +232,7 @@ public class TownPeacefulnessUtil {
 					continue;
 
 				//Update towny-influence map
-				nation = town.getNation();
+				nation = TownOccupationController.isTownOccupied(town) ? TownOccupationController.getTownOccupier(town) : town.getNation();
 				if(result.containsKey(nation)) {
 					result.put(nation, result.get(nation) + town.getTownBlocks().size());
 				} else {
