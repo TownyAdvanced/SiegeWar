@@ -8,6 +8,9 @@
 * 🗺️ **Geopolitical:** The whole server is involved, with no opt-outs. Nations and towns always have a *Peaceful* option, where they can become immune to attack, but vulnerable to peaceful occupation.
 * ♟️ **Strategic:** The system has many strategic elements (*e.g. deciding when/where/who to attack, organizing army composition/logisitics/movement, and  diplomacy/occupation/peacefulness etc*). This can be great for thoughful/mature playerbases, but for servers which require more simplistic PVP contests, alternative war systems should be considered.
 * 🍎 **Non-Toxic:** If you install the recommended [*TownyResources*](https://github.com/TownyAdvanced/TownyResources) plugin, this can help to focus wars on the strategic acquisition of material resources, rather than the toxic settlement of personal grudges.
+### Videos
+* https://www.youtube.com/watch?v=0UU9-lVuHSY: Demonstrates how the plugin fits into a geopolitical context (*nation building, diplomacy, and war*), and also demonstrates some tactical features of sieges.
+* https://www.youtube.com/watch?v=raiAhk2Ru5Y: Demonstrates some tactical features of sieges (*players assembling an army, marching to a siegezone, approaching a siege banner surrounded by a fort, and attacking the enemy*).
 ### Links
 * [Download](https://github.com/TownyAdvanced/SiegeWar/releases)
 * [Installation Guide](https://github.com/TownyAdvanced/SiegeWar/wiki/Siege-War-Installation)
