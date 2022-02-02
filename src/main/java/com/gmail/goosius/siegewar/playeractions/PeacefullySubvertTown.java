@@ -91,11 +91,11 @@ public class PeacefullySubvertTown {
 	 * @throws TownyException if the nation does not have enough Towny-Influence
 	 */
 	private static void verifyThatNationHasEnoughTownyInfluenceToSubvertTown(Nation nation, Town targetTown) throws TownyException {
-	    Map<Nation, Integer> townyInfluenceMap = TownPeacefulnessUtil.calculateTownyInfluenceMap(targetTown);
-        if(townyInfluenceMap.size() == 0) {
+		Map<Nation, Integer> townyInfluenceMap = TownPeacefulnessUtil.calculateTownyInfluenceMap(targetTown);
+		if(townyInfluenceMap.size() == 0) {
 			//No nation has towny-influence in the local area
 			throw new TownyException(Translation.of("msg_err_cannot_subvert_town_zero_influence"));
-        } else {
+		} else {
 			Nation topNation = townyInfluenceMap.keySet().iterator().next();
 			if(topNation != nation) {
 				//A different nation is top of the towny-influence map
@@ -117,7 +117,7 @@ public class PeacefullySubvertTown {
 		TownOccupationController.setTownOccupation(targetTown, subvertingNation);
 
 		//Save to db
-        targetTown.save();
+		targetTown.save();
 
 		/*
 		 * Messaging

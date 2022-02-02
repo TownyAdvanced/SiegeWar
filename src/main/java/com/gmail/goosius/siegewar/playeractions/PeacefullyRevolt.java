@@ -62,11 +62,11 @@ public class PeacefullyRevolt {
         revoltingTown.save();
 
         //Messaging
-		Messaging.sendGlobalMessage(
-			Translation.of("msg_peaceful_town_revolted",
-					revoltingTown.getName(),
-					occupier.getName()
-		));
+        Messaging.sendGlobalMessage(
+        	Translation.of("msg_peaceful_town_revolted",
+                revoltingTown.getName(),
+                occupier.getName()
+        ));
     }
 
     /**
