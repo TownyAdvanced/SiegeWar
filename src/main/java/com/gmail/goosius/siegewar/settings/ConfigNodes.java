@@ -44,11 +44,6 @@ public enum ConfigNodes {
 			"",
 			"# If true, the Siege-War system is enabled.",
 			"# if false, the Siege-War system is disabled."),
-	WAR_SIEGE_WORLDS(
-			"war.siege.switches.worlds",
-			"world, world_nether, world_the_end",
-			"",
-			"# This list specifies the worlds in which siegewar is enabled."),
 	WAR_SIEGE_CONQUEST_SIEGES_ENABLED(
 			"war.siege.switches.conquest_sieges_enabled",
 			"true",

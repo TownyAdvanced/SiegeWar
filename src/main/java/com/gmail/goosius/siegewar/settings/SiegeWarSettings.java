@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Locale;
 
 import com.gmail.goosius.siegewar.SiegeWar;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
@@ -16,14 +15,12 @@ import org.jetbrains.annotations.Nullable;
 public class SiegeWarSettings {
 	
 	private static List<HeldItemsCombination> mapHidingItems = null;
-	private static List<String> worldsWithSiegeWarEnabled = null;
 	private static List<Material> siegeZoneWildernessForbiddenBlockMaterials = null;
 	private static List<Material> siegeZoneWildernessForbiddenBucketMaterials = null;
 	private static List<EntityType> siegeZoneWildernessForbiddenExplodeEntityTypes = null;
 	
 	protected static void resetCachedSettings() {
 		mapHidingItems = null;
-		worldsWithSiegeWarEnabled = null;
 		siegeZoneWildernessForbiddenBlockMaterials = null;
 		siegeZoneWildernessForbiddenBucketMaterials = null;
 		siegeZoneWildernessForbiddenExplodeEntityTypes = null;
@@ -31,18 +28,6 @@ public class SiegeWarSettings {
 
 	public static boolean getWarSiegeEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_ENABLED);
-	}
-
-	public static List<String> getWarSiegeWorlds() {
-		if (worldsWithSiegeWarEnabled == null) {
-			worldsWithSiegeWarEnabled = new ArrayList<>();
-			String[] worldNamesAsArray = Settings.getString(ConfigNodes.WAR_SIEGE_WORLDS).split(",");
-			for (String worldName : worldNamesAsArray) {
-				if (Bukkit.getServer().getWorld(worldName.trim()) != null)
-					worldsWithSiegeWarEnabled.add(Bukkit.getServer().getWorld(worldName.trim()).getName());
-			}
-		}
-		return worldsWithSiegeWarEnabled;
 	}
 
 	public static boolean getWarSiegeAbandonEnabled() {
