@@ -396,12 +396,16 @@ public class SiegeWarSettings {
 		return siegeZoneWildernessForbiddenExplodeEntityTypes;
 	}
 
-	public static int getPeacefulTownsGuardianTownPlotsRequirement() {
-		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_GUARDIAN_TOWN_PLOTS_REQUIREMENT);
+	public static boolean isPeacefulTownsSubvertEnabled() {
+		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_SUBVERT_ENABLED);
 	}
 
-	public static int getPeacefulTownsGuardianTownMinDistanceRequirement() {
-		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_GUARDIAN_TOWN_MIN_DISTANCE_REQUIREMENT_TOWNBLOCKS);
+	public static boolean isPeacefulTownsRevoltEnabled() {
+		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_REVOLT_ENABLED);
+	}
+
+	public static int getPeacefulTownsTownyInfluenceRadius() {
+		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_TOWNY_INFLUENCE_RADIUS);
 	}
 
 	public static int getWarCommonPeacefulTownsNewTownConfirmationRequirementDays() {

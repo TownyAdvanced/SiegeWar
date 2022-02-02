@@ -17,9 +17,9 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_ABANDON("siegewar.nation.siege.liberation.siege.abandon"),
 	SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_START("siegewar.nation.siege.suppression.siege.start"),
 	SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_ABANDON("siegewar.nation.siege.suppression.siege.abandon"),
-	//Post Siege Actions
 	SIEGEWAR_NATION_SIEGE_INVADE("siegewar.nation.siege.invade"),
 	SIEGEWAR_NATION_SIEGE_PLUNDER("siegewar.nation.siege.plunder"),
+	SIEGEWAR_NATION_SUBVERTPEACEFULTOWN("siegewar.nation.siege.subvertpeacefultown"),
 
 	// ----- Town Action Nodes -----
 	//Battle points
@@ -28,6 +28,7 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_START("siegewar.town.siege.revolt.siege.abandon"),
 	SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_ABANDON("siegewar.town.siege.revolt.siege.start"),
 	SIEGEWAR_TOWN_SIEGE_SURRENDER("siegewar.town.siege.surrender"),
+	SIEGEWAR_TOWN_REVOLT_PEACEFULLY("siegewar.town.siege.revoltpeacefully"),
 
 	// Node related to cannon session integration
 	SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION("siegewar.town.siege.startcannonsession"),

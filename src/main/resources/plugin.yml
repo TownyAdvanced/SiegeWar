@@ -94,6 +94,7 @@ permissions:
             siegewar.nation.siege.revolt.siege.abandon: true
             siegewar.nation.siege.suppression.siege.start: true
             siegewar.nation.siege.suppression.siege.abandon: true
+            siegewar.nation.siege.subvertpeacefultown: true
 
     siegewar.town.siege.*:
         description: User holds all of the siegewar town nodes.
@@ -104,17 +105,11 @@ permissions:
             siegewar.town.siege.startcannonsession: true
             siegewar.town.siege.revolt.siege.start: true
             siegewar.town.siege.revolt.siege.abandon: true
+            siegewar.town.siege.revoltpeacefully: true
 
-    siegewar.command.siegewar.guide:
-        description: User is able to read guide book.
-        default: true
 
     siegewar.command.siegewar.collect:
         description: User is able to do the /siegewar collect command.
-        default: true
-
-    siegewar.command.siegewar.preference:
-        description: User is able to do the /siegewar preference command.
         default: true
 
     siegewar.immune.to.war.nausea:

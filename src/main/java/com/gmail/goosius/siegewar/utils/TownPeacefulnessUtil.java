@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.utils;
 
 
 import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
@@ -23,6 +24,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -30,11 +32,14 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.Comparator;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+
 
 public class TownPeacefulnessUtil {
 
 	/**
-	 * This method adjust the peacefulness counters of all towns, where required
+	 * This method adjusts the peacefulness counters of all towns, where required
 	 */
 	public static void updateTownPeacefulnessCounters() {
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
@@ -56,6 +61,9 @@ public class TownPeacefulnessUtil {
 		}
 	}
 
+	/**
+	 * This method adjusts the peacefulness counter of a single town
+	 */
 	public static void updateTownPeacefulnessCounters(Town town) {
 		String message;
 
@@ -182,207 +190,105 @@ public class TownPeacefulnessUtil {
 		}
 	}
 
-	/**
-	 * This method is a cleanup of peaceful town occupation statuses
-	 *
-	 * How it works:
-	 *
-	 * 1. For each peaceful town, every nearby guardian town exerts a "power-influence" on the peaceful town.
-	 *    - "Nearby" is defined as 75 townblocks (configurable)
-	 *    - "Guardian Town" is defined as a non-peaceful nation town of size 30 townblocks (configurable) or more.
-	 *    - An occupied guardian town exerts influence for its occupier, not for its home nation.
-	 *    - The strength of the influence equals the num-townblocks of the guardian town.
-	 *
-	 * 2. If the peaceful town has a nation,
-	 *    the influences of the home nation & foreign enemy nations are greatly amplified,
-	 *    such that they will always be stronger than the influences of foreign non-enemy nations.
-	 *
-	 * 3. Possible Outcomes:
-	 *    A. If there are zero influences on the peaceful town, it will become unoccupied.
-	 *    B. If the strongest influence belongs to the peaceful town's home nation, the town will become unoccupied.
-	 *    C. If the strongest influence belongs to a foreign nation, the town will get peacefully occupied by that nation.
-	 */
-	public static void evaluatePeacefulTownOccupationAssignments() {
-		TownyUniverse townyUniverse = TownyUniverse.getInstance();
-		List<Town> towns = new ArrayList<>(townyUniverse.getDataSource().getTowns());
-		ListIterator<Town> townItr = towns.listIterator();
-		Town peacefulTown;
-		int modifiedTowns = 0;
-		boolean townTransferred;
-		Nation nationWithStrongestInfluence;
+    /**
+     * Calculates the Towny-Influence map for the target town
+     *
+     * @param targetTown targetTown
+     *
+     * @return Towny-Influence map ....in the form: NationX:Amt, NationY:Amt, NationZ:Amt ....etc.
+     *         The map is sorted in descending order, with the highest influence nation being first
+     */
+    public static Map<Nation,Integer> calculateTownyInfluenceMap(Town targetTown) {
+		Map<Nation,Integer> result = new LinkedHashMap<>();
+		List<Town> allTowns = new ArrayList<>(TownyUniverse.getInstance().getDataSource().getTowns());
+		ListIterator<Town> allTownsItr = allTowns.listIterator();
+		Town town;
+		Nation nation;
 
-		//Cycle peaceful towns
-		while (townItr.hasNext()) {
-			peacefulTown = townItr.next();
+		//Cycle all towns
+		while (allTownsItr.hasNext()) {
+			town = allTownsItr.next();
 
 			try {
-				//Skip if town is non-peaceful
-				if (!peacefulTown.isNeutral())
-					continue;
-
 				//Skip if town is ruined
-				if (peacefulTown.isRuined())
+				if (town.isRuined())
 					continue;
 
-				//Find nearby nations with influence on the town (result is Map<nation, strength-of-influence>)
-				Map<Nation, Long> nationsWithInfluence = findNearbyNationsWithInfluence(peacefulTown);
+				//Skip if town is peaceful
+				if(town.isNeutral())
+					continue;
 
-				//Amplify influence of home & enemy nations
-				nationsWithInfluence = amplifyInfluenceOfHomeAndEnemyNations(nationsWithInfluence, peacefulTown);
+				//Skip if town has no natural or occupying nation
+				if(!town.hasNation() && !TownOccupationController.isTownOccupied(town))
+					continue;
 
-				if (nationsWithInfluence.size() == 0) {
-					//The town is not affected by influence.
-					//Ensure peaceful town is unoccupied.
-					townTransferred = ensureTownIsPeacefullyUnoccupied(peacefulTown);
+				//Skip if town is besieged
+				if(SiegeController.hasActiveSiege(town))
+					continue;
+
+				//Skip if town is too far from target town
+				int townyInfluenceRadiusInTownBlocks = SiegeWarSettings.getPeacefulTownsTownyInfluenceRadius() / TownySettings.getTownBlockSize();
+				if(!SiegeWarDistanceUtil.areTownsClose(town, targetTown, townyInfluenceRadiusInTownBlocks))
+					continue;
+
+				//Update towny-influence map
+				nation = TownOccupationController.isTownOccupied(town) ? TownOccupationController.getTownOccupier(town) : town.getNation();
+				if(result.containsKey(nation)) {
+					result.put(nation, result.get(nation) + town.getTownBlocks().size());
 				} else {
-					//The town is affected by influence
-					//Get the nation with the strongest influence
-					nationWithStrongestInfluence = calculateNationWithStrongestInfluence(nationsWithInfluence);
-
-					//Set town occupation status
-					if (peacefulTown.hasNation() && peacefulTown.getNation() == nationWithStrongestInfluence) {
-						//Strongest nation is the town's home nation. Ensure town is unoccupied.
-						townTransferred = ensureTownIsPeacefullyUnoccupied(peacefulTown);
-					} else {
-						//Strongest nation is not the town's home nation. Ensure town is occupied by that nation.
-						townTransferred = ensureTownIsPeacefullyOccupied(peacefulTown, nationWithStrongestInfluence);
-					}
+					result.put(nation, town.getTownBlocks().size());
 				}
-
-				if (townTransferred)
-					modifiedTowns += 1;
-
 			} catch (Exception e) {
 				try {
-					SiegeWar.severe("Problem evaluating peaceful town nation assignment for - " + peacefulTown.getName());
+					SiegeWar.severe("Problem evaluating towny-influence map generation for town: " + targetTown.getName());
 				} catch (Exception e2) {
-					SiegeWar.severe("Problem evaluating peaceful town nation assignment (could not read town name)");
+					SiegeWar.severe("Problem evaluating towny-influence map generation for town (could not read town name)");
 				}
 				e.printStackTrace();
 			}
 		}
-		//Send a global message with how many towns were modified.
-		if (modifiedTowns > 0) {
-			boolean one = modifiedTowns == 1;
-			Messaging.sendGlobalMessage(Translation.of("msg_peaceful_town_total_switches", modifiedTowns, one ? "" : "s", one ? "has" : "have"));
-		}
-	}
-
-	/*
-	 * Amplify the influence of home & enemy nations
-	 */
-	private static Map<Nation, Long> amplifyInfluenceOfHomeAndEnemyNations(Map<Nation, Long> nationInfluenceMap, Town peacefulTown) {
-		Map<Nation, Long> result = new HashMap<>(nationInfluenceMap);
-		long amplifiedValue;
-		Nation nationOfPeacefulTown;
-		if (peacefulTown.hasNation()) {
-			nationOfPeacefulTown = TownyAPI.getInstance().getTownNationOrNull(peacefulTown);
-			for (Map.Entry<Nation, Long> mapEntry : nationInfluenceMap.entrySet()) {
-				if (mapEntry.getKey() == nationOfPeacefulTown
-						|| mapEntry.getKey().hasEnemy(nationOfPeacefulTown)) {
-					amplifiedValue = mapEntry.getValue() * 1000000;
-					result.put(mapEntry.getKey(), amplifiedValue);
-				}
-			}
-		}
-		return result;
-	}
-
-	private static Nation calculateNationWithStrongestInfluence(Map<Nation, Long> guardianNations) {
-		Map.Entry<Nation, Long> winningEntry = guardianNations.entrySet().stream()
-		.max(Comparator.comparingLong(Map.Entry::getValue))
-		.get();
-		return winningEntry.getKey();
-	}
-
-	private static boolean ensureTownIsPeacefullyUnoccupied(Town peacefulTown) {
-		if(!TownOccupationController.isTownOccupied(peacefulTown)) {
-			return false;
-		}
-
-		//Get current occupier
-		Nation currentOccupier = TownOccupationController.getTownOccupier(peacefulTown);
-		//Remove occupation
-		TownOccupationController.removeTownOccupation(peacefulTown);
-
-		//Send messages
-		//Send to peaceful town
-		TownyMessaging.sendPrefixedTownMessage(peacefulTown, Translation.of("msg_your_town_peacefully_released", currentOccupier.getName()));
-		//Send to occupier
-		TownyMessaging.sendPrefixedNationMessage(currentOccupier, Translation.of("msg_foreign_town_peacefully_released", peacefulTown.getName()));
-		//Send to nation of peaceful town
-		if(peacefulTown.hasNation())
-			TownyMessaging.sendPrefixedNationMessage(TownyAPI.getInstance().getTownNationOrNull(peacefulTown), Translation.of("msg_home_town_peacefully_released", peacefulTown.getName(), currentOccupier.getName()));
-
-		return true;
-	}
-
-	private static boolean ensureTownIsPeacefullyOccupied(Town peacefulTown, Nation newOccupier) {
-		if(TownOccupationController.isTownOccupied(peacefulTown)) {
-			//Town is already occupied
-			Nation currentOccupier = TownOccupationController.getTownOccupier(peacefulTown);
-
-			//Check if town is already occupied by correct nation
-			if (currentOccupier == newOccupier)
-				return false;
-
-			//Remove current occupation
-			ensureTownIsPeacefullyUnoccupied(peacefulTown);
-		}
-
-		//Set new  occupation
-		TownOccupationController.setTownOccupation(peacefulTown, newOccupier);
-
-		//Send messages
-		//Send to peaceful town
-		TownyMessaging.sendPrefixedTownMessage(peacefulTown, Translation.of("msg_your_town_peacefully_occupied", newOccupier.getName()));
-		//Send to new occupier
-		TownyMessaging.sendPrefixedNationMessage(newOccupier, Translation.of("msg_foreign_town_peacefully_occupied", peacefulTown.getName()));
-		//Send to nation of peaceful town
-		if(peacefulTown.hasNation())
-			TownyMessaging.sendPrefixedNationMessage(TownyAPI.getInstance().getTownNationOrNull(peacefulTown), Translation.of("msg_home_town_peacefully_occupied", peacefulTown.getName(), newOccupier.getName()));
-
-		return true; //Town switched
-	}
-
-	public static Map<Nation, Long> findNearbyNationsWithInfluence(Town peacefulTown) {
-		Map<Nation, Long> guardianNations = new HashMap<>();
-		Nation guardianNation;
-		int numTownBlocks;
-		TownyUniverse townyUniverse = TownyUniverse.getInstance();
-
-		try {
-			int guardianTownMinPlotsRequirement = SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement();
-			int guardianTownMaxDistanceRequirementTownblocks = SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement();
-	
-			//Identify Guardian nations
-			List<Town> candidateTowns = new ArrayList<>(townyUniverse.getDataSource().getTowns());
-			for(Town candidateTown: candidateTowns) {
-				if(!candidateTown.isNeutral()
-					&& (candidateTown.hasNation() || TownOccupationController.isTownOccupied(candidateTown))
-					&& candidateTown.getTownBlocks().size() >= guardianTownMinPlotsRequirement
-					&& SiegeWarDistanceUtil.areTownsClose(peacefulTown, candidateTown, guardianTownMaxDistanceRequirementTownblocks)) {
-
-						guardianNation = TownOccupationController.isTownOccupied(candidateTown) ? TownOccupationController.getTownOccupier(candidateTown) : candidateTown.getNation();
-						numTownBlocks = candidateTown.getTownBlocks().size();
-
-						if(guardianNations.containsKey(guardianNation)) {
-							guardianNations.put(guardianNation, guardianNations.get(guardianNation) + numTownBlocks);
-						} else {
-							guardianNations.put(guardianNation, (long)numTownBlocks);
-						}
-				}
-			}
-		} catch (Exception e) {
-			try {
-				SiegeWar.severe("Problem getting valid guardian towns for - " + peacefulTown.getName());
-			} catch (Exception e2) {
-				SiegeWar.severe("Problem getting valid guardian towns (could not read peaceful town name)");
-			}
-			e.printStackTrace();
-		}
-
+		//Sort result, highest result first
+		result = sortTownyInfluenceMap(result);
 		//Return result
-		return guardianNations;
+		return result;
+    }
+
+	/**
+	 * Sort the influence map in descending order, so that the nation with the highest value,
+	 * is first in the map.
+	 *
+	 * @param unsortedTownyInfluenceMap the given unsorted map
+	 * @return sorted towny-influence map
+	 */
+	private static Map<Nation,Integer> sortTownyInfluenceMap(Map<Nation,Integer> unsortedTownyInfluenceMap) {
+		// Now, getting all entries from map and
+        // convert it to a list using entrySet() method
+        List<Map.Entry<Nation, Integer>> list = new ArrayList<>(unsortedTownyInfluenceMap.entrySet());
+
+        // Using collections class sort method
+        // and inside which we are using
+        // custom comparator to compare value of map
+        Collections.sort(
+            list,
+            new Comparator<Map.Entry<Nation, Integer> >() {
+                // Comparing two entries by value
+                public int compare(
+                    Map.Entry<Nation, Integer> entry1,
+                    Map.Entry<Nation, Integer> entry2)
+                {
+                    // Subtracting the entries
+                    return entry2.getValue()
+                        - entry1.getValue();
+                }
+            });
+
+		// Iterating over the sorted map
+		// using the for each method
+		Map<Nation, Integer> result = new LinkedHashMap<>();
+		for (Map.Entry<Nation, Integer> mapEntry : list) {
+			result.put(mapEntry.getKey(), mapEntry.getValue());
+		}
+
+		return result;
 	}
 }
