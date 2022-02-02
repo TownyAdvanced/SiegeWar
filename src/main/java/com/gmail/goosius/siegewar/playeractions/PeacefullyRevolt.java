@@ -48,7 +48,7 @@ public class PeacefullyRevolt {
 			throw new TownyException(Translation.of("msg_err_cannot_change_occupation_of_besieged_town"));
 		}
 
-		verifyThatOccupierHasZeroTownyInfluence(targetTown);
+        verifyThatOccupierHasZeroTownyInfluence(targetTown);
 
         peacefullyRevolt(targetTown);
     }
