@@ -115,10 +115,10 @@ public class PeacefullySubvertTown {
 	private static void subvertTown(Nation subvertingNation, Town targetTown) {
 		//Set town to occupied
 		TownOccupationController.setTownOccupation(targetTown, subvertingNation);
-
+		
 		//Save to db
 		targetTown.save();
-
+		
 		/*
 		 * Messaging
 		 *
@@ -130,5 +130,5 @@ public class PeacefullySubvertTown {
 					targetTown.getName(),
 					subvertingNation.getName()
 		));
-    }
+	}
 }
