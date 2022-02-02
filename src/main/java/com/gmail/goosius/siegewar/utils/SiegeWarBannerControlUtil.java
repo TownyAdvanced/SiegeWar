@@ -196,9 +196,6 @@ public class SiegeWarBannerControlUtil {
 		if(!BattleSession.getBattleSession().isActive())
 			return;
 		
-		// Update the BattleSession bossbar.
-		BossBarUtil.updateBattleSessionBossBar();
-
 		for(BannerControlSession bannerControlSession: siege.getBannerControlSessions().values()) {
 			try {
 				//Check if session failed
