@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.objects.BattleSession;
@@ -7,6 +8,8 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Nation;
 import org.bukkit.entity.Entity;
@@ -57,6 +60,19 @@ public class SiegeWarScoringUtil {
 		if(!BattleSession.getBattleSession().isActive())
 			return;
 
+		//No penalty points if killer player is at their daily battle session limit
+		Player killer = getPlayerKiller(player);
+		if(killer != null)  {
+			Resident killerResident = TownyUniverse.getInstance().getResident(killer.getUniqueId());
+			if(killerResident != null && SiegeWarBattleSessionUtil.isDailyBattleSessionLimitActiveForResident(killerResident)) {
+					String message = Translation.of("msg_war_siege_max_daily_player_battle_sessions_reached_cannot_get_kill_points",
+												SiegeWarSettings.getMaxDailyPlayerBattleSessions(),
+												SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(killerResident));
+					Messaging.sendErrorMsg(killer, message);
+					return;
+			}
+		}
+
 		//Give battle points to opposing side
 		int battlePoints;
 		if (residentIsAttacker) {
@@ -74,7 +90,6 @@ public class SiegeWarScoringUtil {
 		//Generate message
 		String unformattedErrorMessage;
 		String message;
-		Player killer = getPlayerKiller(player);
 		if(killer != null) {
 			unformattedErrorMessage = residentIsAttacker ? 	Translation.of("msg_siege_war_attacker_killed_by_player") : Translation.of("msg_siege_war_defender_killed_by_player");
 			message = String.format(
@@ -230,7 +245,7 @@ public class SiegeWarScoringUtil {
      *
 	 * @return the player killer, if there was one
 	 */
-	private static Player getPlayerKiller(Player victim) {
+	public static Player getPlayerKiller(Player victim) {
 		if(victim.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
 			EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) victim.getLastDamageCause();
 			Entity attackerEntity = damageEvent.getDamager();

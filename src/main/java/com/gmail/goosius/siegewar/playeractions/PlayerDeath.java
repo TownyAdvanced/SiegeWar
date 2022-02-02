@@ -14,6 +14,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarScoringUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -24,6 +25,7 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
+import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -62,7 +64,9 @@ public class PlayerDeath {
 	 */
 	public static void evaluateSiegePlayerDeath(Player deadPlayer, PlayerDeathEvent playerDeathEvent) {
 		try {
-			if (!SiegeWarSettings.getWarSiegeWorlds().contains(playerDeathEvent.getEntity().getWorld().getName()))
+			World world = playerDeathEvent.getEntity().getWorld();
+			if (!TownyAPI.getInstance().isTownyWorld(world)
+				|| !TownyAPI.getInstance().getTownyWorld(world).isWarAllowed())
 				return;
 
 			TownyPermissionSource tps = TownyUniverse.getInstance().getPermissionSource();
