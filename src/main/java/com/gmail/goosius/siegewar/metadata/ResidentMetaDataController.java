@@ -2,9 +2,15 @@ package com.gmail.goosius.siegewar.metadata;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
+import com.palmergames.bukkit.towny.object.metadata.StringDataField;
+import com.palmergames.bukkit.towny.utils.MetaDataUtil;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * 
@@ -18,6 +24,11 @@ public class ResidentMetaDataController {
 	private static IntegerDataField refundAmount = new IntegerDataField("siegewar_nationrefund", 0);
 	private static IntegerDataField plunderAmount = new IntegerDataField("siegewar_plunder", 0);
 	private static IntegerDataField militarySalaryAmount = new IntegerDataField("siegewar_militarysalary", 0);
+	/*
+	 * A list of battle sessions the player was recently involved in
+	 * Sessions are identified by their start times (in millis)
+	 */
+	private static StringDataField recentBattleSessions = new StringDataField("siegewar_recentbattlesessions", "");
 
 	static String beaconsDisabled = "siegewar_beaconsdisabled";
 	static String bossBarsDisabled = "siegewar_bossBarsdisabled";
@@ -162,5 +173,26 @@ public class ResidentMetaDataController {
 
 	public static boolean getBossBarsDisabled(Resident resident) {
 		return getBoolean(resident, bossBarsDisabled);
+	}
+
+	@Nullable
+	public static String getRecentBattleSessions(Resident resident) {
+		StringDataField sdf = (StringDataField) recentBattleSessions.clone();
+		if (resident.hasMeta(sdf.getKey()))
+			return MetaDataUtil.getString(resident, sdf);
+		return null;
+	}
+
+	public static void setRecentBattleSessions(Resident resident, List<String> listOfStrings) {
+		String valueAsString = listOfStrings.toString().replaceAll("\\[","").replaceAll("]","");
+		setRecentBattleSessions(resident,valueAsString);
+	}
+
+	public static void setRecentBattleSessions(Resident resident, String value) {
+		StringDataField sdf = (StringDataField) recentBattleSessions.clone();
+		if (resident.hasMeta(sdf.getKey()))
+			MetaDataUtil.setString(resident, sdf, value, true);
+		else
+			resident.addMetaData(new StringDataField("siegewar_recentbattlesessions", value));
 	}
 }

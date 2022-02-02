@@ -36,6 +36,7 @@ public class BattleSession {
 	private boolean active; 			//Is the session active, or is it on break ?
 	private long scheduledEndTime;	//The time this battle session is scheduled to end
 	private Long scheduledStartTime;  //The time this battle session is scheduled to start
+	private long startTime;			//The time the session actually started
 
 	public BattleSession() {
 		active = false;
@@ -87,5 +88,13 @@ public class BattleSession {
 
 	public void setScheduledStartTime(Long scheduledStartTime) {
 		this.scheduledStartTime = scheduledStartTime;
+	}
+
+	public Long getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(long startTime) {
+		this.startTime = startTime;
 	}
 }

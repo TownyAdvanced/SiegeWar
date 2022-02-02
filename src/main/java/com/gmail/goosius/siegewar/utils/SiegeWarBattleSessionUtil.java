@@ -8,10 +8,12 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.events.BattleSessionEndedEvent;
 import com.gmail.goosius.siegewar.events.BattleSessionPreStartEvent;
 import com.gmail.goosius.siegewar.events.BattleSessionStartedEvent;
+import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -22,10 +24,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
 
 public class SiegeWarBattleSessionUtil {
 	
 	private static Map<Siege, Integer> battleResults = new HashMap<>();
+	private static final long ONE_DAY_IN_MILLIS = 86400000;
 
 	/**
 	 * Attempt to schedule the next battle session
@@ -42,6 +46,8 @@ public class SiegeWarBattleSessionUtil {
 	public static void startBattleSession() {
 		BattleSession battleSession = BattleSession.getBattleSession();
 		battleSession.setActive(true);
+		//Set the start time
+		battleSession.setStartTime(System.currentTimeMillis());
 		//Set the scheduled end time
 		battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionDurationMinutes() * 60000));
 		//Clear the scheduled start time
@@ -282,5 +288,107 @@ public class SiegeWarBattleSessionUtil {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * Checks if the daily battle session limit is active for the given resident
+	 * 
+	 * @return true if the limit is active, false if the limit is inactive
+	 */
+	public static boolean isDailyBattleSessionLimitActiveForResident(Resident resident)  {
+		//Return false if there are no limits
+		int maxDailyPlayerBattleSessions = SiegeWarSettings.getMaxDailyPlayerBattleSessions();
+		if(maxDailyPlayerBattleSessions == -1)
+			return false;
+
+		//Return true if the limit is 0
+		if(maxDailyPlayerBattleSessions == 0)
+			return true;
+
+		//Return false if current battle session is inactive
+		if(!BattleSession.getBattleSession().isActive())
+			return false;
+
+		//If player's recent-sessions list is null, initialize it
+		String recentBattleSessionsString = ResidentMetaDataController.getRecentBattleSessions(resident);
+		if(recentBattleSessionsString == null) {
+			ResidentMetaDataController.setRecentBattleSessions(resident,"");
+			resident.save();
+			recentBattleSessionsString = "";
+		}
+		
+		//Transform recent-sessions string into List
+		List<String> recentBattleSessionsList;
+		if(recentBattleSessionsString.length() == 0) {
+			recentBattleSessionsList = new ArrayList<>();		
+		} else {
+			String[] recentBattleSessionsArray = recentBattleSessionsString.replaceAll(" ","").split(",");
+			recentBattleSessionsList = Arrays.asList(recentBattleSessionsArray);
+		}
+		
+		//Return false if current session is in the player's recent-sessions list
+		String startTimeOfCurrentBattleSessionAsString = BattleSession.getBattleSession().getStartTime().toString();
+		if(recentBattleSessionsList.contains(startTimeOfCurrentBattleSessionAsString)) 
+			return false;			
+
+		//Recalculate recent-sessions list, keeping only entries which are newer then 24 hours old
+		List<String> recalculatedRecentBattleSessionsList = new ArrayList<>();
+		for(String battleSessionStartTime: recentBattleSessionsList) {
+			if(System.currentTimeMillis() - Long.parseLong(battleSessionStartTime) < ONE_DAY_IN_MILLIS) {
+				recalculatedRecentBattleSessionsList.add(battleSessionStartTime);
+			}
+		}
+		
+		//Save recent-session list if it has changed (will happen if one or more entries have dropped off)
+		if(recentBattleSessionsList.size() != recalculatedRecentBattleSessionsList.size()) {
+			ResidentMetaDataController.setRecentBattleSessions(resident, recalculatedRecentBattleSessionsList);
+			resident.save();
+		}
+
+		//Check if player is at their daily limit
+		if(recalculatedRecentBattleSessionsList.size() >= maxDailyPlayerBattleSessions) {
+			//Player at or over the limit. Return true
+			return true;
+		} else {
+			//Player not at the limit. Add the current session to the recent-sessions list, then return false 
+			recalculatedRecentBattleSessionsList.add(BattleSession.getBattleSession().getStartTime().toString());
+			ResidentMetaDataController.setRecentBattleSessions(resident, recalculatedRecentBattleSessionsList);
+			resident.save();
+			return false;
+		}
+	}
+
+	/**
+	 * Gets the formatted time until a player is no longer limited by the max-daily-battle-sessions feature
+	 *
+	 * @param resident the resident
+	 * @return formatted time e.g.  11.2 minutes, 12.8 hours,
+	 */
+	public static String getFormattedTimeUntilPlayerBattleSessionLimitExpires(Resident resident) {
+		//Get list of recent sessions
+		String recentBattleSessionsString = ResidentMetaDataController.getRecentBattleSessions(resident);
+
+		//If player's recent-sessions list is null, initialize it
+		if(recentBattleSessionsString == null) {
+			ResidentMetaDataController.setRecentBattleSessions(resident,"");
+			resident.save();
+			recentBattleSessionsString = "";
+		}
+
+		/*
+		 * If the list is blank at this point, it means that the server has limited player sessions to 0
+		 * This should be ideally be done via the scheduler
+		 * But in any case, lets return something
+		*/
+		if(recentBattleSessionsString.length()== 0)
+			return "?";
+
+		//The 1st entry will be the oldest one. Find out when it will drop off the list
+		String stringStartTimeOfOldestSession = recentBattleSessionsString.replace(" ", "").split(",")[0];
+		long longStartTimeOfOldestSession = Long.parseLong(stringStartTimeOfOldestSession);
+		long millisSinceOldestSessionStarted = System.currentTimeMillis() - longStartTimeOfOldestSession; //will be less than 24 hrs
+		long millisUntilOldestSessionDropsOffList = ONE_DAY_IN_MILLIS - millisSinceOldestSessionStarted;
+
+		return TimeMgmt.getFormattedTimeValue(millisUntilOldestSessionDropsOffList);
 	}
 }
