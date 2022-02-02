@@ -112,7 +112,7 @@ public class PeacefullySubvertTown {
 	 * @param subvertingNation the nation doing the subverting
 	 * @param targetTown the target town
 	 */
-    private static void subvertTown(Nation subvertingNation, Town targetTown) {
+	private static void subvertTown(Nation subvertingNation, Town targetTown) {
 		//Set town to occupied
 		TownOccupationController.setTownOccupation(targetTown, subvertingNation);
 
