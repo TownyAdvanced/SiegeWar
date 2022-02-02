@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
 
-import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
@@ -29,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.UUID;
 import java.util.Comparator;
 import java.util.Collections;
