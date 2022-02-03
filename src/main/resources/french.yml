@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.32
+version: 0.33
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -506,3 +506,7 @@ msg_err_cannot_subvert_town_insufficient_influence: "&cYou cannot subvert this t
 msg_err_cannot_invite_peaceful_town_occupation: "&cYou cannot invite occupation if your town is peaceful."
 msg_err_cannot_peacefully_revolt_because_unoccupied: "&cThere is no need to peacefully revolt, because your town is not occupied."
 msg_err_cannot_peacefully_revolt_because_occupier_has_influence: "&cYour town cannot peacefully revolt, because its occupier, %s, still has some Towny-Influence in the local area (%d)."
+
+#Added in 0.33
+msg.battle.session.cleanup.starting: "&bThe previous Battle Session did not complete. Initiating Battle Session Cleanup. Each battle will be resolved as a draw, with both attacker and defender battle points being applied to the siege balance."
+msg.battle.session.cleanup.complete: "&bBattle Session Cleanup complete. %d battles were resolved."
