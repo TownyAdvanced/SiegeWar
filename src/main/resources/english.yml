@@ -497,5 +497,5 @@ msg_err_cannot_peacefully_revolt_because_unoccupied: "&cThere is no need to peac
 msg_err_cannot_peacefully_revolt_because_occupier_has_influence: "&cYour town cannot peacefully revolt, because its occupier, %s, still has some Towny-Influence in the local area (%d)."
 
 #Added in 0.33
-msg.battle.session.cleanup.starting: "&bThe previous Battle Session did not complete. Initiating Battle Session Cleanup. Each battle will be resolved as a draw, with both attacker and defender battle points being applied to the siege balance."
-msg.battle.session.cleanup.complete: "&bBattle Session Cleanup complete. %d battles were resolved."
+msg.battle.session.cleanup.starting: "The previous Battle Session did not complete. Initiating Battle Session Cleanup. Each battle will be resolved as a draw, with both attacker and defender battle points being applied to the siege balance."
+msg.battle.session.cleanup.complete: "Battle Session Cleanup complete. %d battles were resolved."
