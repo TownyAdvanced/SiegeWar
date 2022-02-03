@@ -201,7 +201,7 @@ public class SiegeWar extends JavaPlugin {
 				info(Translation.of("siegewar.battle.session.cleanup.starting"));
 				int numBattlesUpdated = 0;
 				for(Siege siege: siegesWithUnresolvedBattles) {
-					siege.setSiegeBalance(siege.getSiegeBalance() + siege.getAttackerBattlePoints() + siege.getDefenderBattlePoints());
+					siege.setSiegeBalance(siege.getSiegeBalance() + siege.getAttackerBattlePoints() - siege.getDefenderBattlePoints());
 					siege.setAttackerBattlePoints(0);
 					siege.setDefenderBattlePoints(0);
 					SiegeController.saveSiege(siege);
