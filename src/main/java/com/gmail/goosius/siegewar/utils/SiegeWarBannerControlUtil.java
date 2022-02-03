@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
@@ -324,6 +325,9 @@ public class SiegeWarBannerControlUtil {
 			break;
 			default:
 		}
+
+		//Save siege to db
+		SiegeController.saveSiege(siege);
 
 		//Record gained battle points for use by the 'Banner Control Reversal Bonus' feature
 		siege.adjustBattlePointsEarnedFromCurrentBannerControl(battlePoints);

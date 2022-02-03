@@ -87,6 +87,9 @@ public class SiegeWarScoringUtil {
 			siege.adjustAttackerBattlePoints(battlePoints);
 		}
 
+		//Save siege to db
+		SiegeController.saveSiege(siege);
+
 		//Generate message
 		String unformattedErrorMessage;
 		String message;
