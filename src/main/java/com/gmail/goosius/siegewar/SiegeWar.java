@@ -198,7 +198,7 @@ public class SiegeWar extends JavaPlugin {
 			}
 			//Resolve battles
 			if(siegesWithUnresolvedBattles.size() > 0) {
-				info(Translation.of("siegewar.battle.session.cleanup.starting"));
+				info(Translation.of("msg.battle.session.cleanup.starting"));
 				int numBattlesUpdated = 0;
 				for(Siege siege: siegesWithUnresolvedBattles) {
 					siege.setSiegeBalance(siege.getSiegeBalance() + siege.getAttackerBattlePoints() - siege.getDefenderBattlePoints());
@@ -208,7 +208,7 @@ public class SiegeWar extends JavaPlugin {
 					numBattlesUpdated++;
 				}
 				
-				info(Translation.of("siegewar.battle.session.cleanup.complete", numBattlesUpdated));
+				info(Translation.of("msg.battle.session.cleanup.complete", numBattlesUpdated));
 			}
 		}
 	
