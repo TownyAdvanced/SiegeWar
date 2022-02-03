@@ -48,7 +48,7 @@ public class SiegeMetaDataController {
 	//In metadata, siegeBalance still uses the old name of points
 	private static IntegerDataField siegeBalance = new IntegerDataField("siegewar_points", 0);
 	private static IntegerDataField attackerBattlePoints = new IntegerDataField("siegewar_attackerBattlePoints", 0);
-	private static IntegerDataField defenderBattlePoints = new IntegerDataField("siegewar_defenderBattlePoits", 0);
+	private static IntegerDataField defenderBattlePoints = new IntegerDataField("siegewar_defenderBattlePoints", 0);
 	
 	private static DecimalDataField siegeWarChestAmount = new DecimalDataField("siegewar_warChestAmount", 0.0);
 	private static BooleanDataField townPlundered = new BooleanDataField("siegewar_townPlundered", false);
