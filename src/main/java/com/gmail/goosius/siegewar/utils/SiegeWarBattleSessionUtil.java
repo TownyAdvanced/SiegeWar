@@ -100,9 +100,6 @@ public class SiegeWarBattleSessionUtil {
 
 					//Prepare result for messaging
 					battleResults.put(siege, siegeBalanceAdjustment);
-
-					//Save siege
-					SiegeController.saveSiege(siege);
 				}
 
 				//Remove glowing effects from players in bc sessions
@@ -124,6 +121,9 @@ public class SiegeWarBattleSessionUtil {
 				siege.setAttackerBattlePoints(0);
 				siege.setDefenderBattlePoints(0);
 				siege.clearSuccessfulBattleContributors();
+
+				//Save siege to database
+				SiegeController.saveSiege(siege);
 			}
 		} catch (Throwable t) {
 			try {
