@@ -144,9 +144,10 @@ public class SiegeWarBattleSessionUtil {
 			if(System.currentTimeMillis() > battleSession.getScheduledEndTime()) {
 				//Finish battle session
 				endBattleSession();
+			} else {
+				//Update battle session boss bars.
+				BossBarUtil.updateBattleSessionBossBar();
 			}
-			
-			BossBarUtil.updateBattleSessionBossBar();
 
 		} else {
 			//Battle session is inactive.
