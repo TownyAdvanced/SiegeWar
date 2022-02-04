@@ -98,17 +98,6 @@ public class SiegeWarNationEventListener implements Listener {
 	@EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
 	public void onDeleteNation(PreDeleteNationEvent event) {
 		/*
-		 * If SiegeWar and the Economy are enabled, give the player a nation refund if it is non-zero & enabled.
-		 */
-		if (SiegeWarSettings.getWarSiegeEnabled() 
-				&& TownyEconomyHandler.isActive()
-				&& SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete() 
-				&& SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() > 0 
-				&& event.getNation().getKing() != null) {
-			SiegeWarMoneyUtil.makeNationRefundAvailable(event.getNation().getKing());
-		}
-		
-		/*
 		 * Adjust sieges if needed
 		 */
 		for (Siege siege : SiegeController.getSieges()) {

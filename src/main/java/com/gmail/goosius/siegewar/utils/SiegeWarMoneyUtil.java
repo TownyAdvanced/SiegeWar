@@ -61,21 +61,6 @@ public class SiegeWarMoneyUtil {
 	}
 
 	/**
-	 * If the player is due a nation refund, pays the refund to the player
-	 *
-	 * @param player collecting the nation refund.
-	 * @return true if payment is made
-	 *        false if payment cannot be made for various reasons.
-	 */
-	public static boolean collectNationRefund(Player player) throws Exception {
-		if (!(SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete())) {
-			return false;
-		}
-		return collectIncome(player, "Nation Refund",
-				"msg_siege_war_nation_refund_collected");
-	}
-
-	/**
 	 * If the player is due plunder, pays the plunder to the player
 	 *
 	 * @param player collecting the plunder
@@ -123,9 +108,6 @@ public class SiegeWarMoneyUtil {
 
 		int incomeAmount;
 		switch(reason.toLowerCase()) {
-			case "nation refund":
-				incomeAmount = ResidentMetaDataController.getNationRefundAmount(resident);
-				break;
 			case "plunder":
 				incomeAmount = ResidentMetaDataController.getPlunderAmount(resident);
 				break;
@@ -139,9 +121,6 @@ public class SiegeWarMoneyUtil {
 		if(incomeAmount != 0) {
 			resident.getAccount().deposit(incomeAmount, reason);
 			switch(reason.toLowerCase()) {
-				case "nation refund":
-					ResidentMetaDataController.clearNationRefund(resident);
-				break;
 				case "plunder":
 					ResidentMetaDataController.clearPlunder(resident);
 				break;
@@ -156,21 +135,6 @@ public class SiegeWarMoneyUtil {
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * Refund some of the initial setup cost to the king
-	 * 
-	 * @param king Resident to grant the refund to.
-	 */
-	public static void makeNationRefundAvailable(Resident king) {
-		int amountToRefund = (int)(TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
-		
-		// Makes the nation refund available. Player can do "/sw collect" later to claim money.
-		ResidentMetaDataController.addNationRefundAmount(king, amountToRefund);
-
-		Messaging.sendMsg(king.getPlayer(),
-				Translation.of("msg_siege_war_nation_refund_available", TownyEconomyHandler.getFormattedBalance(amountToRefund)));
 	}
 
 	/**

@@ -115,14 +115,6 @@ public enum ConfigNodes {
 			"# 1. Protect players from accidentally spawning into a warzone while unprepared.",
 			"# 2. Discourage 'fake' sieges, by making the automatic siege impact harsher.",
 			"# 3. Even the spawn-advantage between attacking and defender."), 
-	WAR_SIEGE_REFUND_INITIAL_NATION_COST_ON_DELETE(
-			"war.siege.switches.refund_initial_nation_cost_on_delete",
-			"true",
-			"",
-			"# If this is true, then when a nation is deleted/destroyed,",
-			"# a refund amount will be made available to the former king.", 
-		    "# This money can then be reclaim using /n claim refund.",
-			"# This prevents the new nation cost becoming a large sunken cost due to invasion."),
 	WAR_SIEGE_BESIEGED_TOWN_RECRUITMENT_DISABLED(
 			"war.siege.switches.besieged_town_recruitment_disabled",
 			"true",
@@ -153,18 +145,6 @@ public enum ConfigNodes {
 			"# ",
 			"# WARNING: Do not enable this feature without first reviewing the following config setting: ",
 			"# - counterattack_booster_extra_death_points_per_player_percentage"),
-	WAR_SIEGE_POPULATION_BASED_POINT_BOOSTS_ENABLED(
-			"war.siege.switches.population_based_point_boosts_enabled",
-			"false",
-			"",
-			"# If this setting is true, then the siege side with the lower population gets a boost to their siege point gains.",
-			"# The attacking side population consists of the residents of the attacking nation, and allies.",
-			"# The defending side population consists of the residents of the defending town, and nation + allies if applicable.",
-			"# The level of the boost is configured in a separate section.",
-			"# ",
-			"# WARNING: Do not enable this feature without first reviewing the following config setting: ",
-			"# - population_quotient_for_max_points_boost",
-			"# - max_population_based_points_boost"),
 	WAR_SIEGE_NATION_STATISTICS_ENABLED(
 			"war.siege.switches.nation_statistics_enabled",
 			"true",
@@ -238,12 +218,6 @@ public enum ConfigNodes {
 			"",
 			"# The percentage to increase the cost of sieging capitals by.",
 			"# Example: If set to 50, with an attack cost of 20/plot, each plot would be 30."),
-	WAR_SIEGE_NATION_COST_REFUND_PERCENTAGE_ON_DELETE(
-			"war.siege.money.nation_cost_refund_percentage_on_delete",
-			"80.0",
-			"",
-			"# The value specifies what proportion of the initial nation cost is refunded," +
-			"# When the nation is deleted."),
 	WAR_SIEGE_EXTRA_MONEY_PERCENTAGE_PER_TOWN_LEVEL(
 			"war.siege.money.extra_money_percentage_per_town_level",
 			"0",
@@ -398,13 +372,6 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	WAR_SIEGE_MAX_ALLOWED_BANNER_TO_TOWN_DOWNWARD_ELEVATION_DIFFERENCE(
-			"war.siege.distances.max_allowed_banner_to_town_downward_elevation_difference",
-			"15",
-			"",
-			"# This is the max allowed elevation difference downward from siege banner to town.",
-			 "# There is no limit on the upward difference.",
-		     "# This setting prevents the banner being placed on a platform high in the air."),
 	WAR_SIEGE_ZONE_RADIUS_BLOCKS(
 			"war.siege.distances.zone_radius_blocks",
 			"300",
@@ -495,26 +462,6 @@ public enum ConfigNodes {
 			"# As long as the counterattack booster feature is not disabled, this setting determines the strength of the boost.",
 			"# Example: If this setting is 10.0, and there are 3 players on the banner control list, and a player from the banner-controlling side dies,",
 			"# then the death points awarded to the attacker will be increased by +30%."),
-	WAR_SIEGE_POPULATION_QUOTIENT_FOR_MAX_POINTS_BOOST(
-			"war.siege.scoring.population_quotient_for_max_points_boost",
-			"3.0",
-			"",
-			"# This setting determines the population quotient which results in max points boots.",
-			"# Example:",
-			"# 1. Assume this value is set to 3.0.",
-		    "# 2. Assume a siege attacker has 3 times the population of a siege defender (counting allied populations too).",
-			"# 3. In this example, if the siege defender scores any battle points, the points will be boosted by the (separately configured) maximum.",
-            "# 4. In this example, the siege attacker will not get any points boosts."),
-	WAR_SIEGE_MAX_POPULATION_BASED_POINTS_BOOST(
-			"war.siege.scoring.max_population_based_points_boost",
-			"2.0",
-			"",
-			"# This setting determines the maximum points boost which a siege side can get due to population.",
-			"# Example:",
-			"# 1. Assume this value is set to 2.0.",
-			"# 2. Assume that a siege attacker greatly outnumbers a siege defender in population. (also counting allies)",
-			"# 3. In this example, if the siege defender scores any battle points, the points will be multiplied by 2.",
-			"# 4. In this example, the siege attacker will not get any points boosts."),
 	WAR_SIEGE_BATTLE_SESSION(
 			"war.siege.battle_session",
 			"",
@@ -795,12 +742,6 @@ public enum ConfigNodes {
 			"# The peaceful town feels the effect of all 'Towny-Influence' in that area.",
 			"# Each nearby automatically generates Towny-Influence in its non-peaceful, non-sieged towns in the area. The value is measured in num-townblocks.",
 			"# The nation with the highest Towny-Influence can subvert (peacefully occupy) the peaceful town, if it wishes to do so."),
-	PEACEFUL_TOWNS_GUARDIAN_TOWN_MIN_DISTANCE_REQUIREMENT_TOWNBLOCKS(
-			"peaceful_towns.guardian_town_min_distance_requirement_townblocks",
-			"75",
-			"",
-			"# This value determines how close a town has to be to a peaceful town,",
-			"# to be considered a guardian town."),
 	OCCUPIED_TOWNS(
 			"occupied_towns",
 			"",

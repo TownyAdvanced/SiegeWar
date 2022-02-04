@@ -147,11 +147,7 @@ public class SiegeWarBlockUtil {
 		//No siegecamp banner found near given block
 		return false;
 	}
-	
-	static Location getSurfaceLocation(Location topLocation) {
-		return topLocation.getWorld().getHighestBlockAt(topLocation).getLocation();
-	}
-	
+
 	private static boolean isStandingColouredBanner(Block block) {
 		switch (block.getType()) {
 			case BLACK_BANNER:

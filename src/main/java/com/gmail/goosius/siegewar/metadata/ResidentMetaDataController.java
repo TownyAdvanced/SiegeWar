@@ -20,7 +20,6 @@ public class ResidentMetaDataController {
 
 	@SuppressWarnings("unused")
 	private SiegeWar plugin;
-	private static IntegerDataField refundAmount = new IntegerDataField("siegewar_nationrefund", 0);
 	private static IntegerDataField plunderAmount = new IntegerDataField("siegewar_plunder", 0);
 	private static IntegerDataField militarySalaryAmount = new IntegerDataField("siegewar_militarysalary", 0);
 	/*
@@ -35,38 +34,6 @@ public class ResidentMetaDataController {
 
 	public ResidentMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
-	}
-	
-	public static int getNationRefundAmount(Resident resident) {
-		IntegerDataField idf = (IntegerDataField) refundAmount.clone();
-		if (resident.hasMeta(idf.getKey())) {
-			CustomDataField<?> cdf = resident.getMetadata(idf.getKey());
-			if (cdf instanceof IntegerDataField) {
-				IntegerDataField amount = (IntegerDataField) cdf; 
-				return amount.getValue();
-			}
-		}
-		return 0;
-	}
-
-	public static void clearNationRefund(Resident resident) {
-		IntegerDataField idf = (IntegerDataField) refundAmount.clone();
-		if (resident.hasMeta(idf.getKey())) {
-			resident.removeMetaData(idf);
-		}
-	}
-
-	public static void addNationRefundAmount(Resident resident, int nationRefundAmount) {
-		IntegerDataField idf = (IntegerDataField) refundAmount.clone();
-		if (nationRefundAmount > 0) {
-			if (resident.hasMeta(idf.getKey())) {
-				int updatedRefundAmount = getNationRefundAmount(resident) + nationRefundAmount;
-				resident.removeMetaData(idf);
-				resident.addMetaData(new IntegerDataField("siegewar_nationrefund", updatedRefundAmount));
-			} else {
-				resident.addMetaData(new IntegerDataField("siegewar_nationrefund", nationRefundAmount));
-			}
-		}
 	}
 
 	public static int getPlunderAmount(Resident resident) {

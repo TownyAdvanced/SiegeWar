@@ -27,42 +27,6 @@ public class SiegeWarDistanceUtil {
 	private static final int TOWNBLOCKSIZE= TownySettings.getTownBlockSize();
 
 	/**
-	 * This method determines if the difference in elevation between a (attack banner) block, 
-	 * and the average height of a town block,
-	 * is acceptable,
-	 * 
-	 * The allowed limit is configurable.
-	 * 
-	 * @param block the attack banner
-	 * @param townBlock the town block
-	 * @return true if the difference in elevation is acceptable
-	 */
-	public static boolean isBannerToTownElevationDifferenceOk(Block block, TownBlock townBlock) {
-		int allowedDownwardElevationDifference = SiegeWarSettings.getWarSiegeMaxAllowedBannerToTownDownwardElevationDifference();
-		int averageDownwardElevationDifference = getAverageBlockToTownDownwardElevationDistance(block, townBlock);
-		return averageDownwardElevationDifference <= allowedDownwardElevationDifference;
-	}
-	
-	private static int getAverageBlockToTownDownwardElevationDistance(Block block, TownBlock townBlock) {
-		int blockElevation = block.getY();
-		
-		Location topNorthWestCornerLocation = getTopNorthWestCornerLocation(townBlock.getWorldCoord());
-		Location[] surfaceCornerLocations = new Location[4];
-		surfaceCornerLocations[0] = SiegeWarBlockUtil.getSurfaceLocation(topNorthWestCornerLocation);
-		surfaceCornerLocations[1] = SiegeWarBlockUtil.getSurfaceLocation(topNorthWestCornerLocation.add(TOWNBLOCKSIZE,0,0));
-		surfaceCornerLocations[2] = SiegeWarBlockUtil.getSurfaceLocation(topNorthWestCornerLocation.add(0,0,TOWNBLOCKSIZE));
-		surfaceCornerLocations[3] = SiegeWarBlockUtil.getSurfaceLocation(topNorthWestCornerLocation.add(TOWNBLOCKSIZE,0,TOWNBLOCKSIZE));
-		
-		int totalElevation = 0;
-		for(Location surfaceCornerLocation: surfaceCornerLocations) {
-			totalElevation += surfaceCornerLocation.getBlockY();
-		}
-		int averageTownElevation = totalElevation / 4;
-		
-		return blockElevation - averageTownElevation;
-	}
-
-	/**
 	 * This method returns true if the given location is in an active siegezone
 	 *
 	 * @param location the target location
@@ -144,12 +108,6 @@ public class SiegeWarDistanceUtil {
 
 		//Check horizontal distance
 		return MathUtil.distance(location1.getX(), location2.getX(), location1.getZ(), location2.getZ()) < radius;
-	}
-
-	private static Location getTopNorthWestCornerLocation(WorldCoord worldCoord) {
-		int locX = worldCoord.getX() * TOWNBLOCKSIZE;
-		int locZ = worldCoord.getZ() * TOWNBLOCKSIZE;
-		return new Location(worldCoord.getBukkitWorld(), locX, 255, locZ);
 	}
 
 	/**

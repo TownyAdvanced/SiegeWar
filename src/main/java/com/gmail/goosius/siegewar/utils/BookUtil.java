@@ -108,9 +108,6 @@ public class BookUtil {
 			text += "If one siege-side has banner control, then the other side will receive a kill point bonus of " + counterPercent + " % for each player on the banner control list. ";
 			text += "For example, if there are 3 players on the banner control list and one is killed, the enemy side will receive " + (3 * counterPercent) + "% more death points than normal.\n\n";
 		}
-		if (SiegeWarSettings.getWarSiegePopulationBasedPointBoostsEnabled())
-			text += "The side of the siege which has a lower population will receive extra battle points.\n\n";
-
 
 		/*
 		 * Siege Area info
@@ -190,13 +187,6 @@ public class BookUtil {
 			text += "its residents suffer from 'war allergy' if they enter siege zones).\n";
 			text += "When a town chooses to toggle their peaceful status, it will take " + SiegeWarSettings.getWarCommonPeacefulTownsConfirmationRequirementDays() + " days for their decision to take effect.\n";
 			text += "Peaceful towns " + (SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP() ? "are" : "are not") + " allowed to toggle their pvp status.\n";
-		}
-
-
-		//Nation Refund
-		if (SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete()) {
-			text += "\nMISCELLANEOUS FEATURE: \nNATION REFUNDS\n\n";
-			text += "Nations which are disbanded for any reason (upkeep, plunder, capture) will be refunded " + SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() + "% of the nation cost, collected using '/sw nation refund'.\n";
 		}
 
 		// Map Hiding
