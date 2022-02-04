@@ -266,9 +266,6 @@ public class PlaceBlock {
 													 			  Town nearbyTown,
 													 			  Block bannerBlock
 											         			  ) throws TownyException {
-		if (!SiegeWarDistanceUtil.isBannerToTownElevationDifferenceOk(bannerBlock, nearbyTownBlock))
-			throw new TownyException(Translation.of("msg_err_siege_war_cannot_place_banner_far_above_town"));
-
 		if (nearbyTown.isRuined())
 			throw new TownyException(Translation.of("msg_err_cannot_start_siege_at_ruined_town"));
 

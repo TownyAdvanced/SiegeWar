@@ -73,7 +73,6 @@ msg_err_siege_war_cannot_attack_non_enemy_nation: "&cVous ne pouvez pas attaquer
 msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: "&cVous ne pouvez pas effectuer cette action car ce chunk fait face à plusieurs claims. Essayez de placer la bannière autre part."
 msg_err_siege_war_nation_already_attacking_town: "&cVotre nation attaque déjà cette ville."
 msg_err_siege_war_cannot_attack_siege_immunity: "&cLa ville cible bénéficie de l'immunité de siège. Elle ne peut pas être attaqué avant l'expiration de l'immunité de siège."
-msg_err_siege_war_cannot_place_banner_far_above_town: "La bannière de siège ne peut pas être placée à une altitude beaucoup plus élevée que la ville. Essayez de placer la bannière plus bas."
 msg_err_siege_war_cannot_join_siege: "&cVous ne pouvez pas attaquer une ville lorsqu'elle est assiégée par une autre nation."
 msg_err_siege_war_nation_has_too_many_active_siege_attacks: "&cVotre nation a atteint le nombre maximum d'attaques de siège simultanées. Pour lancer une autre attaque, une ou plusieurs des attaques en cours doivent se terminer."
 msg_err_siege_war_town_not_close_enough_to_nation: "&cLa ville est trop éloignée de votre capitale pour être attaquée."
@@ -186,15 +185,11 @@ msg_err_nation_not_registered: '&cNation %s is not registered.'
 msg_err_cannot_remove_enemy: '&cYou cannot remove a nation as enemy if you have an active siege against them!'
 
 #Added in 0.09
-nation_help_11 : 'Collect any income due to you from: plunder, military salary, or nation refunds.'
 nation_help_12 : 'Pay your soldiers. The given amount will be distributed according to rank.'
-msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be collected using '/sw collect'."
 msg_siege_war_plunder_available: "Plunder worth %s is now available to you. It can be collected using '/sw collect'."
 msg_siege_war_military_salary_available: "A Military Salary of of %s is now available to you. It can be collected using '/sw collect'."
-msg_siege_war_nation_refund_collected: "You have collected a nation refund of %s."
 msg_siege_war_plunder_collected: "You have collected plunder worth %s."
 msg_siege_war_military_salary_collected: "You have collected a military salary of %s."
-msg_err_siege_war_collect_unavailable: "There is no income due to you from either plunder, military salary, or nation refunds."
 msg_err_siege_war_no_soldiers_to_pay: "There were no soldiers to pay."
 msg_err_siege_war_not_enough_nation_funds_to_pay: "The nation does not have enough funds to pay that amount."
 msg_siege_war_soldiers_paid: "The soldiers of the nation were paid a total of %s, which was distributed according to rank."
@@ -483,7 +478,6 @@ msg_bossbar_preference_set: "&bBossBar preference set to %s."
 bossbar_msg_battle_time_remaining: '&2Battle Session Time Remaining: &a%s'
 msg_err_siege_war_revolt_immunity_permanent: "&cYour town has permanent revolt immunity. It cannot revolt."
 status_sieged: "%s[%sSieged%s]"
-status_nation_refund: "Nation Refund: "
 status_plunder: "Plunder: "
 status_military_salary: "Military Salary: "
 hover_message_click_to_claim: "Click to claim money owed to you."
@@ -506,3 +500,7 @@ msg_err_cannot_subvert_town_insufficient_influence: "&cYou cannot subvert this t
 msg_err_cannot_invite_peaceful_town_occupation: "&cYou cannot invite occupation if your town is peaceful."
 msg_err_cannot_peacefully_revolt_because_unoccupied: "&cThere is no need to peacefully revolt, because your town is not occupied."
 msg_err_cannot_peacefully_revolt_because_occupier_has_influence: "&cYour town cannot peacefully revolt, because its occupier, %s, still has some Towny-Influence in the local area (%d)."
+
+#Added in 0.33
+nation_help_11 : 'Collect any income due to you from: plunder or military salary.'
+msg_err_siege_war_collect_unavailable: "There is nothing for you to collect."

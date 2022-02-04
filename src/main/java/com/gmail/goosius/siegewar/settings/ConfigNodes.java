@@ -390,13 +390,6 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	WAR_SIEGE_MAX_ALLOWED_BANNER_TO_TOWN_DOWNWARD_ELEVATION_DIFFERENCE(
-			"war.siege.distances.max_allowed_banner_to_town_downward_elevation_difference",
-			"15",
-			"",
-			"# This is the max allowed elevation difference downward from siege banner to town.",
-			 "# There is no limit on the upward difference.",
-		     "# This setting prevents the banner being placed on a platform high in the air."),
 	WAR_SIEGE_ZONE_RADIUS_BLOCKS(
 			"war.siege.distances.zone_radius_blocks",
 			"300",

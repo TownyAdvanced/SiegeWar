@@ -74,10 +74,6 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_CLAIMING_DISABLED_NEAR_SIEGE_ZONES);
 	}
 
-	public static int getWarSiegeMaxAllowedBannerToTownDownwardElevationDifference() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_MAX_ALLOWED_BANNER_TO_TOWN_DOWNWARD_ELEVATION_DIFFERENCE);
-	}
-
 	public static double getWarSiegeAttackerCostUpFrontPerPlot() {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_ATTACKER_COST_UPFRONT_PER_PLOT);
 	}
