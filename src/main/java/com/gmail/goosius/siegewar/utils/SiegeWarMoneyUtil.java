@@ -61,21 +61,6 @@ public class SiegeWarMoneyUtil {
 	}
 
 	/**
-	 * If the player is due a nation refund, pays the refund to the player
-	 *
-	 * @param player collecting the nation refund.
-	 * @return true if payment is made
-	 *        false if payment cannot be made for various reasons.
-	 */
-	public static boolean collectNationRefund(Player player) throws Exception {
-		if (!(SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete())) {
-			return false;
-		}
-		return collectIncome(player, "Nation Refund",
-				"msg_siege_war_nation_refund_collected");
-	}
-
-	/**
 	 * If the player is due plunder, pays the plunder to the player
 	 *
 	 * @param player collecting the plunder

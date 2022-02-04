@@ -192,13 +192,6 @@ public class BookUtil {
 			text += "Peaceful towns " + (SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP() ? "are" : "are not") + " allowed to toggle their pvp status.\n";
 		}
 
-
-		//Nation Refund
-		if (SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete()) {
-			text += "\nMISCELLANEOUS FEATURE: \nNATION REFUNDS\n\n";
-			text += "Nations which are disbanded for any reason (upkeep, plunder, capture) will be refunded " + SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() + "% of the nation cost, collected using '/sw nation refund'.\n";
-		}
-
 		// Map Hiding
 		if (SiegeWarSettings.getWarSiegeMapHidingEnabled()) {
 			text += "\nMISCELLANEOUS HIDING: \nMAP HIDING\n\n";

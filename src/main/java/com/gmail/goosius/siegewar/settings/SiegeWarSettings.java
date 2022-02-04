@@ -150,10 +150,6 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_MAX_ACTIVE_SIEGE_ATTACKS_PER_NATION);
 	}
 
-	public static boolean getWarSiegeRefundInitialNationCostOnDelete() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_REFUND_INITIAL_NATION_COST_ON_DELETE);
-	}
-
 	public static boolean getWarCommonPeacefulTownsEnabled() {
 		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_ENABLED);
 	}

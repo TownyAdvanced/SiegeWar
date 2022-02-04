@@ -115,14 +115,6 @@ public enum ConfigNodes {
 			"# 1. Protect players from accidentally spawning into a warzone while unprepared.",
 			"# 2. Discourage 'fake' sieges, by making the automatic siege impact harsher.",
 			"# 3. Even the spawn-advantage between attacking and defender."), 
-	WAR_SIEGE_REFUND_INITIAL_NATION_COST_ON_DELETE(
-			"war.siege.switches.refund_initial_nation_cost_on_delete",
-			"true",
-			"",
-			"# If this is true, then when a nation is deleted/destroyed,",
-			"# a refund amount will be made available to the former king.", 
-		    "# This money can then be reclaim using /n claim refund.",
-			"# This prevents the new nation cost becoming a large sunken cost due to invasion."),
 	WAR_SIEGE_BESIEGED_TOWN_RECRUITMENT_DISABLED(
 			"war.siege.switches.besieged_town_recruitment_disabled",
 			"true",
