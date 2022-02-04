@@ -218,12 +218,6 @@ public enum ConfigNodes {
 			"",
 			"# The percentage to increase the cost of sieging capitals by.",
 			"# Example: If set to 50, with an attack cost of 20/plot, each plot would be 30."),
-	WAR_SIEGE_NATION_COST_REFUND_PERCENTAGE_ON_DELETE(
-			"war.siege.money.nation_cost_refund_percentage_on_delete",
-			"80.0",
-			"",
-			"# The value specifies what proportion of the initial nation cost is refunded," +
-			"# When the nation is deleted."),
 	WAR_SIEGE_EXTRA_MONEY_PERCENTAGE_PER_TOWN_LEVEL(
 			"war.siege.money.extra_money_percentage_per_town_level",
 			"0",
