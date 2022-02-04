@@ -748,12 +748,6 @@ public enum ConfigNodes {
 			"# The peaceful town feels the effect of all 'Towny-Influence' in that area.",
 			"# Each nearby automatically generates Towny-Influence in its non-peaceful, non-sieged towns in the area. The value is measured in num-townblocks.",
 			"# The nation with the highest Towny-Influence can subvert (peacefully occupy) the peaceful town, if it wishes to do so."),
-	PEACEFUL_TOWNS_GUARDIAN_TOWN_MIN_DISTANCE_REQUIREMENT_TOWNBLOCKS(
-			"peaceful_towns.guardian_town_min_distance_requirement_townblocks",
-			"75",
-			"",
-			"# This value determines how close a town has to be to a peaceful town,",
-			"# to be considered a guardian town."),
 	OCCUPIED_TOWNS(
 			"occupied_towns",
 			"",
