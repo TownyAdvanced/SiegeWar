@@ -310,14 +310,12 @@ public class SiegeWarBannerControlUtil {
 		switch(siege.getBannerControllingSide()) {
 			case ATTACKERS:
 				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarBattlePointsForAttackerOccupation();
-				battlePoints = SiegeWarScoringUtil.applyBattlePointsAdjustmentForPopulationQuotient(true, battlePoints, siege);
 				siege.adjustAttackerBattlePoints(battlePoints);
 				if (!siege.getSiegeType().equals(SiegeType.REVOLT))
 					siege.registerSuccessfulBattleContributorsFromBannerControl();
 			break;
 			case DEFENDERS:
 				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarBattlePointsForDefenderOccupation();
-				battlePoints = SiegeWarScoringUtil.applyBattlePointsAdjustmentForPopulationQuotient(false, battlePoints, siege);
 				siege.adjustDefenderBattlePoints(battlePoints);
 				if (siege.getSiegeType().equals(SiegeType.REVOLT))
 					siege.registerSuccessfulBattleContributorsFromBannerControl();

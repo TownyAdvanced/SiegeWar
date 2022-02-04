@@ -270,18 +270,6 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_BANNER_CONTROL_SESSION_DURATION_MINUTES);
 	}
 
-	public static boolean getWarSiegePopulationBasedPointBoostsEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_POPULATION_BASED_POINT_BOOSTS_ENABLED);
-	}
-
-	public static double getWarSiegePopulationQuotientForMaxPointsBoost() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_POPULATION_QUOTIENT_FOR_MAX_POINTS_BOOST);
-	}
-
-	public static double getWarSiegeMaxPopulationBasedPointBoost() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_MAX_POPULATION_BASED_POINTS_BOOST);
-	}
-
 	public static boolean getWarCommonOccupiedTownUnClaimingDisabled() {
 		return Settings.getBoolean(ConfigNodes.OCCUPIED_TOWN_UNCLAIMING_DISABLED);
 	}

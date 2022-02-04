@@ -59,8 +59,6 @@ public class Siege {
 	private SiegeSide siegeWinner;    //For when a siege is over, holds the winning side.
 	private Map<Player, BannerControlSession> bannerControlSessions;
 	private int timedBattlePointsEarnedFromCurrentBannerControl;
-	private boolean attackerHasLowestPopulation;
-	private double battlePointstModifierForSideWithLowestPopulation;
 	private int attackerBattlePoints;
 	private int defenderBattlePoints;
 	private Set<String> successfulBattleContributors;   //UUID's of attacker-side residents who got BC at least once during the current battle
@@ -81,8 +79,6 @@ public class Siege {
 		bannerControllingResidents = new ArrayList<>();
 		bannerControllingSide = SiegeSide.NOBODY;
 		bannerControlSessions = new HashMap<>();
-		attackerHasLowestPopulation = false;
-		battlePointstModifierForSideWithLowestPopulation = 0;  //0 is the special starting value
 		attackerBattlePoints = 0;
 		defenderBattlePoints = 0;
 		successfulBattleContributors = new HashSet<>();
@@ -303,22 +299,6 @@ public class Siege {
 
 	public void addBannerControlSession(Player player, BannerControlSession bannerControlSession) {
 		bannerControlSessions.put(player, bannerControlSession);
-	}
-
-	public double getBattlePointsModifierForSideWithLowestPopulation() {
-		return battlePointstModifierForSideWithLowestPopulation;
-	}
-
-	public void setBattlePointsModifierForSideWithLowestPopulation(double battlePointsModifierForSideWithLowestPopulation) {
-		this.battlePointstModifierForSideWithLowestPopulation = battlePointsModifierForSideWithLowestPopulation;
-	}
-
-	public boolean isAttackerHasLowestPopulation() {
-		return attackerHasLowestPopulation;
-	}
-
-	public void setAttackerHasLowestPopulation(boolean attackerHasLowestPopulation) {
-		this.attackerHasLowestPopulation = attackerHasLowestPopulation;
 	}
 
 	/**

@@ -87,12 +87,6 @@ public class SiegeWarTimerTaskController {
 		}
 	}
 
-	public static void updatePopulationBasedBattlePointModifiers() {
-		if(SiegeWarSettings.getWarSiegePopulationBasedPointBoostsEnabled()) {
-			SiegeWarScoringUtil.updatePopulationBasedBattlePointModifiers();
-		}
-	}
-
 	public static void evaluateBattleSessions() {
 		SiegeWarBattleSessionUtil.evaluateBattleSessions();
 	}

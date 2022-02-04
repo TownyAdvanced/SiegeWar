@@ -108,9 +108,6 @@ public class BookUtil {
 			text += "If one siege-side has banner control, then the other side will receive a kill point bonus of " + counterPercent + " % for each player on the banner control list. ";
 			text += "For example, if there are 3 players on the banner control list and one is killed, the enemy side will receive " + (3 * counterPercent) + "% more death points than normal.\n\n";
 		}
-		if (SiegeWarSettings.getWarSiegePopulationBasedPointBoostsEnabled())
-			text += "The side of the siege which has a lower population will receive extra battle points.\n\n";
-
 
 		/*
 		 * Siege Area info
