@@ -266,13 +266,13 @@ public class SiegeWarBattleSessionUtil {
 	 * @return configured start time, in millis.
 	 */
 	private static Long getConfiguredStartTimeOfNextBattleSession() {
-		LocalDateTime currentTime = LocalDateTime.now(Clock.systemUTC());
+		LocalDateTime currentTime = LocalDateTime.now();
 		LocalDateTime nextStartDateTime = null;
 
 		//Look for next configured-start-time for today
-		for (LocalDateTime candidateStartTimeUtc : SiegeWarSettings.getAllBattleSessionStartTimesForTodayUtc()) {
-			if(candidateStartTimeUtc.isAfter(currentTime)) {
-				nextStartDateTime = candidateStartTimeUtc;
+		for (LocalDateTime candidateStartTime : SiegeWarSettings.getAllBattleSessionStartTimesForToday()) {
+			if(candidateStartTime.isAfter(currentTime)) {
+				nextStartDateTime = candidateStartTime;
 				break;
 			}
 		}
@@ -282,10 +282,12 @@ public class SiegeWarBattleSessionUtil {
 			nextStartDateTime = SiegeWarSettings.getFirstBattleSessionStartTimeForTomorrowUtc();
 		}
 		
-		//If nextStartTime is still null, return null, else transform it to millis and return
+		//If nextStartTime is still null, return null, else return the UTC time of the given value.
 		if(nextStartDateTime != null) {
-			ZonedDateTime zdt = ZonedDateTime.of(nextStartDateTime, ZoneOffset.UTC);
-			return zdt.toInstant().toEpochMilli();
+			ZonedDateTime nextStartTimeInServerTimeZone = ZonedDateTime.of(nextStartDateTime, ZoneId.systemDefault());
+			ZonedDateTime nextStartTimeInUtcTimeZone = nextStartTimeInServerTimeZone.withZoneSameInstant(ZoneId.of("UTC"));
+			long nextStartTimeAsUtcMillis = nextStartTimeInUtcTimeZone.toInstant().toEpochMilli();
+			return nextStartTimeAsUtcMillis;
 		} else {
 			return null;
 		}

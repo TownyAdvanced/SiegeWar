@@ -473,19 +473,19 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	WAR_SIEGE_BATTLE_SESSION_WEEKDAY_START_TIMES_UTC(
-			"war.siege.battle_session.weekday_start_times_utc",
-			"12:10,14:10,16:10,18:10,20:10",
+	WAR_SIEGE_BATTLE_SESSION_WEEKDAY_START_TIMES(
+			"war.siege.battle_session.weekday_start_times",
+			"00:10,01:10,02:10,03:10,04:10,05:10,06:10,07:10,08:10,09:10,10:10,11:10,12:10,13:10,14:10,15:10,16:10,17:10,18:10,19:10,20:10,21:10,22:10,23:10",
 			"",
-			"# This value determines the UTC weekday times when each battle session will start.",
+			"# This value determines the weekday times (in Server timezone) when each battle session will start.",
 			"# This setting applies to Monday, Tuesday, Wednesday, Thursday, and Friday.",
 			"# The format is HOUR:MINUTE.",
 			"# The default values are all at ten past the hour, so that the critical point of the battle (the final minutes), will fall on the hour."),
-	WAR_SIEGE_BATTLE_SESSION_WEEKEND_START_TIMES_UTC(
-			"war.siege.battle_session.weekend_start_times_utc",
-			"12:10,14:10,16:10,18:10,20:10",
+	WAR_SIEGE_BATTLE_SESSION_WEEKEND_START_TIMES(
+			"war.siege.battle_session.weekend_start_times",
+			"00:10,01:10,02:10,03:10,04:10,05:10,06:10,07:10,08:10,09:10,10:10,11:10,12:10,13:10,14:10,15:10,16:10,17:10,18:10,19:10,20:10,21:10,22:10,23:10",
 			"",
-			"# This value determines the UTC weekend times when each battle session will start.",
+			"# This value determines the weekend times (in Server timezone) when each battle session will start.",
 			"# This setting applies to Saturday and Sunday.",
 			"# The format is HOUR:MINUTE.",
 			"# The default values are all at ten past the hour, so that the critical point of the battle (the final minutes), will fall on the hour."),
