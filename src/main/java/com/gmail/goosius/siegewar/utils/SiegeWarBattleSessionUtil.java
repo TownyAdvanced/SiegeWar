@@ -282,7 +282,7 @@ public class SiegeWarBattleSessionUtil {
 			nextStartDateTime = SiegeWarSettings.getFirstBattleSessionStartTimeForTomorrowUtc();
 		}
 		
-		//If nextStartTime is still null, return null, else return the UTC time of the given value.
+		//If nextStartTime is still null, return null, else return the UTC time in millis of the given value.
 		if(nextStartDateTime != null) {
 			ZonedDateTime nextStartTimeInServerTimeZone = ZonedDateTime.of(nextStartDateTime, ZoneId.systemDefault());
 			ZonedDateTime nextStartTimeInUtcTimeZone = nextStartTimeInServerTimeZone.withZoneSameInstant(ZoneId.of("UTC"));
