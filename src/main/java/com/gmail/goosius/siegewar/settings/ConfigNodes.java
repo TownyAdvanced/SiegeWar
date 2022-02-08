@@ -949,7 +949,31 @@ public enum ConfigNodes {
 			"yellow",
 			"",
 			"# This setting determines the color of the boss bar message,",
-			"# which players see while they are capturing the banner.");
+			"# which players see while they are capturing the banner."),
+	SIEGE_START_DAY_LIMITER(
+		"siege_start_day_limiter",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |              SIEGE START DAY LIMITER                 | #",
+			"# +------------------------------------------------------+ #",
+			"#                                                          #",
+			"# The feature allows a server to limit the days when       #",
+			"# players can start sieges.                                #",
+			"# 						                                    #",
+			"# Example: If you wanted fighting mostly on the weekends   #",
+			"# you could limit siege-starts to just Thursday.           #",
+			"############################################################",
+			""),
+	SIEGE_START_DAY_LIMITER_DAYS(
+			"siege_start_day_limiter.days",
+			"monday, tuesday, wednesday, thursday, friday, saturday, sunday",
+			"",
+			"# This setting determines the days when players can start sieges.",
+			"# Multiple entries should be separated by a comma.",
+			"# Permitted values: monday, tuesday, wednesday, thursday, friday, saturday, sunday.");
 
 	private final String Root;
 	private final String Default;
