@@ -964,7 +964,7 @@ public enum ConfigNodes {
 			"# players can start sieges.                                #",
 			"# 						                                    #",
 			"# Example: If you wanted fighting mostly on the weekends   #",
-			"# you could limit siege-starts to just Thursday.           #",
+			"# you could limit siege-starts to just Friday.             #",
 			"############################################################",
 			""),
 	SIEGE_START_DAY_LIMITER_ALLOWED_DAYS(
