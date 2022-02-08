@@ -967,11 +967,11 @@ public enum ConfigNodes {
 			"# you could limit siege-starts to just Thursday.           #",
 			"############################################################",
 			""),
-	SIEGE_START_DAY_LIMITER_DAYS(
-			"siege_start_day_limiter.days",
+	SIEGE_START_DAY_LIMITER_ALLOWED_DAYS(
+			"siege_start_day_limiter.allowed_days",
 			"monday, tuesday, wednesday, thursday, friday, saturday, sunday",
 			"",
-			"# This setting determines the days when players can start sieges.",
+			"# This setting determines the days (in server timezone) when players can start sieges.",
 			"# Multiple entries should be separated by a comma.",
 			"# Permitted values: monday, tuesday, wednesday, thursday, friday, saturday, sunday.");
 

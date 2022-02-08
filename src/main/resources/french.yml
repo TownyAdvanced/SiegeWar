@@ -506,3 +506,4 @@ nation_help_11 : 'Collect any income due to you from: plunder or military salary
 msg_err_siege_war_collect_unavailable: "There is nothing for you to collect."
 msg.battle.session.cleanup.starting: "The previous Battle Session did not complete. Initiating Battle Session Cleanup. Each battle will be resolved as a draw, with both attacker and defender battle points being applied to the siege balance."
 msg.battle.session.cleanup.complete: "Battle Session Cleanup complete. %d battles were resolved."
+msg_err_cannot_start_sieges_today: "&cYour server has limited the days-of-the-week when sieges can be started. Players cannot start sieges today."
