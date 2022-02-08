@@ -26,7 +26,6 @@ import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
