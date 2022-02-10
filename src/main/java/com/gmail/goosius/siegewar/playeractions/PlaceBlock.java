@@ -26,6 +26,7 @@ import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -272,6 +273,9 @@ public class PlaceBlock {
 
 		if(SiegeWarBlockUtil.isSupportBlockUnstable(bannerBlock))
 			throw new TownyException(Translation.of("msg_err_siege_war_banner_support_block_not_stable"));
+
+        if(!SiegeWarSettings.getSiegeStartDayLimiterAllowedDays().contains(LocalDate.now().getDayOfWeek()))
+			throw new TownyException(Translation.of("msg_err_cannot_start_sieges_today"));
 
 		if (residentsTown == nearbyTown) {
 			//Revolt siege
