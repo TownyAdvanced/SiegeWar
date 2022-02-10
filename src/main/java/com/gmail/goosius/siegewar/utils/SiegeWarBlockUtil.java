@@ -16,7 +16,9 @@ import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class contains utility functions related to blocks 
@@ -25,6 +27,35 @@ import java.util.List;
  * @author Goosius
  */
 public class SiegeWarBlockUtil {
+
+	/**
+	 * This method gets a list of all adjacent townblocks.
+	 *
+	 * @param block the block to start from
+	 * @return list of all adjacent townblocks
+	 */
+	public static List<TownBlock> getAllAdjacentTownBlocks(Block block) {
+		List<TownBlock> result = new ArrayList<>();
+		result.addAll(getCardinalAdjacentTownBlocks(block));
+		result.addAll(getNonCardinalAdjacentTownBlocks(block));
+		return result;
+	}
+
+	/**
+	 * This method gets a list of all adjacent sieges.
+	 *
+	 * @param block the block to start from
+	 * @return list of all adjacent sieges (active or not)
+	 */
+	public static Set<Siege> getAllAdjacentSieges(Block block) {
+		Set<Siege> result = new HashSet<>();
+		for(TownBlock townBlock: getAllAdjacentTownBlocks(block)) {
+			if(townBlock.hasTown() & SiegeController.hasSiege(townBlock.getTownOrNull())) {
+				result.add(SiegeController.getSiege(townBlock.getTownOrNull()));
+			}
+		}
+		return result;
+	}
 
 	/**
 	 * This method gets a list of adjacent cardinal townblocks, either N, S, E or W.
