@@ -51,7 +51,7 @@ public class SiegeWarBlockUtil {
 		Set<Siege> result = new HashSet<>();
 		for(TownBlock townBlock: getAllAdjacentTownBlocks(block)) {
 			if(townBlock.hasTown() & SiegeController.hasSiege(townBlock.getTownOrNull())) {
-				result.add(SiegeController.getSiege(townBlock.getTownOrNull()));	
+				result.add(SiegeController.getSiege(townBlock.getTownOrNull()));
 			}
 		}
 		return result;
