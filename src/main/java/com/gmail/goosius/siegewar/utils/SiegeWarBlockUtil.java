@@ -27,6 +27,19 @@ import java.util.List;
 public class SiegeWarBlockUtil {
 
 	/**
+	 * This method gets a list of all adjacent townblocks.
+	 *
+	 * @param block the block to start from
+	 * @return list of all adjacent townblocks
+	 */
+	public static List<TownBlock> getAllAdjacentTownBlocks(Block block) {
+		List<TownBlock> result = new ArrayList<>();
+		result.addAll(getCardinalAdjacentTownBlocks(block));
+		result.addAll(getNonCardinalAdjacentTownBlocks(block));
+		return result;
+	}
+
+	/**
 	 * This method gets a list of adjacent cardinal townblocks, either N, S, E or W.
 	 * 
 	 * @param block the block to start from

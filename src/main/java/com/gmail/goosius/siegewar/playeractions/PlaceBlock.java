@@ -318,21 +318,17 @@ public class PlaceBlock {
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_economy"));
 		
 		//Ensure there is at least 1 adjacent town
-		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
-		List<TownBlock> adjacentNonCardinalTownBlocks = SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block);
-		if(adjacentCardinalTownBlocks.size() == 0 && adjacentNonCardinalTownBlocks.size() == 0)
+		List<TownBlock> allAdjacentTownBlocks = SiegeWarBlockUtil.getAllAdjacentTownBlocks(block);
+		if(allAdjacentTownBlocks.size() == 0)
 			return;
 
-		//Ensure there is just one cardinal town block
-		if (adjacentCardinalTownBlocks.size() > 1)
-			throw new TownyException(Translation.of("msg_err_siege_war_too_many_adjacent_towns"));
-
-		//Get 1st nearby town
-		Town town;
-		if(adjacentCardinalTownBlocks.size() > 0)
-			town = adjacentCardinalTownBlocks.get(0).getTownOrNull();
-		else
-			town = adjacentNonCardinalTownBlocks.get(0).getTownOrNull();
+		//Ensure there is only one adjacent town
+		Town town = allAdjacentTownBlocks.get(0).getTownOrNull();
+		for(int i = 1; i < allAdjacentTownBlocks.size(); i++) {
+			if(allAdjacentTownBlocks.get(i).getTown() != town) {
+				throw new TownyException(Translation.of("msg_err_siege_war_too_many_adjacent_towns"));
+			}
+		}
 
 		//If there is no siege, do normal block placement
 		if(!SiegeController.hasSiege(town))
