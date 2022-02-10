@@ -27,6 +27,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class is fired from the SiegeWarActionListener's TownyBuildEvent listener.
@@ -317,25 +318,17 @@ public class PlaceBlock {
 		if(!TownyEconomyHandler.isActive())
 			throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_economy"));
 		
-		//Ensure there is at least 1 adjacent town
-		List<TownBlock> allAdjacentTownBlocks = SiegeWarBlockUtil.getAllAdjacentTownBlocks(block);
-		if(allAdjacentTownBlocks.size() == 0)
+		//If there are no sieges nearby, do normal block placement
+		Set<Siege> adjacentSieges = SiegeWarBlockUtil.getAllAdjacentSieges(block);
+		if(adjacentSieges.size() == 0)
 			return;
 
-		//Ensure there is only one adjacent town
-		Town town = allAdjacentTownBlocks.get(0).getTownOrNull();
-		for(int i = 1; i < allAdjacentTownBlocks.size(); i++) {
-			if(allAdjacentTownBlocks.get(i).getTown() != town) {
-				throw new TownyException(Translation.of("msg_err_siege_war_too_many_adjacent_towns"));
-			}
-		}
-
-		//If there is no siege, do normal block placement
-		if(!SiegeController.hasSiege(town))
-			return;
+		//Ensure there is only one adjacent siege
+		if(adjacentSieges.size() > 1)
+			throw new TownyException(Translation.of("msg_err_siege_war_too_many_adjacent_towns"));
 
 		//Attempt plunder.
-		PlunderTown.processPlunderTownRequest(player, town);
+		PlunderTown.processPlunderTownRequest(player, adjacentSieges.iterator().next().getTown());
 	}
 	
 	private static boolean isWhiteBanner(Block block) {
