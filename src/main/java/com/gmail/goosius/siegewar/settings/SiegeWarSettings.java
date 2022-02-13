@@ -495,23 +495,23 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_SIEGECAMPS_DURATION_IN_MINUTES);
 	}
 
-	public static int getMaxDailyPlayerBattleSessions() {
+	public static int getBattleSessionCappingLimiter() {
 		DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
 		boolean weekend = dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
 
 		if(weekend) {
-			return getWeekendMaxDailyPlayerBattleSessions();
+			return getBattleSessionCappingLimiterWeekendDays();
 		} else {
-			return getWeekdayMaxDailyPlayerBattleSessions();
+			return getBattleSessionCappingLimiterWeekdays();
 		}
 	}
 
-	private static int getWeekdayMaxDailyPlayerBattleSessions() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_WEEKDAY_MAX_DAILY_PLAYER_BATTLE_SESSIONS);
+	private static int getBattleSessionCappingLimiterWeekdays() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_CAPPING_LIMITER_WEEKDAYS);
 	}
 
-	private static int getWeekendMaxDailyPlayerBattleSessions() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_WEEKEND_MAX_DAILY_PLAYER_BATTLE_SESSIONS);
+	private static int getBattleSessionCappingLimiterWeekendDays() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_CAPPING_LIMITER_WEEKEND_DAYS);
 	}
 
 	public static List<DayOfWeek> getSiegeStartDayLimiterAllowedDays() {
