@@ -496,7 +496,7 @@ public enum ConfigNodes {
 			"# that team receives a bonus, equal to a multiplier of the timed points which that control had previously granted to the opposing team.",
             "# ",
 			"# This feature discourages large unskilled armies from trying to win by capping + avoiding PVP.",
-			"# because the more banner control points a team gains in a battle session, the more it stands to lose if a PVP-stronger opponent appears on the battlefield."),,
+			"# because the more banner control points a team gains in a battle session, the more it stands to lose if a PVP-stronger opponent appears on the battlefield."),
 	POINTS_BALANCING_BANNER_CONTROL_REVERSAL_BONUS_MULTIPLIER(
 			"points_balancing.banner_control_reversal_bonus.multiplier",
 			"2",
