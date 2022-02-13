@@ -501,7 +501,6 @@ public enum ConfigNodes {
 			"2",
 			"",
 			"# This value determines the maximum number of week-day battle sessions for each individual player, in which they can capture the banner.",
-            "# ",
 			"# This feature is an important server defence against night-capping, and against players skipping school or work to gain timed points.",
 			"# To disable the feature, set the value to -1."),
 	WAR_SIEGE_BATTLE_SESSION_CAPPING_LIMITER_WEEKEND_DAYS(
