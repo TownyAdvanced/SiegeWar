@@ -496,21 +496,20 @@ public enum ConfigNodes {
 			"# This value determines the duration of each battle session.",
 			"# After a battle session ends,",
 			"# the time period until the next battle session starts, is defined as a 'break'"),
-	WAR_SIEGE_BATTLE_SESSION_WEEKDAY_MAX_DAILY_PLAYER_BATTLE_SESSIONS(
-			"war.siege.battle_session.weekday_max_daily_player_battle_sessions",
+	WAR_SIEGE_BATTLE_SESSION_CAPPING_LIMITER_WEEKDAYS(
+			"war.siege.battle_session.capping_limiter.weekdays",
 			"2",
 			"",
-			"# This value determines the maximum number of daily battle sessions allowed per player - on week days.",
-			"# To disable the limit, set the value to -1.",
-			"# This feature mitigates the problem of night-capping, where players stay up all night to gain timed points.",
-			"# This feature also mitigates the problem of players skipping weekday school or work to gain timed points."),
-	WAR_SIEGE_BATTLE_SESSION_WEEKEND_MAX_DAILY_PLAYER_BATTLE_SESSIONS(
-			"war.siege.battle_session.weekend_max_daily_player_battle_sessions",
+			"# This value determines the maximum number of week-day battle sessions for each individual player, in which they can capture the banner.",
+			"# This feature is an important server defence against night-capping, and against players skipping school or work to gain timed points.",
+			"# To disable the feature, set the value to -1."),
+	WAR_SIEGE_BATTLE_SESSION_CAPPING_LIMITER_WEEKEND_DAYS(
+			"war.siege.battle_session.capping_limiter.weekend_days",
 			"5",
 			"",
-			"# This value determines the maximum number of daily battle sessions allowed per player - on weekend days.",
-			"# To disable the limit, set the value to -1.",
-			"# This feature mitigates the problem of night-capping, where players stay up all night to gain timed points."),
+			"# This value determines the maximum number of weekend-day battle sessions for each individual player, in which they can capture the banner.",
+			"# This feature is an important server defence against night-capping, and against players skipping school or work to gain timed points.",
+			"# To disable the feature, set the value to -1."),
 	WAR_SIEGE_BANNER_CONTROL_REVERSAL_BONUS(
 			"war.siege.banner_control_reversal_bonus",
 			"",

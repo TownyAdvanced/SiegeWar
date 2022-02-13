@@ -294,17 +294,17 @@ public class SiegeWarBattleSessionUtil {
 	}
 
 	/**
-	 * Checks if the daily battle session limit is active for the given resident
+	 * Checks if the battle session capping limiter is active for the given resident
 	 * 
-	 * @return true if the limit is active, false if the limit is inactive
+	 * @return true if the limiter is active, false if the limit is inactive
 	 */
-	public static boolean isDailyBattleSessionLimitActiveForResident(Resident resident)  {
-		//Return false if there are no limits
-		int maxDailyPlayerBattleSessions = SiegeWarSettings.getMaxDailyPlayerBattleSessions();
+	public static boolean isBattleSessionCappingLimiterActiveForResident(Resident resident)  {
+		//Return false if the limit is disabled
+		int maxDailyPlayerBattleSessions = SiegeWarSettings.getBattleSessionCappingLimiter();
 		if(maxDailyPlayerBattleSessions == -1)
 			return false;
 
-		//Return true if the limit is 0
+		//Return true if the limit is set to 0
 		if(maxDailyPlayerBattleSessions == 0)
 			return true;
 
