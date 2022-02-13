@@ -558,7 +558,7 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If true, at the end of a battle, only the battle points of the winner are applied to the siege balance.",
-			"# If false, the battle points of the losing side are also applied to the siege balance"),
+			"# If false, the battle points of the losing side are also applied to the siege balance."),
 	SIEGE_MATERIAL_RESTRICTIONS(
 			"siege_material_restrictions",
 			"",
