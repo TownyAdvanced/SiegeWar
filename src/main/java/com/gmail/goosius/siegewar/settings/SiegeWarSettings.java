@@ -111,23 +111,23 @@ public class SiegeWarSettings {
 	}
 	
 	public static boolean areBattlePointsWinnerTakesAll() {
-		return Settings.getBoolean(ConfigNodes.WAR_BATTLE_POINTS_DISTRIBUTION_WINNER_TAKES_ALL);
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_END_OF_BATTLE_POINTS_DISTRIBUTION_WINNER_TAKES_ALL);
 	}
 
 	public static int getWarBattlePointsForAttackerOccupation() {
-		return Settings.getInt(ConfigNodes.WAR_BATTLE_POINTS_FOR_ATTACKER_OCCUPATION);
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BASE_POINTS_BANNER_CONTROL_ATTACKER);
 	}
 
 	public static int getWarBattlePointsForDefenderOccupation() {
-		return Settings.getInt(ConfigNodes.WAR_BATTLE_POINTS_FOR_DEFENDER_OCCUPATION);
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BASE_POINTS_BANNER_CONTROL_DEFENDER);
 	}
 
 	public static int getWarBattlePointsForAttackerDeath() {
-		return Settings.getInt(ConfigNodes.WAR_BATTLE_POINTS_FOR_ATTACKER_DEATH);
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BASE_POINTS_BANNER_CONTROL_DEATHS_ATTACKER);
 	}
 
 	public static int getWarBattlePointsForDefenderDeath() {
-		return Settings.getInt(ConfigNodes.WAR_BATTLE_POINTS_FOR_DEFENDER_DEATH);
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BASE_POINTS_BANNER_CONTROL_DEATHS_DEFENDER);
 	}
 	
 	public static int getWarSiegeZoneRadiusBlocks() {
@@ -271,11 +271,11 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean isWarSiegeCounterattackBoosterEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_ENABLED);
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_COUNTERATTACK_BOOSTER_ENABLED);
 	}
 
 	public static double getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercentage() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE);
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE);
 	}
 
 	public static List<LocalDateTime> getAllBattleSessionStartTimesForToday() {
@@ -321,15 +321,15 @@ public class SiegeWarSettings {
 	}
 
 	public static String getWarSiegeBattleSessionWeekdayStartTimes() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_WEEKDAY_START_TIMES);
+		return Settings.getString(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BATTLE_SESSION_TIMINGS_START_TIMES_WEEKDAYS);
 	}
 
 	public static String getWarSiegeBattleSessionWeekendStartTimes() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_WEEKEND_START_TIMES);
+		return Settings.getString(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BATTLE_SESSION_TIMINGS_START_TIMES_WEEKEND_DAYS);
 	}
 
 	public static int getWarSiegeBattleSessionDurationMinutes() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_DURATION_MINUTES);
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BATTLE_SESSION_TIMINGS_DURATION_MINUTES);
 	}
 
 	public static List<Material> getSiegeZoneWildernessForbiddenBlockMaterials() {
@@ -444,11 +444,11 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean isWarSiegeBannerControlReversalBonusEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BANNER_CONTROL_REVERSAL_BONUS_ENABLED);
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BANNER_CONTROL_REVERSAL_BONUS_ENABLED);
 	}
 
 	public static double getWarSiegeBannerControlReversalBonusFactor() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_BANNER_CONTROL_REVERSAL_BONUS_MULTIPLIER);
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BANNER_CONTROL_REVERSAL_BONUS_MULTIPLIER);
 	}
 
 	public static boolean isBannerXYZTextEnabled() {
@@ -507,11 +507,11 @@ public class SiegeWarSettings {
 	}
 
 	private static int getBattleSessionCappingLimiterWeekdays() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_CAPPING_LIMITER_WEEKDAYS);
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_CAPPING_LIMITER_WEEKDAYS);
 	}
 
 	private static int getBattleSessionCappingLimiterWeekendDays() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSION_CAPPING_LIMITER_WEEKEND_DAYS);
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_CAPPING_LIMITER_WEEKEND_DAYS);
 	}
 
 	public static List<DayOfWeek> getSiegeStartDayLimiterAllowedDays() {
