@@ -507,7 +507,7 @@ public enum ConfigNodes {
 			"war.siege.battle_session.capping_limiter.weekend_days",
 			"5",
 			"",
-			"# This value determines the maximum number of week-day battle sessions for each individual player, in which they can capture the banner.",
+			"# This value determines the maximum number of weekend-day battle sessions for each individual player, in which they can capture the banner.",
 			"# This feature is an important server defence against night-capping, and against players skipping school or work to gain timed points.",
 			"# To disable the feature, set the value to -1."),
 	WAR_SIEGE_BANNER_CONTROL_REVERSAL_BONUS(
