@@ -379,9 +379,8 @@ public enum ConfigNodes {
 			"",
 			"# This is the vertical distance a soldier must be within below the Banner.",
 			"# Note that the horizontal distance is always the same as the Towny townblock size."),
-
 	POINTS_BALANCING(
-			"points_balancing",
+			"war.siege.points_balancing",
 			"",
 			"",
 			"",
@@ -392,7 +391,7 @@ public enum ConfigNodes {
 			"############################################################",
 			""),
     POINTS_BALANCING_BATTLE_SESSION_TIMINGS(
-			"points_balancing.battle_session_timings",
+			"war.siege.points_balancing.battle_session_timings",
 			"",
 			"",
 			"",
@@ -401,14 +400,14 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			""),
     POINTS_BALANCING_BATTLE_SESSION_TIMINGS_START_TIMES(
-			"points_balancing.battle_session_timings.start_times",
+			"war.siege.points_balancing.battle_session_timings.start_times",
 			"",
 			"",
 			"",
 			"################### START TIMES ####################",
 			""),
 	POINTS_BALANCING_BATTLE_SESSION_TIMINGS_START_TIMES_WEEKDAYS(
-			"points_balancing.battle_session_timings.weekdays",
+			"war.siege.points_balancing.battle_session_timings.weekdays",
 			"00:10,01:10,02:10,03:10,04:10,05:10,06:10,07:10,08:10,09:10,10:10,11:10,12:10,13:10,14:10,15:10,16:10,17:10,18:10,19:10,20:10,21:10,22:10,23:10",
 			"",
 			"# This value determines the weekday times (in Server timezone) when each battle session will start.",
@@ -416,7 +415,7 @@ public enum ConfigNodes {
 			"# The format is HOUR:MINUTE.",
 			"# The default values are all at ten past the hour, so that the critical point of the battle (the final minutes), will fall on the hour."),
 	POINTS_BALANCING_BATTLE_SESSION_TIMINGS_START_TIMES_WEEKEND_DAYS(
-			"points_balancing.battle_session_timings.weekend_days",
+			"war.siege.points_balancing.battle_session_timings.weekend_days",
 			"00:10,01:10,02:10,03:10,04:10,05:10,06:10,07:10,08:10,09:10,10:10,11:10,12:10,13:10,14:10,15:10,16:10,17:10,18:10,19:10,20:10,21:10,22:10,23:10",
 			"",
 			"# This value determines the weekend times (in Server timezone) when each battle session will start.",
@@ -424,12 +423,12 @@ public enum ConfigNodes {
 			"# The format is HOUR:MINUTE.",
 			"# The default values are all at ten past the hour, so that the critical point of the battle (the final minutes), will fall on the hour."),
 	POINTS_BALANCING_BATTLE_SESSION_TIMINGS_DURATION_MINUTES(
-			"points_balancing.battle_session_timings.duration_minutes",
+			"war.siege.points_balancing.battle_session_timings.duration_minutes",
 			"50",
 			"",
 			"# This value determines the duration of each battle session."),
 	POINTS_BALANCING_BASE_POINTS(
-			"points_balancing.base_points",
+			"war.siege.points_balancing.base_points",
 			"",
 			"",
 			"",
@@ -438,20 +437,20 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			""),
     POINTS_BALANCING_BASE_BANNER_CONTROL_POINTS(
-			"points_balancing.base_points.banner_control",
+			"war.siege.points_balancing.base_points.banner_control",
 			"",
 			"",
 			"",
 			"################## Banner Control ##################",
 			""),
 	POINTS_BALANCING_BASE_POINTS_BANNER_CONTROL_ATTACKER(
-			"points_balancing.base_points.banner_control.attacker",
+			"war.siege.points_balancing.base_points.banner_control.attacker",
 			"10",
 			"",
 			"# This value determines the number of battle points awarded every siegewar-tick (20 seconds) to an attacker with banner-control.",
 			"# It is recommended to always keep this value at 10, for easier comparison with other server configurations."),
 	POINTS_BALANCING_BASE_BANNER_CONTROL_POINTS_DEFENDER(
-			"points_balancing.base_points.banner_control.defender",
+			"war.siege.points_balancing.base_points.banner_control.defender",
 			"10",
 			"",
 			"# This value determines the number of battle points awarded every siegewar-tick (20 seconds) to a defender with banner-control.",
@@ -464,7 +463,7 @@ public enum ConfigNodes {
 			"################### Deaths ########################",
 			""),
 	POINTS_BALANCING_BASE_POINTS_DEATHS_ATTACKER(
-			"points_balancing.base_points.deaths.attacker",
+			"war.siege.points_balancing.base_points.deaths.attacker",
 			"150",
 			"",
 			"# This value determines the number of battle points awarded if an attacker dies in a siege zone.",
@@ -472,7 +471,7 @@ public enum ConfigNodes {
 			"# The trick with this value is to make it low enough so as not to exclude weak players from sieges,",
 			"# and high enough to avoid banner control being considered too OP."),
 	POINTS_BALANCING_BASE_POINTS_DEATHS_DEFENDER(
-			"points_balancing.base_points.deaths.defender",
+			"war.siege.points_balancing.base_points.deaths.defender",
 			"150",
 			"",
 			"# This value determines the number of battle points awarded if defender dies in a siege zone.",
@@ -480,7 +479,7 @@ public enum ConfigNodes {
 			"# The trick with this value is to make it low enough so as not to exclude weak players from sieges,",
 			"# and high enough to avoid banner control being considered too OP."),
 	POINTS_BALANCING_BANNER_CONTROL_REVERSAL_BONUS(
-			"points_balancing.banner_control_reversal_bonus",
+			"war.siege.points_balancing.banner_control_reversal_bonus",
 			"",
 			"",
 			"",
@@ -489,7 +488,7 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			""),
 	POINTS_BALANCING_BANNER_CONTROL_REVERSAL_BONUS_ENABLED(
-			"points_balancing.banner_control_reversal_bonus.enabled",
+			"war.siege.points_balancing.banner_control_reversal_bonus.enabled",
 			"true",
 			"# This setting determines if the banner control reversal bonus is enabled.",
 			"# If enabled, then whenever a team reverses banner control during a battle,",
@@ -498,7 +497,7 @@ public enum ConfigNodes {
 			"# This feature discourages large unskilled armies from trying to win by capping + avoiding PVP.",
 			"# because the more banner control points a team gains in a battle session, the more it stands to lose if a PVP-stronger opponent appears on the battlefield."),
 	POINTS_BALANCING_BANNER_CONTROL_REVERSAL_BONUS_MULTIPLIER(
-			"points_balancing.banner_control_reversal_bonus.multiplier",
+			"war.siege.points_balancing.banner_control_reversal_bonus.multiplier",
 			"2",
 			"# This setting determines the strength of the bonus multiplier.",
 			"# Example: Assuming this value is 2,",
@@ -515,7 +514,7 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			""),
     POINTS_BALANCING_COUNTERATTACK_BOOSTER_ENABLED(
-			"points_balancing.counterattack_booster.enabled",
+			"war.siege.points_balancing.counterattack_booster.enabled",
 			"false",
 			"",
 			"# If this setting is true, then if a player from the banner controlling side dies,",
@@ -523,14 +522,14 @@ public enum ConfigNodes {
 			"# ",
             "# This feature delivers extra balance to battles in which one side is outnumbered by the other."),
 	POINTS_BALANCING_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE(
-			"points_balancing.counterattack_booster.extra_death_points_per_player_percentage",
+			"war.siege.points_balancing.counterattack_booster.extra_death_points_per_player_percentage",
 			"10.0",
 			"",
 			"# If the counterattack booster is enabled, this value determines the strength of the boost.",
 			"# Example: If this value is 10.0, and there are 3 players on the banner control list, and a player from the banner-controlling side dies,",
 			"# then the death points awarded to the attacker will be increased by +30%."),
 	POINTS_BALANCING_CAPPING_LIMITER(
-			"points_balancing.capping_limiter",
+			"war.siege.points_balancing.capping_limiter",
 			"",
 			"",
 			"",
@@ -539,7 +538,7 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			""),
 	POINTS_BALANCING_CAPPING_LIMITER_WEEKDAYS(
-			"points_balancing.capping_limiter.weekdays",
+			"war.siege.points_balancing.capping_limiter.weekdays",
 			"2",
 			"",
 			"# This value determines the maximum number of week-day battle sessions for each individual player, in which they can capture the banner.",
@@ -547,7 +546,7 @@ public enum ConfigNodes {
             "# ",
 			"# This feature is an important server defence against night-capping, and against players skipping school or work to gain timed points."),
 	POINTS_BALANCING_CAPPING_LIMITER_WEEKEND_DAYS(
-			"points_balancing.capping_limiter.weekend_days",
+			"war.siege.points_balancing.capping_limiter.weekend_days",
 			"5",
 			"",
 			"# This value determines the maximum number of weekend-day battle sessions for each individual player, in which they can capture the banner.",
@@ -555,7 +554,7 @@ public enum ConfigNodes {
 			"# ",
 			"# This feature is an important server defence against night-capping, and against players skipping school or work to gain timed points."),
     POINTS_BALANCING_END_OF_BATTLE_POINTS_DISTRIBUTION(
-			"points_balancing.end_of_battle_points_distribution",
+			"war.siege.points_balancing.end_of_battle_points_distribution",
 			"",
 			"",
 			"",
@@ -563,8 +562,8 @@ public enum ConfigNodes {
 			"# |         End-Of-Battle Point Distribution             | #",
 			"# +------------------------------------------------------+ #",
 			""),
-		POINTS_BALANCING_END_OF_BATTLE_POINTS_DISTRIBUTION_WINNER_TAKES_ALL(
-			"points_balancing.end_of_battle_points_distribution.winner_takes_all",
+	POINTS_BALANCING_END_OF_BATTLE_POINTS_DISTRIBUTION_WINNER_TAKES_ALL(
+			"war.siege.points_balancing.end_of_battle_points_distribution.winner_takes_all",
 			"true",
 			"",
 			"# If true, at the end of a battle, only the battle points of the winner are applied to the siege balance.",
