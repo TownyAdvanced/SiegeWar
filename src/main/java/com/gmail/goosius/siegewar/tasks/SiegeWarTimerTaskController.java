@@ -86,6 +86,12 @@ public class SiegeWarTimerTaskController {
 			SiegeWarBannerControlUtil.evaluateBannerControl(siege);
 		}
 	}
+	
+	public static void evaluateWallBreaches() {
+		if(SiegeWarSettings.getWarSiegePointsBalancingWallBreachBonusPoints() != -1) {
+			SiegeWarWallBreachUtil.evaluateWallBreaches();
+		}
+	}
 
 	public static void evaluateBattleSessions() {
 		SiegeWarBattleSessionUtil.evaluateBattleSessions();

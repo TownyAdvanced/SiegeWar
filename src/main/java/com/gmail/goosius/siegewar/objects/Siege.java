@@ -64,6 +64,7 @@ public class Siege {
 	private Set<String> successfulBattleContributors;   //UUID's of attacker-side residents who got BC at least once during the current battle
 	private Map<String, Integer> residentTimedPointContributors;  //UUID:numContributions map of attacker-side residents who got BC at least once during the current siege
 	private Map<UUID, Integer> primaryTownGovernments; //UUID:numBattleSessions map of governments who led the town during the siege. If town was is a nation, nation UUID will be used, otherwise town UUID will be used
+	private Set<Resident> residentsAwardedWallBreechBonus;  //Soldiers who have been awarded a wall breech bonus for this session.
 
 	public Siege(Town town) {
 		this.town = town;
@@ -84,6 +85,7 @@ public class Siege {
 		successfulBattleContributors = new HashSet<>();
 		residentTimedPointContributors = new HashMap<>();
 		primaryTownGovernments = new HashMap<>();
+		residentsAwardedWallBreechBonus = new HashSet<>();
     }
 
     public Town getTown() {
@@ -491,5 +493,13 @@ public class Siege {
 
 	public void setDefenderName(String defenderName) {
 		this.defenderName = defenderName;
+	}
+
+	public Set<Resident> getResidentsAwardedWallBreechBonus() {
+		return residentsAwardedWallBreechBonus;
+	}
+
+	public void clearResidentsAwardedWallBreechBonus() {
+		residentsAwardedWallBreechBonus.clear();
 	}
 }

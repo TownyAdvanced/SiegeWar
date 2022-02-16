@@ -527,4 +527,8 @@ public class SiegeWarSettings {
 		return  allowedDaysList;
 	}
 
+	public static int getWarSiegePointsBalancingWallBreachBonusPoints() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_WALL_BREACH_BONUS_POINTS);
+	}
+
 }

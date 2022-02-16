@@ -1,5 +1,5 @@
 ﻿name: SiegeWar
-version: 0.34
+version: 0.35
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -506,3 +506,7 @@ msg_err_siege_war_collect_unavailable: "There is nothing for you to collect."
 msg.battle.session.cleanup.starting: "The previous Battle Session did not complete. Initiating Battle Session Cleanup. Each battle will be resolved as a draw, with both attacker and defender battle points being applied to the siege balance."
 msg.battle.session.cleanup.complete: "Battle Session Cleanup complete. %d battles were resolved."
 msg_err_cannot_start_sieges_today: "&cYour server has limited the days-of-the-week when sieges can be started. Sieges cannot be started today."
+
+#Added in 0.35
+msg_wall_breach_bonus_awarded_to_attackers: "&bSiege on %s > %d attackers have gotten to the homeblock. Wall Breach Bonus: %d."
+msg_wall_breach_bonus_awarded_to_defenders: "&bSiege on %s > %d defenders have gotten to the homeblock. Wall Breach Bonus: %d."
