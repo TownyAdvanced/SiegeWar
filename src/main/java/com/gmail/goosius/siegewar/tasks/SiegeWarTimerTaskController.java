@@ -87,9 +87,9 @@ public class SiegeWarTimerTaskController {
 		}
 	}
 	
-	public static void evaluateWallBreaches() {
+	public static void evaluateWallBreaching() {
 		if(SiegeWarSettings.isWallBreachingEnabled()) {
-			SiegeWarWallBreachUtil.evaluateWallBreaches();
+			SiegeWarWallBreachUtil.evaluateWallBreaching();
 		}
 	}
 

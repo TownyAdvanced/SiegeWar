@@ -530,5 +530,14 @@ public class SiegeWarSettings {
 	public static boolean isWallBreachingEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_WALL_BREACHING_ENABLED);
 	}
+	
+	public static double getWallBreachingPointGenerationRate() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_RATE);
+	}
+
+	public static int getWallBreachBonusBattlePoints() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_WALL_BREACH_BONUS_BATTLE_POINTS);
+	}
+
 
 }

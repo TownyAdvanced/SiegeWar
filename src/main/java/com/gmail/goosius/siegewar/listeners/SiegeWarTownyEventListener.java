@@ -82,7 +82,7 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeWarTimerTaskController.punishPeacefulPlayersInActiveSiegeZones();
             SiegeWarTimerTaskController.evaluateBattleSessions();
             SiegeWarTimerTaskController.evaluateBannerControl();
-            SiegeWarTimerTaskController.evaluateWallBreaches();
+            SiegeWarTimerTaskController.evaluateWallBreaching();
             
             SiegeWarTimerTaskController.evaluateMapHiding();
             SiegeWarTimerTaskController.evaluateTimedSiegeOutcomes();

@@ -123,6 +123,7 @@ public class SiegeWarBattleSessionUtil {
 				siege.clearSuccessfulBattleContributors();
 				siege.setWallBreachingActive(false);
 				siege.setWallBreachPoints(0);
+				siege.getWallBreachBonusAwardees().clear();
 
 				//Save siege to database
 				SiegeController.saveSiege(siege);
