@@ -527,7 +527,7 @@ public class SiegeWarSettings {
 		return  allowedDaysList;
 	}
 
-	public static boolean getWarSiegePointsBalancingEnabled() {
+	public static boolean isWallBreachingEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_WALL_BREACHING_ENABLED);
 	}
 

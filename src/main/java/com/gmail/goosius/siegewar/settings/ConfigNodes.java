@@ -595,11 +595,11 @@ public enum ConfigNodes {
 			"war.siege.wall_breaching.breach_point_generation_rate",
 			"0.03",
 			"",
-			"# This value determines the generation rate of breach points.",
+			"# This value determines the generation rate of Breach Points.",
 			"# The points start to be generated only when Wall Breaching is activated in the current battle.",
             "# The points are generated every SiegeWar tick e.g. 20 seconds.",
             "# Actual Points = this-value X num-townblocks.",
-            "# If you wish to disable breach points, set this value to -1.",
+            "# If you wish to disable Breach Points, set this value to -1.",
             "# TIP: Set this value high enough to allow for fun wall breaching,",
             "# but low enough to prevent excessive griefing of besieged towns."),
 	WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS(

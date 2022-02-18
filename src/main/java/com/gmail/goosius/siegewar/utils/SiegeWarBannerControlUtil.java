@@ -289,6 +289,30 @@ public class SiegeWarBannerControlUtil {
 								message = Translation.of("msg_siege_war_banner_control_gained_by_defender", siege.getTown().getFormattedName());
 							}
 						}
+						
+						/* 
+						 * If this is the first time in the battle that the town-friendly side has gained banner control,
+						 * Wall Breaching activates.
+						 */
+						if(SiegeWarSettings.isWallBreachingEnabled() && !siege.isWallBreachingActive()) {							
+							switch(siege.getSiegeType()) {
+								case CONQUEST:
+								case SUPPRESSION:
+									if(bannerControlSession.getSiegeSide() == SiegeSide.DEFENDERS) {
+										siege.setWallBreachingActive(true);
+										message = Translation.of("msg_wall_breaching_activated");
+									}
+								break;
+								case LIBERATION:
+								case REVOLT:
+									if(bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
+										siege.setWallBreachingActive(true);
+										message = Translation.of("msg_wall_breaching_activated");
+									}
+								break;
+							}
+						}							
+
 						SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
 					}
 				}

@@ -64,7 +64,8 @@ public class Siege {
 	private Set<String> successfulBattleContributors;   //UUID's of attacker-side residents who got BC at least once during the current battle
 	private Map<String, Integer> residentTimedPointContributors;  //UUID:numContributions map of attacker-side residents who got BC at least once during the current siege
 	private Map<UUID, Integer> primaryTownGovernments; //UUID:numBattleSessions map of governments who led the town during the siege. If town was is a nation, nation UUID will be used, otherwise town UUID will be used
-	private int breachPoints;	//Breach points for the current battle session
+	private boolean wallBreachingActive;  //Wall Breaching active for the current session
+	private int wallBreachPoints;	//Wall Breach points for the current battle session
 	
 	public Siege(Town town) {
 		this.town = town;
@@ -85,7 +86,8 @@ public class Siege {
 		successfulBattleContributors = new HashSet<>();
 		residentTimedPointContributors = new HashMap<>();
 		primaryTownGovernments = new HashMap<>();
-		breachPoints = 0;
+		wallBreachingActive = false;
+		wallBreachPoints = 0;
     }
 
     public Town getTown() {
@@ -495,11 +497,19 @@ public class Siege {
 		this.defenderName = defenderName;
 	}
 
-	public int getBreachPoints() {
-		return breachPoints;
+	public int getWallBreachPoints() {
+		return wallBreachPoints;
 	}
 
-	public void setBreachPoints(int breachPoints) {
-		this.breachPoints = breachPoints;
+	public void setWallBreachPoints(int wallBreachPoints) {
+		this.wallBreachPoints = wallBreachPoints;
+	}
+
+	public boolean isWallBreachingActive() {
+		return wallBreachingActive;
+	}
+
+	public void setWallBreachingActive(boolean wallBreachingActive) {
+		this.wallBreachingActive = wallBreachingActive;
 	}
 }
