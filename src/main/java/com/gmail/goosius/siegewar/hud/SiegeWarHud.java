@@ -82,7 +82,7 @@ public class SiegeWarHud {
         battleTimeRemaining.addEntry(battleTimeRemaining_entry);
         breachPoints.addEntry(breachPoints_entry);
 
-        objective.getScore(siegeType_entry).setScore(111);
+        objective.getScore(siegeType_entry).setScore(11);
         objective.getScore(attackers_entry).setScore(10);
         objective.getScore(defenders_entry).setScore(9);
         objective.getScore(balance_entry).setScore(8);
