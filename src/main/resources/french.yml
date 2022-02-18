@@ -510,7 +510,7 @@ msg_err_cannot_start_sieges_today: "&cYour server has limited the days-of-the-we
 #Added in 0.35
 msg_wall_breaching_activated: ' Wall Breaching has been Activated.'
 hud_breach_points: "Breach Points: "
-status_town_siege_status_breach_points: '&2 > Breach Points: &a%s'
+status_town_siege_breach_points: '&2 > Breach Points: &a%s'
 msg_wall_breach_bonus_awarded: "&bYou have been awarded a wall breach bonus."
 msg_wall_breach_bonus_awarded_to_attackers: "&bSiege on %s > %d attackers have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
 msg_wall_breach_bonus_awarded_to_defenders: "&bSiege on %s > %d defenders have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
