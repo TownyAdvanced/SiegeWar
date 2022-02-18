@@ -433,21 +433,21 @@ public enum ConfigNodes {
 			"",
 			"# This value determines the number of battle points awarded if defender dies in a siege zone.",
 			"# TIP: Set this value low enough so as not to exclude weak players from sieges, and high enough to avoid banner control being considered too OP."),
-    WAR_SIEGE_POINTS_BALANCING_WALL_BREACHING(
-			"war.siege.points_balancing.wall_breaching",
+    WAR_SIEGE_POINTS_BALANCING_WALL_BREACH_BONUS(
+			"war.siege.points_balancing.wall_breach_bonus",
 			"",
 			"",
 			"",
 			"# +------------------------------------------------------+ #",
-			"# |         			Wall Breaching                    | #",
+			"# |                 Wall Breach Bonus                    | #",
 			"# +------------------------------------------------------+ #",
 			""),
-	WAR_SIEGE_POINTS_BALANCING_WALL_BREACHING_BONUS(
-			"war.siege.points_balancing.wall_breaching.bonus",
+	WAR_SIEGE_POINTS_BALANCING_WALL_BREACH_BONUS_BATTLE_POINTS(
+			"war.siege.points_balancing.wall_breach_bonus.battle_points",
 			"250",
 			"",
 			"# If the wall breaching feature is enabled, this value determines the number of Battle Points awarded by the bonus",
-			"# The enable switch is located in this config, in the main 'Wall Breaching'.section"),
+			"# The enable switch is located in this config, in the 'Wall Breaching'.section"),
 	WAR_SIEGE_POINTS_BALANCING_BANNER_CONTROL_REVERSAL_BONUS(
 			"war.siege.points_balancing.banner_control_reversal_bonus",
 			"",
