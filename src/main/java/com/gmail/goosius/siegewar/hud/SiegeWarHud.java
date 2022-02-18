@@ -38,6 +38,7 @@ public class SiegeWarHud {
         board.getTeam("btAttackerPoints").setSuffix(siege.getFormattedAttackerBattlePoints());
         board.getTeam("btDefenderPoints").setSuffix(siege.getFormattedDefenderBattlePoints());
         board.getTeam("btTimeRemaining").setSuffix(siege.getFormattedBattleTimeRemaining());
+        board.getTeam("breachPoints").setSuffix(siege.getFormattedBreachPoints());        
     }
 
     public static void toggleOn(Player p, Siege siege) {
@@ -54,7 +55,8 @@ public class SiegeWarHud {
             bannerControl = board.registerNewTeam("bannerControl"),
             battleAttackerScore = board.registerNewTeam("btAttackerPoints"),
             battleDefenderScore = board.registerNewTeam("btDefenderPoints"),
-            battleTimeRemaining = board.registerNewTeam("btTimeRemaining");
+            battleTimeRemaining = board.registerNewTeam("btTimeRemaining"),
+            breachPoints = board.registerNewTeam("breachPoints");
 
             String siegeType_entry = Colors.LightGray + Translation.of("hud_siege_type"),
             attackers_entry = Colors.LightGray + Translation.of("hud_attackers"),
@@ -65,7 +67,8 @@ public class SiegeWarHud {
             bannerControl_entry = Colors.LightGray + Translation.of("hud_banner_control"),
             battleAttackerScore_entry = Colors.LightGray + Translation.of("hud_battle_attacker_points"),
             battleDefenderScore_entry = Colors.LightGray + Translation.of("hud_battle_defender_points"),
-            battleTimeRemaining_entry = Colors.LightGray + Translation.of("hud_battle_time_remaining");
+            battleTimeRemaining_entry = Colors.LightGray + Translation.of("hud_battle_time_remaining"),            
+            breachPoints_entry = Colors.LightGray + Translation.of("hud_breach_points");
 
         siegeType.addEntry(siegeType_entry);
         attackers.addEntry(attackers_entry);
@@ -77,17 +80,19 @@ public class SiegeWarHud {
         battleDefenderScore.addEntry(battleDefenderScore_entry);
         battleAttackerScore.addEntry(battleAttackerScore_entry);
         battleTimeRemaining.addEntry(battleTimeRemaining_entry);
+        breachPoints.addEntry(breachPoints_entry);
 
-        objective.getScore(siegeType_entry).setScore(10);
-        objective.getScore(attackers_entry).setScore(9);
-        objective.getScore(defenders_entry).setScore(8);
-        objective.getScore(balance_entry).setScore(7);
-        objective.getScore(timeRemaining_entry).setScore(6);
-        objective.getScore(warchest_entry).setScore(5);
-        objective.getScore(bannerControl_entry).setScore(4);
-        objective.getScore(battleAttackerScore_entry).setScore(3);
-        objective.getScore(battleDefenderScore_entry).setScore(2);
-        objective.getScore(battleTimeRemaining_entry).setScore(1);
+        objective.getScore(siegeType_entry).setScore(111);
+        objective.getScore(attackers_entry).setScore(10);
+        objective.getScore(defenders_entry).setScore(9);
+        objective.getScore(balance_entry).setScore(8);
+        objective.getScore(timeRemaining_entry).setScore(7);
+        objective.getScore(warchest_entry).setScore(6);
+        objective.getScore(bannerControl_entry).setScore(5);
+        objective.getScore(battleAttackerScore_entry).setScore(4);
+        objective.getScore(battleDefenderScore_entry).setScore(3);
+        objective.getScore(battleTimeRemaining_entry).setScore(2);
+        objective.getScore(breachPoints_entry).setScore(1);
 
         p.setScoreboard(board);
         updateInfo(p, siege);

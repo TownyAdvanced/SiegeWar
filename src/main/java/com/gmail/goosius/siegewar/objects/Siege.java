@@ -522,4 +522,8 @@ public class Siege {
 	public void setWallBreachBonusAwardees(Set<Resident> wallBreachBonusAwardees) {
 		this.wallBreachBonusAwardees = wallBreachBonusAwardees;
 	}
+	
+	public String getFormattedBreachPoints() {
+		return Integer.toString((int)(getWallBreachPoints()));
+	}
 }
