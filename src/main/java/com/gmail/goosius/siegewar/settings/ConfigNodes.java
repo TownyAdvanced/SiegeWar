@@ -627,7 +627,8 @@ public enum ConfigNodes {
 			"-15,30",
 			"",
 			"# This value determines the altitude limits of block-placement-by-breach-points.",
-			"# The value should be in the format 'A,B', where A is the minimum altitude relative to the siege banner, amd B is the maximum."),
+			"# The value should be in the format 'A,B', where A is the minimum altitude relative to the siege banner, amd B is the maximum.",
+			"# TIP: The value prevents unpleasant metas, such as assaults starting at cloud-level platforms."),
 	WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS(
 			"war.siege.wall_breaching.destroying_blocks",
 			"",
@@ -653,7 +654,8 @@ public enum ConfigNodes {
 			"-15,30",
 			"",
 			"# This value determines the altitude limits of block-destruction-by-breach-points.",
-			"# The value should be in the format 'A,B', where A is the minimum altitude relative to the siege banner, amd B is the maximum."),
+			"# The value should be in the format 'A,B', where A is the minimum altitude relative to the siege banner, amd B is the maximum.",
+			"# TIP: The value prevents unpleasant metas such as tunnelling into the town at bedrock."),
 	SIEGE_MATERIAL_RESTRICTIONS(
 			"siege_material_restrictions",
 			"",
