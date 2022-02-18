@@ -300,14 +300,14 @@ public class SiegeWarBannerControlUtil {
 								case SUPPRESSION:
 									if(bannerControlSession.getSiegeSide() == SiegeSide.DEFENDERS) {
 										siege.setWallBreachingActive(true);
-										message = Translation.of("msg_wall_breaching_activated");
+										message += Translation.of("msg_wall_breaching_activated");
 									}
 								break;
 								case LIBERATION:
 								case REVOLT:
 									if(bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
 										siege.setWallBreachingActive(true);
-										message = Translation.of("msg_wall_breaching_activated");
+										message += Translation.of("msg_wall_breaching_activated");
 									}
 								break;
 							}

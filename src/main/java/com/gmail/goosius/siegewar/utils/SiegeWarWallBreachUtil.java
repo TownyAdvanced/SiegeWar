@@ -7,15 +7,11 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class SiegeWarWallBreachUtil {
@@ -29,57 +25,81 @@ public class SiegeWarWallBreachUtil {
      */
     public static void evaluateWallBreaching() {
         for (Siege siege : SiegeController.getSieges()) {
-
-            //If Wall Breaching is active, increase Breach Points
-            if(siege.isWallBreachingActive()) {
-                double wallBreachPointsIncrease = 
-                    SiegeWarSettings.getWallBreachingPointGenerationRate()
-                    * siege.getTown().getTownBlocks().size();
-                siege.setWallBreachPoints(siege.getWallBreachPoints() + wallBreachPointsIncrease);
+            /*
+             * Increase Breach Points
+             */
+            double wallBreachPointsIncrease = 
+                SiegeWarSettings.getWallBreachingPointGenerationRate()
+                * siege.getTown().getTownBlocks().size();
+            siege.setWallBreachPoints(siege.getWallBreachPoints() + wallBreachPointsIncrease);
+            
+            /* 
+             * Award Wall Breach Bonuses
+             */
+            //The town-hostile side must be controlling the banner                
+            switch(siege.getSiegeType()) {
+                case CONQUEST:
+                case SUPPRESSION:
+                    if(siege.getBannerControllingSide() == SiegeSide.DEFENDERS)
+                        continue; 
+                    break;
+                case REVOLT:
+                case LIBERATION:
+                    if(siege.getBannerControllingSide() == SiegeSide.ATTACKERS)
+                        continue;
+                    break;
             }
-
-            //Award wall breach bonus to any who deserve it
+                
+            //For a resident to get it, they must be on the bc list, at the homeblock, wall breaching must be active, and they must not already have the award
             Player player;
             Set<Resident> newAwardees = new HashSet<>();
             Set<Resident> previousAwardees = new HashSet<>(siege.getWallBreachBonusAwardees());
             for(Resident candidate: siege.getBannerControllingResidents()) {
-                //The town-hostile side must be controlling the banner
-                switch(siege.getSiegeType()) {
-                    case CONQUEST:
-                    case SUPPRESSION:
-                        if(siege.getBannerControllingSide() == SiegeSide.DEFENDERS)
-                            continue;
-                        break;
-                    case REVOLT:
-                    case LIBERATION:
-                        if(siege.getBannerControllingSide() == SiegeSide.ATTACKERS)
-                            continue;
-                        break;
-                }
-
-                //Candidate must not already have award
-                if(previousAwardees.contains(candidate))
-                    return;
-
                 //Candidate must be at the homeblock of the besieged town
                 player = TownyAPI.getInstance().getPlayer(candidate);
                 TownBlock townblockWherePlayerIsLocated = TownyAPI.getInstance().getTownBlock(player);
                 if(townblockWherePlayerIsLocated == null)
-                    return;
+                    continue;
                 if(townblockWherePlayerIsLocated != siege.getTown().getHomeBlockOrNull())
-                    return;                
+                    continue;
 
-                //Grant award!!!
+                //Wall breaching must be active
+                if(siege.isWallBreachingActive()) {
+                    Messaging.sendErrorMsg(player, Translation.of("msg_err_wall_breaching_not_yet_activated"));
+                    continue;    
+                }
+
+                //Candidate must not already have award
+                if(previousAwardees.contains(candidate)) {
+                    Messaging.sendErrorMsg(player, Translation.of("msg_err_already_received_wall_breach_bonus"));
+                    continue;                                       
+                }
+                
+                //List candidate for award
                 newAwardees.add(candidate);
                 
                 //Notify player
           		Messaging.sendMsg(player, Translation.of("msg_wall_breach_bonus_awarded"));
             }
-         
-            //Notify siege  of any awards       
-            if(newAwardees.size() > 0) {
-                String message = Translation.of("msg_wall_breach_bonus_awarded_to_attackers",siege.getTown().getName(), newAwardees.size(), SiegeWarSettings.getWallBreachBonusBattlePoints());
-        		SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
+
+            //Grant bonuses!
+            if(newAwardees.size() > 0) {         
+                //Adjust Battle Points
+                int battlePointsBonus = SiegeWarSettings.getWallBreachBonusBattlePoints() * newAwardees.size();
+                if(siege.getBannerControllingSide() == SiegeSide.ATTACKERS) {
+                    siege.adjustAttackerBattlePoints(battlePointsBonus);                
+                } else {
+                    siege.adjustDefenderBattlePoints(battlePointsBonus);
+                }
+                
+                //Register new awardees
+                siege.getWallBreachBonusAwardees().addAll(newAwardees);
+             
+                //Notify siege stakeholders       
+                if(newAwardees.size() > 0) {
+                    String message = Translation.of("msg_wall_breach_bonus_awarded_to_attackers",siege.getTown().getName(), newAwardees.size(), SiegeWarSettings.getWallBreachBonusBattlePoints());
+                    SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
+                }
             }
     	}
     }

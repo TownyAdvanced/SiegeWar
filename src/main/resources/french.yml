@@ -514,3 +514,5 @@ status_town_siege_breach_points: '&2 > Breach Points: &a%s'
 msg_wall_breach_bonus_awarded: "&bYou have been awarded a wall breach bonus."
 msg_wall_breach_bonus_awarded_to_attackers: "&bSiege on %s > %d attackers have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
 msg_wall_breach_bonus_awarded_to_defenders: "&bSiege on %s > %d defenders have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
+msg_err_wall_breaching_not_yet_activated: '&cWall Breaching is not yet activated for this battle sessions.'
+msg_err_already_received_wall_breach_bonus: '&cYou already received your Wall-Breach-Bonus for this Battle Session.'
