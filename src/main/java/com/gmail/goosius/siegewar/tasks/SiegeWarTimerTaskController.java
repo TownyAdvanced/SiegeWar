@@ -88,7 +88,7 @@ public class SiegeWarTimerTaskController {
 	}
 	
 	public static void evaluateWallBreaches() {
-		if(SiegeWarSettings.getWarSiegePointsBalancingWallBreachBonusPoints() != -1) {
+		if(SiegeWarSettings.getWarSiegePointsBalancingEnabled()) {
 			SiegeWarWallBreachUtil.evaluateWallBreaches();
 		}
 	}

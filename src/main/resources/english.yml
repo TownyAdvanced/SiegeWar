@@ -497,5 +497,8 @@ msg.battle.session.cleanup.complete: "Battle Session Cleanup complete. %d battle
 msg_err_cannot_start_sieges_today: "&cYour server has limited the days-of-the-week when sieges can be started. Sieges cannot be started today."
 
 #Added in 0.35
-msg_wall_breach_bonus_awarded_to_attackers: "&bSiege on %s > %d attackers have gotten to the homeblock. Wall Breach Bonus: %d."
-msg_wall_breach_bonus_awarded_to_defenders: "&bSiege on %s > %d defenders have gotten to the homeblock. Wall Breach Bonus: %d."
+msg_wall_breaching_activated: '&bSiege on %s > Wall Breaching Activated.'
+hud_breach_points: "Breach Points: "
+status_town_siege_status_breach_points: '&2 > Breach Points: &a%s'
+msg_wall_breach_bonus_awarded_to_attackers: "&bSiege on %s > %d attackers have reached the homeblock. Wall Breach Bonus: %d."
+msg_wall_breach_bonus_awarded_to_defenders: "&bSiege on %s > %d defenders have reached the homeblock. Wall Breach Bonus: %d."
