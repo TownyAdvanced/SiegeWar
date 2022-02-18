@@ -618,8 +618,8 @@ public enum ConfigNodes {
 			"# This value determines the cost, in Breach Points, to place a block in the besieged town."),			
 	WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_WHITELIST(
 			"war.siege.wall_breaching.placing_blocks.whitelist",
-			"",
 			"endswith:WOOD, LADDER",
+			"",
 			"# This list determines the blocks which can be placed by spending Breach Points.",
 			"# Supported Special Entries: 'endswith:{Partial Material Name}'"),			
 	WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_ALTITUDE_LIMITS(
