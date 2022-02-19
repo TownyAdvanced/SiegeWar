@@ -50,7 +50,7 @@ public class SiegeWarWallBreachUtil {
                     break;
             }
                 
-            //For a resident to get it, they must be on the bc list, at the homeblock, wall breaching must be active, and they must not already have the award
+            //For a resident to get it, they must be on the bc list, at the homeblock, and they must not already have the award
             Player player;
             Set<Resident> newAwardees = new HashSet<>();
             Set<Resident> previousAwardees = new HashSet<>(siege.getWallBreachBonusAwardees());
@@ -62,12 +62,6 @@ public class SiegeWarWallBreachUtil {
                     continue;
                 if(townblockWherePlayerIsLocated != siege.getTown().getHomeBlockOrNull())
                     continue;
-
-                //Wall breaching must be active
-                if(siege.isWallBreachingActive()) {
-                    Messaging.sendErrorMsg(player, Translation.of("msg_err_wall_breaching_not_yet_activated"));
-                    continue;    
-                }
 
                 //Candidate must not already have award
                 if(previousAwardees.contains(candidate)) {

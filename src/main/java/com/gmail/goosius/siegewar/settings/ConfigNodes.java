@@ -593,13 +593,12 @@ public enum ConfigNodes {
 			"# If false, then the wall breaching feature is disabled"),
 	WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_RATE(
 			"war.siege.wall_breaching.breach_point_generation_rate",
-			"0.03",
+			"0.01",
 			"",
 			"# This value determines the generation rate of Breach Points.",
-			"# The points start to be generated only when Wall Breaching is activated in the current battle.",
-            "# The points are generated every SiegeWar tick e.g. 20 seconds.",
-            "# Actual Points = this-value X num-townblocks.",
-            "# If you wish to disable Breach Points, set this value to -1.",
+			"# Breach Points are automatically generated while the town-friendly side has banner control",
+			"# The points are generated every SiegeWar tick e.g. 20 seconds.",
+            "# Actual Points = This-Rate x BC-List-Size x Num-Townblocks.",
             "# TIP: Set this value high enough to allow for fun wall breaching,",
             "# but low enough to prevent excessive griefing of besieged towns."),
 	WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS(
@@ -613,12 +612,12 @@ public enum ConfigNodes {
 			""),
 	WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_COST_PER_BLOCK(
 			"war.siege.wall_breaching.placing_blocks.cost_per_block",
-			"1",
+			"3",
 			"",
 			"# This value determines the cost, in Breach Points, to place a block in the besieged town."),			
 	WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_WHITELIST(
 			"war.siege.wall_breaching.placing_blocks.whitelist",
-			"endswith(WOOD, LADDER)",
+			"endswith(WOOD), LADDER)",
 			"",
 			"# This list determines the blocks which can be placed by spending Breach Points.",
 			"# Supported Special Entries: 'endswith(Partial Material Name)'"),			
@@ -640,7 +639,7 @@ public enum ConfigNodes {
 			""),
 	WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_COST_PER_BLOCK(
 			"war.siege.wall_breaching.destroying_blocks.cost_per_block",
-			"4",
+			"12",
 			"",
 			"# This value determines the cost, in Breach Points, to destroy a block in the besieged town."),			
 	WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST(
