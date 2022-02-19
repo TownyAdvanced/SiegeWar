@@ -54,9 +54,11 @@ public class SiegeWarWallBreachUtil {
             case ATTACKERS:
                 if(siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION) 
                     return;
+                break;
             case DEFENDERS:
                 if(siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.LIBERATION) 
                     return;                                               
+                break;
         }
 
         double wallBreachPointsIncrease = 
@@ -88,10 +90,12 @@ public class SiegeWarWallBreachUtil {
                 return;
             case ATTACKERS:
                 if(siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.LIBERATION) 
-                    return;                                               
+                    return;    
+                break;                                           
             case DEFENDERS:
                 if(siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION) 
                     return;
+                break;                                           
         }
 
         //Cycle banner controlling residents
