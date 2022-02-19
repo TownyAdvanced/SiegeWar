@@ -111,7 +111,6 @@ public class PlaceBlock {
 				//Un-cancel the event
 				event.setCancelled(false);
 				return;
-				
 			}
 
 			//Enforce Anti-Trap warfare build block if below siege banner altitude.

@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.listeners;
 
+import com.gmail.goosius.siegewar.playeractions.DestroyBlock;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -37,25 +38,13 @@ public class SiegeWarActionListener implements Listener {
 			PlaceBlock.evaluateSiegeWarPlaceBlockRequest(event.getPlayer(), event.getBlock(), event);
 	}
 
-
 	/*
 	 * SW will prevent an block break from altering an area around a banner.
 	 */
 	@EventHandler
 	public void onBlockBreak(TownyDestroyEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled())
-			if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
-					&& SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(event.getBlock().getLocation())) {
-				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + Translation.of("msg_err_cannot_alter_blocks_below_banner_in_timed_point_zone")));
-				event.setCancelled(true);
-				return;
-			}
-			if (SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(event.getBlock())
-			|| SiegeWarBlockUtil.isBlockNearAnActiveSiegeCampBanner(event.getBlock())) {
-				event.setMessage(Translation.of("msg_err_siege_war_cannot_destroy_siege_banner"));
-				event.setCancelled(true);
-				return;
-			}
+			DestroyBlock.evaluateSiegeWarDestroyBlockRequest(event);
 	}
 	
 	/*
