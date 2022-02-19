@@ -539,6 +539,10 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_WALL_BREACH_BONUS_BATTLE_POINTS);
 	}
 
+	public static int getWallBreachingBlockPlacementCost() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_COST_PER_BLOCK);
+	}
+
 	public static int getWallBreachingBlockDestructionCost() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_COST_PER_BLOCK);
 	}

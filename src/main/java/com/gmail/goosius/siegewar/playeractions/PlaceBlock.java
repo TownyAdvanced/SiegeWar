@@ -3,11 +3,13 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
@@ -59,6 +61,10 @@ public class PlaceBlock {
 
 			//If the event has already been cancelled by Towny...
 			if(event.isCancelled()) {
+				System.out.println("------------");
+				System.out.println("Block: " + block);
+				System.out.println("Block Type: " + block.getType().toString());
+			
 				if(!SiegeWarSettings.isWallBreachingEnabled())
 					return; //Without wall breaching, SW doesn't un-cancel events
 				Town town = TownyAPI.getInstance().getTown(block.getLocation());
@@ -66,21 +72,46 @@ public class PlaceBlock {
 					return; //SW currently doesn't un-cancel wilderness events
 				if(!SiegeController.hasActiveSiege(town))
 					return; //SW doesn't un-cancel events in unsieged towns
+					
+				//Ensure player is on the town-hostile siege side				
+				Resident resident = TownyAPI.getInstance().getResident(player);
+				if(resident == null)
+					return;
+				if(!resident.hasNation())
+					return;
 				Siege siege = SiegeController.getSiege(town);
-				if(siege.getWallBreachPoints() < SiegeWarSettings.getWallBreachingBlockDestructionCost()) {			
+				SiegeSide playerSiegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTownOrNull(), siege);
+				if(playerSiegeSide == SiegeSide.NOBODY)
+					return; 
+				switch(siege.getSiegeType()) {
+					case CONQUEST:
+					case SUPPRESSION:
+						if(playerSiegeSide != SiegeSide.ATTACKERS)
+							return;
+						break;
+					case REVOLT:
+					case LIBERATION:
+						if(playerSiegeSide != SiegeSide.DEFENDERS)
+							return;
+						break;
+				}
+									
+				//Ensure there are enough breach points				
+				if(siege.getWallBreachPoints() < SiegeWarSettings.getWallBreachingBlockPlacementCost()) {			
 					event.setMessage( "Not enough points");  //Not enough breach points
 					return;
-				}
-				//TODO --------- Ensure player is on the town-hostile siege side	
-			
-				//TODO ----------- Check materials blacklist
-
+				}			
+				
+				//Ensure the placed material is ok
+				//TODO ----------- Check materials whitelist
+				
 				//IF we get here, it is a wall breach!!					
 				//Reduce breach points
-				siege.setWallBreachPoints(siege.getWallBreachPoints() - SiegeWarSettings.getWallBreachingBlockDestructionCost());
+				siege.setWallBreachPoints(siege.getWallBreachPoints() - SiegeWarSettings.getWallBreachingBlockPlacementCost());
 				//Un-cancel the event
 				event.setCancelled(false);
 				return;
+				
 			}
 
 			//Enforce Anti-Trap warfare build block if below siege banner altitude.
