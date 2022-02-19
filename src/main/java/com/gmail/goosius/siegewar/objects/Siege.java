@@ -86,7 +86,7 @@ public class Siege {
 		successfulBattleContributors = new HashSet<>();
 		residentTimedPointContributors = new HashMap<>();
 		primaryTownGovernments = new HashMap<>();
-		wallBreachPoints = 0;
+		wallBreachPoints = 50;
 		wallBreachBonusAwardees = new HashSet<>();
     }
 

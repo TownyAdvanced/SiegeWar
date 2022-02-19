@@ -134,7 +134,7 @@ public class SiegeWarWallBreachUtil {
                 siege.adjustDefenderBattlePoints(battlePointsBonus);
             }
             
-            //Register new awardees
+            //Register new awardees with Siege
             siege.getWallBreachBonusAwardees().addAll(newAwardees);
          
             //Notify siege stakeholders       

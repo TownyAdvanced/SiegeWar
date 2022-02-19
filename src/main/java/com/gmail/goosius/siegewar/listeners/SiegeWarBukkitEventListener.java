@@ -2,7 +2,9 @@ package com.gmail.goosius.siegewar.listeners;
 
 import java.util.List;
 
+import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.palmergames.bukkit.towny.TownyMessaging;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -11,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -289,4 +292,37 @@ public class SiegeWarBukkitEventListener implements Listener {
 			event.setCancelled(true);
 		}
 	}	
+	
+	//If this is a town wall breach, and the player has enough breach points, spend the breach points then un-cancel the event.
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void on(BlockBreakEvent event) {
+		if(event.isCancelled()
+			&& SiegeWarSettings.getWarSiegeEnabled()
+			&& SiegeWarSettings.isWallBreachingEnabled()) {
+
+			Town town = TownyAPI.getInstance().getTown(event.getBlock().getLocation());
+			if(town == null)
+				return;
+			if(!SiegeController.hasActiveSiege(town))
+				return;
+			Siege siege = SiegeController.getSiege(town);
+			
+			//TODO --------- Ensure player is on the town-hostile siege side	
+			
+			//TODO ----------- Check materials blacklist
+			
+			//Check if there are enough breach points
+			int wallBreachPointsCost = SiegeWarSettings.getWallBreachingBlockDestructionCost();
+			if(siege.getWallBreachPoints() < wallBreachPointsCost) {
+				Messaging.sendErrorMsg(event.getPlayer(), "Not enough points");
+				return;
+			}
+
+			//Reduce breach points
+			siege.setWallBreachPoints(siege.getWallBreachPoints() - wallBreachPointsCost);
+
+			//Allow the block destruction
+			event.setCancelled(false);
+		}
+	}
 }

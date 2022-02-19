@@ -57,6 +57,32 @@ public class PlaceBlock {
 			if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
 				return;
 
+			//If the event has already been cancelled by Towny...
+			if(event.isCancelled()) {
+				if(!SiegeWarSettings.isWallBreachingEnabled())
+					return; //Without wall breaching, SW doesn't un-cancel events
+				Town town = TownyAPI.getInstance().getTown(block.getLocation());
+				if(town == null)
+					return; //SW currently doesn't un-cancel wilderness events
+				if(!SiegeController.hasActiveSiege(town))
+					return; //SW doesn't un-cancel events in unsieged towns
+				Siege siege = SiegeController.getSiege(town);
+				if(siege.getWallBreachPoints() < SiegeWarSettings.getWallBreachingBlockDestructionCost()) {			
+					event.setMessage( "Not enough points");  //Not enough breach points
+					return;
+				}
+				//TODO --------- Ensure player is on the town-hostile siege side	
+			
+				//TODO ----------- Check materials blacklist
+
+				//IF we get here, it is a wall breach!!					
+				//Reduce breach points
+				siege.setWallBreachPoints(siege.getWallBreachPoints() - SiegeWarSettings.getWallBreachingBlockDestructionCost());
+				//Un-cancel the event
+				event.setCancelled(false);
+				return;
+			}
+
 			//Enforce Anti-Trap warfare build block if below siege banner altitude.
 			if (SiegeWarSettings.isTrapWarfareMitigationEnabled()
 					&& SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(event.getBlock().getLocation())) {
