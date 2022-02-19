@@ -61,10 +61,6 @@ public class PlaceBlock {
 
 			//If the event has already been cancelled by Towny...
 			if(event.isCancelled()) {
-				System.out.println("------------");
-				System.out.println("Block: " + block);
-				System.out.println("Block Type: " + block.getType().toString());
-			
 				if(!SiegeWarSettings.isWallBreachingEnabled())
 					return; //Without wall breaching, SW doesn't un-cancel events
 				Town town = TownyAPI.getInstance().getTown(block.getLocation());

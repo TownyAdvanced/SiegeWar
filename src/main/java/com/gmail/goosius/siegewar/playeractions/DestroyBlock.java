@@ -15,6 +15,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 /**
@@ -36,18 +37,16 @@ public class DestroyBlock {
 				return;
 
 			//If the event has already been cancelled by Towny...
-			if(event.isCancelled()) {
-				System.out.println("------------");
-				System.out.println("Block: " + block);
-				System.out.println("Block Type: " + block.getType().toString());
-			
+			if(event.isCancelled()) {		
 				if(!SiegeWarSettings.isWallBreachingEnabled())
 					return; //Without wall breaching, SW doesn't un-cancel events
 				Town town = TownyAPI.getInstance().getTown(block.getLocation());
 				if(town == null)
 					return; //SW currently doesn't un-cancel wilderness events
 				if(!SiegeController.hasActiveSiege(town))
-					return; //SW doesn't un-cancel events in unsieged towns
+					return; //SW doesn't un-cancel events in unsieged towns				
+                if(block.getType() == Material.AIR)
+                    return; //Means this is an Entity. Cannot destroy via breach!	
 					
 				//Ensure player is on the town-hostile siege side				
 				Resident resident = TownyAPI.getInstance().getResident(event.getPlayer());
