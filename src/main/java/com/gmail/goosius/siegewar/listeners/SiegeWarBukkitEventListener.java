@@ -292,37 +292,4 @@ public class SiegeWarBukkitEventListener implements Listener {
 			event.setCancelled(true);
 		}
 	}	
-	
-	//If this is a town wall breach, and the player has enough breach points, spend the breach points then un-cancel the event.
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void on(BlockBreakEvent event) {
-		if(event.isCancelled()
-			&& SiegeWarSettings.getWarSiegeEnabled()
-			&& SiegeWarSettings.isWallBreachingEnabled()) {
-
-			Town town = TownyAPI.getInstance().getTown(event.getBlock().getLocation());
-			if(town == null)
-				return;
-			if(!SiegeController.hasActiveSiege(town))
-				return;
-			Siege siege = SiegeController.getSiege(town);
-			
-			//TODO --------- Ensure player is on the town-hostile siege side	
-			
-			//TODO ----------- Check materials blacklist
-			
-			//Check if there are enough breach points
-			int wallBreachPointsCost = SiegeWarSettings.getWallBreachingBlockDestructionCost();
-			if(siege.getWallBreachPoints() < wallBreachPointsCost) {
-				Messaging.sendErrorMsg(event.getPlayer(), "Not enough points");
-				return;
-			}
-
-			//Reduce breach points
-			siege.setWallBreachPoints(siege.getWallBreachPoints() - wallBreachPointsCost);
-
-			//Allow the block destruction
-			event.setCancelled(false);
-		}
-	}
 }
