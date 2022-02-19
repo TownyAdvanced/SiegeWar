@@ -546,5 +546,6 @@ public class SiegeWarSettings {
 	public static int getWallBreachingBlockDestructionCost() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_COST_PER_BLOCK);
 	}
+	
 
 }

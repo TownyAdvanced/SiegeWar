@@ -9,13 +9,14 @@ import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.TownyWorld;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 
 /**
@@ -45,8 +46,9 @@ public class DestroyBlock {
 					return; //SW currently doesn't un-cancel wilderness events
 				if(!SiegeController.hasActiveSiege(town))
 					return; //SW doesn't un-cancel events in unsieged towns				
-                if(block.getType() == Material.AIR)
-                    return; //Means this is an Entity. Cannot destroy via breach!	
+
+               if(isEntityAtLocation(event.getLocation()))
+	               return; //Do not destroy entities via breach
 					
 				//Ensure player is on the town-hostile siege side				
 				Resident resident = TownyAPI.getInstance().getResident(event.getPlayer());
@@ -104,4 +106,23 @@ public class DestroyBlock {
             return;
         }
     }
+
+	/**
+	 * Determine if an entity is at the location
+	 * 
+	 * We can do this because blocks have an integers only location (e.g. -20,60,140),
+	 * but entities have doubles (e.g. -20.445,60.444,140.999)
+	 * 
+	 * @param location the given location
+	 * @return true if an entity is here
+	 */
+	private static boolean isEntityAtLocation(Location location) {
+		if(location.getX() % 1 == 0
+			&& location.getY() % 1 == 0
+			&& location.getZ() % 1 == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }
