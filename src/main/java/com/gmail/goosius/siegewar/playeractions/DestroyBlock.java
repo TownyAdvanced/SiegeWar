@@ -9,15 +9,15 @@ import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.TownyWorld;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.Container;
+import org.bukkit.block.Hopper;
 
 /**
  * This class handles siege-related destroy-block requests
@@ -47,7 +47,7 @@ public class DestroyBlock {
 				if(!SiegeController.hasActiveSiege(town))
 					return; //SW doesn't un-cancel events in unsieged towns				
 
-               if(isEntityAtLocation(event.getLocation()))
+               if(isEntityBeingTargeted(event.getLocation()))
 	               return; //Do not destroy entities via breach
 					
 				//Ensure player is on the town-hostile siege side				
@@ -79,8 +79,24 @@ public class DestroyBlock {
 					return;
 				}			
 				
-				//Ensure the placed material is ok
-				//TODO ----------- Check materials whitelist
+				//Ensure the material is ok to destroy
+				boolean blacklistedMaterial = false;
+				for(String materialString: SiegeWarSettings.getWallBreachingPlaceBlocksWhitelist()) {
+					if(materialString.equalsIgnoreCase("is-container")) {
+						if(block instanceof Container) {
+							blacklistedMaterial = true;
+							break;
+						}
+					}					
+					if(event.getMaterial().name().equalsIgnoreCase(materialString)) {
+						blacklistedMaterial = true;
+						break;
+					}
+				}
+				if(blacklistedMaterial) {
+					event.setMessage( "Material is blacklisted"); 
+					return;
+				}
 				
 				//IF we get here, it is a wall breach!!					
 				//Reduce breach points
@@ -108,15 +124,15 @@ public class DestroyBlock {
     }
 
 	/**
-	 * Determine if an entity is at the location
+	 * Determine if an entity is being targeted for destruction
 	 * 
 	 * We can do this because blocks have an integers only location (e.g. -20,60,140),
 	 * but entities have doubles (e.g. -20.445,60.444,140.999)
 	 * 
 	 * @param location the given location
-	 * @return true if an entity is here
+	 * @return true if an entity is being targeted
 	 */
-	private static boolean isEntityAtLocation(Location location) {
+	private static boolean isEntityBeingTargeted(Location location) {
 		if(location.getX() % 1 == 0
 			&& location.getY() % 1 == 0
 			&& location.getZ() % 1 == 0) {

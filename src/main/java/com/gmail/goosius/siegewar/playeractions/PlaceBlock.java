@@ -98,8 +98,25 @@ public class PlaceBlock {
 					return;
 				}			
 				
-				//Ensure the placed material is ok
-				//TODO ----------- Check materials whitelist
+				//Ensure the material is ok to place
+				boolean allowedMaterial = false;
+				for(String materialString: SiegeWarSettings.getWallBreachingPlaceBlocksWhitelist()) {
+					if(materialString.startsWith("endswith-")) {
+						materialString = materialString.replace("endswith-", "");
+						if(event.getMaterial().name().toLowerCase().endsWith(materialString.toLowerCase())) {
+							allowedMaterial = true;
+							break;
+						}
+					}					
+					if(event.getMaterial().name().equalsIgnoreCase(materialString)) {
+						allowedMaterial = true;
+						break;
+					}
+				}
+				if(!allowedMaterial) {
+					event.setMessage( "Material sucks to place"); 
+					return;
+				}
 				
 				//IF we get here, it is a wall breach!!					
 				//Reduce breach points

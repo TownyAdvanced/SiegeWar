@@ -547,5 +547,11 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_COST_PER_BLOCK);
 	}
 	
+	public static String[] getWallBreachingPlaceBlocksWhitelist() {
+		return Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_WHITELIST).replaceAll(" ","").split(",");
+	}
 
+	public static String[] getWallBreachingDestroyBlocksBlacklist() {
+		return Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).replaceAll(" ","").split(",");
+	}
 }
