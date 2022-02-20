@@ -31,7 +31,7 @@ public class SiegeWarActionListener implements Listener {
 
 		plugin = siegeWar;
 	}
-
+	
 	@EventHandler
 	public void onBlockBuild(TownyBuildEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled())
