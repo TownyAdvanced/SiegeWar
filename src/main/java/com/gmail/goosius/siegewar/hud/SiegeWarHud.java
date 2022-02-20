@@ -69,7 +69,7 @@ public class SiegeWarHud {
             bannerControl_entry = Colors.LightGray + Translation.of("hud_banner_control"),
             battleAttackerScore_entry = Colors.LightGray + Translation.of("hud_battle_attacker_points"),
             battleDefenderScore_entry = Colors.LightGray + Translation.of("hud_battle_defender_points"),
-            battleTimeRemaining_entry = Colors.LightGray + Translation.of("hud_battle_time_remaining");            
+            battleTimeRemaining_entry = Colors.LightGray + Translation.of("hud_battle_time_remaining");
 
         siegeType.addEntry(siegeType_entry);
         attackers.addEntry(attackers_entry);
