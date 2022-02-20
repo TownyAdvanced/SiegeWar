@@ -114,8 +114,8 @@ public class PlaceBlock {
 				//Ensure the material is ok to place
 				boolean allowedMaterial = false;
 				for(String materialString: SiegeWarSettings.getWallBreachingPlaceBlocksWhitelist()) {
-					if(materialString.startsWith("endswith-")) {
-						materialString = materialString.replace("endswith-", "");
+					if(materialString.startsWith("endswith=")) {
+						materialString = materialString.replace("endswith=", "");
 						if(event.getMaterial().name().toLowerCase().endsWith(materialString.toLowerCase())) {
 							allowedMaterial = true;
 							break;

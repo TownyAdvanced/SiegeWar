@@ -51,9 +51,6 @@ public class DestroyBlock {
 					return; //SW currently doesn't un-cancel wilderness events
 				if(!SiegeController.hasActiveSiege(town))
 					return; //SW doesn't un-cancel events in unsieged towns				
-
-               if(isEntityBeingTargeted(event.getLocation()))
-	               return; //Do not destroy entities via breach
 					
 				//Ensure player is on the town-hostile siege side				
 				Resident resident = TownyAPI.getInstance().getResident(event.getPlayer());
@@ -77,7 +74,7 @@ public class DestroyBlock {
 							return;
 						break;
 				}
-									
+				
 				//Ensure there are enough breach points				
 				if(siege.getWallBreachPoints() < SiegeWarSettings.getWallBreachingBlockDestructionCost()) {			
 					event.setMessage( "Not enough points to destroy");  //Not enough breach points
@@ -99,13 +96,19 @@ public class DestroyBlock {
 
 				//Ensure the material is ok to destroy
 				boolean blacklistedMaterial = false;
-				for(String materialString: SiegeWarSettings.getWallBreachingPlaceBlocksWhitelist()) {
-					if(materialString.equalsIgnoreCase("is-container")) {
+				for(String materialString: SiegeWarSettings.getWallBreachingDestroyBlocksBlacklist()) {
+					if(materialString.equalsIgnoreCase("is=container")) {
 						if(block instanceof Container) {
 							blacklistedMaterial = true;
 							break;
 						}
 					}					
+					if(materialString.equalsIgnoreCase("is=entity")) {
+						if(isEntityBeingTargeted(block.getLocation())) {
+							blacklistedMaterial = true;
+							break;
+						}
+					}			
 					if(event.getMaterial().name().equalsIgnoreCase(materialString)) {
 						blacklistedMaterial = true;
 						break;
