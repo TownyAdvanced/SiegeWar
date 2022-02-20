@@ -281,7 +281,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		
 		groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.engineer");
 		groupNodes.add(nationpoints);
-		groupNodes.add("towny.nation.siege.use.breach.points");
+		groupNodes.add("siegewar.nation.siege.use.breach.points");
 		groupNodes.add("towny.nation.siege.pay.grade.250");
 		file.set("nations.ranks.engineer", groupNodes);
 		
