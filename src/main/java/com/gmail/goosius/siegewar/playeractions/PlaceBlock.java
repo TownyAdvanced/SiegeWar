@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -90,6 +91,12 @@ public class PlaceBlock {
 						if(playerSiegeSide != SiegeSide.DEFENDERS)
 							return;
 						break;
+				}
+
+				//Ensure player has permission
+				if (!TownyUniverse.getInstance().getPermissionSource().testPermission(event.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_USE_BREACH_POINTS.getNode())) {
+					event.setMessage(Translation.of("msg_err_action_disable"));
+					return; 
 				}
 									
 				//Ensure there are enough breach points				

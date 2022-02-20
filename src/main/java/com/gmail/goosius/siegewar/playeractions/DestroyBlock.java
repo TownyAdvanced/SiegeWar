@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
@@ -9,7 +10,9 @@ import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import net.md_5.bungee.api.ChatMessageType;
@@ -45,7 +48,7 @@ public class DestroyBlock {
 					return; //SW currently doesn't un-cancel wilderness events
 				if(!SiegeController.hasActiveSiege(town))
 					return; //SW doesn't un-cancel events in unsieged towns				
-					
+
 				//Ensure player is on the town-hostile siege side				
 				Resident resident = TownyAPI.getInstance().getResident(event.getPlayer());
 				if(resident == null)
@@ -68,7 +71,13 @@ public class DestroyBlock {
 							return;
 						break;
 				}
-				
+
+				//Ensure player has permission
+				if (!TownyUniverse.getInstance().getPermissionSource().testPermission(event.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_USE_BREACH_POINTS.getNode())) {
+					event.setMessage(Translation.of("msg_err_action_disable"));
+					return; 
+				}
+
 				//Ensure there are enough breach points				
 				if(siege.getWallBreachPoints() < SiegeWarSettings.getWallBreachingBlockDestructionCost()) {			
 					event.setMessage(Translation.of("msg_err_not_enough_breach_points_for_action", SiegeWarSettings.getWallBreachingBlockDestructionCost(), siege.getFormattedBreachPoints()));

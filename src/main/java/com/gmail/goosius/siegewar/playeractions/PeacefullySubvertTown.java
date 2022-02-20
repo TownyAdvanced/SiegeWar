@@ -40,7 +40,7 @@ public class PeacefullySubvertTown {
 		if(!SiegeWarSettings.isPeacefulTownsSubvertEnabled())
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SUBVERTPEACEFULTOWN.getNode()))
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_SUBVERTPEACEFULTOWN.getNode()))
 			throw new TownyException(Translation.of("msg_err_action_disable"));
 
 		if(residentsNation == null)
