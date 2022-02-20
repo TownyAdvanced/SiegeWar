@@ -675,7 +675,7 @@ public enum ConfigNodes {
 			"0",
 			"",
 			"# This setting applies when the block change location is the homeblock, or an adjacent townblock.",
-			"# The value  is the minimum allowed height at which blocks can be placed/broken via breaching.",
+			"# The value is the minimum allowed height at which blocks can be placed/broken via breaching.",
 			"# TIP: This feature prevents people excavating bedrock-tunnels straight into the homeblock."),
 	WAR_SIEGE_WALL_BREACHING_HOMEBLOCK_BREACH_HEIGHT_LIMITS_MAX(
 			"war.siege.wall_breaching.homeblock_breach_height_limits.max",
