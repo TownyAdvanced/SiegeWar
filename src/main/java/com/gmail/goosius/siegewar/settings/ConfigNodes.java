@@ -631,7 +631,7 @@ public enum ConfigNodes {
 			""),
 	WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_COST_PER_BLOCK(
 			"war.siege.wall_breaching.placing_blocks.cost_per_block",
-			"3",
+			"5",
 			"",
 			"# This value determines the cost, in Breach Points, to place a block in the besieged town."),			
 	WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_WHITELIST(
