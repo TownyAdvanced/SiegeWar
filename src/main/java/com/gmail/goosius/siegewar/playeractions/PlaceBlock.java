@@ -97,7 +97,19 @@ public class PlaceBlock {
 					event.setMessage( "Not enough points");  //Not enough breach points
 					return;
 				}			
-				
+
+				//Ensure the height is ok
+				if(SiegeWarDistanceUtil.isBlockCloseToTownBlock(block, town.getHomeBlockOrNull(), 1)) {					
+					if(block.getY() < SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin()) {
+						event.setMessage("Too low dude");
+						return;
+					}
+					if(block.getY() > SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()) {
+						event.setMessage("Too high dude");
+						return;
+					}	
+				}
+
 				//Ensure the material is ok to place
 				boolean allowedMaterial = false;
 				for(String materialString: SiegeWarSettings.getWallBreachingPlaceBlocksWhitelist()) {

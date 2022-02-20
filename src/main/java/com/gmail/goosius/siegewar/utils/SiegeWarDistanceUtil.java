@@ -4,7 +4,9 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Town;
@@ -16,6 +18,8 @@ import com.palmergames.util.MathUtil;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+
+import java.util.List;
 
 /**
  * This class contains utility functions related to calculating and validating distances
@@ -79,6 +83,20 @@ public class SiegeWarDistanceUtil {
 		double distanceTownblocks = Math.sqrt(Math.pow(coord1.getX() - coord2.getX(), 2) + Math.pow(coord1.getZ() - coord2.getZ(), 2));
 
 		return distanceTownblocks < radiusTownblocks;
+	}
+
+	public static boolean isBlockCloseToTownBlock(Block block, TownBlock townBlock, int radiusTownBlocks) {
+		TownyWorld townyWorldOfBlock = TownyAPI.getInstance().getTownyWorld(block.getWorld());
+		if(townyWorldOfBlock != null) {
+			return areCoordsClose(				
+				townyWorldOfBlock,
+				Coord.parseCoord(block),
+				townBlock.getWorld(),
+				townBlock.getCoord(),
+				radiusTownBlocks);
+		} else {
+			return false;
+		}
 	}
 
 	private static boolean areLocationsClose(Location location1, Location location2, int maxHorizontalDistance) {

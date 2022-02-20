@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -12,12 +13,16 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.TownBlock;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.block.Hopper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class handles siege-related destroy-block requests
@@ -77,8 +82,20 @@ public class DestroyBlock {
 				if(siege.getWallBreachPoints() < SiegeWarSettings.getWallBreachingBlockDestructionCost()) {			
 					event.setMessage( "Not enough points to destroy");  //Not enough breach points
 					return;
-				}			
-				
+				}		
+
+				//Ensure the height is ok
+				if(SiegeWarDistanceUtil.isBlockCloseToTownBlock(block, town.getHomeBlockOrNull(), 1)) {					
+					if(block.getY() < SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin()) {
+						event.setMessage("Too low dude");
+						return;
+					}
+					if(block.getY() > SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()) {
+						event.setMessage("Too high dude");
+						return;
+					}	
+				}
+
 				//Ensure the material is ok to destroy
 				boolean blacklistedMaterial = false;
 				for(String materialString: SiegeWarSettings.getWallBreachingPlaceBlocksWhitelist()) {

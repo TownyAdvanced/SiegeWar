@@ -554,4 +554,13 @@ public class SiegeWarSettings {
 	public static String[] getWallBreachingDestroyBlocksBlacklist() {
 		return Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).replaceAll(" ","").split(",");
 	}
+	
+	public static int getWallBreachingHomeblockBreachHeightLimitMin() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_HOMEBLOCK_BREACH_HEIGHT_LIMITS_MIN);
+	}
+	
+	public static int getWallBreachingHomeblockBreachHeightLimitMax() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_HOMEBLOCK_BREACH_HEIGHT_LIMITS_MAX);
+	}
+
 }
