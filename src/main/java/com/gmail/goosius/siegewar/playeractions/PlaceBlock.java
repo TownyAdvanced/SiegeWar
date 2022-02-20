@@ -127,7 +127,7 @@ public class PlaceBlock {
 					}
 				}
 				if(!allowedMaterial) {
-					event.setMessage( "Material sucks to place"); 
+					event.setMessage(Translation.of("msg_err_breaching_cannot_place_this_material"));
 					return;
 				}
 				

@@ -109,7 +109,7 @@ public class DestroyBlock {
 					}
 				}
 				if(blacklistedMaterial) {
-					event.setMessage( "Material is blacklisted"); 
+					event.setMessage(Translation.of("msg_err_breaching_cannot_destroy_this_material"));
 					return;
 				}
 				

@@ -503,6 +503,8 @@ status_town_siege_breach_points: '&2 > Breach Points: &a%s'
 msg_err_not_enough_breach_points_for_action: '&cThere are not enough breach points for this action. Required: %d, Actual: %s.'
 msg_err_cannot_place_at_this_height: '&cYou cannot do a place-block action at this height. Height limits apply when close to the homeblock. Compared to Siege-Banner Height, MIN = %d, MAX = %d.'
 msg_err_cannot_destroy_at_this_height: '&cYou cannot do a destroy-block action at this height. Height limits apply when close to the homeblock. Compared to Siege-Banner Height, MIN = %d, MAX = %d.'
+msg_err_breaching_cannot_place_this_material: '&cYou cannot place this type of block.'
+msg_err_breaching_cannot_destroy_this_material: '&cYou cannot destroy this type of block.'
 #Wall-Breach-Bonus
 msg_wall_breach_bonus_awarded_to_attackers: "&bSiege on %s > %d attackers have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
 msg_wall_breach_bonus_awarded_to_defenders: "&bSiege on %s > %d defenders have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
