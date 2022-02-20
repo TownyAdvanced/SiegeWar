@@ -616,7 +616,7 @@ public enum ConfigNodes {
             "# but low enough to prevent excessive griefing of besieged towns."),
 	WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_MAX_POOL_SIZE(
 			"war.siege.wall_breaching.breach_point_generation.max_pool_size",
-			"50",
+			"40",
 			"",
 			"# This value determines the max size of the breach point pool.",
             "# TIP: This value prevents besiegers doing a last-minute, extensive-breaching, dash to the homeblock."),
