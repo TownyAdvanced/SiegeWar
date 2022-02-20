@@ -59,7 +59,7 @@ public class SiegeWarHud {
             battleAttackerScore = board.registerNewTeam("btAttackerPoints"),
             battleDefenderScore = board.registerNewTeam("btDefenderPoints"),
             battleTimeRemaining = board.registerNewTeam("btTimeRemaining");
-    
+
             String siegeType_entry = Colors.LightGray + Translation.of("hud_siege_type"),
             attackers_entry = Colors.LightGray + Translation.of("hud_attackers"),
             defenders_entry = Colors.LightGray + Translation.of("hud_defenders"),
@@ -70,7 +70,7 @@ public class SiegeWarHud {
             battleAttackerScore_entry = Colors.LightGray + Translation.of("hud_battle_attacker_points"),
             battleDefenderScore_entry = Colors.LightGray + Translation.of("hud_battle_defender_points"),
             battleTimeRemaining_entry = Colors.LightGray + Translation.of("hud_battle_time_remaining");            
-            
+
         siegeType.addEntry(siegeType_entry);
         attackers.addEntry(attackers_entry);
         defenders.addEntry(defenders_entry);

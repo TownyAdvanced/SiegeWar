@@ -289,7 +289,6 @@ public class SiegeWarBannerControlUtil {
 								message = Translation.of("msg_siege_war_banner_control_gained_by_defender", siege.getTown().getFormattedName());
 							}
 						}
-
 						SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
 					}
 				}
