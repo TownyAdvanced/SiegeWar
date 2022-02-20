@@ -85,16 +85,17 @@ public class DestroyBlock {
 				}		
 
 				//Ensure the height is ok
-				if(SiegeWarDistanceUtil.isBlockCloseToTownBlock(block, town.getHomeBlockOrNull(), 1)) {					
-					if(block.getY() < SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin()) {
+				if(SiegeWarDistanceUtil.isBlockCloseToTownBlock(block, town.getHomeBlockOrNull(), 2)) {					
+					int heightOfBlockRelativeToSiegeBanner = block.getY() - siege.getFlagLocation().getBlockY();
+					if(heightOfBlockRelativeToSiegeBanner < SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin()) {
 						event.setMessage("Too low dude");
 						return;
 					}
-					if(block.getY() > SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()) {
+					if(heightOfBlockRelativeToSiegeBanner > SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()) {
 						event.setMessage("Too high dude");
 						return;
-					}	
-				}
+					}
+				}	
 
 				//Ensure the material is ok to destroy
 				boolean blacklistedMaterial = false;
