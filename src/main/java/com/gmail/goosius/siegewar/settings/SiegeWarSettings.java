@@ -535,6 +535,10 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_RATE);
 	}
 
+	public static int getWallBreachingMaxPoolSize() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_MAX_POOL_SIZE);
+	}
+
 	public static int getWallBreachBonusBattlePoints() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_WALL_BREACH_BONUS_BATTLE_POINTS);
 	}

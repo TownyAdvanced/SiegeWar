@@ -40,7 +40,7 @@ public class SiegeWarWallBreachUtil {
     /**
      * Increase breach points if conditions are met.
      * 
-     * Conditions: Town-Friendly side has banner control
+     * Conditions: Town-Friendly side has banner control.
      * 
      * @param siege the siege
      */
@@ -66,17 +66,29 @@ public class SiegeWarWallBreachUtil {
             * siege.getBannerControllingResidents().size()
             * siege.getTown().getTownBlocks().size();
 
-        siege.setWallBreachPoints(siege.getWallBreachPoints() + wallBreachPointsIncrease);
+        if(siege.getWallBreachPoints() >= SiegeWarSettings.getWallBreachingMaxPoolSize()) {
+            //Already at max
+            return;
+        } else {
+            double newPointsTotal = siege.getWallBreachPoints() + wallBreachPointsIncrease;
+            if(newPointsTotal >= SiegeWarSettings.getWallBreachingMaxPoolSize()) {
+                 //Max Reached
+                 siege.setWallBreachPoints(SiegeWarSettings.getWallBreachingMaxPoolSize());
+            } else {
+                 //Max Not Reached
+                siege.setWallBreachPoints(siege.getWallBreachPoints() + wallBreachPointsIncrease);
+            }
+        }
     }
 
     /**
      * Award wall-breach bonuses if conditions are met.
      * 
      * Conditions:
-     * - Town hostile team has Banner Control
-     * - Player is the BC list
-     * - Player is at the homeblock
-     * - Player did not already get the award in this Battle Session
+     * - Town hostile team has Banner Control.
+     * - Player is the BC list.
+     * - Player is at the homeblock.
+     * - Player did not already get the award in this Battle Session.
      *
      * @param siege the siege
      */
