@@ -1,5 +1,5 @@
 ﻿name: SiegeWar
-version: 0.34
+version: 0.35
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -240,7 +240,7 @@ msg_swa_set_siege_balance_success: '&bSuccessfully set siege balance to %d for %
 
 #Added in 0.14
 msg_err_cannot_alter_blocks_below_banner_in_timed_point_zone: 'You cannot place/destroy blocks below banner altitude in the timed point zone.'
-msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain close to the siege-banner (%d blocks horizonally, %d blocks vertically), not in the town, and not flying, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
+msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain close to the siege-banner (%d blocks horizonally, %d blocks above, %d blocks below), not in the town, and not flying, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
 msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control session started. Remain close to the siege-banner (%d blocks horizonally, %d blocks above, %d blocks below), not below its altitude, not in the town, and not flying, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
 msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going into the town, or flying.'
 msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going below the altitude of the banner, going into the town, or flying.'
