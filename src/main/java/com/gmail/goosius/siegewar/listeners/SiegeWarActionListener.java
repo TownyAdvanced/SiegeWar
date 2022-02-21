@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.playeractions.DestroyBlock;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -43,8 +44,14 @@ public class SiegeWarActionListener implements Listener {
 	 */
 	@EventHandler
 	public void onBlockBreak(TownyDestroyEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled())
-			DestroyBlock.evaluateSiegeWarDestroyBlockRequest(event);
+		if (SiegeWarSettings.getWarSiegeEnabled()) {
+			try {
+				DestroyBlock.evaluateSiegeWarDestroyBlockRequest(event);
+			} catch (TownyException e) {
+				event.setCancelled(true);
+				event.setMessage(e.getMessage());
+			}
+		}
 	}
 	
 	/*

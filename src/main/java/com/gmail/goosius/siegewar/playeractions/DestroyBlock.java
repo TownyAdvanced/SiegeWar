@@ -12,6 +12,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import net.md_5.bungee.api.ChatMessageType;
@@ -32,7 +33,7 @@ public class DestroyBlock {
 	 *
 	 * @param event The event object
 	 */
-	public static void evaluateSiegeWarDestroyBlockRequest(TownyDestroyEvent event) {    
+	public static void evaluateSiegeWarDestroyBlockRequest(TownyDestroyEvent event) throws TownyException {
             //Ensure siege is enabled in this world
             Block block = event.getBlock();
 			if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
