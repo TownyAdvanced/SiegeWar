@@ -48,6 +48,12 @@ public class DestroyBlock {
 				if(!SiegeController.hasActiveSiege(town))
 					return; //SW doesn't un-cancel events in unsieged towns				
 
+				//Ensure player has permission
+				if (!TownyUniverse.getInstance().getPermissionSource().testPermission(event.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_USE_BREACH_POINTS.getNode())) {
+					event.setMessage(Translation.of("msg_err_action_disable"));
+					return; 
+				}
+
 				//Ensure player is on the town-hostile siege side				
 				Resident resident = TownyAPI.getInstance().getResident(event.getPlayer());
 				if(resident == null)
@@ -69,12 +75,6 @@ public class DestroyBlock {
 						if(playerSiegeSide != SiegeSide.DEFENDERS)
 							return;
 						break;
-				}
-
-				//Ensure player has permission
-				if (!TownyUniverse.getInstance().getPermissionSource().testPermission(event.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_USE_BREACH_POINTS.getNode())) {
-					event.setMessage(Translation.of("msg_err_action_disable"));
-					return; 
 				}
 
 				//Ensure there are enough breach points				
