@@ -583,7 +583,7 @@ public class SiegeWarSettings {
 				}
 			}
 		}
-		return cachedWallBreachingDestroyBlocksBlacklist;
+		return cachedWallBreachingPlaceBlocksWhitelist;
 	}
 
     public static boolean isWallBreachingDestroyEntityBlacklist() {

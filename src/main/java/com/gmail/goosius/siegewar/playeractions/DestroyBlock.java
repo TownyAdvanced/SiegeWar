@@ -98,8 +98,8 @@ public class DestroyBlock {
 				}	
 
 				//Ensure the material is ok to destroy
-				if(SiegeWarSettings.getWallBreachingDestroyBlocksBlacklist()
-					.contains(block.getType())) {
+				if(SiegeWarSettings.isWallBreachingDestroyEntityBlacklist()
+					&& isEntityBeingTargeted(block.getLocation())) {
 					event.setMessage(Translation.of("msg_err_breaching_cannot_destroy_this_material"));
 					return;
 				}
@@ -108,8 +108,8 @@ public class DestroyBlock {
 					event.setMessage(Translation.of("msg_err_breaching_cannot_destroy_this_material"));
 					return;
 				}
-				if(SiegeWarSettings.isWallBreachingDestroyEntityBlacklist()
-					&& isEntityBeingTargeted(block.getLocation())) {
+				if(SiegeWarSettings.getWallBreachingDestroyBlocksBlacklist()
+					.contains(block.getType())) {
 					event.setMessage(Translation.of("msg_err_breaching_cannot_destroy_this_material"));
 					return;
 				}
