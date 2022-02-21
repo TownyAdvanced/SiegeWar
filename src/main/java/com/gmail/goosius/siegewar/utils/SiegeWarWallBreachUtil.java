@@ -45,6 +45,9 @@ public class SiegeWarWallBreachUtil {
      * @param siege the siege
      */
     private static void increaseBreachPoints(Siege siege) {
+        if(siege.getWallBreachPoints() >= SiegeWarSettings.getWallBreachingMaxPoolSize())
+            return; //Already at max
+                    
         if(SiegeWarSettings.getWallBreachingPointGenerationRate() == 0)
             return;
 
@@ -62,23 +65,14 @@ public class SiegeWarWallBreachUtil {
         }
 
         double wallBreachPointsIncrease = 
-            SiegeWarSettings.getWallBreachingPointGenerationRate()
-            * siege.getBannerControllingResidents().size()
-            * siege.getTown().getTownBlocks().size();
+        SiegeWarSettings.getWallBreachingPointGenerationRate()
+        * siege.getBannerControllingResidents().size()
+        * siege.getTown().getTownBlocks().size();
 
-        if(siege.getWallBreachPoints() >= SiegeWarSettings.getWallBreachingMaxPoolSize()) {
-            //Already at max
-            return;
-        } else {
-            double newPointsTotal = siege.getWallBreachPoints() + wallBreachPointsIncrease;
-            if(newPointsTotal >= SiegeWarSettings.getWallBreachingMaxPoolSize()) {
-                 //Max Reached
-                 siege.setWallBreachPoints(SiegeWarSettings.getWallBreachingMaxPoolSize());
-            } else {
-                 //Max Not Reached
-                siege.setWallBreachPoints(siege.getWallBreachPoints() + wallBreachPointsIncrease);
-            }
-        }
+        siege.setWallBreachPoints(            
+            Math.min(
+                SiegeWarSettings.getWallBreachingMaxPoolSize(), 
+                siege.getWallBreachPoints() + wallBreachPointsIncrease));
     }
 
     /**

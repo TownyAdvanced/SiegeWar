@@ -27,6 +27,7 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
+import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
 
 import java.time.LocalDate;
@@ -119,21 +120,8 @@ public class PlaceBlock {
 				}
 
 				//Ensure the material is ok to place
-				boolean allowedMaterial = false;
-				for(String materialString: SiegeWarSettings.getWallBreachingPlaceBlocksWhitelist()) {
-					if(materialString.startsWith("endswith=")) {
-						materialString = materialString.replace("endswith=", "");
-						if(event.getMaterial().name().toLowerCase().endsWith(materialString.toLowerCase())) {
-							allowedMaterial = true;
-							break;
-						}
-					}					
-					if(event.getMaterial().name().equalsIgnoreCase(materialString)) {
-						allowedMaterial = true;
-						break;
-					}
-				}
-				if(!allowedMaterial) {
+				if(!SiegeWarSettings.getWallBreachingPlaceBlocksWhitelist()
+					.contains(block.getType())) {
 					event.setMessage(Translation.of("msg_err_breaching_cannot_place_this_material"));
 					return;
 				}

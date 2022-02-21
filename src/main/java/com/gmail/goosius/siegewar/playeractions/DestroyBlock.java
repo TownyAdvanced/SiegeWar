@@ -12,7 +12,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
-import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import net.md_5.bungee.api.ChatMessageType;
@@ -98,30 +97,22 @@ public class DestroyBlock {
 				}	
 
 				//Ensure the material is ok to destroy
-				boolean blacklistedMaterial = false;
-				for(String materialString: SiegeWarSettings.getWallBreachingDestroyBlocksBlacklist()) {
-					if(materialString.equalsIgnoreCase("is=container")) {
-						if(block instanceof Container) {
-							blacklistedMaterial = true;
-							break;
-						}
-					}					
-					if(materialString.equalsIgnoreCase("is=entity")) {
-						if(isEntityBeingTargeted(block.getLocation())) {
-							blacklistedMaterial = true;
-							break;
-						}
-					}			
-					if(event.getMaterial().name().equalsIgnoreCase(materialString)) {
-						blacklistedMaterial = true;
-						break;
-					}
-				}
-				if(blacklistedMaterial) {
+				if(SiegeWarSettings.getWallBreachingDestroyBlocksBlacklist()
+					.contains(block.getType())) {
 					event.setMessage(Translation.of("msg_err_breaching_cannot_destroy_this_material"));
 					return;
 				}
-				
+				if(SiegeWarSettings.isWallBreachingDestroyContainerBlacklist()
+					&& block instanceof Container) {
+					event.setMessage(Translation.of("msg_err_breaching_cannot_destroy_this_material"));
+					return;
+				}
+				if(SiegeWarSettings.isWallBreachingDestroyEntityBlacklist()
+					&& isEntityBeingTargeted(block.getLocation())) {
+					event.setMessage(Translation.of("msg_err_breaching_cannot_destroy_this_material"));
+					return;
+				}
+
 				//IF we get here, it is a wall breach!!					
 				//Reduce breach points
 				siege.setWallBreachPoints(siege.getWallBreachPoints() - SiegeWarSettings.getWallBreachingBlockDestructionCost());

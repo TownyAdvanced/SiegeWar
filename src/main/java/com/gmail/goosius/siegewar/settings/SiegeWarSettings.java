@@ -4,7 +4,8 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
+import java.util.EnumSet;
+import java.util.Set;
 import com.gmail.goosius.siegewar.SiegeWar;
 import org.bukkit.Material;
 
@@ -18,12 +19,20 @@ public class SiegeWarSettings {
 	private static List<Material> siegeZoneWildernessForbiddenBlockMaterials = null;
 	private static List<Material> siegeZoneWildernessForbiddenBucketMaterials = null;
 	private static List<EntityType> siegeZoneWildernessForbiddenExplodeEntityTypes = null;
-	
+	private static EnumSet<Material> cachedWallBreachingPlaceBlocksWhitelist = null;
+	private static EnumSet<Material> cachedWallBreachingDestroyBlocksBlacklist = null;
+	private static Boolean cachedWallBreachingDestroyEntityBlacklist = null;
+	private static Boolean cachedWallBreachingDestroyContainerBlacklist = null;
+
 	protected static void resetCachedSettings() {
 		mapHidingItems = null;
 		siegeZoneWildernessForbiddenBlockMaterials = null;
 		siegeZoneWildernessForbiddenBucketMaterials = null;
 		siegeZoneWildernessForbiddenExplodeEntityTypes = null;
+		cachedWallBreachingPlaceBlocksWhitelist = null;
+		cachedWallBreachingDestroyBlocksBlacklist = null;
+		cachedWallBreachingDestroyEntityBlacklist = false;
+		cachedWallBreachingDestroyContainerBlacklist = false;
 	}
 
 	public static boolean getWarSiegeEnabled() {
@@ -550,15 +559,58 @@ public class SiegeWarSettings {
 	public static int getWallBreachingBlockDestructionCost() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_COST_PER_BLOCK);
 	}
-	
-	public static String[] getWallBreachingPlaceBlocksWhitelist() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_WHITELIST).replaceAll(" ","").split(",");
+
+	public static Set<Material> getWallBreachingPlaceBlocksWhitelist() {
+		if(cachedWallBreachingPlaceBlocksWhitelist == null) {			
+    		cachedWallBreachingPlaceBlocksWhitelist = EnumSet.noneOf(Material.class);
+    		String configuredListUppercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_WHITELIST).toUpperCase();
+			for(String configuredItemUppercase: configuredListUppercase.replaceAll(" ","").split(",")) {
+				if(configuredItemUppercase.startsWith("ENDSWITH=")) {
+					String partialName = configuredItemUppercase.replace("ENDSWITH=","");
+					for(Material material: Material.values()) {
+						if(material.name().toUpperCase().endsWith(partialName))
+							cachedWallBreachingPlaceBlocksWhitelist.add(material);
+					}
+				} else {
+					Material material = Material.matchMaterial(configuredItemUppercase);
+					cachedWallBreachingPlaceBlocksWhitelist.add(material);
+				}
+			}
+		}
+		return cachedWallBreachingDestroyBlocksBlacklist;
 	}
 
-	public static String[] getWallBreachingDestroyBlocksBlacklist() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).replaceAll(" ","").split(",");
+    public static boolean isWallBreachingDestroyEntityBlacklist() {
+    	if(cachedWallBreachingDestroyEntityBlacklist == null) {
+    		String configuredListLowercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST);
+			cachedWallBreachingDestroyEntityBlacklist = configuredListLowercase.contains("is=entity"); 				
+		}
+		return cachedWallBreachingDestroyEntityBlacklist;
+	}
+
+    public static boolean isWallBreachingDestroyContainerBlacklist() {
+    	if(cachedWallBreachingDestroyContainerBlacklist == null) {
+    		String configuredListLowercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST);
+			cachedWallBreachingDestroyContainerBlacklist = configuredListLowercase.contains("is=container"); 				
+		}
+		return cachedWallBreachingDestroyContainerBlacklist;
 	}
 	
+	public static Set<Material> getWallBreachingDestroyBlocksBlacklist() {
+		if(cachedWallBreachingDestroyBlocksBlacklist == null) {			
+    		cachedWallBreachingDestroyBlocksBlacklist = EnumSet.noneOf(Material.class);
+    		String configuredListUppercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toUpperCase();
+			for(String configuredItemUppercase: configuredListUppercase.replaceAll(" ","").split(",")) {
+				if(!configuredItemUppercase.equals("IS=ENTITY")
+					&& !configuredItemUppercase.equals("IS=CONTAINER")) {
+					Material material = Material.matchMaterial(configuredItemUppercase);
+					cachedWallBreachingDestroyBlocksBlacklist.add(material);
+				}							
+			}
+		}
+		return cachedWallBreachingDestroyBlocksBlacklist;
+	}
+
 	public static int getWallBreachingHomeblockBreachHeightLimitMin() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_HOMEBLOCK_BREACH_HEIGHT_LIMITS_MIN);
 	}
