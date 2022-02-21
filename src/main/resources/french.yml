@@ -511,11 +511,16 @@ msg_err_cannot_start_sieges_today: "&cYour server has limited the days-of-the-we
 #Wall-Breach-Actions
 hud_breach_points: "Breach Points: "
 status_town_siege_breach_points: '&2 > Breach Points: &a%s'
-msg_err_not_enough_breach_points_for_action: '&cThere are not enough breach points for this action. Required: %d, Actual: %d.'
+msg_err_not_enough_breach_points_for_action: '&cThere are not enough breach points for this action. Required: %d, Actual: %s.'
 msg_err_cannot_place_at_this_height: '&cYou cannot do a place-block action at this height. Height limits apply when close to the homeblock. Compared to Siege-Banner Height, MIN = %d, MAX = %d.'
 msg_err_cannot_destroy_at_this_height: '&cYou cannot do a destroy-block action at this height. Height limits apply when close to the homeblock. Compared to Siege-Banner Height, MIN = %d, MAX = %d.'
+msg_err_breaching_cannot_place_this_material: '&cYou cannot place this type of block.'
+msg_err_breaching_cannot_destroy_this_material: '&cYou cannot destroy this type of block.'
 #Wall-Breach-Bonus
 msg_wall_breach_bonus_awarded_to_attackers: "&bSiege on %s > %d attackers have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
 msg_wall_breach_bonus_awarded_to_defenders: "&bSiege on %s > %d defenders have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
 msg_wall_breach_bonus_awarded: "&bYou have been awarded a wall breach bonus."
 msg_err_already_received_wall_breach_bonus: '&cYou already received your Wall-Breach-Bonus for this Battle Session.'
+#configuration-errors
+msg_error_misconfigured_place_blocks_whitelist: '&cMisconfigured Material on Wall-Breaching-Place-Blocks-Whitelist. Problem Entry: %s'
+msg_error_misconfigured_destroy_blocks_blacklist: '&cMisconfigured Material on Wall-Breaching-Destroy-Blocks-Blacklist. Problem Entry: %s'

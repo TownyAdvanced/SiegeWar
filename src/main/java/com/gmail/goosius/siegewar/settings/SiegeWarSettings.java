@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.EnumSet;
 import java.util.Set;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
 import org.bukkit.Material;
 
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
@@ -560,10 +561,11 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_COST_PER_BLOCK);
 	}
 
-	public static Set<Material> getWallBreachingPlaceBlocksWhitelist() {
+	public static Set<Material> getWallBreachingPlaceBlocksWhitelist() throws TownyException
+	{
 		if(cachedWallBreachingPlaceBlocksWhitelist == null) {			
     		cachedWallBreachingPlaceBlocksWhitelist = EnumSet.noneOf(Material.class);
-    		String configuredListUppercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_WHITELIST).toUpperCase();
+			String configuredListUppercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_WHITELIST).toUpperCase(Locale.ROOT);
 			for(String configuredItemUppercase: configuredListUppercase.replaceAll(" ","").split(",")) {
 				if(configuredItemUppercase.startsWith("ENDSWITH=")) {
 					String partialName = configuredItemUppercase.replace("ENDSWITH=","");
@@ -573,7 +575,11 @@ public class SiegeWarSettings {
 					}
 				} else {
 					Material material = Material.matchMaterial(configuredItemUppercase);
-					cachedWallBreachingPlaceBlocksWhitelist.add(material);
+					if(material == null) {
+						throw new TownyException(Translation.of("msg_error_misconfigured_place_blocks_whitelist", configuredItemUppercase));
+					} else {
+						cachedWallBreachingPlaceBlocksWhitelist.add(material);
+					}
 				}
 			}
 		}
@@ -596,15 +602,19 @@ public class SiegeWarSettings {
 		return cachedWallBreachingDestroyContainerBlacklist;
 	}
 	
-	public static Set<Material> getWallBreachingDestroyBlocksBlacklist() {
+	public static Set<Material> getWallBreachingDestroyBlocksBlacklist() throws TownyException {
 		if(cachedWallBreachingDestroyBlocksBlacklist == null) {			
     		cachedWallBreachingDestroyBlocksBlacklist = EnumSet.noneOf(Material.class);
-    		String configuredListUppercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toUpperCase();
+			String configuredListUppercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toUpperCase(Locale.ROOT);
 			for(String configuredItemUppercase: configuredListUppercase.replaceAll(" ","").split(",")) {
 				if(!configuredItemUppercase.equals("IS=ENTITY")
 					&& !configuredItemUppercase.equals("IS=CONTAINER")) {
 					Material material = Material.matchMaterial(configuredItemUppercase);
-					cachedWallBreachingDestroyBlocksBlacklist.add(material);
+					if(material == null) {
+						throw new TownyException(Translation.of("msg_error_misconfigured_destroy_blocks_blacklist", configuredItemUppercase));
+					} else {
+						cachedWallBreachingDestroyBlocksBlacklist.add(material);
+					}
 				}							
 			}
 		}
