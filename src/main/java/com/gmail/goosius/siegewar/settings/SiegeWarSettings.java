@@ -32,8 +32,8 @@ public class SiegeWarSettings {
 		siegeZoneWildernessForbiddenExplodeEntityTypes = null;
 		cachedWallBreachingPlaceBlocksWhitelist = null;
 		cachedWallBreachingDestroyBlocksBlacklist = null;
-		cachedWallBreachingDestroyEntityBlacklist = false;
-		cachedWallBreachingDestroyContainerBlacklist = false;
+		cachedWallBreachingDestroyEntityBlacklist = null;
+		cachedWallBreachingDestroyContainerBlacklist = null;
 	}
 
 	public static boolean getWarSiegeEnabled() {
@@ -588,7 +588,7 @@ public class SiegeWarSettings {
 
     public static boolean isWallBreachingDestroyEntityBlacklist() {
     	if(cachedWallBreachingDestroyEntityBlacklist == null) {
-    		String configuredListLowercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST);
+    		String configuredListLowercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toLowerCase(Locale.ROOT);
 			cachedWallBreachingDestroyEntityBlacklist = configuredListLowercase.contains("is=entity"); 				
 		}
 		return cachedWallBreachingDestroyEntityBlacklist;
@@ -596,7 +596,7 @@ public class SiegeWarSettings {
 
     public static boolean isWallBreachingDestroyContainerBlacklist() {
     	if(cachedWallBreachingDestroyContainerBlacklist == null) {
-    		String configuredListLowercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST);
+    		String configuredListLowercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toLowerCase(Locale.ROOT);
 			cachedWallBreachingDestroyContainerBlacklist = configuredListLowercase.contains("is=container"); 				
 		}
 		return cachedWallBreachingDestroyContainerBlacklist;
