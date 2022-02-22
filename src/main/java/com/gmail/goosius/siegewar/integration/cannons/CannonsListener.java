@@ -3,12 +3,22 @@ package com.gmail.goosius.siegewar.integration.cannons;
 import at.pavlov.cannons.event.CannonFireEvent;
 import at.pavlov.cannons.event.CannonRedstoneEvent;
 import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 
+import com.palmergames.bukkit.util.BukkitTools;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,19 +42,56 @@ public class CannonsListener implements Listener {
 	/**
 	 * Process a Cannon Fire Event, where a player fires a cannon
 	 *
-	 * - If the cannon is in the wilderness, it can be fired
-	 *
-	 * - If a player is firing from their town, 
-	 *   and has the siegewar.siege.town.start.cannon.session permission,
-	 *   then a cannon session starts/refreshes, and the event is allowed
-	 *
-	 * - If neither of the above applies, then we look for a cannon session.
-	 *   If active, the event is allowed, otherwise it is prevented.
+	 * When a cannon is in a siegezone:
+	 * - To fire the cannon, you must have one or both of the following perms:
+	 *   - siegewar.siege.nation.firecannon (as official participant)
+	 *   - siegewar.siege.town.firecannon (as resident of besieged town)
+	 * - To fire the cannon, you must be an official siege participant.
+     * - When a defender fires a cannon, breach points are generated.
+     * - When an attacker fires a cannon, breach points are used up.
 	 *
 	 * @param event the event
 	 */
 	@EventHandler
 	public void cannonFireEvent(CannonFireEvent event) {
+		if (SiegeWarSettings.getWarSiegeEnabled()
+			&& SiegeWarSettings.isWallBreachingEnabled()
+			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getCannon().getLocation())) {
+
+			Player gunnerPlayer = BukkitTools.getPlayer(event.getPlayer());
+			Siege siege = SiegeController.getSiegeAtLocation(event.getCannon().getLocation());
+			Resident gunnerResident = TownyAPI.getInstance().getResident(gunnerPlayer);
+			if(gunnerResident == null) {
+				event.setCancelled(true);
+				return;
+			}
+
+			if(gunnerResident.hasTown() 
+				&& gunnerResident.getTownOrNull() == siege.getTown()
+				&& TownyUniverse.getInstance().getPermissionSource().testPermission(gunnerPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_FIRECANNONS.getNode())) {
+				//Has permission to fire
+			} else if (gunnerResident.hasNation()
+				&& TownyUniverse.getInstance().getPermissionSource().testPermission(gunnerPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_FIRECANNONS.getNode())) {
+				//Has permission to fire
+			} else {
+				event.setCancelled(true);
+				Messaging.sendErrorMsg(gunnerPlayer, Translation.of("msg_err_action_disable"));
+			}
+
+			SiegeSide gunnerSiegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(gunnerPlayer,gunnerResident.getTownOrNull(), siege);
+			switch(gunnerSiegeSide) {
+				case NOBODY:
+					event.setCancelled(true);
+					Messaging.sendErrorMsg(gunnerPlayer, Translation.of("msg_err_action_disable"));
+				break;
+				case ATTACKERS:
+				case DEFENDERS:
+					boolean isSideHostileToTown = SiegeWarAllegianceUtil.isSideHostileToTown(gunnerSiegeSide, siege);
+				break;
+			}
+		
+		}
+	
 		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
 			Player player = null;
 			try {
@@ -67,35 +114,17 @@ public class CannonsListener implements Listener {
 
 	/**
 	 * Process a Redstone Cannon Fire Event
-	 *
-	 * - If the cannon is in the wilderness, it can be fired
-	 *
-	 * - Otherwise, we look for a cannon session.
-	 *   If active, the event is allowed, otherwise it is prevented.
+	 * - If the cannon is in a siegezone,this is prevented
+	 *  .... because in siegezones we need to attribute cannon fires to players
 	 *
 	 * @param event the event
 	 */
 	@EventHandler
 	public void cannonRedstoneEvent(CannonRedstoneEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
-			try {
-				Town townWhereCannonIsLocated;
-				Set<Town> cannonTowns = cannonsIntegration.getTownsWhereCannonIsLocated(event.getCannon());
-				if (cannonTowns.size() == 0) {
-					return; //cannon is not in a town
-				} else if (cannonTowns.size() > 1) {
-					event.setCancelled(true); //too many towns
-					return;
-				} else {
-					townWhereCannonIsLocated = (Town)cannonTowns.toArray()[0];
-				}
-				if (!CannonsIntegration.doesTownHaveCannonSession(townWhereCannonIsLocated)) {
-					event.setCancelled(true);  //No cannon session found. Cancel event
-				}
-			} catch (Exception e) {
+		if (SiegeWarSettings.getWarSiegeEnabled() 
+			&& SiegeWarSettings.isWallBreachingEnabled()
+			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getCannon().getLocation())) {
 				event.setCancelled(true);
-				SiegeWar.severe("Error processing cannon redstone event. Cannon fire prevented: " + e.getMessage());
-				e.printStackTrace();
 			}
 		}
 	}

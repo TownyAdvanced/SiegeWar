@@ -21,6 +21,7 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_NATION_SIEGE_PLUNDER("siegewar.nation.siege.plunder"),
 	SIEGEWAR_NATION_SIEGE_SUBVERTPEACEFULTOWN("siegewar.nation.siege.subvertpeacefultown"),
 	SIEGEWAR_NATION_SIEGE_USE_BREACH_POINTS("siegewar.nation.siege.use.breach.points"),
+	SIEGEWAR_NATION_SIEGE_FIRECANNONS("siegewar.nation.siege.firecannons"),
 
 	// ----- Town Action Nodes -----
 	//Battle points
@@ -29,10 +30,9 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_START("siegewar.town.siege.revolt.siege.abandon"),
 	SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_ABANDON("siegewar.town.siege.revolt.siege.start"),
 	SIEGEWAR_TOWN_SIEGE_SURRENDER("siegewar.town.siege.surrender"),
+	SIEGEWAR_TOWN_SIEGE_FIRECANNONS("siegewar.town.siege.firecannons"),
 	SIEGEWAR_TOWN_REVOLT_PEACEFULLY("siegewar.town.siege.revoltpeacefully"),
 
-	// Node related to cannon session integration
-	SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION("siegewar.town.siege.startcannonsession"),
 	// Siegewar related war sickness immunities
 	SIEGEWAR_IMMUNE_TO_WAR_NAUSEA("siegewar.immune.to.war.nausea"),
 

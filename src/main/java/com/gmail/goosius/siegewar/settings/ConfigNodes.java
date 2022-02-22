@@ -446,8 +446,10 @@ public enum ConfigNodes {
 			"war.siege.points_balancing.wall_breach_bonus.battle_points",
 			"250",
 			"",
-			"# If the wall breaching feature is enabled, this value determines the number of Battle Points awarded by the bonus",
-			"# The enable switch is located in this config, in the 'Wall Breaching'.section"),
+			"# If the wall breaching feature is enabled (in the 'Wall Breaching' config section), this value determines the number of Battle Points awarded by the Wall Breach Bonus.",
+			"# To get the bonus, hostile-to-town players must capture the banner first, then get to the homeblock.",
+			"# TIP: Players are required to cap first, because otherwise they could log off at the homeblock after getting the bonus, and then in the next session, simply log back in to get the bonus again."),
+
 	WAR_SIEGE_POINTS_BALANCING_BANNER_CONTROL_REVERSAL_BONUS(
 			"war.siege.points_balancing.banner_control_reversal_bonus",
 			"",

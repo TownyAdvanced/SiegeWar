@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -73,4 +74,17 @@ public class SiegeWarAllegianceUtil {
         }
     }
 
+    public static boolean isSideHostileToTown(SiegeSide gunnerSiegeSide, Siege siege) {
+        switch (gunnerSiegeSide) {
+            case NOBODY:
+                return false;
+            case ATTACKERS:
+                return siege.getSiegeType() == SiegeType.CONQUEST 
+                        || siege.getSiegeType() == SiegeType.SUPPRESSION;
+        }
+        switch(siege.getSiegeType()) {
+            
+        }
+        
+    }
 }
