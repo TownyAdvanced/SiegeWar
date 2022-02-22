@@ -30,8 +30,6 @@ msg_err_command_disable: "&cVous n'avez pas la permission d'effectuer cette comm
 #Siege war happy-path messages
 msg_siege_war_attack_pay_war_chest: "&bUn coffre de guerre a été préparé par %s, avec une valeur de %s. Celui qui remporte le siège recevra cet argent."
 msg_siege_war_attack_recover_war_chest: "&bLe coffre de guerre a été récupéré par %s, avec une valeur de %s."
-msg_siege_war_defender_win: "&bLes défenseurs de %s ont réussi à chasser toutes les armées attaquantes. Le siège a échoué !"
-msg_siege_war_attacker_win: "&bUne armée appartenant à %s a réussi à traverser les défenses de %s. Le siège est fini !"
 msg_siege_war_attacker_abandon: "&bUne armée appartenant à %s a abandonné son attaque sur %s. Les défenseurs ont gagné !"
 msg_siege_war_pending_attacker_abandon: "&bUne armée appartenant à %s a abandonné son attaque sur %s. La victoire des défenseurs sera confirmée dans %s !"
 msg_siege_war_town_surrender: "&b%s s'est rendu à une armée appartenant à %s. Les attaquants ont gagné !"
@@ -337,14 +335,14 @@ msg_err_town_cannot_end_siege_as_no_siege: '&cThe nearby town has no siege. Aban
 msg_err_town_cannot_end_siege_as_finished: '&cThe siege is finished or scheduled to finish. Abandon/Surrender not possible.'
 
 # Timed wins
-msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has defeated the army of %s and breached the defences of the town.'
+msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has defeated the defending army of %s. The town now stands open for invasion and/or plunder.'
 msg_liberation_siege_timed_attacker_win: '&bLIBERATION SIEGE at %s > The attacking army of %s has defeated the occupying army of %s, and liberated the townspeople from occupation.'
 msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking rebel army has driven out the occupying army of %s.'
-msg_suppression_siege_timed_attacker_win: '&bSUPPRESSION SIEGE at %s > The occupying army of %s has successfully suppressed rebel activity in the town.'
+msg_suppression_siege_timed_attacker_win: '&bSUPPRESSION SIEGE at %s > The occupying army of %s has successfully suppressed all rebel activity. The town now stands open for invasion and/or plunder.'
 msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has defeated the army of %s, and driven the attackers off.'
 msg_liberation_siege_timed_defender_win: '&bLIBERATION SIEGE at %s > The occupying army of %s has defeated the army of %s, and successfully prevented the liberation of the town.'
-msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The occupying army of %s has defeated the attacking rebels, and crushed the rebellion.'
-msg_suppression_siege_timed_defender_win: '&bSUPPRESSION SIEGE at %s > The defending army of %s have defeated the army of %s, preventing the attempted suppression, and freeing themselves from occupation.'
+msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The occupying army of %s has successfully crushed the rebellion. The town now stands open for invasion and/or plunder.'
+msg_suppression_siege_timed_defender_win: '&bSUPPRESSION SIEGE at %s > The defending army of %s has defeated the attacking army of %s, preventing the attempted suppression, and freeing the town from occupation.'
 
 # Generic Victory messages
 msg_immediate_attacker_victory: " The attackers are victorious!"
