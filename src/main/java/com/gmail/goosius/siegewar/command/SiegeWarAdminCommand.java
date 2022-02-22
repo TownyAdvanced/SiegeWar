@@ -191,8 +191,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		List<String> groupNodes = new ArrayList<>();
 		String townpoints = "siegewar.town.siege.battle.points";
 		String nationpoints = "siegewar.nation.siege.battle.points";
-		
-		
+
 		// Add nodes to mayor rank.
 		groupNodes = TownyPerms.getPermsOfGroup("towns.mayor");
 		if (!groupNodes.contains("siegewar.town.siege.*"))
@@ -230,6 +229,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		file.createSection("nations.ranks.major");
 		file.createSection("nations.ranks.colonel");
 		file.createSection("nations.ranks.general");
+		file.createSection("nations.ranks.engineer");
 
 		// Populate town guard rank.
 		groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.guard");
@@ -257,7 +257,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		groupNodes.add("towny.nation.siege.pay.grade.250");
 		file.set("nations.ranks.captain", groupNodes);
 
-
 		groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.major");
 		groupNodes.add(nationpoints);
 		groupNodes.add("towny.nation.siege.pay.grade.300");
@@ -276,8 +275,15 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		groupNodes.add("towny.command.nation.rank.captain");
 		groupNodes.add("towny.command.nation.rank.major");
 		groupNodes.add("towny.command.nation.rank.colonel");
+		groupNodes.add("towny.command.nation.rank.engineer");
 		groupNodes.add("towny.nation.siege.pay.grade.500");
 		file.set("nations.ranks.general", groupNodes);
+		
+		groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.engineer");
+		groupNodes.add(nationpoints);
+		groupNodes.add("siegewar.nation.siege.use.breach.points");
+		groupNodes.add("towny.nation.siege.pay.grade.250");
+		file.set("nations.ranks.engineer", groupNodes);
 		
 		// Add nodes to king rank.
 		groupNodes = TownyPerms.getPermsOfGroup("nations.king");

@@ -19,7 +19,8 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_ABANDON("siegewar.nation.siege.suppression.siege.abandon"),
 	SIEGEWAR_NATION_SIEGE_INVADE("siegewar.nation.siege.invade"),
 	SIEGEWAR_NATION_SIEGE_PLUNDER("siegewar.nation.siege.plunder"),
-	SIEGEWAR_NATION_SUBVERTPEACEFULTOWN("siegewar.nation.siege.subvertpeacefultown"),
+	SIEGEWAR_NATION_SIEGE_SUBVERTPEACEFULTOWN("siegewar.nation.siege.subvertpeacefultown"),
+	SIEGEWAR_NATION_SIEGE_USE_BREACH_POINTS("siegewar.nation.siege.use.breach.points"),
 
 	// ----- Town Action Nodes -----
 	//Battle points

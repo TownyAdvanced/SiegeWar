@@ -121,6 +121,8 @@ public class SiegeWarBattleSessionUtil {
 				siege.setAttackerBattlePoints(0);
 				siege.setDefenderBattlePoints(0);
 				siege.clearSuccessfulBattleContributors();
+				siege.setWallBreachPoints(0);
+				siege.getWallBreachBonusAwardees().clear();
 
 				//Save siege to database
 				SiegeController.saveSiege(siege);

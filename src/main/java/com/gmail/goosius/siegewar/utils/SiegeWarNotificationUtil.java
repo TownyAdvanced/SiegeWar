@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -65,7 +66,7 @@ public class SiegeWarNotificationUtil {
 			//Inform battlefield observers
 			for(Player player: Bukkit.getOnlinePlayers()) {
 				if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NOTIFICATIONS_ALL.getNode())) {
-					TownyMessaging.sendMessage(player, message);
+					Messaging.sendMsg(player, message);
 				}
 			}
 

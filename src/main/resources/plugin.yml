@@ -95,6 +95,7 @@ permissions:
             siegewar.nation.siege.suppression.siege.start: true
             siegewar.nation.siege.suppression.siege.abandon: true
             siegewar.nation.siege.subvertpeacefultown: true
+            siegewar.nation.siege.use.breach.points: true
 
     siegewar.town.siege.*:
         description: User holds all of the siegewar town nodes.
@@ -106,7 +107,6 @@ permissions:
             siegewar.town.siege.revolt.siege.start: true
             siegewar.town.siege.revolt.siege.abandon: true
             siegewar.town.siege.revoltpeacefully: true
-
 
     siegewar.command.siegewar.collect:
         description: User is able to do the /siegewar collect command.

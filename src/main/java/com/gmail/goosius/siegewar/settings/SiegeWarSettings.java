@@ -4,8 +4,10 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
+import java.util.EnumSet;
+import java.util.Set;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
 import org.bukkit.Material;
 
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
@@ -18,12 +20,20 @@ public class SiegeWarSettings {
 	private static List<Material> siegeZoneWildernessForbiddenBlockMaterials = null;
 	private static List<Material> siegeZoneWildernessForbiddenBucketMaterials = null;
 	private static List<EntityType> siegeZoneWildernessForbiddenExplodeEntityTypes = null;
-	
+	private static EnumSet<Material> cachedWallBreachingPlaceBlocksWhitelist = null;
+	private static EnumSet<Material> cachedWallBreachingDestroyBlocksBlacklist = null;
+	private static Boolean cachedWallBreachingDestroyEntityBlacklist = null;
+	private static Boolean cachedWallBreachingDestroyContainerBlacklist = null;
+
 	protected static void resetCachedSettings() {
 		mapHidingItems = null;
 		siegeZoneWildernessForbiddenBlockMaterials = null;
 		siegeZoneWildernessForbiddenBucketMaterials = null;
 		siegeZoneWildernessForbiddenExplodeEntityTypes = null;
+		cachedWallBreachingPlaceBlocksWhitelist = null;
+		cachedWallBreachingDestroyBlocksBlacklist = null;
+		cachedWallBreachingDestroyEntityBlacklist = null;
+		cachedWallBreachingDestroyContainerBlacklist = null;
 	}
 
 	public static boolean getWarSiegeEnabled() {
@@ -525,6 +535,98 @@ public class SiegeWarSettings {
 			}
 
 		return  allowedDaysList;
+	}
+
+	public static boolean isWallBreachingEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_WALL_BREACHING_ENABLED);
+	}
+	
+	public static double getWallBreachingPointGenerationRate() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_RATE);
+	}
+
+	public static int getWallBreachingMaxPoolSize() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_MAX_POOL_SIZE);
+	}
+
+	public static int getWallBreachBonusBattlePoints() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_WALL_BREACH_BONUS_BATTLE_POINTS);
+	}
+
+	public static int getWallBreachingBlockPlacementCost() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_COST_PER_BLOCK);
+	}
+
+	public static int getWallBreachingBlockDestructionCost() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_COST_PER_BLOCK);
+	}
+
+	public static Set<Material> getWallBreachingPlaceBlocksWhitelist() throws TownyException
+	{
+		if(cachedWallBreachingPlaceBlocksWhitelist == null) {			
+    		cachedWallBreachingPlaceBlocksWhitelist = EnumSet.noneOf(Material.class);
+			String configuredListUppercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_WHITELIST).toUpperCase(Locale.ROOT);
+			for(String configuredItemUppercase: configuredListUppercase.replaceAll(" ","").split(",")) {
+				if(configuredItemUppercase.startsWith("ENDSWITH=")) {
+					String partialName = configuredItemUppercase.replace("ENDSWITH=","");
+					for(Material material: Material.values()) {
+						if(material.name().toUpperCase().endsWith(partialName))
+							cachedWallBreachingPlaceBlocksWhitelist.add(material);
+					}
+				} else {
+					Material material = Material.matchMaterial(configuredItemUppercase);
+					if(material == null) {
+						throw new TownyException(Translation.of("msg_error_misconfigured_place_blocks_whitelist", configuredItemUppercase));
+					} else {
+						cachedWallBreachingPlaceBlocksWhitelist.add(material);
+					}
+				}
+			}
+		}
+		return cachedWallBreachingPlaceBlocksWhitelist;
+	}
+
+    public static boolean isWallBreachingDestroyEntityBlacklist() {
+    	if(cachedWallBreachingDestroyEntityBlacklist == null) {
+    		String configuredListLowercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toLowerCase(Locale.ROOT);
+			cachedWallBreachingDestroyEntityBlacklist = configuredListLowercase.contains("is=entity"); 				
+		}
+		return cachedWallBreachingDestroyEntityBlacklist;
+	}
+
+    public static boolean isWallBreachingDestroyContainerBlacklist() {
+    	if(cachedWallBreachingDestroyContainerBlacklist == null) {
+    		String configuredListLowercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toLowerCase(Locale.ROOT);
+			cachedWallBreachingDestroyContainerBlacklist = configuredListLowercase.contains("is=container"); 				
+		}
+		return cachedWallBreachingDestroyContainerBlacklist;
+	}
+	
+	public static Set<Material> getWallBreachingDestroyBlocksBlacklist() throws TownyException {
+		if(cachedWallBreachingDestroyBlocksBlacklist == null) {			
+    		cachedWallBreachingDestroyBlocksBlacklist = EnumSet.noneOf(Material.class);
+			String configuredListUppercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toUpperCase(Locale.ROOT);
+			for(String configuredItemUppercase: configuredListUppercase.replaceAll(" ","").split(",")) {
+				if(!configuredItemUppercase.equals("IS=ENTITY")
+					&& !configuredItemUppercase.equals("IS=CONTAINER")) {
+					Material material = Material.matchMaterial(configuredItemUppercase);
+					if(material == null) {
+						throw new TownyException(Translation.of("msg_error_misconfigured_destroy_blocks_blacklist", configuredItemUppercase));
+					} else {
+						cachedWallBreachingDestroyBlocksBlacklist.add(material);
+					}
+				}							
+			}
+		}
+		return cachedWallBreachingDestroyBlocksBlacklist;
+	}
+
+	public static int getWallBreachingHomeblockBreachHeightLimitMin() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_HOMEBLOCK_BREACH_HEIGHT_LIMITS_MIN);
+	}
+	
+	public static int getWallBreachingHomeblockBreachHeightLimitMax() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_HOMEBLOCK_BREACH_HEIGHT_LIMITS_MAX);
 	}
 
 }

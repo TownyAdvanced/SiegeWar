@@ -3,11 +3,14 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
@@ -24,6 +27,7 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
+import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
 
 import java.time.LocalDate;
@@ -56,6 +60,79 @@ public class PlaceBlock {
 			//Ensure siege is enabled in this world
 			if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
 				return;
+
+			//If the event has already been cancelled by Towny...
+			if(event.isCancelled()) {
+				if(!SiegeWarSettings.isWallBreachingEnabled())
+					return; //Without wall breaching, SW doesn't un-cancel events
+				Town town = TownyAPI.getInstance().getTown(block.getLocation());
+				if(town == null)
+					return; //SW currently doesn't un-cancel wilderness events
+				if(!SiegeController.hasActiveSiege(town))
+					return; //SW doesn't un-cancel events in unsieged towns
+					
+				//Ensure player has permission
+				if (!TownyUniverse.getInstance().getPermissionSource().testPermission(event.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_USE_BREACH_POINTS.getNode())) {
+					event.setMessage(Translation.of("msg_err_action_disable"));
+					return; 
+				}
+
+				//Ensure player is on the town-hostile siege side				
+				Resident resident = TownyAPI.getInstance().getResident(player);
+				if(resident == null)
+					return;
+				if(!resident.hasNation())
+					return;
+				Siege siege = SiegeController.getSiege(town);
+				SiegeSide playerSiegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTownOrNull(), siege);
+				if(playerSiegeSide == SiegeSide.NOBODY)
+					return; 
+				switch(siege.getSiegeType()) {
+					case CONQUEST:
+					case SUPPRESSION:
+						if(playerSiegeSide != SiegeSide.ATTACKERS)
+							return;
+						break;
+					case REVOLT:
+					case LIBERATION:
+						if(playerSiegeSide != SiegeSide.DEFENDERS)
+							return;
+						break;
+				}
+									
+				//Ensure there are enough breach points				
+				if(siege.getWallBreachPoints() < SiegeWarSettings.getWallBreachingBlockPlacementCost()) {			
+					event.setMessage(Translation.of("msg_err_not_enough_breach_points_for_action", SiegeWarSettings.getWallBreachingBlockPlacementCost(), siege.getFormattedBreachPoints()));
+					return;
+				}			
+
+				//Ensure the height is ok
+				if(SiegeWarDistanceUtil.isBlockCloseToTownBlock(block, town.getHomeBlockOrNull(), 2)) {					
+					int heightOfBlockRelativeToSiegeBanner = block.getY() - siege.getFlagLocation().getBlockY();
+					if(heightOfBlockRelativeToSiegeBanner < SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin()) {					
+						event.setMessage(Translation.of("msg_err_cannot_place_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
+						return;
+					}
+					if(heightOfBlockRelativeToSiegeBanner > SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()) {
+						event.setMessage(Translation.of("msg_err_cannot_place_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
+						return;
+					}	
+				}
+
+				//Ensure the material is ok to place
+				if(!SiegeWarSettings.getWallBreachingPlaceBlocksWhitelist()
+					.contains(block.getType())) {
+					event.setMessage(Translation.of("msg_err_breaching_cannot_place_this_material"));
+					return;
+				}
+				
+				//IF we get here, it is a wall breach!!					
+				//Reduce breach points
+				siege.setWallBreachPoints(siege.getWallBreachPoints() - SiegeWarSettings.getWallBreachingBlockPlacementCost());
+				//Un-cancel the event
+				event.setCancelled(false);
+				return;
+			}
 
 			//Enforce Anti-Trap warfare build block if below siege banner altitude.
 			if (SiegeWarSettings.isTrapWarfareMitigationEnabled()
