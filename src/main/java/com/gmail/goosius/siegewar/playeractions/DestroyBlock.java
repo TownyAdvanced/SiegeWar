@@ -99,7 +99,7 @@ public class DestroyBlock {
 
 				//Ensure the material is ok to destroy
 				if(SiegeWarSettings.isWallBreachingDestroyEntityBlacklist()
-					&& isEntityBeingTargeted(block.getLocation())) {
+					&& isEntityBeingTargeted(event.getLocation())) {
 					event.setMessage(Translation.of("msg_err_breaching_cannot_destroy_this_material"));
 					return;
 				}
