@@ -522,3 +522,5 @@ msg_err_already_received_wall_breach_bonus: '&cYou already received your Wall-Br
 #configuration-errors
 msg_error_misconfigured_place_blocks_whitelist: '&cMisconfigured Material on Wall-Breaching-Place-Blocks-Whitelist. Problem Entry: %s'
 msg_error_misconfigured_destroy_blocks_blacklist: '&cMisconfigured Material on Wall-Breaching-Destroy-Blocks-Blacklist. Problem Entry: %s'
+#Liberation Siege Restriction
+msg_err_siege_war_cannot_start_liberation_siege_at_unallied_town: '&cYou cannot start a liberation siege unless the natural nation of the target town is your ally.'

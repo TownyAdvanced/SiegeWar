@@ -58,9 +58,13 @@ public class StartLiberationSiege {
         if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToStartSiege(SiegeType.LIBERATION)))
             throw new TownyException(Translation.of("msg_err_action_disable"));
 
-        Nation occupierNation = TownOccupationController.getTownOccupier(targetTown);
-        if (!nationOfSiegeStarter.hasEnemy(occupierNation))
+        Nation occupierNationOfTown = TownOccupationController.getTownOccupier(targetTown);
+        if (!nationOfSiegeStarter.hasEnemy(occupierNationOfTown))
             throw new TownyException(Translation.of("msg_err_siege_war_cannot_attack_occupied_town_non_enemy_nation"));
+
+        Nation naturalNationOfTown = targetTown.getNationOrNull();
+        if(!naturalNationOfTown.hasMutualAlly(nationOfSiegeStarter))
+            throw new TownyException(Translation.of("msg_err_siege_war_cannot_start_liberation_siege_at_unallied_town"));
 
         if (TownySettings.getNationRequiresProximity() > 0) {
             Coord capitalCoord = nationOfSiegeStarter.getCapital().getHomeBlock().getCoord();
@@ -75,7 +79,7 @@ public class StartLiberationSiege {
             }
         }
 
-		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.LIBERATION, targetTown, nationOfSiegeStarter, occupierNation, townOfSiegeStarter, townBlock);
+		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.LIBERATION, targetTown, nationOfSiegeStarter, occupierNationOfTown, townOfSiegeStarter, townBlock);
 
 		PreSiegeCampEvent event = new PreSiegeCampEvent(camp);
 		Bukkit.getPluginManager().callEvent(event);
