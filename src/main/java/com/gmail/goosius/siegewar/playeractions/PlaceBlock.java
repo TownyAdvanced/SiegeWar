@@ -7,6 +7,7 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
@@ -65,12 +66,14 @@ public class PlaceBlock {
 			if(event.isCancelled()) {
 				if(!SiegeWarSettings.isWallBreachingEnabled())
 					return; //Without wall breaching, SW doesn't un-cancel events
+				if(!BattleSession.getBattleSession().isActive())
+					return; //No wall breaching outside battle sessions
 				Town town = TownyAPI.getInstance().getTown(block.getLocation());
 				if(town == null)
 					return; //SW currently doesn't un-cancel wilderness events
 				if(!SiegeController.hasActiveSiege(town))
 					return; //SW doesn't un-cancel events in unsieged towns
-					
+
 				//Ensure player has permission
 				if (!TownyUniverse.getInstance().getPermissionSource().testPermission(event.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_USE_BREACH_POINTS.getNode())) {
 					event.setMessage(Translation.of("msg_err_action_disable"));

@@ -5,12 +5,11 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
+import com.gmail.goosius.siegewar.objects.BattleSession;
+import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
-import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
+import com.gmail.goosius.siegewar.utils.*;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.PreNewDayEvent;
 import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
@@ -21,13 +20,16 @@ import com.palmergames.bukkit.towny.event.time.NewHourEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Set;
+import java.util.HashSet;
 /**
  * 
  * @author LlmDl
@@ -91,56 +93,121 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeWarTimerTaskController.evaluateBeacons();
             SiegeWarTimerTaskController.evaluateBattlefieldReporters();
         }
-
     }
 
     /**
-     * Do not explode the siege banner or its supporting block
-     *
-     * If trap mitigation is active,
-     *  do not explode blocks below the siege banner altitude
-     *
-     * If the Cannons integration is active,
-     *  override any Towny protections of blocks within towns where cannon sessions are in progress.
-     *  and allow their explosion.
+     * Process block explosion events coming from Towny 
      *
      * @param event the TownyExplodingBlocksEvent event
      */
     @EventHandler(priority = EventPriority.HIGH)
     public void onBlockExploding(TownyExplodingBlocksEvent event) {
-        List<Block> finalExplodeList = new ArrayList<>();
-
-        //Do not add to final explode list: Blocks near banner or protected by trap mitigation
-        List<Block> townyExplodeList = event.getTownyFilteredBlockList();
-        if(townyExplodeList != null) {
-            for(Block block: townyExplodeList) {
-                if ((SiegeWarSettings.isTrapWarfareMitigationEnabled() && SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(block.getLocation()))
-                    ||
-                    SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(block)) {
-                    //Do not add block to final explode list
-                } else {
-                    //Add to final explode list
-                    finalExplodeList.add(block);
-                }
-            }
-        }
-
-        //Add to final explode list: town blocks if town has a cannon session in progress
-        if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginIntegrationEnabled()) {
-            List<Block> vanillaExplodeList = event.getVanillaBlockList(); //original list of exploding blocks
-            Town town;
-            for (Block block : vanillaExplodeList) {
-                if(!finalExplodeList.contains(block)) {
-                    town = TownyAPI.getInstance().getTown(block.getLocation());
-                    if (town != null && CannonsIntegration.doesTownHaveCannonSession(town)) {
-                        finalExplodeList.add(block);
-                    }
-                }
-            }
-        }
-
-        event.setBlockList(finalExplodeList);
+        List<Block> currentExplodeList = event.getTownyFilteredBlockList();
+        List<Block> filteredExplodeList = filterExplodeListByCannonEffects(currentExplodeList, event);
+        filteredExplodeList = filterExplodeListBySiegeBannerProtection(filteredExplodeList);
+        filteredExplodeList = filterExplodeListByTrapWarfareMitigation(filteredExplodeList);
+        event.setBlockList(filteredExplodeList);
     }
+
+    /**
+     * Filter a given explode list by cannon effects
+     * @param givenExplodeList given list of exploding blocks
+     * @param event the explosion event
+     *
+     * @return filtered list
+     */
+    private List<Block> filterExplodeListByCannonEffects(List<Block> givenExplodeList, TownyExplodingBlocksEvent event) {       
+        if(SiegeWar.getCannonsPluginIntegrationEnabled()
+            && BattleSession.getBattleSession().isActive()
+            && event.getEntity() != null
+            && event.getEntity() instanceof Projectile
+            && ((Projectile) event.getEntity()).getShooter() instanceof Player) {
+
+            //Prepare filtered list
+            List<Block> filteredList = new ArrayList<>(givenExplodeList);
+
+            //Prepare some cache sets, to optimize processing
+            Set<Town> cachedSafeTownSet = new HashSet<>();
+            Set<Town> cachedUnsafeTownSet = new HashSet<>();
+ 
+            //Find the blocks explosions which were removed by Towny, and see if they should be re-added.
+            Player player = (Player)(((Projectile) event.getEntity()).getShooter());
+            Town town;
+            List<Block> vanillaExplodeList = event.getVanillaBlockList(); //The pre-towny-protection list
+            for (Block block : vanillaExplodeList) {
+                if(givenExplodeList.contains(block))
+                    continue;   //Block is unprotected & will explode. No breach points needed
+                town = TownyAPI.getInstance().getTown(block.getLocation());
+                if(town == null)
+                    continue; 
+                if(cachedSafeTownSet.contains(town))
+                    continue;
+                if(cachedUnsafeTownSet.contains(town)) {
+                    filteredList.add(block);
+                    continue;
+                }                
+                Siege siege = SiegeController.getSiege(town);
+                if(siege == null || !siege.getStatus().isActive()) {
+                    cachedSafeTownSet.add(town); //No siege or inactive siege. Town is safe
+                    continue;
+                }
+                if(!SiegeWarWallBreachUtil.canPlayerUseBreachPointsByCannon(player, siege))
+                    continue;
+                cachedUnsafeTownSet.add(town);  //Player can breach at the siege. Town is unsafe
+                if(!SiegeWarWallBreachUtil.payBreachPoints(SiegeWarSettings.getWallBreachingCannonExplosionCostPerBlock(), siege))
+                    continue;   //Insufficient breach points to explode this block
+                /*
+                 * Player has now paid the required breach points.
+                 * Allow block to explode
+                 */
+                 filteredList.add(block);
+            }
+
+            //Return filtered list
+            return filteredList;
+        } else {
+            //Return given list
+            return givenExplodeList;
+        }
+    }
+
+    /**
+     * Filter a given explode list by siege banner protection
+     * @param givenExplodeList given list of exploding blocks
+     *
+     * @return filtered list
+     */
+    private List<Block> filterExplodeListBySiegeBannerProtection(List<Block> givenExplodeList) {       
+        List<Block> filteredList = new ArrayList<>(givenExplodeList);
+        for(Block block: givenExplodeList) {
+            if (SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(block)) {
+                //Remove block from final explode list
+                filteredList.remove(block);
+            } 
+        }
+        return filteredList;
+    }
+
+    /**
+     * Filter a given explode list by trap warfare mitigation
+     * @param givenExplodeList given list of exploding blocks
+     *
+     * @return filtered list
+     */
+    private List<Block> filterExplodeListByTrapWarfareMitigation(List<Block> givenExplodeList) {       
+        List<Block> filteredList = new ArrayList<>(givenExplodeList);
+        if(!SiegeWarSettings.isTrapWarfareMitigationEnabled())
+            return filteredList;
+
+        for(Block block: givenExplodeList) {
+            if (SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(block.getLocation())) {
+                //Remove block from final explode list
+                filteredList.remove(block);
+            } 
+        }
+        return filteredList;
+    }
+
 
     /**
      * If the cannons integration is active,

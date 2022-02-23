@@ -4,12 +4,15 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeType;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import org.bukkit.entity.Player;
 
@@ -151,4 +154,59 @@ public class SiegeWarWallBreachUtil {
         }
     }
 
+    /**
+     * Determine if player can use breach points by cannon
+     * 
+     * @param player player
+     * @param siege siege
+     * 
+     * @return true if the player can use breach points by cannon
+     */
+    public static boolean canPlayerUseBreachPointsByCannon(Player player, Siege siege) {
+			//Validate that player has town
+			Resident gunnerResident = TownyAPI.getInstance().getResident(player);
+            if(!gunnerResident.hasTown())
+                return false;
+
+			//Validate player perms
+			if(
+				! ( 
+                    (gunnerResident.getTownOrNull() == siege.getTown()
+					&& TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_FIRE_CANNON_IN_SIEGEZONE.getNode()))
+					|| 
+					(gunnerResident.hasNation()
+					&& TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_FIRE_CANNONS_IN_SIEGEZONE.getNode()))
+				 )
+			) {
+    			return false;
+			}
+			
+			//Validate that player is on the town-hostile side of the given siege
+            Town gunnerResidentTown = gunnerResident.getTownOrNull();
+			SiegeSide playerSiegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, gunnerResidentTown, siege);
+            switch(playerSiegeSide) {
+            case ATTACKERS:
+                return siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION; 
+            case DEFENDERS:
+               return siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.LIBERATION;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Pay the given breach point cost
+     * 
+     * @param breachPointCost the cost
+     * @param siege the siege
+     * @return true if the breach is allow, false if not (then no payment is made)
+     */
+    public static boolean payBreachPoints(int breachPointCost, Siege siege) {
+        if(breachPointCost > siege.getWallBreachPoints()) {
+            return false;
+        } else {
+            siege.setWallBreachPoints(siege.getWallBreachPoints() - breachPointCost);
+            return true;
+        }
+    }
 }

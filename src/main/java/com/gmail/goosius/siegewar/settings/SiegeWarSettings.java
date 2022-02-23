@@ -629,4 +629,15 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_HOMEBLOCK_BREACH_HEIGHT_LIMITS_MAX);
 	}
 
+	public static int getWallBreachingCannonFireCost() {
+		return 0;
+	}
+
+	public static int getWallBreachingCannonFirePointGenerationRate() {		
+		return 20;
+	}
+
+	public static int getWallBreachingCannonExplosionCostPerBlock() {
+		return 2;
+	}
 }

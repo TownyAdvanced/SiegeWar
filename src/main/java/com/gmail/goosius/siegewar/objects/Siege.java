@@ -13,13 +13,7 @@ import com.palmergames.util.TimeMgmt;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
 
 import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
 
@@ -514,5 +508,13 @@ public class Siege {
 	
 	public String getFormattedBreachPoints() {
 		return Integer.toString((int)(getWallBreachPoints()));
+	}
+
+	public Set<Player> getRecentTownFriendlyCannonFirers() {
+		return new HashSet<>();
+	}
+
+	public void addRecentTownFriendlyCannonFirer(Player gunnerPlayer) {
+		
 	}
 }

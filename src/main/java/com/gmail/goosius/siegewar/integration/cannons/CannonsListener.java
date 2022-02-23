@@ -7,6 +7,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
@@ -42,72 +43,71 @@ public class CannonsListener implements Listener {
 	/**
 	 * Process a Cannon Fire Event, where a player fires a cannon
 	 *
-	 * When a cannon is in a siegezone:
-	 * - To fire the cannon, you must have one or both of the following perms:
-	 *   - siegewar.siege.nation.firecannon (as official participant)
-	 *   - siegewar.siege.town.firecannon (as resident of besieged town)
-	 * - To fire the cannon, you must be an official siege participant.
-     * - When a defender fires a cannon, breach points are generated.
-     * - When an attacker fires a cannon, breach points are used up.
-	 *
 	 * @param event the event
 	 */
 	@EventHandler
-	public void cannonFireEvent(CannonFireEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled()
+	public void cannonFireEvent(CannonFireEvent event) {	
+		if (!event.isCancelled()
+			&& SiegeWarSettings.getWarSiegeEnabled()
 			&& SiegeWarSettings.isWallBreachingEnabled()
 			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getCannon().getLocation())) {
 
+			//Battle session must be active
 			Player gunnerPlayer = BukkitTools.getPlayer(event.getPlayer());
-			Siege siege = SiegeController.getSiegeAtLocation(event.getCannon().getLocation());
-			Resident gunnerResident = TownyAPI.getInstance().getResident(gunnerPlayer);
-			if(gunnerResident == null) {
+			if(!BattleSession.getBattleSession().isActive()) {
 				event.setCancelled(true);
+				Messaging.sendErrorMsg(gunnerPlayer, "Can't fire cannons in siegezones unless a battle session is active");
 				return;
 			}
 
-			if(gunnerResident.hasTown() 
-				&& gunnerResident.getTownOrNull() == siege.getTown()
-				&& TownyUniverse.getInstance().getPermissionSource().testPermission(gunnerPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_FIRECANNONS.getNode())) {
-				//Has permission to fire
-			} else if (gunnerResident.hasNation()
-				&& TownyUniverse.getInstance().getPermissionSource().testPermission(gunnerPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_FIRECANNONS.getNode())) {
-				//Has permission to fire
-			} else {
+			//Payer must have perms
+			Siege siege = SiegeController.getSiegeAtLocation(event.getCannon().getLocation());
+			Resident gunnerResident = TownyAPI.getInstance().getResident(gunnerPlayer);
+			if(
+				! ( 
+					(gunnerResident.hasTown() 
+					&& gunnerResident.getTownOrNull() == siege.getTown()
+					&& TownyUniverse.getInstance().getPermissionSource().testPermission(gunnerPlayer, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_FIRE_CANNON_IN_SIEGEZONE.getNode()))
+
+					|| 
+
+					(gunnerResident.hasNation()
+					&& TownyUniverse.getInstance().getPermissionSource().testPermission(gunnerPlayer, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_FIRE_CANNONS_IN_SIEGEZONE.getNode()))
+				 )
+			) {
 				event.setCancelled(true);
-				Messaging.sendErrorMsg(gunnerPlayer, Translation.of("msg_err_action_disable"));
+				Messaging.sendErrorMsg(gunnerPlayer, Translation.of("You do not have permissions to fire cannons in this siegezone."));			
+				return;
 			}
 
+			//Player must be an official siege participant
 			SiegeSide gunnerSiegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(gunnerPlayer,gunnerResident.getTownOrNull(), siege);
-			switch(gunnerSiegeSide) {
-				case NOBODY:
-					event.setCancelled(true);
-					Messaging.sendErrorMsg(gunnerPlayer, Translation.of("msg_err_action_disable"));
-				break;
-				case ATTACKERS:
-				case DEFENDERS:
-					boolean isSideHostileToTown = SiegeWarAllegianceUtil.isSideHostileToTown(gunnerSiegeSide, siege);
-				break;
-			}
-		
-		}
-	
-		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
-			Player player = null;
-			try {
-				player = Bukkit.getPlayer(event.getPlayer());
-				cannonsIntegration.processPlayerCannonInteraction(player, event.getCannon(), Translation.of("msg_err_cannot_fire_no_cannon_session"));
-			} catch (TownyException te) {
+			if (gunnerSiegeSide == SiegeSide.NOBODY) {
 				event.setCancelled(true);
-				if (player != null) {
-					Messaging.sendErrorMsg(player, te.getMessage());
+				Messaging.sendErrorMsg(gunnerPlayer, Translation.of("You do not have permissions to fire cannons in this siegezone."));
+				return;
+			} 
+			
+			//Take-away/generate Breach Points, then fire!
+			boolean isSiegeSideHostileToTown = SiegeWarAllegianceUtil.isSideHostileToTown(gunnerSiegeSide, siege);
+			if(isSiegeSideHostileToTown) {
+				int breachPointCost = SiegeWarSettings.getWallBreachingCannonFireCost();
+				if(breachPointCost > siege.getWallBreachPoints()) {
+					Messaging.sendErrorMsg(gunnerPlayer, Translation.of("Not enough breach points to fire this cannon."));
+					event.setCancelled(true);				
+					return;
 				} else {
-					SiegeWar.severe("Problem processing fire cannon event: " + te.getMessage());
+					siege.setWallBreachPoints(siege.getWallBreachPoints() - breachPointCost);
+					return;
 				}
-			} catch (Exception e) {
-				event.setCancelled(true);
-				SiegeWar.severe("Problem processing fire cannon event: " + e.getMessage());
-				e.printStackTrace();
+			} else {
+				//If the player has not already fired this tick, points are not generated
+				if(!siege.getRecentTownFriendlyCannonFirers().contains(gunnerPlayer)) {
+					int generatedBreachPoints = SiegeWarSettings.getWallBreachingCannonFirePointGenerationRate() * siege.getTown().getTownBlocks().size();	
+					siege.setWallBreachPoints(siege.getWallBreachPoints() - generatedBreachPoints);
+					siege.addRecentTownFriendlyCannonFirer(gunnerPlayer);
+				}				
+				return;
 			}
 		}
 	}
@@ -121,11 +121,10 @@ public class CannonsListener implements Listener {
 	 */
 	@EventHandler
 	public void cannonRedstoneEvent(CannonRedstoneEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled() 
+		if (SiegeWarSettings.getWarSiegeEnabled()
 			&& SiegeWarSettings.isWallBreachingEnabled()
 			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getCannon().getLocation())) {
 				event.setCancelled(true);
-			}
 		}
 	}
 }

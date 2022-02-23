@@ -76,15 +76,14 @@ public class SiegeWarAllegianceUtil {
 
     public static boolean isSideHostileToTown(SiegeSide gunnerSiegeSide, Siege siege) {
         switch (gunnerSiegeSide) {
-            case NOBODY:
-                return false;
             case ATTACKERS:
                 return siege.getSiegeType() == SiegeType.CONQUEST 
                         || siege.getSiegeType() == SiegeType.SUPPRESSION;
+            case DEFENDERS:
+                return siege.getSiegeType() == SiegeType.LIBERATION 
+                        || siege.getSiegeType() == SiegeType.REVOLT;
+            default:
+                return false;
         }
-        switch(siege.getSiegeType()) {
-            
-        }
-        
     }
 }

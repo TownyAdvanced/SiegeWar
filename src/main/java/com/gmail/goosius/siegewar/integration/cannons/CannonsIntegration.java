@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.integration.cannons;
 import at.pavlov.cannons.cannon.Cannon;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -90,17 +91,7 @@ public class CannonsIntegration {
             townWhereCannonIsLocated = (Town)cannonTowns.toArray()[0];
         }
 
-        //If a player is firing and has the start-cannon-session permission, start/refresh the cannon session.
-        if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION.getNode())) {
-            Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-            if (resident != null && resident.hasTown() && resident.getTown() == townWhereCannonIsLocated) {
-                synchronized (CANNON_SESSIONS_LOCK) {
-                    //Add/refresh cannon session object
-                    cannonSessions.put(townWhereCannonIsLocated.getUUID(), SiegeWarSettings.getMaxCannonSessionDuration());
-                    return; //event allowed
-                }
-            }
-        }
+
 
         //If the town has no cannon session, prevent the event.
         if (!doesTownHaveCannonSession(townWhereCannonIsLocated)) {
