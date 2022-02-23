@@ -133,6 +133,7 @@ public class SiegeWarTownyEventListener implements Listener {
             //Find the blocks explosions which were removed by Towny, and see if they should be re-added.
             Player player = (Player)(((Projectile) event.getEntity()).getShooter());
             Town town;
+            Siege siege;
             List<Block> vanillaExplodeList = event.getVanillaBlockList(); //The pre-towny-protection list
             for (Block block : vanillaExplodeList) {
                 if(givenExplodeList.contains(block))
@@ -146,7 +147,7 @@ public class SiegeWarTownyEventListener implements Listener {
                     filteredList.add(block);
                     continue;
                 }                
-                Siege siege = SiegeController.getSiege(town);
+                siege = SiegeController.getSiege(town);
                 if(siege == null || !siege.getStatus().isActive()) {
                     cachedSafeTownSet.add(town); //No siege or inactive siege. Town is safe
                     continue;

@@ -23,10 +23,6 @@ public class SiegeWarWallBreachUtil {
 
     /**
      * Evaluate wall breaching
-     * 
-     * For each siege:
-     * - Increase the Breach Points
-     * - Award Wall Breach bonuses
      */
     public static void evaluateWallBreaching() {
         //Return if battle session is inactive
@@ -35,19 +31,18 @@ public class SiegeWarWallBreachUtil {
 
         //Cycle all sieges
         for (Siege siege : SiegeController.getSieges()) {
-            increaseBreachPoints(siege);
-            awardWallBreachBonuses(siege);            
+            increaseBreachPointsFromBannerControl(siege);
+            awardWallBreachBonuses(siege);
+            siege.clearRecentTownFriendlycannonFirers();   
         }
     }
 
     /**
-     * Increase breach points if conditions are met.
-     * 
-     * Conditions: Town-Friendly side has banner control.
+     * Increase breach points from the town-friendly side having banner-control.
      * 
      * @param siege the siege
      */
-    private static void increaseBreachPoints(Siege siege) {
+    private static void increaseBreachPointsFromBannerControl(Siege siege) {
         if(siege.getWallBreachPoints() >= SiegeWarSettings.getWallBreachingMaxPoolSize())
             return; //Already at max
                     
@@ -163,32 +158,73 @@ public class SiegeWarWallBreachUtil {
      * @return true if the player can use breach points by cannon
      */
     public static boolean canPlayerUseBreachPointsByCannon(Player player, Siege siege) {
-			//Validate that player has town
-			Resident gunnerResident = TownyAPI.getInstance().getResident(player);
-            if(!gunnerResident.hasTown())
-                return false;
+        Resident resident = TownyAPI.getInstance().getResident(player);
+        if(!resident.hasTown())
+            return false;
+        if(!doesPlayerHaveCannonPerms(player, resident, siege))
+            return false;
+        if(!isPlayerOnTownHostileSide(player, resident, siege))
+            return false;
+        return true;			
+    }
+    
+    /**
+     * Determine if player can generate breach points by cannon
+     * 
+     * @param player player
+     * @param siege siege
+     * 
+     * @return true if the player can generate breach points by cannon
+     */
+    public static boolean canPlayerGenerateBreachPointsByCannon(Player player, Siege siege) {
+        Resident resident = TownyAPI.getInstance().getResident(player);
+        if(!resident.hasTown())
+            return false;
+        if(!doesPlayerHaveCannonPerms(player, resident, siege))
+            return false;
+        if(!isPlayerOnTownFriendlySide(player, resident, siege))
+            return false;
+        return true;			
+    }
 
-			//Validate player perms
-			if(
-				! ( 
-                    (gunnerResident.getTownOrNull() == siege.getTown()
-					&& TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_FIRE_CANNON_IN_SIEGEZONE.getNode()))
-					|| 
-					(gunnerResident.hasNation()
-					&& TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_FIRE_CANNONS_IN_SIEGEZONE.getNode()))
-				 )
-			) {
-    			return false;
-			}
-			
-			//Validate that player is on the town-hostile side of the given siege
-            Town gunnerResidentTown = gunnerResident.getTownOrNull();
-			SiegeSide playerSiegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, gunnerResidentTown, siege);
-            switch(playerSiegeSide) {
+    /**
+     * Determine if a player has perms to shoot cannons in siegezones
+     */
+    private static boolean doesPlayerHaveCannonPerms(Player player, Resident resident, Siege siege) {
+        return (resident.getTownOrNull() == siege.getTown()
+                && TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_FIRE_CANNON_IN_SIEGEZONE.getNode()))
+                ||
+                (resident.hasNation()
+                && TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_FIRE_CANNONS_IN_SIEGEZONE.getNode()));
+    }
+
+    /**
+     * Determine if a player is on the town-friendly side of a given siege
+     */
+    private static boolean isPlayerOnTownFriendlySide(Player player, Resident resident, Siege siege) {
+        Town gunnerResidentTown = resident.getTownOrNull();
+        SiegeSide playerSiegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, gunnerResidentTown, siege);
+        switch(playerSiegeSide) {
+            case DEFENDERS:
+                return siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION; 
+            case ATTACKERS:
+                return siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.LIBERATION;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Determine if a player is on the town-hostile side of a given siege
+     */
+    private static boolean isPlayerOnTownHostileSide(Player player, Resident resident, Siege siege) {
+        Town gunnerResidentTown = resident.getTownOrNull();
+        SiegeSide playerSiegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, gunnerResidentTown, siege);
+        switch(playerSiegeSide) {
             case ATTACKERS:
                 return siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION; 
             case DEFENDERS:
-               return siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.LIBERATION;
+                return siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.LIBERATION;
             default:
                 return false;
         }

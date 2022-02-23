@@ -542,7 +542,7 @@ public class SiegeWarSettings {
 	}
 	
 	public static double getWallBreachingPointGenerationRate() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_RATE);
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_RATE_FROM_BANNER_CONTROL);
 	}
 
 	public static int getWallBreachingMaxPoolSize() {
@@ -558,7 +558,7 @@ public class SiegeWarSettings {
 	}
 
 	public static int getWallBreachingBlockDestructionCost() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_COST_PER_BLOCK);
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BY_MINING_COST_PER_BLOCK);
 	}
 
 	public static Set<Material> getWallBreachingPlaceBlocksWhitelist() throws TownyException
