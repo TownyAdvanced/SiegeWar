@@ -81,7 +81,7 @@ public class CannonsIntegration {
                 && TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_FIRE_CANNON_IN_SIEGEZONE.getNode()))
                 ||
                 (resident.hasNation()
-                && TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_FIRE_CANNONS_IN_SIEGEZONE.getNode()));
+                && TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_FIRE_CANNON_IN_SIEGEZONE.getNode()));
     }
 
     /**

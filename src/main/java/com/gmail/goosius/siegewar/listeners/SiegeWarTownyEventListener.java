@@ -18,6 +18,7 @@ import com.palmergames.bukkit.towny.event.time.NewHourEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -146,8 +147,8 @@ public class SiegeWarTownyEventListener implements Listener {
     }
 
     /**
-     * During a siege, players in the town are not protected from explosion damage
-     * (a complementary effect to how PVP protection is forced off)
+     * During a siege, players in the town are not protected from explosion damage.
+     * (a related effect to how PVP protection is forced off)
      *
      * @param event the TownyExplosionDamagesEntityEvent event
      */
@@ -159,12 +160,14 @@ public class SiegeWarTownyEventListener implements Listener {
             return;
         if (!TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld()).isWarAllowed())
             return;
+        if(!(event.getEntity() instanceof Player))
+            return;
         if(event.getTown() == null)
             return;
         if(SiegeController.hasActiveSiege(event.getTown()))
             event.setCancelled(false);
     }
-
+    
     /**
      * Prevent an outlaw being teleported away if the town they are outlawed in has an active siege.
      * @param event OutlawTeleportEvent thrown by Towny.
