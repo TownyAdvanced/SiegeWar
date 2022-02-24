@@ -586,14 +586,6 @@ public class SiegeWarSettings {
 		return cachedWallBreachingDestroyEntityBlacklist;
 	}
 
-    public static boolean isWallBreachingDestroyContainerBlacklist() {
-    	if(cachedWallBreachingDestroyContainerBlacklist == null) {
-    		String configuredListLowercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toLowerCase(Locale.ROOT);
-			cachedWallBreachingDestroyContainerBlacklist = configuredListLowercase.contains("is=container"); 				
-		}
-		return cachedWallBreachingDestroyContainerBlacklist;
-	}
-	
 	public static Set<Material> getWallBreachingDestroyBlocksBlacklist() throws TownyException {
 		if(cachedWallBreachingDestroyBlocksBlacklist == null) {			
     		cachedWallBreachingDestroyBlocksBlacklist = EnumSet.noneOf(Material.class);

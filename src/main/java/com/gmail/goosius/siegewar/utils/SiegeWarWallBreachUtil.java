@@ -205,10 +205,6 @@ public class SiegeWarWallBreachUtil {
             && isEntityAtLocation(location)) {
             return false;
         }
-        if(SiegeWarSettings.isWallBreachingDestroyContainerBlacklist()
-            && block instanceof Container) {
-            return false;
-        }
         if(SiegeWarSettings.getWallBreachingDestroyBlocksBlacklist()
             .contains(block.getType())) {
             return false;
