@@ -91,6 +91,8 @@ public class DestroyBlock {
 				siege.setWallBreachPoints(siege.getWallBreachPoints() - SiegeWarSettings.getWallBreachingBlockDestructionCost());
 				//Un-cancel the event
 				event.setCancelled(false);
+				//Send message to player				
+        		event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + "Wall Breach!"));
 				return;
 			}
 

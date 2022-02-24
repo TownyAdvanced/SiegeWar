@@ -15,6 +15,9 @@ import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -99,7 +102,7 @@ public class CannonsIntegration {
             && ((Projectile) event.getEntity()).getShooter() instanceof Player) {
 
             //Prepare filtered list
-            List<Block> filteredList = new ArrayList<>(givenExplodeList);
+            List<Block> filteredExplodeList = new ArrayList<>(givenExplodeList);
 
             //Prepare some cache sets, to optimize processing
             Set<Town> cachedProtectedTowns = new HashSet<>();
@@ -112,7 +115,7 @@ public class CannonsIntegration {
             Town town;
             Siege siege;
             List<Block> vanillaExplodeList = event.getVanillaBlockList(); //The pre-towny-protection list
-            for (Block block : vanillaExplodeList) {
+            for (Block block : vanillaExplodeList) {            
                 if(givenExplodeList.contains(block))
                     continue;   //Block is unprotected & will explode. No breach points needed
                 town = TownyAPI.getInstance().getTown(block.getLocation());
@@ -120,10 +123,6 @@ public class CannonsIntegration {
                     continue; 
                 if(cachedProtectedTowns.contains(town))
                     continue;
-                if(cachedUnprotectedTowns.contains(town)) {
-                    filteredList.add(block);
-                    continue;
-                }                
                 siege = SiegeController.getSiege(town);
                 if(siege == null || !siege.getStatus().isActive()) {
                     cachedProtectedTowns.add(town); //No siege or inactive siege. Town is safe
@@ -150,17 +149,23 @@ public class CannonsIntegration {
                         continue;
                     }    
                 }
-              
+
                 /*
                  * Player has now paid the required breach points.
                  * Allow block to explode
                  */
-                 filteredList.add(block);
+                 filteredExplodeList.add(block);
             }
 
+            //Send message if a wall breach is about to occur
+            if(filteredExplodeList.size() > givenExplodeList.size())
+        		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + "Wall Breach!"));
+
             //Return filtered list
-            return filteredList;
+            return filteredExplodeList;
         } else {
+            System.out.print("ppp");
+
             //Return given list
             return givenExplodeList;
         }

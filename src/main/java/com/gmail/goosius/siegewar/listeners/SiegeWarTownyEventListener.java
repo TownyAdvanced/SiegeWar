@@ -101,8 +101,8 @@ public class SiegeWarTownyEventListener implements Listener {
             return;
         if (event.getEntity() != null && !TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld()).isWarAllowed())
             return;    
-        List<Block> currentExplodeList = event.getTownyFilteredBlockList();
-        List<Block> filteredExplodeList = CannonsIntegration.filterExplodeListByCannonEffects(currentExplodeList, event);
+        List<Block> filteredExplodeList = event.getTownyFilteredBlockList();
+        filteredExplodeList = CannonsIntegration.filterExplodeListByCannonEffects(filteredExplodeList, event);
         filteredExplodeList = filterExplodeListBySiegeBannerProtection(filteredExplodeList);
         filteredExplodeList = filterExplodeListByTrapWarfareMitigation(filteredExplodeList);
         event.setBlockList(filteredExplodeList);
@@ -132,10 +132,10 @@ public class SiegeWarTownyEventListener implements Listener {
      * @return filtered list
      */
     private static List<Block> filterExplodeListByTrapWarfareMitigation(List<Block> givenExplodeList) {       
-        List<Block> filteredList = new ArrayList<>(givenExplodeList);
         if(!SiegeWarSettings.isTrapWarfareMitigationEnabled())
-            return filteredList;
+            return givenExplodeList;
 
+        List<Block> filteredList = new ArrayList<>(givenExplodeList);
         for(Block block: givenExplodeList) {
             if (SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(block.getLocation())) {
                 //Remove block from final explode list
@@ -144,7 +144,6 @@ public class SiegeWarTownyEventListener implements Listener {
         }
         return filteredList;
     }
-
 
     /**
      * During a siege, players in the town are not protected from explosion damage
