@@ -510,7 +510,7 @@ public class Siege {
 	public void increaseWallBreachPointsToCap(double wallBreachPointsIncrease) {
 		setWallBreachPoints(            
 			Math.min(
-				wallBreachPointsIncrease,
+				wallBreachPoints + wallBreachPointsIncrease,
 				SiegeWarSettings.getWallBreachingMaxPoolSize()));	
 	}
 
