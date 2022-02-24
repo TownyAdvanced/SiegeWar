@@ -429,14 +429,6 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_DEATH_SPAWN_FIREWORK);
 	}
 
-	public static boolean isCannonsIntegrationEnabled() {
-		return Settings.getBoolean(ConfigNodes.CANNONS_INTEGRATION_ENABLED);
-	}
-
-	public static int getMaxCannonSessionDuration() {
-		return Settings.getInt(ConfigNodes.CANNONS_INTEGRATION_MAX_CANNON_SESSION_DURATION);
-	}
-
 	public static boolean getBeaconsEnabled() {
 		return Settings.getBoolean(ConfigNodes.BEACON_MARKERS_ENABLED);
 	}
@@ -542,7 +534,7 @@ public class SiegeWarSettings {
 	}
 	
 	public static double getWallBreachingPointGenerationRate() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_RATE_FROM_BANNER_CONTROL);
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_RATE);
 	}
 
 	public static int getWallBreachingMaxPoolSize() {
@@ -558,7 +550,7 @@ public class SiegeWarSettings {
 	}
 
 	public static int getWallBreachingBlockDestructionCost() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BY_MINING_COST_PER_BLOCK);
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_COST_PER_BLOCK);
 	}
 
 	public static Set<Material> getWallBreachingPlaceBlocksWhitelist() throws TownyException
@@ -629,15 +621,15 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_HOMEBLOCK_BREACH_HEIGHT_LIMITS_MAX);
 	}
 
-	public static int getWallBreachingCannonFireCost() {
-		return 0;
+	public static boolean isWallBreachingCannonsIntegrationEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_ENABLED);
 	}
 
-	public static int getWallBreachingCannonFirePointGenerationRate() {		
-		return 20;
+	public static double getWallBreachingCannonFirePointGenerationRate() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_BREACH_POINT_GENERATION_RATE_FROM_CANNON_FIRE);
 	}
 
 	public static int getWallBreachingCannonExplosionCostPerBlock() {
-		return 2;
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_EXPLODING_BLOCKS_COST_PER_BLOCK);
 	}
 }

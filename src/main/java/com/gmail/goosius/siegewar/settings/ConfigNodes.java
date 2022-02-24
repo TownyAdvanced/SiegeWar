@@ -603,8 +603,8 @@ public enum ConfigNodes {
 			"# |               Breach Point Generation                | #",
 			"# +------------------------------------------------------+ #",
 			""),
-	WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_RATE_FROM_BANNER_CONTROL(
-			"war.siege.wall_breaching.breach_point_generation.rate_from_banner_control",
+	WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_RATE(
+			"war.siege.wall_breaching.breach_point_generation.rate",
 			"0.01",
 			"",
 			"# This value determines the generation rate of Breach Points from Banner Control.",
@@ -615,17 +615,6 @@ public enum ConfigNodes {
 			"# ---",
 			"# TIP: Set this value high enough to allow for fun wall breaching,",
 			"# but low enough to prevent excessive griefing of besieged towns."),
-	WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_RATE_FROM_CANNON_FIRE(
-			"war.siege.wall_breaching.breach_point_generation.rate_from_cannon_fire",
-			"0.07",
-			"",
-			"# This setting only applies if the Cannons plugin is deployed",
-			"# This value determines the generation rate of Breach Points from a single cannon firing.",
-			"# ---", 
-			"# Actual Breach Points = This-Rate x Num-Townblocks.",
-			"# ---",
-			"# TIP: Set this value high enough to allow for fun wall breaching,",
-			"# but low enough to prevent excessive griefing of besieged towns."),	
 	WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_MAX_POOL_SIZE(
 			"war.siege.wall_breaching.breach_point_generation.max_pool_size",
 			"40",
@@ -662,17 +651,11 @@ public enum ConfigNodes {
 			"# |                  Destroying Blocks                    | #",
 			"# +------------------------------------------------------+ #",
 			""),
-	WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BY_MINING_COST_PER_BLOCK(
-			"war.siege.wall_breaching.destroying_blocks.by_mining_cost_per_block",
+	WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_COST_PER_BLOCK(
+			"war.siege.wall_breaching.destroying_blocks.cost_per_block",
 			"12",
 			"",
 			"# This value determines the cost, in Breach Points, to destroy a block via mining in the besieged town."),			
-	WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BY_CANNON_COST_PER_BLOCK(
-			"war.siege.wall_breaching.destroying_blocks.by_cannon.cost_per_block",
-			"2",
-			"",
-			"# This setting only applies if the Cannons plugin is deployed",
-			"# This value determines the cost, in Breach Points, to destroy a block via cannon fire into the besieged town."),			
 	WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST(
 			"war.siege.wall_breaching.destroying_blocks.blacklist",
 			"is=entity, is=container, BEACON",
@@ -702,6 +685,38 @@ public enum ConfigNodes {
 			"# This setting  applies when the block change location is the homeblock, or an adjacent townblock.",
 			"# The value is the maximum allowed height at which blocks can be placed/broken via breaching.",
 			"# TIP: This feature prevents people building sky-ramps straight into the homeblock."),
+			
+			
+	WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION(
+			"war.siege.wall_breaching.cannons_integration",
+			"",
+			"",
+			"",
+			"# +------------------------------------------------------+ #",
+			"# |                  Cannons Integration                 | #",
+			"# +------------------------------------------------------+ #",
+			""),
+	WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_ENABLED(
+			"war.siege.wall_breaching.cannons_integration.enabled",
+			"true",
+			"",
+			"# If this value is true, all of the configs in this section apply.",
+			"# If this value is false, none of the configs in this section apply."),
+	WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_BREACH_POINT_GENERATION_RATE_FROM_CANNON_FIRE(
+			"war.siege.wall_breaching.cannons_integration.breach_point_generation_rate_from_cannon_fire",
+			"0.07",
+			"",
+			"# This value determines the generation rate of Breach Points from a single cannon firing.",
+			"# ---", 
+			"# Actual Breach Points = This-Rate x Num-Townblocks.",
+			"# ---",
+			"# TIP: Set this value high enough to allow for fun wall breaching,",
+			"# but low enough to prevent excessive griefing of besieged towns."),			
+	WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_EXPLODING_BLOCKS_COST_PER_BLOCK(
+			"war.siege.wall_breaching.cannons_integration.exploding_blocks_cost_per_block",
+			"2",
+			"",
+			"# This value determines the cost, in Breach Points, to destroy a block via cannon fire explosion in the besieged town."),			
 	SIEGE_MATERIAL_RESTRICTIONS(
 			"siege_material_restrictions",
 			"",
@@ -952,34 +967,6 @@ public enum ConfigNodes {
 			"# This is how many seconds a player has to leave the siege zone before he gets war sickness",
 			"# If this is set to 0, no warn will be given and non-participants will receive war sickness instantly, if enabled"
 	),
-	CANNONS_INTEGRATION(
-			"cannons_integration",
-			"",
-			"",
-			"",
-			"############################################################",
-			"# +------------------------------------------------------+ #",
-			"# |                 Cannons Integration                  | #",
-			"# +------------------------------------------------------+ #",
-			"############################################################",
-			""),
-	CANNONS_INTEGRATION_ENABLED (
-			"cannons_integration.enabled",
-			"false",
-			"",
-			"# If this value is true, then the integration with the Cannons plugin is enabled.",
-			"# The integration works as follows:",
-			"#  - Town cannons cannot be fired unless there is a 'cannon session' in effect.",
-			"#  - A cannon session starts/refreshes when a town resident with the 'siegewar.town.siege.startcannonsession' fires a town cannon.",
-			"#  - While a cannon session is in effect, town cannons can be fired, and town explosion perm protections are forced off.",
-			"#  - The cannon session usually lasts just a few minutes (don't make it too long or the defender will often be too scared to fire).",
-			"#  - The max duration is configured below.",
-			"# "),
-	CANNONS_INTEGRATION_MAX_CANNON_SESSION_DURATION(
-			"cannons_integration.max_cannon_session_duration",
-			"9",
-			"# This value determines the max duration of each cannon session,",
-			"# The duration is 'in short ticks', typically a short tick is 20 seconds."),
 	BEACON_MARKERS(
 			"beacon_markers",
 			"",

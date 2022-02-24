@@ -1,9 +1,7 @@
 package com.gmail.goosius.siegewar.tasks;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
-import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.playeractions.AbandonAttack;
@@ -106,12 +104,6 @@ public class SiegeWarTimerTaskController {
 	public static void punishNonSiegeParticipantsInSiegeZones() {
 		if (SiegeWarSettings.getPunishingNonSiegeParticipantsInSiegeZone()) {
 			SiegeWarSicknessUtil.punishNonSiegeParticipantsInSiegeZone();
-		}
-	}
-
-	public static void evaluateCannonSessions() {
-		if(SiegeWar.getCannonsPluginIntegrationEnabled() && SiegeWarSettings.isCannonsIntegrationEnabled()) {
-			CannonsIntegration.evaluateCannonSessions();
 		}
 	}
 

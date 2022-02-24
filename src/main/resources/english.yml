@@ -180,11 +180,6 @@ msg_err_siege_war_no_soldiers_to_pay: "There were no soldiers to pay."
 msg_err_siege_war_not_enough_nation_funds_to_pay: "The nation does not have enough funds to pay that amount."
 msg_siege_war_soldiers_paid: "The soldiers of the nation were paid a total of %s, which was distributed according to rank."
 
-#Added in 0.10
-msg_err_cannot_fire_no_cannon_session: "You cannot fire any cannons in this town until a ranked town member starts a cannon session."
-msg_err_cannon_in_two_towns: "&cYour cannon blocks are split between two towns. Please ensure your cannon is in just one town."
-msg_err_cannot_toggle_explosions_due_to_cannon_session: "&cYou cannot toggle explosions in the town until the current cannon session ends."
-
 #Added in 0.11
 msg_err_invalid_bool: "&cInvalid option. Options: on/off"
 msg_beacon_preference_set: "&bBeacon preference set to %s."
