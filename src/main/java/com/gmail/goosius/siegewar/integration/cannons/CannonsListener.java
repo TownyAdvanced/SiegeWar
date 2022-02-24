@@ -41,13 +41,17 @@ public class CannonsListener implements Listener {
 			&& SiegeWarSettings.getWarSiegeEnabled()
 			&& TownyAPI.getInstance().getTownyWorld(event.getCannon().getLocation().getWorld()).isWarAllowed()
 			&& SiegeWarSettings.isWallBreachingEnabled()
-			&& SiegeWarSettings.isWallBreachingCannonsIntegrationEnabled()
-			&& BattleSession.getBattleSession().isActive()
+			&& SiegeWarSettings.isWallBreachingCannonsIntegrationEnabled() 
 			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getCannon().getLocation())) {
 
 			Player gunnerPlayer = BukkitTools.getPlayer(event.getPlayer());
-			Siege siege = SiegeController.getSiegeAtLocation(event.getCannon().getLocation());
+			if(!BattleSession.getBattleSession().isActive()) {
+				Messaging.sendErrorMsg(gunnerPlayer, "You cannot fire cannons in siegezones unless there is a Battle Session in progress");
+				event.setCancelled(true);
+				return;  //Cannon fire was cancelled	
+			}
 
+			Siege siege = SiegeController.getSiegeAtLocation(event.getCannon().getLocation());
 			if(CannonsIntegration.canPlayerUseBreachPointsByCannon(gunnerPlayer, siege)) {
 				return; //Player can fire cannon
 			
@@ -60,8 +64,8 @@ public class CannonsListener implements Listener {
 				}
 				return;	//Player can fire cannon
 			} else {
+				Messaging.sendErrorMsg(gunnerPlayer, "You cannot fire this cannon. Check that you are an official participant in the local siege, and that you have a rank which allows cannon-firing.");
 				event.setCancelled(true);
-				Messaging.sendErrorMsg(gunnerPlayer, "You cannot fire this cannon. Check that you have rank which allows cannon-firing, and that you are an official participant in the local siege.");
 				return;  //Cannon fire was cancelled
 			}
 		}
