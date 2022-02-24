@@ -8,6 +8,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.util.BukkitTools;
@@ -46,7 +47,7 @@ public class CannonsListener implements Listener {
 
 			Player gunnerPlayer = BukkitTools.getPlayer(event.getPlayer());
 			if(!BattleSession.getBattleSession().isActive()) {
-				Messaging.sendErrorMsg(gunnerPlayer, "You cannot fire cannons in siegezones unless there is a Battle Session in progress");
+				Messaging.sendErrorMsg(gunnerPlayer, Translation.of("msg_err_cannot_fire_cannon_without_battle_session"));
 				event.setCancelled(true);
 				return;  //Cannon fire was cancelled	
 			}
@@ -64,7 +65,7 @@ public class CannonsListener implements Listener {
 				}
 				return;	//Player can fire cannon
 			} else {
-				Messaging.sendErrorMsg(gunnerPlayer, "You cannot fire this cannon. Check that you are an official participant in the local siege, and that you have a rank which allows cannon-firing.");
+				Messaging.sendErrorMsg(gunnerPlayer, Translation.of("msg_err_cannot_fire_cannon_without_perms"));
 				event.setCancelled(true);
 				return;  //Cannon fire was cancelled
 			}

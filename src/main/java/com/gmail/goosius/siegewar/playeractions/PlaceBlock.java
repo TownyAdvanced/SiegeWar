@@ -63,20 +63,21 @@ public class PlaceBlock {
 			if(event.isCancelled()) {
 				if(!SiegeWarSettings.isWallBreachingEnabled())
 					return; //Without wall breaching, SW doesn't un-cancel events
-				if(!BattleSession.getBattleSession().isActive())
-					return; //No wall breaching outside battle sessions
 				Town town = TownyAPI.getInstance().getTown(block.getLocation());
 				if(town == null)
 					return; //SW currently doesn't un-cancel wilderness events
 				if(!SiegeController.hasActiveSiege(town))
 					return; //SW doesn't un-cancel events in unsieged towns
-
 				//Ensure player has permission
 				if (!TownyUniverse.getInstance().getPermissionSource().testPermission(event.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_USE_BREACH_POINTS.getNode())) {
 					event.setMessage(Translation.of("msg_err_action_disable"));
 					return; 
 				}
-
+				//No wall breaching outside battle sessions
+				if(!BattleSession.getBattleSession().isActive()) {
+					event.setMessage(Translation.of("msg_err_cannot_breach_without_battle_session"));
+					return;
+				}
 				//Ensure player is on the town-hostile siege side				
 				Resident resident = TownyAPI.getInstance().getResident(event.getPlayer());
 				if(resident == null)
@@ -84,33 +85,29 @@ public class PlaceBlock {
 				Siege siege = SiegeController.getSiege(town);
 				if(!SiegeWarAllegianceUtil.isPlayerOnTownHostileSide(event.getPlayer(), resident, siege))
 					return;
-
 				//Ensure there are enough breach points				
 				if(siege.getWallBreachPoints() < SiegeWarSettings.getWallBreachingBlockPlacementCost()) {			
 					event.setMessage(Translation.of("msg_err_not_enough_breach_points_for_action", SiegeWarSettings.getWallBreachingBlockPlacementCost(), siege.getFormattedBreachPoints()));
 					return;
 				}			
-
 				//Ensure height is ok
 				if(!SiegeWarWallBreachUtil.validateBreachHeight(block, town, siege)) {
-					event.setMessage(Translation.of("msg_err_cannot_place_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
+					event.setMessage(Translation.of("msg_err_cannot_breach_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
 					return;
 				}
-
 				//Ensure the material is ok to place
 				if(!SiegeWarSettings.getWallBreachingPlaceBlocksWhitelist()
 					.contains(block.getType())) {
 					event.setMessage(Translation.of("msg_err_breaching_cannot_place_this_material"));
 					return;
 				}
-				
 				//IF we get here, it is a wall breach!!					
 				//Reduce breach points
 				siege.setWallBreachPoints(siege.getWallBreachPoints() - SiegeWarSettings.getWallBreachingBlockPlacementCost());
 				//Un-cancel the event
 				event.setCancelled(false);
 				//Send message to player				
-        		event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + "Wall Breach!"));
+        		event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED +  Translation.of("msg_wall_breach_successful")));
 				return;
 			}
 

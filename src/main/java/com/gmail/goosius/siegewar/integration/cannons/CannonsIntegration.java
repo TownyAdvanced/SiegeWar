@@ -159,13 +159,11 @@ public class CannonsIntegration {
 
             //Send message if a wall breach is about to occur
             if(filteredExplodeList.size() > givenExplodeList.size())
-        		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + "Wall Breach!"));
+        		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + Translation.of("msg_wall_breach_successful")));
 
             //Return filtered list
             return filteredExplodeList;
         } else {
-            System.out.print("ppp");
-
             //Return given list
             return givenExplodeList;
         }
