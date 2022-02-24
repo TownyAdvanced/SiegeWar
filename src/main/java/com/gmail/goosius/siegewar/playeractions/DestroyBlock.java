@@ -48,7 +48,7 @@ public class DestroyBlock {
 					return; //No wall breaching outside battle sessions
 				Town town = TownyAPI.getInstance().getTown(block.getLocation());
 				if(town == null)
-					return; //SW currently doesn't un-cancel wilderness events
+					return; //SW doesn't un-cancel wilderness events
 				if(!SiegeController.hasActiveSiege(town))
 					return; //SW doesn't un-cancel events in unsieged towns				
 
@@ -62,24 +62,9 @@ public class DestroyBlock {
 				Resident resident = TownyAPI.getInstance().getResident(event.getPlayer());
 				if(resident == null)
 					return;
-				if(!resident.hasNation())
-					return;
 				Siege siege = SiegeController.getSiege(town);
-				SiegeSide playerSiegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(event.getPlayer(), resident.getTownOrNull(), siege);
-				if(playerSiegeSide == SiegeSide.NOBODY)
-					return; 
-				switch(siege.getSiegeType()) {
-					case CONQUEST:
-					case SUPPRESSION:
-						if(playerSiegeSide != SiegeSide.ATTACKERS)
-							return;
-						break;
-					case REVOLT:
-					case LIBERATION:
-						if(playerSiegeSide != SiegeSide.DEFENDERS)
-							return;
-						break;
-				}
+				if(!SiegeWarAllegianceUtil.isPlayerOnTownHostileSide(event.getPlayer(), resident, siege))
+					return;
 
 				//Ensure there are enough breach points				
 				if(siege.getWallBreachPoints() < SiegeWarSettings.getWallBreachingBlockDestructionCost()) {			

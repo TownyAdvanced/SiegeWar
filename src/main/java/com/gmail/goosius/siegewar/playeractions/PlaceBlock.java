@@ -81,28 +81,13 @@ public class PlaceBlock {
 				}
 
 				//Ensure player is on the town-hostile siege side				
-				Resident resident = TownyAPI.getInstance().getResident(player);
+				Resident resident = TownyAPI.getInstance().getResident(event.getPlayer());
 				if(resident == null)
 					return;
-				if(!resident.hasNation())
-					return;
 				Siege siege = SiegeController.getSiege(town);
-				SiegeSide playerSiegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTownOrNull(), siege);
-				if(playerSiegeSide == SiegeSide.NOBODY)
-					return; 
-				switch(siege.getSiegeType()) {
-					case CONQUEST:
-					case SUPPRESSION:
-						if(playerSiegeSide != SiegeSide.ATTACKERS)
-							return;
-						break;
-					case REVOLT:
-					case LIBERATION:
-						if(playerSiegeSide != SiegeSide.DEFENDERS)
-							return;
-						break;
-				}
-									
+				if(!SiegeWarAllegianceUtil.isPlayerOnTownHostileSide(event.getPlayer(), resident, siege))
+					return;
+				
 				//Ensure there are enough breach points				
 				if(siege.getWallBreachPoints() < SiegeWarSettings.getWallBreachingBlockPlacementCost()) {			
 					event.setMessage(Translation.of("msg_err_not_enough_breach_points_for_action", SiegeWarSettings.getWallBreachingBlockPlacementCost(), siege.getFormattedBreachPoints()));
