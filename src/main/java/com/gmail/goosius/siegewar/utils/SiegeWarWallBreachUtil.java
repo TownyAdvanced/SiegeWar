@@ -72,10 +72,8 @@ public class SiegeWarWallBreachUtil {
         * siege.getBannerControllingResidents().size()
         * siege.getTown().getTownBlocks().size();
 
-        siege.setWallBreachPoints(            
-            Math.min(
-                SiegeWarSettings.getWallBreachingMaxPoolSize(), 
-                siege.getWallBreachPoints() + wallBreachPointsIncrease));
+        //Increase wall breach points
+        siege.increaseWallBreachPointsToCap(wallBreachPointsIncrease);
     }
 
     /**
