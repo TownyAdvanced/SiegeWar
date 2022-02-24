@@ -1,12 +1,14 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.entity.Player;
 
@@ -73,4 +75,48 @@ public class SiegeWarAllegianceUtil {
         }
     }
 
+    public static boolean isSideHostileToTown(SiegeSide gunnerSiegeSide, Siege siege) {
+        switch (gunnerSiegeSide) {
+            case ATTACKERS:
+                return siege.getSiegeType() == SiegeType.CONQUEST 
+                        || siege.getSiegeType() == SiegeType.SUPPRESSION;
+            case DEFENDERS:
+                return siege.getSiegeType() == SiegeType.LIBERATION 
+                        || siege.getSiegeType() == SiegeType.REVOLT;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Determine if a player is on the town-friendly side of a given siege
+     */
+    public static boolean isPlayerOnTownFriendlySide(Player player, Resident resident, Siege siege) {
+        Town gunnerResidentTown = resident.getTownOrNull();
+        SiegeSide playerSiegeSide = calculateCandidateSiegePlayerSide(player, gunnerResidentTown, siege);
+        switch(playerSiegeSide) {
+            case DEFENDERS:
+                return siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION; 
+            case ATTACKERS:
+                return siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.LIBERATION;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Determine if a player is on the town-hostile side of a given siege
+     */
+    public static boolean isPlayerOnTownHostileSide(Player player, Resident resident, Siege siege) {
+        Town gunnerResidentTown = resident.getTownOrNull();
+        SiegeSide playerSiegeSide = calculateCandidateSiegePlayerSide(player, gunnerResidentTown, siege);
+        switch(playerSiegeSide) {
+            case ATTACKERS:
+                return siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION; 
+            case DEFENDERS:
+                return siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.LIBERATION;
+            default:
+                return false;
+        }
+    }
 }

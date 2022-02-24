@@ -1,32 +1,34 @@
 package com.gmail.goosius.siegewar.integration.cannons;
 
-import at.pavlov.cannons.cannon.Cannon;
+import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.objects.BattleSession;
+import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
-import org.bukkit.Location;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 public class CannonsIntegration {
-
-    //List of all cannon sessions in the universe <Town UUID, Remaining duration in short ticks>
-    private static final Map<UUID, Integer> cannonSessions = new HashMap<>();
-
-    //Synchronize this variable whenever you modify the above map
-    private static final Integer CANNON_SESSIONS_LOCK = 1;
 
     public CannonsIntegration(SiegeWar plugin) {
         plugin.getServer().getPluginManager().registerEvents(new CannonsListener(this), plugin);
@@ -34,90 +36,140 @@ public class CannonsIntegration {
     }
 
     /**
-     * Check if the given town has a cannon session
-     *
-     * Thread safe
-     *
-     * @param town the town to check
-     * @return true if the given town has a cannon session
+     * Determine if player can use breach points by cannon
+     * 
+     * @param player player
+     * @param siege siege
+     * 
+     * @return true if the player can use breach points by cannon
      */
-    public static boolean doesTownHaveCannonSession(Town town) {
-        return (new HashMap<>(cannonSessions)).containsKey(town.getUUID());
+    public static boolean canPlayerUseBreachPointsByCannon(Player player, Siege siege) {
+        Resident resident = TownyAPI.getInstance().getResident(player);
+        if(!resident.hasTown())
+            return false;
+        if(!doesPlayerHaveCannonPerms(player, resident, siege))
+            return false;
+        if(!SiegeWarAllegianceUtil.isPlayerOnTownHostileSide(player, resident, siege))
+            return false;
+        return true;			
     }
-
-    public static void evaluateCannonSessions() {
-        synchronized (CANNON_SESSIONS_LOCK) {
-            for(Map.Entry<UUID, Integer> townTicks: (new HashMap<>(cannonSessions)).entrySet()) {
-                if(townTicks.getValue() > 0) {
-                    //Decrement remaining duration
-                    cannonSessions.put(townTicks.getKey(), townTicks.getValue()-1);
-                } else {
-                    //Remove cannon session
-                    cannonSessions.remove(townTicks.getKey());
-                }
-            }
-        }
+    
+    /**
+     * Determine if player can generate breach points by cannon
+     * 
+     * @param player player
+     * @param siege siege
+     * 
+     * @return true if the player can generate breach points by cannon
+     */
+    public static boolean canPlayerGenerateBreachPointsByCannon(Player player, Siege siege) {
+        Resident resident = TownyAPI.getInstance().getResident(player);
+        if(!resident.hasTown())
+            return false;
+        if(!doesPlayerHaveCannonPerms(player, resident, siege))
+            return false;
+        if(!SiegeWarAllegianceUtil.isPlayerOnTownFriendlySide(player, resident, siege))
+            return false;
+        return true;			
     }
 
     /**
-     * The method determines if a town cannon can be fired.
-     *
-     * - If the cannon is in the wilderness, it can be fired
-     *
-     * - If a player is firing from their town,
-     *   and has the siegewar.siege.town.start.cannon.session permission,
-     *   then a cannon session starts/refreshes, and the event is allowed
-     *
-     * - If neither of the above applies, then we look for a cannon session.
-     *   If active, the event is allowed, otherwise it is prevented.
-     *
-     * @param player the player interacting with the cannon
-     * @param cannon the cannon
-     * @throws TownyException if the cannon use is blocked
+     * Determine if a player has perms to shoot cannons in siegezones
      */
-    public void processPlayerCannonInteraction(Player player, Cannon cannon, String permissionErrorString) throws TownyException {
-        if (player == null)
-            return;
+    private static boolean doesPlayerHaveCannonPerms(Player player, Resident resident, Siege siege) {
+        return (resident.getTownOrNull() == siege.getTown()
+                && TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_FIRE_CANNON_IN_SIEGEZONE.getNode()))
+                ||
+                (resident.hasNation()
+                && TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_FIRE_CANNON_IN_SIEGEZONE.getNode()));
+    }
 
-        //Find the town where the cannon is located
-        Town townWhereCannonIsLocated;
-        Set<Town> cannonTowns = getTownsWhereCannonIsLocated(cannon);
-        if(cannonTowns.size() == 0) {
-            return; //Cannon not in a town
-        } else if (cannonTowns.size() > 1) {
-            throw new TownyException(Translation.of("msg_err_cannon_in_two_towns"));
-        } else {
-            townWhereCannonIsLocated = (Town)cannonTowns.toArray()[0];
-        }
+    /**
+     * Filter a given explode list by cannon effects
+     * @param givenExplodeList given list of exploding blocks
+     * @param event the explosion event
+     *
+     * @return filtered list
+     * @throws TownyException if something is misconfigured
+     */
+    public static List<Block> filterExplodeListByCannonEffects(List<Block> givenExplodeList, TownyExplodingBlocksEvent event) throws TownyException {       
+        if(SiegeWar.isCannonsPluginInstalled()
+            && SiegeWarSettings.isWallBreachingEnabled()
+            && SiegeWarSettings.isWallBreachingCannonsIntegrationEnabled()        
+            && BattleSession.getBattleSession().isActive()
+            && event.getEntity() != null
+            && event.getEntity() instanceof Projectile
+            && ((Projectile) event.getEntity()).getShooter() instanceof Player) {
 
-        //If a player is firing and has the start-cannon-session permission, start/refresh the cannon session.
-        if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_START_CANNON_SESSION.getNode())) {
-            Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-            if (resident != null && resident.hasTown() && resident.getTown() == townWhereCannonIsLocated) {
-                synchronized (CANNON_SESSIONS_LOCK) {
-                    //Add/refresh cannon session object
-                    cannonSessions.put(townWhereCannonIsLocated.getUUID(), SiegeWarSettings.getMaxCannonSessionDuration());
-                    return; //event allowed
+            //Prepare filtered list
+            List<Block> filteredExplodeList = new ArrayList<>(givenExplodeList);
+
+            //Prepare some cache sets, to optimize processing
+            Set<Town> cachedProtectedTowns = new HashSet<>();
+            Set<Town> cachedUnprotectedTowns = new HashSet<>();
+            Set<Material> cachedProtectedMaterials = new HashSet<>();
+            Set<Material> cachedUnprotectedMaterials = new HashSet<>();
+             
+            //Find the blocks explosions which were removed by Towny, and see if they should be re-added.
+            Player player = (Player)(((Projectile) event.getEntity()).getShooter());
+            Town town;
+            Siege siege;
+            List<Block> vanillaExplodeList = event.getVanillaBlockList(); //The pre-towny-protection list
+            for (Block block : vanillaExplodeList) {            
+                if(givenExplodeList.contains(block))
+                    continue;   //Block is unprotected & will explode. No breach points needed
+                town = TownyAPI.getInstance().getTown(block.getLocation());
+                if(town == null)
+                    continue; 
+                if(cachedProtectedTowns.contains(town))
+                    continue;
+                siege = SiegeController.getSiege(town);
+                if(siege == null || !siege.getStatus().isActive()) {
+                    cachedProtectedTowns.add(town); //No siege or inactive siege. Town is safe
+                    continue;
                 }
-            }
-        }
+                if(!canPlayerUseBreachPointsByCannon(player, siege))
+                    continue;
+                cachedUnprotectedTowns.add(town);  //Player can breach at the siege. Town is unsafe
+                if(!SiegeWarWallBreachUtil.payBreachPoints(SiegeWarSettings.getWallBreachingCannonExplosionCostPerBlock(), siege))
+                    continue;   //Insufficient breach points to explode this block
+				//Ensure height is ok
+                if(!SiegeWarWallBreachUtil.validateBreachHeight(block, town, siege))
+                    continue;
+                //Ensure material is ok
+                if(cachedProtectedMaterials.contains(block.getType())) {
+                //In cache, protected
+                    continue; 
+                } else if(!cachedUnprotectedMaterials.contains(block.getType())) {
+                    //Not in cache
+                    if(SiegeWarWallBreachUtil.validateDestroyMaterial(block, block.getLocation())) {
+                        cachedUnprotectedMaterials.add(block.getType());
+                    } else {
+                        cachedProtectedMaterials.add(block.getType());
+                        continue;
+                    }    
+                }
 
-        //If the town has no cannon session, prevent the event.
-        if (!doesTownHaveCannonSession(townWhereCannonIsLocated)) {
-            throw new TownyException(permissionErrorString);
+                /*
+                 * Player has now paid the required breach points.
+                 * Allow block to explode
+                 */
+                 filteredExplodeList.add(block);
+            }
+
+            //Send message if a wall breach is about to occur
+            if(filteredExplodeList.size() > givenExplodeList.size())
+        		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + Translation.of("msg_wall_breach_successful")));
+
+            //Return filtered list
+            return filteredExplodeList;
+        } else {
+            //Return given list
+            return givenExplodeList;
         }
     }
 
-    public Set<Town> getTownsWhereCannonIsLocated(Cannon cannon) {
-        Set<Town> townsWhereCannonIsLocated = new HashSet<>();
-        List<Location> locationOfCannonBlocks = cannon.getCannonDesign().getAllCannonBlocks(cannon);
-        Town possibleTown;
-        for (Location locationOfCannonBlock : locationOfCannonBlocks) {
-            possibleTown = TownyAPI.getInstance().getTown(locationOfCannonBlock);
-            if (possibleTown != null) {
-                townsWhereCannonIsLocated.add(possibleTown);
-            }
-        }
-        return townsWhereCannonIsLocated;
+    public static void clearRecentTownFriendlycannonFirers(Siege siege) {
+        siege.clearRecentTownFriendlycannonFirers();
     }
 }

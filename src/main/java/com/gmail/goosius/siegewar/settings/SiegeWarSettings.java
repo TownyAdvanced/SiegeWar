@@ -429,14 +429,6 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_DEATH_SPAWN_FIREWORK);
 	}
 
-	public static boolean isCannonsIntegrationEnabled() {
-		return Settings.getBoolean(ConfigNodes.CANNONS_INTEGRATION_ENABLED);
-	}
-
-	public static int getMaxCannonSessionDuration() {
-		return Settings.getInt(ConfigNodes.CANNONS_INTEGRATION_MAX_CANNON_SESSION_DURATION);
-	}
-
 	public static boolean getBeaconsEnabled() {
 		return Settings.getBoolean(ConfigNodes.BEACON_MARKERS_ENABLED);
 	}
@@ -594,14 +586,6 @@ public class SiegeWarSettings {
 		return cachedWallBreachingDestroyEntityBlacklist;
 	}
 
-    public static boolean isWallBreachingDestroyContainerBlacklist() {
-    	if(cachedWallBreachingDestroyContainerBlacklist == null) {
-    		String configuredListLowercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toLowerCase(Locale.ROOT);
-			cachedWallBreachingDestroyContainerBlacklist = configuredListLowercase.contains("is=container"); 				
-		}
-		return cachedWallBreachingDestroyContainerBlacklist;
-	}
-	
 	public static Set<Material> getWallBreachingDestroyBlocksBlacklist() throws TownyException {
 		if(cachedWallBreachingDestroyBlocksBlacklist == null) {			
     		cachedWallBreachingDestroyBlocksBlacklist = EnumSet.noneOf(Material.class);
@@ -629,4 +613,15 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_HOMEBLOCK_BREACH_HEIGHT_LIMITS_MAX);
 	}
 
+	public static boolean isWallBreachingCannonsIntegrationEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_ENABLED);
+	}
+
+	public static double getWallBreachingCannonFirePointGenerationRate() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_BREACH_POINT_GENERATION_RATE_FROM_CANNON_FIRE);
+	}
+
+	public static int getWallBreachingCannonExplosionCostPerBlock() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_EXPLODING_BLOCKS_COST_PER_BLOCK);
+	}
 }

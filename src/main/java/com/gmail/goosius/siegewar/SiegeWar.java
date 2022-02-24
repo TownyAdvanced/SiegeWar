@@ -112,15 +112,10 @@ public class SiegeWar extends JavaPlugin {
 		} else if (!SiegeWarSettings.getWarSiegeEnabled()) {
 			info("SiegeWar is disabled in config. Plugin integrations disabled.");
 		} else {
-			if (SiegeWarSettings.isCannonsIntegrationEnabled()) {
-				if (getServer().getPluginManager().isPluginEnabled("Cannons")) {
-					info("SiegeWar found Cannons plugin, enabling Cannons support.");
-					cannonsIntegration = new CannonsIntegration(this);
-				} else {
-					info("Cannons integration enabled in config, but Cannons plugin not found!");
-				}
-			}
-
+			if (getServer().getPluginManager().isPluginEnabled("Cannons")) {
+				info("SiegeWar found Cannons plugin, enabling Cannons support.");
+				cannonsIntegration = new CannonsIntegration(this);
+			} 
 			if (getServer().getPluginManager().isPluginEnabled("dynmap")) {
 				info("SiegeWar found Dynmap plugin, enabling Dynmap support.");
 				new DynmapIntegration(this);
@@ -165,7 +160,7 @@ public class SiegeWar extends JavaPlugin {
 		Bukkit.getLogger().info(Colors.translateColorCodes(art));
 	}
 	
-	public static boolean getCannonsPluginIntegrationEnabled() {
+	public static boolean isCannonsPluginInstalled() {
 		return plugin.cannonsIntegration != null;
 	}
 	

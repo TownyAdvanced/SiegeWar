@@ -19,8 +19,9 @@ import com.palmergames.bukkit.towny.event.damage.TownyExplosionDamagesEntityEven
 import com.palmergames.bukkit.towny.event.teleport.OutlawTeleportEvent;
 import com.palmergames.bukkit.towny.event.time.NewHourEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
-import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -87,78 +88,87 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeWarTimerTaskController.evaluateTimedSiegeOutcomes();
             SiegeWarTimerTaskController.punishNonSiegeParticipantsInSiegeZones();
             SiegeHUDManager.updateHUDs();
-            SiegeWarTimerTaskController.evaluateCannonSessions();
             SiegeWarTimerTaskController.evaluateBeacons();
             SiegeWarTimerTaskController.evaluateBattlefieldReporters();
         }
-
     }
 
     /**
-     * Do not explode the siege banner or its supporting block
-     *
-     * If trap mitigation is active,
-     *  do not explode blocks below the siege banner altitude
-     *
-     * If the Cannons integration is active,
-     *  override any Towny protections of blocks within towns where cannon sessions are in progress.
-     *  and allow their explosion.
+     * Process block explosion events coming from Towny 
      *
      * @param event the TownyExplodingBlocksEvent event
+     * @throws TownyException if something is misconfigured
      */
     @EventHandler(priority = EventPriority.HIGH)
-    public void onBlockExploding(TownyExplodingBlocksEvent event) {
-        List<Block> finalExplodeList = new ArrayList<>();
-
-        //Do not add to final explode list: Blocks near banner or protected by trap mitigation
-        List<Block> townyExplodeList = event.getTownyFilteredBlockList();
-        if(townyExplodeList != null) {
-            for(Block block: townyExplodeList) {
-                if ((SiegeWarSettings.isTrapWarfareMitigationEnabled() && SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(block.getLocation()))
-                    ||
-                    SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(block)) {
-                    //Do not add block to final explode list
-                } else {
-                    //Add to final explode list
-                    finalExplodeList.add(block);
-                }
-            }
-        }
-
-        //Add to final explode list: town blocks if town has a cannon session in progress
-        if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginIntegrationEnabled()) {
-            List<Block> vanillaExplodeList = event.getVanillaBlockList(); //original list of exploding blocks
-            Town town;
-            for (Block block : vanillaExplodeList) {
-                if(!finalExplodeList.contains(block)) {
-                    town = TownyAPI.getInstance().getTown(block.getLocation());
-                    if (town != null && CannonsIntegration.doesTownHaveCannonSession(town)) {
-                        finalExplodeList.add(block);
-                    }
-                }
-            }
-        }
-
-        event.setBlockList(finalExplodeList);
+    public void onBlockExploding(TownyExplodingBlocksEvent event) throws TownyException {
+        if(!SiegeWarSettings.getWarSiegeEnabled())
+            return;
+        if (event.getEntity() != null && !TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld()).isWarAllowed())
+            return;    
+        List<Block> filteredExplodeList = event.getTownyFilteredBlockList();
+        filteredExplodeList = CannonsIntegration.filterExplodeListByCannonEffects(filteredExplodeList, event);
+        filteredExplodeList = filterExplodeListBySiegeBannerProtection(filteredExplodeList);
+        filteredExplodeList = filterExplodeListByTrapWarfareMitigation(filteredExplodeList);
+        event.setBlockList(filteredExplodeList);
     }
 
     /**
-     * If the cannons integration is active,
-     *   SiegeWar will allow explosion damage,
-     *   if the entity is in a town which has a cannon session
+     * Filter a given explode list by siege banner protection
+     * @param givenExplodeList given list of exploding blocks
+     *
+     * @return filtered list
+     */
+    private static List<Block> filterExplodeListBySiegeBannerProtection(List<Block> givenExplodeList) {       
+        List<Block> filteredList = new ArrayList<>(givenExplodeList);
+        for(Block block: givenExplodeList) {
+            if (SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(block)) {
+                //Remove block from final explode list
+                filteredList.remove(block);
+            } 
+        }
+        return filteredList;
+    }
+
+    /**
+     * Filter a given explode list by trap warfare mitigation
+     * @param givenExplodeList given list of exploding blocks
+     *
+     * @return filtered list
+     */
+    private static List<Block> filterExplodeListByTrapWarfareMitigation(List<Block> givenExplodeList) {       
+        if(!SiegeWarSettings.isTrapWarfareMitigationEnabled())
+            return givenExplodeList;
+
+        List<Block> filteredList = new ArrayList<>(givenExplodeList);
+        for(Block block: givenExplodeList) {
+            if (SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(block.getLocation())) {
+                //Remove block from final explode list
+                filteredList.remove(block);
+            } 
+        }
+        return filteredList;
+    }
+
+    /**
+     * During a siege, players in the town are not protected from explosion damage.
+     * (a related effect to how PVP protection is forced off)
      *
      * @param event the TownyExplosionDamagesEntityEvent event
      */
     @EventHandler(priority = EventPriority.HIGH)
     public void onExplosionDamageEntity(TownyExplosionDamagesEntityEvent event) {
-        if(SiegeWarSettings.isCannonsIntegrationEnabled() && SiegeWar.getCannonsPluginIntegrationEnabled()) {
-            if (event.isCancelled()) {
-                Town town = TownyAPI.getInstance().getTown(event.getLocation());
-                if (town != null && CannonsIntegration.doesTownHaveCannonSession(town)) {
-                    event.setCancelled(false);
-                }
-            }
-        }
+        if (!event.isCancelled())
+            return;
+        if(!SiegeWarSettings.getWarSiegeEnabled())
+            return;
+        if (!TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld()).isWarAllowed())
+            return;
+        if(!(event.getEntity() instanceof Player))
+            return;
+        if(event.getTown() == null)
+            return;
+        if(SiegeController.hasActiveSiege(event.getTown()))
+            event.setCancelled(false);
     }
     
     /**
