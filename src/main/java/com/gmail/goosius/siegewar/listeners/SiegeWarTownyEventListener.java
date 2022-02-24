@@ -16,6 +16,7 @@ import com.palmergames.bukkit.towny.event.damage.TownyExplosionDamagesEntityEven
 import com.palmergames.bukkit.towny.event.teleport.OutlawTeleportEvent;
 import com.palmergames.bukkit.towny.event.time.NewHourEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -92,9 +93,10 @@ public class SiegeWarTownyEventListener implements Listener {
      * Process block explosion events coming from Towny 
      *
      * @param event the TownyExplodingBlocksEvent event
+     * @throws TownyException if something is misconfigured
      */
     @EventHandler(priority = EventPriority.HIGH)
-    public void onBlockExploding(TownyExplodingBlocksEvent event) {
+    public void onBlockExploding(TownyExplodingBlocksEvent event) throws TownyException {
         if(!SiegeWarSettings.getWarSiegeEnabled())
             return;
         if (event.getEntity() != null && !TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld()).isWarAllowed())
