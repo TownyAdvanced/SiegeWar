@@ -89,7 +89,7 @@ public class DestroyBlock {
 				//Un-cancel the event
 				event.setCancelled(false);
 				//Send message to player				
-        		event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + Translation.of("msg_wall_breach_successful")));
+				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + Translation.of("msg_wall_breach_successful")));
 				return;
 			}
 

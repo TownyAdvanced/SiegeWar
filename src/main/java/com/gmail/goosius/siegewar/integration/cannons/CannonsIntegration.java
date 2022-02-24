@@ -94,8 +94,8 @@ public class CannonsIntegration {
      */
     public static List<Block> filterExplodeListByCannonEffects(List<Block> givenExplodeList, TownyExplodingBlocksEvent event) throws TownyException {       
         if(SiegeWar.isCannonsPluginInstalled()
-			&& SiegeWarSettings.isWallBreachingEnabled()
-			&& SiegeWarSettings.isWallBreachingCannonsIntegrationEnabled()        
+            && SiegeWarSettings.isWallBreachingEnabled()
+            && SiegeWarSettings.isWallBreachingCannonsIntegrationEnabled()        
             && BattleSession.getBattleSession().isActive()
             && event.getEntity() != null
             && event.getEntity() instanceof Projectile
@@ -134,12 +134,12 @@ public class CannonsIntegration {
                 if(!SiegeWarWallBreachUtil.payBreachPoints(SiegeWarSettings.getWallBreachingCannonExplosionCostPerBlock(), siege))
                     continue;   //Insufficient breach points to explode this block
 				//Ensure height is ok
-				if(!SiegeWarWallBreachUtil.validateBreachHeight(block, town, siege))
+                if(!SiegeWarWallBreachUtil.validateBreachHeight(block, town, siege))
                     continue;
-				//Ensure material is ok
-				if(cachedProtectedMaterials.contains(block.getType())) {
-				    //In cache, protected
-				    continue; 
+                //Ensure material is ok
+                if(cachedProtectedMaterials.contains(block.getType())) {
+                //In cache, protected
+                    continue; 
                 } else if(!cachedUnprotectedMaterials.contains(block.getType())) {
                     //Not in cache
                     if(SiegeWarWallBreachUtil.validateDestroyMaterial(block, block.getLocation())) {
