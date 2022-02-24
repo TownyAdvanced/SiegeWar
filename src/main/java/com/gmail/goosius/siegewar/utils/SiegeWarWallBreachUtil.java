@@ -12,9 +12,13 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
@@ -165,4 +169,69 @@ public class SiegeWarWallBreachUtil {
             return true;
         }
     }
+
+    /**
+     * Ensure the height is ok for a breach attempt
+     * 
+     * @param block the block
+     * @param town the town
+     * @param siege the siege
+     * @return true if its ok to breach at this height
+     */
+    public static boolean validateBreachHeight(Block block, Town town, Siege siege) {
+        if(SiegeWarDistanceUtil.isBlockCloseToTownBlock(block, town.getHomeBlockOrNull(), 2)) {					
+            int heightOfBlockRelativeToSiegeBanner = block.getY() - siege.getFlagLocation().getBlockY();
+            if(heightOfBlockRelativeToSiegeBanner < SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin()) {
+                return false;
+            }
+            if(heightOfBlockRelativeToSiegeBanner > SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()) {
+                return false;
+            }
+        }	
+        return true;
+    }
+
+    /**
+     * Ensure a block is ok to destroy in a breach 
+     * 
+     * @param block the block (if entity, this will be a dummy one! e.g AIR
+     * @param location the location
+     * 
+     * @return true if its ok to breach-destroy this material
+     * @throws TownyException if something is misconfigured
+     */
+    public static boolean validateDestroyMaterial(Block block, Location location) throws TownyException {
+        if(SiegeWarSettings.isWallBreachingDestroyEntityBlacklist()
+            && isEntityAtLocation(location)) {
+            return false;
+        }
+        if(SiegeWarSettings.isWallBreachingDestroyContainerBlacklist()
+            && block instanceof Container) {
+            return false;
+        }
+        if(SiegeWarSettings.getWallBreachingDestroyBlocksBlacklist()
+            .contains(block.getType())) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+	 * Determine if an entity is at the location
+	 *
+	 * We can do this because blocks have an integers only location (e.g. -20,60,140),
+	 * but entities have doubles (e.g. -20.445,60.444,140.999)
+	 *
+	 * @param location the given location
+	 * @return true if an entity is at the given location
+	 */
+	private static boolean isEntityAtLocation(Location location) {
+		if(location.getX() % 1 == 0
+			&& location.getY() % 1 == 0
+			&& location.getZ() % 1 == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

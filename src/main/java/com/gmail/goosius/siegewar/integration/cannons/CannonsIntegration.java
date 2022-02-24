@@ -6,11 +6,13 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.block.Block;
@@ -84,8 +86,9 @@ public class CannonsIntegration {
      * @param event the explosion event
      *
      * @return filtered list
+     * @throws TownyException if something is misconfigured
      */
-    public static List<Block> filterExplodeListByCannonEffects(List<Block> givenExplodeList, TownyExplodingBlocksEvent event) {       
+    public static List<Block> filterExplodeListByCannonEffects(List<Block> givenExplodeList, TownyExplodingBlocksEvent event) throws TownyException {       
         if(SiegeWar.isCannonsPluginInstalled()
 			&& SiegeWarSettings.isWallBreachingEnabled()
 			&& SiegeWarSettings.isWallBreachingCannonsIntegrationEnabled()        
@@ -128,6 +131,13 @@ public class CannonsIntegration {
                 cachedUnsafeTownSet.add(town);  //Player can breach at the siege. Town is unsafe
                 if(!SiegeWarWallBreachUtil.payBreachPoints(SiegeWarSettings.getWallBreachingCannonExplosionCostPerBlock(), siege))
                     continue;   //Insufficient breach points to explode this block
+				//Ensure height is ok
+				if(!SiegeWarWallBreachUtil.validateBreachHeight(block, town, siege))
+                    continue;
+				//Ensure material is ok
+				if(!SiegeWarWallBreachUtil.validateDestroyMaterial(block, block.getLocation()))
+                    continue;
+              
                 /*
                  * Player has now paid the required breach points.
                  * Allow block to explode

@@ -10,6 +10,7 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
@@ -33,6 +34,7 @@ public class DestroyBlock {
 	 * Evaluates a block destroy request.
 	 *
 	 * @param event The event object
+	 * @throws TownyException if something is misconfigured
 	 */
 	public static void evaluateSiegeWarDestroyBlockRequest(TownyDestroyEvent event) throws TownyException {
             //Ensure siege is enabled in this world
@@ -71,34 +73,16 @@ public class DestroyBlock {
 					event.setMessage(Translation.of("msg_err_not_enough_breach_points_for_action", SiegeWarSettings.getWallBreachingBlockDestructionCost(), siege.getFormattedBreachPoints()));
 					return;
 				}		
-
-				//Ensure the height is ok
-				if(SiegeWarDistanceUtil.isBlockCloseToTownBlock(block, town.getHomeBlockOrNull(), 2)) {					
-					int heightOfBlockRelativeToSiegeBanner = block.getY() - siege.getFlagLocation().getBlockY();
-					if(heightOfBlockRelativeToSiegeBanner < SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin()) {
-						event.setMessage(Translation.of("msg_err_cannot_destroy_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
-						return;
-					}
-					if(heightOfBlockRelativeToSiegeBanner > SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()) {
-						event.setMessage(Translation.of("msg_err_cannot_destroy_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
-						return;
-					}
-				}	
-
-				//Ensure the material is ok to destroy
-				if(SiegeWarSettings.isWallBreachingDestroyEntityBlacklist()
-					&& isEntityBeingTargeted(event.getLocation())) {
-					event.setMessage(Translation.of("msg_err_breaching_cannot_destroy_this_material"));
+		
+				//Ensure height is ok
+				if(!SiegeWarWallBreachUtil.validateBreachHeight(block, town, siege)) {
+					event.setMessage(Translation.of("msg_err_cannot_destroy_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
 					return;
 				}
-				if(SiegeWarSettings.isWallBreachingDestroyContainerBlacklist()
-					&& block instanceof Container) {
-					event.setMessage(Translation.of("msg_err_breaching_cannot_destroy_this_material"));
-					return;
-				}
-				if(SiegeWarSettings.getWallBreachingDestroyBlocksBlacklist()
-					.contains(block.getType())) {
-					event.setMessage(Translation.of("msg_err_breaching_cannot_destroy_this_material"));
+
+				//Ensure material is ok
+				if(!SiegeWarWallBreachUtil.validateDestroyMaterial(block, event.getLocation())) {
+					event.setMessage(Translation.of("msg_err_cannot_destroy_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
 					return;
 				}
 
