@@ -15,6 +15,7 @@ import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -101,9 +102,11 @@ public class CannonsIntegration {
             List<Block> filteredList = new ArrayList<>(givenExplodeList);
 
             //Prepare some cache sets, to optimize processing
-            Set<Town> cachedSafeTownSet = new HashSet<>();
-            Set<Town> cachedUnsafeTownSet = new HashSet<>();
- 
+            Set<Town> cachedProtectedTowns = new HashSet<>();
+            Set<Town> cachedUnprotectedTowns = new HashSet<>();
+            Set<Material> cachedProtectedMaterials = new HashSet<>();
+            Set<Material> cachedUnprotectedMaterials = new HashSet<>();
+             
             //Find the blocks explosions which were removed by Towny, and see if they should be re-added.
             Player player = (Player)(((Projectile) event.getEntity()).getShooter());
             Town town;
@@ -115,28 +118,38 @@ public class CannonsIntegration {
                 town = TownyAPI.getInstance().getTown(block.getLocation());
                 if(town == null)
                     continue; 
-                if(cachedSafeTownSet.contains(town))
+                if(cachedProtectedTowns.contains(town))
                     continue;
-                if(cachedUnsafeTownSet.contains(town)) {
+                if(cachedUnprotectedTowns.contains(town)) {
                     filteredList.add(block);
                     continue;
                 }                
                 siege = SiegeController.getSiege(town);
                 if(siege == null || !siege.getStatus().isActive()) {
-                    cachedSafeTownSet.add(town); //No siege or inactive siege. Town is safe
+                    cachedProtectedTowns.add(town); //No siege or inactive siege. Town is safe
                     continue;
                 }
                 if(!canPlayerUseBreachPointsByCannon(player, siege))
                     continue;
-                cachedUnsafeTownSet.add(town);  //Player can breach at the siege. Town is unsafe
+                cachedUnprotectedTowns.add(town);  //Player can breach at the siege. Town is unsafe
                 if(!SiegeWarWallBreachUtil.payBreachPoints(SiegeWarSettings.getWallBreachingCannonExplosionCostPerBlock(), siege))
                     continue;   //Insufficient breach points to explode this block
 				//Ensure height is ok
 				if(!SiegeWarWallBreachUtil.validateBreachHeight(block, town, siege))
                     continue;
 				//Ensure material is ok
-				if(!SiegeWarWallBreachUtil.validateDestroyMaterial(block, block.getLocation()))
-                    continue;
+				if(cachedProtectedMaterials.contains(block.getType())) {
+				    //In cache, protected
+				    continue; 
+                } else if(!cachedUnprotectedMaterials.contains(block.getType())) {
+                    //Not in cache
+                    if(SiegeWarWallBreachUtil.validateDestroyMaterial(block, block.getLocation())) {
+                        cachedUnprotectedMaterials.add(block.getType());
+                    } else {
+                        cachedProtectedMaterials.add(block.getType());
+                        continue;
+                    }    
+                }
               
                 /*
                  * Player has now paid the required breach points.
