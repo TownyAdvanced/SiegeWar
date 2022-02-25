@@ -158,13 +158,12 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 				switch (siegeStatus) {
 					case IN_PROGRESS:
-						// > Balance: 530 | Pending: +130
+						// > Balance: 530
 						String balanceLine = Translation.of("status_town_siege_status_siege_balance", siege.getSiegeBalance());
-						// If the battle is active with points add the " | Pending: +130"
-						if (battleIsActive(siege)) {
-							int pending = SiegeWarBattleSessionUtil.calculateSiegeBalanceAdjustment(siege);
+						// > Balance: 530 | Pending: +130
+						int pending = SiegeWarBattleSessionUtil.calculateSiegeBalanceAdjustment(siege);
+						if(pending != 0)
 							balanceLine += Translation.of("status_town_siege_pending_balance_adjustment", ((pending > 0 ? "+" : "") + pending));
-						}
 						out.add(balanceLine); 
 
 						if(SiegeWarSettings.isBannerXYZTextEnabled()) {
@@ -187,38 +186,35 @@ public class SiegeWarStatusScreenListener implements Listener {
 							out.add(Translation.of("status_town_siege_status_warchest", warChest));
 						}
 
-						if(battleIsActive(siege)) {
+						//Battle:
+						String battle = Translation.of("status_town_siege_battle");
+						out.add(battle);
 
-							//Battle:
-							String battle = Translation.of("status_town_siege_battle");
-							out.add(battle);
-
-							// > Banner Control: Attackers [4] Killbot401x, NerfeyMcNerferson, WarCriminal80372
-							if (siege.getBannerControllingSide() == SiegeSide.NOBODY) {
-								out.add(Translation.of("status_town_banner_control_nobody", siege.getBannerControllingSide().getFormattedName()));
-							} else {
-								
-								String[] bannerControllingResidents = TownyFormatter.getFormattedNames(siege.getBannerControllingResidents().toArray(new Resident[0]));
-								if (bannerControllingResidents.length > 34) {
-									String[] entire = bannerControllingResidents;
-									bannerControllingResidents = new String[36];
-									System.arraycopy(entire, 0, bannerControllingResidents, 0, 35);
-									bannerControllingResidents[35] = Translation.of("status_town_reslist_overlength");
-								}
-								out.addAll(ChatTools.listArr(bannerControllingResidents, Translation.of("status_town_banner_control", siege.getBannerControllingSide().getFormattedName(), siege.getBannerControllingResidents().size())));
-							}
-
-							// > Points: +90 / -220
-							out.add(Translation.of("status_town_siege_battle_points", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
-
-							// > Time Remaining: 22 minutes
-							out.add(Translation.of("status_town_siege_battle_time_remaining", BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds()));
+						// > Banner Control: Attackers [4] Killbot401x, NerfeyMcNerferson, WarCriminal80372
+						if (siege.getBannerControllingSide() == SiegeSide.NOBODY) {
+							out.add(Translation.of("status_town_banner_control_nobody", siege.getBannerControllingSide().getFormattedName()));
+						} else {
 							
-							// > Breach Points: 15
-							if(SiegeWarSettings.isWallBreachingEnabled() && SiegeWarSettings.getWallBreachBonusBattlePoints() != 0)
-								out.add(Translation.of("status_town_siege_breach_points", siege.getFormattedBreachPoints()));
+							String[] bannerControllingResidents = TownyFormatter.getFormattedNames(siege.getBannerControllingResidents().toArray(new Resident[0]));
+							if (bannerControllingResidents.length > 34) {
+								String[] entire = bannerControllingResidents;
+								bannerControllingResidents = new String[36];
+								System.arraycopy(entire, 0, bannerControllingResidents, 0, 35);
+								bannerControllingResidents[35] = Translation.of("status_town_reslist_overlength");
+							}
+							out.addAll(ChatTools.listArr(bannerControllingResidents, Translation.of("status_town_banner_control", siege.getBannerControllingSide().getFormattedName(), siege.getBannerControllingResidents().size())));
 						}
-	                    break;
+
+						// > Points: +90 / -220
+						out.add(Translation.of("status_town_siege_battle_points", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
+
+						// > Time Remaining: 22 minutes
+						out.add(Translation.of("status_town_siege_battle_time_remaining", siege.getFormattedBattleTimeRemaining()));
+						
+						// > Breach Points: 15
+						if(SiegeWarSettings.isWallBreachingEnabled() && SiegeWarSettings.getWallBreachBonusBattlePoints() != 0)
+							out.add(Translation.of("status_town_siege_breach_points", siege.getFormattedBreachPoints()));
+						break;
 
 	                case ATTACKER_WIN:
 	                case DEFENDER_SURRENDER:
@@ -329,15 +325,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 			return Translation.of("status_town_siege_status_invaded", invadedYesNo);
 		}
 	}
-	
-	private static boolean battleIsActive(Siege siege) {
-		return BattleSession.getBattleSession().isActive()
-				&& (siege.getAttackerBattlePoints() > 0
-				 || siege.getDefenderBattlePoints() > 0
-				 || siege.getBannerControllingSide() != SiegeSide.NOBODY
-				 || siege.getBannerControlSessions().size() > 0);
-	}
-	
+
 	private String hoverFormat(String hover) {
 		return String.format(hover,
 				com.palmergames.bukkit.towny.object.Translation.of("status_format_hover_bracket_colour"),

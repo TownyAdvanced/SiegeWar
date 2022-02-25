@@ -370,11 +370,7 @@ public class Siege {
 
 	public String getFormattedBattleTimeRemaining() {
 		if (BattleSession.getBattleSession().isActive()
-			&& status == SiegeStatus.IN_PROGRESS
-			&& (getAttackerBattlePoints() > 0
-				|| getDefenderBattlePoints() > 0
-				|| getBannerControllingSide() != SiegeSide.NOBODY
-				|| getBannerControlSessions().size() > 0)) {
+			&& status == SiegeStatus.IN_PROGRESS) {
 			return BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds();
 		} else {
 			return Translation.of("msg_na");
