@@ -99,7 +99,6 @@ public class SiegeController {
 		SiegeMetaDataController.setStartTime(town, siege.getStartTime());
 		SiegeMetaDataController.setEndTime(town, siege.getScheduledEndTime());
 		SiegeMetaDataController.setActualEndTime(town, siege.getActualEndTime());
-		SiegeMetaDataController.setResidentTimedPointContributors(town, siege.getResidentTimedPointContributors());
 		SiegeMetaDataController.setPrimaryTownGovernments(town, siege.getPrimaryTownGovernments());
 		town.save();
 	}
@@ -240,8 +239,6 @@ public class SiegeController {
 		siege.setScheduledEndTime(SiegeMetaDataController.getEndTime(town));
 
 		siege.setActualEndTime(SiegeMetaDataController.getActualEndTime(town));
-
-		siege.setResidentTimedPointContributors(SiegeMetaDataController.getResidentTimedPointContributors(town));
 
 		siege.setPrimaryTownGovernments(SiegeMetaDataController.getPrimaryTownGovernments(town));
 

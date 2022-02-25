@@ -95,9 +95,6 @@ public class SiegeWarBattleSessionUtil {
 					//Apply the battle points of the winner to the siege balance
 					siege.adjustSiegeBalance(siegeBalanceAdjustment);
 
-					//Propagate attacker battle contributions to siege history
-					siege.propagateSuccessfulBattleContributorsToResidentTimedPointContributors();
-
 					//Prepare result for messaging
 					battleResults.put(siege, siegeBalanceAdjustment);
 				}
@@ -120,7 +117,6 @@ public class SiegeWarBattleSessionUtil {
 				siege.clearBannerControlSessions();
 				siege.setAttackerBattlePoints(0);
 				siege.setDefenderBattlePoints(0);
-				siege.clearSuccessfulBattleContributors();
 				siege.setWallBreachPoints(0);
 				siege.getWallBreachBonusAwardees().clear();
 

@@ -20,7 +20,7 @@ public class ResidentMetaDataController {
 
 	@SuppressWarnings("unused")
 	private SiegeWar plugin;
-	private static IntegerDataField plunderAmount = new IntegerDataField("siegewar_plunder", 0);
+	private static IntegerDataField plunderAmount = new IntegerDataField("siegewar_plunder", 0); //Field no longer in use
 	private static IntegerDataField militarySalaryAmount = new IntegerDataField("siegewar_militarysalary", 0);
 	/*
 	 * A list of battle sessions the player was recently involved in
@@ -36,35 +36,14 @@ public class ResidentMetaDataController {
 		this.plugin = plugin;
 	}
 
-	public static int getPlunderAmount(Resident resident) {
-		IntegerDataField idf = (IntegerDataField) plunderAmount.clone();
-		if (resident.hasMeta(idf.getKey())) {
-			CustomDataField<?> cdf = resident.getMetadata(idf.getKey());
-			if (cdf instanceof IntegerDataField) {
-				IntegerDataField amount = (IntegerDataField) cdf;
-				return amount.getValue();
-			}
-		}
-		return 0;
-	}
-
+	/**
+	 * This method is used to clean up legacy metadata
+	 * @param resident a resident
+	 */
 	public static void clearPlunder(Resident resident) {
 		IntegerDataField idf = (IntegerDataField) plunderAmount.clone();
 		if (resident.hasMeta(idf.getKey())) {
-			resident.removeMetaData(idf);
-		}
-	}
-
-	public static void addPlunderAmount(Resident resident, int amountToAdd) {
-		IntegerDataField idf = (IntegerDataField) plunderAmount.clone();
-		if (amountToAdd > 0) {
-			if (resident.hasMeta(idf.getKey())) {
-				int updatedAmount = getPlunderAmount(resident) + amountToAdd;
-				resident.removeMetaData(idf);
-				resident.addMetaData(new IntegerDataField("siegewar_plunder", updatedAmount));
-			} else {
-				resident.addMetaData(new IntegerDataField("siegewar_plunder", amountToAdd));
-			}
+		   resident.removeMetaData(idf);
 		}
 	}
 

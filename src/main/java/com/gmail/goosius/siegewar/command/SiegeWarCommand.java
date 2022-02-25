@@ -200,14 +200,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		boolean error = false;
 
 		try {
-			if(SiegeWarMoneyUtil.collectPlunder(player))
-				incomeTypesCollected++;
-		} catch (Exception e) {
-			error = true;
-			player.sendMessage(e.getMessage());
-		}
-
-		try {
 			if(SiegeWarMoneyUtil.collectMilitarySalary(player))
 				incomeTypesCollected++;
 		} catch (Exception e) {

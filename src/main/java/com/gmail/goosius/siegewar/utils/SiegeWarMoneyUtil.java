@@ -61,21 +61,6 @@ public class SiegeWarMoneyUtil {
 	}
 
 	/**
-	 * If the player is due plunder, pays the plunder to the player
-	 *
-	 * @param player collecting the plunder
-	 * @return true if payment is made
-	 *         false if payment cannot be made for various reasons.
-	 */
-	public static boolean collectPlunder(Player player) throws Exception {
-		if(!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.getWarSiegePlunderEnabled()) {
-			return false;
-		}
-		return collectIncome(player, "Plunder",
-				"msg_siege_war_plunder_collected");
-	}
-
-	/**
 	 * If the player is due military salary, pays it to the player
 	 *
 	 * @param player collecting the military salary
@@ -108,9 +93,6 @@ public class SiegeWarMoneyUtil {
 
 		int incomeAmount;
 		switch(reason.toLowerCase()) {
-			case "plunder":
-				incomeAmount = ResidentMetaDataController.getPlunderAmount(resident);
-				break;
 			case "military salary":
 				incomeAmount = ResidentMetaDataController.getMilitarySalaryAmount(resident);
 				break;
@@ -121,9 +103,6 @@ public class SiegeWarMoneyUtil {
 		if(incomeAmount != 0) {
 			resident.getAccount().deposit(incomeAmount, reason);
 			switch(reason.toLowerCase()) {
-				case "plunder":
-					ResidentMetaDataController.clearPlunder(resident);
-				break;
 				case "military salary":
 					ResidentMetaDataController.clearMilitarySalary(resident);
 				break;
@@ -138,26 +117,13 @@ public class SiegeWarMoneyUtil {
 	}
 
 	/**
-	 * Make some plunder money available to a resident
-	 *
-	 * @param soldier the resident to grant the plunder to.
-	 * @param plunderAmount the plunder amount
-	 */
-	public static void makePlunderAvailable(Resident soldier, int plunderAmount) {
-		// Makes the plunder available. Player can do "/sw collect" later to claim money.
-			ResidentMetaDataController.addPlunderAmount(soldier, plunderAmount);
-			Messaging.sendMsg(soldier.getPlayer(),
-					Translation.of("msg_siege_war_plunder_available", TownyEconomyHandler.getFormattedBalance(plunderAmount)));
-	}
-
-	/**
 	 * Make some military salary money available to a resident
 	 *
 	 * @param soldier the resident to grant the amount to.
 	 * @param militarySalaryAmount the amount
 	 */
 	public static void makeMilitarySalaryAvailable(Resident soldier, int militarySalaryAmount) {
-		// Makes the plunder available. Player can do "/sw collect" later to claim money.
+		// Makes the military salary available. Player can do "/sw collect" later to claim money.
 		ResidentMetaDataController.addMilitarySalaryAmount(soldier, militarySalaryAmount);
 		Messaging.sendMsg(soldier.getPlayer(),
 				Translation.of("msg_siege_war_military_salary_available", TownyEconomyHandler.getFormattedBalance(militarySalaryAmount)));
@@ -230,9 +196,6 @@ public class SiegeWarMoneyUtil {
 		for(Map.Entry<Resident,Integer> soldierShareEntry: soldierSharesMap.entrySet()) {
 			amountToPaySoldier = (int)((amountValueOfOneShare * soldierShareEntry.getValue())); //Round down to avoid exploits for making extra money
 			switch(reason.toLowerCase()) {
-				case "plunder":
-					makePlunderAvailable(soldierShareEntry.getKey(), amountToPaySoldier);
-				break;
 				case "military salary":
 					makeMilitarySalaryAvailable(soldierShareEntry.getKey(), amountToPaySoldier);
 				break;
