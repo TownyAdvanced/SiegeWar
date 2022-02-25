@@ -1,9 +1,12 @@
 package com.gmail.goosius.siegewar;
 
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.object.Resident;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -74,6 +77,7 @@ public class SiegeWar extends JavaPlugin {
 		registerCommands();
 		registerListeners();
 		checkIntegrations();
+		cleanupLegacyMetaData();
 
 		if(siegeWarPluginError) {
 			severe("SiegeWar did not load successfully, and is now in safe mode!");
@@ -206,6 +210,14 @@ public class SiegeWar extends JavaPlugin {
 				info(Translation.of("msg.battle.session.cleanup.complete", numBattlesUpdated));
 			}
 		}
-	
+	}
+
+	/**
+	 * Cleanup metadata which is non longer in use
+	 */
+	private void cleanupLegacyMetaData() {
+		for(Resident resident: TownyUniverse.getInstance().getResidents()) {
+			ResidentMetaDataController.clearPlunder(resident);
+		}
 	}
 }

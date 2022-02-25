@@ -61,8 +61,6 @@ public class Siege {
 	private int timedBattlePointsEarnedFromCurrentBannerControl;
 	private int attackerBattlePoints;
 	private int defenderBattlePoints;
-	private Set<String> successfulBattleContributors;   //UUID's of attacker-side residents who got BC at least once during the current battle
-	private Map<String, Integer> residentTimedPointContributors;  //UUID:numContributions map of attacker-side residents who got BC at least once during the current siege
 	private Map<UUID, Integer> primaryTownGovernments; //UUID:numBattleSessions map of governments who led the town during the siege. If town was is a nation, nation UUID will be used, otherwise town UUID will be used
 	private double wallBreachPoints;	//Wall Breach points for the current battle session
 	private Set<Resident> wallBreachBonusAwardees;  //Residents who have been awarded the wall-breach bonus for the current battle session
@@ -84,8 +82,6 @@ public class Siege {
 		bannerControlSessions = new HashMap<>();
 		attackerBattlePoints = 0;
 		defenderBattlePoints = 0;
-		successfulBattleContributors = new HashSet<>();
-		residentTimedPointContributors = new HashMap<>();
 		primaryTownGovernments = new HashMap<>();
 		wallBreachPoints = 0;
 		wallBreachBonusAwardees = new HashSet<>();
@@ -374,38 +370,6 @@ public class Siege {
 			return BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds();
 		} else {
 			return Translation.of("msg_na");
-		}
-	}
-
-	public Set<String> getSuccessfulBattleContributors() {
-		return successfulBattleContributors;
-	}
-
-	public void clearSuccessfulBattleContributors() {
-		successfulBattleContributors.clear();
-	}
-
-	public Map<String, Integer> getResidentTimedPointContributors() {
-		return residentTimedPointContributors;
-	}
-
-	public void setResidentTimedPointContributors(Map<String, Integer> residentTimedPointContributors) {
-		this.residentTimedPointContributors = residentTimedPointContributors;
-	}
-
-	public void registerSuccessfulBattleContributorsFromBannerControl() {
-		for(Resident resident: bannerControllingResidents) {
-			successfulBattleContributors.add(resident.getUUID().toString());
-		}
-	}
-
-	public void propagateSuccessfulBattleContributorsToResidentTimedPointContributors() {
-		for(String playerUuid: successfulBattleContributors) {
-			if(residentTimedPointContributors.containsKey(playerUuid)) {
-				residentTimedPointContributors.put(playerUuid, residentTimedPointContributors.get(playerUuid) + 1);
-			} else {
-				residentTimedPointContributors.put(playerUuid, 1);
-			}
 		}
 	}
 

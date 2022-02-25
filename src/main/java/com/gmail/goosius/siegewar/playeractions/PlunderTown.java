@@ -189,51 +189,12 @@ public class PlunderTown {
 	private static void transferPlunderToNation(Siege siege, Nation nation, double totalPlunderAmount, boolean removeMoneyFromTownBank) {
 		Town town = siege.getTown();
 
-		//Calculate plunder ratios for nation & soldiers
-		double totalPlunderForNation = getTotalPlunderForNationBank(totalPlunderAmount);
-		double totalPlunderForSoldiers = totalPlunderAmount - totalPlunderForNation;
-
-		//Pay nation
+		//Pay nation bank
 		if(removeMoneyFromTownBank) {
-			town.getAccount().payTo(totalPlunderForNation, nation, "Plunder");
+			town.getAccount().payTo(totalPlunderAmount, nation, "Plunder");
 		} else {
-			nation.getAccount().deposit(totalPlunderForNation, "Plunder of " + town.getName());
-		}
-
-		//Pay soldiers
-		boolean soldiersPaid = SiegeWarMoneyUtil.distributeMoneyAmongSoldiers(
-				totalPlunderForSoldiers,
-				town,
-				gatherResidentsShareMap(siege),
-				"Plunder",
-				removeMoneyFromTownBank);
-
-		//If there were no soldiers, give money to nation
-		if(!soldiersPaid) {
-			if(removeMoneyFromTownBank) {
-				town.getAccount().payTo(totalPlunderForSoldiers, nation, "Plunder");
-			} else {
-				nation.getAccount().deposit(totalPlunderForSoldiers, "Plunder of " + town.getName());
-			}
+			nation.getAccount().deposit(totalPlunderAmount, "Plunder of " + town.getName());
 		}
 	}
 	
-	private static Map<Resident, Integer> gatherResidentsShareMap(Siege siege) {
-		Resident resident;
-		Map<Resident, Integer> residentSharesMap = new HashMap<>();
-		for(Map.Entry<String, Integer> uuidShareMapEntry: siege.getResidentTimedPointContributors().entrySet()) {
-			resident = TownyUniverse.getInstance().getResident(UUID.fromString(uuidShareMapEntry.getKey()));
-			if(resident != null)
-				residentSharesMap.put(resident, uuidShareMapEntry.getValue());
-		}
-		return residentSharesMap;
-	}
-	
-	private static double getTotalPlunderForNationBank(double totalPlunderAmount) {
-		//Calculate amount that will be given to the winning government directly.
-		String[] ratios = SiegeWarSettings.getWarSiegePlunderDistributionRatio().split(":");
-		int bankRatio = Integer.parseInt(ratios[0]);
-		int soldierRatio = Integer.parseInt(ratios[1]);
-		return totalPlunderAmount / (bankRatio + soldierRatio) * bankRatio;
-	}
 }

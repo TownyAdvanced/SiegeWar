@@ -189,17 +189,7 @@ public enum ConfigNodes {
 			"war.siege.money.attacker_plunder_amount_per_plot",
 			"40.0",
 			"",
-			"# This is the amount which an attacking nation will plunder if they choose to do so after a siege victory.",
-			"# See below for more details on how the plunder is distributed."),
-	WAR_SIEGE_PLUNDER_DISTRIBUTION_RATIO(
-			"war.siege.money.plunder_distribution_ratio",
-			"1:3",
-			"",
-			"# This ratio affects how plunder is distributed among the winning team.",
-			"# The value on the left is the ratio which will go to the government bank (town or nation).",
-			"# The value on the right is the ratio which will go to the contributing soldiers",
-			"# For each battle in which a soldier gained banner control at least once, that soldier receives 1 share.",
-			"# The total soldiers' share is distributed accordingly among the army."),
+			"# This is the amount which an attacking nation will plunder if they choose to do so after a siege victory."),
 	WAR_SIEGE_CAPITAL_SIEGE_COST_INCREASE_PERCENTAGE(
 			"war.siege.money.capital_siege_cost_increase_percentage",
 			"0",

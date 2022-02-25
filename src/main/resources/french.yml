@@ -184,9 +184,7 @@ msg_err_cannot_remove_enemy: '&cYou cannot remove a nation as enemy if you have 
 
 #Added in 0.09
 nation_help_12 : 'Pay your soldiers. The given amount will be distributed according to rank.'
-msg_siege_war_plunder_available: "Plunder worth %s is now available to you. It can be collected using '/sw collect'."
 msg_siege_war_military_salary_available: "A Military Salary of of %s is now available to you. It can be collected using '/sw collect'."
-msg_siege_war_plunder_collected: "You have collected plunder worth %s."
 msg_siege_war_military_salary_collected: "You have collected a military salary of %s."
 msg_err_siege_war_no_soldiers_to_pay: "There were no soldiers to pay."
 msg_err_siege_war_not_enough_nation_funds_to_pay: "The nation does not have enough funds to pay that amount."
@@ -471,7 +469,6 @@ msg_bossbar_preference_set: "&bBossBar preference set to %s."
 bossbar_msg_battle_time_remaining: '&2Battle Session Time Remaining: &a%s'
 msg_err_siege_war_revolt_immunity_permanent: "&cYour town has permanent revolt immunity. It cannot revolt."
 status_sieged: "%s[%sSieged%s]"
-status_plunder: "Plunder: "
 status_military_salary: "Military Salary: "
 hover_message_click_to_claim: "Click to claim money owed to you."
 

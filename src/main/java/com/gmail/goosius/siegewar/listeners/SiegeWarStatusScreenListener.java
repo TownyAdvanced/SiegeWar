@@ -45,13 +45,6 @@ public class SiegeWarStatusScreenListener implements Listener {
 	 */
 	@EventHandler
 	public void onResidentStatusScreen(ResidentStatusScreenEvent event) {
-		int plunder = ResidentMetaDataController.getPlunderAmount(event.getResident());
-		if (plunder > 0) {
-			event.getStatusScreen().addComponentOf("siegeWarNationPlunder",
-					formatKeyValue(Translation.of("status_plunder"), formatMoney(plunder)),
-					HoverEvent.showText(Component.text(Translation.of("hover_message_click_to_claim"))),
-					ClickEvent.runCommand("/sw collect"));
-		}
 		int salary = ResidentMetaDataController.getMilitarySalaryAmount(event.getResident());
 		if (salary > 0) {
 			event.getStatusScreen().addComponentOf("siegeWarNationSalary",
