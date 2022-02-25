@@ -23,8 +23,6 @@ public class SiegeWarSettings {
 	private static EnumSet<Material> cachedWallBreachingPlaceBlocksWhitelist = null;
 	private static EnumSet<Material> cachedWallBreachingDestroyBlocksBlacklist = null;
 	private static Boolean cachedWallBreachingDestroyEntityBlacklist = null;
-	private static Boolean cachedWallBreachingDestroyContainerBlacklist = null;
-
 	protected static void resetCachedSettings() {
 		mapHidingItems = null;
 		siegeZoneWildernessForbiddenBlockMaterials = null;
@@ -33,7 +31,6 @@ public class SiegeWarSettings {
 		cachedWallBreachingPlaceBlocksWhitelist = null;
 		cachedWallBreachingDestroyBlocksBlacklist = null;
 		cachedWallBreachingDestroyEntityBlacklist = null;
-		cachedWallBreachingDestroyContainerBlacklist = null;
 	}
 
 	public static boolean getWarSiegeEnabled() {

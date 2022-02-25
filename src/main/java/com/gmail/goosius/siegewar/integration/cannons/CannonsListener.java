@@ -23,10 +23,7 @@ import org.bukkit.event.Listener;
  */
 public class CannonsListener implements Listener {
 
-	private final CannonsIntegration cannonsIntegration;
-
 	public CannonsListener(CannonsIntegration integration) {
-		this.cannonsIntegration = integration;
 	}
 
 	/**
