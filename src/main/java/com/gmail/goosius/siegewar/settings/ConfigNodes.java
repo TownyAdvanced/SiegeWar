@@ -685,8 +685,6 @@ public enum ConfigNodes {
 			"# This setting  applies when the block change location is the homeblock, or an adjacent townblock.",
 			"# The value is the maximum allowed height at which blocks can be placed/broken via breaching.",
 			"# TIP: This feature prevents people building sky-ramps straight into the homeblock."),
-			
-			
 	WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION(
 			"war.siege.wall_breaching.cannons_integration",
 			"",
