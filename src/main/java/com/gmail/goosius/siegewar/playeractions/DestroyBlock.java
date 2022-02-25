@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -21,7 +20,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.Container;
 
 /**
  * This class handles siege-related destroy-block requests
@@ -109,23 +107,4 @@ public class DestroyBlock {
             return;
         }
     }
-
-	/**
-	 * Determine if an entity is being targeted for destruction
-	 * 
-	 * We can do this because blocks have an integers only location (e.g. -20,60,140),
-	 * but entities have doubles (e.g. -20.445,60.444,140.999)
-	 * 
-	 * @param location the given location
-	 * @return true if an entity is being targeted
-	 */
-	private static boolean isEntityBeingTargeted(Location location) {
-		if(location.getX() % 1 == 0
-			&& location.getY() % 1 == 0
-			&& location.getZ() % 1 == 0) {
-			return false;
-		} else {
-			return true;
-		}
-	}
 }

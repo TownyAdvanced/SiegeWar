@@ -24,8 +24,6 @@ import org.bukkit.entity.Entity;
  */
 public class SiegeWarDistanceUtil {
 
-	private static final int TOWNBLOCKSIZE= TownySettings.getTownBlockSize();
-
 	/**
 	 * This method returns true if the given location is in an active siegezone
 	 *

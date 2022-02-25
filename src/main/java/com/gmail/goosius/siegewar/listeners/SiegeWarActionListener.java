@@ -2,9 +2,6 @@ package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.playeractions.DestroyBlock;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
