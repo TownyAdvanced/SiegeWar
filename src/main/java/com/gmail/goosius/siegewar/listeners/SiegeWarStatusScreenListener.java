@@ -160,7 +160,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 					case IN_PROGRESS:
 						// > Balance: 530
 						String balanceLine = Translation.of("status_town_siege_status_siege_balance", siege.getSiegeBalance());
-						// > Balance: 530" | Pending: +130"
+						// > Balance: 530 | Pending: +130
 						int pending = SiegeWarBattleSessionUtil.calculateSiegeBalanceAdjustment(siege);
 						if(pending != 0)
 							balanceLine += Translation.of("status_town_siege_pending_balance_adjustment", ((pending > 0 ? "+" : "") + pending));
