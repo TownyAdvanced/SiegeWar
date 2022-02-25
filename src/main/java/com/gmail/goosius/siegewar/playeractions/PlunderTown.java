@@ -22,10 +22,6 @@ import com.palmergames.bukkit.towny.utils.MoneyUtil;
 
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 /**
  * This class is responsible for processing requests to plunder towns
  *

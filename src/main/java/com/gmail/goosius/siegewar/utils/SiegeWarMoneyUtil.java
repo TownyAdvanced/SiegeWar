@@ -123,7 +123,7 @@ public class SiegeWarMoneyUtil {
 	 * @param militarySalaryAmount the amount
 	 */
 	public static void makeMilitarySalaryAvailable(Resident soldier, int militarySalaryAmount) {
-		// Makes the plunder available. Player can do "/sw collect" later to claim money.
+		// Makes the military salary available. Player can do "/sw collect" later to claim money.
 		ResidentMetaDataController.addMilitarySalaryAmount(soldier, militarySalaryAmount);
 		Messaging.sendMsg(soldier.getPlayer(),
 				Translation.of("msg_siege_war_military_salary_available", TownyEconomyHandler.getFormattedBalance(militarySalaryAmount)));
