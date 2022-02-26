@@ -332,10 +332,10 @@ public class SiegeWarNationEventListener implements Listener {
 	 * @param event the event
 	 */
 	@EventHandler(ignoreCancelled = true)
-    public void on(NationToggleNeutralEvent event) {
-        if (event.getFutureState()) {
-            event.setCancelled(true);
-            event.setCancelMessage(Translation.of("msg_err_nation_neutrality_not_supported"));
-        }
-    }
+	public void on(NationToggleNeutralEvent event) {
+		if (event.getFutureState()) {
+			event.setCancelled(true);
+			event.setCancelMessage(Translation.of("msg_err_nation_neutrality_not_supported"));
+		}
+	}
 }
