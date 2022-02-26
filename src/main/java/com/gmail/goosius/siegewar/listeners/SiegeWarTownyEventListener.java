@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
@@ -16,6 +17,7 @@ import com.palmergames.bukkit.towny.event.PreNewDayEvent;
 import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyExplosionDamagesEntityEvent;
+import com.palmergames.bukkit.towny.event.nation.toggle.NationToggleNeutralEvent;
 import com.palmergames.bukkit.towny.event.teleport.OutlawTeleportEvent;
 import com.palmergames.bukkit.towny.event.time.NewHourEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
@@ -179,5 +181,13 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onOutlawTeleportEvent(OutlawTeleportEvent event) {
     	if (SiegeWarSettings.getWarSiegeEnabled() && SiegeController.hasActiveSiege(event.getTown())) 
     		event.setCancelled(true);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void on(NationToggleNeutralEvent event) {
+        if (event.getFutureState()) {
+            event.setCancelled(true);
+            event.setCancelMessage(Translation.of("msg_err_nation_neutrality_not_supported"));
+        }
     }
 }
