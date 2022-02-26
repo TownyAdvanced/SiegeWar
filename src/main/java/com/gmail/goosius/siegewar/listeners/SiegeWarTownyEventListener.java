@@ -182,12 +182,4 @@ public class SiegeWarTownyEventListener implements Listener {
     	if (SiegeWarSettings.getWarSiegeEnabled() && SiegeController.hasActiveSiege(event.getTown())) 
     		event.setCancelled(true);
     }
-
-    @EventHandler(ignoreCancelled = true)
-    public void on(NationToggleNeutralEvent event) {
-        if (event.getFutureState()) {
-            event.setCancelled(true);
-            event.setCancelMessage(Translation.of("msg_err_nation_neutrality_not_supported"));
-        }
-    }
 }

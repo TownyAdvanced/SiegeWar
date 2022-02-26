@@ -25,6 +25,7 @@ import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumResidents
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumTownBlocksCalculationEvent;
 import com.palmergames.bukkit.towny.event.nation.DisplayedNationsListSortEvent;
 
+import com.palmergames.bukkit.towny.event.nation.toggle.NationToggleNeutralEvent;
 import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -323,4 +324,18 @@ public class SiegeWarNationEventListener implements Listener {
 		//Give the re-sorted list to the event object
 		event.setNations(nationList);
 	}
+
+	/**
+	 * Prevents nations using /n toggle neutral
+	 * - Because in SW this has no effect
+	 * 
+	 * @param event the event
+	 */
+	@EventHandler(ignoreCancelled = true)
+    public void on(NationToggleNeutralEvent event) {
+        if (event.getFutureState()) {
+            event.setCancelled(true);
+            event.setCancelMessage(Translation.of("msg_err_nation_neutrality_not_supported"));
+        }
+    }
 }
