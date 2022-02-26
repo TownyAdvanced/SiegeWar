@@ -511,4 +511,4 @@ msg_error_misconfigured_destroy_blocks_blacklist: '&cMisconfigured Material on W
 msg_err_siege_war_cannot_start_liberation_siege_at_unallied_town: '&cYou cannot start a liberation siege at this town, because the nation of the town is not your ally.'
 
 #Added in 0.36
-msg_err_nation_neutrality_not_supported: '&cSiegeWar does not support Nation Neutrality.'
+msg_err_nation_neutrality_not_supported: '&cSiegeWar does not support nation neutrality.'
