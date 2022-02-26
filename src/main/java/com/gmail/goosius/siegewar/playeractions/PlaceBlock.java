@@ -61,13 +61,14 @@ public class PlaceBlock {
 			if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
 				return;
 
-			//If the event has already been cancelled by Towny...
-			if(event.isCancelled()) {
-				if(!SiegeWarSettings.isWallBreachingEnabled())
-					return; //Without wall breaching, SW doesn't un-cancel events
+			//Unless in nationzone-wilderness, SW might uncancel a cancellation, via wall breaching
+			if(event.isCancelled()
+				&& SiegeWarSettings.isWallBreachingEnabled()
+				&& !TownyAPI.getInstance().isNationZone(block.getLocation())) {
+
 				Town town = TownyAPI.getInstance().getTown(block.getLocation());
 				if(town == null)
-					return; //SW currently doesn't un-cancel wilderness events
+					return; //SW currently doesn't un-cancel events in non-nationzone-wilderness
 				if(!SiegeController.hasActiveSiege(town))
 					return; //SW doesn't un-cancel events in unsieged towns
 				//Ensure player has permission
