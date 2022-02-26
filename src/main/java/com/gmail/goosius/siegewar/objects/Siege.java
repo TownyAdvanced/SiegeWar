@@ -252,7 +252,13 @@ public class Siege {
 	}
 
 	public void adjustSiegeBalance(int adjustment) {
-		siegeBalance += adjustment;
+		if(SiegeWarSettings.getSiegeBalanceCapValue() != -1) {
+			siegeBalance = Math.min(
+							siegeBalance + adjustment,
+							SiegeWarSettings.getSiegeBalanceCapValue());
+		} else {
+			siegeBalance += adjustment;
+		}
 	}
 
 	public double getWarChestAmount() {

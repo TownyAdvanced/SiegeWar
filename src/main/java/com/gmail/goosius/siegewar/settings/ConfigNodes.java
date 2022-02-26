@@ -528,6 +528,23 @@ public enum ConfigNodes {
 			"",
 			"# This value determines the duration of each battle session.",
 			"# TIP: The default value of 50 is deliberately designed to give players a 10 minute break after each battle session, for reasons of health and safety."),
+	WAR_SIEGE_POINTS_SIEGE_BALANCE_CAP(
+			"war.siege.points_balancing.siege_balance_cap",
+			"",
+			"",
+			"",
+			"# +------------------------------------------------------+ #",
+			"# |                  Siege Balance Cap                     | #",
+			"# +------------------------------------------------------+ #",
+			""),
+	WAR_SIEGE_POINTS_SIEGE_BALANCE_CAP_VALUE(
+			"war.siege.points_balancing.siege_balance_cap.value",
+			"20000",
+			"",
+			"# This value determines the siege balance cap.",
+			"# Set to -1 to disable the cap",
+			"# The value applies to both positive and negative balances e.g. 20000 means a lower limit of -20000 and an upper limit of 20000.",
+			"# TIP: Set this value HIGH to give advantage to big nations, and LOW to give advantage to small nations."),
 	WAR_SIEGE_POINTS_BALANCING_CAPPING_LIMITER(
 			"war.siege.points_balancing.capping_limiter",
 			"",

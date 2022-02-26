@@ -617,4 +617,8 @@ public class SiegeWarSettings {
 	public static int getWallBreachingCannonExplosionCostPerBlock() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_EXPLODING_BLOCKS_COST_PER_BLOCK);
 	}
+
+	public static int getSiegeBalanceCapValue() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_SIEGE_BALANCE_CAP_VALUE);
+	}
 }
