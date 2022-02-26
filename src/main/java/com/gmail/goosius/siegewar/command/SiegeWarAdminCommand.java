@@ -17,6 +17,7 @@ import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.towny.TownyMessaging;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
@@ -37,7 +38,7 @@ import java.util.List;
 
 public class SiegeWarAdminCommand implements TabExecutor {
 
-	private static final List<String> siegewaradminTabCompletes = Arrays.asList("battlesession","installperms","nation","reload","revoltimmunity","siege","siegeimmunity","town");
+	private static final List<String> siegewaradminTabCompletes = Arrays.asList("battlesession","install","nation","reload","revoltimmunity","siege","siegeimmunity","town");
 	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
@@ -163,8 +164,8 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			case "nation":
 				parseSiegeWarNationCommand(sender, StringMgmt.remFirstArg(args));
 				break;
-			case "installperms":
-				parseInstallPermissionsCommand(sender);
+			case "install":
+				parseInstallCommand(sender);
 				break;
 			case "battlesession":
 				parseSiegeWarBattleSessionCommand(sender, StringMgmt.remFirstArg(args));
@@ -186,7 +187,13 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		}
 	}
 	
-	private void parseInstallPermissionsCommand(CommandSender sender) {
+	private void parseInstallCommand(CommandSender sender) {
+		setupTownyPermsFile(sender);
+		setupTownyConfigFile(sender);
+		Messaging.sendMsg(sender, "Installation Complete");
+	}
+
+	private void setupTownyPermsFile(CommandSender sender) {
 		CommentedConfiguration file = TownyPerms.getTownyPermsFile();
 		List<String> groupNodes = new ArrayList<>();
 		String townpoints = "siegewar.town.siege.battle.points";
@@ -314,7 +321,19 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			file.set("nations.ranks.assistant", groupNodes);
 		}
 		file.save();
-		Messaging.sendMsg(sender, "Permission nodes installed: see wiki for nodes you should give manually: https://git.io/JRSHW");
+		Messaging.sendMsg(sender, "Townyperms adjusted for recommended SW setup.");
+	}
+
+	private void setupTownyConfigFile(CommandSender sender) {
+		CommentedConfiguration file = TownySettings.getConfig();
+		file.set("price_town_neutrality", "0");
+		file.set("price_nation_neutrality", "0");
+		file.set("bankruptcy.enabled", "true");
+		file.set("bankruptcy.nation_tax.do_bankrupt_towns_pay_nation_tax", "true");
+		file.set("town_ruins.enabled", "true");
+		file.set("town_ruins.min_duration_hours", "24");
+		file.save();
+		Messaging.sendMsg(sender, "Towny Config adjusted for recommended SW setup");
 	}
 
 	private void showHelp(CommandSender sender) {
