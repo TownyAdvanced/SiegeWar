@@ -120,27 +120,16 @@ public class DynmapIntegration {
 
                     } else if (marker.getMarkerIcon().getMarkerIconID().equals(PEACEFUL_BANNER_ICON_ID)) {
                         /*
-                         * Change to battle icon if battle is active.
+                         * Change to battle icon if siege is active.
                          */
-                        if (BattleSession.getBattleSession().isActive()
-                                && (siege.getAttackerBattlePoints() > 0
-                                || siege.getDefenderBattlePoints() > 0
-                                || siege.getBannerControllingSide() != SiegeSide.NOBODY
-                                || siege.getBannerControlSessions().size() > 0)) {
-                            marker.setMarkerIcon(markerapi.getMarkerIcon(BATTLE_BANNER_ICON_ID));
-                        }
-
+                        if(!isSiegeDormant(siege))
+                            marker.setMarkerIcon(markerapi.getMarkerIcon(BATTLE_BANNER_ICON_ID));                             
                     } else if (marker.getMarkerIcon().getMarkerIconID().equals(BATTLE_BANNER_ICON_ID)) {
                         /*
-                         * Change to peaceful icon if battle is no longer active.
+                         * Change to peaceful icon if siege is dormant
                          */
-                        if (!BattleSession.getBattleSession().isActive()
-                                || (siege.getAttackerBattlePoints() == 0
-                                && siege.getDefenderBattlePoints() == 0
-                                && siege.getBannerControllingSide() == SiegeSide.NOBODY
-                                && siege.getBannerControlSessions().size() == 0)) {
-                            marker.setMarkerIcon(markerapi.getMarkerIcon(PEACEFUL_BANNER_ICON_ID));
-                        }
+                        if (isSiegeDormant(siege))
+                            marker.setMarkerIcon(markerapi.getMarkerIcon(PEACEFUL_BANNER_ICON_ID));                      
                     }
                 } catch (Exception e) {
                     if (marker != null)
@@ -157,11 +146,9 @@ public class DynmapIntegration {
                 String name = Translation.of("dynmap_siege_title", siege.getAttackerNameForDisplay(), siege.getDefenderNameForDisplay());
                 try {
                     if (siege.getStatus().isActive()) {
-                        //If anyone is in a BC session or on the BC list, it is a fire & swords icon
-                        //otherwise just fire
+                        //If siege is dormant, show the fire icon, otherwise show the crossed swords icon.
                         MarkerIcon siegeIcon;
-                        if (siege.getBannerControllingSide() == SiegeSide.NOBODY
-                                && siege.getBannerControlSessions().size() == 0) {
+                        if (isSiegeDormant(siege)) {
                             siegeIcon = markerapi.getMarkerIcon(PEACEFUL_BANNER_ICON_ID);
                         } else {
                             siegeIcon = markerapi.getMarkerIcon(BATTLE_BANNER_ICON_ID);
@@ -214,4 +201,21 @@ public class DynmapIntegration {
             dynmapAPI.assertPlayerInvisibility(player, player.hasMetadata(SiegeWarMapUtil.MAP_HIDING_METADATA_ID), SiegeWar.getSiegeWar());
         }
     }
+
+    /**
+     * A siege is dormant if there is no significant activity there (e.g. kills, banner control).
+     * 
+     * This state is represented by a fire icon on the map.
+     * If the battle becomes active, the icon changes to crossed-swords.
+     * 
+     * @return true if siege is dormant
+     */
+    private boolean isSiegeDormant(Siege siege) {
+        return !BattleSession.getBattleSession().isActive()
+                || (siege.getAttackerBattlePoints() == 0
+                && siege.getDefenderBattlePoints() == 0
+                && siege.getBannerControllingSide() == SiegeSide.NOBODY
+                && siege.getBannerControlSessions().size() == 0);
+    }
+    
 }
