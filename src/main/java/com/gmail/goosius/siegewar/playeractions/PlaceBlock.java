@@ -17,6 +17,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -61,10 +62,10 @@ public class PlaceBlock {
 			if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
 				return;
 
-			//Unless in nationzone-wilderness, SW might uncancel a cancellation, via wall breaching
+			//If the block is in a town, SW might uncancel a cancellation, via wall breaching
 			if(event.isCancelled()
 				&& SiegeWarSettings.isWallBreachingEnabled()
-				&& !TownyAPI.getInstance().isNationZone(block.getLocation())) {
+				&& TownyAPI.getInstance().isWilderness(block)) {
 
 				Town town = TownyAPI.getInstance().getTown(block.getLocation());
 				if(town == null)
