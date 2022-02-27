@@ -17,6 +17,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -61,13 +62,12 @@ public class PlaceBlock {
 			if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
 				return;
 
-			//If the event has already been cancelled by Towny...
-			if(event.isCancelled()) {
-				if(!SiegeWarSettings.isWallBreachingEnabled())
-					return; //Without wall breaching, SW doesn't un-cancel events
+			//If the event is in a town and was cancelled by towny, SW might un-cancel the event via wall breaching
+			if(event.isCancelled()
+				&& SiegeWarSettings.isWallBreachingEnabled()
+				&& !TownyAPI.getInstance().isWilderness(block)) {
+
 				Town town = TownyAPI.getInstance().getTown(block.getLocation());
-				if(town == null)
-					return; //SW currently doesn't un-cancel wilderness events
 				if(!SiegeController.hasActiveSiege(town))
 					return; //SW doesn't un-cancel events in unsieged towns
 				//Ensure player has permission
