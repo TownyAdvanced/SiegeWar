@@ -326,12 +326,12 @@ public class SiegeWarAdminCommand implements TabExecutor {
 
 	private void setupTownyConfigFile(CommandSender sender) {
 		CommentedConfiguration file = TownySettings.getConfig();
-		file.set("price_town_neutrality", "0");
-		file.set("price_nation_neutrality", "0");
-		file.set("bankruptcy.enabled", "true");
-		file.set("bankruptcy.nation_tax.do_bankrupt_towns_pay_nation_tax", "true");
-		file.set("town_ruins.enabled", "true");
-		file.set("town_ruins.min_duration_hours", "24");
+		file.set("economy.price_town_neutrality", "0");
+		file.set("economy.price_nation_neutrality", "0");
+		file.set("economy.bankruptcy.enabled", "true");
+		file.set("economy.bankruptcy.nation_tax.do_bankrupt_towns_pay_nation_tax", "true");
+		file.set("town_ruining.town_ruins.enabled", "true");
+		file.set("town_ruining.town_ruins.min_duration_hours", "24");
 		file.save();		
 		Messaging.sendMsg(sender, Translation.of("msg.townyconfig.installation.complete"));
 	}
