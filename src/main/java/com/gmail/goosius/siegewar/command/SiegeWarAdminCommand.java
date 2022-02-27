@@ -329,7 +329,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		file.set("economy.price_town_neutrality", "0");
 		file.set("economy.price_nation_neutrality", "0");
 		file.set("economy.bankruptcy.enabled", "true");
-		file.set("economy.bankruptcy.nation_tax.do_bankrupt_towns_pay_nation_tax", "true");
 		file.set("town_ruining.town_ruins.enabled", "true");
 		file.set("town_ruining.town_ruins.min_duration_hours", "24");
 		file.save();		
