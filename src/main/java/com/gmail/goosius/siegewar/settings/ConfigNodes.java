@@ -512,7 +512,7 @@ public enum ConfigNodes {
 			"# This setting applies to Monday, Tuesday, Wednesday, Thursday, and Friday.",
 			"# The format is HOUR:MINUTE.",
 			"# The default values are all at ten past the hour, so that the critical point of the battle (the final minutes), will fall on the hour.",
-			"# TIP: Do not use this setting to prevent night capping, as it will hurt cross-timezone players. Instead, use the 'Capping Limiter' for that purpose."),
+			"# TIP: DO NOT CHANGE THIS SETTING, as it does not work cross-timezone. Instead, if you want to restrict player-fighting-times, use the 'Capping Limiter' config for that purpose."),
 	WAR_SIEGE_POINTS_BALANCING_BATTLE_SESSION_TIMINGS_START_TIMES_WEEKEND_DAYS(
 			"war.siege.points_balancing.battle_session_timings.start_times.weekend_days",
 			"00:10,01:10,02:10,03:10,04:10,05:10,06:10,07:10,08:10,09:10,10:10,11:10,12:10,13:10,14:10,15:10,16:10,17:10,18:10,19:10,20:10,21:10,22:10,23:10",
@@ -521,7 +521,7 @@ public enum ConfigNodes {
 			"# This setting applies to Saturday and Sunday.",
 			"# The format is HOUR:MINUTE.",
 			"# The default values are all at ten past the hour, so that the critical point of the battle (the final minutes), will fall on the hour.",
-			"# TIP: Do not use this setting to prevent night capping, as it will hurt cross-timezone players. Instead, use the 'Capping Limiter' for that purpose."),
+			"# TIP: DO NOT CHANGE THIS SETTING, as it does not work cross-timezone. Instead, if you want to restrict player-fighting-times, use the 'Capping Limiter' config for that purpose."),
 	WAR_SIEGE_POINTS_BALANCING_BATTLE_SESSION_TIMINGS_DURATION_MINUTES(
 			"war.siege.points_balancing.battle_session_timings.duration_minutes",
 			"50",

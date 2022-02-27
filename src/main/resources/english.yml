@@ -512,3 +512,6 @@ msg_err_siege_war_cannot_start_liberation_siege_at_unallied_town: '&cYou cannot 
 
 #Added in 0.36
 msg_err_nation_neutrality_not_supported: '&cSiegeWar does not support nation neutrality.'
+msg.townyperms.installation.complete: "Towny perms file adjusted for recommended SW setup."
+msg.townyconfig.installation.complete: "Towny config file adjusted for recommended SW setup."
+msg.installation.complete: "Installation Complete."
