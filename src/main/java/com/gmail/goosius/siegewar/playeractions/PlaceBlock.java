@@ -65,7 +65,7 @@ public class PlaceBlock {
 			//If the event is in a town and was cancelled by towny, SW might un-cancel the event via wall breaching
 			if(event.isCancelled()
 				&& SiegeWarSettings.isWallBreachingEnabled()
-				&& TownyAPI.getInstance().isWilderness(block)) {
+				&& !TownyAPI.getInstance().isWilderness(block)) {
 
 				Town town = TownyAPI.getInstance().getTown(block.getLocation());
 				if(!SiegeController.hasActiveSiege(town))
