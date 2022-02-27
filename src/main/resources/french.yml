@@ -1,5 +1,5 @@
 ﻿name: SiegeWar
-version: 0.35
+version: 0.36
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -515,9 +515,13 @@ msg_err_already_received_wall_breach_bonus: '&cYou already received your Wall-Br
 #Wall-Breach Cannons Integration
 msg_err_cannot_fire_cannon_without_battle_session: '&cYou cannot fire a cannon in a siegezone unless there is a Battle Session in progress.'
 msg_err_cannot_fire_cannon_without_perms: '&cYou cannot fire this cannon. Check that you are an official participant in the local siege, and that you have a rank which allows cannon-firing.'
-
 #configuration-errors
 msg_error_misconfigured_place_blocks_whitelist: '&cMisconfigured Material on Wall-Breaching-Place-Blocks-Whitelist. Problem Entry: %s.'
 msg_error_misconfigured_destroy_blocks_blacklist: '&cMisconfigured Material on Wall-Breaching-Destroy-Blocks-Blacklist. Problem Entry: %s.'
 #Liberation Siege Restriction
 msg_err_siege_war_cannot_start_liberation_siege_at_unallied_town: '&cYou cannot start a liberation siege at this town, because the nation of the town is not your ally.'
+
+#Added in 0.36
+msg.townyperms.installation.complete: "Townyperms file adjusted for recommended SW setup."
+msg.townyconfig.installation.complete: "Towny config file adjusted for recommended SW setup."
+msg.installation.complete: "Installation Complete."

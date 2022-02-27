@@ -321,7 +321,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			file.set("nations.ranks.assistant", groupNodes);
 		}
 		file.save();
-		Messaging.sendMsg(sender, "Townyperms adjusted for recommended SW setup.");
+		Messaging.sendMsg(sender, Translation.of("msg.townyperms.installation.complete"));
 	}
 
 	private void setupTownyConfigFile(CommandSender sender) {
@@ -332,8 +332,8 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		file.set("bankruptcy.nation_tax.do_bankrupt_towns_pay_nation_tax", "true");
 		file.set("town_ruins.enabled", "true");
 		file.set("town_ruins.min_duration_hours", "24");
-		file.save();
-		Messaging.sendMsg(sender, "Towny Config adjusted for recommended SW setup");
+		file.save();		
+		Messaging.sendMsg(sender, Translation.of("msg.townyconfig.installation.complete"));
 	}
 
 	private void showHelp(CommandSender sender) {
