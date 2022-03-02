@@ -5,7 +5,6 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.BattleSession;
@@ -27,6 +26,8 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * This class contains utility functions related to banner control
@@ -331,74 +332,69 @@ public class SiegeWarBannerControlUtil {
 	 * This method evaluates whether players should be made to glow
 	 * 
 	 * Glowing Rules:
-	 * - If both teams are within the timed point zone, all players in BC sessions glow.
-	 * - If no team, or just one, is within the timed point zone, nobody glows.
+	 * - The capper with the lowest time-to-cap on each side, glows.
 	 * 
 	 * @param siege the siege
 	 */
 	private static void evaluatePlayerGlowing(Siege siege) throws Exception {
-		boolean attackersInTimedPointZone = false;
-		boolean defendersInTimedPointZone = false;
-		TownyUniverse universe = TownyUniverse.getInstance();
-		Resident resident;
-		SiegeSide siegeSide;
-
-		//Determine if both of the teams are within the timed point zone
-		PLAYER_LOOP:
-		for(Player player: Bukkit.getOnlinePlayers()) {
-			resident = universe.getResident(player.getUniqueId());
-			if (resident == null)
-				continue;
-
-			if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
-				continue;
-
-			siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
-			
-			switch (siegeSide) {
-				case ATTACKERS:
-					attackersInTimedPointZone = true;
-					if(defendersInTimedPointZone)
-						break PLAYER_LOOP;
-					break;
-				case DEFENDERS:
-					defendersInTimedPointZone = true;
-					if(attackersInTimedPointZone)
-						break PLAYER_LOOP;
-					break;
-				case NOBODY:
-					break;
+		//Create attacker and defender capper maps
+		Set<BannerControlSession> attackerSessions = new HashSet<>();
+		Set<BannerControlSession> defenderSessions = new HashSet<>();
+		for(BannerControlSession bannerControlSession: siege.getBannerControlSessions().values()) {
+			if(bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
+				attackerSessions.add(bannerControlSession);
+			} else {
+				defenderSessions.add(bannerControlSession);
 			}
 		}
-		
-		//Adjust player glow effects
-		if(attackersInTimedPointZone && defendersInTimedPointZone) {
-			//Calculate glow effect duration
-			int effectDurationSeconds = SiegeWarSettings.getWarSiegeBannerControlSessionDurationMinutes() * 60; 
-			final int effectDurationTicks = (int)(TimeTools.convertToTicks(effectDurationSeconds));
-			//Ensure players in BC sessions are glowing
-			for(Player player: siege.getBannerControlSessions().keySet()) {
-				if(!player.hasPotionEffect(PotionEffectType.GLOWING)) {
+
+		//Ensure glowing
+		grantGlowingToSessionWithLowestTimer(attackerSessions);
+		grantGlowingToSessionWithLowestTimer(defenderSessions);
+	}
+
+	/**
+	 * Given a list of sessions, grant glowing to the session with the lowest timer.
+	 * Ensure all others do NOT glow.
+	 *
+	 * @param sessions given list of sessions.
+	 */
+	private static void grantGlowingToSessionWithLowestTimer(Set<BannerControlSession> sessions) {
+		//Calculate glow duration
+		int effectDurationSeconds = SiegeWarSettings.getWarSiegeBannerControlSessionDurationMinutes() * 60; 
+		final int effectDurationTicks = (int)(TimeTools.convertToTicks(effectDurationSeconds));
+
+		if(sessions.size() > 0) {
+			//Find player with lowest timer
+			BannerControlSession glowingSession = null;
+			for(BannerControlSession bannerControlSession: sessions) {
+				if(glowingSession == null
+					|| bannerControlSession.getSessionEndTime() > glowingSession.getSessionEndTime()) {
+					glowingSession = bannerControlSession;
+				}
+			}
+			//Ensure the player glows
+			BannerControlSession glowingSessionFinal = glowingSession;
+			Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
+			public void run() {
+					List<PotionEffect> potionEffects = new ArrayList<>();
+					potionEffects.add(new PotionEffect(PotionEffectType.GLOWING, effectDurationTicks, 0));
+					glowingSessionFinal.getPlayer().addPotionEffects(potionEffects);
+				}
+			});
+			//Ensure nobody else glows
+			for(BannerControlSession bannerControlSession: sessions) {
+				if(bannerControlSession == glowingSession)
+					continue;
+				if(bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
 					Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
 						public void run() {
-							List<PotionEffect> potionEffects = new ArrayList<>();
-							potionEffects.add(new PotionEffect(PotionEffectType.GLOWING, effectDurationTicks, 0));
-							player.addPotionEffects(potionEffects);
+							bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
 						}
 					});
 				}
 			}
-		} else {
-			//Ensure players in BC sessions are not glowing
-			for(Player player: siege.getBannerControlSessions().keySet()) {
-				if(player.hasPotionEffect(PotionEffectType.GLOWING)) {
-					Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-						public void run() {
-							player.removePotionEffect(PotionEffectType.GLOWING);
-						}
-					});
-				}				
-			}
 		}
 	}
+
 }
