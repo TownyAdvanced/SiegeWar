@@ -369,7 +369,7 @@ public class SiegeWarBannerControlUtil {
 			BannerControlSession glowingSession = null;
 			for(BannerControlSession bannerControlSession: sessions) {
 				if(glowingSession == null
-					|| bannerControlSession.getSessionEndTime() > glowingSession.getSessionEndTime()) {
+					|| bannerControlSession.getSessionEndTime() < glowingSession.getSessionEndTime()) {
 					glowingSession = bannerControlSession;
 				}
 			}
