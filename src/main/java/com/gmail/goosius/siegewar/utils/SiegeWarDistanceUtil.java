@@ -52,8 +52,8 @@ public class SiegeWarDistanceUtil {
 		World world = Bukkit.getWorld(townBlock.getWorld().getName());
 		int townBlockSize = TownySettings.getTownBlockSize();
 		int x = (townBlock.getX() * townBlockSize) + (townBlockSize /2);
-		int y = (townBlock.getX() * townBlockSize) + (townBlockSize /2);
-		int z = 0;		    
+		int y = 0;
+		int z = (townBlock.getZ() * townBlockSize) + (townBlockSize /2);
 		Location locationOfTownBlock = new Location(world, x, y, z);
 		return isLocationInActiveSiegeZone(locationOfTownBlock);
 	}
