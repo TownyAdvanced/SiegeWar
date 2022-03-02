@@ -8,7 +8,11 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.*;
+import com.palmergames.bukkit.towny.object.Coord;
+import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.TownBlock;
+import com.palmergames.bukkit.towny.object.TownyWorld;
+import com.palmergames.bukkit.towny.object.WorldCoord;
 import com.palmergames.util.MathUtil;
 
 import org.bukkit.Bukkit;
@@ -18,7 +22,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -63,8 +66,8 @@ public class SiegeWarDistanceUtil {
 	 * @return all townblocks within the siege zone
 	 */
 	public static Set<TownBlock> getTownBlocksInSiegeZone(Siege siege) {
-		Set<TownBlock> result = new HashSet<>(); 
-		World siegeBannerWorld = siege.getFlagLocation().getWorld();		
+		Set<TownBlock> result = new HashSet<>();
+		World siegeBannerWorld = siege.getFlagLocation().getWorld();
 		int siegeBannerLocationX = (int)siege.getFlagLocation().getX();
 		int siegeBannerLocationZ = (int)siege.getFlagLocation().getZ();
 		int townBlockLocationX;
@@ -75,10 +78,10 @@ public class SiegeWarDistanceUtil {
 		for(Map.Entry<WorldCoord, TownBlock> mapEntry: TownyUniverse.getInstance().getTownBlocks().entrySet()) {
 			if(mapEntry.getKey().getBukkitWorld().equals(siegeBannerWorld)) {
 				townBlockLocationX = (mapEntry.getKey().getX() * townBlockSize) + (townBlockSize /2);
-				townBlockLocationZ = (mapEntry.getKey().getZ() * townBlockSize) + (townBlockSize /2);			
+				townBlockLocationZ = (mapEntry.getKey().getZ() * townBlockSize) + (townBlockSize /2);
 				if(MathUtil.distance(siegeBannerLocationX, townBlockLocationX, siegeBannerLocationZ, townBlockLocationZ) < siegeZoneRadius) {
-					result.add(mapEntry.getValue());					
-				}				
+					result.add(mapEntry.getValue());
+				}
 			}
 		}
 

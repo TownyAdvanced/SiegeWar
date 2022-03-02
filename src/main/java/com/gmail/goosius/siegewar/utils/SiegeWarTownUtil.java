@@ -22,7 +22,7 @@ public class SiegeWarTownUtil {
 			if (plot.getPermissions().pvp != desiredSetting) {
 				plot.getPermissions().pvp = desiredSetting;
 				plot.save();
-			}			
+			}
 		}
 	}
 

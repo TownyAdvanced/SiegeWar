@@ -95,7 +95,7 @@ public class SiegeWarTownEventListener implements Listener {
 		}
 	}
 	
-   /*
+	/*
 	* On toggle pvp, SW can stop a town toggling pvp.
 	*/
 	@EventHandler
