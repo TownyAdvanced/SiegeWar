@@ -24,7 +24,7 @@ public class SiegeWarPlotEventListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled()
 		    && event.getTownBlock().getWorld().isWarAllowed()
 		    && SiegeWarDistanceUtil.isTownBlockInActiveSiegeZone(event.getTownBlock())) {
-                event.setCancellationMsg(Translation.of("msg_err_cannon_toggle_plot_pvp_in_siegezone"));
+                event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_cannon_toggle_plot_pvp_in_siegezone"));
 				event.setCancelled(true);
 		}	
     }

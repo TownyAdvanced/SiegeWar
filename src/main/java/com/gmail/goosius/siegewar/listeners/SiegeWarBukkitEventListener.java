@@ -3,7 +3,11 @@ package com.gmail.goosius.siegewar.listeners;
 import java.util.List;
 
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -19,9 +23,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.entity.LingeringPotionSplashEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.potion.PotionEffectType;
 
@@ -194,6 +196,17 @@ public class SiegeWarBukkitEventListener implements Listener {
 					event.setCancelled(true);
 				}
 			}
+		}
+	}
+
+	@EventHandler
+	public void on(PlayerJoinEvent event) {
+		if(SiegeWarSettings.getWarSiegeEnabled()
+			&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()
+			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getPlayer().getLocation())) {			
+			event.setJoinMessage("join message x");
+			Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_siege_zone_proximity_warning_text"));
+			event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + Translation.of("msg_siege_zone_proximity_warning_hotbar")));			
 		}
 	}
 
