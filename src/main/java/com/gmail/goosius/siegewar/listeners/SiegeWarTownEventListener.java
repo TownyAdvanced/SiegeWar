@@ -1,38 +1,33 @@
 package com.gmail.goosius.siegewar.listeners;
 
-import java.util.ArrayList;
-import com.gmail.goosius.siegewar.TownOccupationController;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
-import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.event.DeleteTownEvent;
 import com.palmergames.bukkit.towny.event.NewTownEvent;
 import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
-import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
-import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
-import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
-import com.palmergames.bukkit.towny.event.town.TownUnconquerEvent;
-import com.palmergames.bukkit.towny.event.town.TownMapColourNationalCalculationEvent;
+import com.palmergames.bukkit.towny.event.town.*;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownTogglePVPEvent;
-import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
-
+import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.util.TimeMgmt;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+import java.util.ArrayList;
 
 /**
  * 
@@ -95,6 +90,23 @@ public class SiegeWarTownEventListener implements Listener {
 		}
 	}
 	
+   /*
+	* On toggle pvp, SW can stop a town toggling pvp.
+	*/
+	@EventHandler
+   	public void onTownTogglePVP(TownTogglePVPEvent event) {
+		if (SiegeWarSettings.getWarSiegeEnabled()) {
+			//If any of the townblocks are in a siegezone, the toggle is prevented.
+			for(TownBlock townBlock: event.getTown().getTownBlocks()) {
+				if(SiegeWarDistanceUtil.isTownBlockInActiveSiegeZone(townBlock)) {
+				   event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_town_affected_by_siege_cannot_toggle_pvp"));
+				   event.setCancelled(true);
+				   return;				
+				}
+			}
+		}
+   }
+
 	/*
 	 * On toggle neutral, SW will evaluate a number of things.
 	 */
