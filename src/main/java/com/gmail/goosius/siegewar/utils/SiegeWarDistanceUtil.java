@@ -13,7 +13,9 @@ import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyWorld;
 import com.palmergames.util.MathUtil;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 
@@ -38,6 +40,16 @@ public class SiegeWarDistanceUtil {
 			}
 		}
 		return false;
+	}
+
+	public static boolean isTownBlockInActiveSiegeZone(TownBlock townBlock) {
+		World world = Bukkit.getWorld(townBlock.getWorld().getName());
+		int townBlockSize = TownySettings.getTownBlockSize();
+		int x = (townBlock.getX() * townBlockSize) + (townBlockSize /2);
+		int y = (townBlock.getX() * townBlockSize) + (townBlockSize /2);
+		int z = 0;		    
+		Location locationOfTownBlock = new Location(world, x, y, z);
+		return isLocationInActiveSiegeZone(locationOfTownBlock);
 	}
 
 	public static boolean isInSiegeZone(Location location, Siege siege) {

@@ -1,5 +1,5 @@
 ﻿name: SiegeWar
-version: 0.36
+version: 0.37
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -152,7 +152,6 @@ hud_defenders: "DEF: "
 hud_banner_control: "Ctrl bannière: "
 hud_time_remaining: "Temps restant: "
 
-msg_err_peaceful_town_pvp_forced_off: "&cLe PVP est désactivé dans les villes pacifiques."
 msg_swa_resident_already_has_control: "&cLe résident %s a déjà le contrôle."
 msg_swa_resident_doesnt_have_control: "&Le résident %s n'a pas le contrôle."
 msg_swa_set_plunder_success: "&bPillage défini pour %s sur %s."

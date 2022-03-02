@@ -73,10 +73,6 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_SUPPRESSION_SIEGES_ENABLED);
 	}
 
-	public static boolean getWarSiegePvpAlwaysOnInBesiegedTowns() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_PVP_ALWAYS_ON_IN_BESIEGED_TOWNS);
-	}
-
 	public static boolean getWarSiegeClaimingDisabledNearSiegeZones() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_CLAIMING_DISABLED_NEAR_SIEGE_ZONES);
 	}
@@ -379,7 +375,7 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean isPeacefulTownsRevoltEnabled() {
-		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_REVOLT_ENABLED);
+		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_PEACEFUL_REVOLT_ENABLED);
 	}
 
 	public static int getPeacefulTownsTownyInfluenceRadius() {
@@ -396,10 +392,6 @@ public class SiegeWarSettings {
 	
 	public static int getBannerControlVerticalDistanceDownBlocks() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_BANNER_CONTROL_VERTICAL_DISTANCE_DOWN_BLOCKS);
-	}
-
-	public static boolean getWarCommonPeacefulTownsAllowedToTogglePVP() {
-		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_ALLOWED_TO_TOGGLE_PVP);
 	}
 
 	public static boolean getPunishingNonSiegeParticipantsInSiegeZone() {

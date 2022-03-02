@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.36
+version: 0.37
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -98,12 +98,12 @@ msg_nobody: '&aNobody'
 msg_attackers: '&aAttackers'
 msg_defenders: '&aDefenders'
 
-#Town Peacefulness
-status_town_peacefulness_status_change_timer: '&2Countdown To Peacefulness Status Change: &a%d days'
-msg_war_common_town_declared_peaceful: '&bPeacefulness Declared!. The town will be confirmed as peaceful in %d day(s).'
-msg_war_common_town_declared_non_peaceful: '&bNon-Peacefulness Declared!. The town will be confirmed as non-peaceful in %d day(s).'
-msg_war_common_town_peacefulness_countdown_cancelled: '&bThe peacefulness status change countdown was cancelled.'
-msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they are in a peaceful town.'
+#Town Neutrality
+status_town_peacefulness_status_change_timer: '&2Countdown To Neutral Status Change: &a%d days'
+msg_war_common_town_declared_peaceful: '&bNeutrality Declared!. The town will be confirmed as Neutral in %d day(s).'
+msg_war_common_town_declared_non_peaceful: '&bNon-Neutrality Declared!. The town will be confirmed as Non-Neutral in %d day(s).'
+msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Neutrality status change countdown was cancelled.'
+msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they are in a Neutral town.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cWar-allergy active. To remove this effect, leave the siege-zone immediately.'
 
 #Siege immunities
@@ -141,7 +141,6 @@ hud_defenders: 'DEF: '
 hud_banner_control: "Banner Control: "
 hud_time_remaining: 'Time Left: '
 
-msg_err_peaceful_town_pvp_forced_off: '&cPeaceful towns have PVP forced OFF.'
 msg_swa_resident_already_has_control: '&cResident %s already has control.'
 msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
 msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
@@ -515,3 +514,6 @@ msg_err_nation_neutrality_not_supported: '&cSiegeWar does not support nation neu
 msg.townyperms.installation.complete: "Towny perms file adjusted for recommended SW setup."
 msg.townyconfig.installation.complete: "Towny config file adjusted for recommended SW setup."
 msg.installation.complete: "Installation Complete."
+
+#Added in 0.37
+msg_err_cannon_toggle_plot_pvp_in_siegezone: "&cYou cannot toggle PVP on a plot which is in a SiegeZone."
