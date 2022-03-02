@@ -49,8 +49,6 @@ msg_town_destroyed_by_nation_tax: "&b%s ne pouvait pas payer de taxes et est rui
 msg_town_destroyed_by_nation_tax_multiple: "&bLes villes suivantes ne pouvaient pas payer les taxes national et sont ruinées : "
 
 #Siege war error message
-#Town Toggling
-msg_err_siege_besieged_town_cannot_toggle_pvp: "&cLes villes assiégées ont le PVP forcé."
 #Recruiting
 msg_err_siege_besieged_town_cannot_recruit: "&cLes villes assiégées ne peuvent pas recruter de nouveaux résidents."
 #Claiming/Unclaiming
@@ -525,3 +523,6 @@ msg_err_nation_neutrality_not_supported: '&cSiegeWar does not support nation neu
 msg.townyperms.installation.complete: "Towny perms file adjusted for recommended SW setup."
 msg.townyconfig.installation.complete: "Towny config file adjusted for recommended SW setup."
 msg.installation.complete: "Installation Complete."
+
+#Added in 0.37
+msg_err_cannon_toggle_plot_pvp_in_siegezone: "&cYou cannot toggle PVP on a plot which is in a SiegeZone."

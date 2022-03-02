@@ -94,34 +94,6 @@ public class SiegeWarTownEventListener implements Listener {
 			town.save();
 		}
 	}
-
-	/*
-	 * On toggle pvp, SW can stop a town toggling pvp.
-	 */
-	@EventHandler
-	public void onTownTogglePVP(TownTogglePVPEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			//If the town is peaceful, it cannot toggle pvp
-			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
-					&& !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()
-					&& event.getTown().isNeutral()
-					&& !event.getTown().isPVP()) {
-				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_pvp_forced_off"));
-				event.setCancelled(true);
-				return;
-			}
-
-			if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns()) {
-
-				//Is the town under siege
-				if (SiegeController.hasActiveSiege(event.getTown())) {
-					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
-					event.setCancelled(true);
-					return;
-				}
-			}
-		}
-	}
 	
 	/*
 	 * On toggle neutral, SW will evaluate a number of things.
@@ -142,8 +114,6 @@ public class SiegeWarTownEventListener implements Listener {
 		if (event.isAdminAction()) {
 			TownMetaDataController.setDesiredPeacefulnessSetting(town, event.getFutureState());
 			TownMetaDataController.setPeacefulnessChangeDays(town, 0);
-			if (event.getFutureState() == true)
-				SiegeWarTownUtil.disableTownPVP(town);
 			return;
 		} else {
 			int days;

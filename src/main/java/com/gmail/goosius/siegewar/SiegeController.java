@@ -270,7 +270,7 @@ public class SiegeController {
 		siegedTowns.remove(siege.getTown());
 		siegedTownNames.remove(siege.getTown().getName());
 
-		SiegeWarTownUtil.setPvpFlag(town, false);
+		SiegeWarTownUtil.setPvpInAllPlotsInSiegeZone(siege,false);
 		CosmeticUtil.removeFakeBeacons(siege);
 
 		//Save town
@@ -470,8 +470,8 @@ public class SiegeController {
 		SiegeController.setSiege(targetTown, true);
 		SiegeController.putTownInSiegeMap(targetTown, siege);
 
-		//Set pvp to true in the besieged town
-		SiegeWarTownUtil.setPvpFlag(targetTown, true);
+		//Set pvp to true in all nearby plots
+		SiegeWarTownUtil.setPvpInAllPlotsInSiegeZone(siege, true);
 
 		sendGlobalSiegeStartMessage(siege);
 

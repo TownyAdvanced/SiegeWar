@@ -1,41 +1,28 @@
 package com.gmail.goosius.siegewar.utils;
 
-import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.object.Town;
+import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.object.TownBlock;
-import com.palmergames.bukkit.towny.object.TownBlockType;
+
+import java.util.Set;
 
 /**
  * Util class containing methods related to town flags/permssions.
  */
 public class SiegeWarTownUtil {
-    public static void disableTownPVP(Town town) {
-		if (town.isPVP())
-				town.setPVP(false);
 
-		for (TownBlock plot : town.getTownBlocks()) {
-			if (plot.getPermissions().pvp) {
-				if (plot.getType() == TownBlockType.ARENA)
-					plot.setType(TownBlockType.RESIDENTIAL);
-			
-				plot.getPermissions().pvp = false;
-				plot.save();
-			}
-		}
-		town.save();
-    }
-
-    /**
-	 * Sets pvp flag in a town to the desired setting.
-	 * 
-	 * @param town The town to set the flag for.
-	 * @param desiredSetting The value to set pvp to.
+	/**
+	 * Set PVP in all plots in a siegezone
+	 *
+	 * @param siege the siege
+	 * @param desiredSetting the desired setting for the pvp flag
 	 */
-	public static void setPvpFlag(Town town, boolean desiredSetting) {
-		
-		if (town.getPermissions().pvp != desiredSetting && SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns()) {
-			town.getPermissions().pvp = desiredSetting;
-			town.save();
+	public static void setPvpInAllPlotsInSiegeZone(Siege siege, boolean desiredSetting) {
+		Set<TownBlock> nearbyPlots = SiegeWarDistanceUtil.getTownBlocksInSiegeZone(siege);
+		for(TownBlock plot: nearbyPlots) {
+			if (plot.getPermissions().pvp != desiredSetting) {
+				plot.getPermissions().pvp = desiredSetting;
+				plot.save();
+			}			
 		}
 	}
 

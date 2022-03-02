@@ -43,8 +43,6 @@ msg_town_destroyed_by_nation_tax: '&b%s couldn''t pay taxes and has fallen.'
 msg_town_destroyed_by_nation_tax_multiple:  '&bThe following towns could not afford the nation tax and have fallen: '
 
 #Siege war error message
-#Town Toggling
-msg_err_siege_besieged_town_cannot_toggle_pvp: "&cBesieged towns have PVP forced ON."
 #Recruiting
 msg_err_siege_besieged_town_cannot_recruit: "&cBesieged towns cannot recruit new residents."
 #Claiming/Unclaiming

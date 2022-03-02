@@ -6,11 +6,9 @@ import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Coord;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.TownBlock;
-import com.palmergames.bukkit.towny.object.TownyWorld;
+import com.palmergames.bukkit.towny.object.*;
 import com.palmergames.util.MathUtil;
 
 import org.bukkit.Bukkit;
@@ -18,6 +16,11 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * This class contains utility functions related to calculating and validating distances
@@ -50,6 +53,36 @@ public class SiegeWarDistanceUtil {
 		int z = 0;		    
 		Location locationOfTownBlock = new Location(world, x, y, z);
 		return isLocationInActiveSiegeZone(locationOfTownBlock);
+	}
+
+	/**
+	 * Get all townblocks inside a siegezone
+	 *
+	 * @param siege the siege
+	 *
+	 * @return all townblocks within the siege zone
+	 */
+	public static Set<TownBlock> getTownBlocksInSiegeZone(Siege siege) {
+		Set<TownBlock> result = new HashSet<>(); 
+		World siegeBannerWorld = siege.getFlagLocation().getWorld();		
+		int siegeBannerLocationX = (int)siege.getFlagLocation().getX();
+		int siegeBannerLocationZ = (int)siege.getFlagLocation().getZ();
+		int townBlockLocationX;
+		int townBlockLocationZ;
+		int townBlockSize = TownySettings.getTownBlockSize();
+		int siegeZoneRadius = SiegeWarSettings.getWarSiegeZoneRadiusBlocks();
+
+		for(Map.Entry<WorldCoord, TownBlock> mapEntry: TownyUniverse.getInstance().getTownBlocks().entrySet()) {
+			if(mapEntry.getKey().getBukkitWorld().equals(siegeBannerWorld)) {
+				townBlockLocationX = (mapEntry.getKey().getX() * townBlockSize) + (townBlockSize /2);
+				townBlockLocationZ = (mapEntry.getKey().getZ() * townBlockSize) + (townBlockSize /2);			
+				if(MathUtil.distance(siegeBannerLocationX, townBlockLocationX, siegeBannerLocationZ, townBlockLocationZ) < siegeZoneRadius) {
+					result.add(mapEntry.getValue());					
+				}				
+			}
+		}
+
+		return result;
 	}
 
 	public static boolean isInSiegeZone(Location location, Siege siege) {
