@@ -204,9 +204,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 			&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()
 			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getPlayer().getLocation())) {			
-			event.setJoinMessage("join message x");
 			Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_siege_zone_proximity_warning_text"));
-			event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED + Translation.of("msg_siege_zone_proximity_warning_hotbar")));			
 		}
 	}
 

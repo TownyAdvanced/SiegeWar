@@ -516,5 +516,4 @@ msg.installation.complete: "Installation Complete."
 #Added in 0.37
 msg_err_cannon_toggle_plot_pvp_in_siegezone: "&cYou cannot toggle PVP in this plot, because it is in a SiegeZone."
 msg_err_siege_town_affected_by_siege_cannot_toggle_pvp: "&cYou cannot toggle PVP in this town, because one or more of its townblocks are in a SiegeZone."
-msg_siege_zone_proximity_warning_hotbar: "WARNING: You are in a SiegeZone!"
 msg_siege_zone_proximity_warning_text: "&cWARNING: You are in a SiegeZone!. If you are not prepared for combat, get to a safe location immediately before you get murdered."
