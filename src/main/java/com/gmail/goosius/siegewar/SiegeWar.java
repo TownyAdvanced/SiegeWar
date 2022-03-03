@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
+import com.gmail.goosius.siegewar.utils.MigrationUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
 import org.bukkit.Bukkit;
@@ -68,7 +69,7 @@ public class SiegeWar extends JavaPlugin {
         } else {
             info("Towny version " + getTownyVersion() + " found.");
         }
-        
+
         if (!loadAll()) {
 	        siegeWarPluginError = true;
         }
@@ -93,7 +94,9 @@ public class SiegeWar extends JavaPlugin {
     
     private boolean loadAll() {
     	return !Towny.getPlugin().isError()
+				&& MigrationUtil.readInConfigFileMigrationFields()
 				&& Settings.loadSettingsAndLang()
+				&& MigrationUtil.migrateConfigFileFields()
 				&& SiegeController.loadAll()
 				&& TownOccupationController.loadAll();
     }
