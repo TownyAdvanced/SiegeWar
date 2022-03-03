@@ -33,7 +33,6 @@ public class SiegeWarSiegeCompletionUtil {
 		siege.setActualEndTime(System.currentTimeMillis());
 		SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown(), siege);
 
-		SiegeWarTownUtil.setPvpInAllPlotsInSiegeZone(siege, false);
 		CosmeticUtil.removeFakeBeacons(siege);
 		/*
 		 * The siege is now historical rather than active.
