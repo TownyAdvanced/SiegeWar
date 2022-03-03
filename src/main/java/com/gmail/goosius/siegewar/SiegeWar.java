@@ -69,7 +69,7 @@ public class SiegeWar extends JavaPlugin {
         } else {
             info("Towny version " + getTownyVersion() + " found.");
         }
-
+        
         if (!loadAll()) {
 	        siegeWarPluginError = true;
         }
