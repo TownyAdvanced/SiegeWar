@@ -94,23 +94,6 @@ public class SiegeWarTownEventListener implements Listener {
 			town.save();
 		}
 	}
-	
-	/*
-	* On toggle pvp, SW can stop a town toggling pvp.
-	*/
-	@EventHandler
-	public void onTownTogglePVP(TownTogglePVPEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			//If any of the townblocks are in a siegezone, the toggle is prevented.
-			for(TownBlock townBlock: event.getTown().getTownBlocks()) {
-				if(SiegeWarDistanceUtil.isTownBlockInActiveSiegeZone(townBlock)) {
-					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_town_affected_by_siege_cannot_toggle_pvp"));
-					event.setCancelled(true);
-					return;
-				}
-			}
-		}
-   }
 
 	/*
 	 * On toggle neutral, SW will evaluate a number of things.
