@@ -123,8 +123,7 @@ public class BookUtil {
 			text += "Besieged towns are unable to unclaim land.\n";
 		if (SiegeWarSettings.getWarSiegeBesiegedTownRecruitmentDisabled())
 			text += "Besieged towns cannot recruit new members.\n";
-		if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns())
-			text += "PVP is forced on in besieged towns.\n";
+		text += "PVP is forced on in all plots in the Siege Zone (including other towns).\n";
 
 		/*
 		 * End Game info
@@ -186,7 +185,6 @@ public class BookUtil {
 			text += SiegeWarSettings.isPeacefulTownsSubvertEnabled() ? 	"it becomes vulnerable to subversion (peaceful occupation) by nearby powerful nations, and " : "";
 			text += "its residents suffer from 'war allergy' if they enter siege zones).\n";
 			text += "When a town chooses to toggle their peaceful status, it will take " + SiegeWarSettings.getWarCommonPeacefulTownsConfirmationRequirementDays() + " days for their decision to take effect.\n";
-			text += "Peaceful towns " + (SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP() ? "are" : "are not") + " allowed to toggle their pvp status.\n";
 		}
 
 		// Map Hiding

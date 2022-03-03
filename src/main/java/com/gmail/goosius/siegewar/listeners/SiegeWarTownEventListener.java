@@ -1,20 +1,16 @@
 package com.gmail.goosius.siegewar.listeners;
 
-import java.util.ArrayList;
-import com.gmail.goosius.siegewar.TownOccupationController;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.settings.Translation;
-import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.event.DeleteTownEvent;
@@ -26,13 +22,15 @@ import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
 import com.palmergames.bukkit.towny.event.town.TownUnconquerEvent;
 import com.palmergames.bukkit.towny.event.town.TownMapColourNationalCalculationEvent;
-import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
-import com.palmergames.bukkit.towny.event.town.toggle.TownTogglePVPEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
+import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
-
 import com.palmergames.util.TimeMgmt;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+import java.util.ArrayList;
 
 /**
  * 
@@ -96,34 +94,6 @@ public class SiegeWarTownEventListener implements Listener {
 	}
 
 	/*
-	 * On toggle pvp, SW can stop a town toggling pvp.
-	 */
-	@EventHandler
-	public void onTownTogglePVP(TownTogglePVPEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			//If the town is peaceful, it cannot toggle pvp
-			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
-					&& !SiegeWarSettings.getWarCommonPeacefulTownsAllowedToTogglePVP()
-					&& event.getTown().isNeutral()
-					&& !event.getTown().isPVP()) {
-				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_pvp_forced_off"));
-				event.setCancelled(true);
-				return;
-			}
-
-			if (SiegeWarSettings.getWarSiegePvpAlwaysOnInBesiegedTowns()) {
-
-				//Is the town under siege
-				if (SiegeController.hasActiveSiege(event.getTown())) {
-					event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_toggle_pvp"));
-					event.setCancelled(true);
-					return;
-				}
-			}
-		}
-	}
-	
-	/*
 	 * On toggle neutral, SW will evaluate a number of things.
 	 */
 	@EventHandler
@@ -142,8 +112,6 @@ public class SiegeWarTownEventListener implements Listener {
 		if (event.isAdminAction()) {
 			TownMetaDataController.setDesiredPeacefulnessSetting(town, event.getFutureState());
 			TownMetaDataController.setPeacefulnessChangeDays(town, 0);
-			if (event.getFutureState() == true)
-				SiegeWarTownUtil.disableTownPVP(town);
 			return;
 		} else {
 			int days;

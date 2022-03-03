@@ -37,7 +37,6 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarTownUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -270,7 +269,6 @@ public class SiegeController {
 		siegedTowns.remove(siege.getTown());
 		siegedTownNames.remove(siege.getTown().getName());
 
-		SiegeWarTownUtil.setPvpFlag(town, false);
 		CosmeticUtil.removeFakeBeacons(siege);
 
 		//Save town
@@ -469,9 +467,6 @@ public class SiegeController {
 
 		SiegeController.setSiege(targetTown, true);
 		SiegeController.putTownInSiegeMap(targetTown, siege);
-
-		//Set pvp to true in the besieged town
-		SiegeWarTownUtil.setPvpFlag(targetTown, true);
 
 		sendGlobalSiegeStartMessage(siege);
 

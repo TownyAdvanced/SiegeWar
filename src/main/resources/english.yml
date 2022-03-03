@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.36
+version: 0.37
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -43,8 +43,6 @@ msg_town_destroyed_by_nation_tax: '&b%s couldn''t pay taxes and has fallen.'
 msg_town_destroyed_by_nation_tax_multiple:  '&bThe following towns could not afford the nation tax and have fallen: '
 
 #Siege war error message
-#Town Toggling
-msg_err_siege_besieged_town_cannot_toggle_pvp: "&cBesieged towns have PVP forced ON."
 #Recruiting
 msg_err_siege_besieged_town_cannot_recruit: "&cBesieged towns cannot recruit new residents."
 #Claiming/Unclaiming
@@ -98,12 +96,12 @@ msg_nobody: '&aNobody'
 msg_attackers: '&aAttackers'
 msg_defenders: '&aDefenders'
 
-#Town Peacefulness
-status_town_peacefulness_status_change_timer: '&2Countdown To Peacefulness Status Change: &a%d days'
-msg_war_common_town_declared_peaceful: '&bPeacefulness Declared!. The town will be confirmed as peaceful in %d day(s).'
-msg_war_common_town_declared_non_peaceful: '&bNon-Peacefulness Declared!. The town will be confirmed as non-peaceful in %d day(s).'
-msg_war_common_town_peacefulness_countdown_cancelled: '&bThe peacefulness status change countdown was cancelled.'
-msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they are in a peaceful town.'
+#Town Neutrality
+status_town_peacefulness_status_change_timer: '&2Countdown To Neutral Status Change: &a%d days'
+msg_war_common_town_declared_peaceful: '&bNeutrality Declared!. The town will be confirmed as Neutral in %d day(s).'
+msg_war_common_town_declared_non_peaceful: '&bNon-Neutrality Declared!. The town will be confirmed as Non-Neutral in %d day(s).'
+msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Neutrality status change countdown was cancelled.'
+msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they are in a Neutral town.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cWar-allergy active. To remove this effect, leave the siege-zone immediately.'
 
 #Siege immunities
@@ -141,7 +139,6 @@ hud_defenders: 'DEF: '
 hud_banner_control: "Banner Control: "
 hud_time_remaining: 'Time Left: '
 
-msg_err_peaceful_town_pvp_forced_off: '&cPeaceful towns have PVP forced OFF.'
 msg_swa_resident_already_has_control: '&cResident %s already has control.'
 msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
 msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
@@ -158,7 +155,7 @@ dynmap_siege_time_left: 'Time Left: %s'
 msg_inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to breaking due to inventory degradation.'
 msg_swa_remove_siege_success: '&bSuccessfully removed siege.'
 msg_war_siege_occupied_towns_cannot_surrender: '&cOccupied towns cannot surrender.'
-msg_you_received_war_sickness: '&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave to remove the war sickness. Common causes of war sickness: being in a peaceful town, not having a military rank or not being allied to either side.'
+msg_you_received_war_sickness: '&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave to remove the war sickness. Common causes of war sickness: being in a neutral town, not having a military rank or not being allied to either side.'
 msg_you_will_get_sickness: '&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave or you will receive war sickness in %s seconds.'
 
 #Added in 0.08:
@@ -369,7 +366,7 @@ msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cCannot unclaim land, 
 # Added in 0.17
 
 # Peaceful towns homeblock move restrictions
-msg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
+msg_err_peaceful_town_cannot_move_homeblock: "&cNeutral towns cannot move their homeblocks. If you wish to move your homeblock, first toggle neutrality off."
 
 # Added in 0.18
 
@@ -426,7 +423,7 @@ msg_siege_war_defender_death: '&bSiege of %s > Defender %s died > Battle Points 
 msg_siege_war_attacker_killed_by_player: '&bSiege of %s > Attacker %s was killed by %s > Battle Points -%d'
 msg_siege_war_defender_killed_by_player: '&bSiege of %s > Defender %s was killed by %s > Battle Points +%d'
 msg_you_cannot_carry_items_in_siegezones: '&cYou cannot carry any items in siege-zones, except picks, axes, shovels, and shears. All other items were automatically dropped.'
-status_town_days_to_peacefulness_status_change: 'Days To Peacefulness Status Change'
+status_town_days_to_peacefulness_status_change: 'Days To Neutrality Status Change'
 
 # Added in 0.27
 msg_next_siege_session_in_minutes: 'The next Siege Session is in %s.'
@@ -468,14 +465,14 @@ msg_next_session_cannot_be_determined: "The next Siege Session has not been sche
 msg_war_siege_max_daily_player_battle_sessions_reached_cannot_get_banner_control: "&cBanner capture failed because you have reached your daily battle session limit (%d). Try again in %s."
 msg_peaceful_town_subverted: "&b%s has been peacefully subverted and occupied by %s."
 msg_peaceful_town_revolted: "&b%s has peacefully revolted against %s, and freed itself from occupation."
-msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot enter siege-zones or gain nation-military ranks.'
-msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Peaceful. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can enter siege-zones and gain nation-military ranks.'
-msg_town_returned_to_pre_peaceful_occupier: " The town has been returned to the occupier it had before it turned peaceful - %s."
+msg_town_became_peaceful: '&b%s has been confirmed as Neutral. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot enter siege-zones or gain nation-military ranks.'
+msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Neutral. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can enter siege-zones and gain nation-military ranks.'
+msg_town_returned_to_pre_peaceful_occupier: " The town has been returned to the occupier it had before it turned neutral - %s."
 msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already occupies it."
 msg_err_cannot_subvert_towns_in_own_nation: "&cYou cannot subvert towns which are in your own nation."
 msg_err_cannot_subvert_town_zero_influence: "&cYou cannot subvert this town, because your nation has no Towny-Influence in the local area."
 msg_err_cannot_subvert_town_insufficient_influence: "&cYou cannot subvert this town, because %s has more Towny-Influence in the local area (%d), than your nation (%d)."
-msg_err_cannot_invite_peaceful_town_occupation: "&cYou cannot invite occupation if your town is peaceful."
+msg_err_cannot_invite_peaceful_town_occupation: "&cYou cannot invite occupation if your town is neutral."
 msg_err_cannot_peacefully_revolt_because_unoccupied: "&cThere is no need to peacefully revolt, because your town is not occupied."
 msg_err_cannot_peacefully_revolt_because_occupier_has_influence: "&cYour town cannot peacefully revolt, because its occupier, %s, still has some Towny-Influence in the local area (%d)."
 
@@ -515,3 +512,6 @@ msg_err_nation_neutrality_not_supported: '&cSiegeWar does not support nation neu
 msg.townyperms.installation.complete: "Towny perms file adjusted for recommended SW setup."
 msg.townyconfig.installation.complete: "Towny config file adjusted for recommended SW setup."
 msg.installation.complete: "Installation Complete."
+
+#Added in 0.37
+msg_siege_zone_proximity_warning_text: "&cWARNING: You are in a SiegeZone!. If you are not prepared for combat, get to a safe location immediately before you get murdered."
