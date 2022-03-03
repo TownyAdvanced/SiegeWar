@@ -58,36 +58,6 @@ public class SiegeWarDistanceUtil {
 		return isLocationInActiveSiegeZone(locationOfTownBlock);
 	}
 
-	/**
-	 * Get all townblocks inside a siegezone
-	 *
-	 * @param siege the siege
-	 *
-	 * @return all townblocks within the siege zone
-	 */
-	public static Set<TownBlock> getTownBlocksInSiegeZone(Siege siege) {
-		Set<TownBlock> result = new HashSet<>();
-		World siegeBannerWorld = siege.getFlagLocation().getWorld();
-		int siegeBannerLocationX = (int)siege.getFlagLocation().getX();
-		int siegeBannerLocationZ = (int)siege.getFlagLocation().getZ();
-		int townBlockLocationX;
-		int townBlockLocationZ;
-		int townBlockSize = TownySettings.getTownBlockSize();
-		int siegeZoneRadius = SiegeWarSettings.getWarSiegeZoneRadiusBlocks();
-
-		for(Map.Entry<WorldCoord, TownBlock> mapEntry: TownyUniverse.getInstance().getTownBlocks().entrySet()) {
-			if(mapEntry.getKey().getBukkitWorld().equals(siegeBannerWorld)) {
-				townBlockLocationX = (mapEntry.getKey().getX() * townBlockSize) + (townBlockSize /2);
-				townBlockLocationZ = (mapEntry.getKey().getZ() * townBlockSize) + (townBlockSize /2);
-				if(MathUtil.distance(siegeBannerLocationX, townBlockLocationX, siegeBannerLocationZ, townBlockLocationZ) < siegeZoneRadius) {
-					result.add(mapEntry.getValue());
-				}
-			}
-		}
-
-		return result;
-	}
-
 	public static boolean isInSiegeZone(Location location, Siege siege) {
 		return areLocationsCloseHorizontally(location, siege.getFlagLocation(), SiegeWarSettings.getWarSiegeZoneRadiusBlocks());
 	}
