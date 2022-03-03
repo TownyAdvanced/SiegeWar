@@ -49,13 +49,14 @@ public class MigrationUtil {
                 // read the config.yml into memory
                 CommentedConfiguration config = new CommentedConfiguration(file.toPath());
                 if (!config.load()) {
-                    throw new TownyException("Failed to load config");
+                    throw new TownyException("Failed to load existing config file.");
                 }
                 //Read in migration fields
                 for(ConfigFileMigrationField migrationField: migrationFields) {
                     migrationField.value = config.get(migrationField.oldKey);
                 }
             }
+            SiegeWar.info("Successfully read existing config file.");
             return true;
         } catch (Exception e) {
             SiegeWar.severe(e.getMessage());
@@ -69,15 +70,20 @@ public class MigrationUtil {
      */
     public static boolean migrateConfigFileFields() {
         try {
+            int numMigratedFields = 0;
             CommentedConfiguration config = Settings.getConfig();
             //migrate fields
             for(ConfigFileMigrationField migrationField: migrationFields) {
                 if(migrationField.value != null) {
                     config.set(migrationField.newKey, migrationField.value);
+                    numMigratedFields++;
                 }
             }
-            //Save to disk
-            config.save();
+            if(numMigratedFields > 0) {
+                //Save to disk
+                config.save();
+                SiegeWar.info("Successfully migrated " + numMigratedFields + " fields.");
+            }
             return true;
         } catch (Exception e) {
             SiegeWar.severe(e.getMessage());
