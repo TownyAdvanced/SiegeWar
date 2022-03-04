@@ -19,7 +19,13 @@ import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.*;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.TownBlock;
+import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.Translator;
+
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -54,7 +60,7 @@ public class PlaceBlock {
 	 * @param event The event object related to the block placement
 	 */
 	public static void evaluateSiegeWarPlaceBlockRequest(Player player, Block block, TownyBuildEvent event) {
-		final Translator translator = Translator.locale(com.palmergames.bukkit.towny.object.Translation.getLocale(player));
+		final Translator translator = Translator.locale(Translation.getLocale(player));
 		try {
 			//Ensure siege is enabled in this world
 			if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
@@ -160,7 +166,7 @@ public class PlaceBlock {
 	 * @throws TownyException if the banner will not be allowed.
 	 */
 	private static boolean evaluatePlaceStandingBanner(Player player, Block block) throws TownyException {
-		final Translator translator = Translator.locale(com.palmergames.bukkit.towny.object.Translation.getLocale(player));
+		final Translator translator = Translator.locale(Translation.getLocale(player));
 		//Ensure the the banner is placed in wilderness
 		if (!TownyAPI.getInstance().isWilderness(block))
 			return false;
@@ -216,7 +222,7 @@ public class PlaceBlock {
 												   Town residentsTown,
 												   Nation residentsNation,
 												   Town nearbyTown) throws TownyException {
-		final Translator translator = Translator.locale(com.palmergames.bukkit.towny.object.Translation.getLocale(player));
+		final Translator translator = Translator.locale(Translation.getLocale(player));
 		//Ensure that there is a siege
 		if (!SiegeController.hasSiege(nearbyTown))
 			throw new TownyException(translator.of("msg_err_town_cannot_end_siege_as_no_siege"));
@@ -324,7 +330,7 @@ public class PlaceBlock {
 													 			  Town nearbyTown,
 													 			  Block bannerBlock
 											         			  ) throws TownyException {
-		final Translator translator = Translator.locale(com.palmergames.bukkit.towny.object.Translation.getLocale(player));
+		final Translator translator = Translator.locale(Translation.getLocale(player));
 		if (nearbyTown.isRuined())
 			throw new TownyException(translator.of("msg_err_cannot_start_siege_at_ruined_town"));
 
@@ -376,7 +382,7 @@ public class PlaceBlock {
 		if (!SiegeWarSettings.getWarSiegePlunderEnabled() || !TownyAPI.getInstance().isWilderness(block))
 			return;
 		
-		final Translator translator = Translator.locale(com.palmergames.bukkit.towny.object.Translation.getLocale(player));
+		final Translator translator = Translator.locale(Translation.getLocale(player));
 		
 		if(!TownyEconomyHandler.isActive())
 			throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_economy"));
