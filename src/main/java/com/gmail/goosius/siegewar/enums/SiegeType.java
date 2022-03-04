@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.enums;
 
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 
 public enum SiegeType {
@@ -18,6 +19,10 @@ public enum SiegeType {
 
     public String getName() {
         return Translation.of(siegeTypeLangKey);
+    }
+    
+    public Translatable getTranslatedName() {
+    	return Translatable.of(siegeTypeLangKey);
     }
 
     public static SiegeType parseString(String line) {

@@ -141,7 +141,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 				String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis()); 
 
 				// > Type: Conquest
-				out.add(translator.of("status_town_siege_type", siege.getSiegeType().getName()));
+				out.add(translator.of("status_town_siege_type", siege.getSiegeType().getTranslatedName()));
 
 				// > Status: In Progress
 				out.add(translator.of("status_town_siege_status", getStatusTownSiegeSummary(siege, translator)));

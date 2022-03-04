@@ -25,7 +25,7 @@ public class SiegeWarHud {
         }
         
         board.getObjective("WAR_HUD_OBJ").setDisplayName(SiegeHUDManager.checkLength(Colors.Gold + "§l" + siege.getTown().getName()) + " " + Translatable.of("hud_title").forLocale(p));
-        board.getTeam("siegeType").setSuffix(SiegeHUDManager.checkLength(siege.getSiegeType().getName()));
+        board.getTeam("siegeType").setSuffix(SiegeHUDManager.checkLength(siege.getSiegeType().getTranslatedName().forLocale(p)));
         board.getTeam("attackers").setSuffix(SiegeHUDManager.checkLength(siege.getAttackerNameForDisplay()));
         board.getTeam("defenders").setSuffix(SiegeHUDManager.checkLength(siege.getDefenderNameForDisplay()));
         board.getTeam("balance").setSuffix(siege.getSiegeBalance().toString());
