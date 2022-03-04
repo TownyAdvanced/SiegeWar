@@ -84,4 +84,17 @@ public class Messaging {
 			}
 		}
 	}
+	
+	public static void sendGlobalMessage(Translatable[] lines) {
+		for(Translatable line: lines) {
+			SiegeWar.info(line.defaultLocale());
+		}
+		for(Player player: Bukkit.getOnlinePlayers()) {
+			if(player != null && TownyAPI.getInstance().isTownyWorld(player.getLocation().getWorld())) {
+				for(Translatable line: lines) {
+					sendMsg(player, line);
+				}
+			}
+		}
+	}
 }

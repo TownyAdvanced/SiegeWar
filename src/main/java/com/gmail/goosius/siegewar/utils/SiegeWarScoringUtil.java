@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 
 import org.bukkit.entity.Entity;
@@ -69,21 +70,21 @@ public class SiegeWarScoringUtil {
 		SiegeController.saveSiege(siege);
 
 		//Generate message
-		String unformattedErrorMessage;
-		String message;
+		String langKey;
+		Translatable message;
 		Player killer = getPlayerKiller(player);
 		if(killer != null) {
-			unformattedErrorMessage = residentIsAttacker ? 	Translation.of("msg_siege_war_attacker_killed_by_player") : Translation.of("msg_siege_war_defender_killed_by_player");
-			message = String.format(
-				unformattedErrorMessage,
+			langKey = residentIsAttacker ? 	"msg_siege_war_attacker_killed_by_player" : "msg_siege_war_defender_killed_by_player";
+			message = Translatable.of(
+				langKey,
 				siege.getTown().getName(),
 				player.getName(),
 				killer.getName(),
 				Math.abs(battlePoints));
 		} else {
-			unformattedErrorMessage = residentIsAttacker ? 	Translation.of("msg_siege_war_attacker_death") : Translation.of("msg_siege_war_defender_death");
-			message = String.format(
-				unformattedErrorMessage,
+			langKey = residentIsAttacker ? 	Translation.of("msg_siege_war_attacker_death") : Translation.of("msg_siege_war_defender_death");
+			message = Translatable.of(
+				langKey,
 				siege.getTown().getName(),
 				player.getName(),
 				Math.abs(battlePoints));

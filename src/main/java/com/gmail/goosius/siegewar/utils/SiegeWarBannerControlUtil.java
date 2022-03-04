@@ -150,12 +150,9 @@ public class SiegeWarBannerControlUtil {
 			}
 
 			if(firstControlSwitchingSession) {
-				String message;
-				if (siegeSide == SiegeSide.ATTACKERS) {
-					message = Translation.of("msg_siege_war_attacking_troops_at_siege_banner", siege.getTown().getFormattedName());
-				} else {
-					message = Translation.of("msg_siege_war_defending_troops_at_siege_banner", siege.getTown().getFormattedName());
-				}
+				Translatable message = siegeSide == SiegeSide.ATTACKERS 
+					? Translatable.of("msg_siege_war_attacking_troops_at_siege_banner", siege.getTown().getFormattedName())
+					: Translatable.of("msg_siege_war_defending_troops_at_siege_banner", siege.getTown().getFormattedName());
 
 				SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
 			}
@@ -273,22 +270,22 @@ public class SiegeWarBannerControlUtil {
 						//Inform player
 						Messaging.sendMsg(bannerControlSession.getPlayer(), Translatable.of("msg_siege_war_banner_control_session_success"));
 						//Inform town/nation participants
-						String message;
+						Translatable[] message = new Translatable[2];
 						if(reversal) {
 							if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
-								message = Translation.of("msg_siege_war_banner_control_reversed_by_attacker", siege.getTown().getFormattedName());
+								message[0] = Translatable.of("msg_siege_war_banner_control_reversed_by_attacker", siege.getTown().getFormattedName());
 							} else {
-								message = Translation.of("msg_siege_war_banner_control_reversed_by_defender", siege.getTown().getFormattedName());
+								message[0] = Translatable.of("msg_siege_war_banner_control_reversed_by_defender", siege.getTown().getFormattedName());
 							}
 							if(SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled()) {
 								String sign = bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS ? "+" : "-";
-								message += Translation.of("msg_siege_war_banner_control_reversal_bonus", sign, reversalBonusScore);
+								message[1] = Translatable.of("msg_siege_war_banner_control_reversal_bonus", sign, reversalBonusScore);
 							}
 						} else {
 							if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
-								message = Translation.of("msg_siege_war_banner_control_gained_by_attacker", siege.getTown().getFormattedName());
+								message[0] = Translatable.of("msg_siege_war_banner_control_gained_by_attacker", siege.getTown().getFormattedName());
 							} else {
-								message = Translation.of("msg_siege_war_banner_control_gained_by_defender", siege.getTown().getFormattedName());
+								message[0] = Translatable.of("msg_siege_war_banner_control_gained_by_defender", siege.getTown().getFormattedName());
 							}
 						}
 						SiegeWarNotificationUtil.informSiegeParticipants(siege, message);

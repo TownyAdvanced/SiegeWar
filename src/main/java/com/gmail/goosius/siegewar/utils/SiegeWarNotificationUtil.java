@@ -7,6 +7,8 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translatable;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -15,7 +17,7 @@ import java.util.Set;
 
 public class SiegeWarNotificationUtil {
 
-	public static void informSiegeParticipants(Siege siege, String message) {
+	public static void informSiegeParticipants(Siege siege, Translatable... message) {
 
 		try {
 			//Build list of who to inform
@@ -57,16 +59,19 @@ public class SiegeWarNotificationUtil {
 
 			//Inform required towns and nations
 			for(Nation nationToInform: nationsToInform) {
-				TownyMessaging.sendPrefixedNationMessage(nationToInform, message);
+				for (Translatable line : message)
+					TownyMessaging.sendPrefixedNationMessage(nationToInform, line);
 			}
 			for(Town townToInform: townsToInform) {
-				TownyMessaging.sendPrefixedTownMessage(townToInform, message);
+				for (Translatable line : message)
+					TownyMessaging.sendPrefixedTownMessage(townToInform, line);
 			}
 
 			//Inform battlefield observers
 			for(Player player: Bukkit.getOnlinePlayers()) {
 				if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NOTIFICATIONS_ALL.getNode())) {
-					Messaging.sendMsg(player, message);
+					for (Translatable line : message)
+						Messaging.sendMsg(player, line);
 				}
 			}
 
