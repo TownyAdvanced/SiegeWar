@@ -53,7 +53,10 @@ public class MigrationUtil {
                 }
                 //Read in migration fields
                 for(ConfigFileMigrationField migrationField: migrationFields) {
-                    migrationField.value = config.get(migrationField.oldKey);
+                    //Read if old field exists AND is not dummy
+                    if(config.contains(migrationField.oldKey) && config.getComments(migrationField.oldKey).size() >0 ) {
+                        migrationField.value = config.get(migrationField.oldKey);
+                    }
                 }
             }
             SiegeWar.info("Successfully read existing config file.");
