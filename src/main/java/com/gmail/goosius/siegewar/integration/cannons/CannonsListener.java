@@ -12,6 +12,7 @@ import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.util.BukkitTools;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,6 +43,7 @@ public class CannonsListener implements Listener {
 			&& SiegeWarSettings.isWallBreachingCannonsIntegrationEnabled() 
 			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getCannon().getLocation())) {
 
+			//Ensure a battle session is active
 			Player gunnerPlayer = BukkitTools.getPlayer(event.getPlayer());
 			if(!BattleSession.getBattleSession().isActive()) {
 				Messaging.sendErrorMsg(gunnerPlayer, Translation.of("msg_err_cannot_fire_cannon_without_battle_session"));
@@ -49,7 +51,18 @@ public class CannonsListener implements Listener {
 				return;  //Cannon fire was cancelled	
 			}
 
+			//Ensure cannon is fully in the wilderness OR the besieged town
 			Siege siege = SiegeController.getSiegeAtLocation(event.getCannon().getLocation());
+			for(Location cannonBlockLocation: event.getCannon().getCannonDesign().getAllCannonBlocks(event.getCannon())) {
+				if(!TownyAPI.getInstance().isWilderness(cannonBlockLocation)
+					&& !TownyAPI.getInstance().getTown(cannonBlockLocation).equals(siege.getTown())) {
+						Messaging.sendErrorMsg(gunnerPlayer, Translation.of("msg_err_cannon_must_be_in_wilderness_or_besieged_town"));
+						event.setCancelled(true);
+						return;  //Cannon fire was cancelled
+				}
+			}
+
+			//Ensure player has perms to fire, and there are enough breach points
 			if(CannonsIntegration.canPlayerUseBreachPointsByCannon(gunnerPlayer, siege)) {
 				return; //Player can fire cannon
 			
