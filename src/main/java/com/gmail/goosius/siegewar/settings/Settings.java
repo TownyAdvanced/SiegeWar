@@ -181,4 +181,8 @@ public class Settings {
 	public static File getBattleIconFile() {
 		return battleIconFile;
 	}
+
+	public static CommentedConfiguration getConfig() {
+		return config;
+	}
 }

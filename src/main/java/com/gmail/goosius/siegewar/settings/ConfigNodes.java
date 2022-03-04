@@ -398,8 +398,7 @@ public enum ConfigNodes {
 			"war.siege.points_balancing.base_points.banner_control.defender",
 			"10",
 			"",
-			"# This value determines the number of battle points awarded every SiegeWar-tick (20 seconds) to a defender with banner-control.",
-			"# TIP: Always keep this value at 10, for easier comparison with other server configurations."),
+			"# This value determines the number of battle points awarded every SiegeWar-tick (20 seconds) to a defender with banner-control."),
     WAR_SIEGE_POINTS_BALANCING_BASE_POINTS_DEATHS(
 			"war.siege.points_balancing.base_points.deaths",
 			"",
@@ -433,7 +432,6 @@ public enum ConfigNodes {
 			"# If the wall breaching feature is enabled (in the 'Wall Breaching' config section), this value determines the number of Battle Points awarded by the Wall Breach Bonus.",
 			"# To get the bonus, hostile-to-town players must capture the banner first, then get to the homeblock.",
 			"# TIP: Players are required to cap first, because otherwise they could log off at the homeblock after getting the bonus, and then in the next session, simply log back in to get the bonus again."),
-
 	WAR_SIEGE_POINTS_BALANCING_BANNER_CONTROL_REVERSAL_BONUS(
 			"war.siege.points_balancing.banner_control_reversal_bonus",
 			"",
