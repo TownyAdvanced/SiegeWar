@@ -57,6 +57,8 @@ public enum SiegeStatus {
 	}
 	
 	/**
+	 * Currently unused.
+	 * 
 	 * @return translated siege status.
 	 */
 	public String getName() {
