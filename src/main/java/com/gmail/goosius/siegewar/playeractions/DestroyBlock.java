@@ -5,7 +5,6 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
@@ -16,6 +15,8 @@ import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translation;
+
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;

@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.enums;
 
-import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.object.Translation;
 
 public enum SiegeType {
     CONQUEST,

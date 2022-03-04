@@ -17,7 +17,6 @@ import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.ChatTools;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.palmergames.adventure.text.Component;
@@ -32,6 +31,7 @@ import com.palmergames.bukkit.towny.event.statusscreen.TownStatusScreenEvent;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
 

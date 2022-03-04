@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.enums;
 
-import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.object.Translation;
 
 public enum SiegeSide {
 	ATTACKERS("msg_attackers"), DEFENDERS("msg_defenders"), NOBODY("msg_nobody");

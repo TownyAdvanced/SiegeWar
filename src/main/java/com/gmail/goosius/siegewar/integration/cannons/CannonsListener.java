@@ -8,9 +8,9 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.util.BukkitTools;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -46,7 +46,7 @@ public class CannonsListener implements Listener {
 			//Ensure a battle session is active
 			Player gunnerPlayer = BukkitTools.getPlayer(event.getPlayer());
 			if(!BattleSession.getBattleSession().isActive()) {
-				Messaging.sendErrorMsg(gunnerPlayer, Translation.of("msg_err_cannot_fire_cannon_without_battle_session"));
+				Messaging.sendErrorMsg(gunnerPlayer, Translatable.of("msg_err_cannot_fire_cannon_without_battle_session"));
 				event.setCancelled(true);
 				return;  //Cannon fire was cancelled	
 			}
@@ -56,7 +56,7 @@ public class CannonsListener implements Listener {
 			for(Location cannonBlockLocation: event.getCannon().getCannonDesign().getAllCannonBlocks(event.getCannon())) {
 				if(!TownyAPI.getInstance().isWilderness(cannonBlockLocation)
 					&& !TownyAPI.getInstance().getTown(cannonBlockLocation).equals(siege.getTown())) {
-						Messaging.sendErrorMsg(gunnerPlayer, Translation.of("msg_err_cannon_must_be_in_wilderness_or_besieged_town"));
+						Messaging.sendErrorMsg(gunnerPlayer, Translatable.of("msg_err_cannon_must_be_in_wilderness_or_besieged_town"));
 						event.setCancelled(true);
 						return;  //Cannon fire was cancelled
 				}
@@ -75,7 +75,7 @@ public class CannonsListener implements Listener {
 				}
 				return;	//Player can fire cannon
 			} else {
-				Messaging.sendErrorMsg(gunnerPlayer, Translation.of("msg_err_cannot_fire_cannon_without_perms"));
+				Messaging.sendErrorMsg(gunnerPlayer, Translatable.of("msg_err_cannot_fire_cannon_without_perms"));
 				event.setCancelled(true);
 				return;  //Cannon fire was cancelled
 			}

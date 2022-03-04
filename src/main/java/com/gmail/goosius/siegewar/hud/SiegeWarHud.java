@@ -3,8 +3,10 @@ package com.gmail.goosius.siegewar.hud;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.bukkit.util.Colors;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
@@ -22,7 +24,7 @@ public class SiegeWarHud {
             return;
         }
         
-        board.getObjective("WAR_HUD_OBJ").setDisplayName(SiegeHUDManager.checkLength(Colors.Gold + "§l" + siege.getTown().getName()) + " " + Translation.of("hud_title"));
+        board.getObjective("WAR_HUD_OBJ").setDisplayName(SiegeHUDManager.checkLength(Colors.Gold + "§l" + siege.getTown().getName()) + " " + Translatable.of("hud_title").forLocale(p));
         board.getTeam("siegeType").setSuffix(SiegeHUDManager.checkLength(siege.getSiegeType().getName()));
         board.getTeam("attackers").setSuffix(SiegeHUDManager.checkLength(siege.getAttackerNameForDisplay()));
         board.getTeam("defenders").setSuffix(SiegeHUDManager.checkLength(siege.getDefenderNameForDisplay()));
@@ -45,8 +47,9 @@ public class SiegeWarHud {
     }
 
     public static void toggleOn(Player p, Siege siege) {
+    	final Translator translator = Translator.locale(Translation.getLocale(p));
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective objective = board.registerNewObjective("WAR_HUD_OBJ", "", Translation.of("hud_title"));
+        Objective objective = board.registerNewObjective("WAR_HUD_OBJ", "", translator.of("hud_title"));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         Team siegeType = board.registerNewTeam("siegeType"),
@@ -60,16 +63,16 @@ public class SiegeWarHud {
             battleDefenderScore = board.registerNewTeam("btDefenderPoints"),
             battleTimeRemaining = board.registerNewTeam("btTimeRemaining");
 
-            String siegeType_entry = Colors.LightGray + Translation.of("hud_siege_type"),
-            attackers_entry = Colors.LightGray + Translation.of("hud_attackers"),
-            defenders_entry = Colors.LightGray + Translation.of("hud_defenders"),
-            balance_entry = Colors.LightGray + Translation.of("hud_siege_balance"),
-            timeRemaining_entry = Colors.LightGray + Translation.of("hud_time_remaining"),
-            warchest_entry = Colors.LightGray + Translation.of("hud_warchest"),
-            bannerControl_entry = Colors.LightGray + Translation.of("hud_banner_control"),
-            battleAttackerScore_entry = Colors.LightGray + Translation.of("hud_battle_attacker_points"),
-            battleDefenderScore_entry = Colors.LightGray + Translation.of("hud_battle_defender_points"),
-            battleTimeRemaining_entry = Colors.LightGray + Translation.of("hud_battle_time_remaining");
+            String siegeType_entry = Colors.LightGray + translator.of("hud_siege_type"),
+            attackers_entry = Colors.LightGray + translator.of("hud_attackers"),
+            defenders_entry = Colors.LightGray + translator.of("hud_defenders"),
+            balance_entry = Colors.LightGray + translator.of("hud_siege_balance"),
+            timeRemaining_entry = Colors.LightGray + translator.of("hud_time_remaining"),
+            warchest_entry = Colors.LightGray + translator.of("hud_warchest"),
+            bannerControl_entry = Colors.LightGray + translator.of("hud_banner_control"),
+            battleAttackerScore_entry = Colors.LightGray + translator.of("hud_battle_attacker_points"),
+            battleDefenderScore_entry = Colors.LightGray + translator.of("hud_battle_defender_points"),
+            battleTimeRemaining_entry = Colors.LightGray + translator.of("hud_battle_time_remaining");
 
         siegeType.addEntry(siegeType_entry);
         attackers.addEntry(attackers_entry);
@@ -102,7 +105,7 @@ public class SiegeWarHud {
 
         if(displayBreachPoints) {
             Team breachPoints = board.registerNewTeam("breachPoints");
-            String breachPoints_entry = Colors.LightGray + Translation.of("hud_breach_points");
+            String breachPoints_entry = Colors.LightGray + translator.of("hud_breach_points");
             breachPoints.addEntry(breachPoints_entry);
             objective.getScore(breachPoints_entry).setScore(topScore--);
         }

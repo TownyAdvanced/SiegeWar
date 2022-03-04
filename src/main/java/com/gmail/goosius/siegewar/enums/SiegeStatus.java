@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.enums;
 
-import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.object.Translation;
+
 /**
  * This class represents the "status" of a siege
  * 

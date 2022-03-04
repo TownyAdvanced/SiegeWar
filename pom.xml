@@ -32,6 +32,10 @@
       <id>citizens-repo</id>
       <url>https://repo.citizensnpcs.co/</url>
     </repository>
+    <repository>
+      <id>glaremasters repo</id>
+      <url>https://repo.glaremasters.me/repository/towny/</url>
+    </repository>
   </repositories>
   
   <dependencies>
@@ -42,9 +46,9 @@
       <scope>provided</scope>
     </dependency>
 	<dependency>
-	  <groupId>com.github.TownyAdvanced</groupId>
+	  <groupId>com.palmergames.bukkit.towny</groupId>
 	  <artifactId>Towny</artifactId>
-	  <version>0.97.5.0</version>
+	  <version>0.98.0.0</version>
 	  <scope>provided</scope>
 	</dependency>
     <dependency>

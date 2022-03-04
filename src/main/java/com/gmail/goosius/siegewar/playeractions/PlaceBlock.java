@@ -9,7 +9,6 @@ import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
@@ -17,7 +16,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
-import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -56,7 +54,7 @@ public class PlaceBlock {
 	 * @param event The event object related to the block placement
 	 */
 	public static void evaluateSiegeWarPlaceBlockRequest(Player player, Block block, TownyBuildEvent event) {
-
+		final Translator translator = Translator.locale(com.palmergames.bukkit.towny.object.Translation.getLocale(player));
 		try {
 			//Ensure siege is enabled in this world
 			if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
@@ -72,12 +70,12 @@ public class PlaceBlock {
 					return; //SW doesn't un-cancel events in unsieged towns
 				//Ensure player has permission
 				if (!TownyUniverse.getInstance().getPermissionSource().testPermission(event.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_USE_BREACH_POINTS.getNode())) {
-					event.setMessage(Translation.of("msg_err_action_disable"));
+					event.setMessage(translator.of("msg_err_action_disable"));
 					return; 
 				}
 				//No wall breaching outside battle sessions
 				if(!BattleSession.getBattleSession().isActive()) {
-					event.setMessage(Translation.of("msg_err_cannot_breach_without_battle_session"));
+					event.setMessage(translator.of("msg_err_cannot_breach_without_battle_session"));
 					return;
 				}
 				//Ensure player is on the town-hostile siege side				
@@ -89,18 +87,18 @@ public class PlaceBlock {
 					return;
 				//Ensure there are enough breach points				
 				if(siege.getWallBreachPoints() < SiegeWarSettings.getWallBreachingBlockPlacementCost()) {			
-					event.setMessage(Translation.of("msg_err_not_enough_breach_points_for_action", SiegeWarSettings.getWallBreachingBlockPlacementCost(), siege.getFormattedBreachPoints()));
+					event.setMessage(translator.of("msg_err_not_enough_breach_points_for_action", SiegeWarSettings.getWallBreachingBlockPlacementCost(), siege.getFormattedBreachPoints()));
 					return;
 				}			
 				//Ensure height is ok
 				if(!SiegeWarWallBreachUtil.validateBreachHeight(block, town, siege)) {
-					event.setMessage(Translation.of("msg_err_cannot_breach_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
+					event.setMessage(translator.of("msg_err_cannot_breach_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
 					return;
 				}
 				//Ensure the material is ok to place
 				if(!SiegeWarSettings.getWallBreachingPlaceBlocksWhitelist()
 					.contains(block.getType())) {
-					event.setMessage(Translation.of("msg_err_breaching_cannot_place_this_material"));
+					event.setMessage(translator.of("msg_err_breaching_cannot_place_this_material"));
 					return;
 				}
 				//IF we get here, it is a wall breach!!					
@@ -109,14 +107,14 @@ public class PlaceBlock {
 				//Un-cancel the event
 				event.setCancelled(false);
 				//Send message to player				
-				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED +  Translation.of("msg_wall_breach_successful")));
+				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED +  translator.of("msg_wall_breach_successful")));
 				return;
 			}
 
 			//Enforce Anti-Trap warfare build block if below siege banner altitude.
 			if (SiegeWarSettings.isTrapWarfareMitigationEnabled()
 					&& SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(event.getBlock().getLocation())) {
-				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + Translation.of("msg_err_cannot_alter_blocks_below_banner_in_timed_point_zone")));
+				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_below_banner_in_timed_point_zone")));
 				event.setCancelled(true);
 				return;
 			}
@@ -148,7 +146,7 @@ public class PlaceBlock {
 			if(SiegeWarSettings.getSiegeZoneWildernessForbiddenBlockMaterials().contains(mat)
 				&& TownyAPI.getInstance().isWilderness(block)
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(block.getLocation())) {
-					throw new TownyException(Translation.of("msg_war_siege_zone_block_placement_forbidden"));
+					throw new TownyException(translator.of("msg_war_siege_zone_block_placement_forbidden"));
 			}
 
 		} catch (TownyException e) {
@@ -162,6 +160,7 @@ public class PlaceBlock {
 	 * @throws TownyException if the banner will not be allowed.
 	 */
 	private static boolean evaluatePlaceStandingBanner(Player player, Block block) throws TownyException {
+		final Translator translator = Translator.locale(com.palmergames.bukkit.towny.object.Translation.getLocale(player));
 		//Ensure the the banner is placed in wilderness
 		if (!TownyAPI.getInstance().isWilderness(block))
 			return false;
@@ -169,7 +168,7 @@ public class PlaceBlock {
 		//Ensure the player has a town
 		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 		if (resident == null || !resident.hasTown())
-			throw new TownyException(Translation.of("msg_err_siege_war_action_not_a_town_member"));
+			throw new TownyException(translator.of("msg_err_siege_war_action_not_a_town_member"));
 		Town residentsTown = resident.getTown();
 
 		//Get resident's nation (if any, for convenience)
@@ -185,7 +184,7 @@ public class PlaceBlock {
 
 		//Ensure there is just one cardinal town block
 		if (adjacentCardinalTownBlocks.size() > 1)
-			throw new TownyException(Translation.of("msg_err_siege_war_too_many_adjacent_towns"));
+			throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
 
 		//Get 1st nearby townblock
 		TownBlock townBlock;
@@ -217,14 +216,15 @@ public class PlaceBlock {
 												   Town residentsTown,
 												   Nation residentsNation,
 												   Town nearbyTown) throws TownyException {
+		final Translator translator = Translator.locale(com.palmergames.bukkit.towny.object.Translation.getLocale(player));
 		//Ensure that there is a siege
 		if (!SiegeController.hasSiege(nearbyTown))
-			throw new TownyException(Translation.of("msg_err_town_cannot_end_siege_as_no_siege"));
+			throw new TownyException(translator.of("msg_err_town_cannot_end_siege_as_no_siege"));
 
 		//Get siege
 		Siege siege = SiegeController.getSiege(nearbyTown);
 		if(siege.getStatus() != SiegeStatus.IN_PROGRESS)
-			throw new TownyException(Translation.of("msg_err_town_cannot_end_siege_as_finished"));
+			throw new TownyException(translator.of("msg_err_town_cannot_end_siege_as_finished"));
 
 		/*
 		 * Check what type of action this qualifies as.
@@ -237,7 +237,7 @@ public class PlaceBlock {
 				} else if (residentsTown == nearbyTown) {
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
-					throw new TownyException(Translation.of("msg_err_action_disable"));
+					throw new TownyException(translator.of("msg_err_action_disable"));
 				}
 				break;
 			case LIBERATION:
@@ -246,7 +246,7 @@ public class PlaceBlock {
 				} else if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
-					throw new TownyException(Translation.of("msg_err_action_disable"));
+					throw new TownyException(translator.of("msg_err_action_disable"));
 				}
 				break;
 			case REVOLT:
@@ -255,7 +255,7 @@ public class PlaceBlock {
 				} else if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
-					throw new TownyException(Translation.of("msg_err_action_disable"));
+					throw new TownyException(translator.of("msg_err_action_disable"));
 				}
 				break;
 			case SUPPRESSION:
@@ -264,7 +264,7 @@ public class PlaceBlock {
 				} else if (residentsTown == nearbyTown) {
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
-					throw new TownyException(Translation.of("msg_err_action_disable"));
+					throw new TownyException(translator.of("msg_err_action_disable"));
 				}
 				break;
 		}
@@ -324,31 +324,32 @@ public class PlaceBlock {
 													 			  Town nearbyTown,
 													 			  Block bannerBlock
 											         			  ) throws TownyException {
+		final Translator translator = Translator.locale(com.palmergames.bukkit.towny.object.Translation.getLocale(player));
 		if (nearbyTown.isRuined())
-			throw new TownyException(Translation.of("msg_err_cannot_start_siege_at_ruined_town"));
+			throw new TownyException(translator.of("msg_err_cannot_start_siege_at_ruined_town"));
 
 		if(SiegeWarBlockUtil.isSupportBlockUnstable(bannerBlock))
-			throw new TownyException(Translation.of("msg_err_siege_war_banner_support_block_not_stable"));
+			throw new TownyException(translator.of("msg_err_siege_war_banner_support_block_not_stable"));
 
         if(!SiegeWarSettings.getSiegeStartDayLimiterAllowedDays().contains(LocalDate.now().getDayOfWeek()))
-			throw new TownyException(Translation.of("msg_err_cannot_start_sieges_today"));
+			throw new TownyException(translator.of("msg_err_cannot_start_sieges_today"));
 
 		if (residentsTown == nearbyTown) {
 			//Revolt siege
 			StartRevoltSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 		} else {
 			if (residentsNation == null)
-				throw new TownyException(Translation.of("msg_err_action_disable"));
+				throw new TownyException(translator.of("msg_err_action_disable"));
 
 			if (System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(nearbyTown)
 			|| TownMetaDataController.getSiegeImmunityEndTime(nearbyTown) == -1l)
-				throw new TownyException(Translation.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
+				throw new TownyException(translator.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
 
 			if (TownyEconomyHandler.isActive() && !residentsNation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.calculateSiegeCost(nearbyTown)))
-				throw new TownyException(Translation.of("msg_err_no_money"));
+				throw new TownyException(translator.of("msg_err_no_money"));
 
 			if(SiegeController.getActiveOffensiveSieges(residentsNation).size() >= SiegeWarSettings.getWarSiegeMaxActiveSiegeAttacksPerNation())
-				throw new TownyException(Translation.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));
+				throw new TownyException(translator.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));
 
 			if (TownOccupationController.isTownOccupied(nearbyTown)) {
 				Nation occupierOfNearbyTown = TownOccupationController.getTownOccupier(nearbyTown);
@@ -375,8 +376,10 @@ public class PlaceBlock {
 		if (!SiegeWarSettings.getWarSiegePlunderEnabled() || !TownyAPI.getInstance().isWilderness(block))
 			return;
 		
+		final Translator translator = Translator.locale(com.palmergames.bukkit.towny.object.Translation.getLocale(player));
+		
 		if(!TownyEconomyHandler.isActive())
-			throw new TownyException(Translation.of("msg_err_siege_war_cannot_plunder_without_economy"));
+			throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_economy"));
 		
 		//If there are no sieges nearby, do normal block placement
 		Set<Siege> adjacentSieges = SiegeWarBlockUtil.getAllAdjacentSieges(block);
@@ -385,7 +388,7 @@ public class PlaceBlock {
 
 		//Ensure there is only one adjacent siege
 		if(adjacentSieges.size() > 1)
-			throw new TownyException(Translation.of("msg_err_siege_war_too_many_adjacent_towns"));
+			throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
 
 		//Attempt plunder.
 		PlunderTown.processPlunderTownRequest(player, adjacentSieges.iterator().next().getTown());

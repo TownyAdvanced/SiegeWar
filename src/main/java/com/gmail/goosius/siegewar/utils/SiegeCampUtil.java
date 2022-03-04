@@ -11,13 +11,13 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeMgmt;
 
 public class SiegeCampUtil {
@@ -74,7 +74,7 @@ public class SiegeCampUtil {
 
 			// At least one attacker is present, give attacker points and break out of the loop.
 			camp.setAttackerPoints(camp.getAttackerPoints() + SiegeWarSettings.getSiegeCampPointsPerMinute());
-			Messaging.sendGlobalMessage(Translation.of("attackers_scored_points_towards_siege_camp_x_of_x", camp.getTownOfSiegeStarter(), camp.getAttackerPoints(), SiegeWarSettings.getSiegeCampPointsForSuccess()));
+			Messaging.sendGlobalMessage(Translatable.of("attackers_scored_points_towards_siege_camp_x_of_x", camp.getTownOfSiegeStarter(), camp.getAttackerPoints(), SiegeWarSettings.getSiegeCampPointsForSuccess()));
 			break;
 		}
 	}
@@ -94,9 +94,9 @@ public class SiegeCampUtil {
 			// Attackers were thwarted, they are penalized with a cooldown on making another SiegeCamp on this town.
 			Government attacker = camp.getAttacker();
 			if (attacker instanceof Town)
-				TownyMessaging.sendPrefixedTownMessage((Town) attacker, Translation.of("msg_err_your_siegecamp_failed_you_must_wait_x", TimeMgmt.formatCountdownTime(SiegeWarSettings.getFailedSiegeCampCooldown())));
+				TownyMessaging.sendPrefixedTownMessage((Town) attacker, Translatable.of("msg_err_your_siegecamp_failed_you_must_wait_x", TimeMgmt.formatCountdownTime(SiegeWarSettings.getFailedSiegeCampCooldown())));
 			else if (attacker instanceof Nation)
-				TownyMessaging.sendPrefixedNationMessage((Nation) attacker, Translation.of("msg_err_your_siegecamp_failed_you_must_wait_x", TimeMgmt.formatCountdownTime(SiegeWarSettings.getFailedSiegeCampCooldown())));
+				TownyMessaging.sendPrefixedNationMessage((Nation) attacker, Translatable.of("msg_err_your_siegecamp_failed_you_must_wait_x", TimeMgmt.formatCountdownTime(SiegeWarSettings.getFailedSiegeCampCooldown())));
 
 			String failedCamps = TownMetaDataController.getFailedSiegeCampList(camp.getTargetTown());
 			if (failedCamps == null) {

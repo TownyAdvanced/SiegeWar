@@ -4,10 +4,11 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.MigrationUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Translation;
+
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,7 +39,7 @@ import java.util.List;
 public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
-	private final Version requiredTownyVersion = Version.fromString("0.97.5.0");
+	private final Version requiredTownyVersion = Version.fromString("0.98.0.0");
 	private static final SiegeHUDManager siegeHUDManager = new SiegeHUDManager();
 
 	private static boolean siegeWarPluginError = false;

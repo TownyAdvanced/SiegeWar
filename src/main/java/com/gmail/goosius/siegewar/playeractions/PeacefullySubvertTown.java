@@ -5,7 +5,6 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -14,6 +13,10 @@ import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.Translator;
+
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -37,42 +40,43 @@ public class PeacefullySubvertTown {
 	 * @throws TownyException if subvert is not allowed
 	 */
 	public static void processActionRequest(Player player, Nation residentsNation, Town targetTown) throws TownyException {
+		final Translator translator = Translator.locale(com.palmergames.bukkit.towny.object.Translation.getLocale(player));
 		if(!SiegeWarSettings.isPeacefulTownsSubvertEnabled())
-			throw new TownyException(Translation.of("msg_err_action_disable"));
+			throw new TownyException(translator.of("msg_err_action_disable"));
 
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_SUBVERTPEACEFULTOWN.getNode()))
-			throw new TownyException(Translation.of("msg_err_action_disable"));
+			throw new TownyException(translator.of("msg_err_action_disable"));
 
 		if(residentsNation == null)
-			throw new TownyException(Translation.of("msg_err_action_disable"));  //Can't subvert if nationless
+			throw new TownyException(translator.of("msg_err_action_disable"));  //Can't subvert if nationless
 
 		if(SiegeController.hasActiveSiege(targetTown)) {
-			throw new TownyException(Translation.of("msg_err_cannot_change_occupation_of_besieged_town"));
+			throw new TownyException(translator.of("msg_err_cannot_change_occupation_of_besieged_town"));
 		}
 
 		if(targetTown.hasNation() && targetTown.getNation() == residentsNation)
-			throw new TownyException(Translation.of("msg_err_cannot_subvert_towns_in_own_nation"));
+			throw new TownyException(translator.of("msg_err_cannot_subvert_towns_in_own_nation"));
 
 		if(TownOccupationController.isTownOccupied(targetTown) && TownOccupationController.getTownOccupier(targetTown) == residentsNation)
-			throw new TownyException(Translation.of("msg_err_cannot_subvert_town_already_occupied"));
+			throw new TownyException(translator.of("msg_err_cannot_subvert_town_already_occupied"));
 
 		if (TownySettings.getNationRequiresProximity() > 0) {
 			Coord capitalCoord = residentsNation.getCapital().getHomeBlock().getCoord();
 			Coord townCoord = targetTown.getHomeBlock().getCoord();
 			if (!residentsNation.getCapital().getHomeBlock().getWorld().getName().equals(targetTown.getHomeBlock().getWorld().getName())) {
-				throw new TownyException(Translation.of("msg_err_nation_homeblock_in_another_world"));
+				throw new TownyException(translator.of("msg_err_nation_homeblock_in_another_world"));
 			}
 			double distance;
 			distance = Math.sqrt(Math.pow(capitalCoord.getX() - townCoord.getX(), 2) + Math.pow(capitalCoord.getZ() - townCoord.getZ(), 2));
 			if (distance > TownySettings.getNationRequiresProximity()) {
-				throw new TownyException(String.format(Translation.of("msg_err_town_not_close_enough_to_nation"), targetTown.getName()));
+				throw new TownyException(String.format(translator.of("msg_err_town_not_close_enough_to_nation"), targetTown.getName()));
 			}
 		}
 
 		if (TownySettings.getMaxTownsPerNation() > 0) {
 			int effectiveNumTowns = SiegeWarNationUtil.getEffectiveNation(residentsNation).getNumTowns();
 			if (effectiveNumTowns >= TownySettings.getMaxTownsPerNation()){
-				throw new TownyException(String.format(Translation.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
+				throw new TownyException(String.format(translator.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
 			}
 		}
 
@@ -126,7 +130,7 @@ public class PeacefullySubvertTown {
 		 * Because the logic is simpler, and because subverting is generally less 'aggressive' than invasion.
 		 */
 		Messaging.sendGlobalMessage(
-			Translation.of("msg_peaceful_town_subverted",
+			Translatable.of("msg_peaceful_town_subverted",
 					targetTown.getName(),
 					subvertingNation.getName()
 		));

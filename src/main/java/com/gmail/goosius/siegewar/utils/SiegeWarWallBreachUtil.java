@@ -8,12 +8,14 @@ import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
+import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
+
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -117,7 +119,7 @@ public class SiegeWarWallBreachUtil {
 
             //Candidate must not already have award
             if(previousAwardees.contains(candidate)) {
-                Messaging.sendErrorMsg(player, Translation.of("msg_err_already_received_wall_breach_bonus"));
+                Messaging.sendErrorMsg(player, Translatable.of("msg_err_already_received_wall_breach_bonus"));
                 continue;                                       
             }
             
@@ -125,7 +127,7 @@ public class SiegeWarWallBreachUtil {
             newAwardees.add(candidate);
             
             //Notify player
-            Messaging.sendMsg(player, Translation.of("msg_wall_breach_bonus_awarded"));
+            Messaging.sendMsg(player, Translatable.of("msg_wall_breach_bonus_awarded"));
         }
 
         //Grant bonuses!

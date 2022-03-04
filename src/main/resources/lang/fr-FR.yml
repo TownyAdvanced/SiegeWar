@@ -23,8 +23,7 @@ description: >
 # DarkPurple = &9, LightGreen = &a, LightBlue = &b
 # Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 
-plugin_prefix: "&f[&6SiegeWar&f] "
-msg_err_command_disable: "&cVous n'avez pas la permission d'effectuer cette commande."
+siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
 
 #Added in (Siegewar version)
 #Siege war happy-path messages
@@ -100,7 +99,6 @@ status_nation_siege_attacks: "&2Attaques de siège &a[%s]&2 : &f"
 status_nation_siege_defences: "&2Défences de siège &a[%s]&2 : &f"
 
 #General
-msg_days: " jours"
 status_no_green: "&aNON"
 msg_occupier: "&4*Occupant*"
 msg_nobody: "&aPersonne"
@@ -128,15 +126,6 @@ msg_war_siege_zone_bucket_emptying_forbidden: "&cVous ne pouvez pas utiliser ce 
 admin_help_1: "Rechargez le fichier de configuration et de langue."
 config_and_lang_file_reloaded_successfully: "Le fichier de configuration et de langue a été rechargé avec succès."
 config_and_lang_file_could_not_be_loaded: "Échec du rechargement. Voir la console pour plus de détails."
-status_yes: "&aOUI"
-status_no: "&cNON"
-
-#Added in 0.03:
-msg_err_no_money: "&cIl n'y a pas assez d'argent dans la banque."
-
-#Added in 0.04:
-msg_err_not_registered_1: "&c%s n'est pas enregistré."
-msg_error_must_be_num: "&cLe montant doit être un nombre."
 
 #Added in 0.05:
 msg_err_not_being_sieged: "&cLa ville %s n'a pas de siège actif."

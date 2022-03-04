@@ -3,7 +3,7 @@ package com.gmail.goosius.siegewar.timeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.object.Translation;
 
 /**
  * This class is responsible for processing timed attacker wins

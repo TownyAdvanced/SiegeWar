@@ -16,7 +16,6 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeCampUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
@@ -42,6 +41,8 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
 
 /**
  * 
@@ -504,15 +505,15 @@ public class SiegeController {
 
 			case CONQUEST:
 				if (siege.getTown().hasNation()) {
-					Messaging.sendGlobalMessage(String.format(
-							Translation.of("msg_conquest_siege_started_nation_town"),
+					Messaging.sendGlobalMessage(
+							Translatable.of("msg_conquest_siege_started_nation_town",
 							siege.getAttacker().getName(),
 							TownyAPI.getInstance().getTownNationOrNull(siege.getTown()).getName(),
 							siege.getTown().getName()
 					));
 				} else {
-					Messaging.sendGlobalMessage(String.format(
-							Translation.of("msg_conquest_siege_started_neutral_town"),
+					Messaging.sendGlobalMessage(
+							Translatable.of("msg_conquest_siege_started_neutral_town",
 							siege.getAttacker().getName(),
 							siege.getTown().getName()
 					));
@@ -520,15 +521,15 @@ public class SiegeController {
 				break;
 			case LIBERATION:
 				if (siege.getTown().hasNation()) {
-					Messaging.sendGlobalMessage(String.format(
-							Translation.of("msg_liberation_siege_started_nation_town"),
+					Messaging.sendGlobalMessage(
+							Translatable.of("msg_liberation_siege_started_nation_town",
 							siege.getAttacker().getName(),
 							siege.getDefender().getName(),
 							siege.getTown().getName()
 					));
 				} else {
-					Messaging.sendGlobalMessage(String.format(
-							Translation.of("msg_liberation_siege_started_neutral_town"),
+					Messaging.sendGlobalMessage(
+							Translatable.of("msg_liberation_siege_started_neutral_town",
 							siege.getAttacker().getName(),
 							siege.getDefender().getName(),
 							siege.getTown().getName()
@@ -537,15 +538,15 @@ public class SiegeController {
 				break;
 			case REVOLT:
 				if (siege.getTown().hasNation()) {
-					Messaging.sendGlobalMessage(String.format(
-							Translation.of("msg_revolt_siege_started_nation_town"),
+					Messaging.sendGlobalMessage(
+							Translatable.of("msg_revolt_siege_started_nation_town",
 							siege.getTown().getName(),
 							TownyAPI.getInstance().getTownNationOrNull(siege.getTown()).getName(),
 							TownOccupationController.getTownOccupier(siege.getTown()).getName()
 					));
 				} else {
-					Messaging.sendGlobalMessage(String.format(
-							Translation.of("msg_revolt_siege_started_neutral_town"),
+					Messaging.sendGlobalMessage(
+							Translatable.of("msg_revolt_siege_started_neutral_town",
 							siege.getTown().getName(),
 							TownOccupationController.getTownOccupier(siege.getTown()).getName()
 					));
@@ -553,15 +554,15 @@ public class SiegeController {
 				break;
 			case SUPPRESSION:
 				if (siege.getTown().hasNation()) {
-					Messaging.sendGlobalMessage(String.format(
-							Translation.of("msg_suppression_siege_started_nation_town"),
+					Messaging.sendGlobalMessage(
+							Translatable.of("msg_suppression_siege_started_nation_town",
 							siege.getAttacker().getName(),
 							TownyAPI.getInstance().getTownNationOrNull(siege.getTown()).getName(),
 							siege.getTown().getName()
 					));
 				} else {
-					Messaging.sendGlobalMessage(String.format(
-							Translation.of("msg_suppression_siege_started_neutral_town"),
+					Messaging.sendGlobalMessage(
+							Translatable.of("msg_suppression_siege_started_neutral_town",
 							siege.getAttacker().getName(),
 							siege.getTown().getName()
 					));
@@ -619,7 +620,7 @@ public class SiegeController {
 			throw new TownyException(Translation.of("msg_err_too_soon_since_your_last_siegecamp"));
 
 		// Broadcast a message
-		Messaging.sendGlobalMessage(Translation.of("attacker_has_begun_a_siegecamp_session", camp.getTownOfSiegeStarter(), camp.getTargetTown(), SiegeWarSettings.getSiegeCampPointsForSuccess(), SiegeWarSettings.getSiegeCampDurationInMinutes()));
+		Messaging.sendGlobalMessage(Translatable.of("attacker_has_begun_a_siegecamp_session", camp.getTownOfSiegeStarter(), camp.getTargetTown(), SiegeWarSettings.getSiegeCampPointsForSuccess(), SiegeWarSettings.getSiegeCampDurationInMinutes()));
 		// Add to SiegeCamp list and begin Evaluating this SiegeCamp for success.
 		addSiegeCamp(camp);
 		Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> SiegeCampUtil.evaluateCamp(camp, true));

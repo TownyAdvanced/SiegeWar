@@ -11,10 +11,6 @@ public enum ConfigNodes {
 			"version.last_run_version",
 			"",
 			"# This is for showing the changelog on updates.  Please do not edit."),
-	LANGUAGE(
-			"language",
-			"english.yml",
-			"# The language file you wish to use"),
 	WAR("war","","",""),
 	WAR_SIEGE(
 			"war.siege",

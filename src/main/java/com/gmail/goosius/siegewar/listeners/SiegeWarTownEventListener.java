@@ -8,7 +8,6 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -26,6 +25,7 @@ import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -66,7 +66,7 @@ public class SiegeWarTownEventListener implements Listener {
 
 			if (SiegeController.hasActiveSiege(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_recruit"));
+				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_recruit"));
 				return;
 			}
 
@@ -74,7 +74,7 @@ public class SiegeWarTownEventListener implements Listener {
 			if (SiegeWarSettings.isNationSiegeImmunityEnabled()
 					&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_recruit"));
+				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_recruit"));
 				return;
 			}
 		}
@@ -141,7 +141,7 @@ public class SiegeWarTownEventListener implements Listener {
 						}
 					}
 				}
-				event.setCancellationMsg(Translation.of("plugin_prefix") + Translation.of("status_town_peacefulness_status_change_timer", days));
+				event.setCancellationMsg(Translation.of("siegewar_plugin_prefix") + Translation.of("status_town_peacefulness_status_change_timer", days));
 				event.setCancelled(true);
 				
 			} else {
@@ -167,7 +167,7 @@ public class SiegeWarTownEventListener implements Listener {
 				//If the claimer's town is under siege, they cannot claim any land
 				if (SiegeController.hasActiveSiege(event.getTown())) {
 					event.setCancelled(true);
-					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_claim"));
+					event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_claim"));
 					return;
 				}
 
@@ -175,7 +175,7 @@ public class SiegeWarTownEventListener implements Listener {
 				if (SiegeWarSettings.isNationSiegeImmunityEnabled()
 						&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
 					event.setCancelled(true);
-					event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_claim"));
+					event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_claim"));
 					return;
 				}
 			}
@@ -187,7 +187,7 @@ public class SiegeWarTownEventListener implements Listener {
 						if (siege.getStatus().isActive()
 							&& SiegeWarDistanceUtil.isInSiegeZone(event.getPlayer(), siege)) {
 							event.setCancelled(true);
-							event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_claim_too_near_siege_zone"));
+							event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_claim_too_near_siege_zone"));
 							break;
 						}
 					} catch (Exception e) {
@@ -211,7 +211,7 @@ public class SiegeWarTownEventListener implements Listener {
 	public void onTownUnclaim(TownPreUnclaimCmdEvent event) {
 		if (SiegeWarSettings.getWarCommonOccupiedTownUnClaimingDisabled() && TownOccupationController.isTownOccupied(event.getTown())) {
 			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_war_common_occupied_town_cannot_unclaim"));
+			event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_war_common_occupied_town_cannot_unclaim"));
 			return;
 		}
 			
@@ -221,7 +221,7 @@ public class SiegeWarTownEventListener implements Listener {
 			//Town besieged
 			if(SiegeController.hasActiveSiege(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_unclaim"));
+				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_unclaim"));
 				return;
 			}
 
@@ -229,7 +229,7 @@ public class SiegeWarTownEventListener implements Listener {
 			if (SiegeWarSettings.isNationSiegeImmunityEnabled()
 					&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_unclaim"));
+				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_unclaim"));
 				return;
 			}
 		}
@@ -246,17 +246,17 @@ public class SiegeWarTownEventListener implements Listener {
 			if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
 				&& event.getTown().isNeutral()) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_peaceful_town_cannot_move_homeblock"));
+				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_peaceful_town_cannot_move_homeblock"));
 			}
 
 			if(SiegeController.hasActiveSiege(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_besieged_town_cannot_move_homeblock"));
+				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_besieged_town_cannot_move_homeblock"));
 			}
 
 			if(TownOccupationController.isTownOccupied(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_occupied_town_cannot_move_homeblock"));
+				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_occupied_town_cannot_move_homeblock"));
 			}
 		}
 	}

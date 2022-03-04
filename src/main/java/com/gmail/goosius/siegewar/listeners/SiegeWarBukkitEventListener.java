@@ -40,10 +40,9 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translatable;
 
 import net.citizensnpcs.api.CitizensAPI;
-
-import com.gmail.goosius.siegewar.settings.Translation;
 
 /**
  * 
@@ -73,7 +72,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 					for(Siege siege: SiegeController.getSieges()) {
 						if(siege.getBannerControlSessions().containsKey(event.getPlayer())) {
 							event.setCancelled(true);
-							Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control"));
+							Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control"));
 						}
 					}
 				}
@@ -173,7 +172,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 			&& (event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND)) {
 			if (TownyAPI.getInstance().isWilderness(event.getTo())) { // The teleport destination is in the wilderness.
 				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
-					Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
+					Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
 					event.setCancelled(true);
 				}
 			} else { // The teleport destination is inside a town.
@@ -185,14 +184,14 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 				//Check IF TP destination is a besieged town
 				if(SiegeController.hasActiveSiege(destinationTown)) {
-					Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
+					Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
 					event.setCancelled(true);
 					return;
 				}
 
 				//Check if the destination is inside a siege zone
 				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
-					Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
+					Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
 					event.setCancelled(true);
 				}
 			}
@@ -204,7 +203,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 			&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()
 			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getPlayer().getLocation())) {
-			Messaging.sendErrorMsg(event.getPlayer(), Translation.of("msg_siege_zone_proximity_warning_text"));
+			Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_siege_zone_proximity_warning_text"));
 		}
 	}
 

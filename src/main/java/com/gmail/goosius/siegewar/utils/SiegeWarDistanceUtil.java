@@ -6,13 +6,11 @@ import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
-import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyWorld;
-import com.palmergames.bukkit.towny.object.WorldCoord;
 import com.palmergames.util.MathUtil;
 
 import org.bukkit.Bukkit;
@@ -20,10 +18,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
-
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * This class contains utility functions related to calculating and validating distances
