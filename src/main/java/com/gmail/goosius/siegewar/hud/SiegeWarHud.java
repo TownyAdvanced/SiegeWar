@@ -4,7 +4,6 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
-import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.bukkit.util.Colors;
@@ -23,8 +22,8 @@ public class SiegeWarHud {
             toggleOn(p, siege);
             return;
         }
-        
-        board.getObjective("WAR_HUD_OBJ").setDisplayName(SiegeHUDManager.checkLength(Colors.Gold + "§l" + siege.getTown().getName()) + " " + Translatable.of("hud_title").forLocale(p));
+        final Translator translator = Translator.locale(Translation.getLocale(p));
+        board.getObjective("WAR_HUD_OBJ").setDisplayName(SiegeHUDManager.checkLength(Colors.Gold + "§l" + siege.getTown().getName()) + " " + translator.of("hud_title"));
         board.getTeam("siegeType").setSuffix(SiegeHUDManager.checkLength(siege.getSiegeType().getTranslatedName().forLocale(p)));
         board.getTeam("attackers").setSuffix(SiegeHUDManager.checkLength(siege.getAttackerNameForDisplay()));
         board.getTeam("defenders").setSuffix(SiegeHUDManager.checkLength(siege.getDefenderNameForDisplay()));
@@ -40,7 +39,7 @@ public class SiegeWarHud {
             + (siege.getBannerControllingSide() == SiegeSide.NOBODY ? "" :  " (" + siege.getBannerControllingResidents().size() + ")"));
         board.getTeam("btAttackerPoints").setSuffix(siege.getFormattedAttackerBattlePoints());
         board.getTeam("btDefenderPoints").setSuffix(siege.getFormattedDefenderBattlePoints());
-        board.getTeam("btTimeRemaining").setSuffix(siege.getFormattedBattleTimeRemaining());
+        board.getTeam("btTimeRemaining").setSuffix(siege.getFormattedBattleTimeRemaining(translator));
         boolean displayBreachPoints = SiegeWarSettings.isWallBreachingEnabled() && SiegeWarSettings.getWallBreachBonusBattlePoints() != 0;
         if(displayBreachPoints)       
             board.getTeam("breachPoints").setSuffix(siege.getFormattedBreachPoints());        

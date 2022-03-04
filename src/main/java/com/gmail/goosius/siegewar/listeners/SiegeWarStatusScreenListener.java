@@ -205,7 +205,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 						out.add(translator.of("status_town_siege_battle_points", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
 
 						// > Time Remaining: 22 minutes
-						out.add(translator.of("status_town_siege_battle_time_remaining", siege.getFormattedBattleTimeRemaining()));
+						out.add(translator.of("status_town_siege_battle_time_remaining", siege.getFormattedBattleTimeRemaining(translator)));
 						
 						// > Breach Points: 15
 						if(SiegeWarSettings.isWallBreachingEnabled() && SiegeWarSettings.getWallBreachBonusBattlePoints() != 0)
