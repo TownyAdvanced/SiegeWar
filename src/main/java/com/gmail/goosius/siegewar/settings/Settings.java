@@ -41,8 +41,6 @@ public class Settings {
 			TranslationLoader loader = new TranslationLoader(langFolderPath, plugin, SiegeWar.class);
 			loader.load();
 			TownyAPI.getInstance().addTranslations(plugin, loader.getTranslations());
-//
-//			Translation.loadLanguage(sw.getDataFolder().getPath() + File.separator, "english.yml");
 		} catch (Exception e) {
 			SiegeWar.severe("Language file failed to load! Disabling!");
 			loadSuccessFlag = false;
