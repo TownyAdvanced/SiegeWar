@@ -59,19 +59,22 @@ public class SiegeWarNotificationUtil {
 
 			//Inform required towns and nations
 			for(Nation nationToInform: nationsToInform) {
-				for (Translatable line : message)
-					TownyMessaging.sendPrefixedNationMessage(nationToInform, line);
+				for (Translatable line : message) 
+					if (line != null)
+						TownyMessaging.sendPrefixedNationMessage(nationToInform, line);
 			}
 			for(Town townToInform: townsToInform) {
 				for (Translatable line : message)
-					TownyMessaging.sendPrefixedTownMessage(townToInform, line);
+					if (line != null)
+						TownyMessaging.sendPrefixedTownMessage(townToInform, line);
 			}
 
 			//Inform battlefield observers
 			for(Player player: Bukkit.getOnlinePlayers()) {
 				if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NOTIFICATIONS_ALL.getNode())) {
 					for (Translatable line : message)
-						Messaging.sendMsg(player, line);
+						if (line != null)
+							Messaging.sendMsg(player, line);
 				}
 			}
 

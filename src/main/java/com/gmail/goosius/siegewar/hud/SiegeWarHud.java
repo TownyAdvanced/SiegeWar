@@ -34,7 +34,7 @@ public class SiegeWarHud {
             board.getTeam("warchest").setSuffix("-");
         }        
         board.getTeam("bannerControl").setSuffix(
-            siege.getBannerControllingSide().getFormattedName()
+            siege.getBannerControllingSide().getFormattedName().forLocale(p)
             + (siege.getBannerControllingSide() == SiegeSide.NOBODY ? "" :  " (" + siege.getBannerControllingResidents().size() + ")"));
         board.getTeam("btAttackerPoints").setSuffix(siege.getFormattedAttackerBattlePoints());
         board.getTeam("btDefenderPoints").setSuffix(siege.getFormattedDefenderBattlePoints());
