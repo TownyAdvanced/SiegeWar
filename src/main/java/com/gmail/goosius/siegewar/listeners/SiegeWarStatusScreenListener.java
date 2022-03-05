@@ -188,7 +188,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 						// > Banner Control: Attackers [4] Killbot401x, NerfeyMcNerferson, WarCriminal80372
 						if (siege.getBannerControllingSide() == SiegeSide.NOBODY) {
-							out.add(translator.of("status_town_banner_control_nobody", siege.getBannerControllingSide().getFormattedName()));
+							out.add(translator.of("status_town_banner_control_nobody", siege.getBannerControllingSide().getFormattedName().forLocale(event.getCommandSender())));
 						} else {
 							
 							String[] bannerControllingResidents = TownyFormatter.getFormattedNames(siege.getBannerControllingResidents().toArray(new Resident[0]));
@@ -198,7 +198,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 								System.arraycopy(entire, 0, bannerControllingResidents, 0, 35);
 								bannerControllingResidents[35] = translator.of("status_town_reslist_overlength");
 							}
-							out.addAll(ChatTools.listArr(bannerControllingResidents, translator.of("status_town_banner_control", siege.getBannerControllingSide().getFormattedName(), siege.getBannerControllingResidents().size())));
+							out.addAll(ChatTools.listArr(bannerControllingResidents, translator.of("status_town_banner_control", siege.getBannerControllingSide().getFormattedName().forLocale(event.getCommandSender()), siege.getBannerControllingResidents().size())));
 						}
 
 						// > Points: +90 / -220
