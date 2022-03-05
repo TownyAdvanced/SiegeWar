@@ -7,7 +7,6 @@ import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.bukkit.util.Colors;
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -35,7 +34,7 @@ public class SiegeWarHud {
             board.getTeam("warchest").setSuffix("-");
         }        
         board.getTeam("bannerControl").setSuffix(
-            WordUtils.capitalizeFully(siege.getBannerControllingSide().name())
+            siege.getBannerControllingSide().getFormattedName()
             + (siege.getBannerControllingSide() == SiegeSide.NOBODY ? "" :  " (" + siege.getBannerControllingResidents().size() + ")"));
         board.getTeam("btAttackerPoints").setSuffix(siege.getFormattedAttackerBattlePoints());
         board.getTeam("btDefenderPoints").setSuffix(siege.getFormattedDefenderBattlePoints());
