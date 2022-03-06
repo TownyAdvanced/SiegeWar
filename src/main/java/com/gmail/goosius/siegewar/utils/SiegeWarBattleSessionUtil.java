@@ -76,7 +76,7 @@ public class SiegeWarBattleSessionUtil {
 		//Send message
 		sendBattleSessionEndedMessage(battleResults);
 		
-		//Remove BossBar
+		//Remove Battle Session Boss-Bars
 		BossBarUtil.removeBattleSessionBossBars();
 	}
 
@@ -109,6 +109,11 @@ public class SiegeWarBattleSessionUtil {
 							}
 						});
 					}
+				}
+
+				//Remove banner cap boss bars
+				for(Player player: siege.getBannerControlSessions().keySet()) {
+					BossBarUtil.removeBannerCapBossBar(player);
 				}
 
 				//Clear battle related stats from the siege
