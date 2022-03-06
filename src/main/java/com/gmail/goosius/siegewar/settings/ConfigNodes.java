@@ -757,7 +757,7 @@ public enum ConfigNodes {
 			""),
 	WAR_SIEGE_MAP_HIDING_ENABLED(
 			"war.siege.map_hiding.enabled",
-			"true",
+			"false",
 			"",
 			"# If this setting is true, then the map hiding feature is enabled.",
 			"# This feature allow players to disappear from the dynmap, allowing military tactics.",
