@@ -33,7 +33,7 @@ public class BossBarUtil {
 		}
 		bossBarBattleSessionMap.clear();
 	}
-	
+
 	public static void updateBattleSessionBossBar() {
 		BattleSession session = BattleSession.getBattleSession();
 		TextComponent comp = Component.text(Translation.of("bossbar_msg_battle_time_remaining", session.getFormattedTimeRemainingUntilBattleSessionEnds()));
