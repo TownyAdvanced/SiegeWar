@@ -250,10 +250,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(!(event instanceof Player))
 			return;
 
-		//Return if the event did not occur in a siegezone
-		if(!SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) 
-			return;
-
 		//Override any previous cancellation attempts
 		Boolean eventIsInActiveSiegeZone = null;
 		if(event.isCancelled()) {
