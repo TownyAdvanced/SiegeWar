@@ -234,30 +234,41 @@ public class SiegeWarBukkitEventListener implements Listener {
 		}
 	}
 	
-	/*
-	 * Stops TNT/Minecarts from injuring players in the siegezone wilderness
-	 * Also stop battlefield observers from hitting people in siegezones
+	/**
+	 * - If event was cancelled (by another plugin), but is in a siegezone, un-cancel it.
+	 * - Stop TNT/Minecarts from injuring players in the siegezone wilderness
+	 * - Stop battlefield observers from hitting players in siegezones
 	 */
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void on(EntityDamageByEntityEvent event) {	
-		if(!SiegeWarSettings.getWarSiegeEnabled())
+		if(!SiegeWarSettings.getWarSiegeEnabled()
+			|| !TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld()).isWarAllowed()) {
+			return;
+		}
+
+		//Return if the entity being damaged is not a player
+		if(!(event instanceof Player))
 			return;
 
+		//Return if the event did not occur in a siegezone
+		if(!SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) 
+			return;
+
+		//Override any previous cancellation attempts
 		if(event.isCancelled())
-			return;
+			event.setCancelled(false);
 
+		//Stop TNT/Minecarts from damaging players in siegezone wilderness
 		if (SiegeWarSettings.getSiegeZoneWildernessForbiddenExplodeEntityTypes().contains(event.getDamager().getType())
-				&& TownyAPI.getInstance().getTown(event.getDamager().getLocation()) == null
-				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getDamager().getLocation())) {
+				&& TownyAPI.getInstance().isWilderness(event.getEntity().getLocation())) {
 			event.setCancelled(true);
 			return;
 		}
 
+		//Stop battlefield observers from damaging other players in siegezones
 		if(event.getDamager() instanceof Player
 				&& !event.getDamager().isOp()
-				&& event.getEntity() instanceof Player
-				&& event.getDamager().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_HIT_PLAYERS.getNode())
-				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getDamager().getLocation())) {
+				&& event.getDamager().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_HIT_PLAYERS.getNode())) {
 			event.setCancelled(true);
 			return;
 		}
