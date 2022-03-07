@@ -235,7 +235,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 	}
 	
 	/**
-	 * - If event was cancelled (by another plugin), but is in a siegezone, un-cancel it.
+	 * - Stop in-siegezone pvp events from being cancelled (e.g. by other plugins)
 	 * - Stop TNT/Minecarts from injuring players in the siegezone wilderness
 	 * - Stop battlefield observers from hitting players in siegezones
 	 */
@@ -255,22 +255,36 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 
 		//Override any previous cancellation attempts
-		if(event.isCancelled())
-			event.setCancelled(false);
+		Boolean eventIsInActiveSiegeZone = null;
+		if(event.isCancelled()) {
+			eventIsInActiveSiegeZone = SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation());
+			if(eventIsInActiveSiegeZone)
+				event.setCancelled(false);
+			else
+				return;
+		}
 
 		//Stop TNT/Minecarts from damaging players in siegezone wilderness
 		if (SiegeWarSettings.getSiegeZoneWildernessForbiddenExplodeEntityTypes().contains(event.getDamager().getType())
 				&& TownyAPI.getInstance().isWilderness(event.getEntity().getLocation())) {
-			event.setCancelled(true);
-			return;
+			if(eventIsInActiveSiegeZone == null)
+				eventIsInActiveSiegeZone = SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation());
+			if(eventIsInActiveSiegeZone) {
+				event.setCancelled(true);
+				return;
+			}
 		}
 
 		//Stop battlefield observers from damaging other players in siegezones
 		if(event.getDamager() instanceof Player
 				&& !event.getDamager().isOp()
 				&& event.getDamager().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_HIT_PLAYERS.getNode())) {
-			event.setCancelled(true);
-			return;
+			if(eventIsInActiveSiegeZone == null)
+				eventIsInActiveSiegeZone = SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation());
+			if(eventIsInActiveSiegeZone) {
+				event.setCancelled(true);
+				return;
+			}
 		}
 	}
 
