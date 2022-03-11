@@ -437,7 +437,7 @@ public class SiegeWarSettings {
 	}
 
 	public static double getWarSiegeBannerControlReversalBonusFactor() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BANNER_CONTROL_REVERSAL_BONUS_MULTIPLIER);
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BANNER_CONTROL_REVERSAL_BONUS_MULTIPLIER_VALUE);
 	}
 
 	public static boolean isBannerXYZTextEnabled() {
