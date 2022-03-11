@@ -21,6 +21,10 @@
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
     <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+	</repository>
+    <repository>
       <id>dynmap-repo</id>
       <url>https://repo.mikeprimm.com/</url>
     </repository>
