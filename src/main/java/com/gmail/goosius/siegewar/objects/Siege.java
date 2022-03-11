@@ -58,13 +58,13 @@ public class Siege {
 	private SiegeSide bannerControllingSide;
 	private SiegeSide siegeWinner;    //For when a siege is over, holds the winning side.
 	private Map<Player, BannerControlSession> bannerControlSessions;
-	private int timedBattlePointsEarnedFromCurrentBannerControl;
 	private int attackerBattlePoints;
 	private int defenderBattlePoints;
 	private Map<UUID, Integer> primaryTownGovernments; //UUID:numBattleSessions map of governments who led the town during the siege. If town was is a nation, nation UUID will be used, otherwise town UUID will be used
 	private double wallBreachPoints;	//Wall Breach points for the current battle session
 	private Set<Resident> wallBreachBonusAwardees;  //Residents who have been awarded the wall-breach bonus for the current battle session
 	private Set<Player> recentTownFriendlyCannonFirers;
+	private int numberOfBannerControlReversals;
 	
 	public Siege(Town town) {
 		this.town = town;
@@ -86,6 +86,7 @@ public class Siege {
 		wallBreachPoints = 0;
 		wallBreachBonusAwardees = new HashSet<>();
 		recentTownFriendlyCannonFirers = new HashSet<>();
+		numberOfBannerControlReversals = 0;
     }
 
     public Town getTown() {
@@ -379,18 +380,6 @@ public class Siege {
 		}
 	}
 
-	public int getTimedBattlePointsEarnedFromCurrentBannerControl() {
-		return timedBattlePointsEarnedFromCurrentBannerControl;
-	}
-
-	public void setTimedBattlePointsEarnedFromCurrentBannerControl(int timedBattlePointsEarnedFromCurrentBannerControl) {
-		this.timedBattlePointsEarnedFromCurrentBannerControl = timedBattlePointsEarnedFromCurrentBannerControl;
-	}
-
-	public void adjustBattlePointsEarnedFromCurrentBannerControl(int timedBattlePoints) {
-		timedBattlePointsEarnedFromCurrentBannerControl += timedBattlePoints;
-	}
-
 	public SiegeType getSiegeType() {
 		return siegeType;
 	}
@@ -502,5 +491,13 @@ public class Siege {
 
 	public void clearRecentTownFriendlycannonFirers() {
 		recentTownFriendlyCannonFirers.clear();
+	}
+
+	public int getNumberOfBannerControlReversals() {
+		return numberOfBannerControlReversals;
+	}
+
+	public void setNumberOfBannerControlReversals(int numberOfBannerControlReversals) {
+		this.numberOfBannerControlReversals = numberOfBannerControlReversals;
 	}
 }

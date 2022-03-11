@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -250,22 +251,15 @@ public class SiegeWarBannerControlUtil {
 					} else {
 						//Player gains banner control for their side
 						boolean reversal = false;
-						int reversalBonusScore = 0;
 						if(siege.getBannerControllingSide() != SiegeSide.NOBODY
 							&& bannerControlSession.getSiegeSide() != siege.getBannerControllingSide()) {
 							reversal = true;
 							//Apply reversal bonus if required setting is enabled
 							if(SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled()) {
-								reversalBonusScore = (int)((siege.getTimedBattlePointsEarnedFromCurrentBannerControl() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor()) + 0.5);
-								if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
-									siege.adjustAttackerBattlePoints(reversalBonusScore);
-								} else {
-									siege.adjustDefenderBattlePoints(reversalBonusScore);
-								}
+								siege.setNumberOfBannerControlReversals(siege.getNumberOfBannerControlReversals()+1);	
 							}
 						}
 						siege.clearBannerControllingResidents();
-						siege.setTimedBattlePointsEarnedFromCurrentBannerControl(0);
 						siege.setBannerControllingSide(bannerControlSession.getSiegeSide());
 						siege.addBannerControllingResident(bannerControlSession.getResident());
 
@@ -280,8 +274,9 @@ public class SiegeWarBannerControlUtil {
 								message = Translation.of("msg_siege_war_banner_control_reversed_by_defender", siege.getTown().getFormattedName());
 							}
 							if(SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled()) {
-								String sign = bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS ? "+" : "-";
-								message += Translation.of("msg_siege_war_banner_control_reversal_bonus", sign, reversalBonusScore);
+								double battlePointMultiplierDouble = siege.getNumberOfBannerControlReversals() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor();								
+								DecimalFormat decimalFormat = new DecimalFormat("#.##");
+								message += Translation.of("msg_siege_war_banner_control_reversal_bonus", decimalFormat.format(battlePointMultiplierDouble));
 							}
 						} else {
 							if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
@@ -312,10 +307,14 @@ public class SiegeWarBannerControlUtil {
 		switch(siege.getBannerControllingSide()) {
 			case ATTACKERS:
 				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarBattlePointsForAttackerOccupation();
+				if(siege.getNumberOfBannerControlReversals() > 0) 
+					battlePoints *= siege.getNumberOfBannerControlReversals() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor();
 				siege.adjustAttackerBattlePoints(battlePoints);
 			break;
 			case DEFENDERS:
 				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarBattlePointsForDefenderOccupation();
+				if(siege.getNumberOfBannerControlReversals() > 0) 
+					battlePoints *= siege.getNumberOfBannerControlReversals() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor();
 				siege.adjustDefenderBattlePoints(battlePoints);
 			break;
 			default:
@@ -323,9 +322,6 @@ public class SiegeWarBannerControlUtil {
 
 		//Save siege to db
 		SiegeController.saveSiege(siege);
-
-		//Record gained battle points for use by the 'Banner Control Reversal Bonus' feature
-		siege.adjustBattlePointsEarnedFromCurrentBannerControl(battlePoints);
 	}
 
 	/**

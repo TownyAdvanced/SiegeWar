@@ -219,7 +219,8 @@ dynmap_siege_battle_time_left: 'Battle Time Left: %s'
 #Banner control
 msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > The attackers have stolen banner control from the defenders!.'
 msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > The defenders have stolen banner control from the attackers!.'
-msg_siege_war_banner_control_reversal_bonus: ' Reversal Bonus: %s%d'
+msg_siege_war_banner_control_reversal_bonus: ' Reversal Bonus: Cap-Point generation rate increased to X%s.'
+
 
 #Admin
 msg_swa_set_siege_balance_success: '&bSuccessfully set siege balance to %d for %s.'

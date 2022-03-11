@@ -24,15 +24,10 @@ public class SiegeWarSiegeCompletionUtil {
 	public static void setCommonSiegeCompletionValues(Siege siege,
 													  SiegeStatus siegeStatus) {
 		//Update values
+		SiegeWarBattleSessionUtil.endBattleSessionForSiege(siege);
 		siege.setStatus(siegeStatus);
-		siege.setAttackerBattlePoints(0);
-		siege.setDefenderBattlePoints(0);
-		siege.setBannerControllingSide(SiegeSide.NOBODY);
-		siege.clearBannerControllingResidents();
-		siege.clearBannerControlSessions();
 		siege.setActualEndTime(System.currentTimeMillis());
 		SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown(), siege);
-
 		CosmeticUtil.removeFakeBeacons(siege);
 		/*
 		 * The siege is now historical rather than active.
