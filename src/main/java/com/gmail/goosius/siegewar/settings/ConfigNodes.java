@@ -447,8 +447,8 @@ public enum ConfigNodes {
 			"",
 			"# If this setting is true, then the Banner Control Reversal Bonus is enabled:",
 			"# If enabled, and a team reverses banner control during a battle,",
-			"# the generation of timed points increases by the amount configured below (e.g. x3)",
-			"# Subsequent reversals double the generation rate.",
+			"# the base generation rate of timed points is then multiplied by the configured value below (e.g. x3).",
+			"# Subsequent reversals increase the rate further by that amount.",
             "# TIP: This feature grants small skilled armies a tactic to win battles against larger unskilled armies,",
             "# Tactic: Wait for the large army to cap the banner, then ambush/counterattack them, grabbing the reversal bonus, and holding the area to net an enhanced cap-point score."),
 	WAR_SIEGE_POINTS_BALANCING_BANNER_CONTROL_REVERSAL_BONUS_MULTIPLIER_VALUE(
