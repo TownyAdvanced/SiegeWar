@@ -39,7 +39,7 @@ msg_siege_war_attacking_troops_at_siege_banner: '&bSiege on %s > Attackers are a
 msg_siege_war_banner_control_session_success: '&bBanner control session succeeded!. You have been added to the banner control list.'
 msg_siege_war_banner_control_gained_by_attacker: '&bSiege on %s > The attackers have gained banner control.'
 msg_siege_war_banner_control_gained_by_defender: '&bSiege on %s > The defenders have gained banner control.'
-msg_town_destroyed_by_nation_tax: '&b%s couldn''t pay taxes and has fallen.'
+msg_town_destroyed_by_nation_tax: '&b%s couldn''t pay taxes and hasmsg_siege_war_banner_control_gained_by_attacker fallen.'
 msg_town_destroyed_by_nation_tax_multiple:  '&bThe following towns could not afford the nation tax and have fallen: '
 
 #Siege war error message
@@ -206,9 +206,9 @@ hud_battle_time_remaining: 'BAT Time Left: '
 dynmap_siege_battle_time_left: 'Battle Time Left: %s'
 
 #Banner control
-msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > The attackers have stolen banner control from the defenders!.'
-msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > The defenders have stolen banner control from the attackers!.'
-msg_siege_war_banner_control_reversal_bonus: ' Reversal Bonus: Cap-Point generation rate increased to X%s.'
+msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > The attackers have successfully reversed banner control!.'
+msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > The defenders have successfully reversed banner control!.'
+msg_siege_war_banner_control_reversal_bonus: ' Cap-Point generation rate multiplied by X%s.'
 
 #Admin
 msg_swa_set_siege_balance_success: '&bSuccessfully set siege balance to %d for %s.'
