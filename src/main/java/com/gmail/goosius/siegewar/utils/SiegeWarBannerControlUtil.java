@@ -256,7 +256,7 @@ public class SiegeWarBannerControlUtil {
 							reversal = true;
 							//Apply reversal bonus if required setting is enabled
 							if(SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled()) {
-								siege.setNumberOfBannerControlReversals(siege.getNumberOfBannerControlReversals()+1);	
+								siege.setNumberOfBannerControlReversals(siege.getNumberOfBannerControlReversals()+1);
 							}
 						}
 						siege.clearBannerControllingResidents();
@@ -274,7 +274,7 @@ public class SiegeWarBannerControlUtil {
 								message = Translation.of("msg_siege_war_banner_control_reversed_by_defender", siege.getTown().getFormattedName());
 							}
 							if(SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled()) {
-								double battlePointMultiplierDouble = siege.getNumberOfBannerControlReversals() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor();								
+								double battlePointMultiplierDouble = siege.getNumberOfBannerControlReversals() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor();
 								DecimalFormat decimalFormat = new DecimalFormat("#.##");
 								message += Translation.of("msg_siege_war_banner_control_reversal_bonus", decimalFormat.format(battlePointMultiplierDouble));
 							}
@@ -307,13 +307,13 @@ public class SiegeWarBannerControlUtil {
 		switch(siege.getBannerControllingSide()) {
 			case ATTACKERS:
 				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarBattlePointsForAttackerOccupation();
-				if(siege.getNumberOfBannerControlReversals() > 0) 
+				if(siege.getNumberOfBannerControlReversals() > 0)
 					battlePoints *= siege.getNumberOfBannerControlReversals() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor();
 				siege.adjustAttackerBattlePoints(battlePoints);
 			break;
 			case DEFENDERS:
 				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarBattlePointsForDefenderOccupation();
-				if(siege.getNumberOfBannerControlReversals() > 0) 
+				if(siege.getNumberOfBannerControlReversals() > 0)
 					battlePoints *= siege.getNumberOfBannerControlReversals() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor();
 				siege.adjustDefenderBattlePoints(battlePoints);
 			break;
