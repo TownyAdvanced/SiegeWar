@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.enums;
 
-import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.object.Translatable;
 
 public enum SiegeSide {
 	ATTACKERS("msg_attackers"), DEFENDERS("msg_defenders"), NOBODY("msg_nobody");
@@ -11,7 +11,7 @@ public enum SiegeSide {
 
 	private String langStringId;
 
-	public String getFormattedName() {
-		return Translation.of(langStringId);
+	public Translatable getFormattedName() {
+		return Translatable.of(langStringId);
 	}
 }

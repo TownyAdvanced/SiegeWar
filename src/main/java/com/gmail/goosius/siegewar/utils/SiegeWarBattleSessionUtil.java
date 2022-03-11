@@ -12,8 +12,9 @@ import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -55,7 +56,7 @@ public class SiegeWarBattleSessionUtil {
 		//Send up the Bukkit event for other plugins to listen for.
 		Bukkit.getPluginManager().callEvent(new BattleSessionStartedEvent());	
 		//Send global message to let the server know that the battle session started
-		Messaging.sendGlobalMessage(Translation.of("msg_war_siege_battle_session_started"));
+		Messaging.sendGlobalMessage(Translatable.of("msg_war_siege_battle_session_started"));
 		//Start the bossbar for the Battle Session
 		BossBarUtil.updateBattleSessionBossBar();
 	}

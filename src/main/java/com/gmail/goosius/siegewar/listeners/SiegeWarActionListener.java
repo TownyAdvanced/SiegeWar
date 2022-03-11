@@ -2,6 +2,8 @@ package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.playeractions.DestroyBlock;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Translatable;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -13,7 +15,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyBurnEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
-import com.gmail.goosius.siegewar.settings.Translation;
 
 /**
  * 
@@ -71,7 +72,7 @@ public class SiegeWarActionListener implements Listener {
 				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenBucketMaterials().contains(event.getMaterial())
 				&& event.isInWilderness() 
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getLocation())) {
-			event.setMessage(Translation.of("msg_war_siege_zone_bucket_emptying_forbidden"));
+			event.setMessage(Translatable.of("msg_war_siege_zone_bucket_emptying_forbidden").forLocale(event.getPlayer()));
 			event.setCancelled(true);
 		}
 	}

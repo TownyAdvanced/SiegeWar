@@ -1,16 +1,17 @@
 package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeTools;
 
 import org.bukkit.Bukkit;
@@ -68,7 +69,7 @@ public class SiegeWarSicknessUtil {
     public static void punishWithFullWarSickness(Player player) {
         final int effectDurationTicks = (int)(TimeTools.convertToTicks(TownySettings.getShortInterval() + 5));
         if (SiegeWarSettings.getSicknessWarningTimeInTicks() / 20 >= 1) {
-            player.sendMessage(Translation.of("plugin_prefix") + Translation.of("msg_you_will_get_sickness",
+            Messaging.sendMsg(player, Translatable.of("msg_you_will_get_sickness",
                     SiegeWarSettings.getSicknessWarningTimeInTicks() / 20));
         }
         Towny.getPlugin().getServer().getScheduler().runTaskLater(Towny.getPlugin(), () -> {
@@ -91,7 +92,7 @@ public class SiegeWarSicknessUtil {
 			    potionEffects.add(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 2));
 			    potionEffects.add(new PotionEffect(PotionEffectType.SLOW_DIGGING, effectDurationTicks, 2));
 			    player.addPotionEffects(potionEffects);
-			    player.sendMessage(Translation.of("plugin_prefix") + Translation.of("msg_you_received_war_sickness"));
+			    Messaging.sendMsg(player, Translatable.of("msg_you_received_war_sickness"));
 			}
         }, SiegeWarSettings.getSicknessWarningTimeInTicks());
     }

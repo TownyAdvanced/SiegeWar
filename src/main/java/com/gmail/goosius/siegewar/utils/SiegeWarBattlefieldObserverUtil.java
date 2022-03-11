@@ -1,8 +1,9 @@
 package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.object.Translatable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -79,7 +80,7 @@ public class SiegeWarBattlefieldObserverUtil {
                         }                       
                     });                   
                     //Notify player
-                    player.sendMessage(Translation.of("plugin_prefix") + Translation.of("msg_you_cannot_carry_items_in_siegezones"));
+                    Messaging.sendMsg(player, Translatable.of("msg_you_cannot_carry_items_in_siegezones"));
                 }
             } 
         }

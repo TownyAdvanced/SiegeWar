@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.TownOccupationController;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyCommandAddonAPI;
 import com.palmergames.bukkit.towny.TownyCommandAddonAPI.CommandType;
@@ -87,10 +86,10 @@ public class SiegeWarNationAddonCommand implements TabExecutor {
 		
 		switch (args[0].toLowerCase()) {
 		case "occupiedhometowns":
-			Messaging.sendMsg(sender, getFormattedStrings(Translation.of("status_nation_occupied_home_towns"), TownOccupationController.getOccupiedHomeTowns(nation)));
+			Messaging.sendMsg(sender, getFormattedStrings(Translatable.of("status_nation_occupied_home_towns").forLocale(sender), TownOccupationController.getOccupiedHomeTowns(nation)));
 			break;
 		case "occupiedforeigntowns":
-			Messaging.sendMsg(sender, getFormattedStrings(Translation.of("status_nation_occupied_foreign_towns"), TownOccupationController.getOccupiedForeignTowns(nation)));
+			Messaging.sendMsg(sender, getFormattedStrings(Translatable.of("status_nation_occupied_foreign_towns").forLocale(sender), TownOccupationController.getOccupiedForeignTowns(nation)));
 			break;
 		default:
 			showHelp();

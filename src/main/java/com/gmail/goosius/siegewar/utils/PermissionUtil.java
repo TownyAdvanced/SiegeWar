@@ -15,7 +15,7 @@ public class PermissionUtil {
 	 * @return true if the rank allows the permission node
 	 */
 	public static boolean doesNationRankAllowPermissionNode(String nationRank, SiegeWarPermissionNodes permissionNode) {
-		return doesRankAllowPermissionNode(TownyPerms.getNationRank(nationRank), permissionNode);
+		return doesRankAllowPermissionNode(TownyPerms.getNationRankPermissions(nationRank), permissionNode);
 	}
 
 	/**
@@ -26,7 +26,7 @@ public class PermissionUtil {
 	 * @return true if the rank allows the permission node
 	 */
 	public static boolean doesTownRankAllowPermissionNode(String townRank, SiegeWarPermissionNodes permissionNode) {
-		return doesRankAllowPermissionNode(TownyPerms.getTownRank(townRank), permissionNode);
+		return doesRankAllowPermissionNode(TownyPerms.getTownRankPermissions(townRank), permissionNode);
 	}
 	
 	/**

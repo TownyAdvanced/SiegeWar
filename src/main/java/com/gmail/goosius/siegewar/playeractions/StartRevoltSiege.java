@@ -8,12 +8,13 @@ import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
+import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.Translator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
@@ -49,21 +50,21 @@ public class StartRevoltSiege {
                                                 TownBlock townBlock,
                                                 Town targetTown,
                                                 Block bannerBlock) throws TownyException {
-
+        final Translator translator = Translator.locale(Translation.getLocale(player));
         if (!SiegeWarSettings.getRevoltSiegesEnabled())
-            throw new TownyException(Translation.of("msg_err_action_disable"));
+            throw new TownyException(translator.of("msg_err_action_disable"));
 
         if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToStartSiege(SiegeType.REVOLT)))
-            throw new TownyException(Translation.of("msg_err_action_disable"));
+            throw new TownyException(translator.of("msg_err_action_disable"));
 
         if(!TownOccupationController.isTownOccupied(targetTown))
-            throw new TownyException(Translation.of("msg_err_cannot_start_revolt_siege_as_town_is_unoccupied"));
+            throw new TownyException(translator.of("msg_err_cannot_start_revolt_siege_as_town_is_unoccupied"));
 
         long immunity = TownMetaDataController.getRevoltImmunityEndTime(targetTown);
         if (immunity == -1L)
-        	throw new TownyException(Translation.of("msg_err_siege_war_revolt_immunity_permanent"));
+        	throw new TownyException(translator.of("msg_err_siege_war_revolt_immunity_permanent"));
         if (System.currentTimeMillis() < immunity)
-            throw new TownyException(Translation.of("msg_err_siege_war_revolt_immunity_active"));
+            throw new TownyException(translator.of("msg_err_siege_war_revolt_immunity_active"));
 
         Nation occupierNation = TownOccupationController.getTownOccupier(targetTown);
 

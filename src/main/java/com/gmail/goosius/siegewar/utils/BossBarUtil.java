@@ -10,7 +10,6 @@ import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.adventure.bossbar.BossBar;
 import com.palmergames.adventure.bossbar.BossBar.Color;
 import com.palmergames.adventure.bossbar.BossBar.Overlay;
@@ -19,6 +18,7 @@ import com.palmergames.adventure.text.TextComponent;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Translation;
 
 public class BossBarUtil {
 

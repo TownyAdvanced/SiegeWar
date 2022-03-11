@@ -9,7 +9,6 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.events.PreSiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -17,6 +16,7 @@ import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeTools;
 
 public class SiegeCamp {
@@ -128,7 +128,7 @@ public class SiegeCamp {
 		
 		// Retest that the nation can still pay the warchest.
 		if (!siegeType.equals(SiegeType.REVOLT) && TownyEconomyHandler.isActive() && !attacker.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.calculateSiegeCost(targetTown))) {
-			TownyMessaging.sendPrefixedNationMessage((Nation)attacker, Translation.of("msg_err_no_money"));
+			TownyMessaging.sendPrefixedNationMessage((Nation)attacker, Translatable.of("msg_err_no_money"));
 			return;
 		}
 			
