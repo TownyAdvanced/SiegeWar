@@ -5,12 +5,15 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.Translator;
+
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -35,17 +38,18 @@ public class PeacefullyRevolt {
     public static void processActionRequest(Player player,
                                             Town targetTown) throws TownyException {
 
+    	final Translator translator = Translator.locale(Translation.getLocale(player));
         if (!SiegeWarSettings.isPeacefulTownsRevoltEnabled())
-            throw new TownyException(Translation.of("msg_err_action_disable"));
+            throw new TownyException(translator.of("msg_err_action_disable"));
 
         if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_REVOLT_PEACEFULLY.getNode()))
-            throw new TownyException(Translation.of("msg_err_action_disable"));
+            throw new TownyException(translator.of("msg_err_action_disable"));
 
         if(!TownOccupationController.isTownOccupied(targetTown))
-            throw new TownyException(Translation.of("msg_err_cannot_peacefully_revolt_because_unoccupied"));
+            throw new TownyException(translator.of("msg_err_cannot_peacefully_revolt_because_unoccupied"));
 
 		if(SiegeController.hasActiveSiege(targetTown)) {
-			throw new TownyException(Translation.of("msg_err_cannot_change_occupation_of_besieged_town"));
+			throw new TownyException(translator.of("msg_err_cannot_change_occupation_of_besieged_town"));
 		}
 
         verifyThatOccupierHasZeroTownyInfluence(targetTown);
@@ -63,7 +67,7 @@ public class PeacefullyRevolt {
 
         //Messaging
         Messaging.sendGlobalMessage(
-        	Translation.of("msg_peaceful_town_revolted",
+        	Translatable.of("msg_peaceful_town_revolted",
                 revoltingTown.getName(),
                 occupier.getName()
         ));
@@ -79,7 +83,7 @@ public class PeacefullyRevolt {
         Nation occupier = TownOccupationController.getTownOccupier(revoltingTown);
         if(townyInfluenceMap.containsKey(occupier)) {
             int occupierInfluenceAmount = townyInfluenceMap.get(occupier);
-            throw new TownyException(Translation.of("msg_err_cannot_peacefully_revolt_because_occupier_has_influence", occupier.getName(), occupierInfluenceAmount));
+            throw new TownyException(Translatable.of("msg_err_cannot_peacefully_revolt_because_occupier_has_influence", occupier.getName(), occupierInfluenceAmount));
         }
     }
 }

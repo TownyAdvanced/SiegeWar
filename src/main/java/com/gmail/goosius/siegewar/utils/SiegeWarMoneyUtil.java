@@ -7,14 +7,14 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
-import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
-import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
 
 import org.bukkit.entity.Player;
 
@@ -56,7 +56,7 @@ public class SiegeWarMoneyUtil {
 		if(extraMoneyPercentage == 0) {
 			return 1;
 		} else {
-			return 1 + ((extraMoneyPercentage / 100) * (TownySettings.calcTownLevelId(town) -1));
+			return 1 + ((extraMoneyPercentage / 100) * (town.getLevelID() -1));
 		}
 	}
 
@@ -109,7 +109,7 @@ public class SiegeWarMoneyUtil {
 				default:
 					throw new TownyException("Unknown income type");
 			}
-			Messaging.sendMsg(player, Translation.of(successMessageLangId, TownyEconomyHandler.getFormattedBalance(incomeAmount)));
+			Messaging.sendMsg(player, Translatable.of(successMessageLangId, TownyEconomyHandler.getFormattedBalance(incomeAmount)));
 			return true;
 		} else {
 			return false;
@@ -126,7 +126,7 @@ public class SiegeWarMoneyUtil {
 		// Makes the military salary available. Player can do "/sw collect" later to claim money.
 		ResidentMetaDataController.addMilitarySalaryAmount(soldier, militarySalaryAmount);
 		Messaging.sendMsg(soldier.getPlayer(),
-				Translation.of("msg_siege_war_military_salary_available", TownyEconomyHandler.getFormattedBalance(militarySalaryAmount)));
+				Translatable.of("msg_siege_war_military_salary_available", TownyEconomyHandler.getFormattedBalance(militarySalaryAmount)));
 	}
 
 	public static double calculateSiegeCost(Town town) {

@@ -6,11 +6,12 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.timeractions.AttackerWin;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.confirmations.Confirmation;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
 
@@ -23,14 +24,14 @@ public class SurrenderDefence {
 
 	public static void processSurrenderDefenceRequest(Player player, Siege siege) throws TownyException {
 		if(!SiegeWarSettings.getWarSiegeAbandonEnabled())
-			throw new TownyException(Translation.of("msg_err_action_disable"));
+			throw new TownyException(Translatable.of("msg_err_action_disable").forLocale(player));
 
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER.getNode()))
-			throw new TownyException(Translation.of("msg_err_action_disable"));
+			throw new TownyException(Translatable.of("msg_err_action_disable").forLocale(player));
 		
 		Confirmation
 			.runOnAccept(()-> surrenderDefence(siege, siege.getTimeUntilSurrenderConfirmationMillis()))
-			.runOnCancel(()-> Messaging.sendMsg(player, Translation.of("msg_surrender_action_cancelled")))
+			.runOnCancel(()-> Messaging.sendMsg(player, Translatable.of("msg_surrender_action_cancelled")))
 			.sendTo(player);
 	}
 

@@ -23,8 +23,7 @@ description: >
 # DarkPurple = &9, LightGreen = &a, LightBlue = &b
 # Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 
-plugin_prefix: '&f[&6SiegeWar&f] '
-msg_err_command_disable: '&cYou don''t have enough permissions for that command.'
+siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
 
 #Added in (Siegewar version)
 #Siege war happy-path messages
@@ -89,7 +88,6 @@ status_town_banner_control: '&2 > Banner Control: %s &a[%s]&2: &f'
 status_town_banner_control_nobody: '&2 > Banner Control: %s'
 
 #General
-msg_days: ' days'
 status_no_green: '&aNO'
 msg_occupier: '&4*Occupier*'
 msg_nobody: '&aNobody'
@@ -117,15 +115,6 @@ msg_war_siege_zone_bucket_emptying_forbidden: '&cYou cannot use this type of buc
 admin_help_1: 'Reload the config and language file.'
 config_and_lang_file_reloaded_successfully: 'Config and Language file reloaded successfully.'
 config_and_lang_file_could_not_be_loaded: 'Reload unsuccessful. See console for details.'
-status_yes: '&aYES'
-status_no: '&cNO'
-
-#Added in 0.03:
-msg_err_no_money: '&cThere is not enough money in the bank.'
-
-#Added in 0.04:
-msg_err_not_registered_1: '&c%s is not registered.'
-msg_error_must_be_num: '&cAmount must be a number.'
 
 #Added in 0.05:
 msg_err_not_being_sieged: '&cTown %s does not have any active sieges.'

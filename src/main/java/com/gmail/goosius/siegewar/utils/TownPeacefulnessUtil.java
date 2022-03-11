@@ -16,7 +16,7 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
-import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.TimeTools;
 
 import org.bukkit.Bukkit;
@@ -40,9 +40,8 @@ public class TownPeacefulnessUtil {
 	 * This method adjusts the peacefulness counters of all towns, where required
 	 */
 	public static void updateTownPeacefulnessCounters() {
-		TownyUniverse townyUniverse = TownyUniverse.getInstance();
 
-		List<Town> towns = new ArrayList<>(townyUniverse.getDataSource().getTowns());
+		List<Town> towns = TownyAPI.getInstance().getTowns();
 		ListIterator<Town> townItr = towns.listIterator();
 		Town town;
 
@@ -52,7 +51,7 @@ public class TownPeacefulnessUtil {
 			 * Only adjust counter for this town if it really still exists.
 			 * We are running in an Async thread so MUST verify all objects.
 			 */
-			if (townyUniverse.getDataSource().hasTown(town.getName()) 
+			if (TownyUniverse.getInstance().hasTown(town.getName()) 
 				&& !town.isRuined()
 				&& town.isNeutral() != TownMetaDataController.getDesiredPeacefulnessSetting(town))
 				updateTownPeacefulnessCounters(town);
@@ -195,7 +194,7 @@ public class TownPeacefulnessUtil {
      */
     public static Map<Nation,Integer> calculateTownyInfluenceMap(Town targetTown) {
 		Map<Nation,Integer> result = new LinkedHashMap<>();
-		List<Town> allTowns = new ArrayList<>(TownyUniverse.getInstance().getDataSource().getTowns());
+		List<Town> allTowns = TownyAPI.getInstance().getTowns();
 		ListIterator<Town> allTownsItr = allTowns.listIterator();
 		Town town;
 		Nation nation;

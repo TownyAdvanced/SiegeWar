@@ -14,7 +14,8 @@ import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
-import com.gmail.goosius.siegewar.settings.Translation;
+import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
 import org.bukkit.Bukkit;
@@ -72,7 +73,7 @@ public class SiegeWarBannerControlUtil {
 					continue;
 
 				if(!BattleSession.getBattleSession().isActive()) {
-					String message = Translation.of("msg_war_siege_battle_session_break_cannot_get_banner_control",
+					Translatable message = Translatable.of("msg_war_siege_battle_session_break_cannot_get_banner_control",
 													SiegeWarBattleSessionUtil.getFormattedTimeUntilNextBattleSessionStarts());
 					Messaging.sendErrorMsg(player, message);
 					continue;
@@ -85,7 +86,7 @@ public class SiegeWarBannerControlUtil {
 					continue;  // Player already on the BC list
 
 				if(SiegeWarBattleSessionUtil.isBattleSessionCappingLimiterActiveForResident(resident)) {
-					String message = Translation.of("msg_war_siege_max_daily_player_battle_sessions_reached_cannot_get_banner_control",
+					Translatable message = Translatable.of("msg_war_siege_max_daily_player_battle_sessions_reached_cannot_get_banner_control",
 													SiegeWarSettings.getBattleSessionCappingLimiter(),
 													SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident));
 					Messaging.sendErrorMsg(player, message);
@@ -122,8 +123,8 @@ public class SiegeWarBannerControlUtil {
 		//Notify Player in console
 		String messageKey = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? "msg_siege_war_banner_control_session_started_with_altitude" : "msg_siege_war_banner_control_session_started";
 		String sessionDurationText = TimeMgmt.getFormattedTimeValue(sessionDurationMillis);
-		Messaging.sendMsg(player, String.format(
-			Translation.of(messageKey),
+		Messaging.sendMsg(player,
+			Translatable.of(messageKey,
 			TownySettings.getTownBlockSize(),
 			SiegeWarSettings.getBannerControlVerticalDistanceUpBlocks(),
 			SiegeWarSettings.getBannerControlVerticalDistanceDownBlocks(),
@@ -131,7 +132,7 @@ public class SiegeWarBannerControlUtil {
 
 		//Notify player in action bar
 		ChatColor bossBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
-		String actionBarMessage = bossBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", sessionDurationText);
+		String actionBarMessage = bossBarMessageColor + Translatable.of("msg_siege_war_banner_control_remaining_session_time", sessionDurationText).forLocale(bannerControlSession.getPlayer());
 		BossBarUtil.updateBannerCapBossBar(bannerControlSession.getPlayer(), actionBarMessage, bannerControlSession);
 
 		CosmeticUtil.evaluateBeacon(player, siege);
@@ -149,12 +150,9 @@ public class SiegeWarBannerControlUtil {
 			}
 
 			if(firstControlSwitchingSession) {
-				String message;
-				if (siegeSide == SiegeSide.ATTACKERS) {
-					message = Translation.of("msg_siege_war_attacking_troops_at_siege_banner", siege.getTown().getFormattedName());
-				} else {
-					message = Translation.of("msg_siege_war_defending_troops_at_siege_banner", siege.getTown().getFormattedName());
-				}
+				Translatable message = siegeSide == SiegeSide.ATTACKERS 
+					? Translatable.of("msg_siege_war_attacking_troops_at_siege_banner", siege.getTown().getFormattedName())
+					: Translatable.of("msg_siege_war_defending_troops_at_siege_banner", siege.getTown().getFormattedName());
 
 				SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
 			}
@@ -203,7 +201,7 @@ public class SiegeWarBannerControlUtil {
 				//Check if session failed
 				if (!doesPlayerMeetBasicSessionRequirements(siege, bannerControlSession.getPlayer(), bannerControlSession.getResident())) {
 					siege.removeBannerControlSession(bannerControlSession);
-					String errorMessage = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? Translation.of("msg_siege_war_banner_control_session_failure_with_altitude") : Translation.of("msg_siege_war_banner_control_session_failure");
+					Translatable errorMessage = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? Translatable.of("msg_siege_war_banner_control_session_failure_with_altitude") : Translatable.of("msg_siege_war_banner_control_session_failure");
 					BossBarUtil.removeBannerCapBossBar(bannerControlSession.getPlayer());
 					Messaging.sendMsg(bannerControlSession.getPlayer(), errorMessage);
 					//Update beacon
@@ -224,7 +222,7 @@ public class SiegeWarBannerControlUtil {
 				if((System.currentTimeMillis() / 1000) < (bannerControlSession.getSessionEndTime() / 1000)) {
 					//Session still in progress
 					remainingSessionTime = TimeMgmt.getFormattedTimeValue(bannerControlSession.getSessionEndTime() - System.currentTimeMillis());
-					inProgressMessage = bossBarMessageColor + Translation.of("msg_siege_war_banner_control_remaining_session_time", remainingSessionTime);
+					inProgressMessage = bossBarMessageColor + Translatable.of("msg_siege_war_banner_control_remaining_session_time", remainingSessionTime).forLocale(bannerControlSession.getPlayer());
 					BossBarUtil.updateBannerCapBossBar(bannerControlSession.getPlayer(), inProgressMessage, bannerControlSession);
 				} else {
 					//Session success
@@ -246,7 +244,7 @@ public class SiegeWarBannerControlUtil {
 					if(bannerControlSession.getSiegeSide() == siege.getBannerControllingSide()) {
 						//Player contributes to ongoing banner control
 						siege.addBannerControllingResident(bannerControlSession.getResident());
-						Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_success"));
+						Messaging.sendMsg(bannerControlSession.getPlayer(), Translatable.of("msg_siege_war_banner_control_session_success"));
 					} else {
 						//Player gains banner control for their side
 						boolean reversal = false;
@@ -270,24 +268,24 @@ public class SiegeWarBannerControlUtil {
 						siege.addBannerControllingResident(bannerControlSession.getResident());
 
 						//Inform player
-						Messaging.sendMsg(bannerControlSession.getPlayer(), Translation.of("msg_siege_war_banner_control_session_success"));
+						Messaging.sendMsg(bannerControlSession.getPlayer(), Translatable.of("msg_siege_war_banner_control_session_success"));
 						//Inform town/nation participants
-						String message;
+						Translatable[] message = new Translatable[2];
 						if(reversal) {
 							if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
-								message = Translation.of("msg_siege_war_banner_control_reversed_by_attacker", siege.getTown().getFormattedName());
+								message[0] = Translatable.of("msg_siege_war_banner_control_reversed_by_attacker", siege.getTown().getFormattedName());
 							} else {
-								message = Translation.of("msg_siege_war_banner_control_reversed_by_defender", siege.getTown().getFormattedName());
+								message[0] = Translatable.of("msg_siege_war_banner_control_reversed_by_defender", siege.getTown().getFormattedName());
 							}
 							if(SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled()) {
 								String sign = bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS ? "+" : "-";
-								message += Translation.of("msg_siege_war_banner_control_reversal_bonus", sign, reversalBonusScore);
+								message[1] = Translatable.of("msg_siege_war_banner_control_reversal_bonus", sign, reversalBonusScore);
 							}
 						} else {
 							if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
-								message = Translation.of("msg_siege_war_banner_control_gained_by_attacker", siege.getTown().getFormattedName());
+								message[0] = Translatable.of("msg_siege_war_banner_control_gained_by_attacker", siege.getTown().getFormattedName());
 							} else {
-								message = Translation.of("msg_siege_war_banner_control_gained_by_defender", siege.getTown().getFormattedName());
+								message[0] = Translatable.of("msg_siege_war_banner_control_gained_by_defender", siege.getTown().getFormattedName());
 							}
 						}
 						SiegeWarNotificationUtil.informSiegeParticipants(siege, message);

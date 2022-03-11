@@ -2,12 +2,18 @@ package com.gmail.goosius.siegewar.settings;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.bukkit.plugin.Plugin;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 
 import com.gmail.goosius.siegewar.utils.FileMgmt;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.palmergames.bukkit.config.CommentedConfiguration;
+import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.object.TranslationLoader;
 import com.palmergames.util.TimeTools;
 
 public class Settings {
@@ -30,7 +36,11 @@ public class Settings {
 		SiegeWarSettings.resetCachedSettings();
 		
 		try {
-			Translation.loadLanguage(sw.getDataFolder().getPath() + File.separator, "english.yml");
+			Plugin plugin = SiegeWar.getSiegeWar(); 
+			Path langFolderPath = Paths.get(plugin.getDataFolder().getPath()).resolve("lang");
+			TranslationLoader loader = new TranslationLoader(langFolderPath, plugin, SiegeWar.class);
+			loader.load();
+			TownyAPI.getInstance().addTranslations(plugin, loader.getTranslations());
 		} catch (Exception e) {
 			SiegeWar.severe("Language file failed to load! Disabling!");
 			loadSuccessFlag = false;

@@ -6,11 +6,12 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.gmail.goosius.siegewar.timeractions.DefenderWin;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.confirmations.Confirmation;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
 
@@ -37,7 +38,7 @@ public class AbandonAttack {
 
 		Confirmation
 			.runOnAccept(()-> abandonAttack(siege, siege.getTimeUntilAbandonConfirmationMillis()))
-			.runOnCancel(()-> Messaging.sendMsg(player, Translation.of("msg_abandon_action_cancelled")))
+			.runOnCancel(()-> Messaging.sendMsg(player, Translatable.of("msg_abandon_action_cancelled")))
 			.sendTo(player);
 	}
 

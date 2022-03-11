@@ -5,11 +5,11 @@ import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translatable;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -121,7 +121,7 @@ public class SiegeWarImmunityUtil {
 				continue;
 			// Expired in the last hour.
 			if (expirationTime < System.currentTimeMillis())
-				TownyMessaging.sendPrefixedTownMessage(town, Translation.of("msg_town_immunity_expired"));
+				TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_town_immunity_expired"));
 		}
 	}
 }

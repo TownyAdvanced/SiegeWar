@@ -1,0 +1,7 @@
+# Global language file override file.
+# Here you can add your own messages, and they will be applied to each language.
+# To add messages for specific languages, copy the file from the reference folder to this one, and alter the messages.
+
+# Messages can be added like so: (hint: remove the # to uncomment it)
+#siegewar_plugin_prefix: '&f[&6SiegeWar&f] '          # SiegeWar prefix seen in front of most messages.
+status_town_title_peaceful: '&b(Neutral)'

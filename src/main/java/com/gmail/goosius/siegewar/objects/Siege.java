@@ -4,11 +4,12 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.Translation;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -371,11 +372,15 @@ public class Siege {
 	}
 
 	public String getFormattedBattleTimeRemaining() {
+		return getFormattedBattleTimeRemaining(Translator.locale(Translation.getDefaultLocale()));
+	}
+	
+	public String getFormattedBattleTimeRemaining(Translator translator) {
 		if (BattleSession.getBattleSession().isActive()
 			&& status == SiegeStatus.IN_PROGRESS) {
 			return BattleSession.getBattleSession().getFormattedTimeRemainingUntilBattleSessionEnds();
 		} else {
-			return Translation.of("msg_na");
+			return translator.of("msg_na");
 		}
 	}
 

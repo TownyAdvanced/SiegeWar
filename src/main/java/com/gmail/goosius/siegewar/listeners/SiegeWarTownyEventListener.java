@@ -14,20 +14,27 @@ import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.PreNewDayEvent;
 import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
+import com.palmergames.bukkit.towny.event.TranslationLoadEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyExplosionDamagesEntityEvent;
 import com.palmergames.bukkit.towny.event.teleport.OutlawTeleportEvent;
 import com.palmergames.bukkit.towny.event.time.NewHourEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.TranslationLoader;
+
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -54,6 +61,22 @@ public class SiegeWarTownyEventListener implements Listener {
         TownOccupationController.loadAll();
     }
     
+	/*
+	 * When Towny is reloading the languages, make sure we're re-injecting our language strings. 
+	 */
+	@EventHandler
+	public void onTownyLoadLanguages(TranslationLoadEvent event) {
+		Plugin plugin = SiegeWar.getSiegeWar();
+		Path langFolderPath = Paths.get(plugin.getDataFolder().getPath()).resolve("lang");
+		TranslationLoader loader = new TranslationLoader(langFolderPath, plugin, SiegeWar.class);
+		loader.load();
+		Map<String, Map<String, String>> translations = loader.getTranslations();
+
+		for (String language : translations.keySet())
+			for (Map.Entry<String, String> map : translations.get(language).entrySet())
+				event.addTranslation(language, map.getKey(), map.getValue());
+	}
+	
     /*
      * Update town peacefulness counters.
      */
