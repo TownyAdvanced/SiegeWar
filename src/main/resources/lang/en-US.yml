@@ -433,7 +433,7 @@ msg_surrender_action_cancelled: 'Siege surrender cancelled.'
 msg_abandon_action_cancelled: 'Siege abandon cancelled.'
 
 # Added in 0.29
-msg_err_siegecamp_too_close_to_another_siegecamp: 'Siege-Assembly too lose to another Siege-Assembly!'
+msg_err_siegecamp_too_close_to_another_siegecamp: 'Siege-Assembly too close to another Siege-Assembly!'
 msg_err_too_soon_since_your_last_siegecamp: 'It has been too soon since you last tried to attack this town!'
 msg_err_your_siegecamp_failed_you_must_wait_x: 'Your Siege-Assembly failed to score enough points, you cannot attempt to attack the town again for %s.'
 attackers_scored_points_towards_siege_camp_x_of_x: '%s has scored points towards their Siege-Assembly: %s/%s.'
