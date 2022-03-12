@@ -30,17 +30,27 @@ import java.util.Arrays;
 public class SiegeWarBattleSessionUtil {
 	
 	private static Map<Siege, Integer> battleResults = new HashMap<>();
-	private static final long ONE_DAY_IN_MILLIS = 86400000;
+	private static final int ONE_DAY_IN_MILLIS = 86400000;
+	private static final int ONE_MINUTE_IN_MILLIS = 60000;
 
 	/**
-	 * Attempt to schedule the next battle session
-	 * 1. If there is a battle session configured to start later today, or tomorrow,
-	 *     this method will successfully set the battleSessions.scheduledStartTime variable.
-	 * 2. If there are no battle sessions configured to start later today, or tomorrow,
-	 *     this method will set the battleSessions.scheduledStartTime variable to null.
+	 * Schedule the next battle session
 	 */
-   	public static void attemptToScheduleNextBattleSession() {
-		Long startTimeOfNextSession = getConfiguredStartTimeOfNextBattleSession();
+	public static void scheduleNextBattleSession() {
+		long startTimeOfNextSession;
+		int minutesUntilStart;
+		int millisUntilStart;
+		int startTimeClip = SiegeWarSettings.getWarSiegeBattleSessionsStartTimeClip();
+		int currentMinutes = LocalDateTime.now().getMinute();
+		if(currentMinutes <= startTimeClip) {
+			//The next session will occur this hour
+			minutesUntilStart = startTimeClip - currentMinutes -1;
+		} else {
+			//This next session will occur next hour
+			minutesUntilStart = (60 - currentMinutes) + startTimeClip;
+		}
+		millisUntilStart = minutesUntilStart * ONE_MINUTE_IN_MILLIS;
+		startTimeOfNextSession = System.currentTimeMillis() + millisUntilStart;
 		BattleSession.getBattleSession().setScheduledStartTime(startTimeOfNextSession);
    	}
 
@@ -50,7 +60,7 @@ public class SiegeWarBattleSessionUtil {
 		//Set the start time
 		battleSession.setStartTime(System.currentTimeMillis());
 		//Set the scheduled end time
-		battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionDurationMinutes() * 60000));
+		battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * 60000));
 		//Clear the scheduled start time
 		battleSession.setScheduledStartTime(null);
 		//Send up the Bukkit event for other plugins to listen for.
@@ -159,7 +169,7 @@ public class SiegeWarBattleSessionUtil {
 
 			//If there is no battle session scheduled, attempt to schedule session now.
 			if(battleSession.getScheduledStartTime() == null) {
-				attemptToScheduleNextBattleSession();
+				scheduleNextBattleSession();
 			}
 
 			//If a battle session is scheduled, start it if we hit the scheduled time
@@ -260,42 +270,6 @@ public class SiegeWarBattleSessionUtil {
 				return "0";
 			}		
 		}	
-	}
-
-	/**
-	 * Get the configured start time, in millis, of the next battle session.
-	 * 
-	 * This method will only find the start time if it is later today or tomorrow.
-	 * If there are no start times later today or tomorrow, then this method will return null
-	 * 
-	 * @return configured start time, in millis.
-	 */
-	private static Long getConfiguredStartTimeOfNextBattleSession() {
-		LocalDateTime currentTime = LocalDateTime.now();
-		LocalDateTime nextStartDateTime = null;
-
-		//Look for next configured-start-time for today
-		for (LocalDateTime candidateStartTime : SiegeWarSettings.getAllBattleSessionStartTimesForToday()) {
-			if(candidateStartTime.isAfter(currentTime)) {
-				nextStartDateTime = candidateStartTime;
-				break;
-			}
-		}
-
-		//If no configured-start-time was found, look for the first configured time for tomorrow
-		if(nextStartDateTime == null) {
-			nextStartDateTime = SiegeWarSettings.getFirstBattleSessionStartTimeForTomorrowUtc();
-		}
-		
-		//If nextStartTime is still null, return null, else return the UTC time in millis of the given value.
-		if(nextStartDateTime != null) {
-			ZonedDateTime nextStartTimeInServerTimeZone = ZonedDateTime.of(nextStartDateTime, ZoneId.systemDefault());
-			ZonedDateTime nextStartTimeInUtcTimeZone = nextStartTimeInServerTimeZone.withZoneSameInstant(ZoneId.of("UTC"));
-			long nextStartTimeAsUtcMillis = nextStartTimeInUtcTimeZone.toInstant().toEpochMilli();
-			return nextStartTimeAsUtcMillis;
-		} else {
-			return null;
-		}
 	}
 
 	/**

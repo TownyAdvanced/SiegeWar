@@ -279,58 +279,12 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_COUNTERATTACK_BOOSTER_EXTRA_DEATH_POINTS_PER_PLAYER_PERCENTAGE);
 	}
 
-	public static List<LocalDateTime> getAllBattleSessionStartTimesForToday() {
-		return getAllBattleSessionStartTimesForDay(LocalDate.now());
-	}
-	
-	@Nullable
-	public static LocalDateTime getFirstBattleSessionStartTimeForTomorrowUtc() {
-		LocalDate tomorrow = LocalDate.now().plusDays(1);
-		List<LocalDateTime> allBattleSessionStartTimesForTomorrow = getAllBattleSessionStartTimesForDay(tomorrow); 
-		if(allBattleSessionStartTimesForTomorrow.size() != 0) {
-			return allBattleSessionStartTimesForTomorrow.get(0);
-		} else {
-			return null;
-		}
-	}
-	
-	private static List<LocalDateTime> getAllBattleSessionStartTimesForDay(LocalDate day) {
-		//Determine if the given day is on the weekend
-		boolean isWeekend = day.getDayOfWeek() == DayOfWeek.SATURDAY || day.getDayOfWeek() == DayOfWeek.SUNDAY;
-
-		//Get the start times from the config file, in the form of a single string.
-		String startTimesAsString = isWeekend ? 
-			getWarSiegeBattleSessionWeekendStartTimes() :
-			getWarSiegeBattleSessionWeekdayStartTimes();
-
-		//Transform the config file strings into a list of LocalDateTime objects
-		List<LocalDateTime> startTimesAsList = new ArrayList<>();	
-		if(startTimesAsString.length() > 0) {		
-			String[] startTimeAsHourMinutePair;		
-			LocalDateTime startTime;
-			for(String startTimeAsString: startTimesAsString.split(",")) {
-				if (startTimeAsString.contains(":")) {
-					startTimeAsHourMinutePair = startTimeAsString.split(":");
-					startTime = LocalDateTime.of(day, LocalTime.of(Integer.parseInt(startTimeAsHourMinutePair[0]), Integer.parseInt(startTimeAsHourMinutePair[1])));
-				} else {
-					startTime = LocalDateTime.of(day, LocalTime.of(Integer.parseInt(startTimeAsString), 0));
-				}
-				startTimesAsList.add(startTime);	
-			}
-		}
-		return startTimesAsList;
+	public static int getWarSiegeBattleSessionsStartTimeClip() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_START_TIME_CLIP);
 	}
 
-	public static String getWarSiegeBattleSessionWeekdayStartTimes() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BATTLE_SESSION_TIMINGS_START_TIMES_WEEKDAYS);
-	}
-
-	public static String getWarSiegeBattleSessionWeekendStartTimes() {
-		return Settings.getString(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BATTLE_SESSION_TIMINGS_START_TIMES_WEEKEND_DAYS);
-	}
-
-	public static int getWarSiegeBattleSessionDurationMinutes() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_BATTLE_SESSION_TIMINGS_DURATION_MINUTES);
+	public static int getWarSiegeBattleSessionsDurationMinutes() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BATTLE_SESSIONS_DURATION_MINUTES);
 	}
 
 	public static List<Material> getSiegeZoneWildernessForbiddenBlockMaterials() {

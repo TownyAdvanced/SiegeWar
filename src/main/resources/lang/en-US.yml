@@ -415,12 +415,12 @@ msg_you_cannot_carry_items_in_siegezones: '&cYou cannot carry any items in siege
 status_town_days_to_peacefulness_status_change: 'Days To Neutrality Status Change'
 
 # Added in 0.27
-msg_next_siege_session_in_minutes: 'The next Siege Session is in %s.'
-msg_session_is_active_now: 'The Siege Session is active now!'
-msg_err_battle_session_active: "&cBattle session has already started."
-msg_err_battle_session_inactive: "&cBattle session has already ended."
-msg_battle_session_force_start: "&bBattle session has been force started."
-msg_battle_session_force_end: "&bBattle session has been force ended."
+msg_next_siege_session_in_minutes: 'The next Battle Session is in %s.'
+msg_session_is_active_now: 'A Battle Session is active now!'
+msg_err_battle_session_active: "&cA Battle session has already started."
+msg_err_battle_session_inactive: "&cThe Battle session has already ended."
+msg_battle_session_force_start: "&bA Battle session has been force started."
+msg_battle_session_force_end: "&bThe Battle session has been force ended."
 
 # Added in 0.28
 msg_town_immunity_expired: 'Your town''s Siege Immunity has expired.'
