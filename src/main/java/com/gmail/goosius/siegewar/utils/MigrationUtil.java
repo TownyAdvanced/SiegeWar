@@ -26,7 +26,6 @@ public class MigrationUtil {
         migrationFields.add(new ConfigFileMigrationField("war.siege.scoring.counterattack_booster_extra_death_points_per_player_percentage","war.siege.points_balancing.counterattack_booster.extra_death_points_per_player_percentage"));
         migrationFields.add(new ConfigFileMigrationField("war.siege.banner_control_reversal_bonus.enabled","war.siege.points_balancing.banner_control_reversal_bonus.enabled"));
         migrationFields.add(new ConfigFileMigrationField("war.siege.banner_control_reversal_bonus.multiplier","war.siege.points_balancing.banner_control_reversal_bonus.multiplier"));
-        migrationFields.add(new ConfigFileMigrationField("war.siege.battle_session.duration_minutes","war.siege.points_balancing.battle_session_timings.duration_minutes"));
         migrationFields.add(new ConfigFileMigrationField("war.siege.battle_session.capping_limiter.weekdays","war.siege.points_balancing.capping_limiter.weekdays"));
         migrationFields.add(new ConfigFileMigrationField("war.siege.battle_session.capping_limiter.weekend_days","war.siege.points_balancing.capping_limiter.weekend_days"));
         //Peaceful towns migration

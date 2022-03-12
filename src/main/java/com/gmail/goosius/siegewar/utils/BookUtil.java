@@ -26,7 +26,7 @@ public class BookUtil {
 		/*
 		 * Local variables
 		 */
-		String activeSession = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getWarSiegeBattleSessionDurationMinutes() * TimeMgmt.ONE_MINUTE_IN_MILLIS);
+		String activeSession = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * TimeMgmt.ONE_MINUTE_IN_MILLIS);
 		String maxSiege = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getWarSiegeMaxHoldoutTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS);
 		double counterPercent = SiegeWarSettings.getWarSiegeCounterattackBoosterExtraDeathPointsPerPlayerPercentage();
 		boolean bankruptcy = TownySettings.isTownBankruptcyEnabled();
