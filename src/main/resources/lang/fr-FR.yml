@@ -1,5 +1,5 @@
 ﻿name: SiegeWar
-version: 0.38
+version: 0.39
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -443,11 +443,11 @@ msg_surrender_action_cancelled: 'Siege surrender cancelled.'
 msg_abandon_action_cancelled: 'Siege abandon cancelled.'
 
 # Added in 0.29
-msg_err_siegecamp_too_close_to_another_siegecamp: 'SiegeCamp too lose to another SiegeCamp!'
-msg_err_too_soon_since_your_last_siegecamp: 'It has been too soon since you last tried to make a SiegeCamp on this town!'
-msg_err_your_siegecamp_failed_you_must_wait_x: 'Your SiegeCamp failed to score enough points, you may not attempt another siege for %s.'
-attackers_scored_points_towards_siege_camp_x_of_x: '%s has scored points towards their SiegeCamp session: %s/%s.'
-attacker_has_begun_a_siegecamp_session: '%s has begun a SiegeCamp session against %s. If successful a Siege will begin! The attackers must score %s points within %s minutes.'
+msg_err_siegecamp_too_close_to_another_siegecamp: 'Siege-Assembly too lose to another Siege-Assembly!'
+msg_err_too_soon_since_your_last_siegecamp: 'It has been too soon since you last tried to attack this town!'
+msg_err_your_siegecamp_failed_you_must_wait_x: 'Your Siege-Assembly failed to score enough points, you cannot attempt to attack the town again for %s.'
+attackers_scored_points_towards_siege_camp_x_of_x: '%s has scored points towards their Siege-Assembly: %s/%s.'
+attacker_has_begun_a_siegecamp_session: '%s has begun a Siege-Assembly against %s. If successful a Siege will begin! The attackers must score %s points within %s minutes.'
 
 # Added in 0.30
 msg_bossbar_preference_set: "&bBossBar preference set to %s."
