@@ -29,13 +29,19 @@ public class MigrationUtil {
         migrationFields.add(new ConfigFileMigrationField("war.siege.battle_session.duration_minutes","war.siege.points_balancing.battle_session_timings.duration_minutes"));
         migrationFields.add(new ConfigFileMigrationField("war.siege.battle_session.capping_limiter.weekdays","war.siege.points_balancing.capping_limiter.weekdays"));
         migrationFields.add(new ConfigFileMigrationField("war.siege.battle_session.capping_limiter.weekend_days","war.siege.points_balancing.capping_limiter.weekend_days"));
-        //Peaceful towns migration
+        //Peaceful towns to Neutral towns migration
         migrationFields.add(new ConfigFileMigrationField("peaceful_towns.enabled","neutral_towns.enabled"));
         migrationFields.add(new ConfigFileMigrationField("peaceful_towns.confirmation_requirement_days","neutral_towns.confirmation_requirement_days"));
         migrationFields.add(new ConfigFileMigrationField("peaceful_towns.new_town_confirmation_requirement_days","neutral_towns.new_town_confirmation_requirement_days"));
         migrationFields.add(new ConfigFileMigrationField("peaceful_towns.subvert_enabled","neutral_towns.subvert_enabled"));
         migrationFields.add(new ConfigFileMigrationField("peaceful_towns.revolt_enabled","neutral_towns.revolt_enabled"));
-        migrationFields.add(new ConfigFileMigrationField("peaceful_towns.towny_influence_radius","neutral_towns.towny_influence_radius")); 
+        migrationFields.add(new ConfigFileMigrationField("peaceful_towns.towny_influence_radius","neutral_towns.towny_influence_radius"));
+        //SiegeCamps to Siege-Assemblies migration
+        migrationFields.add(new ConfigFileMigrationField("war.siege.siegecamps.enabled","war.siege.siege_assemblies.enabled"));
+        migrationFields.add(new ConfigFileMigrationField("war.siege.siegecamps.failed_siegecamp_cooldown","war.siege.siege_assemblies.failed_siege_assembly_cooldown"));
+        migrationFields.add(new ConfigFileMigrationField("war.siege.siegecamps.points_required_to_succeed","war.siege.siege_assemblies.points_required_to_succeed"));
+        migrationFields.add(new ConfigFileMigrationField("war.siege.siegecamps.points_per_minute","war.siege.siege_assemblies.points_per_minute"));
+        migrationFields.add(new ConfigFileMigrationField("war.siege.siegecamps_assemblies.duration_in_minutes","war.siege.siege_assemblies.duration_in_minutes"));
     }
 
     /**
