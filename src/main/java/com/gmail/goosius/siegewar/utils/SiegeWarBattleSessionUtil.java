@@ -44,10 +44,10 @@ public class SiegeWarBattleSessionUtil {
 		int currentMinutes = LocalDateTime.now().getMinute();
 		if(currentMinutes <= startTimeClip) {
 			//The next session will occur this hour
-			minutesUntilStart = startTimeClip - currentMinutes;
+			minutesUntilStart = startTimeClip - currentMinutes -1;
 		} else {
 			//This next session will occur next hour
-			minutesUntilStart = (59 - currentMinutes) + startTimeClip;
+			minutesUntilStart = (60 - currentMinutes) + startTimeClip;
 		}
 		millisUntilStart = minutesUntilStart * ONE_MINUTE_IN_MILLIS;
 		startTimeOfNextSession = System.currentTimeMillis() + millisUntilStart;
