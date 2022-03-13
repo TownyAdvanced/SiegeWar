@@ -1,0 +1,17 @@
+package com.gmail.goosius.siegewar.settings.migrator;
+
+public enum MigrationType {
+	OVERWRITE(false),
+	APPEND(false),
+	NATION_LEVEL_ADD(false),
+	TOWN_LEVEL_ADD(false),
+	TOWNYPERMS_ADD(false),
+	REPLACE(false),
+	DELETE(false),
+	MOVE(true);
+	
+	public boolean early;
+	MigrationType(boolean early) {
+		this.early = early;
+	}
+}
