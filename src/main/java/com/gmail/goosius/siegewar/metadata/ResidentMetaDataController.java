@@ -22,6 +22,7 @@ public class ResidentMetaDataController {
 	private SiegeWar plugin;
 	private static IntegerDataField plunderAmount = new IntegerDataField("siegewar_plunder", 0); //Field no longer in use
 	private static IntegerDataField militarySalaryAmount = new IntegerDataField("siegewar_militarysalary", 0);
+	private static StringDataField wallBreachFatigue = new StringDataField("siegewar_wallbreachfatigue");
 	/*
 	 * A list of battle sessions the player was recently involved in
 	 * Sessions are identified by their start times (in millis)
@@ -140,4 +141,24 @@ public class ResidentMetaDataController {
 		else
 			resident.addMetaData(new StringDataField("siegewar_recentbattlesessions", value));
 	}
+
+	public static boolean hasWallBreachFatigue(Resident resident) {
+		StringDataField sdf = (StringDataField) wallBreachFatigue.clone();
+		return resident.hasMeta(sdf.getKey());
+	}
+
+	public static void removeWallBreachFatigue(Resident resident) {
+		StringDataField sdf = (StringDataField) wallBreachFatigue.clone();
+		if (resident.hasMeta(sdf.getKey())) {
+			resident.removeMetaData(sdf);
+		}		
+	}
+
+	public static void addWallBreachFatigue(Resident resident) {
+		StringDataField sdf = (StringDataField) wallBreachFatigue.clone();
+		if (!resident.hasMeta(sdf.getKey())) {
+			resident.addMetaData(new StringDataField("siegewar_wallbreachfatigue"));
+		}		
+	}
+
 }

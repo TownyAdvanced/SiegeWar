@@ -3,8 +3,10 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
+import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -14,6 +16,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.Translatable;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -31,12 +34,17 @@ public class SiegeWarWallBreachUtil {
         if(!BattleSession.getBattleSession().isActive())
             return;
 
+        //Remove wall breaching fatigue from residents
+        removeWallBreachFatigue();
+
         //Cycle all sieges
         for (Siege siege : SiegeController.getSieges()) {
+            if(siege.getStatus() != SiegeStatus.IN_PROGRESS) 
+                continue;
             increaseBreachPointsFromBannerControl(siege);
             awardWallBreachBonuses(siege);
             CannonsIntegration.clearRecentTownFriendlycannonFirers(siege);   
-        }
+        }        
     }
 
     /**
@@ -85,45 +93,41 @@ public class SiegeWarWallBreachUtil {
      * @param siege the siege
      */
     private static void awardWallBreachBonuses(Siege siege) {
-        if(SiegeWarSettings.getWallBreachBonusBattlePoints() == 0)
+        if(SiegeWarSettings.getWallBreachBonusBattlePoints() < 1)
             return;
-        
-        //Town-hostile team must have banner control                
-        switch(siege.getBannerControllingSide()) {
-            case NOBODY:
-                return;
-            case ATTACKERS:
-                if(siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.LIBERATION) 
-                    return;    
-                break;                                           
-            case DEFENDERS:
-                if(siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION) 
-                    return;
-                break;                                           
-        }
 
-        //Cycle banner controlling residents
-        Player player;
+        //Cycle online players
+        Resident resident;
         Set<Resident> newAwardees = new HashSet<>();
         Set<Resident> previousAwardees = new HashSet<>(siege.getWallBreachBonusAwardees());
-        for(Resident candidate: siege.getBannerControllingResidents()) {
-            //Candidate must be at the homeblock of the besieged town
-            player = TownyAPI.getInstance().getPlayer(candidate);
+        for(Player player: Bukkit.getOnlinePlayers()) {
             TownBlock townblockWherePlayerIsLocated = TownyAPI.getInstance().getTownBlock(player);
             if(townblockWherePlayerIsLocated == null)
                 continue;
             if(townblockWherePlayerIsLocated != siege.getTown().getHomeBlockOrNull())
                 continue;
+            resident = TownyAPI.getInstance().getResident(player);
+            if(!SiegeWarAllegianceUtil.isPlayerOnTownHostileSide(player, resident, siege))
+                continue;
 
             //Candidate must not already have award
-            if(previousAwardees.contains(candidate)) {
+            if(previousAwardees.contains(resident)) {
                 Messaging.sendErrorMsg(player, Translatable.of("msg_err_already_received_wall_breach_bonus"));
                 continue;                                       
             }
-            
+
+            //Candidate must not have wall breach fatigue
+            if(ResidentMetaDataController.hasWallBreachFatigue(resident)) {
+                Messaging.sendErrorMsg(player, "Yall has wall breach fatigue");
+                continue;                                                       
+            }
+
             //Mark candidate to receive bonus
-            newAwardees.add(candidate);
-            
+            newAwardees.add(resident);
+
+            //Give wall breach fatigue to resident
+            ResidentMetaDataController.addWallBreachFatigue(resident);
+
             //Notify player
             Messaging.sendMsg(player, Translatable.of("msg_wall_breach_bonus_awarded"));
         }
@@ -140,7 +144,7 @@ public class SiegeWarWallBreachUtil {
             
             //Register new awardees with Siege
             siege.getWallBreachBonusAwardees().addAll(newAwardees);
-         
+
             //Notify siege stakeholders       
             if(newAwardees.size() > 0) {
                 Translatable message = Translatable.of("msg_wall_breach_bonus_awarded_to_attackers",siege.getTown().getName(), newAwardees.size(), SiegeWarSettings.getWallBreachBonusBattlePoints());
@@ -225,4 +229,22 @@ public class SiegeWarWallBreachUtil {
 			return true;
 		}
 	}
+
+    /**
+     * Remove wall breach fatigue from online residents
+     */	
+    private static void removeWallBreachFatigue() {
+        Resident resident;
+        for(Player player: Bukkit.getOnlinePlayers()) {
+            resident = TownyAPI.getInstance().getResident(player);
+            if(ResidentMetaDataController.hasWallBreachFatigue(resident)) {
+                if(TownyAPI.getInstance().isWilderness(player.getLocation())) {
+                    ResidentMetaDataController.removeWallBreachFatigue(resident);
+                    Messaging.sendMsg(player, "Wall Breach Fatigue removed. You are no longer blocked from getting Wall Breach Bonuses.");    
+                } 
+            }
+        }
+
+    }
+
 }
