@@ -36,12 +36,12 @@ public class SiegeWarWallBreachUtil {
 
         //Cycle all sieges
         for (Siege siege : SiegeController.getSieges()) {
-            if(siege.getStatus() != SiegeStatus.IN_PROGRESS) 
+            if(siege.getStatus() != SiegeStatus.IN_PROGRESS)
                 continue;
             increaseBreachPointsFromBannerControl(siege);
             awardWallBreachBonuses(siege);
             CannonsIntegration.clearRecentTownFriendlycannonFirers(siege);   
-        }        
+        }
     }
 
     /**
@@ -94,27 +94,28 @@ public class SiegeWarWallBreachUtil {
             return;
 
         //Cycle online players
-        Resident resident;
+        Resident candidate;
         Set<Resident> newAwardees = new HashSet<>();
         Set<Resident> previousAwardees = new HashSet<>(siege.getWallBreachBonusAwardees());
         for(Player player: Bukkit.getOnlinePlayers()) {
+            //Candidate must be at the homeblock of the besieged town
             TownBlock townblockWherePlayerIsLocated = TownyAPI.getInstance().getTownBlock(player);
             if(townblockWherePlayerIsLocated == null)
                 continue;
             if(townblockWherePlayerIsLocated != siege.getTown().getHomeBlockOrNull())
                 continue;
-            resident = TownyAPI.getInstance().getResident(player);
-            if(!SiegeWarAllegianceUtil.isPlayerOnTownHostileSide(player, resident, siege))
+            candidate = TownyAPI.getInstance().getResident(player);
+            if(!SiegeWarAllegianceUtil.isPlayerOnTownHostileSide(player, candidate, siege))
                 continue;
 
             //Candidate must not already have award
-            if(previousAwardees.contains(resident)) {
+            if(previousAwardees.contains(candidate)) {
                 Messaging.sendErrorMsg(player, Translatable.of("msg_err_already_received_wall_breach_bonus"));
                 continue;                                       
             }
 
             //Mark candidate to receive bonus
-            newAwardees.add(resident);
+            newAwardees.add(candidate);
 
             //Notify player
             Messaging.sendMsg(player, Translatable.of("msg_wall_breach_bonus_awarded"));
@@ -127,8 +128,8 @@ public class SiegeWarWallBreachUtil {
             if(siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION) {
                 siege.adjustAttackerBattlePoints(battlePointsBonus);                
             } else {
-                siege.adjustDefenderBattlePoints(battlePointsBonus);            
-            } 
+                siege.adjustDefenderBattlePoints(battlePointsBonus);
+            }
 
             //Register new awardees with Siege
             siege.getWallBreachBonusAwardees().addAll(newAwardees);
