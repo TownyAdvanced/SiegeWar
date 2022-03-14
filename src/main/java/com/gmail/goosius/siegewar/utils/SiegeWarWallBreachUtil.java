@@ -34,9 +34,6 @@ public class SiegeWarWallBreachUtil {
         if(!BattleSession.getBattleSession().isActive())
             return;
 
-        //Remove wall breaching fatigue from residents
-        removeWallBreachFatigue();
-
         //Cycle all sieges
         for (Siege siege : SiegeController.getSieges()) {
             if(siege.getStatus() != SiegeStatus.IN_PROGRESS) 
@@ -116,17 +113,8 @@ public class SiegeWarWallBreachUtil {
                 continue;                                       
             }
 
-            //Candidate must not have wall breach fatigue
-            if(ResidentMetaDataController.hasWallBreachFatigue(resident)) {
-                Messaging.sendErrorMsg(player, "Yall has wall breach fatigue");
-                continue;                                                       
-            }
-
             //Mark candidate to receive bonus
             newAwardees.add(resident);
-
-            //Give wall breach fatigue to resident
-            ResidentMetaDataController.addWallBreachFatigue(resident);
 
             //Notify player
             Messaging.sendMsg(player, Translatable.of("msg_wall_breach_bonus_awarded"));
@@ -136,12 +124,12 @@ public class SiegeWarWallBreachUtil {
         if(newAwardees.size() > 0) {         
             //Adjust Battle Points
             int battlePointsBonus = SiegeWarSettings.getWallBreachBonusBattlePoints() * newAwardees.size();
-            if(siege.getBannerControllingSide() == SiegeSide.ATTACKERS) {
+            if(siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION) {
                 siege.adjustAttackerBattlePoints(battlePointsBonus);                
             } else {
-                siege.adjustDefenderBattlePoints(battlePointsBonus);
-            }
-            
+                siege.adjustDefenderBattlePoints(battlePointsBonus);            
+            } 
+
             //Register new awardees with Siege
             siege.getWallBreachBonusAwardees().addAll(newAwardees);
 
@@ -229,22 +217,5 @@ public class SiegeWarWallBreachUtil {
 			return true;
 		}
 	}
-
-    /**
-     * Remove wall breach fatigue from online residents
-     */	
-    private static void removeWallBreachFatigue() {
-        Resident resident;
-        for(Player player: Bukkit.getOnlinePlayers()) {
-            resident = TownyAPI.getInstance().getResident(player);
-            if(ResidentMetaDataController.hasWallBreachFatigue(resident)) {
-                if(TownyAPI.getInstance().isWilderness(player.getLocation())) {
-                    ResidentMetaDataController.removeWallBreachFatigue(resident);
-                    Messaging.sendMsg(player, "Wall Breach Fatigue removed. You are no longer blocked from getting Wall Breach Bonuses.");    
-                } 
-            }
-        }
-
-    }
 
 }
