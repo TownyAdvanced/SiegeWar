@@ -140,5 +140,4 @@ public class ResidentMetaDataController {
 		else
 			resident.addMetaData(new StringDataField("siegewar_recentbattlesessions", value));
 	}
-
 }
