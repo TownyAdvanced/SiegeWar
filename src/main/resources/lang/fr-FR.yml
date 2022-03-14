@@ -1,5 +1,5 @@
 ﻿name: SiegeWar
-version: 0.39
+version: 0.40
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -495,8 +495,8 @@ msg_err_breaching_cannot_destroy_this_material: '&cYou cannot destroy this type 
 #Wall-Breach-Bonus
 msg_wall_breach_bonus_awarded_to_attackers: "&bSiege on %s > %d attackers have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
 msg_wall_breach_bonus_awarded_to_defenders: "&bSiege on %s > %d defenders have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
-msg_wall_breach_bonus_awarded: "&bYou have been awarded a wall breach bonus."
-msg_err_already_received_wall_breach_bonus: '&cYou already received your Wall-Breach-Bonus for this Battle Session.'
+msg_wall_breach_bonus_awarded: "&bYou have been awarded a Wall Breach Bonus!"
+msg_err_already_received_wall_breach_bonus: '&cYou already received a Wall Breach Bonus for this Battle Session.'
 #Wall-Breach Cannons Integration
 msg_err_cannot_fire_cannon_without_battle_session: '&cYou cannot fire a cannon in a siegezone unless there is a Battle Session in progress.'
 msg_err_cannot_fire_cannon_without_perms: '&cYou cannot fire this cannon. Check that you are an official participant in the local siege, and that you have a rank which allows cannon-firing.'

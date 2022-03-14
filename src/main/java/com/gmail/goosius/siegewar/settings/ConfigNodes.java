@@ -575,7 +575,7 @@ public enum ConfigNodes {
 			"",
 			"# If true, then the wall breaching feature is enabled.",
 			"# If false, then the wall breaching feature is disabled.",
-			"# TIP: This feature is disabled by default, to allow servers owners to carefully review the feature before enabling."),
+			"# TIP: This feature is disabled by default, to allow servers owners to configure the feature carefully before enabling."),
 	WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION(
 			"war.siege.wall_breaching.breach_point_generation",
 			"",
