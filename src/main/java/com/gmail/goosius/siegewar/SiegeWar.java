@@ -4,7 +4,7 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.MigrationUtil;
+import com.gmail.goosius.siegewar.settings.migrator.ConfigMigrator;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translation;
@@ -13,7 +13,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.gmail.goosius.siegewar.settings.ConfigNodes;
 import com.gmail.goosius.siegewar.settings.Settings;
+import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
@@ -33,6 +35,8 @@ import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +75,8 @@ public class SiegeWar extends JavaPlugin {
             info("Towny version " + getTownyVersion() + " found.");
         }
         
+        handleLegacyConfigs();
+        
         if (!loadAll()) {
 	        siegeWarPluginError = true;
         }
@@ -88,16 +94,27 @@ public class SiegeWar extends JavaPlugin {
 		}
     }
     
-    @Override
+    private void handleLegacyConfigs() {
+		Path configPath = getDataFolder().toPath().resolve("config.yml");
+		if (!Files.exists(configPath))
+			return;
+
+		CommentedConfiguration config = new CommentedConfiguration(configPath);
+		if (!config.load() || config.getString(ConfigNodes.LAST_RUN_VERSION.getRoot(), "0.0.0.0").equals(getVersion()))
+			return;
+		
+		ConfigMigrator earlyMigrator = new ConfigMigrator(config, "config-migration.json", true);
+		earlyMigrator.migrate();
+	}
+
+	@Override
     public void onDisable() {
     	info("Shutting down...");
     }
     
     private boolean loadAll() {
     	return !Towny.getPlugin().isError()
-				&& MigrationUtil.readInConfigFileMigrationFields()
 				&& Settings.loadSettingsAndLang()
-				&& MigrationUtil.migrateConfigFileFields()
 				&& SiegeController.loadAll()
 				&& TownOccupationController.loadAll();
     }

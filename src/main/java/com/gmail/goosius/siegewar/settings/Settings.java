@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import org.bukkit.plugin.Plugin;
 
 import com.gmail.goosius.siegewar.SiegeWar;
-
+import com.gmail.goosius.siegewar.settings.migrator.ConfigMigrator;
 import com.gmail.goosius.siegewar.utils.FileMgmt;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.palmergames.bukkit.config.CommentedConfiguration;
@@ -32,6 +32,11 @@ public class Settings {
 			loadSuccessFlag = false;
         }
 
+		if (Settings.getLastRunVersion(SiegeWar.getSiegeWar().getVersion()).equals(SiegeWar.getSiegeWar().getVersion())) {
+			ConfigMigrator migrator = new ConfigMigrator(config, "config-migration.json", false);
+			migrator.migrate();
+		}
+		
 		// Some list variables do not reload upon loadConfig.
 		SiegeWarSettings.resetCachedSettings();
 		
@@ -118,7 +123,7 @@ public class Settings {
 			if (root.getRoot() == ConfigNodes.VERSION.getRoot())
 				setNewProperty(root.getRoot(), version);
 			else if (root.getRoot() == ConfigNodes.LAST_RUN_VERSION.getRoot())
-				setNewProperty(root.getRoot(), getLastRunVersion(version));
+				setNewProperty(root.getRoot(), SiegeWar.getSiegeWar().getVersion());
 			else
 				setNewProperty(root.getRoot(), (config.get(root.getRoot().toLowerCase()) != null) ? config.get(root.getRoot().toLowerCase()) : root.getDefault());
 		}

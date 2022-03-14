@@ -14,7 +14,6 @@ import org.bukkit.Material;
 
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
 import org.bukkit.entity.EntityType;
-import org.jetbrains.annotations.Nullable;
 
 public class SiegeWarSettings {
 	

@@ -1,0 +1,140 @@
+[
+  {
+    "version": "0.7.7",
+    "changes": [
+      {
+        "type": "APPEND",
+        "path": "war.siege.wall_breaching.destroying_blocks.blacklist",
+        "value": ",BARREL"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.scoring.points_for_attacker_occupation",
+        "value": "war.siege.points_balancing.base_points.banner_control.attacker"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.scoring.points_for_defender_occupation",
+        "value": "war.siege.points_balancing.base_points.banner_control.defender"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.scoring.points_for_attacker_death",
+        "value": "war.siege.points_balancing.base_points.deaths.attacker"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.scoring.points_for_defender_death",
+        "value": "war.siege.points_balancing.base_points.deaths.defender"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.scoring.winner_takes_all_points",
+        "value": "war.siege.points_balancing.end_of_battle_points_distribution.winner_takes_all"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.switches.counterattack_booster_enabled",
+        "value": "war.siege.points_balancing.counterattack_booster.enabled"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.scoring.counterattack_booster_extra_death_points_per_player_percentage",
+        "value": "war.siege.points_balancing.counterattack_booster.extra_death_points_per_player_percentage"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.banner_control_reversal_bonus.enabled",
+        "value": "war.siege.points_balancing.banner_control_reversal_bonus.enabled"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.banner_control_reversal_bonus.multiplier",
+        "value": "war.siege.points_balancing.banner_control_reversal_bonus.multiplier"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.battle_session.capping_limiter.weekdays",
+        "value": "war.siege.points_balancing.capping_limiter.weekdays"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.battle_session.capping_limiter.weekend_days",
+        "value": "war.siege.points_balancing.capping_limiter.weekend_days"
+      }
+    ]
+  },
+  {
+    "version": "0.7.9",
+    "changes": [
+      {
+        "type": "MOVE",
+        "path": "peaceful_towns.enabled",
+        "value": "neutral_towns.enabled"
+      },
+      {
+        "type": "MOVE",
+        "path": "peaceful_towns.confirmation_requirement_days",
+        "value": "neutral_towns.confirmation_requirement_days"
+      },
+      {
+        "type": "MOVE",
+        "path": "peaceful_towns.new_town_confirmation_requirement_days",
+        "value": "neutral_towns.new_town_confirmation_requirement_days"
+      },
+      {
+        "type": "MOVE",
+        "path": "peaceful_towns.subvert_enabled",
+        "value": "neutral_towns.subvert_enabled"
+      },
+      {
+        "type": "MOVE",
+        "path": "peaceful_towns.revolt_enabled",
+        "value": "neutral_towns.revolt_enabled"
+      },
+      {
+        "type": "MOVE",
+        "path": "peaceful_towns.towny_influence_radius",
+        "value": "neutral_towns.towny_influence_radius"
+      }
+    ]
+  },
+  {
+    "version": "0.7.11",
+    "changes": [
+      {
+        "type": "MOVE",
+        "path": "war.siege.siegecamps.enabled",
+        "value": "war.siege.siege_assemblies.enabled"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.siegecamps.failed_siegecamp_cooldown",
+        "value": "war.siege.siege_assemblies.failed_siege_assembly_cooldown"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.siegecamps.points_required_to_succeed",
+        "value": "war.siege.siege_assemblies.points_required_to_succeed"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.siegecamps.points_per_minute",
+        "value": "war.siege.siege_assemblies.points_per_minute"
+      },
+      {
+        "type": "MOVE",
+        "path": "war.siege.siegecamps_assemblies.duration_in_minutes",
+        "value": "war.siege.siege_assemblies.duration_in_minutes"
+      },
+      {
+        "type": "REMOVE",
+        "path": "cannons_integration"
+      },
+      {
+        "type": "REMOVE",
+        "path": "peaceful_towns"
+      }
+    ]
+  }
+]
