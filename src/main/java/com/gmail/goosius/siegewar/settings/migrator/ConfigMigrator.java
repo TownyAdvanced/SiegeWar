@@ -88,7 +88,6 @@ public class ConfigMigrator {
 	}
 
 	private void performChange(Change change) {
-		System.out.println("change: " + change.type);
 		switch (change.type) {
 			case OVERWRITE:
 				config.set(change.path, change.value);
@@ -121,11 +120,10 @@ public class ConfigMigrator {
 					config.set(change.path, null);
 				}
 				break;
-			case DELETE:
-				System.out.println("Delete type for " + change.path);
+			case REMOVE:
 				Object path = config.get(change.path);
 				if (path != null) {
-					System.out.println("Deleting " + change.path);
+					TownyMessaging.sendDebugMsg("Removing unneeded config entry: " + change.path);
 					config.set(change.path, null);
 				}
 				break;

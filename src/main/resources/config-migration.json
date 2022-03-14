@@ -128,14 +128,12 @@
         "value": "war.siege.siege_assemblies.duration_in_minutes"
       },
       {
-        "type": "DELETE",
-        "path": "cannons_integration",
-        "value": ""
+        "type": "REMOVE",
+        "path": "cannons_integration"
       },
       {
-        "type": "DELETE",
-        "path": "peaceful_towns",
-        "value": ""
+        "type": "REMOVE",
+        "path": "peaceful_towns"
       }
     ]
   }
