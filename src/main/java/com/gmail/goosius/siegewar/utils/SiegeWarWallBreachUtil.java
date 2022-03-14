@@ -85,10 +85,10 @@ public class SiegeWarWallBreachUtil {
      * Award wall-breach bonuses if conditions are met.
      * 
      * Conditions:
-     * - Town hostile team has Banner Control.
-     * - Player is the BC list.
      * - Player is at the homeblock.
+     * - Player is on the town-hostile side
      * - Player did not already get the award in this Battle Session.
+     * - Player does not have wall-breach fatigue
      *
      * @param siege the siege
      */
