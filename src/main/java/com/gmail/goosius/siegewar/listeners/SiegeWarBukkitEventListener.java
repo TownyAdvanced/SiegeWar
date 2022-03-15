@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 
+import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -201,9 +202,8 @@ public class SiegeWarBukkitEventListener implements Listener {
 	@EventHandler
 	public void on(PlayerJoinEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled()
-			&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()
-			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getPlayer().getLocation())) {
-			Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_siege_zone_proximity_warning_text"));
+			&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()) {			
+			SiegeWarNotificationUtil.warnPlayerOfSiegeDanger(event.getPlayer());
 		}
 	}
 

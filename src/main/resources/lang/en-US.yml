@@ -505,3 +505,6 @@ msg.installation.complete: "Installation Complete."
 #Added in 0.37
 msg_siege_zone_proximity_warning_text: "&cWARNING: You are in a SiegeZone!. If you are not prepared for combat, get to a safe location immediately before you get murdered."
 msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cWithin SiegeZones, cannons can only be fired if they are in the wilderness or the besieged town."
+
+#Added in 0.40
+msg_besieged_town__proximity_warning_text: "&cWARNING: You are in a besieged town!. Do not log out here or you will be automatically killed."
