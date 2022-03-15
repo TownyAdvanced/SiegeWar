@@ -88,6 +88,10 @@ public class SiegeWarNotificationUtil {
 	}
 
 	public static void warnPlayerOfSiegeDanger(Player player) {
+		//Return is war is not enabled at player's location
+		if(!TownyAPI.getInstance().getTownyWorld(player.getWorld()).isWarAllowed())
+			return;
+		
 		//Send warning if player is in SiegeZone (& didn't already get the warning)
 		Siege siege = SiegeController.getSiegeAtLocation(player.getLocation());
 		if(siege != null 
@@ -97,6 +101,7 @@ public class SiegeWarNotificationUtil {
 				Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning_text"));
 				siege.addPlayerWhoWasInTheSiegeZone(player);		
 		}
+		
 		//Send warning if player is in besieged town (& didn't already get the warning)
 		//Note: Being in the SiegeZone doesn't necessarily mean being in a besieged town
 		Town town = TownyAPI.getInstance().getTown(player.getLocation());
@@ -106,6 +111,12 @@ public class SiegeWarNotificationUtil {
 		if(siege != null && siege.getStatus().isActive()) {
 			Messaging.sendErrorMsg(player, Translatable.of("msg_besieged_town_proximity_warning_text"));
 			siege.addPlayersWhoWasInTheBesiegedTown(player);		
+		}
+	}
+
+	public static void warnPlayersOfSiegeDanger() {
+		for(Player player: Bukkit.getOnlinePlayers()) {
+			warnPlayerOfSiegeDanger(player);
 		}
 	}
 }

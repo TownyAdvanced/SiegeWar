@@ -7,10 +7,7 @@ import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
-import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
+import com.gmail.goosius.siegewar.utils.*;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.PreNewDayEvent;
 import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
@@ -113,6 +110,7 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeHUDManager.updateHUDs();
             SiegeWarTimerTaskController.evaluateBeacons();
             SiegeWarTimerTaskController.evaluateBattlefieldReporters();
+            SiegeWarNotificationUtil.warnPlayersOfSiegeDanger();
         }
     }
 
