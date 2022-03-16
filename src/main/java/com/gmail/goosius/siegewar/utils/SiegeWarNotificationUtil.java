@@ -108,9 +108,11 @@ public class SiegeWarNotificationUtil {
 		if(town == null)
 			return;
 		siege = SiegeController.getSiege(town);
-		if(siege != null && siege.getStatus().isActive()) {
-			Messaging.sendErrorMsg(player, Translatable.of("msg_besieged_town_proximity_warning_text"));
-			siege.addPlayersWhoWasInTheBesiegedTown(player);		
+		if(siege != null 
+			&& siege.getStatus().isActive()
+			&& !siege.getPlayersWhoWereInTheBesiegedTown().contains(player)) {
+				Messaging.sendErrorMsg(player, Translatable.of("msg_besieged_town_proximity_warning_text"));
+				siege.addPlayersWhoWasInTheBesiegedTown(player);		
 		}
 	}
 
