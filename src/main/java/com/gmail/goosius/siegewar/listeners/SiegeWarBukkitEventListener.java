@@ -204,7 +204,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 	@EventHandler
 	public void on(PlayerJoinEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled()
-			&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()) {			
+			&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()) {
 			SiegeWarNotificationUtil.warnPlayerOfSiegeDanger(event.getPlayer());
 		}
 	}
