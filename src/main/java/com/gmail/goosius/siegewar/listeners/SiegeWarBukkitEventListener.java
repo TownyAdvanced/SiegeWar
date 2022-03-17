@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 
+import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
+import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -201,23 +204,42 @@ public class SiegeWarBukkitEventListener implements Listener {
 	@EventHandler
 	public void on(PlayerJoinEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled()
-			&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()
-			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getPlayer().getLocation())) {
-			Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_siege_zone_proximity_warning_text"));
+			&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()) {
+			SiegeWarNotificationUtil.warnPlayerOfSiegeDanger(event.getPlayer());
 		}
 	}
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeController.getPlayersInBannerControlSessions().contains(event.getPlayer()) 
-				&& event.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
+		if(!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+
+		//Remove banner-control related glowing
+		if(SiegeController.getPlayersInBannerControlSessions().contains(event.getPlayer()) 
+		  && event.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
 				@Override
 				public void run() {
 					event.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
 				}
 			});
+		}
+
+		//Kill players in besieged towns
+		if(SiegeWarSettings.getKillHostilePlayersWhoLogoutInBesiegedTown()
+				&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()) {
+			Town town = TownyAPI.getInstance().getTown(event.getPlayer().getLocation());
+			if(town == null)
+				return;
+			Siege siege = SiegeController.getSiege(town);
+			if(siege == null || !siege.getStatus().isActive())
+				return;
+			Resident resident = TownyAPI.getInstance().getResident(event.getPlayer());
+			if(SiegeWarAllegianceUtil.isPlayerOnTownFriendlySide(event.getPlayer(), resident, siege))
+				return;
+			event.getPlayer().setHealth(0);
+			//event.
+			event.setQuitMessage(Translation.of("msg_player_killed_from_logging_out_in_besieged_town", event.getPlayer().getName()));
 		}
 	}
 

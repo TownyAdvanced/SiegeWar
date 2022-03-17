@@ -1,9 +1,12 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
@@ -82,6 +85,43 @@ public class SiegeWarNotificationUtil {
 			SiegeWar.severe("Problem informing siege participants");
 			SiegeWar.severe("Message : " + message);
 			e.printStackTrace();
+		}
+	}
+
+	public static void warnPlayerOfSiegeDanger(Player player) {
+		//Return is war is not enabled at player's location
+		if(!TownyAPI.getInstance().getTownyWorld(player.getWorld()).isWarAllowed())
+			return;
+
+		//Send warning if player is in SiegeZone (& didn't already get the warning)
+		Siege siege = SiegeController.getSiegeAtLocation(player.getLocation());
+		if(siege != null
+			&& siege.getStatus().isActive()
+			&& !siege.getPlayersWhoWereInTheSiegeZone().contains(player)
+			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
+				Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning_text"));
+				siege.addPlayerWhoWasInTheSiegeZone(player);
+		}
+
+		//Send warning if player is in besieged town (& didn't already get the warning)
+		//Note: Being in the SiegeZone doesn't necessarily mean being in a besieged town
+		if(SiegeWarSettings.getKillHostilePlayersWhoLogoutInBesiegedTown()) {
+			Town town = TownyAPI.getInstance().getTown(player.getLocation());
+			if(town == null)
+				return;
+			siege = SiegeController.getSiege(town);
+			if(siege != null
+				&& siege.getStatus().isActive()
+				&& !siege.getPlayersWhoWereInTheBesiegedTown().contains(player)) {
+					Messaging.sendErrorMsg(player, Translatable.of("msg_besieged_town_proximity_warning_text"));
+					siege.addPlayersWhoWasInTheBesiegedTown(player);
+			}
+		}
+	}
+
+	public static void warnPlayersOfSiegeDanger() {
+		for(Player player: Bukkit.getOnlinePlayers()) {
+			warnPlayerOfSiegeDanger(player);
 		}
 	}
 }

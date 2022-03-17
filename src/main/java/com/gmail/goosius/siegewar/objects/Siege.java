@@ -66,6 +66,8 @@ public class Siege {
 	private Set<Resident> wallBreachBonusAwardees;  //Residents who have been awarded the wall-breach bonus for the current battle session
 	private Set<Player> recentTownFriendlyCannonFirers;
 	private int numberOfBannerControlReversals;
+	private Set<Player> playersWhoWereInTheSiegeZone;
+	private Set<Player> playersWhoWereInTheBesiegedTown;
 	
 	public Siege(Town town) {
 		this.town = town;
@@ -88,6 +90,8 @@ public class Siege {
 		wallBreachBonusAwardees = new HashSet<>();
 		recentTownFriendlyCannonFirers = new HashSet<>();
 		numberOfBannerControlReversals = 0;
+		playersWhoWereInTheSiegeZone = new HashSet<>();
+		playersWhoWereInTheBesiegedTown = new HashSet<>();
     }
 
     public Town getTown() {
@@ -504,5 +508,29 @@ public class Siege {
 
 	public void setNumberOfBannerControlReversals(int numberOfBannerControlReversals) {
 		this.numberOfBannerControlReversals = numberOfBannerControlReversals;
+	}
+
+	public void clearPlayersWhoWereInTheSiegeZone() {
+		playersWhoWereInTheSiegeZone.clear();
+	}
+
+	public void clearPlayersWhoWereInTheBesiegedTown() {
+		playersWhoWereInTheBesiegedTown.clear();
+	}
+
+	public Set<Player> getPlayersWhoWereInTheSiegeZone() {
+		return playersWhoWereInTheSiegeZone;
+	}
+
+	public void addPlayerWhoWasInTheSiegeZone(Player player) {
+		playersWhoWereInTheSiegeZone.add(player);
+	}
+
+	public Set<Player> getPlayersWhoWereInTheBesiegedTown() {
+		return playersWhoWereInTheBesiegedTown;
+	}
+
+	public void addPlayersWhoWasInTheBesiegedTown(Player player) {
+		playersWhoWereInTheBesiegedTown.add(player);
 	}
 }

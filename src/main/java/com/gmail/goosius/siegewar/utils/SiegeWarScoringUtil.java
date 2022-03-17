@@ -82,7 +82,7 @@ public class SiegeWarScoringUtil {
 				killer.getName(),
 				Math.abs(battlePoints));
 		} else {
-			langKey = residentIsAttacker ? 	Translation.of("msg_siege_war_attacker_death") : Translation.of("msg_siege_war_defender_death");
+			langKey = residentIsAttacker ? 	"msg_siege_war_attacker_death" : "msg_siege_war_defender_death";
 			message = Translatable.of(
 				langKey,
 				siege.getTown().getName(),

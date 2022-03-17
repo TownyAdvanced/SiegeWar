@@ -513,5 +513,9 @@ msg.townyconfig.installation.complete: "Towny config file adjusted for recommend
 msg.installation.complete: "Installation Complete."
 
 #Added in 0.37
-msg_siege_zone_proximity_warning_text: "&cWARNING: You are in a SiegeZone!. If you are not prepared for combat, get to a safe location immediately before you get murdered."
+msg_siege_zone_proximity_warning_text: "&cWARNING: You are in a SiegeZone!. PVP protections are disabled here."
 msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cWithin SiegeZones, cannons can only be fired if they are in the wilderness or the besieged town."
+
+#Added in 0.40
+msg_besieged_town_proximity_warning_text: "&cWARNING: You are in a besieged town!. If you log out here while not a military-ranked member of the town-friendly side, you will be killed."
+msg_player_killed_from_logging_out_in_besieged_town: "%s was killed because they logged out while in a besieged town."
