@@ -155,6 +155,12 @@ public enum ConfigNodes {
 			"# ",
 			"# If the setting is true then military ranked players keep level on siege-zone death.",
 			"# See the 'death penalties' section below for more settings in this area"),
+	WAR_SIEGE_KILL_HOSTILE_PLAYERS_WHO_LOG_OUT_IN_BESIEGED_TOWNS(
+			"war.siege.switches.kill_hostile_players_who_log_out_in_besieged_towns",
+			"true",
+			"",
+			"# If this value is true then non-town-friendly players who log out in besieged towns will be killed.",
+			"# TIP: The setting is essential when using the Wall Breaching feature, to stop players logging in/out at the homeblock"),
 	WAR_SIEGE_MONEY(
 			"war.siege.money",
 			"",

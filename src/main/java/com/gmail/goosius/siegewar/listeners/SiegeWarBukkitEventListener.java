@@ -226,7 +226,8 @@ public class SiegeWarBukkitEventListener implements Listener {
 		}
 
 		//Kill players in besieged towns
-		if(TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()) {
+		if(SiegeWarSettings.getKillHostilePlayersWhoLogoutInBesiegedTown()
+				&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()) {
 			Town town = TownyAPI.getInstance().getTown(event.getPlayer().getLocation());
 			if(town == null)
 				return;

@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -104,15 +105,17 @@ public class SiegeWarNotificationUtil {
 
 		//Send warning if player is in besieged town (& didn't already get the warning)
 		//Note: Being in the SiegeZone doesn't necessarily mean being in a besieged town
-		Town town = TownyAPI.getInstance().getTown(player.getLocation());
-		if(town == null)
-			return;
-		siege = SiegeController.getSiege(town);
-		if(siege != null
-			&& siege.getStatus().isActive()
-			&& !siege.getPlayersWhoWereInTheBesiegedTown().contains(player)) {
-				Messaging.sendErrorMsg(player, Translatable.of("msg_besieged_town_proximity_warning_text"));
-				siege.addPlayersWhoWasInTheBesiegedTown(player);
+		if(SiegeWarSettings.getKillHostilePlayersWhoLogoutInBesiegedTown()) {
+			Town town = TownyAPI.getInstance().getTown(player.getLocation());
+			if(town == null)
+				return;
+			siege = SiegeController.getSiege(town);
+			if(siege != null
+				&& siege.getStatus().isActive()
+				&& !siege.getPlayersWhoWereInTheBesiegedTown().contains(player)) {
+					Messaging.sendErrorMsg(player, Translatable.of("msg_besieged_town_proximity_warning_text"));
+					siege.addPlayersWhoWasInTheBesiegedTown(player);
+			}
 		}
 	}
 
