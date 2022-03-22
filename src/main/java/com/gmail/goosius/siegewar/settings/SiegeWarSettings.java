@@ -437,23 +437,23 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_SIEGECAMPS_DURATION_IN_MINUTES);
 	}
 
-	public static int getBattleSessionCappingLimiter() {
+	public static int getSiegeAttendanceLimiterBattleSessions() {
 		DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
 		boolean weekend = dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
 
 		if(weekend) {
-			return getBattleSessionCappingLimiterWeekendDays();
+			return getSiegeAttendanceLimiterWeekdayBattleSessions();
 		} else {
-			return getBattleSessionCappingLimiterWeekdays();
+			return getSiegeAttendanceLimiterWeekendDayBattleSessions();
 		}
 	}
 
-	private static int getBattleSessionCappingLimiterWeekdays() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_CAPPING_LIMITER_WEEKDAYS);
+	private static int getSiegeAttendanceLimiterWeekdayBattleSessions() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_ATTENDANCE_LIMITER_WEEKDAY_BATTLE_SESSIONS);
 	}
 
-	private static int getBattleSessionCappingLimiterWeekendDays() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_CAPPING_LIMITER_WEEKEND_DAYS);
+	private static int getSiegeAttendanceLimiterWeekendDayBattleSessions() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_ATTENDANCE_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS);
 	}
 
 	public static List<DayOfWeek> getSiegeStartDayLimiterAllowedDays() {

@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -70,9 +71,6 @@ public class SiegeWarBannerControlUtil {
 				if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
 					continue;
 
-				if(!player.isOp() && player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_GET_BANNER_CONTROL.getNode()))
-					continue;
-
 				if(!BattleSession.getBattleSession().isActive()) {
 					Translatable message = Translatable.of("msg_war_siege_battle_session_break_cannot_get_banner_control",
 													SiegeWarBattleSessionUtil.getFormattedTimeUntilNextBattleSessionStarts());
@@ -86,13 +84,8 @@ public class SiegeWarBannerControlUtil {
 				if(siege.getBannerControllingResidents().contains(resident))
 					continue;  // Player already on the BC list
 
-				if(SiegeWarBattleSessionUtil.isBattleSessionCappingLimiterActiveForResident(resident)) {
-					Translatable message = Translatable.of("msg_war_siege_max_daily_player_battle_sessions_reached_cannot_get_banner_control",
-													SiegeWarSettings.getBattleSessionCappingLimiter(),
-													SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident));
-					Messaging.sendErrorMsg(player, message);
-					continue;  // Player is being limited by the battle session capping limiter
-				}
+				if(SiegeWarBattleSessionUtil.isSiegeAttendanceLimiterActiveForResident(resident)) 
+					continue; // Max daily battle sessions reached
 
 				SiegeSide siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
 
@@ -173,12 +166,18 @@ public class SiegeWarBannerControlUtil {
 		if (!resident.hasTown())
 			return false; //Player is a nomad
 
+		if(resident.getTownOrNull().isNeutral())
+			return false; //Player if from a neutral town
+
 		if(player.isFlying() || player.isGliding())
 			return false;   // Player is flying
 
 		if (player.getGameMode() == GameMode.SPECTATOR)
 			return false; // Player is spectating
 
+		if(!player.isOp() && player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_GET_BANNER_CONTROL.getNode()))
+			return false;  //Player is SiegeZone observer
+					
 		if(!SiegeWarScoringUtil.isPlayerInTimedPointZone(player, siege))
 			return false; //player is not in the timed point zone
 
@@ -241,6 +240,9 @@ public class SiegeWarBannerControlUtil {
 							}
 						});
 					}
+					//Count this sessions towards the player's daily bs attendance limit
+					SiegeWarBattleSessionUtil.markPlayerAsHavingAttendedCurrentBattleSession(siege);
+					
 					//Update siege
 					if(bannerControlSession.getSiegeSide() == siege.getBannerControllingSide()) {
 						//Player contributes to ongoing banner control

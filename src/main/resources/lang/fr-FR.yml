@@ -1,5 +1,5 @@
 ﻿name: SiegeWar
-version: 0.40
+version: 0.41
 language: french
 author: PainOchoco
 website: "http://townyadvanced.github.io/"
@@ -461,7 +461,7 @@ hover_message_click_to_claim: "Click to claim money owed to you."
 msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
 
 #Added in 0.32
-msg_war_siege_max_daily_player_battle_sessions_reached_cannot_get_banner_control: "&cBanner capture failed because you have reached your daily battle session limit (%d). Try again in %s."
+msg_war_siege_max_daily_player_battle_sessions_reached_cannot_get_banner_control: "&cBanner capture failed because you have reached your daily battle session attendance limit (%d). Try again in %s."
 msg_peaceful_town_subverted: "&b%s has been peacefully subverted and occupied by %s."
 msg_peaceful_town_revolted: "&b%s has peacefully revolted against %s, and freed itself from occupation."
 msg_town_became_peaceful: '&b%s has been confirmed as Neutral. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot enter siege-zones or gain nation-military ranks.'
@@ -519,3 +519,6 @@ msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cWithin SiegeZones, can
 #Added in 0.40
 msg_besieged_town_proximity_warning_text: "&cWARNING: You are in a besieged town!. If you log out here while not a military-ranked member of the town-friendly side, you will be killed."
 msg_player_killed_from_logging_out_in_besieged_town: "%s was killed because they logged out while in a besieged town."
+
+#Added in 0.40
+msg_max_daily_player_battle_session_attendance_limit_reached: "&cYou have reached your daily Battle Session Attendance Limit (%d). War Sickness active. You can attend another battle session in %s."

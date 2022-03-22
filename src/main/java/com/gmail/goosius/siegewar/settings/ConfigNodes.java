@@ -526,29 +526,31 @@ public enum ConfigNodes {
 			"# Set to -1 to disable the cap.",
 			"# The value applies to both positive and negative balances e.g. 20000 means a lower limit of -20000 and an upper limit of 20000.",
 			"# TIP: Set this value HIGH to give advantage to big nations, and LOW to give advantage to small nations."),
-	WAR_SIEGE_POINTS_BALANCING_CAPPING_LIMITER(
-			"war.siege.points_balancing.capping_limiter",
+	WAR_SIEGE_ATTENDANCE_LIMITER(
+			"war.siege.attendance_limiter",
 			"",
 			"",
 			"",
+			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |                   Capping Limiter                    | #",
+			"# |                 Attendance Limiter                     #",
 			"# +------------------------------------------------------+ #",
+			"############################################################",
 			""),
-	WAR_SIEGE_POINTS_BALANCING_CAPPING_LIMITER_WEEKDAYS(
-			"war.siege.points_balancing.capping_limiter.weekdays",
+	WAR_SIEGE_ATTENDANCE_LIMITER_WEEKDAY_BATTLE_SESSIONS(
+			"war.siege.attendance_limiter.weekday_battle_sessions",
 			"2",
 			"",
-			"# This value determines the maximum number of week-day battle sessions for each individual player, in which they can capture the banner.",
+			"# This value determines the maximum number of week-day battle sessions which each player can attend.",
 			"# To disable the feature, set the value to -1.",
-			"# TIP: This feature is an important server defence against night-capping, and against players skipping school or work to gain timed points."),
-	WAR_SIEGE_POINTS_BALANCING_CAPPING_LIMITER_WEEKEND_DAYS(
-			"war.siege.points_balancing.capping_limiter.weekend_days",
+			"# TIP: This feature is critical to prevent teams trying to win sieges via excessive-online-time, including skipping school or work."),
+	WAR_SIEGE_ATTENDANCE_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS(
+			"war.siege.attendance_limiter.weekend_day_battle_sessions",
 			"5",
 			"",
-			"# This value determines the maximum number of weekend-day battle sessions for each individual player, in which they can capture the banner.",
+			"# This value determines the maximum number of weekend-day battle sessions which each player can attend.",
 			"# To disable the feature, set the value to -1.",
-			"# TIP: This feature is an important server defence against night-capping, and against players skipping school or work to gain timed points."),
+			"# TIP: This feature is critical to prevent teams trying to win sieges via excessive-online-time, including skipping school or work."),
     WAR_SIEGE_POINTS_BALANCING_END_OF_BATTLE_POINTS_DISTRIBUTION(
 			"war.siege.points_balancing.end_of_battle_points_distribution",
 			"",
