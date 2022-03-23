@@ -9,6 +9,8 @@ import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -120,8 +122,18 @@ public class ResidentMetaDataController {
 		return getBoolean(resident, bossBarsDisabled);
 	}
 
+	public static List<String> getRecentBattleSessionsAsList(Resident resident) {
+		String recentBattleSessionsString = getRecentBattleSessions(resident);
+		if(recentBattleSessionsString == null || recentBattleSessionsString.length() == 0) {
+			return new ArrayList<>();		
+		} else {
+			String[] recentBattleSessionsArray = recentBattleSessionsString.replaceAll(" ","").split(",");
+			return Arrays.asList(recentBattleSessionsArray);
+		}
+	}
+		
 	@Nullable
-	public static String getRecentBattleSessions(Resident resident) {
+	private static String getRecentBattleSessions(Resident resident) {
 		StringDataField sdf = (StringDataField) recentBattleSessions.clone();
 		if (resident.hasMeta(sdf.getKey()))
 			return MetaDataUtil.getString(resident, sdf);

@@ -285,32 +285,25 @@ public class SiegeWarBattleSessionUtil {
 		if(maxDailyPlayerBattleSessions == -1)
 			return false;
 
-		//Return true if the Siege Attendance Limit is set to 0
-		if(maxDailyPlayerBattleSessions == 0)
-			return true;
-
-		//If player's recent-sessions list is null, initialize it
-		String recentBattleSessionsString = ResidentMetaDataController.getRecentBattleSessions(resident);
-		if(recentBattleSessionsString == null) {
-			ResidentMetaDataController.setRecentBattleSessions(resident,"");
-			resident.save();
-			recentBattleSessionsString = "";
-		}
-		
-		//Transform recent-sessions string into List
-		List<String> recentBattleSessionsList;
-		if(recentBattleSessionsString.length() == 0) {
-			recentBattleSessionsList = new ArrayList<>();		
-		} else {
-			String[] recentBattleSessionsArray = recentBattleSessionsString.replaceAll(" ","").split(",");
-			recentBattleSessionsList = Arrays.asList(recentBattleSessionsArray);
-		}
-		
-		//Return false if current session is in the player's recent-sessions list
+		//If current session is on players's recent-sessions-list, that means they can attend it, so return false.
+		List<String> recentBattleSessionsList = ResidentMetaDataController.getRecentBattleSessionsAsList(resident);
 		String startTimeOfCurrentBattleSessionAsString = BattleSession.getBattleSession().getStartTime().toString();
 		if(recentBattleSessionsList.contains(startTimeOfCurrentBattleSessionAsString)) 
 			return false;			
 
+		//Check if player is at their daily limit
+		if(recentBattleSessionsList.size() >= maxDailyPlayerBattleSessions) {
+			//Player at or over the limit. Return true
+			return true;
+		} else {
+			//Player is not at the limit
+			return false;
+		}		
+		
+
+
+
+		//TODO - MOVE ME
 		//Recalculate recent-sessions list, keeping only entries which are newer then 24 hours old
 		List<String> recalculatedRecentBattleSessionsList = new ArrayList<>();
 		for(String battleSessionStartTime: recentBattleSessionsList) {
@@ -318,21 +311,14 @@ public class SiegeWarBattleSessionUtil {
 				recalculatedRecentBattleSessionsList.add(battleSessionStartTime);
 			}
 		}
-		
+		//TODO - MOVE ME
 		//Save recent-session list if it has changed (will happen if one or more entries have dropped off)
 		if(recentBattleSessionsList.size() != recalculatedRecentBattleSessionsList.size()) {
 			ResidentMetaDataController.setRecentBattleSessions(resident, recalculatedRecentBattleSessionsList);
 			resident.save();
 		}
 
-		//Check if player is at their daily limit
-		if(recalculatedRecentBattleSessionsList.size() >= maxDailyPlayerBattleSessions) {
-			//Player at or over the limit. Return true
-			return true;
-		} else {
-			//Player is not at the limit
-			return false;
-		}		
+
 	}
 
 	/**
