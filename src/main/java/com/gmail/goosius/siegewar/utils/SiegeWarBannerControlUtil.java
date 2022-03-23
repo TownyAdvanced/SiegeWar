@@ -6,7 +6,6 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -84,7 +83,7 @@ public class SiegeWarBannerControlUtil {
 				if(siege.getBannerControllingResidents().contains(resident))
 					continue;  // Player already on the BC list
 
-				if(SiegeWarBattleSessionUtil.isSiegeAttendanceLimiterActiveForResident(resident)) 
+				if(SiegeWarBattleSessionUtil.hasResidentExceededTheirSiegeAttendanceLimit(resident)) 
 					continue; // Max daily battle sessions reached
 
 				SiegeSide siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
@@ -240,9 +239,10 @@ public class SiegeWarBannerControlUtil {
 							}
 						});
 					}
-					//Count this sessions towards the player's daily bs attendance limit
-					SiegeWarBattleSessionUtil.markPlayerAsHavingAttendedCurrentBattleSession(siege);
-					
+
+					//Mark the player as having attended the current battle session
+					SiegeWarBattleSessionUtil.markResidentAsHavingAttendedCurrentBattleSession(bannerControlSession.getResident());
+
 					//Update siege
 					if(bannerControlSession.getSiegeSide() == siege.getBannerControllingSide()) {
 						//Player contributes to ongoing banner control

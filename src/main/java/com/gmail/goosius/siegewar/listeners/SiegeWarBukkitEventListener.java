@@ -4,8 +4,7 @@ import java.util.List;
 
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 
-import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
+import com.gmail.goosius.siegewar.utils.*;
 import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -36,8 +35,6 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.playeractions.PlayerDeath;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -271,38 +268,42 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(!(event instanceof Player))
 			return;
 
+		//Return if event is not in a SiegeZone
+		boolean eventIsInActiveSiegeZone = SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation());
+		if(eventIsInActiveSiegeZone)
+			return;
+
 		//Override any previous cancellation attempts
-		Boolean eventIsInActiveSiegeZone = null;
 		if(event.isCancelled()) {
-			eventIsInActiveSiegeZone = SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation());
-			if(eventIsInActiveSiegeZone)
-				event.setCancelled(false);
-			else
-				return;
+			event.setCancelled(false);
 		}
 
-		//Stop TNT/Minecarts from damaging players in siegezone wilderness
-		if (SiegeWarSettings.getSiegeZoneWildernessForbiddenExplodeEntityTypes().contains(event.getDamager().getType())
-				&& TownyAPI.getInstance().isWilderness(event.getEntity().getLocation())) {
-			if(eventIsInActiveSiegeZone == null)
-				eventIsInActiveSiegeZone = SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation());
-			if(eventIsInActiveSiegeZone) {
+		//PVP or EVP event ?:
+		if(event.getDamager() instanceof Player) {
+
+			//If the damager is op, return
+			if(event.getDamager().isOp())
+				return;
+
+			//If the damager is a battlefield observer, cancel the hit and return
+			if(event.getDamager().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_HIT_PLAYERS.getNode())) {
 				event.setCancelled(true);
 				return;
 			}
-		}
 
-		//Stop battlefield observers from damaging other players in siegezones
-		if(event.getDamager() instanceof Player
-				&& !event.getDamager().isOp()
-				&& event.getDamager().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_HIT_PLAYERS.getNode())) {
-			if(eventIsInActiveSiegeZone == null)
-				eventIsInActiveSiegeZone = SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation());
-			if(eventIsInActiveSiegeZone) {
+			//Register the damager as having participated in the battle session
+			Resident resident = TownyAPI.getInstance().getResident((Player)event.getDamager());
+			SiegeWarBattleSessionUtil.markResidentAsHavingAttendedCurrentBattleSession(resident);			
+
+		} else {
+
+			//Stop TNT/Minecarts from damaging players in SiegeZone wilderness
+			if (SiegeWarSettings.getSiegeZoneWildernessForbiddenExplodeEntityTypes().contains(event.getDamager().getType())
+					&& TownyAPI.getInstance().isWilderness(event.getEntity().getLocation())) {
 				event.setCancelled(true);
 				return;
 			}
-		}
+		}	
 	}
 
 	//Stops battlefield observers from taking damage in siegezones

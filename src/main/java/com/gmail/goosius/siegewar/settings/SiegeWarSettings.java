@@ -469,6 +469,10 @@ public class SiegeWarSettings {
 		return  allowedDaysList;
 	}
 
+	public static int getSiegeAttendanceLimiterSicknessWarningDurationTicks() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_ATTENDANCE_LIMITER_SICKNESS_WARNING_DURATION_SECONDS) * 20;
+	}
+
 	public static boolean isWallBreachingEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_WALL_BREACHING_ENABLED);
 	}

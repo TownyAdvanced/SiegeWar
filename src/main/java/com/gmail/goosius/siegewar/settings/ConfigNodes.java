@@ -539,18 +539,23 @@ public enum ConfigNodes {
 			""),
 	WAR_SIEGE_ATTENDANCE_LIMITER_WEEKDAY_BATTLE_SESSIONS(
 			"war.siege.attendance_limiter.weekday_battle_sessions",
-			"2",
+			"3",
 			"",
 			"# This value determines the maximum number of week-day battle sessions which each player can attend.",
 			"# To disable the feature, set the value to -1.",
 			"# TIP: This feature is critical to prevent teams trying to win sieges via excessive-online-time, including skipping school or work."),
 	WAR_SIEGE_ATTENDANCE_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS(
 			"war.siege.attendance_limiter.weekend_day_battle_sessions",
-			"5",
+			"6",
 			"",
 			"# This value determines the maximum number of weekend-day battle sessions which each player can attend.",
 			"# To disable the feature, set the value to -1.",
 			"# TIP: This feature is critical to prevent teams trying to win sieges via excessive-online-time, including skipping school or work."),
+	WAR_SIEGE_ATTENDANCE_LIMITER_SICKNESS_WARNING_DURATION_SECONDS(
+			"war.siege.attendance_limiter.sickness_warning_duration_seconds",
+			"5",
+			"",
+			"# This value determines the number of warning seconds before sickness applies."),
     WAR_SIEGE_POINTS_BALANCING_END_OF_BATTLE_POINTS_DISTRIBUTION(
 			"war.siege.points_balancing.end_of_battle_points_distribution",
 			"",

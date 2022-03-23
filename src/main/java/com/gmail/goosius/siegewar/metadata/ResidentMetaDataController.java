@@ -131,7 +131,7 @@ public class ResidentMetaDataController {
 			return Arrays.asList(recentBattleSessionsArray);
 		}
 	}
-		
+
 	@Nullable
 	private static String getRecentBattleSessions(Resident resident) {
 		StringDataField sdf = (StringDataField) recentBattleSessions.clone();

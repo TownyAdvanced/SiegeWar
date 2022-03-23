@@ -510,4 +510,5 @@ msg_besieged_town_proximity_warning_text: "&cWARNING: You are in a besieged town
 msg_player_killed_from_logging_out_in_besieged_town: "%s was killed because they logged out while in a besieged town."
 
 #Added in 0.40
-msg_max_daily_player_battle_session_attendance_limit_reached: "&cYou have reached your daily Battle Session Attendance Limit (%d). War Sickness active. You can attend another battle session in %s."
+msg_battle_session_attendance_limit_exceeded_warning: "&cYou have reached your daily Battle Session Attendance Limit (%d). You can attend another battle session in %s. War sickness will activate in %d seconds."
+msg_battle_session_attendance_limit_exceeded_punish: "&cYou have reached your daily Battle Session Attendance Limit (%d). You can attend another battle session in %s. War Sickness Activated."
