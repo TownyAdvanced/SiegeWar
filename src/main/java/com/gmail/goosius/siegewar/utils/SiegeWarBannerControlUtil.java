@@ -83,7 +83,7 @@ public class SiegeWarBannerControlUtil {
 				if(siege.getBannerControllingResidents().contains(resident))
 					continue;  // Player already on the BC list
 
-				if(SiegeWarBattleSessionUtil.hasResidentExceededTheirSiegeAttendanceLimit(resident)) 
+				if(SiegeWarBattleSessionUtil.hasResidentExceededTheirSiegeAttendanceLimit(resident))
 					continue; // Max daily battle sessions reached
 
 				SiegeSide siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
@@ -176,7 +176,7 @@ public class SiegeWarBannerControlUtil {
 
 		if(!player.isOp() && player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_GET_BANNER_CONTROL.getNode()))
 			return false;  //Player is SiegeZone observer
-					
+
 		if(!SiegeWarScoringUtil.isPlayerInTimedPointZone(player, siege))
 			return false; //player is not in the timed point zone
 

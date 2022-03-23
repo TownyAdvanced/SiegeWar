@@ -4,7 +4,11 @@ import java.util.List;
 
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 
-import com.gmail.goosius.siegewar.utils.*;
+import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -293,7 +297,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 			//Register the damager as having participated in the battle session
 			Resident resident = TownyAPI.getInstance().getResident((Player)event.getDamager());
-			SiegeWarBattleSessionUtil.markResidentAsHavingAttendedCurrentBattleSession(resident);			
+			SiegeWarBattleSessionUtil.markResidentAsHavingAttendedCurrentBattleSession(resident);
 
 		} else {
 
@@ -303,7 +307,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 				event.setCancelled(true);
 				return;
 			}
-		}	
+		}
 	}
 
 	//Stops battlefield observers from taking damage in siegezones

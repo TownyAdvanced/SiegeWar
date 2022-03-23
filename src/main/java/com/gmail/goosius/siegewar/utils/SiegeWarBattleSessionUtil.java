@@ -304,7 +304,7 @@ public class SiegeWarBattleSessionUtil {
 		} else {
 			//Player is not at the limit
 			return false;
-		}		
+		}
 	}
 
 	/**
@@ -336,7 +336,7 @@ public class SiegeWarBattleSessionUtil {
 			if(recentBattleSessionsList.size() != recalculatedRecentBattleSessionsList.size()) {
 				ResidentMetaDataController.setRecentBattleSessions(resident, recalculatedRecentBattleSessionsList);
 				resident.save();
-			}			
+			}
 		}
 	}
 
@@ -375,7 +375,7 @@ public class SiegeWarBattleSessionUtil {
 		String startTimeOfCurrentBattleSessionAsString = BattleSession.getBattleSession().getStartTime().toString();
 		if(recentBattleSessionsList.contains(startTimeOfCurrentBattleSessionAsString)) 
 			return;
-			
+
 		//Add the current battle session to the player's list
 		recentBattleSessionsList.add(BattleSession.getBattleSession().getStartTime().toString());
 		ResidentMetaDataController.setRecentBattleSessions(resident, recentBattleSessionsList);

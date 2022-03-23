@@ -125,7 +125,7 @@ public class ResidentMetaDataController {
 	public static List<String> getRecentBattleSessionsAsList(Resident resident) {
 		String recentBattleSessionsString = getRecentBattleSessions(resident);
 		if(recentBattleSessionsString == null || recentBattleSessionsString.length() == 0) {
-			return new ArrayList<>();		
+			return new ArrayList<>();
 		} else {
 			String[] recentBattleSessionsArray = recentBattleSessionsString.replaceAll(" ","").split(",");
 			return Arrays.asList(recentBattleSessionsArray);
