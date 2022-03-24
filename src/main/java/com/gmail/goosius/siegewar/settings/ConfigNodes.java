@@ -161,6 +161,13 @@ public enum ConfigNodes {
 			"",
 			"# If this value is true then non-town-friendly players who log out in besieged towns will be killed.",
 			"# TIP: The setting is essential when using the Wall Breaching feature, to stop players logging in/out at the homeblock"),
+	WAR_SIEGE_BLOCK_GLITCHING_PREVENTION_ENABLED(
+			"war.siege.switches.block_glitching_prevention_enabled",
+			"true",
+			"",
+			"# If this value is true, the block glitching is prevented.",
+			"# This is done as follows: Any player who's block-place-or-destroy action is cancelled, gets teleported back to where they were when they attempted the action.",
+			"# TIP: This feature will not prevent all wall-bypass cheating methods, but it should help."),
 	WAR_SIEGE_MONEY(
 			"war.siege.money",
 			"",

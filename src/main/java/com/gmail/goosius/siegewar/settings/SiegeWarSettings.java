@@ -572,4 +572,8 @@ public class SiegeWarSettings {
 	public static boolean getKillHostilePlayersWhoLogoutInBesiegedTown() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_KILL_HOSTILE_PLAYERS_WHO_LOG_OUT_IN_BESIEGED_TOWNS);
 	}
+
+	public static boolean isBlockGlitchingPreventionEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BLOCK_GLITCHING_PREVENTION_ENABLED);
+	}
 }
