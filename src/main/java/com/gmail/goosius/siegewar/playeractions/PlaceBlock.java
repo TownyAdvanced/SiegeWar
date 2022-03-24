@@ -71,8 +71,10 @@ public class PlaceBlock {
 				if(SiegeWarSettings.isWallBreachingEnabled() && evaluateWallBreach(translator, block, event))
 					return;
 				//If block glitching prevention is enabled, SW will ensure the player cannot block glitch.
-				if(SiegeWarSettings.isBlockGlitchingPreventionEnabled() && SiegeWarBlockUtil.evaluateBlockGlitchingPrevention(player))
-					return;								
+				if(SiegeWarSettings.isBlockGlitchingPreventionEnabled()) {
+					SiegeWarBlockUtil.applyBlockGlitchingPrevention(player);
+				}
+				return;
 			}
 
 			//Enforce Anti-Trap warfare build block if below siege banner altitude.

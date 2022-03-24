@@ -574,6 +574,11 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean isBlockGlitchingPreventionEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BLOCK_GLITCHING_PREVENTION_ENABLED);
+		return Settings.getBoolean(ConfigNodes.BLOCK_GLITCHING_PREVENTION_ENABLED);
 	}
+
+	public static int getBlockGlitchingTeleportDelayMillis() {
+		return Settings.getInt(ConfigNodes.BLOCK_GLITCHING_PREVENTION_TELEPORT_DELAY_MILLIS);
+	}
+
 }
