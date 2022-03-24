@@ -164,6 +164,7 @@ public class SiegeWarSicknessUtil {
         potionEffects.add(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 2));
         potionEffects.add(new PotionEffect(PotionEffectType.SLOW_DIGGING, effectDurationTicks, 2));
         player.addPotionEffects(potionEffects);
+        player.setHealth(1);
     }
 
     /**
