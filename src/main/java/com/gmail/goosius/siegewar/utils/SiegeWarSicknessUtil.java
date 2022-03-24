@@ -27,7 +27,7 @@ public class SiegeWarSicknessUtil {
 
     /**
      * Punish any players who are inside siegezones, but not official participants
-     * 
+     *
      * Special war sickness if they are in their own town
      * Full war sickness otherwise
      */
@@ -76,7 +76,7 @@ public class SiegeWarSicknessUtil {
 
     /**
      * Punish any players who are inside siegezones, but over their siege attendance limit for the day
-     * 
+     *
      * Special war sickness if they are in their own town
      * Full war sickness otherwise
      */
@@ -114,13 +114,13 @@ public class SiegeWarSicknessUtil {
                         "msg_battle_session_attendance_limit_exceeded_punish",
                         SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions(),
                         SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident))); 
-            }                        
+            }
         }
     }
 
     /**
      * Give player full war sickness, with a warning beforehand
-     * 
+     *
      * @param player player
      * @param resident resident
      * @param warningDurationInTicks warning duration in ticks
@@ -138,14 +138,14 @@ public class SiegeWarSicknessUtil {
             Messaging.sendMsg(player, warningTranslatable);
         }
         Towny.getPlugin().getServer().getScheduler().runTaskLater(Towny.getPlugin(), () -> {
-			if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
-        	    if (isInOwnClaims(resident)) {
+            if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
+                if (isInOwnClaims(resident)) {
                     //In own claims
                     givePlayerSpecialWarSicknessNow(player);
                 } else {
 			        //Still in forbidden siege zone area
                     Messaging.sendMsg(player, punishmentTranslatable);
-                    givePlayerFullWarSicknessNow(player);			        
+                    givePlayerFullWarSicknessNow(player);
                 }
             }
         }, warningDurationInTicks);
@@ -176,7 +176,7 @@ public class SiegeWarSicknessUtil {
             public void run() {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, effectDurationTicks, 4));
             }
-        });        
+        });
     }
 
     public static boolean isSiegeParticipant(Player player, Resident resident, Siege siege) {
