@@ -337,6 +337,10 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_TOWNY_INFLUENCE_RADIUS);
 	}
 
+	public static int getPeacefulTownsSicknessWarningDurationSeconds() {
+		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_SICKNESS_WARNING_DURATION_SECONDS);
+	}
+
 	public static int getWarCommonPeacefulTownsNewTownConfirmationRequirementDays() {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_NEW_TOWN_CONFIRMATION_REQUIREMENT_DAYS);
 	}
@@ -353,8 +357,8 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.ENABLE_SICKNESS);
 	}
 
-	public static int getSicknessWarningTimeInTicks() {
-		return Settings.getInt(ConfigNodes.SECONDS_BEFORE_SICKNESS) * 20;
+	public static int getSicknessWarningTimeInSeconds() {
+		return Settings.getInt(ConfigNodes.SECONDS_BEFORE_SICKNESS);
 	}
 
 	public static double getWarSiegeCapitalCostIncreasePercentage() {
@@ -469,8 +473,8 @@ public class SiegeWarSettings {
 		return  allowedDaysList;
 	}
 
-	public static int getSiegeAttendanceLimiterSicknessWarningDurationTicks() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_ATTENDANCE_LIMITER_SICKNESS_WARNING_DURATION_SECONDS) * 20;
+	public static int getSiegeAttendanceLimiterSicknessWarningDurationSeconds() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_ATTENDANCE_LIMITER_SICKNESS_WARNING_DURATION_SECONDS);
 	}
 
 	public static boolean isWallBreachingEnabled() {

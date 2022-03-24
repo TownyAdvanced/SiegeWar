@@ -100,7 +100,6 @@ msg_war_common_town_declared_peaceful: '&bNeutrality Declared!. The town will be
 msg_war_common_town_declared_non_peaceful: '&bNon-Neutrality Declared!. The town will be confirmed as Non-Neutral in %d day(s).'
 msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Neutrality status change countdown was cancelled.'
 msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they are in a Neutral town.'
-msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cWar-allergy active. To remove this effect, leave the siege-zone immediately.'
 
 #Siege immunities
 msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s hours.'
@@ -510,5 +509,8 @@ msg_besieged_town_proximity_warning_text: "&cWARNING: You are in a besieged town
 msg_player_killed_from_logging_out_in_besieged_town: "%s was killed because they logged out while in a besieged town."
 
 #Added in 0.41
-msg_battle_session_attendance_limit_exceeded_warning: "&cYou have reached your daily Battle Session Attendance Limit (%d). You can attend another Battle Session in %s. War Sickness will activate in %d seconds."
-msg_battle_session_attendance_limit_exceeded_punish: "&cYou have reached your daily Battle Session Attendance Limit (%d). You can attend another Battle Session in %s. War Sickness Activated."
+msg_battle_session_attendance_limit_exceeded_warning: "&cYou have reached your daily Battle Session Attendance Limit (%d). You can attend another Battle Session in %s. War Sickness will activate in %d seconds. To avoid this effect, leave the Siege-Zone immediately."
+msg_battle_session_attendance_limit_exceeded_punish: "&cYou have reached your daily Battle Session Attendance Limit (%d). You can attend another Battle Session in %s. War Sickness Activated. To remove this effect, leave the Siege-Zone immediately."
+msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cYou are in a Siege-Zone. War-allergy will activate in %d seconds. To avoid this effect, leave the Siege-Zone immediately.'
+msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cWar-allergy active. To remove this effect, leave the Siege-Zone immediately.'
+

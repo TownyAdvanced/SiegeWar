@@ -111,7 +111,6 @@ msg_war_common_town_declared_peaceful: "&bPaix déclarée ! La ville sera confir
 msg_war_common_town_declared_non_peaceful: "&bNon-pacificité déclarée! La ville sera confirmée comme non pacifique dans %d jour(s)"
 msg_war_common_town_peacefulness_countdown_cancelled: "&bLe compte à rebours du changement de statut de paix a été annulé."
 msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: "&cImpossible d'ajouter un grade militaire aux résidents, car ils sont dans une ville paisible."
-msg_war_siege_peaceful_player_punished_for_being_in_siegezone: "&cAllergie de guerre active. Pour supprimer cet effet, quittez immédiatement la zone de siège."
 
 #Siege immunities
 msg_set_siege_immunities_town: "L'immunité au siège de la ville %s est définie sur %s heures."
@@ -520,5 +519,8 @@ msg_besieged_town_proximity_warning_text: "&cWARNING: You are in a besieged town
 msg_player_killed_from_logging_out_in_besieged_town: "%s was killed because they logged out while in a besieged town."
 
 #Added in 0.41
-msg_battle_session_attendance_limit_exceeded_warning: "&cYou have reached your daily Battle Session Attendance Limit (%d). You can attend another Battle Session in %s. War Sickness will activate in %d seconds."
-msg_battle_session_attendance_limit_exceeded_punish: "&cYou have reached your daily Battle Session Attendance Limit (%d). You can attend another Battle Session in %s. War Sickness Activated."
+msg_battle_session_attendance_limit_exceeded_warning: "&cYou have reached your daily Battle Session Attendance Limit (%d). You can attend another Battle Session in %s. War Sickness will activate in %d seconds. To avoid this effect, leave the Siege-Zone immediately."
+msg_battle_session_attendance_limit_exceeded_punish: "&cYou have reached your daily Battle Session Attendance Limit (%d). You can attend another Battle Session in %s. War Sickness Activated. To remove this effect, leave the Siege-Zone immediately."
+msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cYou are in a Siege-Zone. War-allergy will activate in %d seconds. To avoid this effect, leave the Siege-Zone immediately.'
+msg_war_siege_peaceful_player_punished_for_being_in_siegezone: "&cAllergie de guerre active. Pour supprimer cet effet, quittez immédiatement la Zone de Siège."
+
