@@ -553,7 +553,7 @@ public enum ConfigNodes {
 			"# TIP: This feature is critical to prevent teams trying to win sieges via excessive-online-time, including skipping school or work."),
 	WAR_SIEGE_ATTENDANCE_LIMITER_SICKNESS_WARNING_DURATION_SECONDS(
 			"war.siege.attendance_limiter.sickness_warning_duration_seconds",
-			"5",
+			"20",
 			"",
 			"# This value determines the number of warning seconds before sickness applies."),
     WAR_SIEGE_POINTS_BALANCING_END_OF_BATTLE_POINTS_DISTRIBUTION(

@@ -62,12 +62,12 @@ public class SiegeWarSicknessUtil {
 			    if (isInOwnClaims(resident)) {
 			        givePlayerSpecialWarSicknessNow(player);
 			    } else {
-			        int warningDurationInTicks = SiegeWarSettings.getSicknessWarningTimeInTicks();
+			        int warningDurationInSeconds = SiegeWarSettings.getNonResidentSicknessWarningTimeSeconds();
 			        givePlayerFullWarSicknessWithWarning(
 			            player,
 			            resident,
-			            warningDurationInTicks,
-			            Translatable.of("msg_you_will_get_sickness", warningDurationInTicks / 20),
+			            warningDurationInSeconds,
+			            Translatable.of("msg_you_will_get_sickness", warningDurationInSeconds),
 			            Translatable.of("msg_you_received_war_sickness"));
 			    }
 			}
@@ -88,7 +88,7 @@ public class SiegeWarSicknessUtil {
 
             //Continue if not in a siege zone
             Location location = player.getLocation();
-            if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(location))
+            if (!SiegeWarDistanceUtil.isLocationInActiveSiegeZone(location))
                 continue;
 
             //Continue if player is still within their attendance limit
@@ -100,16 +100,16 @@ public class SiegeWarSicknessUtil {
             if (isInOwnClaims(resident)) {
                 givePlayerSpecialWarSicknessNow(player);
             } else {
-                int warningDurationInTicks = SiegeWarSettings.getSicknessWarningTimeInTicks();
+                int warningDurationSeconds = SiegeWarSettings.getSiegeAttendanceLimiterSicknessWarningDurationSeconds();
                 givePlayerFullWarSicknessWithWarning(
                     player,
                     resident,
-                    SiegeWarSettings.getSiegeAttendanceLimiterSicknessWarningDurationTicks(),
+                    warningDurationSeconds,
                     Translatable.of(
                         "msg_battle_session_attendance_limit_exceeded_warning",
                         SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions(),
                         SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident), 
-                        warningDurationInTicks),
+                        warningDurationSeconds),
                     Translatable.of(
                         "msg_battle_session_attendance_limit_exceeded_punish",
                         SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions(),
@@ -123,18 +123,18 @@ public class SiegeWarSicknessUtil {
      *
      * @param player player
      * @param resident resident
-     * @param warningDurationInTicks warning duration in ticks
+     * @param warningDurationInSeconds warning duration in ticks
      * @param warningTranslatable warning message
      * @param punishmentTranslatable punishment message
      */
     private static void givePlayerFullWarSicknessWithWarning(
             Player player,
             Resident resident,
-            int warningDurationInTicks,
+            int warningDurationInSeconds,
             Translatable warningTranslatable,
             Translatable punishmentTranslatable) {
 
-        if (warningDurationInTicks / 20 >= 1) {
+        if (warningDurationInSeconds >= 1) {
             Messaging.sendMsg(player, warningTranslatable);
         }
         Towny.getPlugin().getServer().getScheduler().runTaskLater(Towny.getPlugin(), () -> {
@@ -148,7 +148,7 @@ public class SiegeWarSicknessUtil {
                     givePlayerFullWarSicknessNow(player);
                 }
             }
-        }, warningDurationInTicks);
+        }, warningDurationInSeconds * 20);
     }
 
     /**

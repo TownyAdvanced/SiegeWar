@@ -353,8 +353,8 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.ENABLE_SICKNESS);
 	}
 
-	public static int getSicknessWarningTimeInTicks() {
-		return Settings.getInt(ConfigNodes.SECONDS_BEFORE_SICKNESS) * 20;
+	public static int getNonResidentSicknessWarningTimeSeconds() {
+		return Settings.getInt(ConfigNodes.SECONDS_BEFORE_SICKNESS);
 	}
 
 	public static double getWarSiegeCapitalCostIncreasePercentage() {
@@ -442,9 +442,9 @@ public class SiegeWarSettings {
 		boolean weekend = dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
 
 		if(weekend) {
-			return getSiegeAttendanceLimiterWeekdayBattleSessions();
-		} else {
 			return getSiegeAttendanceLimiterWeekendDayBattleSessions();
+		} else {
+			return getSiegeAttendanceLimiterWeekdayBattleSessions();
 		}
 	}
 
@@ -469,8 +469,8 @@ public class SiegeWarSettings {
 		return  allowedDaysList;
 	}
 
-	public static int getSiegeAttendanceLimiterSicknessWarningDurationTicks() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_ATTENDANCE_LIMITER_SICKNESS_WARNING_DURATION_SECONDS) * 20;
+	public static int getSiegeAttendanceLimiterSicknessWarningDurationSeconds() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_ATTENDANCE_LIMITER_SICKNESS_WARNING_DURATION_SECONDS);
 	}
 
 	public static boolean isWallBreachingEnabled() {

@@ -289,6 +289,7 @@ public class SiegeWarBannerControlUtil {
 					}
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 				SiegeWar.severe("Problem evaluating banner control session for player " + bannerControlSession.getPlayer().getName());
 			}
 		}
