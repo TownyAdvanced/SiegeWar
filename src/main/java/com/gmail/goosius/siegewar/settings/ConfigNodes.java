@@ -1110,7 +1110,31 @@ public enum ConfigNodes {
 			"",
 			"# This setting determines the days (in server timezone) when players can start sieges.",
 			"# Multiple entries should be separated by a comma.",
-			"# Permitted values: monday, tuesday, wednesday, thursday, friday, saturday, sunday.");
+			"# Permitted values: monday, tuesday, wednesday, thursday, friday, saturday, sunday."),
+	BLOCK_GLITCHING_PREVENTION(
+		"block_glitching_prevention",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |             BLOCK GLITCHING PREVENTION               | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	BLOCK_GLITCHING_PREVENTION_ENABLED(
+			"block_glitching_prevention.enabled",
+			"true",
+			"",
+			"# If this value is true, then some block glitching is prevented.",
+			"# Any player whose block-place-or-destroy action is cancelled, gets teleported back to where they were when they attempted the action.",
+			"# TIP: This feature will not prevent all wall-bypass cheating methods, but it should help."),
+	BLOCK_GLITCHING_PREVENTION_TELEPORT_DELAY_MILLIS(
+			"block_glitching_prevention.teleport_delay_millis",
+			"500",
+			"",
+			"# This value determines the delay before teleport.",
+			"# TIP: If you set this value very low, you might get lag.");
 
 	private final String Root;
 	private final String Default;
