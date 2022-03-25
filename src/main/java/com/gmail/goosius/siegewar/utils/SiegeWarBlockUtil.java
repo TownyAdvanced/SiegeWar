@@ -3,6 +3,8 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
@@ -15,6 +17,9 @@ import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +32,8 @@ import java.util.Set;
  * @author Goosius
  */
 public class SiegeWarBlockUtil {
+
+	private static Set<Player> pendingAntiGlitchTeleports = new HashSet<>();
 
 	/**
 	 * This method gets a list of all adjacent townblocks.
@@ -236,6 +243,29 @@ public class SiegeWarBlockUtil {
 				return true;
 			default:
 				return false;
+		}
+	}
+
+	/**
+	 * Apply block glitching as follows:
+	 *
+	 * 1. If the player is has no pending anti-glitch-teleport, schedule one in 1 second, back to their current location
+	 * 2. If the player has a pending anti-glitch teleport, do nothing.
+	 *
+	 * @param player
+	 */
+	public static void applyBlockGlitchingPrevention(Player player) {
+		if(!pendingAntiGlitchTeleports.contains(player)) {
+			//Add player to the pending list
+			pendingAntiGlitchTeleports.add(player);
+			//Schedule the teleport
+			Location targetLocation = player.getLocation();
+			int delayTimeTicks = (int)(20d * SiegeWarSettings.getBlockGlitchingTeleportDelayMillis() / 1000);
+			Towny.getPlugin().getServer().getScheduler().runTaskLater(Towny.getPlugin(), () -> {
+				//Note: We set the cause to "Unknown" so that SW's own teleport blocker won't stop it.
+				player.teleport(targetLocation, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+				pendingAntiGlitchTeleports.remove(player);
+			}, delayTimeTicks);
 		}
 	}
 }
