@@ -266,7 +266,7 @@ public class SiegeWarBlockUtil {
 			//Schedule the teleport
 			Location targetLocation = player.getLocation();
 			int delayTimeTicks = SiegeWarSettings.getBlockGlitchingTeleportDelayMillis() / 1000 * 20;
-	        Towny.getPlugin().getServer().getScheduler().runTaskLater(Towny.getPlugin(), () -> {
+			Towny.getPlugin().getServer().getScheduler().runTaskLater(Towny.getPlugin(), () -> {
 				//Note: We set the cause to "Unknown" so that SW's own teleport blocker won't stop it.
 				player.teleport(targetLocation, PlayerTeleportEvent.TeleportCause.UNKNOWN);
 				pendingAntiGlitchTeleports.remove(player);
