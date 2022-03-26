@@ -319,16 +319,35 @@ public class SiegeController {
 		return null;
 	}
 
+	/**
+	 * Get the active siege at the given location
+	 * If more than one active siege is found, return the closest one
+	 * If no active sieges are found, return null
+	 *
+	 * @param loc Given location
+	 * @return active siege at given location
+	 */
 	@Nullable
-	public static Siege getSiegeAtLocation(Location loc) {
-		for (Siege siege : getSieges()) {
-			if (siege.getStatus().isActive() 
-				&& SiegeWarDistanceUtil.isInSiegeZone(loc, siege))
-				return siege;
+	public static Siege getActiveSiegeAtLocation(Location loc) {
+		Siege resultSiege = null;
+		int distanceToResultSiege = 0;
+		int distanceToCandidateSiege = 0;
+		for (Siege candidateSiege : getSieges()) {
+			if (candidateSiege.getStatus().isActive()) {
+				if(resultSiege == null) {
+					resultSiege = candidateSiege;
+				} else {
+					distanceToCandidateSiege = SiegeWarDistanceUtil.getDistanceToSiege(loc, candidateSiege);
+					if(distanceToCandidateSiege < distanceToResultSiege) {
+						resultSiege = candidateSiege;
+						distanceToResultSiege = distanceToCandidateSiege;
+					}
+				}
+			}
 		}
-		return null;
+		return resultSiege;
 	}
-	
+
 	public static void setSiege(Town town, boolean bool) {
 		SiegeMetaDataController.setSiege(town, bool);
 	}
@@ -339,16 +358,6 @@ public class SiegeController {
 			result.addAll(siege.getBannerControlSessions().keySet());
 		}
 		return result;
-	}
-
-	public static List<Siege> getActiveSiegesAt(Location location) {
-		List<Siege> siegesAtLocation = new ArrayList<>();
-		for (Siege siege : townSiegeMap.values()) {
-			if (SiegeWarDistanceUtil.isInSiegeZone(location, siege) && siege.getStatus().isActive()) {
-				siegesAtLocation.add(siege);
-			}
-		}
-		return siegesAtLocation;
 	}
 
 	/**

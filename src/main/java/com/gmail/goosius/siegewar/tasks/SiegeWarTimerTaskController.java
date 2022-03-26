@@ -100,10 +100,8 @@ public class SiegeWarTimerTaskController {
 		}
 	}
 
-	public static void punishNonSiegeParticipantsInSiegeZones() {
-		if (SiegeWarSettings.getPunishingNonSiegeParticipantsInSiegeZone()) {
-			SiegeWarSicknessUtil.punishNonSiegeParticipantsInSiegeZone();
-		}
+	public static void evaluateWarSickness() {
+		SiegeWarSicknessUtil.evaluateWarSickness();
 	}
 
 	public static void evaluateBeacons() {
