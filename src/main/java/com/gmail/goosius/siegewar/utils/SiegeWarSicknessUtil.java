@@ -26,7 +26,7 @@ import java.util.List;
 
 public class SiegeWarSicknessUtil {
 
-    public static Set<Player> playersWithWarSickness = new HashSet<>();
+    public static Set<Player> playersWithFullWarSickness = new HashSet<>();
 
     /**
      * Evaluate all war sickness:
@@ -113,25 +113,26 @@ public class SiegeWarSicknessUtil {
             Translatable warningTranslatable,
             Translatable punishmentTranslatable) {
 
-        if(!playersWithWarSickness.contains(player)) {
+        if(!playersWithFullWarSickness.contains(player)) {
             //Send warning
             if (warningDurationInSeconds >= 1)
                 Messaging.sendMsg(player, warningTranslatable);
-            //Mark player as having sickness
-            playersWithWarSickness.add(player);
+            //Mark player as having full war sickness
+            playersWithFullWarSickness.add(player);
         }
         Towny.getPlugin().getServer().getScheduler().runTaskLater(Towny.getPlugin(), () -> {
             if (SiegeWarDistanceUtil.isInSiegeZone(player, siege)) {
                 if (isInOwnClaims(resident)) {
                     //In own claims
                     givePlayerSpecialWarSicknessNow(player);
+                    playersWithFullWarSickness.remove(player);
                 } else {
 			        //Still in forbidden siege zone area
                     Messaging.sendMsg(player, punishmentTranslatable);
                     givePlayerFullWarSicknessNow(player);
                 }
             } else {
-                playersWithWarSickness.remove(player);
+                playersWithFullWarSickness.remove(player);
             }
         }, warningDurationInSeconds * 20);
     }
