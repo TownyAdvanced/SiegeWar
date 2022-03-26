@@ -879,7 +879,7 @@ public enum ConfigNodes {
 			"# The nation with the highest Towny-Influence can subvert (peacefully occupy) the neutral town, if it wishes to do so."),
 	PEACEFUL_TOWNS_SICKNESS_WARNING_DURATION_SECONDS(
 			"neutral_towns.sickness_warning_duration_seconds",
-			"5",
+			"20",
 			"",
 			"# This value determines the number of warning seconds before war allergy (sickness) applies."),
 	OCCUPIED_TOWNS(
