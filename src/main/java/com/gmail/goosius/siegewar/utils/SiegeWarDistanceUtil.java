@@ -175,4 +175,15 @@ public class SiegeWarDistanceUtil {
 	public static boolean isInSiegeCampZone(Location location, SiegeCamp camp) {
 		return areLocationsClose(location, camp.getBannerBlock().getLocation(), TownySettings.getTownBlockSize());
 	}
+
+	/**
+	 * Get distance between given location and given siege
+	 * @param location1 given location
+	 * @param siege given siege
+	 * @return distance
+	 */
+	public static int getDistanceToSiege(Location location1, Siege siege) {
+		Location location2 = siege.getFlagLocation();
+		return (int)MathUtil.distance(location1.getX(), location2.getX(), location1.getZ(), location2.getZ());
+	}
 }
