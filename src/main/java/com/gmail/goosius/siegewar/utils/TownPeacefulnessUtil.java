@@ -1,28 +1,17 @@
 package com.gmail.goosius.siegewar.utils;
 
-
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
-import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.Translation;
-import com.palmergames.util.TimeTools;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +21,6 @@ import java.util.UUID;
 import java.util.Comparator;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-
 
 public class TownPeacefulnessUtil {
 
@@ -115,76 +103,6 @@ public class TownPeacefulnessUtil {
 	}
 
 	/**
-	 * This method punishes any peaceful players who are in siege-zones
-	 * (except for their own town OR any peaceful town)
-	 * 
-	 * A player is peaceful if they
-	 * 1. Are resident in a peaceful town
-	 * 2. Are resident in a declared (but not confirmed) peaceful town
-	 *
-	 * The punishment is a status effect (e.g. poison, nausea)
-	 * The punishment is refreshed every 20 seconds, until the player leaves the siege-zone
-	 */
-	public static void punishPeacefulPlayersInActiveSiegeZones() {
-		for(final Player player: Bukkit.getOnlinePlayers()) {
-			try {
-				//Don't apply to towny admins
-				if(TownyUniverse.getInstance().getPermissionSource().isTownyAdmin(player))
-					continue;
-
-				//Dont apply if player has the immunity perm
-				if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
-					continue;
-
-				//Don't apply to non-peaceful players
-				Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-				if(resident == null || !(resident.hasTown()&& resident.getTown().isNeutral()))
-					continue;
-
-				//Don't punish if the player is in a peaceful town
-				TownBlock townBlockAtPlayerLocation = TownyAPI.getInstance().getTownBlock(player.getLocation());
-				if(townBlockAtPlayerLocation != null
-					&& townBlockAtPlayerLocation.getTown().isNeutral())
-				{
-					continue;
-				}
-
-				//Don't punish if the player is in their own town
-				if(resident.hasTown()
-					&& townBlockAtPlayerLocation != null
-					&& resident.getTown() == townBlockAtPlayerLocation.getTown())
-				{
-					continue;
-				}
-
-				//Punish if the player is in a siege zone
-				if(SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
-					TownyMessaging.sendMsg(player, Translation.of("msg_war_siege_peaceful_player_punished_for_being_in_siegezone"));
-					final int effectDurationTicks = (int)(TimeTools.convertToTicks(TownySettings.getShortInterval() + 5));
-					Towny.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(Towny.getPlugin(), new Runnable() {
-						public void run() {
-							List<PotionEffect> potionEffects = new ArrayList<>();
-							potionEffects.add(new PotionEffect(PotionEffectType.CONFUSION, effectDurationTicks, 4));
-							potionEffects.add(new PotionEffect(PotionEffectType.POISON, effectDurationTicks, 4));
-							potionEffects.add(new PotionEffect(PotionEffectType.WEAKNESS, effectDurationTicks, 4));
-							potionEffects.add(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 2));
-							player.addPotionEffects(potionEffects);
-							player.setHealth(1);
-						}
-					});
-				}
-			} catch (Exception e) {
-				try {
-					SiegeWar.severe("Problem punishing peaceful player in siege zone - " + player.getName());
-				} catch (Exception e2) {
-					SiegeWar.severe("Problem punishing peaceful player in siege zone (could not read player name)");
-				}
-				e.printStackTrace();
-			}
-		}
-	}
-
-    /**
      * Calculates the Towny-Influence map for the target town
      *
      * @param targetTown targetTown

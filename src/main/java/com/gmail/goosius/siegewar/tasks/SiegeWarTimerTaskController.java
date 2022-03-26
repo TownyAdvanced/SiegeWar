@@ -94,11 +94,6 @@ public class SiegeWarTimerTaskController {
 		SiegeWarBattleSessionUtil.evaluateBattleSessions();
 	}
 
-	public static void punishPeacefulPlayersInActiveSiegeZones() {
-		if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
-			TownPeacefulnessUtil.punishPeacefulPlayersInActiveSiegeZones();
-		}
-	}
 
 	public static void evaluateWarSickness() {
 		SiegeWarSicknessUtil.evaluateWarSickness();

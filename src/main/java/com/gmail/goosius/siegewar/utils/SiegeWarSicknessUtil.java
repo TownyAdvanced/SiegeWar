@@ -19,10 +19,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
 import java.util.*;
 import java.util.List;
-
 
 public class SiegeWarSicknessUtil {
 
@@ -35,14 +33,15 @@ public class SiegeWarSicknessUtil {
      * - Unofficial Siege-Participant effects
      */
     public static void evaluateWarSickness() {
+        boolean neutralTownsEnabled = SiegeWarSettings.getWarCommonPeacefulTownsEnabled();
         boolean attendanceLimiterEnabled = SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions() != -1;
         boolean nonOfficialLimiterEnabled = SiegeWarSettings.getPunishingNonSiegeParticipantsInSiegeZone();
-
+        
         for (Player player : Bukkit.getOnlinePlayers()) {
             Location location = player.getLocation();
 
             // Players immune to war nausea won't be punished
-            if (player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
+            if (player.isOp() || player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
                 continue;
 
             // check if in a siege zone
@@ -54,7 +53,22 @@ public class SiegeWarSicknessUtil {
             if (resident == null)
                 continue;
 
-            if(attendanceLimiterEnabled && SiegeWarBattleSessionUtil.hasResidentExceededTheirSiegeAttendanceLimit(resident)) {
+            if(neutralTownsEnabled && resident.hasTown() && resident.getTownOrNull().isNeutral()) {
+
+                //Give war sickness to neutral town residents in Siege-Zones
+                if (isInOwnClaims(resident)) {
+                    givePlayerSpecialWarSicknessNow(player);
+                } else {
+                    givePlayerFullWarSicknessWithWarning(
+                        player,
+                        resident,
+                        siege,
+                        SiegeWarSettings.getPeacefulTownsSicknessWarningDurationSeconds(),
+                        Translatable.of("msg_war_siege_peaceful_player_warned_for_being_in_siegezone"),
+                        Translatable.of("msg_war_siege_peaceful_player_punished_for_being_in_siegezone"));
+                }
+
+            } else if(attendanceLimiterEnabled && SiegeWarBattleSessionUtil.hasResidentExceededTheirSiegeAttendanceLimit(resident)) {
 
                 //Give war sickness to players who have exceeded attendance limit
                 if (isInOwnClaims(resident)) {
@@ -74,7 +88,6 @@ public class SiegeWarSicknessUtil {
                             SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions(),
                             SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident)));
                 }
-
 
             } else if (nonOfficialLimiterEnabled && isSiegeParticipant(player, resident, siege)) {
 
@@ -100,8 +113,8 @@ public class SiegeWarSicknessUtil {
      *
      * @param player player
      * @param resident resident
+     * @param warningDurationInSeconds warning duration in seconds
      * @param siege the siege causing the war sickness
-     * @param warningDurationInSeconds warning duration in ticks
      * @param warningTranslatable warning message
      * @param punishmentTranslatable punishment message
      */
@@ -120,6 +133,7 @@ public class SiegeWarSicknessUtil {
             //Mark player as having full war sickness
             playersWithFullWarSickness.add(player);
         }
+
         Towny.getPlugin().getServer().getScheduler().runTaskLater(Towny.getPlugin(), () -> {
             if (SiegeWarDistanceUtil.isInSiegeZone(player, siege)) {
                 if (isInOwnClaims(resident)) {
