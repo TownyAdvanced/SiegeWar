@@ -589,4 +589,7 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.BLOCK_GLITCHING_PREVENTION_TELEPORT_DELAY_MILLIS);
 	}
 
+	public static boolean isTeleportMountWithPlayer() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_TELEPORT_MOUNT_WITH_PLAYER);
+	}
 }

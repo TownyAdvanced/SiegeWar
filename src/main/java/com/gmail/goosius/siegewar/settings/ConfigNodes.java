@@ -161,6 +161,12 @@ public enum ConfigNodes {
 			"",
 			"# If this value is true then non-town-friendly players who log out in besieged towns will be killed.",
 			"# TIP: The setting is essential when using the Wall Breaching feature, to stop players logging in/out at the homeblock"),
+	WAR_SIEGE_TELEPORT_MOUNT_WITH_PLAYER(
+			"war.siege.switches.teleport_mount_with_player",
+			"true",
+			"",
+			"# If true, then when a player teleports, their mount (e.g. a horse) comes with them, dismounted.",
+			"# TIP: The setting helps enable cavalry tactics, by making it easier to get horses to Siege-Zones."),
 	WAR_SIEGE_MONEY(
 			"war.siege.money",
 			"",
