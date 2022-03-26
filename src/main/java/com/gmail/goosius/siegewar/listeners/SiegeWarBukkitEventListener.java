@@ -10,7 +10,6 @@ import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -51,7 +50,6 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 
 import net.citizensnpcs.api.CitizensAPI;
-import org.spigotmc.event.entity.EntityDismountEvent;
 
 /**
  * 
