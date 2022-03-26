@@ -357,7 +357,7 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.ENABLE_SICKNESS);
 	}
 
-	public static int getSicknessWarningTimeInSeconds() {
+	public static int getNonResidentSicknessWarningTimeSeconds() {
 		return Settings.getInt(ConfigNodes.SECONDS_BEFORE_SICKNESS);
 	}
 
@@ -446,18 +446,18 @@ public class SiegeWarSettings {
 		boolean weekend = dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
 
 		if(weekend) {
-			return getSiegeAttendanceLimiterWeekdayBattleSessions();
-		} else {
 			return getSiegeAttendanceLimiterWeekendDayBattleSessions();
+		} else {
+			return getSiegeAttendanceLimiterWeekdayBattleSessions();
 		}
 	}
 
 	private static int getSiegeAttendanceLimiterWeekdayBattleSessions() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_ATTENDANCE_LIMITER_WEEKDAY_BATTLE_SESSIONS);
+		return Settings.getInt(ConfigNodes.SIEGE_ATTENDANCE_LIMITER_WEEKDAY_BATTLE_SESSIONS);
 	}
 
 	private static int getSiegeAttendanceLimiterWeekendDayBattleSessions() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_ATTENDANCE_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS);
+		return Settings.getInt(ConfigNodes.SIEGE_ATTENDANCE_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS);
 	}
 
 	public static List<DayOfWeek> getSiegeStartDayLimiterAllowedDays() {
@@ -474,7 +474,7 @@ public class SiegeWarSettings {
 	}
 
 	public static int getSiegeAttendanceLimiterSicknessWarningDurationSeconds() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_ATTENDANCE_LIMITER_SICKNESS_WARNING_DURATION_SECONDS);
+		return Settings.getInt(ConfigNodes.SIEGE_ATTENDANCE_LIMITER_SICKNESS_WARNING_DURATION_SECONDS);
 	}
 
 	public static boolean isWallBreachingEnabled() {
@@ -580,4 +580,13 @@ public class SiegeWarSettings {
 	public static boolean getKillHostilePlayersWhoLogoutInBesiegedTown() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_KILL_HOSTILE_PLAYERS_WHO_LOG_OUT_IN_BESIEGED_TOWNS);
 	}
+
+	public static boolean isBlockGlitchingPreventionEnabled() {
+		return Settings.getBoolean(ConfigNodes.BLOCK_GLITCHING_PREVENTION_ENABLED);
+	}
+
+	public static int getBlockGlitchingTeleportDelayMillis() {
+		return Settings.getInt(ConfigNodes.BLOCK_GLITCHING_PREVENTION_TELEPORT_DELAY_MILLIS);
+	}
+
 }

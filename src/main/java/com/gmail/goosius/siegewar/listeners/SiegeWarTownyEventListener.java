@@ -104,14 +104,12 @@ public class SiegeWarTownyEventListener implements Listener {
     @EventHandler
     public void onShortTime(NewShortTimeEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled()) {
-            SiegeWarTimerTaskController.punishPeacefulPlayersInActiveSiegeZones();
             SiegeWarTimerTaskController.evaluateBattleSessions();
-            SiegeWarTimerTaskController.punishPlayersInSiegeZonesOverSiegeAttendanceLimit();
+            SiegeWarTimerTaskController.evaluateWarSickness();
             SiegeWarTimerTaskController.evaluateBannerControl();
             SiegeWarTimerTaskController.evaluateWallBreaching();         
             SiegeWarTimerTaskController.evaluateMapHiding();
             SiegeWarTimerTaskController.evaluateTimedSiegeOutcomes();
-            SiegeWarTimerTaskController.punishNonSiegeParticipantsInSiegeZones();
             SiegeHUDManager.updateHUDs();
             SiegeWarTimerTaskController.evaluateBeacons();
             SiegeWarTimerTaskController.evaluateBattlefieldReporters();

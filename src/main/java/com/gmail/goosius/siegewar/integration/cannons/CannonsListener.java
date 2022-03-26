@@ -52,7 +52,7 @@ public class CannonsListener implements Listener {
 			}
 
 			//Ensure cannon is fully in the wilderness OR the besieged town
-			Siege siege = SiegeController.getSiegeAtLocation(event.getCannon().getLocation());
+			Siege siege = SiegeController.getActiveSiegeAtLocation(event.getCannon().getLocation());
 			for(Location cannonBlockLocation: event.getCannon().getCannonDesign().getAllCannonBlocks(event.getCannon())) {
 				if(!TownyAPI.getInstance().isWilderness(cannonBlockLocation)
 					&& !TownyAPI.getInstance().getTown(cannonBlockLocation).equals(siege.getTown())) {

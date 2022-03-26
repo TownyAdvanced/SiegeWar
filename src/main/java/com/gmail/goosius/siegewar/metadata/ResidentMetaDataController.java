@@ -128,7 +128,7 @@ public class ResidentMetaDataController {
 			return new ArrayList<>();
 		} else {
 			String[] recentBattleSessionsArray = recentBattleSessionsString.replaceAll(" ","").split(",");
-			return Arrays.asList(recentBattleSessionsArray);
+			return new ArrayList<>(Arrays.asList(recentBattleSessionsArray));
 		}
 	}
 

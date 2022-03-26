@@ -94,7 +94,7 @@ public class SiegeWarNotificationUtil {
 			return;
 
 		//Send warning if player is in SiegeZone (& didn't already get the warning)
-		Siege siege = SiegeController.getSiegeAtLocation(player.getLocation());
+		Siege siege = SiegeController.getActiveSiegeAtLocation(player.getLocation());
 		if(siege != null
 			&& siege.getStatus().isActive()
 			&& !siege.getPlayersWhoWereInTheSiegeZone().contains(player)
