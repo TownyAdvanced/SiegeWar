@@ -192,20 +192,24 @@ public class SiegeWarBukkitEventListener implements Listener {
 				Town destinationTown = TownyAPI.getInstance().getTown(event.getTo());
 				Resident resident = TownyUniverse.getInstance().getResident(event.getPlayer().getUniqueId());
 
-				if (destinationTown.hasResident(resident))
+				//Player can TP to their own town.
+				if (destinationTown.hasResident(resident)) {
+					teleportMount(event);
 					return;
+				}
 
-				//Check IF TP destination is a besieged town
+				//Player cannot TP to a town which is besieged.
 				if(SiegeController.hasActiveSiege(destinationTown)) {
 					Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
 					event.setCancelled(true);
 					return;
 				}
 
-				//Check if the destination is inside a siege zone
+				//Player cannot TP to an in-town location which is in a Siege-Zone
 				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
 					Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
 					event.setCancelled(true);
+					return;
 				}
 			}
 		}
