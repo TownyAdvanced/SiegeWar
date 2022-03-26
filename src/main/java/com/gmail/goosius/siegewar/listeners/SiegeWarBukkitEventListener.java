@@ -171,7 +171,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 
 		// Don't stop admins/ops. towny.admin.spawn is part of towny.admin.
-		if (event.getPlayer().isOp() || event.getPlayer().hasPermission("towny.admin.spawn")) {
+		if (event.getPlayer().hasPermission("towny.admin.spawn") || event.getPlayer().isOp()) {
 			teleportMount(event);
 			return;
 		}
@@ -219,7 +219,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 	/**
 	 * When this method is called, the player, if they were mounted, is not any more.
 	 * Therefore to find the mount, we look for a horse at the exact block co-ordinates a mount would be.
-	 * 
+	 *
 	 * @param event the event
 	 */
 	private void teleportMount(PlayerTeleportEvent event) {
@@ -230,7 +230,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 			//Find mount
 			int playerBlockX = event.getPlayer().getLocation().getBlockX();
 			int playerBlockY = event.getPlayer().getLocation().getBlockY();
-			int playerBlockZ = event.getPlayer().getLocation().getBlockZ();		
+			int playerBlockZ = event.getPlayer().getLocation().getBlockZ();
 			for(Entity entity: event.getPlayer().getLocation().getChunk().getEntities()) {
 				/*
 				 * If an horse is found at the exact location a mount would be, 
@@ -240,11 +240,11 @@ public class SiegeWarBukkitEventListener implements Listener {
 						&& entity instanceof AbstractHorse
 						&& entity.getLocation().getBlockX() == playerBlockX
 						&& entity.getLocation().getBlockY() == playerBlockY
-						&& entity.getLocation().getBlockZ() == playerBlockZ) {				
+						&& entity.getLocation().getBlockZ() == playerBlockZ) {
 					if(event.getTo() != null)
-						entity.teleport(event.getTo());	
-					break;			
-				}	
+						entity.teleport(event.getTo());
+					break;
+				}
 			}
 		}
 	}
