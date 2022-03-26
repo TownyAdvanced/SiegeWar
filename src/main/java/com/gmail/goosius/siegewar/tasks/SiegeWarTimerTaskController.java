@@ -100,16 +100,8 @@ public class SiegeWarTimerTaskController {
 		}
 	}
 
-	public static void punishNonSiegeParticipantsInSiegeZones() {
-		if (SiegeWarSettings.getPunishingNonSiegeParticipantsInSiegeZone()) {
-			SiegeWarSicknessUtil.punishNonSiegeParticipantsInSiegeZones();
-		}
-	}
-
-	public static void punishPlayersInSiegeZonesOverSiegeAttendanceLimit() {
-		if(SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions() != -1) {
-			SiegeWarSicknessUtil.punishPlayersInSiegeZonesOverSiegeAttendanceLimit();
-		}
+	public static void evaluateWarSickness() {
+		SiegeWarSicknessUtil.evaluateWarSickness();
 	}
 
 	public static void evaluateBeacons() {

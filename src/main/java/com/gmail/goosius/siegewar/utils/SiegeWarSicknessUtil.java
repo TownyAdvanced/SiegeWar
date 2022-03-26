@@ -54,39 +54,43 @@ public class SiegeWarSicknessUtil {
             if (resident == null)
                 continue;
 
-            if (isInOwnClaims(resident)) {
-                givePlayerSpecialWarSicknessNow(player);
-                continue;
-            }
-
             if(attendanceLimiterEnabled && SiegeWarBattleSessionUtil.hasResidentExceededTheirSiegeAttendanceLimit(resident)) {
 
                 //Give war sickness to players who have exceeded attendance limit
-                givePlayerFullWarSicknessWithWarning(
-                    player,
-                    resident,
-                    siege,
-                    SiegeWarSettings.getSiegeAttendanceLimiterSicknessWarningDurationSeconds(),
-                    Translatable.of(
-                        "msg_battle_session_attendance_limit_exceeded_warning",
-                        SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions(),
-                        SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident)),
-                    Translatable.of(
-                        "msg_battle_session_attendance_limit_exceeded_punish",
-                        SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions(),
-                        SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident)));
+                if (isInOwnClaims(resident)) {
+                    givePlayerSpecialWarSicknessNow(player);
+                } else {
+                    givePlayerFullWarSicknessWithWarning(
+                        player,
+                        resident,
+                        siege,
+                        SiegeWarSettings.getSiegeAttendanceLimiterSicknessWarningDurationSeconds(),
+                        Translatable.of(
+                            "msg_battle_session_attendance_limit_exceeded_warning",
+                            SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions(),
+                            SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident)),
+                        Translatable.of(
+                            "msg_battle_session_attendance_limit_exceeded_punish",
+                            SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions(),
+                            SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident)));
+                }
+
 
             } else if (nonOfficialLimiterEnabled && isSiegeParticipant(player, resident, siege)) {
 
                 //Give war sickness to players who are not official participants in the SiegeZone
-                int warningDurationInSeconds = SiegeWarSettings.getNonResidentSicknessWarningTimeSeconds();
-                givePlayerFullWarSicknessWithWarning(
-                    player,
-                    resident,
-                    siege,
-                    warningDurationInSeconds,
-                    Translatable.of("msg_you_will_get_sickness", warningDurationInSeconds),
-                    Translatable.of("msg_you_received_war_sickness"));
+                if (isInOwnClaims(resident)) {
+                    givePlayerSpecialWarSicknessNow(player);
+                } else {
+                    int warningDurationInSeconds = SiegeWarSettings.getNonResidentSicknessWarningTimeSeconds();
+                    givePlayerFullWarSicknessWithWarning(
+                        player,
+                        resident,
+                        siege,
+                        warningDurationInSeconds,
+                        Translatable.of("msg_you_will_get_sickness", warningDurationInSeconds),
+                        Translatable.of("msg_you_received_war_sickness"));
+                }
             }
         }
     }
