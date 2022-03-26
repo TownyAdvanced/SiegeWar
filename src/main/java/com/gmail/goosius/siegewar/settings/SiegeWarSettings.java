@@ -449,11 +449,11 @@ public class SiegeWarSettings {
 	}
 
 	private static int getSiegeAttendanceLimiterWeekdayBattleSessions() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_ATTENDANCE_LIMITER_WEEKDAY_BATTLE_SESSIONS);
+		return Settings.getInt(ConfigNodes.SIEGE_ATTENDANCE_LIMITER_WEEKDAY_BATTLE_SESSIONS);
 	}
 
 	private static int getSiegeAttendanceLimiterWeekendDayBattleSessions() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_ATTENDANCE_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS);
+		return Settings.getInt(ConfigNodes.SIEGE_ATTENDANCE_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS);
 	}
 
 	public static List<DayOfWeek> getSiegeStartDayLimiterAllowedDays() {
@@ -470,7 +470,7 @@ public class SiegeWarSettings {
 	}
 
 	public static int getSiegeAttendanceLimiterSicknessWarningDurationSeconds() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_ATTENDANCE_LIMITER_SICKNESS_WARNING_DURATION_SECONDS);
+		return Settings.getInt(ConfigNodes.SIEGE_ATTENDANCE_LIMITER_SICKNESS_WARNING_DURATION_SECONDS);
 	}
 
 	public static boolean isWallBreachingEnabled() {
