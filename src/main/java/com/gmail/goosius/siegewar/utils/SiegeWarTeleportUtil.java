@@ -62,29 +62,29 @@ public class SiegeWarTeleportUtil {
 			return false;
 
         // Block most teleports into the siegezone
-		if(SiegeWarSettings.getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled()) {
-			if (TownyAPI.getInstance().isWilderness(event.getTo())) { // The teleport destination is in the wilderness.
-
+        if(SiegeWarSettings.getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled()) {
+            if (TownyAPI.getInstance().isWilderness(event.getTo())) { // The teleport destination is in the wilderness.
+                
                 //Player cannot TP into siegezone wilderness
-				return SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo());
-
-			} else {
-				Town destinationTown = TownyAPI.getInstance().getTown(event.getTo());
-				Resident resident = TownyUniverse.getInstance().getResident(event.getPlayer().getUniqueId());
-
-				//Player can always TP to their own town.
-				if (destinationTown.hasResident(resident))
-					return false;
-
-				//Player cannot TP to a town which is besieged.
-				if(SiegeController.hasActiveSiege(destinationTown))
-                    return true;
-
-				//Player cannot TP to an in-town location which is in a Siege-Zone
-				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo()))
-                    return true;
-			}
-		}
+                return SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo());
+                
+            } else {
+                Town destinationTown = TownyAPI.getInstance().getTown(event.getTo());
+                Resident resident = TownyUniverse.getInstance().getResident(event.getPlayer().getUniqueId());
+                
+                //Player can always TP to their own town.
+                if (destinationTown.hasResident(resident))
+                return false;
+                
+                //Player cannot TP to a town which is besieged.
+                if(SiegeController.hasActiveSiege(destinationTown))
+                return true;
+                
+                //Player cannot TP to an in-town location which is in a Siege-Zone
+                if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo()))
+                return true;
+            }
+        }
 		//TP not blocked
 		return false;
     }
