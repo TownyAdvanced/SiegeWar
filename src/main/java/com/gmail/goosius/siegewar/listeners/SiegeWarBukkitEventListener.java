@@ -6,23 +6,26 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 
 import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTeleportUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.AbstractHorse;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.entity.LingeringPotionSplashEvent;
@@ -39,17 +42,14 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.playeractions.PlayerDeath;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 
 import net.citizensnpcs.api.CitizensAPI;
+import org.spigotmc.event.entity.EntityMountEvent;
 
 /**
  * 
@@ -162,92 +162,34 @@ public class SiegeWarBukkitEventListener implements Listener {
 			PlayerDeath.evaluateSiegePlayerDeath(event.getEntity(), event);
 		}
 	}
-	
+
 	@EventHandler(ignoreCancelled = true)
 	public void onPlayerTeleport(PlayerTeleportEvent event) {
 		if (!SiegeWarSettings.getWarSiegeEnabled())
 			return;
-
-		// Don't stop admins/ops. towny.admin.spawn is part of towny.admin.
-		if (event.getPlayer().hasPermission("towny.admin.spawn") || event.getPlayer().isOp()) {
-			teleportMount(event);
+		if(event.getTo() == null)
+			return; // Can't proceed without this
+		if (Towny.getPlugin().isCitizens2() && CitizensAPI.getNPCRegistry().isNPC(event.getPlayer()))
+			return; // Ignore Citizens NPCs
+		if(event.getCause() != TeleportCause.PLUGIN && event.getCause() != TeleportCause.COMMAND)
+			return; //Don't proceed further for causes like enderpearls
+		if(SiegeWarTeleportUtil.isPlayerTeleportBlocked(event)) {
+			Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
+			event.setCancelled(true);
 			return;
 		}
-
-		// Let's ignore Citizens NPCs
-		if (Towny.getPlugin().isCitizens2() && CitizensAPI.getNPCRegistry().isNPC(event.getPlayer())) {
-			teleportMount(event);
-			return;
-		}
-		
-		// Block most teleports into the siegezone
-		if(SiegeWarSettings.getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled()
-				&& (event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND)) {
-			if (TownyAPI.getInstance().isWilderness(event.getTo())) { // The teleport destination is in the wilderness.
-				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
-					Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
-					event.setCancelled(true);
-				}
-			} else { // The teleport destination is inside a town.
-				Town destinationTown = TownyAPI.getInstance().getTown(event.getTo());
-				Resident resident = TownyUniverse.getInstance().getResident(event.getPlayer().getUniqueId());
-
-				//Player can TP to their own town.
-				if (destinationTown.hasResident(resident)) {
-					teleportMount(event);
-					return;
-				}
-
-				//Player cannot TP to a town which is besieged.
-				if(SiegeController.hasActiveSiege(destinationTown)) {
-					Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
-					event.setCancelled(true);
-					return;
-				}
-
-				//Player cannot TP to an in-town location which is in a Siege-Zone
-				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
-					Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
-					event.setCancelled(true);
-					return;
-				}
-			}
-		}
-
-		//If we get here, if means the event has not been cancelled.
-		teleportMount(event);
+		//Teleport horse with player
+		if(SiegeWarSettings.isTeleportMountWithPlayer())
+			SiegeWarTeleportUtil.scheduleMountTeleport(event);
 	}
 
-	/**
-	 * When this method is called, the player, if they were mounted, is not any more.
-	 * Therefore to find the mount, we look for a horse at the exact block co-ordinates a mount would be.
-	 *
-	 * @param event the event
-	 */
-	private void teleportMount(PlayerTeleportEvent event) {
-		if(SiegeWarSettings.isTeleportMountWithPlayer()) {
-			if(event.getTo() == null)
-				return; //If this is null, we cannot TP the mount
-
-			//Find mount
-			int playerBlockX = event.getPlayer().getLocation().getBlockX();
-			int playerBlockY = event.getPlayer().getLocation().getBlockY();
-			int playerBlockZ = event.getPlayer().getLocation().getBlockZ();
-			for(Entity entity: event.getPlayer().getLocation().getChunk().getEntities()) {
-				/*
-				 * If an horse is found at the exact location a mount would be, 
-				 * assume it generally is the mount, and TP it.
-				 */
-				if (entity != event.getPlayer()
-						&& entity instanceof AbstractHorse
-						&& entity.getLocation().getBlockX() == playerBlockX
-						&& entity.getLocation().getBlockY() == playerBlockY
-						&& entity.getLocation().getBlockZ() == playerBlockZ) {
-					if(event.getTo() != null)
-						entity.teleport(event.getTo());
-					break;
-				}
-			}
+	@EventHandler
+	public void on (EntityMountEvent event) {
+		//Prevent mount if the horse is about to be TP'd to owner
+		if(SiegeWarSettings.isTeleportMountWithPlayer()
+				&& event.getMount() instanceof AbstractHorse
+				&& SiegeWarTeleportUtil.isHorseTeleportScheduled((AbstractHorse)event.getMount())) {
+			event.setCancelled(true);
 		}
 	}
 

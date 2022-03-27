@@ -10,12 +10,14 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTeleportUtil;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.event.DeleteTownEvent;
 import com.palmergames.bukkit.towny.event.NewTownEvent;
 import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
+import com.palmergames.bukkit.towny.event.TownSpawnEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
@@ -27,6 +29,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.TimeMgmt;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -292,4 +295,15 @@ public class SiegeWarTownEventListener implements Listener {
 		}
 	}
 
+	@EventHandler
+	public void on(TownSpawnEvent event) {
+		//If player has a mount, register it, otherwise unregister
+		if(SiegeWarSettings.isTeleportMountWithPlayer()) {
+			if(event.getPlayer().isInsideVehicle() && event.getPlayer().getVehicle() instanceof AbstractHorse) {
+				SiegeWarTeleportUtil.registerPlayerMount(event.getPlayer(), (AbstractHorse)event.getPlayer().getVehicle());
+			} else {
+				SiegeWarTeleportUtil.deregisterPlayerMount(event.getPlayer());
+			}
+		}
+	}
 }
