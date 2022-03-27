@@ -57,9 +57,9 @@ public class SiegeWarTeleportUtil {
     }
 
     public static boolean isPlayerTeleportBlocked(PlayerTeleportEvent event) {
-		 // Don't stop admins/ops. towny.admin.spawn is part of towny.admin.
-		if (event.getPlayer().hasPermission("towny.admin.spawn") || event.getPlayer().isOp())
-			return false;
+        // Don't stop admins/ops. towny.admin.spawn is part of towny.admin.
+        if (event.getPlayer().hasPermission("towny.admin.spawn") || event.getPlayer().isOp())
+            return false;
 
         // Block most teleports into the siegezone
         if(SiegeWarSettings.getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled()) {
