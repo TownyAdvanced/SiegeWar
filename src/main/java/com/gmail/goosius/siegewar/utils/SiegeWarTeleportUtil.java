@@ -59,8 +59,8 @@ public class SiegeWarTeleportUtil {
 
     public static boolean isPlayerTeleportBlocked(PlayerTeleportEvent event) {
         // Don't block citizen NPCs
-		if (Towny.getPlugin().isCitizens2() && CitizensAPI.getNPCRegistry().isNPC(event.getPlayer()))
-			return false;
+        if (Towny.getPlugin().isCitizens2() && CitizensAPI.getNPCRegistry().isNPC(event.getPlayer()))
+            return false;
 
         // Don't stop admins/ops. towny.admin.spawn is part of towny.admin.
         if (event.getPlayer().hasPermission("towny.admin.spawn") || event.getPlayer().isOp())
@@ -79,15 +79,15 @@ public class SiegeWarTeleportUtil {
                 
                 //Player can always TP to their own town.
                 if (destinationTown.hasResident(resident))
-                return false;
+                    return false;
                 
                 //Player cannot TP to a town which is besieged.
                 if(SiegeController.hasActiveSiege(destinationTown))
-                return true;
+                    return true;
                 
                 //Player cannot TP to an in-town location which is in a Siege-Zone
                 if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo()))
-                return true;
+                    return true;
             }
         }
         //TP not blocked
