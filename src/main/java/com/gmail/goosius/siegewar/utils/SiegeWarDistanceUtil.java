@@ -137,25 +137,23 @@ public class SiegeWarDistanceUtil {
 	/**
 	 * This method is used in Anti-trap warfare mitigation
 	 *
-	 * @param location
-	 * @return true of the location is in an active timed point zone AND below siege banner altitude
+	 * @param location given location
+	 * @return true of the location is in an active siege zone wilderness AND below siege banner altitude
 	 */
-	public static boolean isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(Location location) {
-		//Look through all sieges
-		for (Siege siege : SiegeController.getSieges()) {
-			if (siege.getStatus().isActive()
-				&& isInTimedPointZone(location, siege)
-				&& isBelowSiegeBannerAltitude(location, siege))
-				return true;
-		}
-		//Location does not meet the criteria
-		return false;
-	}
+	public static boolean isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(Location location) {
+		//Return false if not wilderness
+		if(!TownyAPI.getInstance().isWilderness(location))
+			return false;
 
-	public static boolean isBelowSiegeBannerAltitude(Location location, Siege siege) {
+		//Return false if no siege
+		Siege siege = SiegeController.getActiveSiegeAtLocation(location); //Get nearest siege
+		if(siege == null)
+			return false;
+
+		//true if below siege banner altitude, false otherwise
 		return location.getY() < siege.getFlagLocation().getY();
 	}
-	
+
 	/**
 	 * Is there a {@link SiegeCamp} too close to the given {@link Location}.
 	 * @param location {@link Location} to check against.

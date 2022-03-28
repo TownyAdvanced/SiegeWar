@@ -181,7 +181,7 @@ public class SiegeWarBannerControlUtil {
 			return false; //player is not in the timed point zone
 
 		if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
-			&& SiegeWarDistanceUtil.isBelowSiegeBannerAltitude(player.getLocation(), siege))
+			&& player.getLocation().getY() < siege.getFlagLocation().getY())
 			return false; //Player is below the siege banner
 
 		return true;

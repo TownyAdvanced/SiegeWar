@@ -56,7 +56,7 @@ public class DestroyBlock {
 
         //Trap warfare block protection
         if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
-                && SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(event.getBlock().getLocation())) {
+                && SiegeWarDistanceUtil.isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(event.getBlock().getLocation())) {
             event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_below_banner_in_timed_point_zone")));
             event.setCancelled(true);
             return;
