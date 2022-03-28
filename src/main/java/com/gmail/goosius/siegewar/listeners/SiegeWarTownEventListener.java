@@ -297,6 +297,10 @@ public class SiegeWarTownEventListener implements Listener {
 
 	@EventHandler
 	public void on(TownSpawnEvent event) {
+		if (!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+		if(event.getTo() == null)
+			return; // Can't proceed without this
 		//If player has a mount, register it, otherwise unregister
 		if(SiegeWarSettings.isTeleportMountWithPlayer()) {
 			if(event.getPlayer().isInsideVehicle() && event.getPlayer().getVehicle() instanceof AbstractHorse) {

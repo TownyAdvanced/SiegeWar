@@ -9,6 +9,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTeleportUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -16,6 +17,7 @@ import com.palmergames.bukkit.towny.event.NationBonusCalculationEvent;
 import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
 import com.palmergames.bukkit.towny.event.PreDeleteNationEvent;
 import com.palmergames.bukkit.towny.event.NationPreAddTownEvent;
+import com.palmergames.bukkit.towny.event.NationSpawnEvent;
 import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
 import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumOnlinePlayersCalculationEvent;
@@ -31,6 +33,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translation;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -337,6 +340,22 @@ public class SiegeWarNationEventListener implements Listener {
 		if (event.getFutureState()) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("msg_err_nation_neutrality_not_supported"));
+		}
+	}
+
+	@EventHandler
+	public void on(NationSpawnEvent event) {
+		if (!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+		if(event.getTo() == null)
+			return; // Can't proceed without this
+		//If player has a mount, register it, otherwise unregister
+		if(SiegeWarSettings.isTeleportMountWithPlayer()) {
+			if(event.getPlayer().isInsideVehicle() && event.getPlayer().getVehicle() instanceof AbstractHorse) {
+				SiegeWarTeleportUtil.registerPlayerMount(event.getPlayer(), (AbstractHorse)event.getPlayer().getVehicle());
+			} else {
+				SiegeWarTeleportUtil.deregisterPlayerMount(event.getPlayer());
+			}
 		}
 	}
 }

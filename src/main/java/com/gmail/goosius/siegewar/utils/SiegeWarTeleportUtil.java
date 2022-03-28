@@ -8,6 +8,7 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
+import net.citizensnpcs.api.CitizensAPI;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -57,6 +58,10 @@ public class SiegeWarTeleportUtil {
     }
 
     public static boolean isPlayerTeleportBlocked(PlayerTeleportEvent event) {
+        // Don't block citizen NPCs
+		if (Towny.getPlugin().isCitizens2() && CitizensAPI.getNPCRegistry().isNPC(event.getPlayer()))
+			return false;
+
         // Don't stop admins/ops. towny.admin.spawn is part of towny.admin.
         if (event.getPlayer().hasPermission("towny.admin.spawn") || event.getPlayer().isOp())
             return false;

@@ -169,13 +169,12 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 		if(event.getTo() == null)
 			return; // Can't proceed without this
-		if (Towny.getPlugin().isCitizens2() && CitizensAPI.getNPCRegistry().isNPC(event.getPlayer()))
-			return; // Ignore Citizens NPCs
 		if(event.getCause() != TeleportCause.PLUGIN && event.getCause() != TeleportCause.COMMAND)
 			return; //Don't proceed further for causes like enderpearls
 		if(SiegeWarTeleportUtil.isPlayerTeleportBlocked(event)) {
 			Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
 			event.setCancelled(true);
+			SiegeWarTeleportUtil.deregisterPlayerMount(event.getPlayer());
 			return;
 		}
 		//Teleport horse with player

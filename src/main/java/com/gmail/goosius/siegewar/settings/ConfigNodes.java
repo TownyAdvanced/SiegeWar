@@ -165,7 +165,8 @@ public enum ConfigNodes {
 			"war.siege.switches.teleport_mount_with_player",
 			"true",
 			"",
-			"# If true, then when a player teleports, their mount (e.g. a horse) comes with them, dismounted.",
+			"# If true, then when a player uses /n or /t spawn, their mount (e.g. a horse) comes with them.",
+			"# After the player spawns, the mount takes 5 seconds to arrive.",
 			"# TIP: The setting helps enable cavalry tactics, by making it easier to get horses to Siege-Zones."),
 	WAR_SIEGE_MONEY(
 			"war.siege.money",
