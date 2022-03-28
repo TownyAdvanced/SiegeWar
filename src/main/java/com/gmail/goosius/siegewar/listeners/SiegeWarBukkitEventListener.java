@@ -13,7 +13,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.AbstractHorse;
@@ -42,13 +41,11 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.playeractions.PlayerDeath;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 
-import net.citizensnpcs.api.CitizensAPI;
 import org.spigotmc.event.entity.EntityMountEvent;
 
 /**
@@ -162,7 +159,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 			PlayerDeath.evaluateSiegePlayerDeath(event.getEntity(), event);
 		}
 	}
-
+	
 	@EventHandler(ignoreCancelled = true)
 	public void onPlayerTeleport(PlayerTeleportEvent event) {
 		if (!SiegeWarSettings.getWarSiegeEnabled())
