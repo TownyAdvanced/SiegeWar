@@ -20,8 +20,9 @@ import com.palmergames.bukkit.towny.object.Translator;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.ChatColor;
+
 
 /**
  * This class handles siege-related destroy-block requests
@@ -43,16 +44,6 @@ public class DestroyBlock {
 			return;
 
 		final Translator translator = Translator.locale(Translation.getLocale(event.getPlayer()));
-		if(event.isCancelled()) {
-			//If the event is in a town and was cancelled by towny, SW might un-cancel the event via wall breaching
-			if(SiegeWarSettings.isWallBreachingEnabled() && evaluateWallBreach(translator, block, event))
-				return;
-			//If block glitching prevention is enabled, SW will ensure the player cannot block glitch.
-			if(SiegeWarSettings.isBlockGlitchingPreventionEnabled()) {
-				SiegeWarBlockUtil.applyBlockGlitchingPrevention(event.getPlayer());
-			}
-			return;
-		}
 
         //Trap warfare block protection
         if(SiegeWarSettings.isTrapWarfareMitigationEnabled()

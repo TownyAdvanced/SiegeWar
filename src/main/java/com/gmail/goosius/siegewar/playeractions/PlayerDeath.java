@@ -136,12 +136,6 @@ public class PlayerDeath {
 						confirmedCandidateSiege);
 				}
 
-				//Keep and degrade inventory
-				degradeInventory(playerDeathEvent);
-				keepInventory(playerDeathEvent);
-				//Keep level
-				keepLevel(playerDeathEvent);
-
 				if(confirmedCandidateSiege.getBannerControlSessions().containsKey(deadPlayer)) { //If the player that died had an ongoing session, remove it.
 					confirmedCandidateSiege.removeBannerControlSession(confirmedCandidateSiege.getBannerControlSessions().get(deadPlayer));
 					Translatable errorMessage = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? Translatable.of("msg_siege_war_banner_control_session_failure_with_altitude") : Translatable.of("msg_siege_war_banner_control_session_failure");
@@ -155,51 +149,6 @@ public class PlayerDeath {
 				SiegeWar.severe("Error evaluating siege death (could not read player name)");
 			}
 			e.printStackTrace();
-		}
-	}
-
-	private static void degradeInventory(PlayerDeathEvent playerDeathEvent) {
-		Damageable damageable;
-		double maxDurability;
-		int currentDurability, damageToInflict, newDurability, durabilityWarning;
-		boolean closeToBreaking = false;
-		if (SiegeWarSettings.getWarSiegeDeathPenaltyDegradeInventoryEnabled()) {
-			for (ItemStack itemStack : playerDeathEvent.getEntity().getInventory().getContents()) {
-				if (itemStack != null && itemStack.getType().getMaxDurability() != 0 && !itemStack.getItemMeta().isUnbreakable()) {
-					damageable = ((Damageable) itemStack.getItemMeta());
-					maxDurability = itemStack.getType().getMaxDurability();
-					currentDurability = damageable.getDamage();
-					damageToInflict = (int)(maxDurability / 100 * SiegeWarSettings.getWarSiegeDeathPenaltyDegradeInventoryPercentage());
-					newDurability = currentDurability + damageToInflict;
-					if (newDurability >= maxDurability) {
-						damageable.setDamage(Math.max((int)maxDurability-25, currentDurability));
-						closeToBreaking = true;
-					}
-					else {
-						damageable.setDamage(newDurability);
-						durabilityWarning = damageToInflict * 2 + currentDurability;
-						if (durabilityWarning >= maxDurability)
-							closeToBreaking = true;
-					}
-					itemStack.setItemMeta((ItemMeta)damageable);
-				}
-			}
-			if (closeToBreaking) //One or more items are close to breaking, send warning.
-				Messaging.sendMsg(playerDeathEvent.getEntity(), Translatable.of("msg_inventory_degrade_warning"));
-		}
-	}
-
-	private static void keepInventory(PlayerDeathEvent playerDeathEvent) {
-		if(SiegeWarSettings.getWarSiegeDeathPenaltyKeepInventoryEnabled() && !playerDeathEvent.getKeepInventory()) {
-			playerDeathEvent.setKeepInventory(true);
-			playerDeathEvent.getDrops().clear();
-		}
-	}
-
-	private static void keepLevel(PlayerDeathEvent playerDeathEvent) {
-		if(SiegeWarSettings.getWarSiegeDeathPenaltyKeepLevelEnabled() && !playerDeathEvent.getKeepLevel()) {
-			playerDeathEvent.setKeepLevel(true);
-			playerDeathEvent.setDroppedExp(0);
 		}
 	}
 

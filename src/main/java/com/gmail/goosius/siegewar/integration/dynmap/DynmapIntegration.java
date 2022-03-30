@@ -7,15 +7,11 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.Settings;
-import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.SiegeWarMapUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.StringMgmt;
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitTask;
 import org.dynmap.DynmapAPI;
@@ -186,19 +182,6 @@ public class DynmapIntegration {
                     ex.printStackTrace();
                 }
             }
-        }
-    }
-
-    /**
-     * This method hides players who have the map hiding metadata tag.
-     * It also un-hides players who do not have it.
-     */
-    void applyMapHidingToPlayers() {
-        if (!SiegeWarSettings.getWarSiegeMapHidingEnabled())
-            return;
-
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            dynmapAPI.assertPlayerInvisibility(player, player.hasMetadata(SiegeWarMapUtil.MAP_HIDING_METADATA_ID), SiegeWar.getSiegeWar());
         }
     }
 
