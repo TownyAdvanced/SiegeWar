@@ -89,7 +89,7 @@ public class SiegeWarSicknessUtil {
                             SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident)));
                 }
 
-            } else if (nonOfficialLimiterEnabled && isSiegeParticipant(player, resident, siege)) {
+            } else if (nonOfficialLimiterEnabled && !isSiegeParticipant(player, resident, siege)) {
 
                 //Give war sickness to players who are not official participants in the SiegeZone
                 if (isInOwnClaims(resident)) {
