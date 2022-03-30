@@ -207,14 +207,13 @@ public class SiegeWarTownyEventListener implements Listener {
     }
 
     /**
-     * If friendly fire has blocked sz damage,
-     * then since we are about to re-enable, dont send message
-     *
+     * If friendly fire has cancelled damage in a SiegeZone,
+     * undo the cancellation
      * @param event the event
      */
     @EventHandler
     public void on (TownyFriendlyFireTestEvent event) {
         if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getAttacker().getLocation()))
-            event.setCancelledMessage("");
+            event.setPVP(true);
     }
 }
