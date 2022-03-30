@@ -277,7 +277,10 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(!eventIsInActiveSiegeZone)
 			return;
 
-		//Override any previous cancellation attempts
+		/*
+		 * Undo any cancellation by non-Towny plugins
+		 * Note that we will have already undone any Towny cancellation
+		 */
 		if(event.isCancelled()) {
 			event.setCancelled(false);
 		}

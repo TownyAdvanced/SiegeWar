@@ -18,6 +18,7 @@ import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
 import com.palmergames.bukkit.towny.event.TranslationLoadEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyExplosionDamagesEntityEvent;
+import com.palmergames.bukkit.towny.event.damage.TownyFriendlyFireTestEvent;
 import com.palmergames.bukkit.towny.event.teleport.OutlawTeleportEvent;
 import com.palmergames.bukkit.towny.event.time.NewHourEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
@@ -203,5 +204,17 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onOutlawTeleportEvent(OutlawTeleportEvent event) {
     	if (SiegeWarSettings.getWarSiegeEnabled() && SiegeController.hasActiveSiege(event.getTown())) 
     		event.setCancelled(true);
+    }
+
+    /**
+     * If friendly fire has blocked sz damage,
+     * then since we are about to re-enable, dont send message
+     *
+     * @param event the event
+     */
+    @EventHandler
+    public void on (TownyFriendlyFireTestEvent event) {
+        if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getAttacker().getLocation()))
+            event.setCancelledMessage("");
     }
 }
