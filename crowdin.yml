@@ -1,6 +1,3 @@
-"files": [
-  {
-    "source" : "/resources/lang/en-US.yml",
-    "translation" : "/resources/lang/%locale%.yml"
-  }
-]
+files:
+  - source: /resources/lang/en-US.yml
+    translation: /resources/lang/%locale%.yml
