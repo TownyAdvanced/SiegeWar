@@ -34,7 +34,6 @@ public class SiegeWarSicknessUtil {
      */
     public static void evaluateWarSickness() {
         boolean neutralTownsEnabled = SiegeWarSettings.getWarCommonPeacefulTownsEnabled();
-        boolean attendanceLimiterEnabled = SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions() != -1;
         boolean nonOfficialLimiterEnabled = SiegeWarSettings.getPunishingNonSiegeParticipantsInSiegeZone();
         
         for (Player player : Bukkit.getOnlinePlayers()) {
@@ -66,30 +65,6 @@ public class SiegeWarSicknessUtil {
                         SiegeWarSettings.getPeacefulTownsSicknessWarningDurationSeconds(),
                         Translatable.of("msg_war_siege_peaceful_player_warned_for_being_in_siegezone"),
                         Translatable.of("msg_war_siege_peaceful_player_punished_for_being_in_siegezone"));
-                }
-
-            } else if(attendanceLimiterEnabled
-                        && SiegeWarBattleSessionUtil.hasResidentExceededTheirSiegeAttendanceLimit(resident)
-                        && !SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident).equals("0")) {
-
-                //Give war sickness to players who have exceeded attendance limit
-                if (isInOwnClaims(resident)) {
-                    givePlayerSpecialWarSicknessNow(player);
-                } else {
-                    String timeUntilLimitExpiry = SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident);
-                    givePlayerFullWarSicknessWithWarning(
-                        player,
-                        resident,
-                        siege,
-                        SiegeWarSettings.getSiegeAttendanceLimiterSicknessWarningDurationSeconds(),
-                        Translatable.of(
-                            "msg_battle_session_attendance_limit_exceeded_warning",
-                            SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions(),
-                            timeUntilLimitExpiry),
-                        Translatable.of(
-                            "msg_battle_session_attendance_limit_exceeded_punish",
-                            SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions(),
-                            timeUntilLimitExpiry));
                 }
 
             } else if (nonOfficialLimiterEnabled && !isSiegeParticipant(player, resident, siege)) {

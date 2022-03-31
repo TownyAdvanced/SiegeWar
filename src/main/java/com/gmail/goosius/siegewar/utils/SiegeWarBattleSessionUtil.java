@@ -12,7 +12,6 @@ import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translatable;
@@ -27,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Arrays;
 
 public class SiegeWarBattleSessionUtil {
 	
@@ -287,7 +285,7 @@ public class SiegeWarBattleSessionUtil {
 	 */
 	public static boolean hasResidentExceededTheirSiegeAttendanceLimit(Resident resident)  {
 		//Return false if the Siege Attendance Limit is -1 (disabled).
-		int maxDailyPlayerBattleSessions = SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions();
+		int maxDailyPlayerBattleSessions = SiegeWarSettings.getCappingLimiterBattleSessions();
 		if(maxDailyPlayerBattleSessions == -1)
 			return false;
 
@@ -314,15 +312,12 @@ public class SiegeWarBattleSessionUtil {
 	 */
 	public static void recalculateRecentBattleSessionsLists() {
 		//Return if the Siege Attendance Limit is -1 (disabled).
-		if(SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions() == -1)
+		if(SiegeWarSettings.getCappingLimiterBattleSessions() == -1)
 			return;
 
-		Resident resident;
 		List<String> recentBattleSessionsList;
 		List<String> recalculatedRecentBattleSessionsList;
-		for(Player player: Bukkit.getOnlinePlayers()) {
-			resident = TownyAPI.getInstance().getResident(player);
-
+		for(Resident resident: TownyAPI.getInstance().getResidents()) {
 			//Recalculate recent-sessions list, keeping only entries which are newer then 24 hours old
 			recentBattleSessionsList = ResidentMetaDataController.getRecentBattleSessionsAsList(resident);
 			recalculatedRecentBattleSessionsList = new ArrayList<>();
@@ -341,12 +336,12 @@ public class SiegeWarBattleSessionUtil {
 	}
 
 	/**
-	 * Gets the formatted time until a player is no longer limited by the Siege Attendance Limiter feature
+	 * Gets the formatted time until a player is no longer limited by the Capping Limiter feature
 	 *
 	 * @param resident the resident
 	 * @return formatted time e.g.  11.2 minutes, 12.8 hours,
 	 */
-	public static String getFormattedTimeUntilPlayerBattleSessionLimitExpires(Resident resident) {
+	public static String getFormattedTimeUntilPlayerCappingLimitExpires(Resident resident) {
 		/*
 		 * The 1st entry on the player's list will be the oldest session.
 		 * Find out when it will drop off the list
@@ -362,12 +357,12 @@ public class SiegeWarBattleSessionUtil {
 	}
 
 	/**
-	 * Mark the player as having attended the current battle session
+	 * Mark the player as having capped at the current battle session
 	 * @param resident the resident
 	 */
-	public static void markResidentAsHavingAttendedCurrentBattleSession(Resident resident) {
-		//Return false if the Siege Attendance Limit is -1 (disabled)
-		if(SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions() == -1)
+	public static void markResidentAsHavingCappedAtCurrentBattleSession(Resident resident) {
+		//Return false if the Capping Limiter is -1 (disabled)
+		if(SiegeWarSettings.getCappingLimiterBattleSessions() == -1)
 			return;
 
 		//If current session is already on players's recent-sessions-list, return.

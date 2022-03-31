@@ -83,8 +83,14 @@ public class SiegeWarBannerControlUtil {
 				if(siege.getBannerControllingResidents().contains(resident))
 					continue;  // Player already on the BC list
 
-				if(SiegeWarBattleSessionUtil.hasResidentExceededTheirSiegeAttendanceLimit(resident))
-					continue; // Max daily battle sessions reached
+				if(SiegeWarBattleSessionUtil.hasResidentExceededTheirSiegeAttendanceLimit(resident)) {
+					Translatable message = Translatable.of(
+						"msg_capping_limiter_limit_exceeded_warning",
+						SiegeWarSettings.getCappingLimiterBattleSessions(),
+						SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerCappingLimitExpires(resident));
+					Messaging.sendErrorMsg(player, message);
+					continue; // Capping limit reached
+				}
 
 				SiegeSide siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, resident.getTown(), siege);
 
@@ -240,8 +246,8 @@ public class SiegeWarBannerControlUtil {
 						});
 					}
 
-					//Mark the player as having attended the current battle session
-					SiegeWarBattleSessionUtil.markResidentAsHavingAttendedCurrentBattleSession(bannerControlSession.getResident());
+					//Mark the player as having capped (info is used by capping limiter)
+					SiegeWarBattleSessionUtil.markResidentAsHavingCappedAtCurrentBattleSession(bannerControlSession.getResident());
 
 					//Update siege
 					if(bannerControlSession.getSiegeSide() == siege.getBannerControllingSide()) {
