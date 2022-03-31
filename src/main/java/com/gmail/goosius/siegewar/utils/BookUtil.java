@@ -87,13 +87,6 @@ public class BookUtil {
 		text += "Attackers: Soldiers from the nation who started the siege, and their allies.\n";
 		text += "Defenders: Guards from the besieged town, as well as soldiers from the town's nation (if any) and from that nation's allies.\n";
 		text += "All participants from each side can contribute fully to scoring.\n";
-		if (SiegeWarSettings.getWarSiegeDeathPenaltyKeepInventoryEnabled()) {
-			text += "If a participant dies in the siege zone, their items are kept";
-			if (SiegeWarSettings.getWarSiegeDeathPenaltyDegradeInventoryEnabled())
-				text+= " but weapon/armour/tool durability is degraded by " + SiegeWarSettings.getWarSiegeDeathPenaltyDegradeInventoryPercentage() + "% each time a player dies.\n\n";
-			else
-				text+= ".\n\n";
-		}
 
 		/*
 		 * Scoring info
@@ -185,35 +178,6 @@ public class BookUtil {
 			text += SiegeWarSettings.isPeacefulTownsSubvertEnabled() ? 	"it becomes vulnerable to subversion (peaceful occupation) by nearby powerful nations, and " : "";
 			text += "its residents suffer from 'war allergy' if they enter siege zones).\n";
 			text += "When a town chooses to toggle their peaceful status, it will take " + SiegeWarSettings.getWarCommonPeacefulTownsConfirmationRequirementDays() + " days for their decision to take effect.\n";
-		}
-
-		// Map Hiding
-		if (SiegeWarSettings.getWarSiegeMapHidingEnabled()) {
-			text += "\nMISCELLANEOUS HIDING: \nMAP HIDING\n\n";
-			text += "Map Hiding is a feature which hides players from being seen on the server Dynmap website.\n";
-			text += "Players who are on the Banner Control list cannot get hidden on the map.\n";
-			if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeEnabled()) {
-				if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeWilderness())
-					text += "If you are in the wilderness, you get hidden on the dynmap.\n";
-				if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeRuins())
-					text += "If you are in ruins, you get hidden on the dynmap.\n";
-				if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeBesiegedTowns())
-					text += "If you are in a besieged town, you get hidden on the dynmap.\n";
-				if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeSiegezones()) {
-					if(SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeSiegezonesRadius() == 1) {
-						text += "If you are in a siegezone, you get hidden on the dynmap.\n";
-					} else {
-						text += "If you are within " + SiegeWarSettings.getWarSiegeZoneRadiusBlocks() * SiegeWarSettings.getWarSiegeMapHidingModeAutomaticModeScopeSiegezonesRadius() + " blocks of a siege banner, you get hidden on the dynmap\n";
-					}
-				}
-			}
-			if (SiegeWarSettings.getWarSiegeMapHidingTriggeringEnabled()) {
-				text += "You can map-hide by holding a combination of items in their hands, which are: \n";
-				for (HeldItemsCombination combo : SiegeWarSettings.getWarSiegeMapHidingTriggeringItems()) {
-					text += " - " + combo.getMainHandItemType().name() + " & " + combo.getOffHandItemType().name() + "\n";
-				}
-			}
-			text += "\n";
 		}
 
 		//Battle sessions

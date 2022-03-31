@@ -9,7 +9,13 @@ import com.gmail.goosius.siegewar.playeractions.SurrenderDefence;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
-import com.gmail.goosius.siegewar.utils.*;
+import com.gmail.goosius.siegewar.utils.SiegeWarBannerControlUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarSicknessUtil;
+import com.gmail.goosius.siegewar.utils.CosmeticUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarBattlefieldObserverUtil;
+
 
 /**
  * This class intercepts siege related instructions coming from timer tasks.
@@ -63,15 +69,6 @@ public class SiegeWarTimerTaskController {
 				if (System.currentTimeMillis() > TownMetaDataController.getSiegeImmunityEndTime(siege.getTown())) {
 					SiegeController.removeSiege(siege, SiegeSide.NOBODY);
 				}
-		}
-	}
-
-	/**
-	 * Evaluate map hiding, to determine if any players should be hidden from map
-	 */
-	public static void evaluateMapHiding() {
-		if (SiegeWarSettings.getWarSiegeMapHidingEnabled()) {
-			SiegeWarMapUtil.evaluateMapHiding();
 		}
 	}
 

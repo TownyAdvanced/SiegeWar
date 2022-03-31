@@ -66,17 +66,6 @@ public class PlaceBlock {
 			if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
 				return;
 
-			if(event.isCancelled()) {
-				//If the event is in a town and was cancelled by towny, SW might un-cancel the event via wall breaching
-				if(SiegeWarSettings.isWallBreachingEnabled() && evaluateWallBreach(translator, block, event))
-					return;
-				//If block glitching prevention is enabled, SW will ensure the player cannot block glitch.
-				if(SiegeWarSettings.isBlockGlitchingPreventionEnabled()) {
-					SiegeWarBlockUtil.applyBlockGlitchingPrevention(player);
-				}
-				return;
-			}
-
 			//Enforce Anti-Trap warfare build block if below siege banner altitude.
 			if (SiegeWarSettings.isTrapWarfareMitigationEnabled()
 					&& SiegeWarDistanceUtil.isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(event.getBlock().getLocation())) {
