@@ -317,12 +317,9 @@ public class SiegeWarBattleSessionUtil {
 		if(SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions() == -1)
 			return;
 
-		Resident resident;
 		List<String> recentBattleSessionsList;
 		List<String> recalculatedRecentBattleSessionsList;
-		for(Player player: Bukkit.getOnlinePlayers()) {
-			resident = TownyAPI.getInstance().getResident(player);
-
+		for(Resident resident: TownyAPI.getInstance().getResidents()) {
 			//Recalculate recent-sessions list, keeping only entries which are newer then 24 hours old
 			recentBattleSessionsList = ResidentMetaDataController.getRecentBattleSessionsAsList(resident);
 			recalculatedRecentBattleSessionsList = new ArrayList<>();
