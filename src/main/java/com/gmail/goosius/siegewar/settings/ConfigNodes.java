@@ -1110,36 +1110,31 @@ public enum ConfigNodes {
 			"",
 			"# This value determines the delay before teleport.",
 			"# TIP: If you set this value very low, you might get lag."),
-	SIEGE_ATTENDANCE_LIMITER(
-			"siege_attendance_limiter",
+	CAPPING_LIMITER(
+			"capping_limiter",
 			"",
 			"",
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |              Siege Attendance Limiter                  #",
+			"# |                    Capping Limiter                     #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	SIEGE_ATTENDANCE_LIMITER_WEEKDAY_BATTLE_SESSIONS(
-			"siege_attendance_limiter.weekday_battle_sessions",
+	CAPPING_LIMITER_WEEKDAY_BATTLE_SESSIONS(
+			"capping_limiter.weekday_battle_sessions",
 			"3",
 			"",
-			"# This value determines the maximum number of week-day battle sessions which each player can attend.",
+			"# This value determines the maximum number of week-day battle sessions which each player can cap at.",
 			"# To disable the feature, set the value to -1.",
-			"# TIP: This feature is critical to prevent teams trying to win sieges via excessive-online-time, including skipping school or work."),
-	SIEGE_ATTENDANCE_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS(
-			"siege_attendance_limiter.weekend_day_battle_sessions",
+			"# TIP: This feature helps to prevent teams trying to win by fight-avoidance with capping."),
+	CAPPING_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS(
+			"capping_limiter.weekend_day_battle_sessions",
 			"6",
 			"",
-			"# This value determines the maximum number of weekend-day battle sessions which each player can attend.",
+			"# This value determines the maximum number of weekend-day battle sessions which each player can at.",
 			"# To disable the feature, set the value to -1.",
-			"# TIP: This feature is critical to prevent teams trying to win sieges via excessive-online-time, including skipping school or work."),
-	SIEGE_ATTENDANCE_LIMITER_SICKNESS_WARNING_DURATION_SECONDS(
-			"siege_attendance_limiter.sickness_warning_duration_seconds",
-			"20",
-			"",
-			"# This value determines the number of warning seconds before sickness applies.");
+			"# TIP: This feature helps to prevent teams trying to win by fight-avoidance with capping.");
 
 	private final String Root;
 	private final String Default;
