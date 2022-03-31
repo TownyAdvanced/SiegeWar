@@ -133,9 +133,9 @@ public enum ConfigNodes {
 			"false",
 			"",
 			"# If this setting is true, then ",
-			"# 1. Players cannot build/destroy blocks in the timed point zone below the siege banner altitude, and",
+			"# 1. Players cannot build/destroy blocks in the Siege-Zone wilderness below the siege banner altitude, and",
 			"# 2. Banner control cannot be gained if the player is below the siege banner altitude",
-			"# NOTE: ",
+			"# TIP: ",
 			"# If you enable this feature, ",
 			"# make sure to also have a server rule preventing traps being created in the timed-point-zone BEFORE the banner is placed"),
 	WAR_SIEGE_KILL_HOSTILE_PLAYERS_WHO_LOG_OUT_IN_BESIEGED_TOWNS(

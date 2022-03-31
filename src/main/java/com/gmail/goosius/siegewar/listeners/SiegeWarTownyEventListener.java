@@ -165,7 +165,7 @@ public class SiegeWarTownyEventListener implements Listener {
 
         List<Block> filteredList = new ArrayList<>(givenExplodeList);
         for(Block block: givenExplodeList) {
-            if (SiegeWarDistanceUtil.isLocationInActiveTimedPointZoneAndBelowSiegeBannerAltitude(block.getLocation())) {
+            if (SiegeWarDistanceUtil.isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(block.getLocation())) {
                 //Remove block from final explode list
                 filteredList.remove(block);
             } 
