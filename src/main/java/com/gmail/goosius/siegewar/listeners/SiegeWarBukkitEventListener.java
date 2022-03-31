@@ -274,10 +274,13 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 		//Return if event is not in a SiegeZone
 		boolean eventIsInActiveSiegeZone = SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation());
-		if(eventIsInActiveSiegeZone)
+		if(!eventIsInActiveSiegeZone)
 			return;
 
-		//Override any previous cancellation attempts
+		/*
+		 * Undo any cancellation by non-Towny plugins
+		 * Note that we will have already undone any Towny cancellation
+		 */
 		if(event.isCancelled()) {
 			event.setCancelled(false);
 		}
@@ -294,13 +297,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 				event.setCancelled(true);
 				return;
 			}
-
-			//Register the damager as having participated in the battle session
-			Resident resident = TownyAPI.getInstance().getResident((Player)event.getDamager());
-			SiegeWarBattleSessionUtil.markResidentAsHavingAttendedCurrentBattleSession(resident);
-			//Register the damagee as having participated in the battle session
-			resident = TownyAPI.getInstance().getResident((Player)event.getEntity());
-			SiegeWarBattleSessionUtil.markResidentAsHavingAttendedCurrentBattleSession(resident);
 		} else {
 
 			//Stop TNT/Minecarts from damaging players in SiegeZone wilderness

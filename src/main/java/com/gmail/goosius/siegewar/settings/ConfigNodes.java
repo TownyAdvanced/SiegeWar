@@ -778,7 +778,7 @@ public enum ConfigNodes {
 			"# If this value is true, then a town under occupation cannot unclaim.",
 			"#  This setting is recommended, to avoid occupation escape exploits."),
 	PUNISH_NON_SIEGE_PARTICIPANTS_IN_SIEGE_ZONE(
-			"punish_non_siege_participants_in_siege_zone",
+			"punish_non_siege_participants_in_siege_zones",
 			"",
 			"",
 			"",
@@ -789,8 +789,8 @@ public enum ConfigNodes {
 			"############################################################",
 			""),
 	ENABLE_SICKNESS(
-			"punish_non_siege_participants_in_siege_zone.enable_sickness",
-			"false",
+			"punish_non_siege_participants_in_siege_zones.enable_sickness",
+			"true",
 			"",
 			"# If true, players that are not participating in a siege will receive war sickness",
 			"# A non-participant is a player who does not have a military rank, is not allied to either the attacker or the defender, or is neutral.",
@@ -798,11 +798,11 @@ public enum ConfigNodes {
 			"# Special war sickness is only given if a non-participant is at his town that happened to be in a siege zone",
 			"#   - Effects: Weakness V",
 			"# Full sickness is given to all players that are not allied to either side, do not have a military rank, or is neutral, and are not in their own town.",
-			"#   - Effects: Nausea V, Poison V, Weakness V, Slowness III, Mining Fatigue III"
+			"#   - Effects: Health 1, Nausea V, Poison V, Weakness V, Slowness III, Mining Fatigue III"
 	),
 	SECONDS_BEFORE_SICKNESS(
-			"punish_non_siege_participants_in_siege_zone.seconds_warning",
-			"5",
+			"punish_non_siege_participants_in_siege_zones.seconds_warning",
+			"20",
 			"",
 			"# This is how many seconds a player has to leave the siege zone before he gets war sickness",
 			"# If this is set to 0, no warn will be given and non-participants will receive war sickness instantly, if enabled"
@@ -964,36 +964,31 @@ public enum ConfigNodes {
 			"# This setting determines the days (in server timezone) when players can start sieges.",
 			"# Multiple entries should be separated by a comma.",
 			"# Permitted values: monday, tuesday, wednesday, thursday, friday, saturday, sunday."),
-	SIEGE_ATTENDANCE_LIMITER(
-			"siege_attendance_limiter",
+	CAPPING_LIMITER(
+			"capping_limiter",
 			"",
 			"",
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |              Siege Attendance Limiter                  #",
+			"# |                    Capping Limiter                     #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	SIEGE_ATTENDANCE_LIMITER_WEEKDAY_BATTLE_SESSIONS(
-			"siege_attendance_limiter.weekday_battle_sessions",
+	CAPPING_LIMITER_WEEKDAY_BATTLE_SESSIONS(
+			"capping_limiter.weekday_battle_sessions",
 			"3",
 			"",
-			"# This value determines the maximum number of week-day battle sessions which each player can attend.",
+			"# This value determines the maximum number of week-day battle sessions which each player can cap at.",
 			"# To disable the feature, set the value to -1.",
-			"# TIP: This feature is critical to prevent teams trying to win sieges via excessive-online-time, including skipping school or work."),
-	SIEGE_ATTENDANCE_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS(
-			"siege_attendance_limiter.weekend_day_battle_sessions",
+			"# TIP: This feature helps to prevent teams trying to win by fight-avoidance with capping."),
+	CAPPING_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS(
+			"capping_limiter.weekend_day_battle_sessions",
 			"6",
 			"",
-			"# This value determines the maximum number of weekend-day battle sessions which each player can attend.",
+			"# This value determines the maximum number of weekend-day battle sessions which each player can at.",
 			"# To disable the feature, set the value to -1.",
-			"# TIP: This feature is critical to prevent teams trying to win sieges via excessive-online-time, including skipping school or work."),
-	SIEGE_ATTENDANCE_LIMITER_SICKNESS_WARNING_DURATION_SECONDS(
-			"siege_attendance_limiter.sickness_warning_duration_seconds",
-			"20",
-			"",
-			"# This value determines the number of warning seconds before sickness applies.");
+			"# TIP: This feature helps to prevent teams trying to win by fight-avoidance with capping.");
 
 	private final String Root;
 	private final String Default;
