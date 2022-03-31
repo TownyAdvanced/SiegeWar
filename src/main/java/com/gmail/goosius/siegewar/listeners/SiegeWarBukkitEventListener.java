@@ -297,13 +297,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 				event.setCancelled(true);
 				return;
 			}
-
-			//Register the damager as having participated in the battle session
-			Resident resident = TownyAPI.getInstance().getResident((Player)event.getDamager());
-			SiegeWarBattleSessionUtil.markResidentAsHavingAttendedCurrentBattleSession(resident);
-			//Register the damagee as having participated in the battle session
-			resident = TownyAPI.getInstance().getResident((Player)event.getEntity());
-			SiegeWarBattleSessionUtil.markResidentAsHavingAttendedCurrentBattleSession(resident);
 		} else {
 
 			//Stop TNT/Minecarts from damaging players in SiegeZone wilderness
