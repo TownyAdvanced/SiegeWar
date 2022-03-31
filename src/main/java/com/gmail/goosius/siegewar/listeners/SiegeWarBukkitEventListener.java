@@ -274,10 +274,13 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 		//Return if event is not in a SiegeZone
 		boolean eventIsInActiveSiegeZone = SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation());
-		if(eventIsInActiveSiegeZone)
+		if(!eventIsInActiveSiegeZone)
 			return;
 
-		//Override any previous cancellation attempts
+		/*
+		 * Undo any cancellation by non-Towny plugins
+		 * Note that we will have already undone any Towny cancellation
+		 */
 		if(event.isCancelled()) {
 			event.setCancelled(false);
 		}

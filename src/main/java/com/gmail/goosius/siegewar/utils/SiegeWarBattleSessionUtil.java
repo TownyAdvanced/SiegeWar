@@ -44,9 +44,9 @@ public class SiegeWarBattleSessionUtil {
 		int millisUntilStart;
 		int startTimeClip = SiegeWarSettings.getWarSiegeBattleSessionsStartTimeClip();
 		int currentMinutes = LocalDateTime.now().getMinute();
-		if(currentMinutes <= startTimeClip) {
+		if(currentMinutes < startTimeClip) {
 			//The next session will occur this hour
-			minutesUntilStart = startTimeClip - currentMinutes -1;
+			minutesUntilStart = startTimeClip - currentMinutes;
 		} else {
 			//This next session will occur next hour
 			minutesUntilStart = (60 - currentMinutes) + startTimeClip;
@@ -317,12 +317,9 @@ public class SiegeWarBattleSessionUtil {
 		if(SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions() == -1)
 			return;
 
-		Resident resident;
 		List<String> recentBattleSessionsList;
 		List<String> recalculatedRecentBattleSessionsList;
-		for(Player player: Bukkit.getOnlinePlayers()) {
-			resident = TownyAPI.getInstance().getResident(player);
-
+		for(Resident resident: TownyAPI.getInstance().getResidents()) {
 			//Recalculate recent-sessions list, keeping only entries which are newer then 24 hours old
 			recentBattleSessionsList = ResidentMetaDataController.getRecentBattleSessionsAsList(resident);
 			recalculatedRecentBattleSessionsList = new ArrayList<>();

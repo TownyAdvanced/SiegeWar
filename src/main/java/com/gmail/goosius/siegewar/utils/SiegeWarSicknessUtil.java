@@ -68,12 +68,15 @@ public class SiegeWarSicknessUtil {
                         Translatable.of("msg_war_siege_peaceful_player_punished_for_being_in_siegezone"));
                 }
 
-            } else if(attendanceLimiterEnabled && SiegeWarBattleSessionUtil.hasResidentExceededTheirSiegeAttendanceLimit(resident)) {
+            } else if(attendanceLimiterEnabled
+                        && SiegeWarBattleSessionUtil.hasResidentExceededTheirSiegeAttendanceLimit(resident)
+                        && !SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident).equals("0")) {
 
                 //Give war sickness to players who have exceeded attendance limit
                 if (isInOwnClaims(resident)) {
                     givePlayerSpecialWarSicknessNow(player);
                 } else {
+                    String timeUntilLimitExpiry = SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident);
                     givePlayerFullWarSicknessWithWarning(
                         player,
                         resident,
@@ -82,14 +85,14 @@ public class SiegeWarSicknessUtil {
                         Translatable.of(
                             "msg_battle_session_attendance_limit_exceeded_warning",
                             SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions(),
-                            SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident)),
+                            timeUntilLimitExpiry),
                         Translatable.of(
                             "msg_battle_session_attendance_limit_exceeded_punish",
                             SiegeWarSettings.getSiegeAttendanceLimiterBattleSessions(),
-                            SiegeWarBattleSessionUtil.getFormattedTimeUntilPlayerBattleSessionLimitExpires(resident)));
+                            timeUntilLimitExpiry));
                 }
 
-            } else if (nonOfficialLimiterEnabled && isSiegeParticipant(player, resident, siege)) {
+            } else if (nonOfficialLimiterEnabled && !isSiegeParticipant(player, resident, siege)) {
 
                 //Give war sickness to players who are not official participants in the SiegeZone
                 if (isInOwnClaims(resident)) {
