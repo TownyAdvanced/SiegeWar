@@ -330,12 +330,12 @@ public enum ConfigNodes {
 			"############################################################",
 			""),
 	WAR_SIEGE_ZONE_RADIUS_BLOCKS(
-			"war.siege.distances.zone_radius_blocks",
-			"300",
+			"war.siege.distances.siegezone_radius_blocks",
+			"200",
 			"",
 			"# The radius of the 'siege zone'.",
 			"# This radius applies only horizontally, so players can never get above a siegezone (e.g. to place lava there or something).",
-			"# Various siege related effects can apply in this zone e.g. lose points on death, keep inv on death, cannot claim here."),
+			"# Various siege related effects can apply in this zone e.g. lose points on death, cannot TP in, cannot claim."),
 	WAR_SIEGE_BANNER_CONTROL_VERTICAL_DISTANCE_UP_BLOCKS(
 			"war.siege.distances.banner_control_vertical_distance_blocks_up",
 			"16",
