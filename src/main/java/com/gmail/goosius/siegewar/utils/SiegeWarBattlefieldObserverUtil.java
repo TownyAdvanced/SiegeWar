@@ -29,7 +29,7 @@ public class SiegeWarBattlefieldObserverUtil {
         for(Player player: Bukkit.getOnlinePlayers()) { 
             if(!player.isOp()
                 && player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_CARRY_ITEMS.getNode())
-                && SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
+                && SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone(player)) {
 
                 //Player cannot carry food. So don't let them starve!.
                 if(player.getFoodLevel() < 20) {

@@ -88,21 +88,16 @@ public class SiegeWarNotificationUtil {
 		}
 	}
 
-	public static void warnPlayerOfSiegeDanger(Player player) {
-		//Return is war is not enabled at player's location
-		if(!TownyAPI.getInstance().getTownyWorld(player.getWorld()).isWarAllowed())
-			return;
-
-		//Send warning if player is in SiegeZone (& didn't already get the warning)
-		Siege siege = SiegeController.getActiveSiegeAtLocation(player.getLocation());
-		if(siege != null
-			&& siege.getStatus().isActive()
-			&& !siege.getPlayersWhoWereInTheSiegeZone().contains(player)
-			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(player.getLocation())) {
-				Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning_text"));
-				siege.addPlayerWhoWasInTheSiegeZone(player);
+	/**
+	 * Warn player who we know is in an active siege zones
+	 * @param player player
+	 * @param siege siege
+	 */
+	public static void warnPlayerOfActiveSiegeDanger(Player player, Siege siege) {
+		if(!siege.getPlayersWhoWereInTheSiegeZone().contains(player)) {
+			Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning_text"));
+			siege.addPlayerWhoWasInTheSiegeZone(player);
 		}
-
 		//Send warning if player is in besieged town (& didn't already get the warning)
 		//Note: Being in the SiegeZone doesn't necessarily mean being in a besieged town
 		if(SiegeWarSettings.getKillHostilePlayersWhoLogoutInBesiegedTown()) {
@@ -114,14 +109,16 @@ public class SiegeWarNotificationUtil {
 				&& siege.getStatus().isActive()
 				&& !siege.getPlayersWhoWereInTheBesiegedTown().contains(player)) {
 					Messaging.sendErrorMsg(player, Translatable.of("msg_besieged_town_proximity_warning_text"));
-					siege.addPlayersWhoWasInTheBesiegedTown(player);
+					siege.addPlayersWhoWereInTheBesiegedTown(player);
 			}
 		}
 	}
 
-	public static void warnPlayersOfSiegeDanger() {
+	public static void warnAllPlayersOfSiegeDanger() {
 		for(Player player: Bukkit.getOnlinePlayers()) {
-			warnPlayerOfSiegeDanger(player);
+			Siege siege = SiegeWarDistanceUtil.getActiveSiegeZoneWherePlayerIsRegistered(player);
+			if(siege != null)
+				warnPlayerOfActiveSiegeDanger(player, siege); 
 		}
 	}
 }

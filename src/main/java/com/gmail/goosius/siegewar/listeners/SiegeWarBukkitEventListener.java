@@ -38,7 +38,6 @@ import com.gmail.goosius.siegewar.playeractions.PlayerDeath;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -204,9 +203,12 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 	@EventHandler
 	public void on(PlayerJoinEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled()
-			&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()) {
-			SiegeWarNotificationUtil.warnPlayerOfSiegeDanger(event.getPlayer());
+		if(SiegeWarSettings.getWarSiegeEnabled() && TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()) {
+		    Siege siegeAtPlayerLocation = SiegeController.getActiveSiegeAtLocation(event.getPlayer().getLocation());	    
+		    if(siegeAtPlayerLocation != null) {
+		    	SiegeWarDistanceUtil.registerPlayerToActiveSiegeZone(event.getPlayer(), siegeAtPlayerLocation);
+		    	SiegeWarNotificationUtil.warnPlayerOfActiveSiegeDanger(event.getPlayer(), siegeAtPlayerLocation);
+			}
 		}
 	}
 
@@ -272,8 +274,8 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(!(event.getEntity() instanceof Player))
 			return;
 
-		//Return if event is not in a SiegeZone
-		boolean eventIsInActiveSiegeZone = SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation());
+		//Return if player being damaged is not in a SiegeZone
+		boolean eventIsInActiveSiegeZone = SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity());
 		if(!eventIsInActiveSiegeZone)
 			return;
 
@@ -315,7 +317,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 				&& !event.isCancelled()
 				&& event.getEntity() instanceof Player
 				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY.getNode())
-				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
+				&& SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity())) {
 			event.setCancelled(true);
 		}
 	}			
@@ -328,7 +330,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 				&& event.getEntity().getShooter() instanceof Player
 				&& !((Player)event.getEntity().getShooter()).isOp()
 				&& ((Player)event.getEntity().getShooter()).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS.getNode())
-				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
+				&& SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity().getShooter())) {
 			event.setCancelled(true);
 		}
 	}			
@@ -341,7 +343,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 				&& event.getEntity().getShooter() instanceof Player
 				&& !((Player)event.getEntity().getShooter()).isOp()
 				&& ((Player)event.getEntity().getShooter()).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS.getNode())
-				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation())) {
+				&& SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity().getShooter())) {
 			event.setCancelled(true);
 		}
 	}	
