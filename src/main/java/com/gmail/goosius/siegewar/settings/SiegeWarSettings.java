@@ -480,4 +480,12 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_KILL_HOSTILE_PLAYERS_WHO_LOG_OUT_IN_BESIEGED_TOWNS);
 	}
 
+	public static boolean isStopTownyFriendlyFireProtection() {
+		return Settings.getBoolean(ConfigNodes.PVP_PROTECTION_OVERRIDES_STOP_TOWNY_FRIENDLY_FIRE_PROTECTION);
+	}
+
+	public static boolean isStopAllPvpProtection() {
+		return Settings.getBoolean(ConfigNodes.PVP_PROTECTION_OVERRIDES_STOP_ALL_PVP_PROTECTION);
+	}
+
 }
