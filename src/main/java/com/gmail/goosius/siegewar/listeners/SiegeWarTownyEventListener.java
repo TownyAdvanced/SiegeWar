@@ -106,6 +106,7 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onShortTime(NewShortTimeEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled()) {
             SiegeWarTimerTaskController.evaluateBattleSessions();
+            SiegeWarDistanceUtil.recalculatePlayersRegisteredToActiveSiegeZones();
             SiegeWarTimerTaskController.evaluateWarSickness();
             SiegeWarTimerTaskController.evaluateBannerControl();
             SiegeWarTimerTaskController.evaluateWallBreaching();         
@@ -113,7 +114,7 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeHUDManager.updateHUDs();
             SiegeWarTimerTaskController.evaluateBeacons();
             SiegeWarTimerTaskController.evaluateBattlefieldReporters();
-            SiegeWarNotificationUtil.warnPlayersOfSiegeDanger();
+            SiegeWarNotificationUtil.warnAllPlayersOfSiegeDanger();
         }
     }
 
@@ -201,8 +202,13 @@ public class SiegeWarTownyEventListener implements Listener {
      */
     @EventHandler
     public void onOutlawTeleportEvent(OutlawTeleportEvent event) {
-    	if (SiegeWarSettings.getWarSiegeEnabled() && SiegeController.hasActiveSiege(event.getTown())) 
+        if (SiegeWarSettings.getWarSiegeEnabled() 
+                && event.getOutlawLocation() != null
+                && event.getOutlawLocation().getWorld() != null
+                && TownyAPI.getInstance().getTownyWorld(event.getOutlawLocation().getWorld()).isWarAllowed()
+                && SiegeController.hasActiveSiege(event.getTown())) {
     		event.setCancelled(true);
+            }
     }
 
     /**
@@ -212,7 +218,10 @@ public class SiegeWarTownyEventListener implements Listener {
      */
     @EventHandler
     public void on (TownyFriendlyFireTestEvent event) {
-        if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getAttacker().getLocation()))
+    	if (SiegeWarSettings.getWarSiegeEnabled() 
+                && TownyAPI.getInstance().getTownyWorld(event.getAttacker().getWorld()).isWarAllowed()
+                && SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone(event.getAttacker())) {
             event.setPVP(true);
+        }
     }
 }
