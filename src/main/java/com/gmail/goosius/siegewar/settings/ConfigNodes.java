@@ -1001,7 +1001,7 @@ public enum ConfigNodes {
 			"#                                                          #",
 			"# Other plugins, including Towny, can protect players      #",
 			"# from PVP, even when those players are in Siege-Zones.    #",
-			"# 						                                    #",
+			"# 						            #",
 			"# This section allows server owners to override those      #",
 			"# protections, and stop them from working in Siege-Zones.  #",
 			"############################################################",
