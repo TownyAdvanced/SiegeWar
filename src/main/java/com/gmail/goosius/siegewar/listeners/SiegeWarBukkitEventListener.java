@@ -273,22 +273,20 @@ public class SiegeWarBukkitEventListener implements Listener {
 		//Return if the entity being damaged is not a player
 		if(!(event.getEntity() instanceof Player))
 			return;
+		
+		//Return if player being damaged is not in a SiegeZone
+		if(!SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity()))
+			return;
+
+		/*
+		 * Catch-All to undo any remaining damage cancellation
+		 */
+		if(SiegeWarSettings.isStopAllPvpProtection() && event.isCancelled()) {
+			event.setCancelled(false);
+		}
 
 		//PVP or EVP event ?:
 		if(event.getDamager() instanceof Player) {
-
-			/*
-			 * Catch-all pvp-protection cancellation
-			 */
-			if(event.isCancelled()) {
-				if(SiegeWarSettings.isStopAllPvpProtection() && SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity()))
-					event.setCancelled(false);  //Event un-cancelled
-				else
-					return; //Event stays cancelled
-			} else {
-				if(!SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity()))
-					return; // Event not in SiegeZone.
-			}
 
 			//If the damager is op, return
 			if(event.getDamager().isOp())
@@ -301,14 +299,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 			}
 
 		} else {
-
-			//Return if event is cancelled
-			if(event.isCancelled())
-				return;
-
-			//Return if player is not in a SiegeZone
-			if(!SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity()))
-				return;
 
 			//Stop TNT/Minecarts from damaging players in SiegeZone wilderness
 			if (SiegeWarSettings.getSiegeZoneWildernessForbiddenExplodeEntityTypes().contains(event.getDamager().getType())
