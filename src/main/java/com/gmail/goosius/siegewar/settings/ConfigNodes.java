@@ -990,7 +990,7 @@ public enum ConfigNodes {
 			"# To disable the feature, set the value to -1.",
 			"# TIP: This feature helps to prevent teams trying to win by fight-avoidance with capping."),
 	PVP_PROTECTION_OVERRIDES(
-			"pvp.protection.overrides",
+			"pvp_protection_overrides",
 			"",
 			"",
 			"",
@@ -1007,18 +1007,18 @@ public enum ConfigNodes {
 			"############################################################",
 			""),
 	PVP_PROTECTION_OVERRIDES_STOP_TOWNY_PLOT_PVP_PROTECTION(
-			"pvp.protection.override.stop_towny_plot_protection",
+			"pvp_protection_overrides.stop_towny_plot_protection",
 			"true",
 			"",
 			"# If true, then Towny plot protection is disabled in Siege-Zones.",
 			"# TIP: This value is generally set to true, to avoid having unnatural safe claims within Siege-Zones."),
 	PVP_PROTECTION_OVERRIDES_STOP_TOWNY_FRIENDLY_FIRE_PROTECTION(
-			"pvp.protection.override.stop_towny_friendly_fire_protection",
+			"pvp_protection_overrides.stop_towny_friendly_fire_protection",
 			"false",
 			"",
 			"# If true, then Towny friendly-fire protection is disabled within Siege-Zones."),
 	PVP_PROTECTION_OVERRIDES_STOP_ALL_PVP_PROTECTION(
-			"pvp.protection.override.stop_all_protection",
+			"pvp_protection_overrides.stop_all_protection",
 			"false",
 			"",
 			"# If true, then all PVP protections are disabled within Siege-Zones, including from non-TownyAdvanced plugins.",

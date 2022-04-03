@@ -273,7 +273,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		//Return if the entity being damaged is not a player
 		if(!(event.getEntity() instanceof Player))
 			return;
-		
+
 		//Return if player being damaged is not in a SiegeZone
 		if(!SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity()))
 			return;
@@ -297,7 +297,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 				event.setCancelled(true);
 				return;
 			}
-
 		} else {
 
 			//Stop TNT/Minecarts from damaging players in SiegeZone wilderness
