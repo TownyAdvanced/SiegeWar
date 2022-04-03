@@ -520,7 +520,7 @@ public enum ConfigNodes {
 			""),
 	WAR_SIEGE_POINTS_BALANCING_END_OF_BATTLE_POINTS_DISTRIBUTION_WINNER_TAKES_ALL(
 			"war.siege.points_balancing.end_of_battle_points_distribution.winner_takes_all",
-			"true",
+			"false",
 			"",
 			"# If true, at the end of a battle, only the battle points of the winner are applied to the siege balance.",
 			"# If false, the battle points of the losing side are also applied to the siege balance."),
