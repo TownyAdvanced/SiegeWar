@@ -988,7 +988,41 @@ public enum ConfigNodes {
 			"",
 			"# This value determines the maximum number of weekend-day battle sessions which each player can at.",
 			"# To disable the feature, set the value to -1.",
-			"# TIP: This feature helps to prevent teams trying to win by fight-avoidance with capping.");
+			"# TIP: This feature helps to prevent teams trying to win by fight-avoidance with capping."),
+	PVP_PROTECTION_OVERRIDES(
+			"pvp_protection_overrides",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |               PVP Protection Overrides               | #",
+			"# +------------------------------------------------------+ #",
+			"#                                                          #",
+			"# Other plugins, including Towny, can protect players      #",
+			"# from PVP, even when those players are in Siege-Zones.    #",
+			"# 						            #",
+			"# This section allows server owners to override those      #",
+			"# protections, and stop them from working in Siege-Zones.  #",
+			"############################################################",
+			""),
+	PVP_PROTECTION_OVERRIDES_STOP_TOWNY_PLOT_PVP_PROTECTION(
+			"pvp_protection_overrides.stop_towny_plot_protection",
+			"true",
+			"",
+			"# If true, then Towny plot protection is disabled in Siege-Zones.",
+			"# TIP: This value is generally set to true, to avoid having unnatural safe claims within Siege-Zones."),
+	PVP_PROTECTION_OVERRIDES_STOP_TOWNY_FRIENDLY_FIRE_PROTECTION(
+			"pvp_protection_overrides.stop_towny_friendly_fire_protection",
+			"false",
+			"",
+			"# If true, then Towny friendly-fire protection is disabled within Siege-Zones."),
+	PVP_PROTECTION_OVERRIDES_STOP_ALL_PVP_PROTECTION(
+			"pvp_protection_overrides.stop_all_protection",
+			"false",
+			"",
+			"# If true, then all PVP protections are disabled within Siege-Zones, including from non-TownyAdvanced plugins.",
+			"# WARNING : This setting may result in incorrect pvp-protection messaging information!.");
 
 	private final String Root;
 	private final String Default;

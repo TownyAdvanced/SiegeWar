@@ -218,8 +218,10 @@ public class SiegeWarTownyEventListener implements Listener {
      */
     @EventHandler
     public void on (TownyFriendlyFireTestEvent event) {
-    	if (SiegeWarSettings.getWarSiegeEnabled() 
+    	if (!event.isPVP()
+    	        && SiegeWarSettings.getWarSiegeEnabled() 
                 && TownyAPI.getInstance().getTownyWorld(event.getAttacker().getWorld()).isWarAllowed()
+                && SiegeWarSettings.isStopTownyFriendlyFireProtection()
                 && SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone(event.getAttacker())) {
             event.setPVP(true);
         }

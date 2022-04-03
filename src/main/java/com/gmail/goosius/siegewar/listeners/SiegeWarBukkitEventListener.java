@@ -275,15 +275,13 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 
 		//Return if player being damaged is not in a SiegeZone
-		boolean eventIsInActiveSiegeZone = SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity());
-		if(!eventIsInActiveSiegeZone)
+		if(!SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity()))
 			return;
 
 		/*
-		 * Undo any cancellation by non-Towny plugins
-		 * Note that we will have already undone any Towny cancellation
+		 * Catch-All to undo any remaining damage cancellation
 		 */
-		if(event.isCancelled()) {
+		if(event.isCancelled() && SiegeWarSettings.isStopAllPvpProtection()) {
 			event.setCancelled(false);
 		}
 
