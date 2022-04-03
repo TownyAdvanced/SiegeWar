@@ -530,7 +530,7 @@ public class Siege {
 		return playersWhoWereInTheBesiegedTown;
 	}
 
-	public void addPlayersWhoWasInTheBesiegedTown(Player player) {
+	public void addPlayersWhoWereInTheBesiegedTown(Player player) {
 		playersWhoWereInTheBesiegedTown.add(player);
 	}
 }

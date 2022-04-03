@@ -18,6 +18,11 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * This class contains utility functions related to calculating and validating distances
@@ -25,6 +30,50 @@ import org.bukkit.entity.Entity;
  * @author Goosius
  */
 public class SiegeWarDistanceUtil {
+
+	/**
+	 * List of players registered to active siege zones
+	 *
+	 * - Every short tick (20 secs), players are registered/de-registered as appropriate.
+	 *   - In an active SiegeZone = registered
+	 *   - Not in an active SiegeZone = de-registered
+	 *
+	 * - Also when a player logs in they are registered/re-registered if appropriate.
+	 *
+	 * - This list & associated methods are good for PVP events, which occur frequently and rapidly
+	 * - For infrequent events (like deaths), it is appropriate to use more precise methods.
+	 * 
+	 * Besides login, if a player enters or leaves a Siege-Zone, this map is not immediately updated.
+	 * This can occasionally cause players to be pvp protected/unprotected in inappropriate locations
+	 * But the really critical mechanism of keep-inventory will still function as expected,
+	 * because it precisely calculates player-location at the moment of death (all in the TownyCombat plugin code).
+	 */
+	private static Map<Player, Siege> playersRegisteredToActiveSiegeZones = new HashMap<>();
+
+	public static void registerPlayerToActiveSiegeZone(Player player, Siege siege) {
+		playersRegisteredToActiveSiegeZones.put(player, siege);
+	}
+
+	public static boolean isPlayerRegisteredToActiveSiegeZone(Player player) {
+		return playersRegisteredToActiveSiegeZones.containsKey(player);
+	}
+
+	public static void recalculatePlayersRegisteredToActiveSiegeZones() {
+		playersRegisteredToActiveSiegeZones.clear();
+		for(Player player: Bukkit.getOnlinePlayers()) {
+			Siege siege = SiegeController.getActiveSiegeAtLocation(player.getLocation());
+			if(siege != null)
+				playersRegisteredToActiveSiegeZones.put(player, siege);
+		}
+	}
+	
+	/**
+	 * Returns null if player is not in an active Siege-Zone
+	 */
+	@Nullable
+	public static Siege getActiveSiegeZoneWherePlayerIsRegistered(Player player) {
+		return playersRegisteredToActiveSiegeZones.get(player);
+	}
 
 	/**
 	 * This method returns true if the given location is in an active siegezone
@@ -43,13 +92,24 @@ public class SiegeWarDistanceUtil {
 	}
 
 	public static boolean isTownBlockInActiveSiegeZone(TownBlock townBlock) {
+		//Transform worldcoord to Location object
 		World world = Bukkit.getWorld(townBlock.getWorld().getName());
 		int townBlockSize = TownySettings.getTownBlockSize();
 		int x = (townBlock.getX() * townBlockSize) + (townBlockSize /2);
 		int y = 0;
 		int z = (townBlock.getZ() * townBlockSize) + (townBlockSize /2);
 		Location locationOfTownBlock = new Location(world, x, y, z);
-		return isLocationInActiveSiegeZone(locationOfTownBlock);
+
+		//There is a good chance the townblock will belong to the under-siege town and be in the siegezone
+		//Check this quickly before going through the full list of sieges
+		Siege siege = SiegeController.getSiege(townBlock.getTownOrNull());
+		if(siege != null && siege.getStatus().isActive() && isInSiegeZone(locationOfTownBlock, siege)) {
+			//Townblock is in an under siege town, and in the siegezone
+			return true;
+		} else {
+			//Search the full list of sieges
+			return isLocationInActiveSiegeZone(locationOfTownBlock);
+		}
 	}
 
 	public static boolean isInSiegeZone(Location location, Siege siege) {
