@@ -24,6 +24,7 @@ public class SiegeWarPlotEventListener implements Listener {
 	public void onTownBlockPVPTest(TownBlockPVPTestEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()
 		    && event.getTownBlock().getWorld().isWarAllowed()
+		    && SiegeWarSettings.isStopTownyPlotPvpProtection()
 		    && !event.getTownBlock().getPermissions().pvp
 		    && SiegeWarDistanceUtil.isTownBlockInActiveSiegeZone(event.getTownBlock())) {
 				event.setPvp(true);

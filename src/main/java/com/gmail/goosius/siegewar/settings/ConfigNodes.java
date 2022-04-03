@@ -1006,19 +1006,23 @@ public enum ConfigNodes {
 			"# protections, and stop them from working in Siege-Zones.  #",
 			"############################################################",
 			""),
+	PVP_PROTECTION_OVERRIDES_STOP_TOWNY_PLOT_PVP_PROTECTION(
+			"pvp.protection.override.stop_towny_plot_protection",
+			"true",
+			"",
+			"# If true, then Towny plot protection is disabled in Siege-Zones.",
+			"# TIP: This value is generally set to true, to avoid having unnatural safe claims within Siege-Zones."),
 	PVP_PROTECTION_OVERRIDES_STOP_TOWNY_FRIENDLY_FIRE_PROTECTION(
 			"pvp.protection.override.stop_towny_friendly_fire_protection",
 			"false",
 			"",
-			"# If true, then Towny friendly-fire protection is disabled in Siege-Zones.",
-			"# WARNING: Setting this to true may cause lag!."),
+			"# If true, then Towny friendly-fire protection is disabled within Siege-Zones."),
 	PVP_PROTECTION_OVERRIDES_STOP_ALL_PVP_PROTECTION(
 			"pvp.protection.override.stop_all_protection",
 			"false",
 			"",
-			"# If true, then all PVP protections are disabled in Siege-Zones.",
-			"# WARNING 1 : Setting this to true may cause lag!.",
-			"# WARNING 2 : This setting may result in incorrect pvp-protection messaging information!.");
+			"# If true, then all PVP protections are disabled within Siege-Zones, including from non-TownyAdvanced plugins.",
+			"# WARNING : This setting may result in incorrect pvp-protection messaging information!.");
 
 	private final String Root;
 	private final String Default;
