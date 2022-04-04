@@ -1,8 +1,8 @@
 ---
 name: SiegeWar
-version: 0.41
-language: english
-author: Goosius
+version: 0.3
+language: Turkish
+author: 'proctoglyvenol#5601'
 website: 'http://townyadvanced.github.io/'
 description: >
   Language file for all game messages.  Do not alter this file. If you wish to change any of the entries, make a copy named something else. Alternate language files can be enabled by altering the [language] entry in config.yml
@@ -18,360 +18,360 @@ description: >
 siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
 #Added in (Siegewar version)
 #Siege war happy-path messages
-msg_siege_war_attack_pay_war_chest: '&bA war-chest has been prepared by %s, with a value of %s. Whoever wins the siege will get this money.'
-msg_siege_war_attack_recover_war_chest: '&bThe war chest has been recovered by %s, with a value of %s.'
-msg_siege_war_neutral_town_plundered: '&b%s has been plundered of %s by %s!'
-msg_siege_war_nation_town_plundered: '&b%s has been plundered of %s by %s!'
-msg_siege_war_town_ruined_from_plunder: '&b%s has been reduced to ruins by %s!'
-msg_siege_war_town_bankrupted_from_plunder: '&b%s has been bankrupted by %s!'
-msg_siege_war_nation_defeated: '&b%s has been defeated!'
-msg_siege_war_attacking_troops_at_siege_banner: '&bSiege on %s > Attackers are at the siege banner.'
-msg_siege_war_banner_control_session_success: '&bBanner control session succeeded!. You have been added to the banner control list.'
-msg_siege_war_banner_control_gained_by_attacker: '&bSiege on %s > The attackers have gained banner control.'
-msg_siege_war_banner_control_gained_by_defender: '&bSiege on %s > The defenders have gained banner control.'
-msg_town_destroyed_by_nation_tax: '&b%s couldn''t pay taxes and has fallen.'
-msg_town_destroyed_by_nation_tax_multiple: '&bThe following towns could not afford the nation tax and have fallen: '
+msg_siege_war_attack_pay_war_chest: '&7Ganimet Sandığı %s tarafından oluşturuldu, %s değerindedir. Kuşatmayı kim kazanırsa bu sandık onundur.'
+msg_siege_war_attack_recover_war_chest: '&7Ganimet sandığı %s tarafından kurtarıldı, %s değerindedir.'
+msg_siege_war_neutral_town_plundered: '&7%s adlı kasaba yağmalandı, yağmalayan taraf: %s, %s!'
+msg_siege_war_nation_town_plundered: '&7%s adlı kasaba yağmalandı, yağmalayan taraf: %s, %s!'
+msg_siege_war_town_ruined_from_plunder: '&7%s adlı kasaba, %s tarafından harabeye çevrildi!'
+msg_siege_war_town_bankrupted_from_plunder: '&7%s adlı kasaba, %s tarafından iflas ettirildi!'
+msg_siege_war_nation_defeated: '&7%s adlı kasaba yerle bir oldu!'
+msg_siege_war_attacking_troops_at_siege_banner: '&7%s üzerindeki kuşatma &8- &7Kuşatmacılar, kuşatma bayrağının etrafındalar.'
+msg_siege_war_banner_control_session_success: '&7Bayrak kontrol aşaması başarılı. Bayrak noktası kontrol altına alındı.'
+msg_siege_war_banner_control_gained_by_attacker: '&7%s üzerindeki kuşatma &8- &7Kuşatmacılar bayrak kontrolünü elde ettiler.'
+msg_siege_war_banner_control_gained_by_defender: '&7%s üzerindeki kuşatma &8- &7Savunucular bayrak kontrolünü elde ettiler.'
+msg_town_destroyed_by_nation_tax: '&7%s adlı ulus, vergilerini ödeyemedi ve yerle bir oldu.'
+msg_town_destroyed_by_nation_tax_multiple: '&7Belirtilen ulus vergilerini ödeyemedi ve yerle bir oldu: '
 #Siege war error message
 #Recruiting
-msg_err_siege_besieged_town_cannot_recruit: "&cBesieged towns cannot recruit new residents."
+msg_err_siege_besieged_town_cannot_recruit: "&cKuşatılmış bir kasaba yeni halkları bünyesine alamaz."
 #Claiming/Unclaiming
-msg_err_siege_claim_too_near_siege_zone: "&cThe claim is too close to a siege."
-msg_err_siege_besieged_town_cannot_claim: "&cBesieged towns cannot claim new land."
-msg_err_siege_besieged_town_cannot_unclaim: "&cBesieged towns (or towns which recently lost a siege) cannot un-claim land."
-msg_err_war_common_occupied_town_cannot_unclaim: "&cOccupied towns cannot un-claim land."
+msg_err_siege_claim_too_near_siege_zone: "&cTapularınıza katmak istediğiniz arazi, yakınlardaki bir kuşatmadan dolayı gerçekleştirilemedi."
+msg_err_siege_besieged_town_cannot_claim: "&cKuşatılmış bir kasaba yeni bir araziye tapu atamaz."
+msg_err_siege_besieged_town_cannot_unclaim: "&cKuşatılmış bir kasaba herhangi bir arazinin tapusunu kaldıramaz."
+msg_err_war_common_occupied_town_cannot_unclaim: "&cİşgal edilmiş kasabalar herhangi bir arazinin tapusunu kaldıramaz."
 #Revolt
-msg_err_siege_war_town_voluntary_leave_impossible: "&cTowns cannot leave nations without agreement. To leave your nation, persuade the king (or an assistant) to kick your town."
-msg_err_siege_war_revolt_immunity_active: "&cYour town has revolt immunity. It cannot revolt until the revolt immunity expires."
+msg_err_siege_war_town_voluntary_leave_impossible: "&cAnlaşma yapılmadan kasabalar, uluslarından ayrılamaz. Eğer savaşmak istemiyorsan, liderine seni kovmasını isteyebilirsin."
+msg_err_siege_war_revolt_immunity_active: "&cKasabanızın bağışıklığını ispat etti.İhlaf bağışıklığı sona erene kadar isyan edemez."
 #Attack
-msg_err_siege_war_banner_must_be_placed_above_ground: '&cThe siege banner must be placed above ground.'
-msg_err_siege_war_action_not_a_town_member: '&cYou must be a member of a town to do this action.'
-NUKE ???? msg_err_siege_war_action_not_a_nation_member: '&cYou must be a member of a nation to do this action.'
-msg_err_siege_war_cannot_attack_own_town: '&cYou cannot attack your own town.'
-msg_err_siege_war_cannot_attack_town_in_own_nation: '&cYou cannot attack a town in your own nation.'
-msg_err_siege_war_cannot_attack_non_enemy_nation: '&cYou cannot attack a town unless the nation of that town is an enemy of your nation.'
-msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cYou cannot perform this action because this chunk is facing more than one town block. Try placing the item in a different area.'
-msg_err_siege_war_nation_already_attacking_town: '&cYour nation is already attacking this town.'
-msg_err_siege_war_cannot_attack_siege_immunity: '&cThe target town has siege immunity. It cannot be attacked until the siege immunity expires.'
-msg_err_siege_war_cannot_join_siege: '&cYou cannot attack a town while it is under siege by another nation.'
-msg_err_siege_war_nation_has_too_many_active_siege_attacks: '&cYour nation is at the maximum number of concurrent siege-attacks. To start another attack, one or more of the current attacks must finish.'
-msg_err_siege_war_town_not_close_enough_to_nation: '&cThe town is too far away from your nation capital to be attacked.'
+msg_err_siege_war_banner_must_be_placed_above_ground: '&cKuşatma bayrağı yer üstünde bir yere koyulmalıdır.'
+msg_err_siege_war_action_not_a_town_member: '&cBunu yapabilmeniz için bir kasabanın üyesi olmalısınız.'
+NUKE ???? msg_err_siege_war_action_not_a_nation_member: '&cBunu yapabilmeniz için bir ulusun üyesi olmalısınız.'
+msg_err_siege_war_cannot_attack_own_town: '&cKendi kasabanıza saldıramazsınız.'
+msg_err_siege_war_cannot_attack_town_in_own_nation: '&cKardeş bir ulusun kasabasına saldıramazsınız.'
+msg_err_siege_war_cannot_attack_non_enemy_nation: '&cBu kasabanın ulusun milletinizin bir düşmanı olmadığı sürece bir şehre saldıramazsınız.'
+msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cBu eylemi gerçekleştiremezsiniz, çünkü bu yığın birden fazla kasaba bloğundan daha fazla bakıyor.Öğeyi farklı bir alana yerleştirmeyi deneyin.'
+msg_err_siege_war_nation_already_attacking_town: '&cUlusunuz zaten bu kasabaya bir saldırı başlatmış.'
+msg_err_siege_war_cannot_attack_siege_immunity: '&cHedef kasabanın kuşatma bağışıklığı var.Kuşatma bağışıklığı sona erene kadar saldırılamaz.'
+msg_err_siege_war_cannot_join_siege: '&cBaşka bir millet tarafından kuşatma altında iken bir kasabaya saldıramazsınız.'
+msg_err_siege_war_nation_has_too_many_active_siege_attacks: '&cMilletiniz, eşzamanlı kuşatma saldırısının maksimum sayıda.Başka bir saldırıyı başlatmak için, mevcut saldırıların bir veya daha fazlası bitmesi gerekir.'
+msg_err_siege_war_town_not_close_enough_to_nation: '&cKasaba, ulus başkentinizden saldırılacak çok uzak.'
 #Invade
-msg_err_siege_war_no_siege_on_target_town: '&cThere is no siege on the target town of %s.'
+msg_err_siege_war_no_siege_on_target_town: '&cHedef kasabasında %s için bir kuşatma yok.'
 #Plunder
-msg_err_siege_war_cannot_plunder_without_victory: "&cYou cannot plunder unless your nation is victorious in the siege."
-msg_err_siege_war_cannot_plunder_without_economy: "&cYou cannot plunder because no economy plugin is active"
-msg_err_siege_war_town_already_plundered: '&cThis town has already been plundered.'
+msg_err_siege_war_cannot_plunder_without_victory: "&cUlusunuz kuşatma içinde muzaffer olmadığı sürece yağmalanamazsınız."
+msg_err_siege_war_cannot_plunder_without_economy: "&cEkonomi eklentisi aktif olmadığı için yağmalanamazsınız."
+msg_err_siege_war_town_already_plundered: '&cBu kasaba zaten yağmalandı.'
 #Block change
-msg_err_siege_war_cannot_destroy_siege_banner: "&cWhile the siege is in progress you cannot destroy the siege banner or the block it is attached to."
-msg_err_siege_war_banner_support_block_not_stable: "&cYou cannot place the banner on unstable ground e.g. sand or gravel."
+msg_err_siege_war_cannot_destroy_siege_banner: "&cKuşatma devam ederken, kuzu başlığını veya eklendiği bloğu yok edemezsiniz."
+msg_err_siege_war_banner_support_block_not_stable: "&cBayrağı dengesiz zemine yerleştiremezsiniz. Kum veya çakıl bulunduğu için bu problem olabilir."
 #Banner control
-msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'You cannot use this item while in a banner control session.'
+msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'Bir bayrak kontrol aşamasındayken bu öğeyi kullanamazsınız.'
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2Revolt Immunity Timer: &a%s'
-status_town_siege_status_in_progress: 'In Progress'
+status_town_siege_status_in_progress: 'Devam etmekte'
 status_town_siege_status_banner_xyz: '&2 > Banner XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > Immunity Timer: &a%s'
 status_town_siege_victory_timer: '&2 > Victory Timer: &a%s'
 status_town_banner_control: '&2 > Banner Control: %s &a[%s]&2: &f'
 status_town_banner_control_nobody: '&2 > Banner Control: %s'
 #General
-status_no_green: '&aNO'
-msg_occupier: '&4*Occupier*'
-msg_nobody: '&aNobody'
-msg_attackers: '&aAttackers'
-msg_defenders: '&aDefenders'
+status_no_green: '&aKAPALI'
+msg_occupier: '&c*İşgalci*'
+msg_nobody: '&aHiçkimse'
+msg_attackers: '&aKuşatmacılar'
+msg_defenders: '&aSavunucular'
 #Town Neutrality
-status_town_peacefulness_status_change_timer: '&2Countdown To Neutral Status Change: &a%d days'
-msg_war_common_town_declared_peaceful: '&bNeutrality Declared!. The town will be confirmed as Neutral in %d day(s).'
-msg_war_common_town_declared_non_peaceful: '&bNon-Neutrality Declared!. The town will be confirmed as Non-Neutral in %d day(s).'
-msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Neutrality status change countdown was cancelled.'
-msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they are in a Neutral town.'
+status_town_peacefulness_status_change_timer: '&7Barış Durumu Değişikliğine Geri Sayım: &a%d gün'
+msg_war_common_town_declared_peaceful: '&7Barış ilan edildi! Kasaba %d günü içerisinde barışçıl olarak sayılacaktır.'
+msg_war_common_town_declared_non_peaceful: '&7Agresiflik ilan edildi!. Kasaba %d günü içerisinde agresif olarak sayılacaktır.'
+msg_war_common_town_peacefulness_countdown_cancelled: '&7Barışçıl durumu değişikliği geri sayımı iptal edildi.'
+msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cAskere herhangi bir vatandaşınızı alamazsınız çünkü barışçıl bir kasabasınız.'
 #Siege immunities
 msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s hours.'
 msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s hours.'
 msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s hours.'
 #Siege-zone block placement restrictions
-msg_war_siege_zone_block_placement_forbidden: '&cYou cannot place this type of block in the wilderness area of a siege zone.'
-msg_war_siege_zone_bucket_emptying_forbidden: '&cYou cannot use this type of bucket in the wilderness area of a siege zone.'
+msg_war_siege_zone_block_placement_forbidden: '&cBu tür bir bloğu, bir kuşatma bölgesine yerleştiremezsiniz.'
+msg_war_siege_zone_bucket_emptying_forbidden: '&cBu tür bir kovayı, bir kuşatma bölgesinde kullanamazsınız.'
 #Added in 0.02:
-admin_help_1: 'Reload the config and language file.'
-config_and_lang_file_reloaded_successfully: 'Config and Language file reloaded successfully.'
-config_and_lang_file_could_not_be_loaded: 'Reload unsuccessful. See console for details.'
+admin_help_1: 'Config ve dil dosyasını yeniden yükleyin.'
+config_and_lang_file_reloaded_successfully: 'Yapılandırma ve dil dosyası başarıyla yeniden yüklendi.'
+config_and_lang_file_could_not_be_loaded: 'Başarısız oldu. Ayrıntılar için konsola bakınız.'
 #Added in 0.05:
-msg_err_not_being_sieged: '&cTown %s does not have any active sieges.'
-msg_err_town_not_registered: '&cTown %s is not registered.'
+msg_err_not_being_sieged: '&c%s adlı kasabanın herhangi bir aktif kuşatması bulunmamaktadır.'
+msg_err_town_not_registered: '&c%s kasabası kayıtlı değildir.'
 #Scoreboard
-hud_title: 'Siege'
-hud_siegestatus: 'Siege Status'
-hud_attackers: 'ATK: '
-hud_defenders: 'DEF: '
-hud_banner_control: "Banner Control: "
-hud_time_remaining: 'Time Left: '
-msg_swa_resident_already_has_control: '&cResident %s already has control.'
-msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
-msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
-siege_status_in_progress: 'In Progress'
-siege_status_attacker_win: 'Attacker Win'
-siege_status_defender_win: 'Defender Win'
-siege_status_unknown: 'Unknown'
-dynmap_siege_banner_control: 'Banner Control: %s'
-dynmap_siege_time_left: 'Time Left: %s'
+hud_title: 'Kuşatma'
+hud_siegestatus: 'Kuşatma Durumu'
+hud_attackers: 'KUŞ: '
+hud_defenders: 'SAV: '
+hud_banner_control: "Bayrak Kontrolü: "
+hud_time_remaining: 'Kalan Süre: '
+msg_swa_resident_already_has_control: '&c%s adlı vatandaş zaten kontrol sahibidir.'
+msg_swa_resident_doesnt_have_control: "&c%s adlı vatandaş kontrol sahibi değildir."
+msg_swa_set_plunder_success: '&7Set plundered to %s for %s.'
+siege_status_in_progress: 'Devam etmekte'
+siege_status_attacker_win: 'Kuşatmacılar Kazandı'
+siege_status_defender_win: 'Savunucular Kazandı'
+siege_status_unknown: 'Bilinmiyor'
+dynmap_siege_banner_control: 'Bayrak Kontrolü: %s'
+dynmap_siege_time_left: 'Kalan Süre: %s'
 #Added in 0.06:
-msg_inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to breaking due to inventory degradation.'
-msg_swa_remove_siege_success: '&bSuccessfully removed siege.'
-msg_war_siege_occupied_towns_cannot_surrender: '&cOccupied towns cannot surrender.'
-msg_you_received_war_sickness: '&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave to remove the war sickness. Common causes of war sickness: being in a neutral town, not having a military rank or not being allied to either side.'
-msg_you_will_get_sickness: '&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave or you will receive war sickness in %s seconds.'
+msg_inventory_degrade_warning: '&4UYARI: &cAraçlarınızdan bazıları, envanter bozulması nedeniyle kırılmaya yakındır.'
+msg_swa_remove_siege_success: '&7Başarıyla kuşatma kaldırıldı.'
+msg_war_siege_occupied_towns_cannot_surrender: '&cİşgal altındaki kasabalar teslim olamaz.'
+msg_you_received_war_sickness: '&cBu kuşatmanın katılımcısı değilsiniz ve kuşatma bölgesinde olamazsınız. Lütfen savaş hastalığını gidermek için bölgeyi terk edin. Savaş Hastalığının Ortak Nedenleri: Barışçıl bir kasabada olmak, askeri rütbeye sahip olmamak ya da her iki tarafla da müttefik olmamak.'
+msg_you_will_get_sickness: '&cBu kuşatmanın katılımcısı değilsiniz ve kuşatma bölgesinde olamazsınız. Lütfen bölgeyi terk edin yoksa %s saniyede savaş hastalığı kapacaksınız.'
 #Added in 0.08:
-msg_swa_set_towns_gained_success: '&bSuccessfully set towns gained to %d for %s.'
-msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
-msg_swa_set_plunder_gained_success: '&bSuccessfully set plunder gained to %d for %s.'
-msg_swa_set_plunder_lost_success: '&bSuccessfully set plunder lost to %d for %s.'
-msg_err_nation_not_registered: '&cNation %s is not registered.'
-msg_err_cannot_remove_enemy: '&cYou cannot remove a nation as enemy if you have an active siege against them!'
+msg_swa_set_towns_gained_success: '&7Successfully set towns gained to %d for %s.'
+msg_swa_set_towns_lost_success: '&7Successfully set towns lost to %d for %s.'
+msg_swa_set_plunder_gained_success: '&7Successfully set plunder gained to %d for %s.'
+msg_swa_set_plunder_lost_success: '&7Successfully set plunder lost to A for B.'
+msg_err_nation_not_registered: '&c%s adlı ulus kayıtlı değildir.'
+msg_err_cannot_remove_enemy: '&cAktif bir kuşatman varsa onlara karşı olan savaşçıl tutumunu hemen değiştiremezsin!'
 #Added in 0.09
-nation_help_12: 'Pay your soldiers. The given amount will be distributed according to rank.'
-msg_siege_war_military_salary_available: "A Military Salary of of %s is now available to you. It can be collected using '/sw collect'."
-msg_siege_war_military_salary_collected: "You have collected a military salary of %s."
-msg_err_siege_war_no_soldiers_to_pay: "There were no soldiers to pay."
-msg_err_siege_war_not_enough_nation_funds_to_pay: "The nation does not have enough funds to pay that amount."
-msg_siege_war_soldiers_paid: "The soldiers of the nation were paid a total of %s, which was distributed according to rank."
+nation_help_12: 'Askerlerine biraz zab öde. Verilen miktar, rütbeye göre dağıtılacaktır.'
+msg_siege_war_military_salary_available: "%s adlı kasabanın, size askeri maaştan bir geliri var. Temin edebilmek için '/sw collect' yazınız."
+msg_siege_war_military_salary_collected: "%s askeri maaşını başarıyla topladınız."
+msg_err_siege_war_no_soldiers_to_pay: "Ödeme yapılacak asker yok."
+msg_err_siege_war_not_enough_nation_funds_to_pay: "Ulusun bu tutarı ödemek için yeterli fonu yok."
+msg_siege_war_soldiers_paid: "%s zab, akserlerin arasında başarıyla dağıtıldı, daha üst seviye askerlerin daha fazla zab'a sahip oldu."
 #Added in 0.11
-msg_err_invalid_bool: "&cInvalid option. Options: on/off"
-msg_beacon_preference_set: "&bBeacon preference set to %s."
+msg_err_invalid_bool: "&cGeçersiz seçenek. Seçenekler: ON/OFF"
+msg_beacon_preference_set: "&7Fener tercihi belirlendi: %s."
 #Misc
-msg_na: 'N/A'
+msg_na: 'BİLİNMİYOR'
 #Town screen
-status_town_siege_status_siege_balance: '&2 > Balance: &a%d'
-status_town_siege_status_warchest: '&2 > War Chest: &a%s'
+status_town_siege_status_siege_balance: '&8-&7 Kasaba Bankası: &a%d'
+status_town_siege_status_warchest: '&8-&7 Ganimet Sandığı: &a%s'
 #Battle sessions
-status_town_siege_battle: '&2Battle'
-status_town_siege_battle_time_remaining: '&2 > Time Remaining: &a%s'
-msg_war_siege_battle_session_started: "&bA new battle session has started."
-msg_war_siege_battle_session_ended_with_battles: "&bThe current battle session has ended. The following teams won their battles:"
-msg_war_siege_battle_session_ended_without_battles: "&bThe current battle session has ended. There were no battles."
-msg_war_siege_battle_session_ended_attacker_result: "&b * Attackers @ %s (%s)"
-msg_war_siege_battle_session_ended_defender_result: "&b * Defenders @ %s (%s)"
-msg_war_siege_battle_session_ended_draw_result: "&b * Draw @ %s (0)"
-msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next battle session starts. The next battle session will start in %s."
+status_town_siege_battle: '&cSavaş'
+status_town_siege_battle_time_remaining: '&8-&7 Kalan Süre: &a%s'
+msg_war_siege_battle_session_started: "&7Yeni bir savaş aşaması başladı."
+msg_war_siege_battle_session_ended_with_battles: "&7Az önceki savaş aşamassı bitti. Şu taraflar kazandı:"
+msg_war_siege_battle_session_ended_without_battles: "&7Az önceki savaş aşamassı bitti. Herhangi bir savaş olmadı."
+msg_war_siege_battle_session_ended_attacker_result: "&7 * Kuşatmacılar @ %s (%s)"
+msg_war_siege_battle_session_ended_defender_result: "&7 * Savunucular @ %s (%s)"
+msg_war_siege_battle_session_ended_draw_result: "&7 * Berabere @ %s (0)"
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBir sonraki savaş aşaması başlayana kadar bayrak kontrolü kazanılamaz. Bir sonraki savaş aşaması %s içerisinde başlayacaktır."
 #Hud
-hud_siege_balance: 'Siege Balance: '
-hud_warchest: 'War Chest: '
-hud_battle_time_remaining: 'BAT Time Left: '
+hud_siege_balance: 'Kuşatma Bakiyesi: '
+hud_warchest: 'Ganimet Sandığı: '
+hud_battle_time_remaining: 'Savaşın Bitmesine: '
 #Dynmap
-dynmap_siege_battle_time_left: 'Battle Time Left: %s'
+dynmap_siege_battle_time_left: 'Savaşın Bitmesine: %s'
 #Banner control
-msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > The attackers have stolen banner control from the defenders! (REVERSAL)'
-msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > The defenders have stolen banner control from the attackers! (REVERSAL)'
-msg_siege_war_banner_control_reversal_bonus: '. Cap-Point-Generation-Rate X %s.'
+msg_siege_war_banner_control_reversed_by_attacker: '&7%s üzerindeki kuşatma &8- &7Kuşatmacılar, savunuculardan bayrak kontrolünü çaldılar!'
+msg_siege_war_banner_control_reversed_by_defender: '&7%s üzerindeki kuşatma &8- &7Savunucular, kuşatmacılardan bayrak kontrolünü çaldılar!'
+msg_siege_war_banner_control_reversal_bonus: ' Katlanma Bonusu: %s%d'
 #Admin
-msg_swa_set_siege_balance_success: '&bSuccessfully set siege balance to %d for %s.'
+msg_swa_set_siege_balance_success: '&7Successfully set siege balance to %d for %s.'
 #Added in 0.13
-msg_siege_war_version: '&bThe current SiegeWar version is: %s.'
+msg_siege_war_version: '&7Kusatma Versiyon: %s.'
 #Added in 0.14
-msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain close to the siege-banner (%d blocks horizonally, %d blocks above, %d blocks below), not in the town, and not flying, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
-msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control session started. Remain close to the siege-banner (%d blocks horizonally, %d blocks above, %d blocks below), not below its altitude, not in the town, and not flying, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
-msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going into the town, or flying.'
-msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going below the altitude of the banner, going into the town, or flying.'
+msg_siege_war_banner_control_session_started: '&7Bayrak Kontrol aşaması başladı. Kuşatma bayrağına yakın kal(%d yatay, %d dikey) %s süresince. Eğer yeterli puan toplanırsa tarafınza puan aktarılacaktır. (bayrak kontrol alanınıza da girebilir).'
+msg_siege_war_banner_control_session_started_with_altitude: '&7Bayrak Kontrol aşaması başladı. Kuşatma bayrağına yakın kal(%d yatay, %d dikey, %d etrafı) %s süresince. Eğer yeterli puan toplanırsa tarafınza puan aktarılacaktır. (bayrak kontrol alanınıza da girebilir).'
+msg_siege_war_banner_control_session_failure: '&cBayrak kontrol aşaması iptal oldu! Buna sebep olabilecekler: ölmek, bayraktan uzağa gitmek, kasabaya girmek veya uçmak.'
+msg_siege_war_banner_control_session_failure_with_altitude: '&cBayrak kontrol aşaması iptal oldu! Buna sebep olabilecekler: ölmek, bayraktan uzağa gitmek, kasabaya girmek veya uçmak.'
 ##### Added in 0.15
 #Town Merging
-msg_err_cannot_merge_towns: '&cUnable to merge a town that is under siege!'
+msg_err_cannot_merge_towns: '&cKuşatma altında olan bir kasaba birleştirilemiyor!'
 #General
-siege.name: '%s vs %s'
-msg_err_action_disable: '&cYou don''t have enough permissions for that action.'
-msg_err_unknown_town: '&cUnknown Town'
-msg_err_unknown_nation: '&cUnknown Nation'
+siege.name: '&7%s &8x &7%s'
+msg_err_action_disable: '&cBu eylem için yeterli izin yok.'
+msg_err_unknown_town: '&cBilinmeyen'
+msg_err_unknown_nation: '&cBilinmeyen'
 #Siege Types
-siege_type_conquest: 'Conquest'
-siege_type_liberation: 'Liberation'
-siege_type_revolt: 'Revolt'
-siege_type_suppression: 'Suppression'
+siege_type_conquest: 'Fethet'
+siege_type_liberation: 'Kurtuluş'
+siege_type_revolt: 'İsyan'
+siege_type_suppression: 'Bastırma'
 #Dynmap
-dynmap_siege_title: 'Siege: %s vs %s'
-dynmap_siege_type: 'Type: %s'
-dynmap_siege_town: 'Town: %s'
-dynmap_siege_balance: 'Siege Balance: %d'
-dynmap_siege_war_chest: 'War Chest: %s'
-dynmap_siege_battle_points: 'Battle Points: %s / %s'
+dynmap_siege_title: 'Kuşatma: %s x %s'
+dynmap_siege_type: 'Tür: %s'
+dynmap_siege_town: 'Tasaba: %s'
+dynmap_siege_balance: 'Kuşatma Bakiyesi: %d'
+dynmap_siege_war_chest: 'Ganimet Sandığı: %s'
+dynmap_siege_battle_points: 'Puanlar: %s / %s'
 #HUD
-hud_siege_type: 'Type: '
-hud_battle_attacker_points: 'ATK BAT Points: '
-hud_battle_defender_points: 'DEF BAT Points: '
+hud_siege_type: 'Tür: '
+hud_battle_attacker_points: 'Kuşatmacıların Puanları: '
+hud_battle_defender_points: 'Savunucuların Puanları: '
 #Starting sieges
-msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruined town.'
-msg_err_cannot_start_siege_due_to_siege_immunity: '&cYou cannot start a siege now, because the nearby town has siege immunity.'
+msg_err_cannot_start_siege_at_ruined_town: '&cHarabe bir şehirde bir kuşatma başlatamazsınız.'
+msg_err_cannot_start_siege_due_to_siege_immunity: '&cŞimdi bir kuşatma başlatamazsınız, çünkü yakındaki kasabanın kuşatma bağışıklığı var.'
 msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cYou cannot start a revolt siege because the town is not in an occupied state.'
-msg_err_siege_war_cannot_attack_occupied_town_non_enemy_nation: '&cYou cannot attack an occupied town unless the occupier of that town is an enemy of your nation.'
-msg_conquest_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A CONQUEST SIEGE has begun!'
-msg_conquest_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A CONQUEST SIEGE has begun!'
-msg_liberation_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s at %s, in an attempt to remove the occupation. A LIBERATION SIEGE has begun!'
-msg_liberation_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s, in an attempt to remove the occupation. A LIBERATION SIEGE has begun!'
-msg_revolt_siege_started_neutral_town: '&bThe townspeople of %s have risen up against the occupying army of %s. A REVOLT SIEGE has begun!'
-msg_revolt_siege_started_nation_town: '&bThe townspeople of %s, whose home nation is %s, have risen up against the occupying army of %s. A REVOLT SIEGE has begun!'
-msg_suppression_siege_started_neutral_town: '&bThe nation of %s has moved to stamp out rebel activity at %s. A SUPPRESSION SIEGE has begun!'
-msg_suppression_siege_started_nation_town: '&bThe nation of %s has moved to stamp out rebel activity by %s at %s. A SUPPRESSION SIEGE has begun!'
+msg_err_siege_war_cannot_attack_occupied_town_non_enemy_nation: '&cO kasabanın işgalcisi milletinizin bir düşmanı olmadıkça işgal altındaki bir şehre saldıramazsınız.'
+msg_conquest_siege_started_neutral_town: '&7%s orudusu, %s adlı kasabaya saldırıldı. Fetih kuşatmaları başlatıldı!'
+msg_conquest_siege_started_nation_town: '&7%s ordusu şu ulusun kasabasına saldırdı: %s, %s. Fetih kuşatmaları başlatıldı!'
+msg_liberation_siege_started_neutral_town: '&7An army belonging to %s has attacked %s at %s, in an attempt to remove the occupation. A LIBERATION SIEGE has begun!'
+msg_liberation_siege_started_nation_town: '&7An army belonging to %s has attacked %s at %s, in an attempt to remove the occupation. A LIBERATION SIEGE has begun!'
+msg_revolt_siege_started_neutral_town: '&7The townspeople of %s have risen up against the occupying army of %s. A REVOLT SIEGE has begun!'
+msg_revolt_siege_started_nation_town: '&7The townspeople of %s, whose home nation is %s, have risen up against the occupying army of %s. A REVOLT SIEGE has begun!'
+msg_suppression_siege_started_neutral_town: '&7The nation of %s has moved to stamp out rebel activity at %s. A SUPPRESSION SIEGE has begun!'
+msg_suppression_siege_started_nation_town: '&7The nation of %s has moved to stamp out rebel activity by %s at %s. A SUPPRESSION SIEGE has begun!'
 #Banner Control
-msg_siege_war_defending_troops_at_siege_banner: '&bSiege on %s > Defenders are at the siege banner.'
+msg_siege_war_defending_troops_at_siege_banner: '&7%s üzerindeki kuşatma &8-&7 Savunucular, kuşatma bayrağındalar.'
 #Town screen
-status_town_occupying_nation: '&2Occupying Nation: &a%s'
-status_town_siege: '&2Siege:'
-status_town_siege_type: '&2 > Type: &a%s'
-status_town_siege_status: '&2 > Status: &a%s'
-status_town_siege_attacker: '&2 > Attacker: &a%s'
-status_town_siege_defender: '&2 > Defender: &a%s'
-status_town_siege_battle_points: '&2 > Points: &a%s &2/ &a%s'
-status_town_siege_status_attacker_win: 'Attacker Victory'
-status_town_siege_status_defender_win: 'Defender Victory'
-status_town_siege_status_attacker_abandon: 'Attacker Abandon'
-status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending, in %s'
-status_town_siege_status_defender_surrender: 'Defender Surrender'
-status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending, in %s'
-status_town_siege_status_plundered: '&2 > Town Plundered: %s'
-status_town_siege_status_invaded: '   &2Town Invaded: %s'
+status_town_occupying_nation: '&cİşgal Edilen Ulus: &a%s'
+status_town_siege: '&cKuşatma:'
+status_town_siege_type: '&7 > Tür: &a%s'
+status_town_siege_status: '&7 > Durum: &a%s'
+status_town_siege_attacker: '&7 > Kuşatmacı: &a%s'
+status_town_siege_defender: '&7 > Savunucu: &a%s'
+status_town_siege_battle_points: '&7 > Puan: &a%s &8/ &a%s'
+status_town_siege_status_attacker_win: 'KUŞATMACI ZAFERİ'
+status_town_siege_status_defender_win: 'SAVUNUCU ZAFERİ'
+status_town_siege_status_attacker_abandon: 'Kuşatmacı İptali'
+status_town_siege_status_pending_attacker_abandon: 'Kuşatmacı İptali Bekleniyor, %s içerisinde'
+status_town_siege_status_defender_surrender: 'Savunucu Teslimiyeti'
+status_town_siege_status_pending_defender_surrender: 'Savunucu Teslimiyeti Bekleniyor, %s içerisinde'
+status_town_siege_status_plundered: '&c > Yağmalandı: %s'
+status_town_siege_status_invaded: '&c > İstila Edildi: %s'
 #Siege statuses
-siege_status_attacker_abandon: 'Attacker Abandon'
-siege_status_defender_surrender: 'Defender Surrender'
-siege_status_pending_attacker_abandon: 'Pending Attacker Abandon'
-siege_status_pending_defender_surrender: 'Pending Defender Surrender'
+siege_status_attacker_abandon: 'Kuşatmacı Çekilmesi'
+siege_status_defender_surrender: 'Savunucu Teslimiyeti'
+siege_status_pending_attacker_abandon: 'Beklenen Kuşatmacı İptali'
+siege_status_pending_defender_surrender: 'Beklenen Savunucu Teslimiyeti'
 #Nation screen
-status_nation_occupied_home_towns: '&2Occupied Home Towns &a[%s]&2: &f'
-status_nation_occupied_foreign_towns: '&2Occupied Foreign Towns &a[%s]&2: &f'
-status_nation_offensive_sieges: '&2Offensive Sieges &a[%s]&2: &f'
-status_nation_defensive_sieges: '&2Defensive Sieges &a[%s]&2: &f'
+status_nation_occupied_home_towns: '&7İşgal Edilen Ana Kasabalar &a[%s]&7: &f'
+status_nation_occupied_foreign_towns: '&7İşgal Edilen Yabancı Kasabalar &a[%s]&7: &f'
+status_nation_offensive_sieges: '&7Saldırgan Kuşatmalar &a[%s]&7: &f'
+status_nation_defensive_sieges: '&7Savunulan Kuşatmalar &a[%s]&7: &f'
 #Surrendering defences
-msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has surrendered to the army of %s.'
-msg_liberation_siege_defender_surrender: '&bLIBERATION SIEGE at %s > The occupying army of %s has surrendered to the army of %s, and the occupation has been removed.'
-msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The occupying army of %s has surrendered to the rebels, and the occupation has been removed.'
-msg_suppression_siege_defender_surrender: '&bSUPPRESSION SIEGE at %s > The town has surrendered to the occupying army of %s. '
+msg_conquest_siege_defender_surrender: '&7%s FETHİ &8-&7 Savunucular, %s ordusuna teslim oldular.'
+msg_liberation_siege_defender_surrender: '&7LIBERATION SIEGE at %s > The occupying army of %s has surrendered to the army of %s, and the occupation has been removed.'
+msg_revolt_siege_defender_surrender: '&7REVOLT SIEGE at %s > The occupying army of %s has surrendered to the rebels, and the occupation has been removed.'
+msg_suppression_siege_defender_surrender: '&7SUPPRESSION SIEGE at %s > The town has surrendered to the occupying army of %s. '
 #Abandoning attacks
-msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > The army of %s has abandoned its attack.'
-msg_liberation_siege_attacker_abandon: '&bLIBERATION SIEGE at %s > The army of %s has abandoned its attempt to free the town from %s.'
-msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The rebel army has abandoned its revolt against %s.'
-msg_suppression_siege_attacker_abandon: '&bSUPPRESSION SIEGE at %s > The army of %s has abandoned its attack and released the town from occupation.'
-msg_err_town_cannot_end_siege_as_no_siege: '&cThe nearby town has no siege. Abandon/Surrender not possible.'
-msg_err_town_cannot_end_siege_as_finished: '&cThe siege is finished or scheduled to finish. Abandon/Surrender not possible.'
+msg_conquest_siege_attacker_abandon: '&7%s FETHİ &8-&7 %s ordusu, kuşatmaktan vazgeçtiler ve geri çekildiler.'
+msg_liberation_siege_attacker_abandon: '&7LIBERATION SIEGE at %s > The army of %s has abandoned its attempt to free the town from %s.'
+msg_revolt_siege_attacker_abandon: '&7REVOLT SIEGE at %s > The rebel army has abandoned its revolt against %s.'
+msg_suppression_siege_attacker_abandon: '&7SUPPRESSION SIEGE at %s > The army of %s has abandoned its attack and released the town from occupation.'
+msg_err_town_cannot_end_siege_as_no_siege: '&cYakındaki bir kasabada kuşatma olmadığı için teslim olmak veya geri çekilmek mümkün değil.'
+msg_err_town_cannot_end_siege_as_finished: '&cKuşatma bitti veya bitmiş olarak zamanlanmış. Teslim olmak veya geri çekilmek mümkün değil.'
 #Timed wins
-msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has defeated the defending army of %s. The town now stands open for invasion and/or plunder.'
-msg_liberation_siege_timed_attacker_win: '&bLIBERATION SIEGE at %s > The attacking army of %s has defeated the occupying army of %s, and liberated the townspeople from occupation.'
-msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking rebel army has driven out the occupying army of %s.'
-msg_suppression_siege_timed_attacker_win: '&bSUPPRESSION SIEGE at %s > The occupying army of %s has successfully suppressed all rebel activity. The town now stands open for invasion and/or plunder.'
-msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has defeated the army of %s, and driven the attackers off.'
-msg_liberation_siege_timed_defender_win: '&bLIBERATION SIEGE at %s > The occupying army of %s has defeated the army of %s, and successfully prevented the liberation of the town.'
-msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The occupying army of %s has successfully crushed the rebellion. The town now stands open for invasion and/or plunder.'
-msg_suppression_siege_timed_defender_win: '&bSUPPRESSION SIEGE at %s > The defending army of %s has defeated the attacking army of %s, preventing the attempted suppression, and freeing the town from occupation.'
+msg_conquest_siege_timed_attacker_win: '&7%s FETHİ &8-&7 %s ordusu, %s ordusunu mahvetti ve kasabanın sınırlarına ulaştılar.'
+msg_liberation_siege_timed_attacker_win: '&7LIBERATION SIEGE at %s > The attacking army of %s has defeated the occupying army of %s, and liberated the townspeople from occupation.'
+msg_revolt_siege_timed_attacker_win: '&7REVOLT SIEGE at %s > The attacking rebel army has driven out the occupying army of %s.'
+msg_suppression_siege_timed_attacker_win: '&7SUPPRESSION SIEGE at %s > The occupying army of %s has successfully suppressed rebel activity in the town.'
+msg_conquest_siege_timed_defender_win: '&7%s FETHİ &8-&7 %s ordusu, %s ordusunu mahvetti ve gelen orduyu uzaklara sürdüler.'
+msg_liberation_siege_timed_defender_win: '&7LIBERATION SIEGE at %s > The occupying army of %s has defeated the army of %s, and successfully prevented the liberation of the town.'
+msg_revolt_siege_timed_defender_win: '&7REVOLT SIEGE at %s > The occupying army of %s has defeated the attacking rebels, and crushed the rebellion.'
+msg_suppression_siege_timed_defender_win: '&7SUPPRESSION SIEGE at %s > The defending army of %s have defeated the army of %s, preventing the attempted suppression, and freeing themselves from occupation.'
 #Generic Victory messages
-msg_immediate_attacker_victory: " The attackers are victorious!"
-msg_pending_attacker_victory: " Attacker victory will be confirmed in %s."
-msg_immediate_defender_victory: " The defenders are victorious!"
-msg_pending_defender_victory: " Defender victory will be confirmed in %s."
+msg_immediate_attacker_victory: " Kuşatmacılar galip!"
+msg_pending_attacker_victory: " Kuşatmacılar galibiyetini %s içerisinde kesinleştirecek."
+msg_immediate_defender_victory: " Savunucular galip!"
+msg_pending_defender_victory: " Savunucular galibiyetini %s içerisinde kesinleştirecek."
 #Invasions
-msg_err_cannot_invade_own_town: '&cYou cannot invade your own town.'
-msg_err_cannot_invade_without_victory: "&cYou cannot invade the town unless your nation is victorious in the siege."
-msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot invade while the siege is still in progress.'
-msg_err_cannot_invade_town_already_occupied: '&cThere is no need to invade because your nation already occupies the town.'
-msg_err_cannot_invade_town_already_invaded: '&cYour nation has already invaded the town.'
-msg_neutral_town_invaded: '&b%s has been invaded by %s, and placed under occupation!'
-msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and placed under occupation!'
+msg_err_cannot_invade_own_town: '&cKendi kasabanı istila edemezsin.'
+msg_err_cannot_invade_without_victory: "&cMilletiniz kuşatma içinde muzaffer olmadıkça şehri istila edemezsiniz."
+msg_err_cannot_invade_siege_still_in_progress: '&cKuşatma hala devam ederken istila edemezsiniz.'
+msg_err_cannot_invade_town_already_occupied: '&cMilletin zaten şehri işgal edildiği için istila etmeye gerek yok.'
+msg_err_cannot_invade_town_already_invaded: '&cMilletin zaten şehri işgal etti.'
+msg_neutral_town_invaded: '&7%s adlı kasaba %s tarafından işgal edildi, kendi hükümleri altına aldılar!'
+msg_nation_town_invaded: '&7%s, %s; %s tarafından işgal edildi, kendi hükümler altına aldılar!'
 #Plunder
-msg_err_siege_war_plunder_not_possible_rebels_won: '&cPlunder not possible because the town rebels won the siege.'
+msg_err_siege_war_plunder_not_possible_rebels_won: '&cİsyancıların kuşatmayı kazandığı için yağma mümkün değil.'
 #Admin commands
 msg_err_swa_cannot_set_invade_due_to_siege_type: '&cYou cannot set the invaded flag for this type of siege.'
 msg_err_swa_cannot_change_occupier_due_to_active_siege: '&cYou cannot change the occupier if the town has an active siege.'
-msg_swa_set_invade_success: '&bSet invaded to %s for %s.'
-msg_swa_town_occupation_removal_success: '&bTown occupier removed for %s.'
-msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
+msg_swa_set_invade_success: '&7Set invaded to %s for %s.'
+msg_swa_town_occupation_removal_success: '&7Town occupier removed for %s.'
+msg_swa_town_occupation_change_success: '&7Town occupier changed to %s for %s.'
 #Added in 0.16
 #Nation war history
-status_nation_town_stats: '&2Town Invasion History - Foreign/Home: &a%d&2/&a%d'
-status_nation_plunder_stats: '&2Town Plunder History - Gains/Losses: &a%d&2/&a%d'
+status_nation_town_stats: '&cKasaba İşgal Geçmişi - Yabancı/Vatan: &a%d&c/&a%d'
+status_nation_plunder_stats: '&cYağma Geçnişi - Zafer/Mağlubiyet: &a%d&c/&a%d'
 #Siege effects
-msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone.'
+msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cSadece şehir sakinleri kuşatılmış bir kasabaya ya da kuşatma bölgesine yayılabilir.'
 #Nation Siege Immunity
-msg_err_siege_affected_home_nation_cannot_recruit: "&cThe nation cannot add new towns, because one of its home towns is under siege attack."
-msg_err_siege_affected_home_nation_town_cannot_recruit: "&cThe town cannot add new residents, because one of its nation's home towns is under siege attack."
-msg_err_siege_affected_home_nation_town_cannot_claim: "&cCannot claim land, because one of your nation's home towns is under siege attack."
-msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cCannot unclaim land, because one of your nation's home towns is under siege attack."
+msg_err_siege_affected_home_nation_cannot_recruit: "&cMillet, yeni şehirler ekleyemiyor, çünkü ana kasabalarından biri kuşatma saldırısı altında."
+msg_err_siege_affected_home_nation_town_cannot_recruit: "&cKasaba yeni sakinleri ekleyemiyor, çünkü ulusunun ana kasabalarından biri kuşatma saldırısı altında."
+msg_err_siege_affected_home_nation_town_cannot_claim: "&cToprak iddia edemez, çünkü ulusunuzun ana kasabalarından biri kuşatma saldırısı altında."
+msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cToprak kabul edemez, çünkü ulusunuzun ana kasabalarından biri kuşatma saldırısı altındadır."
 #Added in 0.17
 #Peaceful towns homeblock move restrictions
-msg_err_peaceful_town_cannot_move_homeblock: "&cNeutral towns cannot move their homeblocks. If you wish to move your homeblock, first toggle neutrality off."
+msg_err_peaceful_town_cannot_move_homeblock: "&cBarışçıl kasabalar ana bloklarını hareket ettiremezler. Ana chunk'ını taşımak istiyorsan, ilk önce barış ayarını kapatın."
 #Added in 0.18
 #Homeblock move restrictions
-msg_err_besieged_town_cannot_move_homeblock: "&cBesieged towns cannot move their homeblocks."
-msg_err_occupied_town_cannot_move_homeblock: "&cOccupied towns cannot move their homeblocks."
+msg_err_besieged_town_cannot_move_homeblock: "&cKuşatılmış kasabalar ana bloklarını hareket ettiremezler."
+msg_err_occupied_town_cannot_move_homeblock: "&cİşgal edilen şehirler ana bloklarını hareket ettiremezler."
 #Added in 0.20
 #Town status screen's pending balance adjustment
-status_town_siege_pending_balance_adjustment: '&2 | Pending: &a%s'
+status_town_siege_pending_balance_adjustment: '&7 | Askıda Olan: &a%s'
 #Added in 0.21
 #General occupation commands error messages
-msg_err_cannot_change_occupation_town_not_occupied: '&cYou cannot change the occupation status because the town is not occupied.'
-msg_err_cannot_change_occupation_by_foreign_nation: '&cYou cannot change the occupation status because your nation is not the occupier.'
-msg_err_cannot_change_occupation_of_besieged_town: '&cYou cannot change the occupation status of a besieged town.'
-msg_err_town_and_capital_too_far_apart: "&cThe homeblock of %s is too far away from the homeblock of %s's capital."
+msg_err_cannot_change_occupation_town_not_occupied: '&cŞehir işgal edilmediğinden tutumunuzu değiştiremezsiniz.'
+msg_err_cannot_change_occupation_by_foreign_nation: '&cTutumunuzu değiştiremezsiniz, çünkü milletiniz işgalci değil.'
+msg_err_cannot_change_occupation_of_besieged_town: '&cKuşatılmış bir kasabanın tutumunu değiştiremezsiniz.'
+msg_err_town_and_capital_too_far_apart: "&c%s adlı kasabanın ana bloğu, başkenti olan %s kasabasının ana bloğundan çok uzak.."
 #Remove occupation command
-nation_help_14: "Remove your nation's occupation of a town."
-msg_remove_occupation_success: '&bThe nation %s has removed its occupation of %s.'
+nation_help_14: "Ulusunuzun bir kasabanın işgalini kaldırın."
+msg_remove_occupation_success: '&7Ulus %s, %s işgalini iptal etti veya kaldırdı.'
 #Transfer occupation command
-nation_help_15: "Transfer your nation's occupation of a town to another nation"
-msg_err_cannot_transfer_occupation_king_not_online: "&cThe occupation-transfer failed because the king of %s (%s) is not online."
-msg_would_you_accept_transfer_of_occupied_town: '&6Would you agree to transfer the occupation of %s, from %s to your nation?. This will cause the town to become occupied by your nation.'
-msg_transfer_occupation_success: '&bThe nation %s has transferred its occupation of %s. The town is now under the occupation of %s.'
+nation_help_15: "Ulusunuzun bir kasabanın işgalini başka bir ülkeye aktarın"
+msg_err_cannot_transfer_occupation_king_not_online: "&cİşgal transferi başarısız oldu çünkü %s kralı (%s) çevrimiçi değil."
+msg_would_you_accept_transfer_of_occupied_town: '&6%s işgalini aktarmayı kabul eder misiniz? %s tarafından size geçecek. Bu, şehrin milletiniz tarafından işgal edilmesine neden olabilir.'
+msg_transfer_occupation_success: '&7Ulus %s, %s işgalini tranfer etti. Kasaba şimdi işgali altında: %s.'
 #Invite occupation command
-nation_help_16: "Invite a nation to occupy your town"
-msg_err_cannot_invite_occupation_town_already_occupied: '&cYou cannot invite occupation because your town is already occupied.'
-msg_err_cannot_invite_occupation_king_not_online: "&cThe occupation-invitation failed because the king of %s (%s) is not online."
-msg_would_you_accept_town_request_for_occupation: '&6Would you agree to occupy %s?. This will cause the town to become occupied by your nation.'
-msg_invite_occupation_success: '&bThe town %s has come under the occupation of %s, by its own request.'
+nation_help_16: "Kasaba işgalini devam ettirmek için bir millet davet et"
+msg_err_cannot_invite_occupation_town_already_occupied: '&cİşgal davetini kabul edemezsin çünkü kasaban zaten işgal edildi.'
+msg_err_cannot_invite_occupation_king_not_online: "&cİşgal daveti başarısız oldu çünkü %s kralı (%s) çevrimiçi değil."
+msg_would_you_accept_town_request_for_occupation: '&6%s işgalini kabul ediyor musunuz? Bu kasabanın ana bloklarının, sizin ulusunuz tarafından işgal edilmesine sebep olabilir.'
+msg_invite_occupation_success: '&7%s adlı kasaba, %s işgalcileri kontrolü altına girdi, kendi rızalarıyla.'
 #Added in 0.22
 #Revolt immunities
 msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s hours.'
 msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s hours.'
 msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s hours.'
 #Added in 0.23
-msg_siege_war_banner_control_remaining_session_time: 'Banner Cap Timer: %s'
+msg_siege_war_banner_control_remaining_session_time: 'Bayrak Kontrolcüsü: %s'
 #Added in 0.25
-msg_err_siege_war_too_many_adjacent_towns: '&cYou cannot perform this action because the target chunk faces too many townblocks. Try placing the item in a different area.'
+msg_err_siege_war_too_many_adjacent_towns: '&cBu işlemi gerçekleştiremezsiniz, çünkü hedef chunk çok fazla kasaba yakın. Öğeyi farklı bir alana yerleştirmeyi deneyin.'
 #Added in 0.26
-msg_siege_war_attacker_death: '&bSiege of %s > Attacker %s died > Battle Points -%d'
-msg_siege_war_defender_death: '&bSiege of %s > Defender %s died > Battle Points +%d'
-msg_siege_war_attacker_killed_by_player: '&bSiege of %s > Attacker %s was killed by %s > Battle Points -%d'
-msg_siege_war_defender_killed_by_player: '&bSiege of %s > Defender %s was killed by %s > Battle Points +%d'
-msg_you_cannot_carry_items_in_siegezones: '&cYou cannot carry any items in siege-zones, except picks, axes, shovels, and shears. All other items were automatically dropped.'
-status_town_days_to_peacefulness_status_change: 'Days To Neutrality Status Change'
+msg_siege_war_attacker_death: '&7%s üzerindek kuşatma &8-&7 Kuşatmacı %s öldü &8- &7Puan -%d'
+msg_siege_war_defender_death: '&7%s üzerindek kuşatma &8-&7 Savunucu %s öldü &8- &7Puan +%d'
+msg_siege_war_attacker_killed_by_player: '&7%s üzerindeki kuşatma &8-&7 Kuşatmacı %s, %s tarafından öldürüldü &8-&7 Puan -%d'
+msg_siege_war_defender_killed_by_player: '&7%s üzerindeki kuşatma &8-&7 Savunucu %s, %s tarafından öldürüldü &8-&7 Puan +%d'
+msg_you_cannot_carry_items_in_siegezones: '&cKuşatma alanlarına herhangi bir eşya taşıyamazsın ama kazma, balta, kürek gibi araçlar hariç. Tüm diğer öğeler otomatik olarak düştü.'
+status_town_days_to_peacefulness_status_change: 'Barışçıl Durumu Değiştirmeye Kalan Günler'
 #Added in 0.27
-msg_next_siege_session_in_minutes: 'The next Battle Session is in %s.'
-msg_session_is_active_now: 'A Battle Session is active now!'
-msg_err_battle_session_active: "&cA Battle session has already started."
-msg_err_battle_session_inactive: "&cThe Battle session has already ended."
-msg_battle_session_force_start: "&bA Battle session has been force started."
-msg_battle_session_force_end: "&bThe Battle session has been force ended."
+msg_next_siege_session_in_minutes: 'Bir diğer kuşatma aşaması için: %s.'
+msg_session_is_active_now: 'Kuşatma aşaması şimdi aktif!'
+msg_err_battle_session_active: "&cSavaş aşaması çoktan başladı."
+msg_err_battle_session_inactive: "&cSavaş aşaması çoktan sona erdi."
+msg_battle_session_force_start: "&7Savaş aşaması zorla açıldı."
+msg_battle_session_force_end: "&7Savaş aşaması zorla kapatıldı."
 #Added in 0.28
-msg_town_immunity_expired: 'Your town''s Siege Immunity has expired.'
+msg_town_immunity_expired: 'Kasabanızın kuşatma bağışıklığının süresi doldu.'
 #Unsiegeable towns strings
 msg_permanent: "permanent"
-msg_error_must_be_num_or_permanent: '&cAmount must be a number or ''permanent''.'
-msg_surrender_action_cancelled: 'Siege surrender cancelled.'
-msg_abandon_action_cancelled: 'Siege abandon cancelled.'
+msg_error_must_be_num_or_permanent: '&cMiktar bir sayı olmalıdır veya permanent olabilir.'
+msg_surrender_action_cancelled: 'Kuşatma teslimiyeti iptal oldu.'
+msg_abandon_action_cancelled: 'Kuşatma kaldırılması iptal oldu.'
 #Added in 0.29
-msg_err_siegecamp_too_close_to_another_siegecamp: 'Siege-Assembly too close to another Siege-Assembly!'
-msg_err_too_soon_since_your_last_siegecamp: 'It has been too soon since you last tried to attack this town!'
-msg_err_your_siegecamp_failed_you_must_wait_x: 'Your Siege-Assembly failed to score enough points, you cannot attempt to attack the town again for %s.'
-attackers_scored_points_towards_siege_camp_x_of_x: '%s has scored points towards their Siege-Assembly: %s/%s.'
-attacker_has_begun_a_siegecamp_session: '%s has begun a Siege-Assembly against %s. If successful a Siege will begin! The attackers must score %s points within %s minutes.'
+msg_err_siegecamp_too_close_to_another_siegecamp: 'Kuşatma kampınız, bir diğer kuşatma kampına çok yakın!'
+msg_err_too_soon_since_your_last_siegecamp: 'En son bu şehirde bir kuşatma kampı yapmaya çalıştığınızdan beri çok geçti!'
+msg_err_your_siegecamp_failed_you_must_wait_x: '&c%s boyunca bu kasabayı tekrar kuşatamazsınız. Kuşatma kampınız başarısız oldu ve yeterli puan toplayamadı.'
+attackers_scored_points_towards_siege_camp_x_of_x: '%s kuşatmacıları, kuşatma kampında puan elde etti: %s/%s.'
+attacker_has_begun_a_siegecamp_session: '%s, bir kuşatma kampı oluşturdu; şuna karşı: %s. Eğer yeterli puan toplanırsa kuşatma başlar! Kuşatmacılar, %s puanı %s süresince kazanmalılar.'
 #Added in 0.30
-msg_bossbar_preference_set: "&bBossBar preference set to %s."
-bossbar_msg_battle_time_remaining: '&2Battle Session Time Remaining: &a%s'
-msg_err_siege_war_revolt_immunity_permanent: "&cYour town has permanent revolt immunity. It cannot revolt."
-status_sieged: "%s[%sSieged%s]"
-status_military_salary: "Military Salary: "
-hover_message_click_to_claim: "Click to claim money owed to you."
+msg_bossbar_preference_set: "&7Üst yazılar belirlendi: %s."
+bossbar_msg_battle_time_remaining: '&cSavaş Aşamasının Sona Ermesine: &7%s'
+msg_err_siege_war_revolt_immunity_permanent: "&cŞehrinizin kalıcı isyan bağışıklığı var.İsyan edemez."
+status_sieged: "%s[%sKuşatıldı%s]"
+status_military_salary: "Askeri Maaş: "
+hover_message_click_to_claim: "Hakkın olan ödemeleri toplamak için tıkla."
 #Added in 0.31
 msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
 #Added in 0.32
 msg_peaceful_town_subverted: "&b%s has been peacefully subverted and occupied by %s."
 msg_peaceful_town_revolted: "&b%s has peacefully revolted against %s, and freed itself from occupation."
-msg_town_became_peaceful: '&b%s has been confirmed as Neutral. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot enter siege-zones or gain nation-military ranks.'
-msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Neutral. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can enter siege-zones and gain nation-military ranks.'
-msg_town_returned_to_pre_peaceful_occupier: " The town has been returned to the occupier it had before it turned neutral - %s."
+msg_town_became_peaceful: '&7%s adlı kasaba Barışçıl olduğunu duyurdu. Kasaba şimdi kuşatma saldırılarına karşı bağışıklık kazanıyor. Kasaba, yerel bölgede güçlü bir varlığa sahip bir millet tarafından otomatik olarak işgal edilebilir. Sakinleri kuşatma bölgelerine giremezler veya ulus-askeri safları kazanamazlar.'
+msg_town_became_non_peaceful: '&7%s adlı kasaba Barışçıl olmadığını duyurdu. Kasaba artık kuşatma saldırılarına karşı bağışık değil. Kasaba artık otomatik olarak işgal edilemez. Sakinleri kuşatma bölgelerine girebilir ve ulus-askeri safları kazanabilirler.'
+msg_town_returned_to_pre_peaceful_occupier: " Kasaba barışçıla dönmeden önce olduğu işgalciye iade edildi - %s."
 msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already occupies it."
 msg_err_cannot_subvert_towns_in_own_nation: "&cYou cannot subvert towns which are in your own nation."
 msg_err_cannot_subvert_town_zero_influence: "&cYou cannot subvert this town, because your nation has no Towny-Influence in the local area."
@@ -380,8 +380,8 @@ msg_err_cannot_invite_peaceful_town_occupation: "&cYou cannot invite occupation 
 msg_err_cannot_peacefully_revolt_because_unoccupied: "&cThere is no need to peacefully revolt, because your town is not occupied."
 msg_err_cannot_peacefully_revolt_because_occupier_has_influence: "&cYour town cannot peacefully revolt, because its occupier, %s, still has some Towny-Influence in the local area (%d)."
 #Added in 0.33
-nation_help_11: 'Collect any income due to you from military salary.'
-msg_err_siege_war_collect_unavailable: "There is nothing for you to collect."
+nation_help_11: 'Herhangi bir gelir toplayın: yağma, askeri maaş veya ulusal borç iadesi.'
+msg_err_siege_war_collect_unavailable: "Yağmalar, askeri maaş veya ulusal borç iadesinden sizin için gelir yoktur."
 msg.battle.session.cleanup.starting: "The previous Battle Session did not complete. Initiating Battle Session Cleanup. Each battle will be resolved as a draw, with both attacker and defender battle points being applied to the siege balance."
 msg.battle.session.cleanup.complete: "Battle Session Cleanup complete. %d battles were resolved."
 msg_err_cannot_start_sieges_today: "&cYour server has limited the days-of-the-week when sieges can be started. Sieges cannot be started today."
@@ -422,5 +422,5 @@ msg_player_killed_from_logging_out_in_besieged_town: "%s was killed because they
 #Added in 0.41
 msg_capping_limiter_limit_exceeded_warning: "&cYou have exceeded your daily Capping Limit of %d Battle Sessions. You can cap again in %s."
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To avoid War Sickness, leave the Siege-Zone immediately.'
-msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To remove the War Sickness, leave the Siege-Zone immediately.'
+msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cSavaş alerjisi aktif. Bu etkiyi kaldırmak için, derhal kuşatma bölgesini bırakın.'
 msg_err_cannot_alter_blocks_below_banner_in_siege_zone: 'You cannot place/destroy blocks below banner altitude in the Siege-Zone.'
