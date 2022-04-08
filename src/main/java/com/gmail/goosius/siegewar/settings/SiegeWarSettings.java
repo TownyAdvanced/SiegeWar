@@ -476,8 +476,8 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_SIEGE_BALANCE_CAP_VALUE);
 	}
 
-	public static boolean getKillHostilePlayersWhoLogoutInBesiegedTown() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_KILL_HOSTILE_PLAYERS_WHO_LOG_OUT_IN_BESIEGED_TOWNS);
+	public static boolean getKillPlayersWhoLogoutInSiegeZones() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_KILL_PLAYERS_WHO_LOG_OUT_IN_SIEGE_ZONES);
 	}
 
 	public static boolean isStopTownyPlotPvpProtection() {

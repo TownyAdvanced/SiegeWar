@@ -95,22 +95,12 @@ public class SiegeWarNotificationUtil {
 	 */
 	public static void warnPlayerOfActiveSiegeDanger(Player player, Siege siege) {
 		if(!siege.getPlayersWhoWereInTheSiegeZone().contains(player)) {
-			Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning_text"));
-			siege.addPlayerWhoWasInTheSiegeZone(player);
-		}
-		//Send warning if player is in besieged town (& didn't already get the warning)
-		//Note: Being in the SiegeZone doesn't necessarily mean being in a besieged town
-		if(SiegeWarSettings.getKillHostilePlayersWhoLogoutInBesiegedTown()) {
-			Town town = TownyAPI.getInstance().getTown(player.getLocation());
-			if(town == null)
-				return;
-			siege = SiegeController.getSiege(town);
-			if(siege != null
-				&& siege.getStatus().isActive()
-				&& !siege.getPlayersWhoWereInTheBesiegedTown().contains(player)) {
-					Messaging.sendErrorMsg(player, Translatable.of("msg_besieged_town_proximity_warning_text"));
-					siege.addPlayersWhoWereInTheBesiegedTown(player);
+			if(SiegeWarSettings.getKillPlayersWhoLogoutInSiegeZones()) {
+				Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning_with_logout_risk"));
+			} else {
+				Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning"));
 			}
+			siege.addPlayerWhoWasInTheSiegeZone(player);
 		}
 	}
 
