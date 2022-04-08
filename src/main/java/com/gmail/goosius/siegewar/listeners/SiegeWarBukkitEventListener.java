@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 
-import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Bukkit;
@@ -228,21 +227,12 @@ public class SiegeWarBukkitEventListener implements Listener {
 			});
 		}
 
-		//Kill players in besieged towns
-		if(SiegeWarSettings.getKillHostilePlayersWhoLogoutInBesiegedTown()
-				&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()) {
-			Town town = TownyAPI.getInstance().getTown(event.getPlayer().getLocation());
-			if(town == null)
-				return;
-			Siege siege = SiegeController.getSiege(town);
-			if(siege == null || !siege.getStatus().isActive())
-				return;
-			Resident resident = TownyAPI.getInstance().getResident(event.getPlayer());
-			if(SiegeWarAllegianceUtil.isPlayerOnTownFriendlySide(event.getPlayer(), resident, siege))
-				return;
+		//Kill players in Siege-Zones
+		if(SiegeWarSettings.getKillPlayersWhoLogoutInSiegeZones()
+				&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()
+				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getPlayer().getLocation())) {
+			event.setQuitMessage(Translation.of("msg_player_killed_for_logging_out_in_siege_zone", event.getPlayer().getName()));
 			event.getPlayer().setHealth(0);
-			//event.
-			event.setQuitMessage(Translation.of("msg_player_killed_from_logging_out_in_besieged_town", event.getPlayer().getName()));
 		}
 	}
 
