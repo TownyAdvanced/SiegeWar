@@ -1,6 +1,6 @@
 ---
 name: SiegeWar
-version: 0.41
+version: 0.42
 language: french
 author: PainOchoco
 website: 'http://townyadvanced.github.io/'
@@ -414,13 +414,13 @@ msg.townyperms.installation.complete: "Towny perms file adjusted for recommended
 msg.townyconfig.installation.complete: "Towny config file adjusted for recommended SW setup."
 msg.installation.complete: "Installation Complete."
 #Added in 0.37
-msg_siege_zone_proximity_warning_text: "&cWARNING: You are in a SiegeZone!. PVP protections are disabled here."
 msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cWithin SiegeZones, cannons can only be fired if they are in the wilderness or the besieged town."
-#Added in 0.40
-msg_besieged_town_proximity_warning_text: "&cWARNING: You are in a besieged town!. If you log out here while not a military-ranked member of the town-friendly side, you will be killed."
-msg_player_killed_from_logging_out_in_besieged_town: "%s was killed because they logged out while in a besieged town."
 #Added in 0.41
 msg_capping_limiter_limit_exceeded_warning: "&cYou have exceeded your daily Capping Limit of %d Battle Sessions. You can cap again in %s."
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To avoid War Sickness, leave the Siege-Zone immediately.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To remove the War Sickness, leave the Siege-Zone immediately.'
 msg_err_cannot_alter_blocks_below_banner_in_siege_zone: 'You cannot place/destroy blocks below banner altitude in the Siege-Zone.'
+#Added on 0.42
+msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!. PVP protections are disabled here."
+msg_siege_zone_proximity_warning_with_logout_risk: "&cWARNING: You are in a Siege-Zone!. PVP protections are disabled here. You will be killed if you logout while in the Siege-Zone."
+msg_player_killed_for_logging_out_in_siege_zone: "%s was killed because they logged out while in a Siege-Zone."
