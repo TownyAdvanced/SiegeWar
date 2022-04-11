@@ -14,8 +14,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSicknessUtil;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarBattlefieldObserverUtil;
-
 
 /**
  * This class intercepts siege related instructions coming from timer tasks.
@@ -99,9 +97,5 @@ public class SiegeWarTimerTaskController {
 	public static void evaluateBeacons() {
 		if (SiegeWarSettings.getBeaconsEnabled())
 			CosmeticUtil.evaluateBeacons();
-	}
-	
-	public static void evaluateBattlefieldReporters() {
-		SiegeWarBattlefieldObserverUtil.evaluateBattlefieldObserversInSiegezones();
 	}
 }
