@@ -212,8 +212,8 @@ public class SiegeWarDistanceUtil {
 		if(siege == null)
 			return false;
 
-		//false if above siege banner altitude
-		if(location.getY() > siege.getFlagLocation().getY())
+		//false if at or above siege banner altitude
+		if(location.getY() >= siege.getFlagLocation().getY())
 			return false;
 
 		if(verifyCapZone) {
