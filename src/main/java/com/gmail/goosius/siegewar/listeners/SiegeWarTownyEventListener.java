@@ -125,7 +125,7 @@ public class SiegeWarTownyEventListener implements Listener {
      * @throws TownyException if something is misconfigured
      */
     @EventHandler(priority = EventPriority.HIGH)
-    public void onBlockExploding(TownyExplodingBlocksEvent event) throws TownyException {       
+    public void onBlockExploding(TownyExplodingBlocksEvent event) throws TownyException {
         if(!SiegeWarSettings.getWarSiegeEnabled())
             return;
         if (event.getEntity() != null && !TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld()).isWarAllowed())
