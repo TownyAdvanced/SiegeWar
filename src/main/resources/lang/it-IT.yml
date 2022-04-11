@@ -335,7 +335,6 @@ msg_siege_war_attacker_death: '&bAssedio di %s > Attaccante %s morto > Punti Bat
 msg_siege_war_defender_death: '&bAssedio di %s > Difensore %s morto > Punti Battaglia +%d'
 msg_siege_war_attacker_killed_by_player: '&bAssedio di %s > Attaccante %s è stato ucciso da %s > Punti Battaglia -%d'
 msg_siege_war_defender_killed_by_player: '&bAssedio di %s > Defender %s è stato ucciso da %s > Punti Battaglia +%d'
-msg_you_cannot_carry_items_in_siegezones: '&cNon puoi portare qualsiasi oggetto nelle zone-assedio, eccetto per picconi, asce, pale, e cesoie. Tutti gli altri oggetti sono stati automaticamente lasciati.'
 status_town_days_to_peacefulness_status_change: 'Giorni Mancanti Al Cambiamento Dello Stato di Neutralità'
 #Added in 0.27
 msg_next_siege_session_in_minutes: 'La prossima Sessione di Battaglia inizierà in %s.'
@@ -419,8 +418,9 @@ msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cAll'interno delle Zone
 msg_capping_limiter_limit_exceeded_warning: "&cHai superato il limite giornaliero di capping di %d Sessioni di Battaglia. Potrai usare il cap in %s."
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cCome cittadino pacifico, non puoi passare facilmente attraverso le Zone-Assedio. Per evitare la Nausea da Guerra, abbandonare la Zona-Assedio immediatamente.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cCome cittadino pacifico, non puoi passare facilmente attraverse le Zone-Assedio. Per rimuovere la Nausea da Guerra, abbandonare la Zona-Assedio immediatamente.'
-msg_err_cannot_alter_blocks_below_banner_in_siege_zone: 'Non puoi piazzare/distruggere blocchi sotto l''altitudine della bandierea nella Zona-Assedio.'
 #Added on 0.42
 msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!. PVP protections are disabled here."
 msg_siege_zone_proximity_warning_with_logout_risk: "&cWARNING: You are in a Siege-Zone!. PVP protections are disabled here. You will be killed if you logout while in the Siege-Zone."
 msg_player_killed_for_logging_out_in_siege_zone: "%s was killed because they logged out while in a Siege-Zone."
+msg_err_cannot_alter_blocks_below_banner_in_siege_zone: 'You cannot place/destroy blocks below banner altitude in this area.'
+
