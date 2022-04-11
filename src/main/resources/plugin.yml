@@ -116,27 +116,3 @@ permissions:
     siegewar.immune.to.war.nausea:
         description: User is immune to war nausea.
         default: false
-        
-    siegewar.battlefield.observer:
-        description: User holds all the nodes needed for non-interfering battlefield observing.
-        default: false
-        children:
-            siegewar.notifications.all: true
-            siegewar.immune.to.war.nausea: true
-            siegewar.siegezone.damage.immunity: true
-            siegewar.siegezone.cannot.hit.players: true
-            siegewar.siegezone.cannot.throw.potions: true
-            siegewar.siegezone.cannot.get.banner.control: true
-            siegewar.siegezone.cannot.carry.items: true
-
-    siegewar.battlefield.reporter:
-        description: Legacy perm, to ease the transition to the renamed battlefield observer perm above.
-        default: false
-        children:
-            siegewar.notifications.all: true
-            siegewar.immune.to.war.nausea: true
-            siegewar.siegezone.damage.immunity: true
-            siegewar.siegezone.cannot.hit.players: true
-            siegewar.siegezone.cannot.throw.potions: true
-            siegewar.siegezone.cannot.get.banner.control: true
-            siegewar.siegezone.cannot.carry.items: true

@@ -276,20 +276,8 @@ public class SiegeWarBukkitEventListener implements Listener {
 			event.setCancelled(false);
 		}
 
-		//PVP or EVP event ?:
-		if(event.getDamager() instanceof Player) {
-
-			//If the damager is op, return
-			if(event.getDamager().isOp())
-				return;
-
-			//If the damager is a battlefield observer, cancel the hit and return
-			if(event.getDamager().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_HIT_PLAYERS.getNode())) {
-				event.setCancelled(true);
-				return;
-			}
-		} else {
-
+		//EVP event ?:
+		if(!(event.getDamager() instanceof Player)) {
 			//Stop TNT/Minecarts from damaging players in SiegeZone wilderness
 			if (SiegeWarSettings.getSiegeZoneWildernessForbiddenExplodeEntityTypes().contains(event.getDamager().getType())
 					&& TownyAPI.getInstance().isWilderness(event.getEntity().getLocation())) {
@@ -298,42 +286,4 @@ public class SiegeWarBukkitEventListener implements Listener {
 			}
 		}
 	}
-
-	//Stops battlefield observers from taking damage in siegezones
-	@EventHandler
-	public void on(EntityDamageEvent event) {	
-		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& !event.isCancelled()
-				&& event.getEntity() instanceof Player
-				&& event.getEntity().hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_DAMAGE_IMMUNITY.getNode())
-				&& SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity())) {
-			event.setCancelled(true);
-		}
-	}			
-
-	//Stops battlefield observers from throwing potions in siegezones
-	@EventHandler
-	public void on(PotionSplashEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& !event.isCancelled()
-				&& event.getEntity().getShooter() instanceof Player
-				&& !((Player)event.getEntity().getShooter()).isOp()
-				&& ((Player)event.getEntity().getShooter()).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS.getNode())
-				&& SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity().getShooter())) {
-			event.setCancelled(true);
-		}
-	}			
-
-	//Stops battlefield observers from throwing lingering potions in siegezones
-	@EventHandler
-	public void on(LingeringPotionSplashEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& !event.isCancelled()
-				&& event.getEntity().getShooter() instanceof Player
-				&& !((Player)event.getEntity().getShooter()).isOp()
-				&& ((Player)event.getEntity().getShooter()).hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_THROW_POTIONS.getNode())
-				&& SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone((Player)event.getEntity().getShooter())) {
-			event.setCancelled(true);
-		}
-	}	
 }
