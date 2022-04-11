@@ -335,7 +335,6 @@ msg_siege_war_attacker_death: '&7%s üzerindek kuşatma &8-&7 Kuşatmacı %s öl
 msg_siege_war_defender_death: '&7%s üzerindek kuşatma &8-&7 Savunucu %s öldü &8- &7Puan +%d'
 msg_siege_war_attacker_killed_by_player: '&7%s üzerindeki kuşatma &8-&7 Kuşatmacı %s, %s tarafından öldürüldü &8-&7 Puan -%d'
 msg_siege_war_defender_killed_by_player: '&7%s üzerindeki kuşatma &8-&7 Savunucu %s, %s tarafından öldürüldü &8-&7 Puan +%d'
-msg_you_cannot_carry_items_in_siegezones: '&cKuşatma alanlarına herhangi bir eşya taşıyamazsın ama kazma, balta, kürek gibi araçlar hariç. Tüm diğer öğeler otomatik olarak düştü.'
 status_town_days_to_peacefulness_status_change: 'Barışçıl Durumu Değiştirmeye Kalan Günler'
 #Added in 0.27
 msg_next_siege_session_in_minutes: 'Bir diğer kuşatma aşaması için: %s.'
@@ -419,8 +418,9 @@ msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cWithin SiegeZones, can
 msg_capping_limiter_limit_exceeded_warning: "&cYou have exceeded your daily Capping Limit of %d Battle Sessions. You can cap again in %s."
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To avoid War Sickness, leave the Siege-Zone immediately.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cSavaş alerjisi aktif. Bu etkiyi kaldırmak için, derhal kuşatma bölgesini bırakın.'
-msg_err_cannot_alter_blocks_below_banner_in_siege_zone: 'You cannot place/destroy blocks below banner altitude in the Siege-Zone.'
 #Added on 0.42
 msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!. PVP protections are disabled here."
 msg_siege_zone_proximity_warning_with_logout_risk: "&cWARNING: You are in a Siege-Zone!. PVP protections are disabled here. You will be killed if you logout while in the Siege-Zone."
 msg_player_killed_for_logging_out_in_siege_zone: "%s was killed because they logged out while in a Siege-Zone."
+msg_err_cannot_alter_blocks_below_banner_in_siege_zone: 'You cannot place/destroy blocks below banner altitude in this area.'
+
