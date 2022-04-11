@@ -160,13 +160,13 @@ public class SiegeWarTownyEventListener implements Listener {
      *
      * @return filtered list
      */
-    private static List<Block> filterExplodeListByTrapWarfareMitigation(List<Block> givenExplodeList) {       
+    private static List<Block> filterExplodeListByTrapWarfareMitigation(List<Block> givenExplodeList) {
         if(!SiegeWarSettings.isTrapWarfareMitigationEnabled())
             return givenExplodeList;
-
+        boolean capZoneMitigationOnly = SiegeWarSettings.isTrapWarfareMitigationCapZoneOnly();
         List<Block> filteredList = new ArrayList<>(givenExplodeList);
         for(Block block: givenExplodeList) {
-            if (SiegeWarDistanceUtil.isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(block.getLocation())) {
+            if(SiegeWarDistanceUtil.isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(block.getLocation(), capZoneMitigationOnly)) {
                 //Remove block from final explode list
                 filteredList.remove(block);
             } 

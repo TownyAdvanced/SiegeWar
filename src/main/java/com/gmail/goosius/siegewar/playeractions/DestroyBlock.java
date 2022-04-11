@@ -45,21 +45,21 @@ public class DestroyBlock {
 
 		final Translator translator = Translator.locale(Translation.getLocale(event.getPlayer()));
 
-        //Trap warfare block protection
-        if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
-                && SiegeWarDistanceUtil.isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(event.getBlock().getLocation())) {
-            event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_below_banner_in_siege_zone")));
-            event.setCancelled(true);
-            return;
-        }
+		//Trap warfare block protection
+		if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
+				&& SiegeWarDistanceUtil.isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(event.getBlock().getLocation(), SiegeWarSettings.isTrapWarfareMitigationCapZoneOnly())) {
+			event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_below_banner_in_siege_zone")));
+			event.setCancelled(true);
+			return;
+		}
 
-        //Prevent destruction of siege-banner or support block
-        if (SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(event.getBlock())
-        || SiegeWarBlockUtil.isBlockNearAnActiveSiegeCampBanner(event.getBlock())) {
-            event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_banner"));
-            event.setCancelled(true);
-            return;
-        }
+		//Prevent destruction of siege-banner or support block
+		if (SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(event.getBlock())
+				|| SiegeWarBlockUtil.isBlockNearAnActiveSiegeCampBanner(event.getBlock())) {
+			event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_siege_war_cannot_destroy_siege_banner")));
+			event.setCancelled(true);
+			return;
+		}
     }
 
 	/**
