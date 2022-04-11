@@ -55,7 +55,7 @@ public class DestroyBlock {
 
         //Prevent destruction of siege-banner or support block
         if (SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(event.getBlock())
-        	|| SiegeWarBlockUtil.isBlockNearAnActiveSiegeCampBanner(event.getBlock())) {
+        || SiegeWarBlockUtil.isBlockNearAnActiveSiegeCampBanner(event.getBlock())) {
             event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_banner"));
             event.setCancelled(true);
             return;
