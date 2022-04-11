@@ -113,7 +113,6 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeWarTimerTaskController.evaluateTimedSiegeOutcomes();
             SiegeHUDManager.updateHUDs();
             SiegeWarTimerTaskController.evaluateBeacons();
-            SiegeWarTimerTaskController.evaluateBattlefieldReporters();
             SiegeWarNotificationUtil.warnAllPlayersOfSiegeDanger();
         }
     }
