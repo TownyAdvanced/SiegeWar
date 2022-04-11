@@ -180,9 +180,6 @@ public class SiegeWarBannerControlUtil {
 		if (player.getGameMode() == GameMode.SPECTATOR)
 			return false; // Player is spectating
 
-		if(!player.isOp() && player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_SIEGEZONE_CANNOT_GET_BANNER_CONTROL.getNode()))
-			return false;  //Player is SiegeZone observer
-
 		if(!SiegeWarScoringUtil.isPlayerInTimedPointZone(player, siege))
 			return false; //player is not in the timed point zone
 
