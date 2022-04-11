@@ -128,16 +128,6 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If this setting is true, then Siegewar statistics will be shown on nation status screens."),
-	WAR_SIEGE_SWITCHES_TRAP_WARFARE_MITIGATION_ENABLED(
-			"war.siege.switches.wilderness_pit_mitigation_enabled",
-			"true",
-			"",
-			"# If this setting is true, then ",
-			"# 1. Players cannot build/destroy blocks in the Siege-Zone wilderness below the siege banner altitude, and",
-			"# 2. Banner control cannot be gained if the player is below the siege banner altitude",
-			"# TIP: ",
-			"# When this feature is enabled, ",
-			"# Make sure to also have a server rule forbidding pits being created in the Siege-Zone BEFORE the banner is placed"),
 	WAR_SIEGE_KILL_PLAYERS_WHO_LOG_OUT_IN_SIEGE_ZONES(
 			"war.siege.switches.kill_players_who_log_out_in_siege_zones",
 			"true",
@@ -1023,7 +1013,32 @@ public enum ConfigNodes {
 			"false",
 			"",
 			"# If true, then all PVP protections are disabled within Siege-Zones, including from non-TownyAdvanced plugins.",
-			"# WARNING : This setting may result in incorrect pvp-protection messaging information!.");
+			"# WARNING : This setting may result in incorrect pvp-protection messaging information!."),
+	TRAP_WARFARE_MITIGATION(
+			"trap_warfare_mitigation",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |               TRAP WARFARE MITIGATION                | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	TRAP_WARFARE_MITIGATION_ENABLED(
+			"trap_warfare_mitigation.enabled",
+			"true",
+			"",
+			"# If this setting is true, then players cannot build/destroy blocks in the Siege-Zone below the siege banner altitude.",
+			"# Also banner control cannot be gained if the player is below the siege banner altitude",
+			"# TIP: ",
+			"# If this feature is enabled, ",
+			"# Also have a server rule making attackers responsible for removing all traps BEFORE the banner is placed"),
+	TRAP_WARFARE_MITIGATION_CAP_ZONE_ONLY(
+			"trap_warfare_mitigation.cap_zone_only",
+			"true",
+			"",
+			"# If this setting is false, then the restrictions apply only to the Cap-Zone.");
 
 	private final String Root;
 	private final String Default;

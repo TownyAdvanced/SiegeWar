@@ -305,7 +305,11 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean isTrapWarfareMitigationEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_SWITCHES_TRAP_WARFARE_MITIGATION_ENABLED);
+		return Settings.getBoolean(ConfigNodes.TRAP_WARFARE_MITIGATION_ENABLED);
+	}
+
+	public static boolean isTrapWarfareMitigationCapZoneOnly() {
+		return Settings.getBoolean(ConfigNodes.TRAP_WARFARE_MITIGATION_CAP_ZONE_ONLY);
 	}
 
 	public static boolean isNationSiegeImmunityEnabled() {

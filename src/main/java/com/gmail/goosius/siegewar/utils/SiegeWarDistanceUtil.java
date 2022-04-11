@@ -198,9 +198,11 @@ public class SiegeWarDistanceUtil {
 	 * This method is used in Anti-trap warfare mitigation
 	 *
 	 * @param location given location
+	 * @param verifyCapZone if true, then the location must also be in the cap zone to qualify
+	 *
 	 * @return true of the location is in an active siege zone wilderness AND below siege banner altitude
 	 */
-	public static boolean isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(Location location) {
+	public static boolean isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(Location location, boolean verifyCapZone) {
 		//Return false if not wilderness
 		if(!TownyAPI.getInstance().isWilderness(location))
 			return false;
@@ -210,8 +212,15 @@ public class SiegeWarDistanceUtil {
 		if(siege == null)
 			return false;
 
-		//true if below siege banner altitude, false otherwise
-		return location.getY() < siege.getFlagLocation().getY();
+		//false if at or above siege banner altitude
+		if(location.getY() >= siege.getFlagLocation().getY())
+			return false;
+
+		if(verifyCapZone) {
+			return SiegeWarDistanceUtil.isInTimedPointZone(location, siege);
+		} else {
+			return true;
+		}
 	}
 
 	/**
