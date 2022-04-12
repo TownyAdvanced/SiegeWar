@@ -1034,11 +1034,11 @@ public enum ConfigNodes {
 			"# TIP: ",
 			"# If this feature is enabled, ",
 			"# Also have a server rule making attackers responsible for removing all traps BEFORE the banner is placed"),
-	TRAP_WARFARE_MITIGATION_CAP_ZONE_ONLY(
-			"trap_warfare_mitigation.cap_zone_only",
+	TRAP_WARFARE_MITIGATION_NEAR_BANNER_ONLY(
+			"trap_warfare_mitigation.near_banner_only",
 			"true",
 			"",
-			"# If this setting is false, then the restrictions apply only to the Cap-Zone.");
+			"# If this setting is true, then the restrictions apply only to a 16 block horizontal radius around the Siege-Banner.");
 
 	private final String Root;
 	private final String Default;
