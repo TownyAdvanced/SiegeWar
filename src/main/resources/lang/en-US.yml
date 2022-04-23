@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.42
+version: 0.43
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -512,3 +512,5 @@ msg_siege_zone_proximity_warning_with_logout_risk: "&cWARNING: You are in a Sieg
 msg_player_killed_for_logging_out_in_siege_zone: "%s was killed because they logged out while in a Siege-Zone."
 msg_err_cannot_alter_blocks_below_banner_in_siege_zone: 'You cannot place/destroy blocks below banner altitude in this area.'
 
+#Added in 0.43
+msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cWhile the siege assembly is in progress you cannot destroy the siege banner or the block it is attached to."

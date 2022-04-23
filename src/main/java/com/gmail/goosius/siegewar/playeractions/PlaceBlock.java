@@ -66,6 +66,28 @@ public class PlaceBlock {
 			if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
 				return;
 
+			//Check if material is banner or chest
+			Material mat = block.getType();
+			if (Tag.BANNERS.isTagged(mat) && !mat.toString().contains("_W")) {
+				try {
+					//Standing Banner placement				
+					if (evaluatePlaceStandingBanner(player, block)) {
+						event.setCancelled(false);
+						return;  //Special banner placement
+					}
+				} catch (TownyException e1) {
+					Messaging.sendErrorMsg(player, e1.getMessage());
+				}
+
+			} else if (mat == Material.CHEST || mat == Material.TRAPPED_CHEST) {
+				try {
+					//Chest placement
+					evaluatePlaceChest(player, block);
+				} catch (TownyException e) {
+					Messaging.sendErrorMsg(player, e.getMessage());
+				}
+			}
+
 			//Trap warfare block protection
 			Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
 			if(nearbySiege != null
@@ -80,36 +102,12 @@ public class PlaceBlock {
 				return;        	
 			}
 
-			Material mat = block.getType();
-
-			//Standing Banner placement
-			if (Tag.BANNERS.isTagged(mat) && !mat.toString().contains("_W")) {
-				try {
-					if (evaluatePlaceStandingBanner(player, block))
-						event.setCancelled(false);
-				} catch (TownyException e1) {
-					Messaging.sendErrorMsg(player, e1.getMessage());
-				}
-				return;
-			}
-
-			//Chest placement
-			if (mat == Material.CHEST || mat == Material.TRAPPED_CHEST) {
-				try {
-					evaluatePlaceChest(player, block);
-				} catch (TownyException e) {
-					Messaging.sendErrorMsg(player, e.getMessage());
-				}
-				return;
-			}
-
-			//Check for forbidden siegezone block placement
+			//Forbidden material placement prevention
 			if(nearbySiege != null
 				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenBlockMaterials().contains(mat)
 				&& TownyAPI.getInstance().isWilderness(block)) {
 					throw new TownyException(translator.of("msg_war_siege_zone_block_placement_forbidden"));
 			}
-
 		} catch (TownyException e) {
 			event.setCancelled(true);
 			event.setMessage(e.getMessage());

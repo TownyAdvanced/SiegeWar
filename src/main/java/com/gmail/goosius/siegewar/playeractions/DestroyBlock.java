@@ -71,10 +71,10 @@ public class DestroyBlock {
             return;
 		}
 
-        //Prevent destruction of siege camp banner
+        //Prevent destruction of siege camp banner or support block
         if(SiegeWarSettings.areSiegeCampsEnabled()
         	&& SiegeWarBlockUtil.isBlockNearAnActiveSiegeCampBanner(event.getBlock())) {
-            event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_banner"));
+            event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_camp_banner"));
             event.setCancelled(true);
             return;
         }
