@@ -19,7 +19,12 @@ import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.*;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.TownBlock;
+import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.Translator;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -247,7 +252,7 @@ public class PlaceBlock {
 					throw new TownyException(translator.of("msg_err_action_disable"));
 				}
 				break;
-			case LIBERATION:		
+			case LIBERATION:
 				if (residentsNation != null && residentsNation == siege.getAttacker()) {
 					//'Liberator'
 					AbandonAttack.processAbandonAttackRequest(player, siege);

@@ -417,8 +417,8 @@ public enum ConfigNodes {
 			"# This value determines the number of battle points awarded if defender dies in a siege zone.",
 			"# TIP: Set this value low enough so as not to exclude weak players from sieges, and high enough to avoid banner control being considered too OP."),
     /*
-    TODO - Re-enable when end-of-session rollbacks are implemented. 
-    
+    TODO - Re-enable when end-of-session rollbacks are implemented.
+
     WAR_SIEGE_POINTS_BALANCING_WALL_BREACH_BONUS(
 			"war.siege.points_balancing.wall_breach_bonus",
 			"",
@@ -520,7 +520,7 @@ public enum ConfigNodes {
 			"# If true, at the end of a battle, only the battle points of the winner are applied to the siege balance.",
 			"# If false, the battle points of the losing side are also applied to the siege balance."),
 	/*
-	    TODO - Re-enable when end-of-session rollbacks are implemented. 
+	    TODO - Re-enable when end-of-session rollbacks are implemented.
 
 	WAR_SIEGE_WALL_BREACHING(
 			"war.siege.wall_breaching",
