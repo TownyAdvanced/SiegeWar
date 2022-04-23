@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -22,6 +23,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.block.Block;
 import org.bukkit.ChatColor;
+import org.bukkit.block.BlockFace;
 
 
 /**
@@ -45,17 +47,34 @@ public class DestroyBlock {
 
 		final Translator translator = Translator.locale(Translation.getLocale(event.getPlayer()));
 
+		//Get nearby siege
+        Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
+        if(nearbySiege == null)
+        	return;
+		
         //Trap warfare block protection
         if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
-                && SiegeWarDistanceUtil.isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(event.getBlock().getLocation(), SiegeWarSettings.isTrapWarfareMitigationNearBannerOnly())) {
+				&& SiegeWarTownyEventListener.isTargetLocationProtectedByTrapWarfareMitigation(
+					event.getLocation(), 
+					nearbySiege.getFlagLocation(), 
+					SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks(),
+					SiegeWarSettings.isTrapWarfareMitigationBelowBannerOnly())) {
             event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_below_banner_in_siege_zone")));
             event.setCancelled(true);
-            return;
-        }
+            return;        	
+		}
 
         //Prevent destruction of siege-banner or support block
-        if (SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(event.getBlock())
-        || SiegeWarBlockUtil.isBlockNearAnActiveSiegeCampBanner(event.getBlock())) {
+        if (event.getBlock().getLocation().equals(nearbySiege.getFlagLocation().getBlock().getLocation())
+	        	|| event.getBlock().getLocation().equals(nearbySiege.getFlagLocation().getBlock().getRelative(BlockFace.DOWN).getLocation())) {
+            event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_banner"));
+            event.setCancelled(true);
+            return;
+		}
+
+        //Prevent destruction of siege camp banner
+        if(SiegeWarSettings.areSiegeCampsEnabled()
+        	&& SiegeWarBlockUtil.isBlockNearAnActiveSiegeCampBanner(event.getBlock())) {
             event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_banner"));
             event.setCancelled(true);
             return;

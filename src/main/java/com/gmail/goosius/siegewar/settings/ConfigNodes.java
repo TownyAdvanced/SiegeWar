@@ -1029,16 +1029,22 @@ public enum ConfigNodes {
 			"trap_warfare_mitigation.enabled",
 			"true",
 			"",
-			"# If this setting is true, then players cannot build/destroy blocks in the Siege-Zone below the siege banner altitude.",
-			"# Also banner control cannot be gained if the player is below the siege banner altitude",
+			"# If this setting is true, then players cannot build/destroy blocks in a certain area near the Siege Banner.",
+			"# ",
 			"# TIP: ",
 			"# If this feature is enabled, ",
-			"# Also have a server rule making attackers responsible for removing all traps BEFORE the banner is placed"),
-	TRAP_WARFARE_MITIGATION_NEAR_BANNER_ONLY(
-			"trap_warfare_mitigation.near_banner_only",
-			"true",
+			"# then it is recommended to also have a server rule requiring attackers to remove all traps in the area before the banner is placed"),
+	TRAP_WARFARE_MITIGATION_RADIUS_BLOCKS(
+			"trap_warfare_mitigation.radius_blocks",
+			"32",
 			"",
-			"# If this setting is true, then the restrictions apply only to a 16 block horizontal radius around the Siege-Banner.");
+			"# The radius of block protection around the Siege Banner"),
+	TRAP_WARFARE_MITIGATION_BELOW_BANNER_ONLY(
+			"trap_warfare_mitigation.below_banner_only",
+			"false",
+			"",
+			"# If this setting is true, then the restrictions apply only BELOW the altitude of the Siege Banner.",
+			"# If this setting is false, then the restrictions apply at all altitudes.");
 
 	private final String Root;
 	private final String Default;

@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -33,6 +34,7 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.time.LocalDate;
@@ -66,12 +68,18 @@ public class PlaceBlock {
 			if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
 				return;
 
-			//Enforce Anti-Trap warfare build block if below siege banner altitude.
-			if (SiegeWarSettings.isTrapWarfareMitigationEnabled()
-					&& SiegeWarDistanceUtil.isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(event.getBlock().getLocation(), SiegeWarSettings.isTrapWarfareMitigationNearBannerOnly())) {
+			//Trap warfare block protection
+			Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
+			if(nearbySiege != null
+					&& SiegeWarSettings.isTrapWarfareMitigationEnabled()
+					&& SiegeWarTownyEventListener.isTargetLocationProtectedByTrapWarfareMitigation(
+						event.getLocation(), 
+						nearbySiege.getFlagLocation(), 
+						SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks(),
+						SiegeWarSettings.isTrapWarfareMitigationBelowBannerOnly())) {
 				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_below_banner_in_siege_zone")));
 				event.setCancelled(true);
-				return;
+				return;        	
 			}
 
 			Material mat = block.getType();
@@ -98,9 +106,9 @@ public class PlaceBlock {
 			}
 
 			//Check for forbidden siegezone block placement
-			if(SiegeWarSettings.getSiegeZoneWildernessForbiddenBlockMaterials().contains(mat)
-				&& TownyAPI.getInstance().isWilderness(block)
-				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(block.getLocation())) {
+			if(nearbySiege != null
+				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenBlockMaterials().contains(mat)
+				&& TownyAPI.getInstance().isWilderness(block)) {
 					throw new TownyException(translator.of("msg_war_siege_zone_block_placement_forbidden"));
 			}
 

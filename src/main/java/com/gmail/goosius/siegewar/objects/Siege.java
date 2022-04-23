@@ -12,6 +12,7 @@ import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -243,6 +244,14 @@ public class Siege {
 
 	public Location getFlagLocation() {
 		return siegeBannerLocation;
+	}
+
+	public Location getBlockLocationOfFlag() {
+		return siegeBannerLocation.getBlock().getLocation();
+	}
+
+	public Location getBlockLocationOfFlagSupportBlock() {
+		return siegeBannerLocation.getBlock().getRelative(BlockFace.DOWN).getLocation();
 	}
 
 	public void setFlagLocation(Location location) {
