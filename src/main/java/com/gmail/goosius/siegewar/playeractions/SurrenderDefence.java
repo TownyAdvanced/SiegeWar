@@ -23,10 +23,10 @@ import org.bukkit.entity.Player;
 public class SurrenderDefence {
 
 	public static void processSurrenderDefenceRequest(Player player, Siege siege) throws TownyException {
-		if(!SiegeWarSettings.getWarSiegeAbandonEnabled())
+		if(!SiegeWarSettings.getWarSiegeSurrenderEnabled())
 			throw new TownyException(Translatable.of("msg_err_action_disable").forLocale(player));
 
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER.getNode()))
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToSurrenderDefence(siege.getSiegeType())))
 			throw new TownyException(Translatable.of("msg_err_action_disable").forLocale(player));
 		
 		Confirmation

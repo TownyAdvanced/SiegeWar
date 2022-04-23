@@ -7,8 +7,6 @@ import java.util.Locale;
 import java.util.EnumSet;
 import java.util.Set;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Translation;
-
 import org.bukkit.Material;
 
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
@@ -381,31 +379,58 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean isWallBreachingEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_WALL_BREACHING_ENABLED);
+		return false;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_WALL_BREACHING_ENABLED);		
+		 */
 	}
 	
 	public static double getWallBreachingPointGenerationRate() {
+		return 0;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_RATE);
+		 */
 	}
 
 	public static int getWallBreachingMaxPoolSize() {
+		return 0;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_MAX_POOL_SIZE);
+		 */
 	}
 
 	public static int getWallBreachBonusBattlePoints() {
+		return 0;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_WALL_BREACH_BONUS_BATTLE_POINTS);
+		 */
 	}
 
 	public static int getWallBreachingBlockPlacementCost() {
+		return 0;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_COST_PER_BLOCK);
+		 */
 	}
 
 	public static int getWallBreachingBlockDestructionCost() {
+		return 0;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_COST_PER_BLOCK);
+		 */
 	}
 
 	public static Set<Material> getWallBreachingPlaceBlocksWhitelist() throws TownyException
 	{
+		return null;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
 		if(cachedWallBreachingPlaceBlocksWhitelist == null) {			
     		cachedWallBreachingPlaceBlocksWhitelist = EnumSet.noneOf(Material.class);
 			String configuredListUppercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_WHITELIST).toUpperCase(Locale.ROOT);
@@ -427,17 +452,26 @@ public class SiegeWarSettings {
 			}
 		}
 		return cachedWallBreachingPlaceBlocksWhitelist;
+		 */
 	}
 
     public static boolean isWallBreachingDestroyEntityBlacklist() {
+		return false;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
+
     	if(cachedWallBreachingDestroyEntityBlacklist == null) {
     		String configuredListLowercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toLowerCase(Locale.ROOT);
 			cachedWallBreachingDestroyEntityBlacklist = configuredListLowercase.contains("is=entity"); 				
 		}
 		return cachedWallBreachingDestroyEntityBlacklist;
+		 */
 	}
 
 	public static Set<Material> getWallBreachingDestroyBlocksBlacklist() throws TownyException {
+		return null;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
 		if(cachedWallBreachingDestroyBlocksBlacklist == null) {			
     		cachedWallBreachingDestroyBlocksBlacklist = EnumSet.noneOf(Material.class);
 			String configuredListUppercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toUpperCase(Locale.ROOT);
@@ -454,26 +488,47 @@ public class SiegeWarSettings {
 			}
 		}
 		return cachedWallBreachingDestroyBlocksBlacklist;
+		 */
 	}
 
 	public static int getWallBreachingHomeblockBreachHeightLimitMin() {
+		return 0;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_HOMEBLOCK_BREACH_HEIGHT_LIMITS_MIN);
+		 */
 	}
 	
 	public static int getWallBreachingHomeblockBreachHeightLimitMax() {
+		return 0;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_HOMEBLOCK_BREACH_HEIGHT_LIMITS_MAX);
+		 */
 	}
 
 	public static boolean isWallBreachingCannonsIntegrationEnabled() {
+		return false;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_ENABLED);
+		 */
 	}
 
 	public static double getWallBreachingCannonFirePointGenerationRate() {
+		return 0;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_BREACH_POINT_GENERATION_RATE_FROM_CANNON_FIRE);
+		 */
 	}
 
 	public static int getWallBreachingCannonExplosionCostPerBlock() {
+		return 0;
+		/*
+		TODO - Re-enable when end-of-session rollbacks are implemented. 
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_EXPLODING_BLOCKS_COST_PER_BLOCK);
+		 */
 	}
 
 	public static int getSiegeBalanceCapValue() {
