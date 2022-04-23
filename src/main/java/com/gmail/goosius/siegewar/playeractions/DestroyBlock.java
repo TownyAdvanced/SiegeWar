@@ -58,25 +58,25 @@ public class DestroyBlock {
 					nearbySiege.getFlagLocation(), 
 					SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks(),
 					SiegeWarSettings.isTrapWarfareMitigationBelowBannerOnly())) {
-            event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_below_banner_in_siege_zone")));
-            event.setCancelled(true);
-            return;        	
+			event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_below_banner_in_siege_zone")));
+			event.setCancelled(true);
+			return;        	
 		}
 
-        //Prevent destruction of siege-banner or support block
-        if (event.getBlock().getLocation().equals(nearbySiege.getFlagLocation().getBlock().getLocation())
-	        	|| event.getBlock().getLocation().equals(nearbySiege.getFlagLocation().getBlock().getRelative(BlockFace.DOWN).getLocation())) {
-            event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_banner"));
-            event.setCancelled(true);
-            return;
+		//Prevent destruction of siege-banner or support block
+		if (event.getBlock().getLocation().equals(nearbySiege.getFlagLocation().getBlock().getLocation())
+				|| event.getBlock().getLocation().equals(nearbySiege.getFlagLocation().getBlock().getRelative(BlockFace.DOWN).getLocation())) {
+			event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_banner"));
+			event.setCancelled(true);
+			return;
 		}
 
         //Prevent destruction of siege camp banner or support block
         if(SiegeWarSettings.areSiegeCampsEnabled()
-        	&& SiegeWarBlockUtil.isBlockNearAnActiveSiegeCampBanner(event.getBlock())) {
-            event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_camp_banner"));
-            event.setCancelled(true);
-            return;
+				&& SiegeWarBlockUtil.isBlockNearAnActiveSiegeCampBanner(event.getBlock())) {
+			event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_camp_banner"));
+			event.setCancelled(true);
+			return;
         }
     }
 
