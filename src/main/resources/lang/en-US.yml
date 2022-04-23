@@ -510,7 +510,8 @@ msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cAs a peaceful 
 msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!. PVP protections are disabled here."
 msg_siege_zone_proximity_warning_with_logout_risk: "&cWARNING: You are in a Siege-Zone!. PVP protections are disabled here. You will be killed if you logout while in the Siege-Zone."
 msg_player_killed_for_logging_out_in_siege_zone: "%s was killed because they logged out while in a Siege-Zone."
-msg_err_cannot_alter_blocks_below_banner_in_siege_zone: 'You cannot place/destroy blocks below banner altitude in this area.'
 
 #Added in 0.43
 msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cWhile the siege assembly is in progress you cannot destroy the siege banner or the block it is attached to."
+msg_err_cannot_alter_blocks_near_siege_banner: 'You cannot place/destroy blocks this close to the Siege Banner.'
+msg_err_cannot_alter_blocks_near_and_under_siege_banner: 'You cannot place/destroy blocks this close to, and lower than, the Siege Banner.'

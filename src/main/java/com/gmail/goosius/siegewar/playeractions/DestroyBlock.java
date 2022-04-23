@@ -58,8 +58,12 @@ public class DestroyBlock {
 					nearbySiege.getFlagLocation(), 
 					SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks(),
 					SiegeWarSettings.isTrapWarfareMitigationBelowBannerOnly())) {
-			event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_below_banner_in_siege_zone")));
 			event.setCancelled(true);
+			if(SiegeWarSettings.isTrapWarfareMitigationBelowBannerOnly()) {
+				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_near_and_under_siege_banner")));
+			} else {
+				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_near_siege_banner")));				
+			}
 			return;        	
 		}
 
