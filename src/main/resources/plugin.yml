@@ -91,7 +91,7 @@ permissions:
             siegewar.nation.siege.conquest.siege.abandon: true
             siegewar.nation.siege.liberation.siege.start: true
             siegewar.nation.siege.liberation.siege.abandon: true
-            siegewar.nation.siege.revolt.siege.abandon: true
+            siegewar.nation.siege.revolt.siege.surrender: true
             siegewar.nation.siege.suppression.siege.start: true
             siegewar.nation.siege.suppression.siege.abandon: true
             siegewar.nation.siege.subvertpeacefultown: true
@@ -103,9 +103,10 @@ permissions:
         default: false
         children:
             siegewar.town.siege.battle.points: true
-            siegewar.town.siege.surrender: true
+            siegewar.town.siege.conquest.siege.surrender: true
             siegewar.town.siege.revolt.siege.start: true
             siegewar.town.siege.revolt.siege.abandon: true
+            siegewar.town.siege.suppression.siege.surrender: true
             siegewar.town.siege.revoltpeacefully: true
             siegewar.town.siege.fire.cannon.in.siegezone: true
             
