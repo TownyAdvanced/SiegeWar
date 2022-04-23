@@ -2,7 +2,6 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -54,7 +53,7 @@ public class DestroyBlock {
 		
         //Trap warfare block protection
         if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
-				&& SiegeWarTownyEventListener.isTargetLocationProtectedByTrapWarfareMitigation(
+				&& SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(
 					event.getLocation(), 
 					nearbySiege.getFlagLocation(), 
 					SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks(),

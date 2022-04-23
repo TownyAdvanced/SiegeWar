@@ -182,35 +182,13 @@ public class SiegeWarTownyEventListener implements Listener {
         //Filter exploding blocks
         List<Block> finalExplodeList = new ArrayList<>(givenExplodeList);
         for(Block block: givenExplodeList) {
-            if(isTargetLocationProtectedByTrapWarfareMitigation(block.getLocation(), siegeBannerLocation, protectionRadiusBlocks,isProtectionBelowBannerOnly)) {
+            if(SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(block.getLocation(), siegeBannerLocation, protectionRadiusBlocks,isProtectionBelowBannerOnly)) {
                 finalExplodeList.remove(block);
             }
         }
 
         //Return final explode list
         return finalExplodeList;
-    }
-
-    /**
-     * Determine if the target location is protected by trap warfare mitigation
-     *
-     * @param targetLocation target location
-     * @param siegeBannerLocation location of nearby siege banner
-     * @param protectionRadiusBlocks protection radius in blocks
-     * @param isProtectionBelowBannerOnly true if we should protect only below banner
-     * 
-     * @return true if the location is protected
-     */
-    public static boolean isTargetLocationProtectedByTrapWarfareMitigation(Location targetLocation, Location siegeBannerLocation, int protectionRadiusBlocks, boolean isProtectionBelowBannerOnly) {
-        if(!TownyAPI.getInstance().isWilderness(targetLocation)) {
-            return false;  //In town. Protection does not apply.
-        } else if(isProtectionBelowBannerOnly && targetLocation.getY() >= siegeBannerLocation.getY()) {
-            return false;  //Above banner. Protection does not apply.
-        } else if(SiegeWarDistanceUtil.areLocationsCloseHorizontally(targetLocation, siegeBannerLocation, protectionRadiusBlocks)) {
-            return true;   //Target location is protected
-        } else {
-            return false;  //Target location is not protected
-        }
     }
 
     /**

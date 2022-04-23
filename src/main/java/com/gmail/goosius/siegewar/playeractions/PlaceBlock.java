@@ -5,7 +5,6 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -34,7 +33,6 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.time.LocalDate;
@@ -72,7 +70,7 @@ public class PlaceBlock {
 			Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
 			if(nearbySiege != null
 					&& SiegeWarSettings.isTrapWarfareMitigationEnabled()
-					&& SiegeWarTownyEventListener.isTargetLocationProtectedByTrapWarfareMitigation(
+					&& SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(
 						event.getLocation(), 
 						nearbySiege.getFlagLocation(), 
 						SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks(),
