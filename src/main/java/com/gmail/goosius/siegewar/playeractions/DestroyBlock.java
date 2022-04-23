@@ -47,9 +47,9 @@ public class DestroyBlock {
 		final Translator translator = Translator.locale(Translation.getLocale(event.getPlayer()));
 
 		//Get nearby siege
-        Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
-        if(nearbySiege == null)
-        	return;
+		Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
+		if(nearbySiege == null)
+			return;
 		
         //Trap warfare block protection
         if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
