@@ -7,6 +7,8 @@ import java.util.Locale;
 import java.util.EnumSet;
 import java.util.Set;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Translation;
+
 import org.bukkit.Material;
 
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
