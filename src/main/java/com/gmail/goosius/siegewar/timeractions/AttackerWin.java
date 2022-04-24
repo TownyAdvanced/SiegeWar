@@ -24,7 +24,6 @@ public class AttackerWin {
 	public static void attackerWin(Siege siege, SiegeStatus siegeStatus) {
 		siege.setSiegeWinner(SiegeSide.ATTACKERS);
 		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege, siegeStatus);
-
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
 			case SUPPRESSION:
