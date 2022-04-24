@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.events.SiegeEndEvent;
+import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import org.bukkit.Bukkit;
 
@@ -27,6 +28,7 @@ public class SiegeWarSiegeCompletionUtil {
 		siege.setStatus(siegeStatus);
 		siege.setActualEndTime(System.currentTimeMillis());
 		SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown(), siege);
+		SiegeWarImmunityUtil.activateRevoltImmunityTimer(siege.getTown());
 		CosmeticUtil.removeFakeBeacons(siege);
 		/*
 		 * The siege is now historical rather than active.

@@ -39,6 +39,7 @@ public class SiegeWarImmunityUtil {
 		long revoltImmunityDurationMillis = (long)(siegeImmunityDurationMillis * SiegeWarSettings.getWarSiegeRevoltImmunityTimeModifier());
 		long revoltImmunityEndTime = System.currentTimeMillis() + revoltImmunityDurationMillis;
 		TownMetaDataController.setRevoltImmunityEndTime(town, revoltImmunityEndTime);
+		town.save();
     }
 
     /**
