@@ -3,7 +3,7 @@
 ### Features
 * ⚔️ **Sieges**: Wars are conducted by means of sieges. A siege occurs when a nation attacks a town.
 * 🤖 **Automatic:** Sieges are started by players and automatically managed by the plugin. Daily staff management of sieges is not required.
-* 🏙️ **Minimally Destructive:** By default, towns cannot be damaged or stolen from during sieges.
+* 🏙️ **Minimally Destructive:** Towns cannot be damaged or stolen from during sieges.
 * 🚶 **Slow Paced:** Sieges last 3 days, giving defenders a chance to respond to attacks, and also making the system friendly to casual players.
 * 🗺️ **Inclusive:** The whole server is involved, with no opt-outs. Towns have a cost-free *Neutrality* (***0.7.9+***) option, where they can become immune to attack, but vulnerable to instant-peaceful-occupation.
 * ♟️ **Strategic:** The system has many strategic elements (*e.g. deciding when/where/who to attack, organizing army composition/logisitics/movement, and  diplomacy/occupation/neutrality etc*). This can be great for thoughful/mature playerbases, but for servers which require more simplistic PVP contests, alternative war systems should be considered.
