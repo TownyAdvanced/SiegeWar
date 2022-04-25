@@ -176,13 +176,19 @@ public class SiegeWarTownyEventListener implements Listener {
 
         //Make convenience variables
         int protectionRadiusBlocks = SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks();
-        boolean isProtectionBelowBannerOnly = SiegeWarSettings.isTrapWarfareMitigationBelowBannerOnly();
+        int upperAlterLimit = SiegeWarSettings.getTrapWarfareMitigationUpperHeightLimit();
+        int lowerAlterLimit = SiegeWarSettings.getTrapWarfareMitigationLowerHeightLimit();
         Location siegeBannerLocation = siege.getFlagLocation();
 
         //Filter exploding blocks
         List<Block> finalExplodeList = new ArrayList<>(givenExplodeList);
         for(Block block: givenExplodeList) {
-            if(SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(block.getLocation(), siegeBannerLocation, protectionRadiusBlocks,isProtectionBelowBannerOnly)) {
+            if(SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(
+                    block.getLocation(),
+                    siegeBannerLocation,
+                    protectionRadiusBlocks,
+                    upperAlterLimit,
+                    lowerAlterLimit)) {
                 finalExplodeList.remove(block);
             }
         }

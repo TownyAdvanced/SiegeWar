@@ -513,5 +513,4 @@ msg_player_killed_for_logging_out_in_siege_zone: "%s was killed because they log
 
 #Added in 0.43
 msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cWhile the siege assembly is in progress you cannot destroy the siege banner or the block it is attached to."
-msg_err_cannot_alter_blocks_near_siege_banner: 'You cannot place/destroy blocks this close to the Siege Banner.'
-msg_err_cannot_alter_blocks_near_and_under_siege_banner: 'You cannot place/destroy blocks this close to, and lower than, the Siege Banner.'
+msg_err_cannot_alter_blocks_near_siege_banner: 'You cannot place/destroy blocks at this location near the Siege Banner.'

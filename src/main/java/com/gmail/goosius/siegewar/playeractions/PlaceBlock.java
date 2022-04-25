@@ -93,17 +93,11 @@ public class PlaceBlock {
 			if(nearbySiege != null
 					&& SiegeWarSettings.isTrapWarfareMitigationEnabled()
 					&& SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(
-						event.getLocation(), 
-						nearbySiege.getFlagLocation(), 
-						SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks(),
-						SiegeWarSettings.isTrapWarfareMitigationBelowBannerOnly())) {				
+						event.getLocation(),
+						nearbySiege)) {
 				event.setCancelled(true);
-				if(SiegeWarSettings.isTrapWarfareMitigationBelowBannerOnly()) {
-					event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_near_and_under_siege_banner")));
-				} else {
-					event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_near_siege_banner")));				
-				}				
-				return;        	
+				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_near_siege_banner")));
+				return;
 			}
 
 			//Forbidden material placement prevention

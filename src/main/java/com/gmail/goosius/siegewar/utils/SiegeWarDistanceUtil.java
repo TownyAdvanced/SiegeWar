@@ -229,17 +229,37 @@ public class SiegeWarDistanceUtil {
 	 * Determine if the target location is protected by trap warfare mitigation
 	 *
 	 * @param targetLocation target location
+	 */
+	public static boolean isTargetLocationProtectedByTrapWarfareMitigation(Location targetLocation, Siege siege) {
+        int protectionRadiusBlocks = SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks();
+        int upperHeightLimit = SiegeWarSettings.getTrapWarfareMitigationUpperHeightLimit();
+        int lowerHeightLimit = SiegeWarSettings.getTrapWarfareMitigationLowerHeightLimit();
+        Location siegeBannerLocation = siege.getFlagLocation();
+        return isTargetLocationProtectedByTrapWarfareMitigation(
+			targetLocation,
+			siegeBannerLocation,
+			protectionRadiusBlocks,
+			upperHeightLimit,
+			lowerHeightLimit);
+	}
+
+	/**
+	 * Determine if the target location is protected by trap warfare mitigation
+	 *
+	 * @param targetLocation target location
 	 * @param siegeBannerLocation location of nearby siege banner
 	 * @param protectionRadiusBlocks protection radius in blocks
-	 * @param isProtectionBelowBannerOnly true if we should protect only below banner
+	 * @param upperHeightLimit cannot alter above this
+	 * @param lowerHeightLimit cannot alter below this
 	 *
 	 * @return true if the location is protected
 	 */
-	public static boolean isTargetLocationProtectedByTrapWarfareMitigation(Location targetLocation, Location siegeBannerLocation, int protectionRadiusBlocks, boolean isProtectionBelowBannerOnly) {
+	public static boolean isTargetLocationProtectedByTrapWarfareMitigation(Location targetLocation, Location siegeBannerLocation, int protectionRadiusBlocks, int upperHeightLimit, int lowerHeightLimit) {
 		if(!TownyAPI.getInstance().isWilderness(targetLocation)) {
 			return false;  //In town. Protection does not apply.
-		} else if(isProtectionBelowBannerOnly && targetLocation.getY() >= siegeBannerLocation.getY()) {
-			return false;  //Above banner. Protection does not apply.
+		} else if(targetLocation.getY() <= siegeBannerLocation.getY() + upperHeightLimit
+					&& targetLocation.getY() >= siegeBannerLocation.getY() + lowerHeightLimit) {
+			return false;  //Not high/low enough for protection
 		} else if(areLocationsCloseHorizontally(targetLocation, siegeBannerLocation, protectionRadiusBlocks)) {
 			return true;   //Target location is protected
 		} else {

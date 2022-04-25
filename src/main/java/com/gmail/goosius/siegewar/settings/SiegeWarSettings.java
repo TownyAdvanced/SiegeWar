@@ -305,8 +305,12 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_RADIUS_BLOCKS);
 	}
 
-	public static boolean isTrapWarfareMitigationBelowBannerOnly() {
-		return Settings.getBoolean(ConfigNodes.TRAP_WARFARE_MITIGATION_BELOW_BANNER_ONLY);
+	public static int getTrapWarfareMitigationUpperHeightLimit() {
+		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_UPPER_HEIGHT_LIMIT);
+	}
+
+	public static int getTrapWarfareMitigationLowerHeightLimit() {
+		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_LOWER_HEIGHT_LIMIT);
 	}
 
 	public static boolean isNationSiegeImmunityEnabled() {

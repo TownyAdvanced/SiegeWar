@@ -1052,12 +1052,18 @@ public enum ConfigNodes {
 			"32",
 			"",
 			"# The radius of block protection around the Siege Banner"),
-	TRAP_WARFARE_MITIGATION_BELOW_BANNER_ONLY(
-			"trap_warfare_mitigation.below_banner_only",
-			"false",
+	TRAP_WARFARE_MITIGATION_UPPER_HEIGHT_LIMIT(
+			"trap_warfare_mitigation.upper_height_limit",
+			"10",
 			"",
-			"# If this setting is true, then the restrictions apply only BELOW the altitude of the Siege Banner.",
-			"# If this setting is false, then the restrictions apply at all altitudes.");
+			"# Within the protection radius, players cannot build above this height.",
+			"# The height is relative to the siege banner height"),
+	TRAP_WARFARE_MITIGATION_LOWER_HEIGHT_LIMIT(
+			"trap_warfare_mitigation.lower_height_limit",
+			"0",
+			"",
+			"# Within the protection radius, players cannot build below this height.",
+			"# The height is relative to the siege banner height");
 
 	private final String Root;
 	private final String Default;
