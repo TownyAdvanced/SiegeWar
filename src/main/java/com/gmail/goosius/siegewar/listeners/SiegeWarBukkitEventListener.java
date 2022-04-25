@@ -232,7 +232,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 				&& SiegeWarSettings.getKillPlayersWhoLogoutInSiegeZones()
 				&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getPlayer().getLocation())) {
-			event.setQuitMessage(Translation.of("msg_player_killed_for_logging_out_in_siege_zone", event.getPlayer().getName()));
+			event.setQuitMessage(Translatable.of("msg_player_killed_for_logging_out_in_siege_zone", event.getPlayer().getName()).translate());
 			event.getPlayer().setHealth(0);
 		}
 	}
