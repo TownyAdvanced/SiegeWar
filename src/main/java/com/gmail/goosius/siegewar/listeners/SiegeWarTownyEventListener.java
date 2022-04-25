@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
+import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
@@ -25,6 +26,7 @@ import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.TranslationLoader;
 
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -162,15 +164,37 @@ public class SiegeWarTownyEventListener implements Listener {
     private static List<Block> filterExplodeListByTrapWarfareMitigation(List<Block> givenExplodeList) {
         if(!SiegeWarSettings.isTrapWarfareMitigationEnabled())
             return givenExplodeList;
-        boolean nearBannerOnly = SiegeWarSettings.isTrapWarfareMitigationNearBannerOnly();
-        List<Block> filteredList = new ArrayList<>(givenExplodeList);
-        for(Block block: givenExplodeList) {
-            if(SiegeWarDistanceUtil.isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(block.getLocation(), nearBannerOnly)) {
-                //Remove block from final explode list
-                filteredList.remove(block);
-            } 
+        //For performance, just get the siege at the 1st block
+        Siege siege;
+        if(givenExplodeList.size() > 0) {
+            siege = SiegeController.getActiveSiegeAtLocation(givenExplodeList.get(0).getLocation());
+            if(siege == null)
+               return givenExplodeList;
+        } else {
+            return givenExplodeList;
         }
-        return filteredList;
+
+        //Make convenience variables
+        int protectionRadiusBlocks = SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks();
+        int upperAlterLimit = SiegeWarSettings.getTrapWarfareMitigationUpperHeightLimit();
+        int lowerAlterLimit = SiegeWarSettings.getTrapWarfareMitigationLowerHeightLimit();
+        Location siegeBannerLocation = siege.getFlagLocation();
+
+        //Filter exploding blocks
+        List<Block> finalExplodeList = new ArrayList<>(givenExplodeList);
+        for(Block block: givenExplodeList) {
+            if(SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(
+                    block.getLocation(),
+                    siegeBannerLocation,
+                    protectionRadiusBlocks,
+                    upperAlterLimit,
+                    lowerAlterLimit)) {
+                finalExplodeList.remove(block);
+            }
+        }
+
+        //Return final explode list
+        return finalExplodeList;
     }
 
     /**
