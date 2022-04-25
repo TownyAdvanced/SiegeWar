@@ -17,6 +17,7 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_NATION_SIEGE_LIBERATION_SIEGE_ABANDON("siegewar.nation.siege.liberation.siege.abandon"),
 	SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_START("siegewar.nation.siege.suppression.siege.start"),
 	SIEGEWAR_NATION_SIEGE_SUPPRESSION_SIEGE_ABANDON("siegewar.nation.siege.suppression.siege.abandon"),
+	SIEGEWAR_NATION_SIEGE_REVOLT_SIEGE_SURRENDER("siegewar.nation.siege.revolt.siege.surrender"),
 	SIEGEWAR_NATION_SIEGE_INVADE("siegewar.nation.siege.invade"),
 	SIEGEWAR_NATION_SIEGE_PLUNDER("siegewar.nation.siege.plunder"),
 	SIEGEWAR_NATION_SIEGE_SUBVERTPEACEFULTOWN("siegewar.nation.siege.subvertpeacefultown"),
@@ -27,9 +28,10 @@ public enum SiegeWarPermissionNodes {
 	//Battle points
 	SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS("siegewar.town.siege.battle.points"),
 	//Actions
-	SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_START("siegewar.town.siege.revolt.siege.abandon"),
-	SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_ABANDON("siegewar.town.siege.revolt.siege.start"),
-	SIEGEWAR_TOWN_SIEGE_SURRENDER("siegewar.town.siege.surrender"),
+	SIEGEWAR_TOWN_SIEGE_CONQUEST_SIEGE_SURRENDER("siegewar.town.siege.conquest.siege.surrender"),
+	SIEGEWAR_TOWN_SIEGE_SUPPRESSION_SIEGE_SURRENDER("siegewar.town.siege.suppression.siege.surrender"),
+	SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_START("siegewar.town.siege.revolt.siege.start"),
+	SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_ABANDON("siegewar.town.siege.revolt.siege.abandon"),
 	SIEGEWAR_TOWN_REVOLT_PEACEFULLY("siegewar.town.siege.revoltpeacefully"),
 	SIEGEWAR_TOWN_SIEGE_FIRE_CANNON_IN_SIEGEZONE("siegewar.town.siege.fire.cannon.in.siegezone"),
 
@@ -132,4 +134,18 @@ public enum SiegeWarPermissionNodes {
 		}
 	}
 
+	public static String getPermissionNodeToSurrenderDefence(SiegeType siegeType) {
+		switch (siegeType) {
+			case CONQUEST:
+				return SIEGEWAR_TOWN_SIEGE_CONQUEST_SIEGE_SURRENDER.getNode();
+			case LIBERATION:
+				throw new RuntimeException("Surrendering a liberation siege is not a thing.");
+			case REVOLT:
+				return SIEGEWAR_NATION_SIEGE_REVOLT_SIEGE_SURRENDER.getNode();
+			case SUPPRESSION:
+				return SIEGEWAR_TOWN_SIEGE_SUPPRESSION_SIEGE_SURRENDER.getNode();
+			default:
+				throw new RuntimeException("Unknown siege type.");
+		}
+	}
 }

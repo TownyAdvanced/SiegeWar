@@ -392,6 +392,9 @@ public enum ConfigNodes {
 			"",
 			"# This value determines the number of battle points awarded if defender dies in a siege zone.",
 			"# TIP: Set this value low enough so as not to exclude weak players from sieges, and high enough to avoid banner control being considered too OP."),
+    /*
+    TODO - Re-enable when end-of-session rollbacks are implemented.
+
     WAR_SIEGE_POINTS_BALANCING_WALL_BREACH_BONUS(
 			"war.siege.points_balancing.wall_breach_bonus",
 			"",
@@ -408,6 +411,7 @@ public enum ConfigNodes {
 			"# If the wall breaching feature is enabled (in the 'Wall Breaching' config section), this value determines the number of Battle Points awarded by the Wall Breach Bonus.",
 			"# To get the bonus, hostile-to-town players must capture the banner first, then get to the homeblock.",
 			"# TIP: Players are required to cap first, because otherwise they could log off at the homeblock after getting the bonus, and then in the next session, simply log back in to get the bonus again."),
+	*/
 	WAR_SIEGE_POINTS_BALANCING_BANNER_CONTROL_REVERSAL_BONUS(
 			"war.siege.points_balancing.banner_control_reversal_bonus",
 			"",
@@ -491,6 +495,9 @@ public enum ConfigNodes {
 			"",
 			"# If true, at the end of a battle, only the battle points of the winner are applied to the siege balance.",
 			"# If false, the battle points of the losing side are also applied to the siege balance."),
+	/*
+	    TODO - Re-enable when end-of-session rollbacks are implemented.
+
 	WAR_SIEGE_WALL_BREACHING(
 			"war.siege.wall_breaching",
 			"",
@@ -630,6 +637,7 @@ public enum ConfigNodes {
 			"2",
 			"",
 			"# This value determines the cost, in Breach Points, to destroy a block via cannon fire explosion in the besieged town."),			
+	*/
 	SIEGE_MATERIAL_RESTRICTIONS(
 			"siege_material_restrictions",
 			"",

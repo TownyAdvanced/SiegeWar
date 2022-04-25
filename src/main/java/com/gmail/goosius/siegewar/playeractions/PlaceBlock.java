@@ -245,8 +245,10 @@ public class PlaceBlock {
 		switch (siege.getSiegeType()) {
 			case CONQUEST:
 				if (residentsNation != null && residentsNation == siege.getAttacker()) {
+					//Attacker
 					AbandonAttack.processAbandonAttackRequest(player, siege);
 				} else if (residentsTown == nearbyTown) {
+					//Resident of town
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException(translator.of("msg_err_action_disable"));
@@ -254,17 +256,24 @@ public class PlaceBlock {
 				break;
 			case LIBERATION:
 				if (residentsNation != null && residentsNation == siege.getAttacker()) {
+					//'Liberator'
 					AbandonAttack.processAbandonAttackRequest(player, siege);
+				} else if (residentsTown == nearbyTown) {
+					//Resident of town
+					throw new TownyException(translator.of("msg_err_cannot_surrender_liberation_siege"));
 				} else if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
-					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
+					//Occupier of town
+					throw new TownyException(translator.of("msg_err_cannot_surrender_liberation_siege"));
 				} else {
 					throw new TownyException(translator.of("msg_err_action_disable"));
 				}
 				break;
 			case REVOLT:
 				if (residentsTown == nearbyTown) {
+					//Resident of town
 					AbandonAttack.processAbandonAttackRequest(player, siege);
 				} else if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
+					//Occupier of town
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException(translator.of("msg_err_action_disable"));
@@ -272,8 +281,10 @@ public class PlaceBlock {
 				break;
 			case SUPPRESSION:
 				if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
+					//Occupier of town
 					AbandonAttack.processAbandonAttackRequest(player, siege);
 				} else if (residentsTown == nearbyTown) {
+					//Resident of town
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException(translator.of("msg_err_action_disable"));
