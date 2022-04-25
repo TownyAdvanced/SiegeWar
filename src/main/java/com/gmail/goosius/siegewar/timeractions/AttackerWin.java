@@ -28,7 +28,6 @@ public class AttackerWin {
 			case CONQUEST:
 			case SUPPRESSION:
 				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
-				SiegeWarImmunityUtil.activateRevoltImmunityTimer(siege.getTown());
 				break;
 			case LIBERATION:
 				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());

@@ -35,9 +35,6 @@ public class DefenderWin
 				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefendingNationIfPossibleElseTown());
 				TownOccupationController.removeTownOccupation(siege.getTown());
 				break;
-			case REVOLT:
-				SiegeWarImmunityUtil.activateRevoltImmunityTimer(siege.getTown());
-				break;
 		}
     }
 
