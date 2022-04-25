@@ -119,7 +119,6 @@ dynmap_siege_time_left: 'Tempo Rimanente: %s'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4ATTENZIONE: &cUna parte della tua attrezzatura è vicino alla rottura a cause della Degradazione dell''Inventario.'
 msg_swa_remove_siege_success: '&cRimosso assedio con successo.'
-msg_war_siege_occupied_towns_cannot_surrender: '&cLe Città occupate non possono arrendersi.'
 msg_you_received_war_sickness: '&cNon sei un partecipante di questo assedio e non puoi essere nella Zona Assedio. Lascia la zone per rimuovere la nausea da guerra. Cause comuni della nausea da guerra: trovarsi in una città neutrale, non avere un rango militare o non essere alleato a entrambe le parti.'
 msg_you_will_get_sickness: '&cNon sei un partecipante di questo assedio e non puoi essere nella Zona Assedio. Lascia la zona or riceverai nausea da guerra in %s secondi.'
 #Added in 0.08:
@@ -405,8 +404,6 @@ msg_err_cannot_fire_cannon_without_perms: '&cNon puoi sparare con questo cannone
 #configuration-errors
 msg_error_misconfigured_place_blocks_whitelist: '&cMateriale non configurato su Wall-Breaching-Place-Blocks-Whitelist. Voce del problema: %s.'
 msg_error_misconfigured_destroy_blocks_blacklist: '&cMateriale non configurato su Wall-Breaching-Destroy-Blocks-Blacklist. Voce del Problema: %s.'
-#Liberation Siege Restriction
-msg_err_siege_war_cannot_start_liberation_siege_at_unallied_town: '&cNon puoi iniziare un''assedio di Liberazione in questa Città, perchè la Nazione della Città non è tua alleata.'
 #Added in 0.36
 msg_err_nation_neutrality_not_supported: '&cGuerraAssedio non supporta la neutralità della nazione.'
 msg.townyperms.installation.complete: "File di permessi Città regolato secondo le impostazioni SW raccomandate."
@@ -418,10 +415,11 @@ msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cAll'interno delle Zone
 msg_capping_limiter_limit_exceeded_warning: "&cHai superato il limite giornaliero di capping di %d Sessioni di Battaglia. Potrai usare il cap in %s."
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cCome cittadino pacifico, non puoi passare facilmente attraverso le Zone-Assedio. Per evitare la Nausea da Guerra, abbandonare la Zona-Assedio immediatamente.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cCome cittadino pacifico, non puoi passare facilmente attraverse le Zone-Assedio. Per rimuovere la Nausea da Guerra, abbandonare la Zona-Assedio immediatamente.'
-#Added on 0.42
+#Added in 0.42
 msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!. PVP protections are disabled here."
 msg_siege_zone_proximity_warning_with_logout_risk: "&cWARNING: You are in a Siege-Zone!. PVP protections are disabled here. You will be killed if you logout while in the Siege-Zone."
 msg_player_killed_for_logging_out_in_siege_zone: "%s was killed because they logged out while in a Siege-Zone."
 #Added in 0.43
+msg_err_cannot_surrender_liberation_siege: "&cYou cannot surrender the defence at a liberation siege."
 msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cWhile the siege assembly is in progress you cannot destroy the siege banner or the block it is attached to."
 msg_err_cannot_alter_blocks_near_siege_banner: 'You cannot place/destroy blocks at this location near the Siege Banner.'
