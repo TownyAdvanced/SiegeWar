@@ -66,44 +66,46 @@ public class PlaceBlock {
 			if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
 				return;
 
-			//Enforce Anti-Trap warfare build block if below siege banner altitude.
-			if (SiegeWarSettings.isTrapWarfareMitigationEnabled()
-					&& SiegeWarDistanceUtil.isLocationInSiegeZoneWildernessAndBelowSiegeBannerAltitude(event.getBlock().getLocation(), SiegeWarSettings.isTrapWarfareMitigationNearBannerOnly())) {
-				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_below_banner_in_siege_zone")));
-				event.setCancelled(true);
-				return;
-			}
-
+			//Check if material is banner or chest
 			Material mat = block.getType();
-
-			//Standing Banner placement
 			if (Tag.BANNERS.isTagged(mat) && !mat.toString().contains("_W")) {
 				try {
-					if (evaluatePlaceStandingBanner(player, block))
+					//Standing Banner placement				
+					if (evaluatePlaceStandingBanner(player, block)) {
 						event.setCancelled(false);
+						return;  //Special banner placement
+					}
 				} catch (TownyException e1) {
 					Messaging.sendErrorMsg(player, e1.getMessage());
 				}
-				return;
-			}
 
-			//Chest placement
-			if (mat == Material.CHEST || mat == Material.TRAPPED_CHEST) {
+			} else if (mat == Material.CHEST || mat == Material.TRAPPED_CHEST) {
 				try {
+					//Chest placement
 					evaluatePlaceChest(player, block);
 				} catch (TownyException e) {
 					Messaging.sendErrorMsg(player, e.getMessage());
 				}
+			}
+
+			//Trap warfare block protection
+			Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
+			if(nearbySiege != null
+					&& SiegeWarSettings.isTrapWarfareMitigationEnabled()
+					&& SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(
+						event.getLocation(),
+						nearbySiege)) {
+				event.setCancelled(true);
+				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_near_siege_banner")));
 				return;
 			}
 
-			//Check for forbidden siegezone block placement
-			if(SiegeWarSettings.getSiegeZoneWildernessForbiddenBlockMaterials().contains(mat)
-				&& TownyAPI.getInstance().isWilderness(block)
-				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(block.getLocation())) {
+			//Forbidden material placement prevention
+			if(nearbySiege != null
+				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenBlockMaterials().contains(mat)
+				&& TownyAPI.getInstance().isWilderness(block)) {
 					throw new TownyException(translator.of("msg_war_siege_zone_block_placement_forbidden"));
 			}
-
 		} catch (TownyException e) {
 			event.setCancelled(true);
 			event.setMessage(e.getMessage());
