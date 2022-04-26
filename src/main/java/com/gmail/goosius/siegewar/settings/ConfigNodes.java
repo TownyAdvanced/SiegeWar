@@ -1073,7 +1073,68 @@ public enum ConfigNodes {
 			"0",
 			"",
 			"# Within the protection radius, players cannot build below this height.",
-			"# The height is relative to the siege banner height");
+			"# The height is relative to the siege banner height"),
+	DOMINATION_AWARDS(
+			"domination_awards",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                  DOMINATION AWARDS                   | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	DOMINATION_AWARDS_ARTIFACT_SPECIFICATIONS(
+			"domination_awards.artifact_specifications",		
+			"Artifacts:" +
+			"\r\n  - sword_of_fiery_sharpness:" +
+			"\r\n      Name: 'Sword of Fiery Sharpness'"+
+			"\r\n      Quantity: 1"+
+    		"\r\n      Extra Lore: 'Optional Extra Lore etc'" +
+    		"\r\n      Material: 'diamond_sword'" +
+            "\r\n      Enchantments:" + 
+            "\r\n        - damage:" +
+            "\r\n            Effect: Damage_Increase" +
+            "\r\n            Level: 7" +
+            "\r\n        - fire:" +
+            "\r\n            Effect: Fire_Aspect" +
+            "\r\n            Level: 1" +
+            "\r\n",
+			"",
+			"The specification of artifacts"),
+	DOMINATION_AWARDS_GLOBAL(
+			"domination_awards.global",
+			"",
+			""),
+	DOMINATION_AWARDS_GLOBAL_ENABLED(
+			"domination_awards.global.enabled",
+			"",
+			"",
+			"# If this setting is true, then global domination awards are enabled."),
+	DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_PERIOD_HOURS(
+			"domination_awards.global.assessment_period_hours",
+			"150",
+			"",
+			"# The minimum assessment period required before awards are granted."),
+	DOMINATION_AWARDS_GLOBAL_REWARD_DAY(
+			"domination_awards.global.reward_day",
+			"Saturday",
+			"",
+			"# The day on which the award is granted. It will be granted on Towny New Day."),
+	DOMINATION_AWARDS_GLOBAL_MONEY(
+			"domination_awards.global.money",
+			"100,200,300,400,500,600,700",
+			"",
+			"# The money granted by the awards.",
+			"# This list is in the form of: bottom_nation, next nation,......top_nation}"),
+	DOMINATION_AWARDS_GLOBAL_ARTIFACTS(
+			"domination_awards.global.artifacts",
+			"[   {1,2,3,4,5,6,7},    {0,1,1,2,2,3,3},   {0,0,0,1,1,1,2}]",  
+			"",
+			"# The artifacts granted by the awards.",
+			"# The list is in the form of [{tier1},{tier2},tier3}].",
+			"# Within each tier, the form is: bottom_nation, next nation,......top_nation}");
 
 	private final String Root;
 	private final String Default;
