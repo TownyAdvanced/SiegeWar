@@ -1087,22 +1087,18 @@ public enum ConfigNodes {
 			""),
 	DOMINATION_AWARDS_ARTIFACT_SPECIFICATIONS(
 			"domination_awards.artifact_specifications",		
-			"Artifacts:" +
-			"\r\n  - sword_of_fiery_sharpness:" +
-			"\r\n      Name: 'Sword of Fiery Sharpness'"+
-			"\r\n      Quantity: 1"+
-    		"\r\n      Extra Lore: 'Optional Extra Lore etc'" +
-    		"\r\n      Material: 'diamond_sword'" +
-            "\r\n      Enchantments:" + 
-            "\r\n        - damage:" +
-            "\r\n            Effect: Damage_Increase" +
-            "\r\n            Level: 7" +
-            "\r\n        - fire:" +
-            "\r\n            Effect: Fire_Aspect" +
-            "\r\n            Level: 1" +
-            "\r\n",
+			"" +
+			"{sword_of_fiery_sharpness, 2, 1, diamond_sword, Damage_Increase:7, Fire_aspect:3} " +
+			"{helmet of missile shielding, 1, 1, diamond_helmet, arrow_resist:10} " + 
+			"{potion_of_major_fire_resistance, 1, 3, potion, fire_resistance:4:200:true:true} " +
+			"{arrow_of_doom, 3, 1, tipped_arrow, Harming:20:0:false:false} ",
 			"",
-			"The specification of artifacts"),
+			"List of Artifact Specifications.",
+			"There are 3 possible entry types:",
+			"1. {weapon_name, artefact_tier, quantity, material_key, effect1_key:power, effect2 etc....}",
+			"2. {armour_name, artefact_tier, quantity, material_key, effect1_key:power, effect2 etc....}",
+		    "3. {potion/arrow_name, artefact_tier, wuantity, material_key, effect1_key:power:duration:ambient:particles, effect2 etc....}",
+			""),
 	DOMINATION_AWARDS_GLOBAL(
 			"domination_awards.global",
 			"",
@@ -1130,10 +1126,10 @@ public enum ConfigNodes {
 			"# This list is in the form of: bottom_nation, next nation,......top_nation}"),
 	DOMINATION_AWARDS_GLOBAL_ARTIFACTS(
 			"domination_awards.global.artifacts",
-			"[   {1,2,3,4,5,6,7},    {0,1,1,2,2,3,3},   {0,0,0,1,1,1,2}]",  
+			"{1,2,3,4,5,6,7}  {0,1,1,2,2,3,3}  {0,0,0,1,1,1,2}",  
 			"",
 			"# The artifacts granted by the awards.",
-			"# The list is in the form of [{tier1},{tier2},tier3}].",
+			"# The list is in the form of {tier1} {tier2} tier3}.",
 			"# Within each tier, the form is: bottom_nation, next nation,......top_nation}");
 
 	private final String Root;
