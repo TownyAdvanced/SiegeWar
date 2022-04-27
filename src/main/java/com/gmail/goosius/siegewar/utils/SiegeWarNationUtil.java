@@ -1,12 +1,34 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class SiegeWarNationUtil {
+
+    public static final Comparator<Nation> BY_NUM_RESIDENTS = (n1, n2) -> {
+        return getEffectiveNation(n2).getResidents().size() 
+                     - getEffectiveNation(n1).getResidents().size();
+    };
+
+    public static final Comparator<Nation> BY_TOWNS= (n1, n2) -> {
+        return getEffectiveNation(n2).getNumTowns() 
+                     - getEffectiveNation(n1).getNumTowns();
+    };
+
+    public static final Comparator<Nation> BY_TOWNBLOCKS= (n1, n2) -> {
+        return getEffectiveNation(n2).getNumTownblocks() 
+                     - getEffectiveNation(n1).getNumTownblocks();
+    };
+
+    public static final Comparator<Nation> BY_ONLINE= (n1, n2) -> {    
+        return TownyAPI.getInstance().getOnlinePlayers(getEffectiveNation(n2)).size() 
+               - TownyAPI.getInstance().getOnlinePlayers(getEffectiveNation(n1)).size();
+    };
 
     /**
      * Calculate the 'effective' nation,

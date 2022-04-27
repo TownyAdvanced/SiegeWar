@@ -1087,17 +1087,16 @@ public enum ConfigNodes {
 			""),
 	DOMINATION_AWARDS_ARTIFACT_SPECIFICATIONS(
 			"domination_awards.artifact_specifications",		
-			"" +
-			"{sword_of_fiery_sharpness, 2, 1, diamond_sword, Damage_Increase:7, Fire_aspect:3} " +
-			"{helmet of missile shielding, 1, 1, diamond_helmet, arrow_resist:10} " + 
-			"{potion_of_major_fire_resistance, 1, 3, potion, fire_resistance:4:200:true:true} " +
-			"{arrow_of_doom, 3, 1, tipped_arrow, Harming:20:0:false:false} ",
+			"\r\n"
+			+ "\r\n" + "{potion_of_true_invisibility, 1, 3, potion, invisibility:2:80:false:false} "
+			+ "\r\n" + "{sword_of_fiery_knockback, 2, 1, stone_sword, Fire_Aspect:4, Knockback:4} "
+			+ "\r\n" + "{helmet of missile shielding, 2, 1, iron_helmet, arrow_resist:10} " 
+			+ "\r\n" + "{arrow_of_doom, 3, 1, tipped_arrow, Harming:20:0:true:true} ",
 			"",
 			"List of Artifact Specifications.",
-			"There are 3 possible entry types:",
-			"1. {weapon_name, artefact_tier, quantity, material_key, effect1_key:power, effect2 etc....}",
-			"2. {armour_name, artefact_tier, quantity, material_key, effect1_key:power, effect2 etc....}",
-		    "3. {potion/arrow_name, artefact_tier, wuantity, material_key, effect1_key:power:duration:ambient:particles, effect2 etc....}",
+			"There are 2 possible entry types:",
+			"1. {weapon/armour_name, artefact_tier, quantity, material_key, effect1_key:power, effect2 etc....}",
+		    "2. {potion/arrow_name, artefact_tier, wuantity, material_key, effect1_key:power:duration:ambient:particles, effect2 etc....}",
 			""),
 	DOMINATION_AWARDS_GLOBAL(
 			"domination_awards.global",
@@ -1113,19 +1112,19 @@ public enum ConfigNodes {
 			"150",
 			"",
 			"# The minimum assessment period required before awards are granted."),
-	DOMINATION_AWARDS_GLOBAL_REWARD_DAY(
-			"domination_awards.global.reward_day",
+	DOMINATION_AWARDS_GLOBAL_GRANT_DAY_OF_WEEK(
+			"domination_awards.global.grant_day_of_week",
 			"Saturday",
 			"",
 			"# The day on which the award is granted. It will be granted on Towny New Day."),
-	DOMINATION_AWARDS_GLOBAL_MONEY(
-			"domination_awards.global.money",
-			"100,200,300,400,500,600,700",
+	DOMINATION_AWARDS_GLOBAL_GRANTED_MONEY(
+			"domination_awards.global.granted_money",
+			"700,600,500,400,300,200,100",
 			"",
 			"# The money granted by the awards.",
-			"# This list is in the form of: bottom_nation, next nation,......top_nation}"),
-	DOMINATION_AWARDS_GLOBAL_ARTIFACTS(
-			"domination_awards.global.artifacts",
+			"# This list is in the form of: top_nation, next nation,......bottom_nation}"),
+	DOMINATION_AWARDS_GLOBAL_GRANTED_ARTIFACTS(
+			"domination_awards.global.granted_artifacts",
 			"{1,2,3,4,5,6,7}  {0,1,1,2,2,3,3}  {0,0,0,1,1,1,2}",  
 			"",
 			"# The artifacts granted by the awards.",

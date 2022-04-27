@@ -1,18 +1,17 @@
 package com.gmail.goosius.siegewar.settings;
 
 import java.time.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Translation;
 
 import org.bukkit.Material;
 
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
 import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 public class SiegeWarSettings {
@@ -607,4 +606,59 @@ public class SiegeWarSettings {
 	public static int getWarSiegeBattleSessionsDurationMinutes() {
 		return Settings.getInt(ConfigNodes.BATTLE_SESSION_SCHEDULER_DURATION_MINUTES);
 	}
+
+	public static boolean isDominationAwardsGlobalEnabled() {
+		return Settings.getBoolean(ConfigNodes.DOMINATION_AWARDS_GLOBAL_ENABLED);
+	}
+
+	public static int getDominationAwardsGlobalMinimumAssessmentPeriodHours() {
+		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_PERIOD_HOURS);
+	}
+
+	public static DayOfWeek getDominationAwardsGlobalGrantDayOfWeek() {
+		return DayOfWeek.valueOf(Settings.getString(ConfigNodes.DOMINATION_AWARDS_GLOBAL_GRANT_DAY_OF_WEEK).toUpperCase());
+	}
+
+	public static List<Integer> getDominationAwardsGlobalGrantedMoney() {
+		List<Integer> result = new ArrayList<>();
+		for(String entry: Settings.getString(ConfigNodes.DOMINATION_AWARDS_GLOBAL_GRANTED_MONEY).replaceAll(" ","").split(",")) {
+			result.add(Integer.parseInt(entry));
+		}
+		return result;
+	}
+
+	public static List<List<Integer>> getDominationAwardsGlobalGrantedArtifacts() {
+		List<List<Integer>> result = new ArrayList<>();
+		List<String> tiers = Settings.getListOfCurlyBracketedItems(ConfigNodes.DOMINATION_AWARDS_GLOBAL_GRANTED_ARTIFACTS);
+		String[] tierAsStringArray;
+		List<Integer> tierAsIntegerList;
+		for(String tierAsString: tiers) {
+			tierAsIntegerList = new ArrayList<>();
+			tierAsStringArray = tierAsString.replaceAll(" ","").split(",");
+			for(String numArtifacts: tierAsStringArray) {
+				tierAsIntegerList.add(Integer.parseInt(numArtifacts));
+			}
+			result.add(tierAsIntegerList);
+		}
+		return result;
+	}	
+
+	/**
+	 * Get domination awards artifact specifications
+	 * //TODO-Cache this
+	 * @return map of artefact specifications, tier -> Specs
+	 */
+	public static Map<Integer, List<String>> getDominationAwardsGlobalArtifactSpecifications() {
+		int artifactLevel;
+		Map<Integer, List<String>> result = new HashMap<>();
+		for(String artifactSpecification: Settings.getListOfCurlyBracketedItems(ConfigNodes.DOMINATION_AWARDS_ARTIFACT_SPECIFICATIONS)) {
+			artifactLevel = Integer.parseInt(artifactSpecification.replaceAll(" ","").split(",")[1]); 				
+			if(!result.containsKey(artifactLevel)) {
+				result.put(artifactLevel, new ArrayList<>());
+			} 
+			result.get(artifactLevel).add(artifactSpecification);
+		}
+		return result;
+	}
+
 }
