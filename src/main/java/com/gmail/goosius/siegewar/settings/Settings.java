@@ -20,6 +20,7 @@ public class Settings {
 	private static CommentedConfiguration config, newConfig;
 	private static File battleIconFile;
 	public static final String BATTLE_BANNER_FILE_NAME = "crossedswords.png";
+	public static final String PEACEFUL_BANNER_FILE_NAME = "fire.png";
 
 	public static boolean loadSettingsAndLang() {
 		SiegeWar sw = SiegeWar.getSiegeWar();

@@ -6,7 +6,7 @@ author: [Goosius,LlmDl]
 website: 'townyadvanced.github.io'
 prefix: ${project.artifactId}
 depend: [Towny]
-softdepend: [TownyCultures, dynmap, Cannons, Dynmap-Towny]
+softdepend: [TownyCultures, dynmap, Cannons, Dynmap-Towny, MapTowny]
 
 description: A war system made by Goosius for Towny.
 

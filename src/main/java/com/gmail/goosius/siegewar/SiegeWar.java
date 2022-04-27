@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar;
 
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.integration.maptowny.MapTownyIntegration;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -144,6 +145,10 @@ public class SiegeWar extends JavaPlugin {
 			if (getServer().getPluginManager().isPluginEnabled("dynmap")) {
 				info("SiegeWar found Dynmap plugin, enabling Dynmap support.");
 				new DynmapIntegration(this);
+			}
+			if (getServer().getPluginManager().isPluginEnabled("MapTowny")) {
+				info("SiegeWar found the MapTowny plugin, enabling MapTowny support.");
+				new MapTownyIntegration(this);
 			}
 		}
 	}

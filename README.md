@@ -24,3 +24,4 @@
 - Special thanks to the servers *CCNET*, *DatBlock*, and *EarthPol*, who pioneered the use of the system, and have provided much valuable information, feedback, and bug reports.
 - [Goosius1](https://github.com/Goosius1) was the maintainer of this repo for the TownyAdvanced org, until his retirement from *Minecraft* plugin development in October 2021.
 - *SiegeWar* is now maintained by the TownyAdvanced org.
+- "Fire" icon created by kosonicon
