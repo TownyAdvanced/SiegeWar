@@ -517,3 +517,9 @@ msg_err_cannot_alter_blocks_near_siege_banner: 'You cannot place/destroy blocks 
 
 #Message shown siege-wide when a player loses a siegewar rank while in a siegezone.
 warn_resident_had_rank_removed: 'Warning: %s had their rank %s taken from them while in the siegezone at %s.'
+#Message shown when a town kicks a resident who is in a siege zone.
+warn_resident_had_town_removed: 'Warning: %s was removed from town %s while in the siegezone at %s.'
+#Message shown when a nation kicks a town which has players in a siege zone.
+warn_nation_had_town_removed: 'Warning: %s was removed from nation %s while the player(s) %s were located in the siegezone at %s.'
+#Message shown when a nation removes an ally which has players in a siege zone.
+warn_nation_had_ally_removed: 'Warning: %s was removed as an ally from nation %s while the player(s) %s were located in the siegezone at %s.'
