@@ -15,17 +15,21 @@ import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.PreNewDayEvent;
+import com.palmergames.bukkit.towny.event.TownRemoveResidentRankEvent;
 import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
 import com.palmergames.bukkit.towny.event.TranslationLoadEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyExplosionDamagesEntityEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyFriendlyFireTestEvent;
+import com.palmergames.bukkit.towny.event.nation.NationRankRemoveEvent;
 import com.palmergames.bukkit.towny.event.teleport.OutlawTeleportEvent;
 import com.palmergames.bukkit.towny.event.time.NewHourEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.TranslationLoader;
-
+import com.palmergames.util.TimeMgmt;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -249,4 +253,61 @@ public class SiegeWarTownyEventListener implements Listener {
             event.setPVP(true);
         }
     }
+
+    /**
+     * Broadcast rank removal in SiegeZones.
+     */
+    @EventHandler
+    public void on(TownRemoveResidentRankEvent event) {
+        tryBroadCast(event.getRank(), event.getResident());
+    }
+
+    /**
+     * Broadcast rank removal in SiegeZones.
+     */
+    @EventHandler
+    public void on(NationRankRemoveEvent event) {
+        tryBroadCast(event.getRank(), event.getResident());
+    }
+
+    /**
+     * Check if a player is in the SiegeZone and losing a SiegeWar rank and
+     * broadcast the action to the public.
+     * 
+     * @param rank     Rank being taken from the resident.
+     * @param resident Resident losing their rank.
+     */
+    private void tryBroadCast(String rank, Resident resident) {
+        if (playerIsInSiegeZone(rank, resident))
+            broadCastPublicWarning(rank, resident);
+    }
+
+    /**
+     * Check if a player is in the SiegeZone and losing a SiegeWar rank
+     * 
+     * @param rank     Rank being taken from the resident.
+     * @param resident Resident losing their rank.
+     * @return true if the player is online, it is a siegewar rank and they are in a
+     *         siegezone.
+     */
+    private boolean playerIsInSiegeZone(String rank, Resident resident) {
+        return resident.isOnline() && rank.contains("siegewar")
+                && SiegeWarDistanceUtil.isLocationInActiveSiegeZone(resident.getPlayer().getLocation());
+    }
+
+    /**
+     * Broadcast a siege-wide message warning other players that a player lost a
+     * siegewar rank while in a siegezone.
+     * 
+     * @param rank     Rank being taken from the resident.
+     * @param resident Resident losing their rank.
+     */
+    private void broadCastPublicWarning(String rank, Resident resident) {
+        Siege siege = SiegeController.getActiveSiegeAtLocation(resident.getPlayer().getLocation());
+        if (siege != null)
+            SiegeWarNotificationUtil.informSiegeParticipants(siege, Translatable.of("warn_resident_had_rank_removed",
+                    resident.getName(), rank, TimeMgmt.getFormattedTimeValue(System.currentTimeMillis())));
+    }
+
 }
+
