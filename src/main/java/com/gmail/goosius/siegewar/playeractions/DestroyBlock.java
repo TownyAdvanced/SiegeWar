@@ -83,7 +83,8 @@ public class DestroyBlock {
 	 *
 	 * @return true if a wall breach has occurred
 	 */
-	private static boolean evaluateWallBreach(Translator translator, Block block, TownyDestroyEvent event) throws TownyException {
+	@SuppressWarnings("unused")
+    private static boolean evaluateWallBreach(Translator translator, Block block, TownyDestroyEvent event) throws TownyException {
 		if(TownyAPI.getInstance().isWilderness(block))
 			return false; //Wall breaching only applies in towns
 

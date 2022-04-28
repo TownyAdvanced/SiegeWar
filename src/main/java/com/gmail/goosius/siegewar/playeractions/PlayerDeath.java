@@ -28,9 +28,6 @@ import org.bukkit.block.Banner;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * This class intercepts 'player death' events coming from the TownyPlayerListener class.
