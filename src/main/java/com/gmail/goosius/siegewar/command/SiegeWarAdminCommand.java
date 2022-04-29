@@ -14,6 +14,7 @@ import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -39,13 +40,14 @@ import java.util.List;
 
 public class SiegeWarAdminCommand implements TabExecutor {
 
-	private static final List<String> siegewaradminTabCompletes = Arrays.asList("battlesession","install","nation","reload","revoltimmunity","siege","siegeimmunity","town");
+	private static final List<String> siegewaradminTabCompletes = Arrays.asList("dominationawards","battlesession","install","nation","reload","revoltimmunity","siege","siegeimmunity","town");
 	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
 	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setoccupier","removeoccupier");
 	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost");
 	private static final List<String> siegewaradminBattleSessionTabCompletes = Arrays.asList("end","start");
+	private static final List<String> siegewarglobalDominationAwardsTabCompletes = Arrays.asList("giveglobal");
 
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
@@ -124,6 +126,9 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		case "battlesession":
 			if (args.length == 2)
 				return NameUtil.filterByStart(siegewaradminBattleSessionTabCompletes, args[1]);
+		case "dominationawards":
+			if (args.length == 2)
+				return NameUtil.filterByStart(siegewarglobalDominationAwardsTabCompletes, args[1]);
 		default:
 			if (args.length == 1)
 				return NameUtil.filterByStart(siegewaradminTabCompletes, args[0]);
@@ -170,6 +175,9 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				break;
 			case "battlesession":
 				parseSiegeWarBattleSessionCommand(sender, StringMgmt.remFirstArg(args));
+				break;
+			case "dominationawards":
+				parseSiegeWarGlobalDominationAwardsCommand(sender, StringMgmt.remFirstArg(args));
 				break;
 
 			/*
@@ -357,11 +365,17 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownsgained [amount]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownslost [amount]", ""));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "battlesession [start/end]", ""));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "dominationawards giveglobal", ""));
 	}
 
 	private void showBattleSessionHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/swa battlesession"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "battlesession [start/end]", ""));
+	}
+	
+	private void showGlobalDominationAwardsHelp(CommandSender sender) {
+		sender.sendMessage(ChatTools.formatTitle("/swa dominationawards"));
+		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "dominationawards giveglobal", ""));
 	}
 	
 	private void showSiegeImmunityHelp(CommandSender sender) {
@@ -433,6 +447,16 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			Messaging.sendMsg(sender, Translatable.of("msg_battle_session_force_end"));
 		} else {
 			showBattleSessionHelp(sender);
+		}
+	}
+
+	private void parseSiegeWarGlobalDominationAwardsCommand(CommandSender sender, String[] args) {
+		if (args.length == 0) {
+			showGlobalDominationAwardsHelp(sender);
+		} else if (args[0].equalsIgnoreCase("giveglobal")) {
+			SiegeWarDominationAwardsUtil.grantGlobalDominationAwards();
+		} else {
+			showGlobalDominationAwardsHelp(sender);
 		}
 	}
 

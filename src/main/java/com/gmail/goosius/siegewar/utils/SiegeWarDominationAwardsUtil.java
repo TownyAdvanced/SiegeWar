@@ -1,8 +1,18 @@
 package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.objects.ArtefactOffer;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.WorldCoord;
+import org.bukkit.*;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Chest;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -20,6 +30,7 @@ public class SiegeWarDominationAwardsUtil {
      */
     public static void grantGlobalDominationAwards() {
         List<Integer> moneyToGrant = SiegeWarSettings.getDominationAwardsGlobalGrantedMoney();
+        List<List<Integer>> artefactsToGrant = SiegeWarSettings.getDominationAwardsGlobalGrantedOffers();
 
         //Sort nations list
         List<Nation> nations = new ArrayList<>(TownyUniverse.getInstance().getNations());
@@ -29,56 +40,76 @@ public class SiegeWarDominationAwardsUtil {
         int numberOfAwardees = Math.min(moneyToGrant.size(), nations.size());
                 
         //Gib awards
-        Nation nation;
+        Nation nation = null;
         for(int nationPosition = 0; nationPosition < numberOfAwardees; nationPosition++) {
-            nation = nations.get(nationPosition);
-            //Gib money
-            nation.getAccount().deposit(moneyToGrant.get(nationPosition), "Global Domination Award");    
-            //Gib artifacts
-            grantArtifactsToNation(generateArtifacts(nationPosition), nation);
+            try{
+                nation = nations.get(nationPosition);            
+                //Gib money
+                nation.getAccount().deposit(moneyToGrant.get(nationPosition), "Global Domination Award");    
+                //Gib artifacts
+                grantArtefactsToNation(artefactsToGrant.get(nationPosition), nation);
+            } catch(Throwable t) {
+                SiegeWar.severe("Problem granting global domination award to nation " + nation.getName());
+                SiegeWar.severe(t.getMessage());
+                t.printStackTrace();
+            }
         }                
     }
 
-    private static List<ItemStack> generateArtifacts(int nationPosition) {
-        List<ItemStack> result = new ArrayList<>();
-        List<List<Integer>> artifactGenerationNumbersByTier = SiegeWarSettings.getDominationAwardsGlobalGrantedArtifacts();
+    private static void grantArtefactsToNation(List<Integer> offersToGrantFromEachTier, Nation nation) {
+        List<ItemStack> artefactsToGrant = new ArrayList<>();
+        for(int tier = 0; tier < offersToGrantFromEachTier.size(); tier++) {
+            artefactsToGrant.addAll(generateArtefacts(tier, offersToGrantFromEachTier.get(tier)));
+        }
+        //Get chunk of capital homeblock
+        WorldCoord homeBlockCoord = nation.getCapital().getHomeBlockOrNull().getWorldCoord();
+        Location homeBlockLocation = new Location(homeBlockCoord.getBukkitWorld(), 
+                                                    homeBlockCoord.getX() * TownySettings.getTownBlockSize(),
+                                                    64,
+                                                    homeBlockCoord.getZ()* TownySettings.getTownBlockSize());
+        Chunk homeBlockChunk = homeBlockLocation.getChunk();
+        try {
+            homeBlockChunk.setForceLoaded(true);
+            homeBlockChunk.load();
+            //Find chests
+            List<Chest> chests = new ArrayList<>(); 
+            for(BlockState blockState: homeBlockChunk.getTileEntities()) {
+                if(blockState.getBlock().getType() == Material.CHEST
+                        || blockState.getBlock().getType() == Material.TRAPPED_CHEST) {
+                    chests.add((Chest)blockState);
+                }
+            }
+            //Deposit artefacts in chests
+            for(Chest chest: chests) {
+                 for(int i = 0; i < chest.getBlockInventory().getSize(); i++) {
+                     if(chest.getBlockInventory().getItem(i) == null) {                                                
+                        if(artefactsToGrant.size() == 0) {
+                            return; //All artefacts granted
+                        }
+                        //Put artefact in chest
+                        chest.getBlockInventory().setItem(i, artefactsToGrant.get(0));
+                        artefactsToGrant.remove(0);
+                     }
+                 }
+            }
+        } finally {
+            homeBlockChunk.setForceLoaded(false);
+            homeBlockChunk.unload();
+        }
+    }
 
-        for(int artifactTier = 0; artifactTier < artifactGenerationNumbersByTier.size(); artifactTier++) {
-            int numArtifactsToGenerate = artifactGenerationNumbersByTier.get(artifactTier).get(nationPosition);
-            result.addAll(generateArtifacts(artifactTier, numArtifactsToGenerate));
+    private static List<ItemStack> generateArtefacts(int tier, int numOffers) {
+        List<ItemStack> result = new ArrayList<>();
+        List<ArtefactOffer> offersInTier = SiegeWarSettings.getDominationAwardsArtefactOffers().get(tier+1);
+        for(int i = 0; i < numOffers; i++) {
+            //Identify Random offer
+            ArtefactOffer offer = offersInTier.get((int)(Math.random() * offersInTier.size()));
+            //Generate the artefacts specified by that offer
+            for(int ii = 0; ii < offer.quantity; ii++) {
+                result.add(offer.artefactTemplate.clone());
+            }
         }
         return result;
     }
 
-    private static List<ItemStack> generateArtifacts(int artifactTier, int numArtifactsToGenerate) {
-        List<ItemStack> result = new ArrayList<>();
-        for(int i = 0; i < numArtifactsToGenerate; i++) {
-            result.add(generateArtifact(SiegeWarSettings.getDominationAwardsGlobalArtifactSpecifications().get(artifactTier)));
-        }
-        return result;
-    }
-    
-    public static ItemStack generateArtifact(List<String> artifactSpecifications) {
-        //Pick 1 random artifact specification
-        String artifactSpecification = artifactSpecifications.get((int)(Math.random() * artifactSpecifications.size()));
-        
-        ItemStack result;
-        
-        BLAHBLAH
-        
-        return result;
-    }
-
-    private static void grantArtifactsToNation(List<ItemStack> artifacts, Nation nation) {
-        BLAH
-    }
-    /**
-     * Get nations list, sorted by num residents
-     * @return nations list, sorted by num residents
-     */
-    public List<Nation> getSortedNationsList() {
-        List<Nation> nationsList = new ArrayList<>(TownyUniverse.getInstance().getNations());
-        nationsList.sort(SiegeWarNationUtil.BY_NUM_RESIDENTS);
-        return nationsList;
-    }
 }

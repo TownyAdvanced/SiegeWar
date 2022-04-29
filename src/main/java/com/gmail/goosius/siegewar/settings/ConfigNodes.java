@@ -1085,18 +1085,19 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	DOMINATION_AWARDS_ARTIFACT_SPECIFICATIONS(
-			"domination_awards.artifact_specifications",		
-			"\r\n"
-			+ "\r\n" + "{potion_of_true_invisibility, 1, 3, potion, invisibility:2:80:false:false} "
-			+ "\r\n" + "{sword_of_fiery_knockback, 2, 1, stone_sword, Fire_Aspect:4, Knockback:4} "
-			+ "\r\n" + "{helmet of missile shielding, 2, 1, iron_helmet, arrow_resist:10} " 
-			+ "\r\n" + "{arrow_of_doom, 3, 1, tipped_arrow, Harming:20:0:true:true} ",
+	DOMINATION_AWARDS_ARTIFACT_OFFERS(
+			"domination_awards.artifact_offers",		
+			""
+			+ " {potion_of_true_invisibility, 1, 3, potion, invisibility:1:3600:false:false:true} "
+			+ " {sword_of_fiery_knockback, 2, 1, golden_sword, fire_aspect:4, knockback:4} "
+			+ " {helmet of missile shielding, 2, 1, iron_helmet, projectile_protection:10} "
+			+ " {arrow_of_doom, 3, 1, tipped_arrow, instant_damage:20:1:true:true:true} ",
 			"",
-			"List of Artifact Specifications.",
-			"There are 2 possible entry types:",
-			"1. {weapon/armour_name, artefact_tier, quantity, material_key, effect1_key:power, effect2 etc....}",
-		    "2. {potion/arrow_name, artefact_tier, wuantity, material_key, effect1_key:power:duration:ambient:particles, effect2 etc....}",
+			"# List of Artifact Specifications.",
+			"# There are 2 possible entry types:",
+			"# 1. {weapon/armour, artefact_tier, quantity, material_name, effect_name:power, (optional effect) (optional effect) ...}",
+		    "# 2. {'potion'/'tipped_arrow', artefact_tier, quantity, material_name, effect_name:power:duration:ambient:particles:icon, (optional effect) (optional effect) ...}",
+			"# TODO -arrow",
 			""),
 	DOMINATION_AWARDS_GLOBAL(
 			"domination_awards.global",
@@ -1122,14 +1123,14 @@ public enum ConfigNodes {
 			"700,600,500,400,300,200,100",
 			"",
 			"# The money granted by the awards.",
-			"# This list is in the form of: top_nation, next nation,......bottom_nation}"),
-	DOMINATION_AWARDS_GLOBAL_GRANTED_ARTIFACTS(
-			"domination_awards.global.granted_artifacts",
-			"{1,2,3,4,5,6,7}  {0,1,1,2,2,3,3}  {0,0,0,1,1,1,2}",  
+			"# This list is in the form of: top_nation, next nation,......bottom_nation"),
+	DOMINATION_AWARDS_GLOBAL_GRANTED_ARTIFACT_OFFERS(
+			"domination_awards.global.granted_artifact_offers",
+			"{1} {2,1} {3,1} {4,2,1} {5,2,1} {6,3,1} {7,3,2}",
 			"",
-			"# The artifacts granted by the awards.",
-			"# The list is in the form of {tier1} {tier2} tier3}.",
-			"# Within each tier, the form is: bottom_nation, next nation,......top_nation}");
+			"# The offers granted by the awards.",
+			"# This list is in the form of: {top_nation}, {next nation},......{bottom_nation}",
+			"# Within each nation, the form is: {num_tier_1_offers, num_tier_2_offers .....}. etc.");
 
 	private final String Root;
 	private final String Default;
