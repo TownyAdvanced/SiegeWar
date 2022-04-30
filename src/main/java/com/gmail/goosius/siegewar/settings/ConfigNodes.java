@@ -1099,6 +1099,12 @@ public enum ConfigNodes {
 		    "# 2. {'potion'/'tipped_arrow', artefact_tier, quantity, material_name, effect_name:power:duration:ambient:particles:icon, (optional effect) (optional effect) ...}",
 			"# TODO -arrow",
 			""),
+	DOMINATION_AWARDS_CHEST_SIGN_IDENTIFIERS(
+			"domination_awards.chest_sign_identifiers",
+			"artefacts, artifacts",
+			"",
+			"# When a nation is granted artefacts. the items get placed in chests in the capital homeblock.",
+			"# If the nation puts a sign on any chests with this text, those chests will be preferred."),			
 	DOMINATION_AWARDS_GLOBAL(
 			"domination_awards.global",
 			"",
@@ -1131,7 +1137,7 @@ public enum ConfigNodes {
 			"# The offers granted by the awards.",
 			"# This list is in the form of: {top_nation}, {next nation},......{bottom_nation}",
 			"# Within each nation, the form is: {num_tier_1_offers, num_tier_2_offers .....}. etc.");
-
+			
 	private final String Root;
 	private final String Default;
 	private String[] comments;

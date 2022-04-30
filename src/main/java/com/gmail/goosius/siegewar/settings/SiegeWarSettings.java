@@ -726,4 +726,11 @@ public class SiegeWarSettings {
 		boolean icon = Boolean.parseBoolean(effectSpec[5]);                
 		return new PotionEffect(potionEffectType, duration, amplifier, particles, ambient, icon);
 	}
+	
+	public static List<String> getDominationAwardsChestSignIdentifiers() {
+		String listAsString = Settings.getString(ConfigNodes.DOMINATION_AWARDS_CHEST_SIGN_IDENTIFIERS);
+		String[] list = listAsString.toLowerCase().replace(" ","").split(",");
+		return Arrays.asList(list); 
+	}
+
 }
