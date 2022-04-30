@@ -1,14 +1,15 @@
 package com.gmail.goosius.siegewar.listeners;
 
-import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
+import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
@@ -325,11 +326,6 @@ public class SiegeWarTownyEventListener implements Listener {
         // Gather a list of player names who are located in siegezones.
         Map<Siege, List<String>> siegePlayerMap = getSiegesAndPlayerNames(
                 TownyAPI.getInstance().getOnlinePlayersInNation(removedNation));
-        
-        // Inform the players of the Nation who've been removed as allies, if there were players in a siegezone.
-        if (!siegePlayerMap.values().isEmpty())
-            TownyAPI.getInstance().getOnlinePlayersInNation(removedNation).stream()
-                .forEach(p -> sendAllianceRemovalWarning(p, nation.getName()));
 
         for (Siege siege : siegePlayerMap.keySet())
             // Inform the players who are still a part of the Siege about the players in the Sieges' zones.
@@ -338,13 +334,6 @@ public class SiegeWarTownyEventListener implements Listener {
                     Translatable.of("warn_nation_had_ally_removed", removedNation.getName(), nation.getName(),
                         StringMgmt.join(siegePlayerMap.get(siege), ", "),
                         TimeMgmt.getFormattedTimeValue(System.currentTimeMillis())));
-    }
-
-    private void sendAllianceRemovalWarning(Player player, String nationName) {
-        // Message: 'Warning: %s has removed your nation as an ally, while some of your nation members are located inside of siegezones, at %s.'
-        Messaging.sendMsg(player, Translatable.of("warn_your_nation_has_been_removed_as_an_ally",
-                nationName,
-                TimeMgmt.getFormattedTimeValue(System.currentTimeMillis())));
     }
 
     /**
@@ -377,7 +366,8 @@ public class SiegeWarTownyEventListener implements Listener {
         Map<Siege, List<String>> siegePlayerMap = new HashMap<>();
         for (Player player : playersOnlineInGovernment) {
             Siege siege = SiegeController.getActiveSiegeAtLocation(player.getLocation());
-            if (siege != null) {
+            // Only put players into the map if they are an attacker or defender.
+            if (siege != null && !getPlayerSiegeSide(player, siege).equals(SiegeSide.NOBODY)) {
                 if (siegePlayerMap.containsKey(siege)) {
                     siegePlayerMap.get(siege).add(player.getName());
                 } else {
@@ -386,6 +376,17 @@ public class SiegeWarTownyEventListener implements Listener {
             }
         }
         return siegePlayerMap;
+    }
+
+    /**
+     * Get the side of a siege a player is on.
+     * 
+     * @param player Player to test.
+     * @param siege  Siege to get the side the player might be on.
+     * @return SiegeSide of the player.
+     */
+    private SiegeSide getPlayerSiegeSide(Player player, Siege siege) {
+        return SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, TownyAPI.getInstance().getResident(player).getTownOrNull(), siege);
     }
 
     /**
