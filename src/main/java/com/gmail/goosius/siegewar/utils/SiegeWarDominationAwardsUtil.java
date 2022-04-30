@@ -106,7 +106,7 @@ public class SiegeWarDominationAwardsUtil {
     private static List<Chest> identifySignedChests(BlockState[] tileEntities) {
         List<Chest> result = new ArrayList<>();      
         for(BlockState blockState: tileEntities) {
-            if(blockState instanceof WallSign) {
+            if(blockState.getBlockData() instanceof WallSign) {
                 WallSign wallSign = (WallSign) blockState.getBlockData();
                 BlockFace directionOfSignedBlock = wallSign.getFacing().getOppositeFace(); 
                 Block signedBlock = blockState.getBlock().getRelative(directionOfSignedBlock);
