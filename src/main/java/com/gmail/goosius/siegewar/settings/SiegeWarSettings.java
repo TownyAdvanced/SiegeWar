@@ -11,7 +11,6 @@ import org.bukkit.Material;
 import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -727,8 +726,8 @@ public class SiegeWarSettings {
 		return new PotionEffect(potionEffectType, duration, amplifier, particles, ambient, icon);
 	}
 	
-	public static List<String> getDominationAwardsChestSignIdentifiers() {
-		String listAsString = Settings.getString(ConfigNodes.DOMINATION_AWARDS_CHEST_SIGN_IDENTIFIERS);
+	public static List<String> getDominationAwardsArtefactChestSignsLowercase() {
+		String listAsString = Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS);
 		String[] list = listAsString.toLowerCase().replace(" ","").split(",");
 		return Arrays.asList(list); 
 	}

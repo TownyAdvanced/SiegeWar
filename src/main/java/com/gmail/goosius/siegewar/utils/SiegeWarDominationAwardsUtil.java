@@ -3,16 +3,13 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.ArtefactOffer;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.WorldCoord;
 import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.block.data.type.WallSign;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -119,12 +116,12 @@ public class SiegeWarDominationAwardsUtil {
                 for(String s: sign.getLines()) {
                     builder.append(s);
                 }
-                String text = builder.toString();
-                List<String> artefactSignatures = SiegeWarSettings.getDominationAwardsChestSignIdentifiers();
-                if(!artefactSignatures.contains(text.trim()))
+                String signTextLowercase = builder.toString().toLowerCase();
+                List<String> artefactChestSignsLowercase = SiegeWarSettings.getDominationAwardsArtefactChestSignsLowercase();
+                if(!artefactChestSignsLowercase.contains(signTextLowercase.trim()))
                     continue; 
                 //Here we know the chest qualifies as signed
-                result.add((Chest)blockState);
+                result.add((Chest)signedBlock.getState());
             }
         }
         return result;

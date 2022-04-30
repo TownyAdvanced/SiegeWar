@@ -1099,12 +1099,12 @@ public enum ConfigNodes {
 		    "# 2. {'potion'/'tipped_arrow', artefact_tier, quantity, material_name, effect_name:power:duration:ambient:particles:icon, (optional effect) (optional effect) ...}",
 			"# TODO -arrow",
 			""),
-	DOMINATION_AWARDS_CHEST_SIGN_IDENTIFIERS(
-			"domination_awards.chest_sign_identifiers",
+	DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS(
+			"domination_awards.artefact_chest_signs",
 			"artefacts, artifacts",
 			"",
 			"# When a nation is granted artefacts. the items get placed in chests in the capital homeblock.",
-			"# If the nation puts a sign on any chests with this text, those chests will be preferred."),			
+			"# If the nation puts a sign on any chests with one of these texts, those chests will be preferred."),			
 	DOMINATION_AWARDS_GLOBAL(
 			"domination_awards.global",
 			"",
