@@ -56,8 +56,8 @@ public class MapTownyIntegration {
         // Register replacement handler
         Bukkit.getPluginManager().registerEvents(new MapTownyReplacementsHandler(mapTowny), plugin);
 
-        // Register repeating task that runs every 2 seconds delayed by 15 seconds on start.
-        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::displaySieges, 40L, 300L);
+        // Re-render the sieges every time a new short time event triggers.
+        Bukkit.getPluginManager().registerEvents(new MapTownyShortTimeListener(this::displaySieges), plugin);
 
         final String pluginName = plugin.getName();
         // Run marker and layer setup on platform initialize
