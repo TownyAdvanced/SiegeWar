@@ -1114,17 +1114,17 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If this setting is true, then global domination awards are enabled."),
-	DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_PERIOD_HOURS(
-			"domination_awards.global.assessment_period_hours",
-			"150",
-			"",
-			"# The minimum assessment period required before awards are granted."),
 	DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_CRITERION(
 			"domination_awards.global.assessment_criterion",
 			"num_residents",
 			"",
 			"# The criterion by which the award winners are chosen.",
 			"# Allowed values: num_residents, num_towns, num_townblocks, num_online_players"),
+	DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_PERIOD_HOURS(
+			"domination_awards.global.assessment_period_hours",
+			"150",
+			"",
+			"# The minimum assessment period required before awards are granted."),
 	DOMINATION_AWARDS_GLOBAL_GRANT_DAY_OF_WEEK(
 			"domination_awards.global.grant_day_of_week",
 			"Saturday",
@@ -1138,7 +1138,7 @@ public enum ConfigNodes {
 			"# This list is in the form of: top_nation, next nation,......bottom_nation"),
 	DOMINATION_AWARDS_GLOBAL_GRANTED_ARTIFACT_OFFERS(
 			"domination_awards.global.granted_artifact_offers",
-			"{1} {2,1} {3,1} {4,2,1} {5,2,1} {6,3,1} {7,3,2}",
+			"{7,3,2} {6,3,1} {5,2,1} {4,2,1} {3,1} {2,1} {1}",			
 			"",
 			"# The offers granted by the awards.",
 			"# This list is in the form of: {top_nation}, {next nation},......{bottom_nation}",

@@ -94,7 +94,7 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onNewHour(NewHourEvent event) {
         if(SiegeWarSettings.getWarSiegeEnabled()) {
             SiegeWarImmunityUtil.evaluateExpiredImmunities();
-            //SiegeWarDominationAwardsUtil.addDominationRecords();
+            SiegeWarDominationAwardsUtil.addDominationRecords();
         }
     }
 
@@ -113,7 +113,6 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeHUDManager.updateHUDs();
             SiegeWarTimerTaskController.evaluateBeacons();
             SiegeWarNotificationUtil.warnAllPlayersOfSiegeDanger();
-            SiegeWarDominationAwardsUtil.addDominationRecords();
         }
     }
 
