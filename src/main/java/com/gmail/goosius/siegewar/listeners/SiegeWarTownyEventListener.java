@@ -367,7 +367,7 @@ public class SiegeWarTownyEventListener implements Listener {
         for (Player player : playersOnlineInGovernment) {
             Siege siege = SiegeController.getActiveSiegeAtLocation(player.getLocation());
             // Only put players into the map if they are an attacker or defender.
-            if (siege != null && !getPlayerSiegeSide(player, siege).equals(SiegeSide.NOBODY)) {
+            if (siege != null && getPlayerSiegeSide(player, siege).equals(SiegeSide.NOBODY)) {
                 if (siegePlayerMap.containsKey(siege)) {
                     siegePlayerMap.get(siege).add(player.getName());
                 } else {
