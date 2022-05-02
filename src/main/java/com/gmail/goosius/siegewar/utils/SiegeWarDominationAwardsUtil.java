@@ -21,6 +21,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
 import org.bukkit.inventory.ItemStack;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
@@ -34,49 +35,61 @@ import java.util.Comparator;
  */
 public class SiegeWarDominationAwardsUtil {
 
+    public static final String GLOBAL_DOMINATION_AWARDS_LOCK = "Global Domination Awards Lock";
+
     /**
      * Grant the global domination awards
      */
     public static void grantGlobalDominationAwards() {
-        List<Integer> moneyToGrant = SiegeWarSettings.getDominationAwardsGlobalGrantedMoney();
-        List<List<Integer>> artefactsToGrant = SiegeWarSettings.getDominationAwardsGlobalGrantedOffers();
-
-        //Sort nations list
-        List<Nation> nations = new ArrayList<>(TownyUniverse.getInstance().getNations());
-        Map<String, Comparator<Nation>> availableComparators = new HashMap<>();
-        availableComparators.put("num_residents", SiegeWarNationUtil.BY_NUM_RESIDENTS);
-        availableComparators.put("num_towns", SiegeWarNationUtil.BY_NUM_TOWNS);
-        availableComparators.put("num_townblocks", SiegeWarNationUtil.BY_NUM_TOWNBLOCKS);
-        availableComparators.put("num_online_players", SiegeWarNationUtil.BY_NUM_RESIDENTS);               
-        Comparator<Nation> nationSortComparator = availableComparators.get(SiegeWarSettings.getDominationAwardsGlobalAssessmentCriterion().toLowerCase());
-        if(nationSortComparator == null) {
-            SiegeWar.severe("Problem Granting Global Domination Awards. Unknown criterion: " + SiegeWarSettings.getDominationAwardsGlobalAssessmentCriterion());
+        if(!SiegeWarSettings.isDominationAwardsGlobalEnabled())
             return;
-        } else {
-            nations.sort(SiegeWarNationUtil.BY_NUM_RESIDENTS);     
-        }
+        if(LocalDateTime.now().getDayOfWeek() != SiegeWarSettings.getDominationAwardsGlobalGrantDayOfWeek())
+            return;
+        synchronized (GLOBAL_DOMINATION_AWARDS_LOCK) {
+            List<Integer> moneyToGrant = SiegeWarSettings.getDominationAwardsGlobalGrantedMoney();
+            List<List<Integer>> artefactsToGrant = SiegeWarSettings.getDominationAwardsGlobalGrantedOffers();
+    
+            //Get list of qualifying nations
+            List<Nation> nations = new ArrayList<>(TownyUniverse.getInstance().getNations());
+            nations = cullNationsWithTooFewDominationRecords(nations);
+            if(nations.size() == 0)
+                return; 
 
-        //The number of awardees will be as configured, or the size of the nations list, whichever is smaller, 
-        int numberOfAwardees = Math.min(moneyToGrant.size(), nations.size());
-                
-        //Gib awards
-        Nation nation = null;
-        for(int nationPosition = 0; nationPosition < numberOfAwardees; nationPosition++) {
-            try{
-                nation = nations.get(nationPosition);            
-                //Gib money
-                nation.getAccount().deposit(moneyToGrant.get(nationPosition), "Global Domination Award");    
-                //Gib artifacts
-                grantArtefactsToNation(artefactsToGrant.get(nationPosition), nation);
-            } catch(Throwable t) {
-                SiegeWar.severe("Problem granting global domination award to nation " + nation.getName());
-                SiegeWar.severe(t.getMessage());
-                t.printStackTrace();
+            //The number of awardees will be as configured, or the size of the nations list, whichever is smaller, 
+            int numberOfAwardees = Math.min(moneyToGrant.size(), nations.size());
+
+            //Sort nations by recorded dominance
+            nations.sort(SiegeWarNationUtil.BY_GLOBAL_DOMINATION_RANKING);     
+                  
+            //Gib awards
+            Nation nation = null;
+            for(int nationPosition = 0; nationPosition < numberOfAwardees; nationPosition++) {
+                try{
+                    nation = nations.get(nationPosition);            
+                    //Gib money
+                    nation.getAccount().deposit(moneyToGrant.get(nationPosition), "Global Domination Award");    
+                    //Gib artifacts
+                    grantArtefactsToNation(artefactsToGrant.get(nationPosition), nation);
+                } catch(Throwable t) {
+                    SiegeWar.severe("Problem granting global domination award to nation " + nation.getName());
+                    SiegeWar.severe(t.getMessage());
+                    t.printStackTrace();
+                }
             }
+            
+            //Global message
+            System.out.println("Global Domination Awards Granted");
+        }       
+    }
+
+    private static List<Nation> cullNationsWithTooFewDominationRecords(List<Nation> nations) {
+        int requiredRecords = SiegeWarSettings.getDominationAwardsGlobalMinimumAssessmentPeriodHours();
+        List<Nation> result = new ArrayList<>();
+        for(Nation nation: nations) {
+            if(NationMetaDataController.getDominationRecord(nation).size() >= requiredRecords)
+                result.add(nation);
         }
-        
-        //Global message
-        System.out.println("Global Domination Awards Granted");       
+        return result;
     }
 
     private static void grantArtefactsToNation(List<Integer> offersToGrantFromEachTier, Nation nation) {
@@ -198,19 +211,27 @@ public class SiegeWarDominationAwardsUtil {
         return result;
     }
 
-    public static void evaluateDominationAwards() {
-        if(!SiegeWarSettings.isDominationAwardsGlobalEnabled())
-            return;
-        //Increase domination records for all nations
-        List<Nation> sortedNationList = getSortedNationsList();            
-        List<String> dominationRecord;
-        for(int i = 0; i < sortedNationList.size(); i++) {
-            dominationRecord = NationMetaDataController.getDominationRecord(sortedNationList.get(i));
-            dominationRecord.add(Integer.toString(i);
+    /**
+     * Add a domination record to each nation, based on their current rank on the /n list.
+     */
+    public static void addDominationRecords() {
+        synchronized (GLOBAL_DOMINATION_AWARDS_LOCK) {
+            if(!SiegeWarSettings.isDominationAwardsGlobalEnabled())
+                return;
+            //Add a domination record for each nation
+            List<Nation> sortedNationList = getNationsListSortedNormally();            
+            List<String> dominationRecord;
+            Nation nation;
+            for(int i = 0; i < sortedNationList.size(); i++) {
+                nation = sortedNationList.get(i);
+                dominationRecord = NationMetaDataController.getDominationRecord(nation);
+                dominationRecord.add(Integer.toString(i));
+                NationMetaDataController.setDominationRecord(nation, dominationRecord);
+            }
         }
     }
-    
-    public static List<Nation> getSortedNationsList() {
+
+    public static List<Nation> getNationsListSortedNormally() {
         List<Nation> nations = new ArrayList<>(TownyUniverse.getInstance().getNations());
         Map<String, Comparator<Nation>> availableComparators = new HashMap<>();
         availableComparators.put("num_residents", SiegeWarNationUtil.BY_NUM_RESIDENTS);

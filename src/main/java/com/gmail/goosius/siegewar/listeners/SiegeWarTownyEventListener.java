@@ -84,6 +84,7 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onNewDay(PreNewDayEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
             TownPeacefulnessUtil.updateTownPeacefulnessCounters();
+            SiegeWarDominationAwardsUtil.grantGlobalDominationAwards();
         }
     }
     
@@ -94,7 +95,7 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onNewHour(NewHourEvent event) {
         if(SiegeWarSettings.getWarSiegeEnabled()) {
             SiegeWarImmunityUtil.evaluateExpiredImmunities();
-            SiegeWarDominationAwardsUtil.evaluateDominationAwards();
+            //SiegeWarDominationAwardsUtil.addDominationRecords();
         }
     }
 
@@ -113,6 +114,7 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeHUDManager.updateHUDs();
             SiegeWarTimerTaskController.evaluateBeacons();
             SiegeWarNotificationUtil.warnAllPlayersOfSiegeDanger();
+            SiegeWarDominationAwardsUtil.addDominationRecords();
         }
     }
 

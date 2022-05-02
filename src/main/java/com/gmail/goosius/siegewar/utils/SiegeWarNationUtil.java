@@ -1,12 +1,14 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class SiegeWarNationUtil {
 
@@ -29,6 +31,9 @@ public class SiegeWarNationUtil {
         return TownyAPI.getInstance().getOnlinePlayers(getEffectiveNation(n2)).size() 
                - TownyAPI.getInstance().getOnlinePlayers(getEffectiveNation(n1)).size();
     };
+
+    public static final Comparator<Nation> BY_GLOBAL_DOMINATION_RANKING =
+        Comparator.comparingInt(SiegeWarNationUtil::getGlobalDominationRank);
 
     /**
      * Calculate the 'effective' nation,
@@ -56,5 +61,23 @@ public class SiegeWarNationUtil {
         }
 
         return effectiveNation;
+    }
+
+    /**
+     * Get the global domination rank of the given nation
+     * 
+     * The rank is calculated by averaging the rankings of the nation over the last assessment period.
+     * 
+     * @param nation given nation
+     * @return rank, with 0 being the best
+     */
+    public static int getGlobalDominationRank(Nation nation) {
+        List<String> dominationRecords = NationMetaDataController.getDominationRecord(nation);
+        int sumOfRankings = 0;
+        for(String dominationRecord: dominationRecords) {
+            sumOfRankings += Integer.parseInt(dominationRecord);
+        }
+        int averageRanking = (int)((sumOfRankings / dominationRecords.size()) + 0.5);
+        return averageRanking;        
     }
 }
