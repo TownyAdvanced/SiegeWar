@@ -80,8 +80,9 @@ public class SiegeWarTownyEventListener implements Listener {
     @EventHandler
     public void onNewDay(PreNewDayEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled()) {
-            if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled())
+            if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
                 TownPeacefulnessUtil.updateTownPeacefulnessCounters();
+            }
             SiegeWarDominationAwardsUtil.grantGlobalDominationAwards();
         }
     }

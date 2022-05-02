@@ -41,15 +41,24 @@ public class SiegeWarDominationAwardsUtil {
             return;
         if(LocalDateTime.now().getDayOfWeek() != SiegeWarSettings.getDominationAwardsGlobalGrantDayOfWeek())
             return;
+        grantGlobalDominationAwardsNow();
+    }
+        
+    /**
+     * Grant the global domination awards now, without waiting for the correct day
+     */
+    public static void grantGlobalDominationAwardsNow() {
         synchronized (GLOBAL_DOMINATION_AWARDS_LOCK) {
             List<Integer> moneyToGrant = SiegeWarSettings.getDominationAwardsGlobalGrantedMoney();
             List<List<Integer>> artefactsToGrant = SiegeWarSettings.getDominationAwardsGlobalGrantedOffers();
-    
+
             //Get list of qualifying nations
             List<Nation> nations = new ArrayList<>(TownyUniverse.getInstance().getNations());
             nations = cullNationsWithTooFewDominationRecords(nations);
-            if(nations.size() == 0)
+            if(nations.size() == 0) {
+                SiegeWar.info("Global Domination Awards: No nations qualified for awards this week, due to having too few domination records.");
                 return; 
+            }
 
             //The number of awardees will be as configured, or the size of the nations list, whichever is smaller, 
             int numberOfAwardees = Math.min(moneyToGrant.size(), nations.size());
@@ -106,28 +115,33 @@ public class SiegeWarDominationAwardsUtil {
                                                     64,
                                                     homeBlockCoord.getZ()* TownySettings.getTownBlockSize());
         Chunk homeBlockChunk = homeBlockLocation.getChunk();
+        //Drop artefacts into chests               
+        SiegeWar.getSiegeWar().getServer().getScheduler().runTask(SiegeWar.getSiegeWar(), ()->  dropItemsInChests(homeBlockChunk, artefactsToGrant));
+    }
+
+    private static void dropItemsInChests(Chunk chunk, List<ItemStack> itemsToGrant) {
         try {
-            homeBlockChunk.setForceLoaded(true);
-            homeBlockChunk.load();
+            chunk.setForceLoaded(true);
+            chunk.load();
             
             //Identify Chests
-            BlockState[] tileEntities = homeBlockChunk.getTileEntities();
+            BlockState[] tileEntities = chunk.getTileEntities();
             List<Chest> signedChests = identifySignedChests(tileEntities);            
             List<Chest> generalChests = identifyChests(tileEntities, signedChests);
             
             //Deposit artefacts
-            depositArtefactsIntoChests(artefactsToGrant, signedChests);
-            if(artefactsToGrant.size() > 0) 
-                depositArtefactsIntoChests(artefactsToGrant, generalChests);
-            if(artefactsToGrant.size() > 0)         
+            depositArtefactsIntoChests(itemsToGrant, signedChests);
+            if(itemsToGrant.size() > 0) 
+                depositArtefactsIntoChests(itemsToGrant, generalChests);
+            if(itemsToGrant.size() > 0)         
                 System.out.println("Could not deposit not enough chests");
                 //TODO - add propor message to above
                 
             //TODO here --- Propor success message
             System.out.println("Artefacts granted to nation");  
         } finally {
-            homeBlockChunk.setForceLoaded(false);
-            homeBlockChunk.unload();
+            chunk.setForceLoaded(false);
+            chunk.unload();
         }
     }
 
