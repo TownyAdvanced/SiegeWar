@@ -22,11 +22,7 @@ import org.bukkit.block.data.type.WallSign;
 import org.bukkit.inventory.ItemStack;
 
 import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.*;
 
 /**
  * This class contains utility functions related to domination awards
@@ -70,15 +66,21 @@ public class SiegeWarDominationAwardsUtil {
                     nation.getAccount().deposit(moneyToGrant.get(nationPosition), "Global Domination Award");    
                     //Gib artifacts
                     grantArtefactsToNation(artefactsToGrant.get(nationPosition), nation);
+                    //Global message
+                    System.out.println("Global Domination Awards Granted");
                 } catch(Throwable t) {
                     SiegeWar.severe("Problem granting global domination award to nation " + nation.getName());
                     SiegeWar.severe(t.getMessage());
                     t.printStackTrace();
                 }
             }
-            
-            //Global message
-            System.out.println("Global Domination Awards Granted");
+
+            //Remove all domination records
+            nations = new ArrayList<>(TownyUniverse.getInstance().getNations());
+            for(Nation nationForRecordRemoval: nations) {
+                NationMetaDataController.setDominationRecord(nationForRecordRemoval, Collections.emptyList());
+                nationForRecordRemoval.save();
+            }
         }       
     }
 
@@ -227,6 +229,7 @@ public class SiegeWarDominationAwardsUtil {
                 dominationRecord = NationMetaDataController.getDominationRecord(nation);
                 dominationRecord.add(Integer.toString(i));
                 NationMetaDataController.setDominationRecord(nation, dominationRecord);
+                nation.save();
             }
         }
     }

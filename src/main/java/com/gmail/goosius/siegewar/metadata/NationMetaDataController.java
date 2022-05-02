@@ -133,8 +133,12 @@ public class NationMetaDataController {
     }
 
 	public static List<String> getDominationRecord(Nation nation) {
-        String[] array = getSdf(nation, dominationRecordKey).replaceAll(" ", "").split(",");
-        return new ArrayList<>(Arrays.asList(array));
+        String recordString = getSdf(nation, dominationRecordKey).replaceAll(" ", "");
+        if(recordString.length() > 0) {
+            return new ArrayList<>(Arrays.asList(recordString.split(",")));
+        } else {
+            return new ArrayList<>();
+        }
 	}
 
 	public static void setDominationRecord(Nation nation, List<String> dominationRecord) {

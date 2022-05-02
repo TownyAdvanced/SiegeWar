@@ -76,14 +76,12 @@ public class SiegeWarTownyEventListener implements Listener {
 			for (Map.Entry<String, String> map : translations.get(language).entrySet())
 				event.addTranslation(language, map.getKey(), map.getValue());
 	}
-	
-    /*
-     * Update town peacefulness counters.
-     */
+
     @EventHandler
     public void onNewDay(PreNewDayEvent event) {
-        if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
-            TownPeacefulnessUtil.updateTownPeacefulnessCounters();
+        if (SiegeWarSettings.getWarSiegeEnabled()) {
+            if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled())
+                TownPeacefulnessUtil.updateTownPeacefulnessCounters();
             SiegeWarDominationAwardsUtil.grantGlobalDominationAwards();
         }
     }

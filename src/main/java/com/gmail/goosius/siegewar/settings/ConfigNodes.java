@@ -1111,7 +1111,7 @@ public enum ConfigNodes {
 			""),
 	DOMINATION_AWARDS_GLOBAL_ENABLED(
 			"domination_awards.global.enabled",
-			"",
+			"true",
 			"",
 			"# If this setting is true, then global domination awards are enabled."),
 	DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_PERIOD_HOURS(
