@@ -8,11 +8,7 @@ import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
-import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
+import com.gmail.goosius.siegewar.utils.*;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.PreNewDayEvent;
 import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
@@ -98,6 +94,7 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onNewHour(NewHourEvent event) {
         if(SiegeWarSettings.getWarSiegeEnabled()) {
             SiegeWarImmunityUtil.evaluateExpiredImmunities();
+            SiegeWarDominationAwardsUtil.evaluateDominationAwards();
         }
     }
 

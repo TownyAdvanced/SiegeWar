@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.ArtefactOffer;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -25,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
-
 
 /**
  * This class contains utility functions related to domination awards
@@ -198,4 +198,31 @@ public class SiegeWarDominationAwardsUtil {
         return result;
     }
 
+    public static void evaluateDominationAwards() {
+        if(!SiegeWarSettings.isDominationAwardsGlobalEnabled())
+            return;
+        //Increase domination records for all nations
+        List<Nation> sortedNationList = getSortedNationsList();            
+        List<String> dominationRecord;
+        for(int i = 0; i < sortedNationList.size(); i++) {
+            dominationRecord = NationMetaDataController.getDominationRecord(sortedNationList.get(i));
+            dominationRecord.add(Integer.toString(i);
+        }
+    }
+    
+    public static List<Nation> getSortedNationsList() {
+        List<Nation> nations = new ArrayList<>(TownyUniverse.getInstance().getNations());
+        Map<String, Comparator<Nation>> availableComparators = new HashMap<>();
+        availableComparators.put("num_residents", SiegeWarNationUtil.BY_NUM_RESIDENTS);
+        availableComparators.put("num_towns", SiegeWarNationUtil.BY_NUM_TOWNS);
+        availableComparators.put("num_townblocks", SiegeWarNationUtil.BY_NUM_TOWNBLOCKS);
+        availableComparators.put("num_online_players", SiegeWarNationUtil.BY_NUM_RESIDENTS);               
+        Comparator<Nation> nationSortComparator = availableComparators.get(SiegeWarSettings.getDominationAwardsGlobalAssessmentCriterion().toLowerCase());
+        if(nationSortComparator == null) {
+            throw new RuntimeException("Problem Granting Global Domination Awards. Unknown criterion: " + SiegeWarSettings.getDominationAwardsGlobalAssessmentCriterion());
+        } else {
+            nations.sort(nationSortComparator);     
+            return nations;      
+        }
+    }
 }

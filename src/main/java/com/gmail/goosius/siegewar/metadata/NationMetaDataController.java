@@ -5,7 +5,11 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
+import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class NationMetaDataController {
     @SuppressWarnings("unused")
@@ -15,7 +19,8 @@ public class NationMetaDataController {
         plunderGained = "siegewar_totalplundergained",
         plunderLost = "siegewar_totalplunderlost",
         townsGained = "siegewar_totaltownsgained",
-        townsLost = "siegewar_totaltownslost";
+        townsLost = "siegewar_totaltownslost",
+        dominationRecordKey = "siegewar_dominationrecord";
 
     private static final LongDataField pendingSiegeImmunityMillis = new LongDataField("siegewar_pendingSiegeImmunityMillis");
 
@@ -30,6 +35,15 @@ public class NationMetaDataController {
                 return ((IntegerDataField) cdf).getValue();
         }
         return 0;
+    }
+    
+    public static String getSdf(Nation nation, String key) {
+        if (nation.hasMeta(key)) {
+            CustomDataField<?> cdf = nation.getMetadata(key);
+            if (cdf instanceof StringDataField)
+                return ((StringDataField) cdf).getValue();
+        }
+        return "";
     }
 
     public static void setIdf(Nation nation, String key, int num) {
@@ -46,6 +60,22 @@ public class NationMetaDataController {
             }
         } else if (num != 0)
             nation.addMetaData(new IntegerDataField(key, num));
+    }
+
+    public static void setSdf(Nation nation, String key, String value) {
+        if (nation.hasMeta(key)) {
+            if (value == null || value.length() == 0)
+                nation.removeMetaData(nation.getMetadata(key));
+            else {
+                CustomDataField<?> cdf = nation.getMetadata(key);
+                if (cdf instanceof StringDataField) {
+                    ((StringDataField) cdf).setValue(value);
+                    nation.save();
+                }
+                return;
+            }
+        } else if (value != null && value.length() > 0)
+            nation.addMetaData(new StringDataField(key, value));
     }
 
     public static int getTotalPlunderGained(Nation nation) {
@@ -101,4 +131,13 @@ public class NationMetaDataController {
             nation.removeMetaData(ldf);
     }
 
+	public static List<String> getDominationRecord(Nation nation) {
+        String[] array = getSdf(nation, dominationRecordKey).replaceAll(" ", "").split(",");
+        return Arrays.asList(array);
+	}
+
+	public static void setDominationRecord(Nation nation, List<String> dominationRecord) {
+        String string = dominationRecord.toString().replace("[", "").replace("]","");
+        setSdf(nation, dominationRecordKey, string);
+    }
 }
