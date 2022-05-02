@@ -5,16 +5,14 @@ import com.gmail.goosius.siegewar.objects.ArtefactOffer;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.WorldCoord;
-import org.bukkit.*;
-import org.bukkit.block.*;
 import org.bukkit.block.data.type.WallSign;
 import org.bukkit.inventory.ItemStack;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class contains utility functions related to domination awards
@@ -32,8 +30,19 @@ public class SiegeWarDominationAwardsUtil {
 
         //Sort nations list
         List<Nation> nations = new ArrayList<>(TownyUniverse.getInstance().getNations());
-        nations.sort(SiegeWarNationUtil.BY_NUM_RESIDENTS);
-        
+        Map<String, Comparator<Nation>> availableComparators = new HashMap<>();
+        availableComparators.put("num_residents", SiegeWarNationUtil.BY_NUM_RESIDENTS);
+        availableComparators.put("num_towns", SiegeWarNationUtil.BY_NUM_TOWNS);
+        availableComparators.put("num_townblocks", SiegeWarNationUtil.BY_NUM_TOWNBLOCKS);
+        availableComparators.put("num_online_players", SiegeWarNationUtil.BY_NUM_RESIDENTS);               
+        Comparator<Nation> nationSortComparator = availableComparators.get(SiegeWarSettings.getDominationAwardsGlobalAssessmentCriterion().toLowerCase());
+        if(nationSortComparator == null) {
+            SiegeWar.severe("Problem Granting Global Domination Awards. Unknown criterion: " + SiegeWarSettings.getDominationAwardsGlobalAssessmentCriterion());
+            return;
+        } else {
+            nations.sort(SiegeWarNationUtil.BY_NUM_RESIDENTS);     
+        }
+
         //The number of awardees will be as configured, or the size of the nations list, whichever is smaller, 
         int numberOfAwardees = Math.min(moneyToGrant.size(), nations.size());
                 

@@ -619,6 +619,14 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_PERIOD_HOURS);
 	}
 
+	public static String getDominationAwardsGlobalAssessmentCriterion() {
+		return Settings.getString(ConfigNodes.DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_CRITERION);
+	}
+
+
+
+
+
 	public static DayOfWeek getDominationAwardsGlobalGrantDayOfWeek() {
 		return DayOfWeek.valueOf(Settings.getString(ConfigNodes.DOMINATION_AWARDS_GLOBAL_GRANT_DAY_OF_WEEK).toUpperCase());
 	}

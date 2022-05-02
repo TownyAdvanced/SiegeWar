@@ -1119,6 +1119,12 @@ public enum ConfigNodes {
 			"150",
 			"",
 			"# The minimum assessment period required before awards are granted."),
+	DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_CRITERION(
+			"domination_awards.global.assessment_criterion",
+			"num_residents",
+			"",
+			"# The criterion by which the award winners are chosen.",
+			"# Allowed values: num_residents, num_towns, num_townblocks, num_online_players"),
 	DOMINATION_AWARDS_GLOBAL_GRANT_DAY_OF_WEEK(
 			"domination_awards.global.grant_day_of_week",
 			"Saturday",

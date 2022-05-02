@@ -290,13 +290,13 @@ public class SiegeWarNationEventListener implements Listener {
 				nationList.sort(SiegeWarNationUtil.BY_NUM_RESIDENTS);
 				break;
 			case TOWNBLOCKS:
-				nationList.sort(SiegeWarNationUtil.BY_TOWNBLOCKS);
+				nationList.sort(SiegeWarNationUtil.BY_NUM_TOWNBLOCKS);
 				break;
 			case ONLINE:
-				nationList.sort(SiegeWarNationUtil.BY_ONLINE);
+				nationList.sort(SiegeWarNationUtil.BY_NUM_ONLINE_PLAYERS);
 				break;
 			case TOWNS:
-				nationList.sort(SiegeWarNationUtil.BY_TOWNS);
+				nationList.sort(SiegeWarNationUtil.BY_NUM_TOWNS);
 				break;
 			default:
 				return;	

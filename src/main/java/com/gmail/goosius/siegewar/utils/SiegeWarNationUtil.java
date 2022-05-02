@@ -15,17 +15,17 @@ public class SiegeWarNationUtil {
                      - getEffectiveNation(n1).getResidents().size();
     };
 
-    public static final Comparator<Nation> BY_TOWNS= (n1, n2) -> {
+    public static final Comparator<Nation> BY_NUM_TOWNS = (n1, n2) -> {
         return getEffectiveNation(n2).getNumTowns() 
                      - getEffectiveNation(n1).getNumTowns();
     };
 
-    public static final Comparator<Nation> BY_TOWNBLOCKS= (n1, n2) -> {
+    public static final Comparator<Nation> BY_NUM_TOWNBLOCKS = (n1, n2) -> {
         return getEffectiveNation(n2).getNumTownblocks() 
                      - getEffectiveNation(n1).getNumTownblocks();
     };
 
-    public static final Comparator<Nation> BY_ONLINE= (n1, n2) -> {    
+    public static final Comparator<Nation> BY_NUM_ONLINE_PLAYERS = (n1, n2) -> {    
         return TownyAPI.getInstance().getOnlinePlayers(getEffectiveNation(n2)).size() 
                - TownyAPI.getInstance().getOnlinePlayers(getEffectiveNation(n1)).size();
     };
