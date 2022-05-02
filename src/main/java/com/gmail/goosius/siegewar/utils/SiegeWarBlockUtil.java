@@ -15,8 +15,6 @@ import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,8 +27,6 @@ import java.util.Set;
  * @author Goosius
  */
 public class SiegeWarBlockUtil {
-
-	private static Set<Player> pendingAntiGlitchTeleports = new HashSet<>();
 
 	/**
 	 * This method gets a list of all adjacent townblocks.

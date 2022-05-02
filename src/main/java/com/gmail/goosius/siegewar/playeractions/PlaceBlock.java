@@ -117,7 +117,8 @@ public class PlaceBlock {
 	 *
 	 * @return true if a wall breach has occurred
 	 */
-	private static boolean evaluateWallBreach(Translator translator, Block block, TownyBuildEvent event) throws TownyException {
+	@SuppressWarnings("unused")
+    private static boolean evaluateWallBreach(Translator translator, Block block, TownyBuildEvent event) throws TownyException {
 		if(TownyAPI.getInstance().isWilderness(block))
 			return false; //Wall breaching only applies in towns
 

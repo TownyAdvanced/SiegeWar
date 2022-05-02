@@ -8,7 +8,6 @@ import com.palmergames.bukkit.towny.exceptions.TownyException;
 
 import org.bukkit.Material;
 
-import com.gmail.goosius.siegewar.objects.HeldItemsCombination;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -20,15 +19,16 @@ import org.jetbrains.annotations.Nullable;
 
 public class SiegeWarSettings {
 	
-	private static List<HeldItemsCombination> mapHidingItems = null;
 	private static List<Material> siegeZoneWildernessForbiddenBlockMaterials = null;
 	private static List<Material> siegeZoneWildernessForbiddenBucketMaterials = null;
 	private static List<EntityType> siegeZoneWildernessForbiddenExplodeEntityTypes = null;
-	private static EnumSet<Material> cachedWallBreachingPlaceBlocksWhitelist = null;
-	private static EnumSet<Material> cachedWallBreachingDestroyBlocksBlacklist = null;
-	private static Boolean cachedWallBreachingDestroyEntityBlacklist = null;
+	@SuppressWarnings("unused")
+    private static EnumSet<Material> cachedWallBreachingPlaceBlocksWhitelist = null;
+	@SuppressWarnings("unused")
+    private static EnumSet<Material> cachedWallBreachingDestroyBlocksBlacklist = null;
+	@SuppressWarnings("unused")
+    private static Boolean cachedWallBreachingDestroyEntityBlacklist = null;
 	protected static void resetCachedSettings() {
-		mapHidingItems = null;
 		siegeZoneWildernessForbiddenBlockMaterials = null;
 		siegeZoneWildernessForbiddenBucketMaterials = null;
 		siegeZoneWildernessForbiddenExplodeEntityTypes = null;

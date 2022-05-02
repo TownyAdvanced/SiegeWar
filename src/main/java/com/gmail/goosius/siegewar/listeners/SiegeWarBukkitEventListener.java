@@ -2,10 +2,7 @@ package com.gmail.goosius.siegewar.listeners;
 
 import java.util.List;
 
-import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
-import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,9 +16,6 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.PotionSplashEvent;
-import org.bukkit.event.entity.LingeringPotionSplashEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
