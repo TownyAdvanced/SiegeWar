@@ -37,7 +37,7 @@ public class NationMetaDataController {
         }
         return 0;
     }
-    
+
     public static String getSdf(Nation nation, String key) {
         if (nation.hasMeta(key)) {
             CustomDataField<?> cdf = nation.getMetadata(key);

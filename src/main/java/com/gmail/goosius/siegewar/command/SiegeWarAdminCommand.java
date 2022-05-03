@@ -372,7 +372,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		sender.sendMessage(ChatTools.formatTitle("/swa battlesession"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "battlesession [start/end]", ""));
 	}
-	
+
 	private void showGlobalDominationAwardsHelp(CommandSender sender) {
 		sender.sendMessage(ChatTools.formatTitle("/swa dominationawards"));
 		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "dominationawards giveglobal", ""));

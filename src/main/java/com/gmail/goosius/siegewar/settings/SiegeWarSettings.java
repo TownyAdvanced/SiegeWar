@@ -1,7 +1,18 @@
 package com.gmail.goosius.siegewar.settings;
 
-import java.time.*;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.EnumSet;
+import java.util.ArrayList;
+import java.util.Locale;
+
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import com.gmail.goosius.siegewar.objects.ArtefactOffer;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -653,7 +664,7 @@ public class SiegeWarSettings {
 	 *
 	 * @return map of artefact offers
 	 * The map is in the form of:   tier -> List of offers
-	 * 
+	 *
 	 * WARNING:
 	 * Make sure to clone any of the items before granting.
 	 */
@@ -665,12 +676,12 @@ public class SiegeWarSettings {
 			//Create convenience variables
 			String[] specificationFields = artefactOfferAsString.replaceAll(" ","").split(",");
 	        String name = specificationFields[0];
-    	    int tier = Integer.parseInt(specificationFields[1]);
-        	List<String> lore = new ArrayList<>();
-        	lore.add("Artifact - Tier " + tier);        
+			int tier = Integer.parseInt(specificationFields[1]);
+			List<String> lore = new ArrayList<>();
+			lore.add("Artifact - Tier " + tier);
 			int quantity = Integer.parseInt(specificationFields[2]);
 			Material material = Material.matchMaterial("minecraft:" + specificationFields[3]);
-			
+
 			//Create artefact
 			ItemStack artefact = new ItemStack(material);
 			ItemMeta itemMeta = artefact.getItemMeta();
@@ -684,9 +695,9 @@ public class SiegeWarSettings {
 			if(!result.containsKey(tier)) {
 				result.put(tier, new ArrayList<>());
 			} 
-			result.get(tier).add(artefactOffer);			
+			result.get(tier).add(artefactOffer);
 		}
-		return result;	
+		return result;
 	}
 
 	private static void addSpecialEffects(ItemStack artefact, String[] specificationFields) {
@@ -698,42 +709,42 @@ public class SiegeWarSettings {
             enchantmentSpecs.add(specificationFields[i].split(":"));
         }
 
-        //Add enchants    
+        //Add enchants
         if(material == Material.POTION
                 || material == Material.SPLASH_POTION
                 || material == Material.LINGERING_POTION
                 || material == Material.TIPPED_ARROW ) {
             for(String[] enchantSpec: enchantmentSpecs) {
                 PotionEffect potionEffect = generatePotionEffect(enchantSpec);
-              	((PotionMeta)itemMeta).addCustomEffect(potionEffect, true);
+				((PotionMeta)itemMeta).addCustomEffect(potionEffect, true);
             }
 
         } else {
             for(String[] enchantSpec: enchantmentSpecs) {
 				Enchantment enchantment = Enchantment.getByKey(NamespacedKey.fromString("minecraft:"+ enchantSpec[0]));
                 int power = Integer.parseInt(enchantSpec[1]);
-                itemMeta.addEnchant(enchantment, power, true);   
+                itemMeta.addEnchant(enchantment, power, true);
             }
 		}
-		
+
 		//Set updated item meta
 		artefact.setItemMeta(itemMeta);
 	}
-	
+
 	private static PotionEffect generatePotionEffect(String[] effectSpec) {
 		PotionEffectType potionEffectType = PotionEffectType.getByKey(NamespacedKey.fromString("minecraft:" + effectSpec[0]));
 		int amplifier = Integer.parseInt(effectSpec[1]);
 		int duration = Integer.parseInt(effectSpec[2]);
 		boolean particles = Boolean.parseBoolean(effectSpec[3]);
 		boolean ambient = Boolean.parseBoolean(effectSpec[4]);
-		boolean icon = Boolean.parseBoolean(effectSpec[5]);                
+		boolean icon = Boolean.parseBoolean(effectSpec[5]);
 		return new PotionEffect(potionEffectType, duration, amplifier, particles, ambient, icon);
 	}
-	
+
 	public static List<String> getDominationAwardsArtefactChestSignsLowercase() {
 		String listAsString = Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS);
 		String[] list = listAsString.toLowerCase().replace(" ","").split(",");
-		return Arrays.asList(list); 
+		return Arrays.asList(list);
 	}
 
 }

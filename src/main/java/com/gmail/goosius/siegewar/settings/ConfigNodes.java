@@ -1086,7 +1086,7 @@ public enum ConfigNodes {
 			"############################################################",
 			""),
 	DOMINATION_AWARDS_ARTIFACT_OFFERS(
-			"domination_awards.artifact_offers",		
+			"domination_awards.artifact_offers",
 			""
 			+ " {potion_of_true_invisibility, 1, 3, potion, invisibility:1:3600:false:false:true} "
 			+ " {sword_of_fiery_knockback, 2, 1, golden_sword, fire_aspect:4, knockback:4} "
@@ -1104,7 +1104,7 @@ public enum ConfigNodes {
 			"artefacts, artifacts",
 			"",
 			"# When a nation is granted artefacts. the items get placed in chests in the capital homeblock.",
-			"# If the nation puts a sign on any chests with one of these texts, those chests will be preferred."),			
+			"# If the nation puts a sign on any chests with one of these texts, those chests will be preferred."),
 	DOMINATION_AWARDS_GLOBAL(
 			"domination_awards.global",
 			"",
@@ -1138,12 +1138,12 @@ public enum ConfigNodes {
 			"# This list is in the form of: top_nation, next nation,......bottom_nation"),
 	DOMINATION_AWARDS_GLOBAL_GRANTED_ARTIFACT_OFFERS(
 			"domination_awards.global.granted_artifact_offers",
-			"{7,3,2} {6,3,1} {5,2,1} {4,2,1} {3,1} {2,1} {1}",			
+			"{7,3,2} {6,3,1} {5,2,1} {4,2,1} {3,1} {2,1} {1}",
 			"",
 			"# The offers granted by the awards.",
 			"# This list is in the form of: {top_nation}, {next nation},......{bottom_nation}",
 			"# Within each nation, the form is: {num_tier_1_offers, num_tier_2_offers .....}. etc.");
-			
+
 	private final String Root;
 	private final String Default;
 	private String[] comments;

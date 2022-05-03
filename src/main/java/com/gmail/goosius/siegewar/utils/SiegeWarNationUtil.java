@@ -27,7 +27,7 @@ public class SiegeWarNationUtil {
                      - getEffectiveNation(n1).getNumTownblocks();
     };
 
-    public static final Comparator<Nation> BY_NUM_ONLINE_PLAYERS = (n1, n2) -> {    
+    public static final Comparator<Nation> BY_NUM_ONLINE_PLAYERS = (n1, n2) -> {
         return TownyAPI.getInstance().getOnlinePlayers(getEffectiveNation(n2)).size() 
                - TownyAPI.getInstance().getOnlinePlayers(getEffectiveNation(n1)).size();
     };
@@ -65,9 +65,9 @@ public class SiegeWarNationUtil {
 
     /**
      * Get the global domination rank of the given nation
-     * 
+     *
      * The rank is calculated by averaging the rankings of the nation over the last assessment period.
-     * 
+     *
      * @param nation given nation
      * @return rank, with 0 being the best
      */
@@ -78,6 +78,6 @@ public class SiegeWarNationUtil {
             sumOfRankings += Integer.parseInt(dominationRecord);
         }
         int averageRanking = (int)((sumOfRankings / dominationRecords.size()) + 0.5);
-        return averageRanking;        
+        return averageRanking;
     }
 }
