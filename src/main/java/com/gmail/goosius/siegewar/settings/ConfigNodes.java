@@ -1085,18 +1085,18 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	DOMINATION_AWARDS_ARTIFACT_OFFERS(
-			"domination_awards.artifact_offers",
+	DOMINATION_AWARDS_ARTEFACT_OFFERS(
+			"domination_awards.artefact_offers",
 			""
 			+ " {potion_of_true_invisibility, 1, 3, potion, invisibility:1:3600:false:false:true} "
 			+ " {sword_of_fiery_knockback, 2, 1, golden_sword, fire_aspect:4, knockback:4} "
 			+ " {helmet of missile shielding, 2, 1, iron_helmet, projectile_protection:10} "
 			+ " {arrow_of_doom, 3, 1, tipped_arrow, instant_damage:20:1:true:true:true} ",
 			"",
-			"# List of Artifact Specifications.",
+			"# List of Artefact Specifications.",
 			"# There are 2 possible entry types:",
-			"# 1. {weapon/armour, artefact_tier, quantity, material_name, effect_name:power, (optional effect) (optional effect) ...}",
-		    "# 2. {'potion'/'tipped_arrow', artefact_tier, quantity, material_name, effect_name:power:duration:ambient:particles:icon, (optional effect) (optional effect) ...}",
+			"# 1. {weapon/armour name, artefact_tier, quantity, material_name, effect_name:power, (optional effect) (optional effect) ...}",
+		        "# 2. {potion/arrow name, artefact_tier, quantity, material_name, effect_name:power:duration:ambient:particles:icon, (optional effect) (optional effect) ...}",
 			"# TODO -arrow",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS(
@@ -1136,8 +1136,8 @@ public enum ConfigNodes {
 			"",
 			"# The money granted by the awards.",
 			"# This list is in the form of: top_nation, next nation,......bottom_nation"),
-	DOMINATION_AWARDS_GLOBAL_GRANTED_ARTIFACT_OFFERS(
-			"domination_awards.global.granted_artifact_offers",
+	DOMINATION_AWARDS_GLOBAL_GRANTED_ARTEFACT_OFFERS(
+			"domination_awards.global.granted_artefact_offers",
 			"{7,3,2} {6,3,1} {5,2,1} {4,2,1} {3,1} {2,1} {1}",
 			"",
 			"# The offers granted by the awards.",
