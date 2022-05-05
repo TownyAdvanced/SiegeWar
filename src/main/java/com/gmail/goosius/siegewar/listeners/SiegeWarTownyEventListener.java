@@ -3,11 +3,13 @@ package com.gmail.goosius.siegewar.listeners;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
+import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
@@ -15,18 +17,28 @@ import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.event.NationRemoveAllyEvent;
+import com.palmergames.bukkit.towny.event.NationRemoveTownEvent;
 import com.palmergames.bukkit.towny.event.PreNewDayEvent;
+import com.palmergames.bukkit.towny.event.TownRemoveResidentEvent;
+import com.palmergames.bukkit.towny.event.TownRemoveResidentRankEvent;
 import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
 import com.palmergames.bukkit.towny.event.TranslationLoadEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyExplosionDamagesEntityEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyFriendlyFireTestEvent;
+import com.palmergames.bukkit.towny.event.nation.NationRankRemoveEvent;
 import com.palmergames.bukkit.towny.event.teleport.OutlawTeleportEvent;
 import com.palmergames.bukkit.towny.event.time.NewHourEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.TranslationLoader;
-
+import com.palmergames.util.StringMgmt;
+import com.palmergames.util.TimeMgmt;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -34,10 +46,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -250,5 +265,176 @@ public class SiegeWarTownyEventListener implements Listener {
                 && SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone(event.getAttacker())) {
             event.setPVP(true);
         }
+    }
+
+    /**
+     * Broadcast rank removal in SiegeZones.
+     * 
+     * @param event TownRemoveResidentEvent.
+     */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void on(TownRemoveResidentRankEvent event) {
+        tryBroadCastRankRemoval(event.getRank(), event.getResident());
+    }
+
+    /**
+     * Broadcast rank removal in SiegeZones.
+     * 
+     * @param event NationRankRemoveEvent
+     */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void on(NationRankRemoveEvent event) {
+        tryBroadCastRankRemoval(event.getRank(), event.getResident());
+    }
+
+    /**
+     * Broadcast town removal in SiegeZones.
+     * 
+     * @param event TownRemoveResidentEvent.
+     */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void on(TownRemoveResidentEvent event) {
+        tryBroadCastTownRemoval(event.getResident(), event.getTown());
+    }
+
+    /**
+     * Broadcast nation removal in SiegeZones.
+     * 
+     * @param event NationRemoveTownEvent.
+     */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void on(NationRemoveTownEvent event) {
+        tryBroadCastNationRemoval(event.getTown(), event.getNation());
+    }
+
+    /**
+     * Broadcast nation ally removal in SiegeZones.
+     * 
+     * @param event NationRemoveAllyEvent.
+     */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void on(NationRemoveAllyEvent event) {
+        tryBroadCastNationAllyRemoval(event.getRemovedNation(), event.getNation());
+    }
+
+    /**
+     * Check over the players in a nation when that nation has been removed as an
+     * ally, to see if they're in a siegezone.
+     * 
+     * @param removedNation Nation which is no longer an ally.
+     * @param nation        Nation which has removed an ally.
+     */
+    private void tryBroadCastNationAllyRemoval(Nation removedNation, Nation nation) {
+        // Gather a list of player names who are located in siegezones.
+        Map<Siege, List<String>> siegePlayerMap = getSiegesAndPlayerNames(
+                TownyAPI.getInstance().getOnlinePlayersInNation(removedNation));
+
+        for (Siege siege : siegePlayerMap.keySet())
+            // Inform the players who are still a part of the Siege about the players in the Sieges' zones.
+            SiegeWarNotificationUtil.informSiegeParticipants(siege,
+                    // Message: 'Warning: %s was removed as an ally from nation %s while the player(s) %s were located in the siegezone at %s.'
+                    Translatable.of("warn_nation_had_ally_removed", removedNation.getName(), nation.getName(),
+                        StringMgmt.join(siegePlayerMap.get(siege), ", "),
+                        TimeMgmt.getFormattedTimeValue(System.currentTimeMillis())));
+    }
+
+    /**
+     * Check over the players in a town to see if they're in a siegezone.
+     * 
+     * @param town   Town that got removed from the nation.
+     * @param nation Nation that removed the town.
+     */
+    private void tryBroadCastNationRemoval(Town town, Nation nation) {
+        Map<Siege, List<String>> siegePlayerMap = getSiegesAndPlayerNames(
+                TownyAPI.getInstance().getOnlinePlayersInTown(town));
+        for (Siege siege : siegePlayerMap.keySet()) {
+            SiegeWarNotificationUtil.informSiegeParticipants(siege,
+                    // Message: 'Warning: %s was removed from nation %s while the player(s) %s were located in the siegezone at %s.'
+                    Translatable.of("warn_nation_had_town_removed", town.getName(), nation.getName(),
+                            StringMgmt.join(siegePlayerMap.get(siege), ", "),
+                            TimeMgmt.getFormattedTimeValue(System.currentTimeMillis())));
+        }
+    }
+
+    /**
+     * Returns a map keyed with Sieges which has Players located in their SiegeZone.
+     * 
+     * @param playersOnlineInGovernment List of Players which are online from a
+     *                                  select Town or Nation.
+     * @return siegePlayerMap A map of Sieges and the names of the players located
+     *         in those siege zones.
+     */
+    private Map<Siege, List<String>> getSiegesAndPlayerNames(List<Player> playersOnlineInGovernment) {
+        Map<Siege, List<String>> siegePlayerMap = new HashMap<>();
+        for (Player player : playersOnlineInGovernment) {
+            Siege siege = SiegeController.getActiveSiegeAtLocation(player.getLocation());
+            // Only put players into the map if they are an attacker or defender.
+            if (siege != null && getPlayerSiegeSide(player, siege).equals(SiegeSide.NOBODY)) {
+                if (siegePlayerMap.containsKey(siege)) {
+                    siegePlayerMap.get(siege).add(player.getName());
+                } else {
+                    siegePlayerMap.put(siege, Collections.singletonList(player.getName()));
+                }
+            }
+        }
+        return siegePlayerMap;
+    }
+
+    /**
+     * Get the side of a siege a player is on.
+     * 
+     * @param player Player to test.
+     * @param siege  Siege to get the side the player might be on.
+     * @return SiegeSide of the player.
+     */
+    private SiegeSide getPlayerSiegeSide(Player player, Siege siege) {
+        return SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, TownyAPI.getInstance().getResident(player).getTownOrNull(), siege);
+    }
+
+    /**
+     * Check if a player is in the SiegeZone when they were removed from the town.
+     * 
+     * @param resident Resident losing their town.
+     * @param town     Town the resident was a part of.
+     */
+    private void tryBroadCastTownRemoval(Resident resident, Town town) {
+        Siege siege = siegeAtPlayerLocation(resident);
+        if (siege != null)
+            SiegeWarNotificationUtil.informSiegeParticipants(siege,
+                    // Message: 'Warning: %s was removed from town %s while in the siegezone at %s.'
+                    Translatable.of("warn_resident_had_town_removed",
+                    resident.getName(), town.getName(), TimeMgmt.getFormattedTimeValue(System.currentTimeMillis())));
+    }
+
+    /**
+     * Check if a player is in the SiegeZone and losing a SiegeWar rank and
+     * broadcast the action to the public.
+     * 
+     * @param rank     Rank being taken from the resident.
+     * @param resident Resident losing their rank.
+     */
+    private void tryBroadCastRankRemoval(String rank, Resident resident) {
+        if (rank.contains("siegewar")) {
+            Siege siege = siegeAtPlayerLocation(resident);
+            if (siege != null)
+                SiegeWarNotificationUtil.informSiegeParticipants(siege,
+                        // Message: 'Warning: %s had their rank %s taken from them while in the siegezone at %s.'
+                        Translatable.of("warn_resident_had_rank_removed", resident.getName(), rank,
+                                TimeMgmt.getFormattedTimeValue(System.currentTimeMillis())));
+        }
+    }
+
+    /**
+     * Return an active Siege based on the location of the Resident, if they are
+     * online.
+     * 
+     * @param resident Resident losing their rank.
+     * @return an active Siege or null.
+     */
+    @Nullable
+    private Siege siegeAtPlayerLocation(Resident resident) {
+        if (resident.isOnline())
+            return SiegeController.getActiveSiegeAtLocation(resident.getPlayer().getLocation());
+        return null;
     }
 }
