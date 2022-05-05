@@ -94,7 +94,7 @@ public class SiegeWarDominationAwardsUtil {
                         artefactText = Translatable.of("domination_awards_global_grant_message_artefact_problem").toString();
                     }
                     //Add to Global message                     
-                    globalMessageLines.add(Translatable.of("domination_awards_global_grant_message_recipient_line", moneyText, artefactText));
+                    globalMessageLines.add(Translatable.of("domination_awards_global_grant_message_recipient_line", nation.getName(), moneyText, artefactText));
                 } catch(Throwable t) {
                     SiegeWar.severe("Problem granting global domination award to nation " + nation.getName());
                     SiegeWar.severe(t.getMessage());
@@ -142,21 +142,25 @@ public class SiegeWarDominationAwardsUtil {
             return false;
         if(!nation.getCapital().hasHomeBlock())
             return false;
-        WorldCoord homeBlockCoord = nation.getCapital().getHomeBlockOrNull().getWorldCoord();
-        Location homeBlockLocation = new Location(homeBlockCoord.getBukkitWorld(), 
-                                                    homeBlockCoord.getX() * TownySettings.getTownBlockSize(),
+        WorldCoord homeBlockWorldCoord = nation.getCapital().getHomeBlockOrNull().getWorldCoord();
+        Location homeBlockLocation = new Location(homeBlockWorldCoord.getBukkitWorld(), 
+                                                    homeBlockWorldCoord.getX() * TownySettings.getTownBlockSize(),
                                                     64,
-                                                    homeBlockCoord.getZ()* TownySettings.getTownBlockSize());
+                                                    homeBlockWorldCoord.getZ()* TownySettings.getTownBlockSize());
         Chunk homeBlockChunk = homeBlockLocation.getChunk();
         //Drop artefacts into chests               
-        SiegeWar.getSiegeWar().getServer().getScheduler().runTask(SiegeWar.getSiegeWar(), ()->  dropItemsInChests(nation, homeBlockChunk, artefactsToGrant));
+        SiegeWar.getSiegeWar().getServer().getScheduler().runTask(SiegeWar.getSiegeWar(), ()->  dropItemsInChests(nation, homeBlockChunk, homeBlockWorldCoord, artefactsToGrant));
         return true;
     }
 
-    private static void dropItemsInChests(Nation nation, Chunk chunk, List<ItemStack> itemsToGrant) {
+    private static void dropItemsInChests(Nation nation, Chunk chunk, WorldCoord homeBlockWorldCoord, List<ItemStack> itemsToGrant) {
         try {
-            chunk.setForceLoaded(true);
-            chunk.load();
+            homeBlockWorldCoord.loadChunks();
+//            chunk.setForceLoaded(true);
+ //           chunk.load();
+            
+            
+
             
             //Identify Chests
             BlockState[] tileEntities = chunk.getTileEntities();
@@ -171,8 +175,9 @@ public class SiegeWarDominationAwardsUtil {
                 TownyMessaging.sendPrefixedNationMessage(nation, Translatable.of("domination_awards_nation_grant_message_not_enough_chests"));
 
         } finally {
-            chunk.setForceLoaded(false);
-            chunk.unload();
+            homeBlockWorldCoord.unloadChunks();
+            //chunk.setForceLoaded(false);
+            //chunk.unload();
         }
     }
 
