@@ -1,12 +1,16 @@
 package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.ArtefactOffer;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.WorldCoord;
 
 import org.bukkit.Location;
@@ -37,8 +41,6 @@ public class SiegeWarDominationAwardsUtil {
      * Grant the global domination awards
      */
     public static void grantGlobalDominationAwards() {
-        if(!SiegeWarSettings.isDominationAwardsGlobalEnabled())
-            return;
         if(LocalDateTime.now().getDayOfWeek() != SiegeWarSettings.getDominationAwardsGlobalGrantDayOfWeek())
             return;
         grantGlobalDominationAwardsNow();
@@ -68,21 +70,40 @@ public class SiegeWarDominationAwardsUtil {
                   
             //Gib awards
             Nation nation = null;
+            String moneyText;
+            String artefactText;
+            Translatable globalMessageHeader = Translatable.of("domination_awards_global_grant_message_header");
+            List<Translatable> globalMessageLines = new ArrayList<>();
             for(int nationPosition = 0; nationPosition < numberOfAwardees; nationPosition++) {
                 try{
                     nation = nations.get(nationPosition);            
                     //Gib money
-                    nation.getAccount().deposit(moneyToGrant.get(nationPosition), "Global Domination Award");    
+                    if(TownyEconomyHandler.isActive()) {
+                        if(nation.getAccount().deposit(moneyToGrant.get(nationPosition), "Global Domination Award")) {
+                            moneyText = TownyEconomyHandler.getFormattedBalance(moneyToGrant.get(nationPosition));
+                        } else {
+                            moneyText = Translatable.of("domination_awards_global_grant_message_money_problem").toString();
+                        }
+                    } else{
+                        moneyText = Translatable.of("msg_na").toString();
+                    }
                     //Gib artefacts
-                    grantArtefactsToNation(artefactsToGrant.get(nationPosition), nation);
-                    //Global message
-                    System.out.println("Global Domination Awards Granted");
+                    if(grantArtefactsToNation(artefactsToGrant.get(nationPosition), nation)) {
+                        artefactText = Integer.toString(calculateTotalArtefacts(artefactsToGrant.get(nationPosition)));
+                    } else {
+                        artefactText = Translatable.of("domination_awards_global_grant_message_artefact_problem").toString();
+                    }
+                    //Add to Global message                     
+                    globalMessageLines.add(Translatable.of("domination_awards_global_grant_message_recipient_line", moneyText, artefactText));
                 } catch(Throwable t) {
                     SiegeWar.severe("Problem granting global domination award to nation " + nation.getName());
                     SiegeWar.severe(t.getMessage());
                     t.printStackTrace();
                 }
             }
+
+            //Send Global Message now
+            Messaging.sendGlobalMessage(globalMessageHeader, globalMessageLines);
 
             //Remove all domination records
             nations = new ArrayList<>(TownyUniverse.getInstance().getNations());
@@ -91,6 +112,14 @@ public class SiegeWarDominationAwardsUtil {
                 nationForRecordRemoval.save();
             }
         }       
+    }
+
+    private static int calculateTotalArtefacts(List<Integer> artefactTiers) {
+        int result = 0;
+        for(Integer artefactTier: artefactTiers) {
+            result += artefactTier;
+        }
+        return result;
     }
 
     private static List<Nation> cullNationsWithTooFewDominationRecords(List<Nation> nations) {
@@ -103,12 +132,16 @@ public class SiegeWarDominationAwardsUtil {
         return result;
     }
 
-    private static void grantArtefactsToNation(List<Integer> offersToGrantFromEachTier, Nation nation) {
+    private static boolean grantArtefactsToNation(List<Integer> offersToGrantFromEachTier, Nation nation) {
         List<ItemStack> artefactsToGrant = new ArrayList<>();
         for(int tier = 0; tier < offersToGrantFromEachTier.size(); tier++) {
             artefactsToGrant.addAll(generateArtefacts(tier, offersToGrantFromEachTier.get(tier)));
         }
         //Get chunk of capital homeblock
+        if(!nation.hasCapital())
+            return false;
+        if(!nation.getCapital().hasHomeBlock())
+            return false;
         WorldCoord homeBlockCoord = nation.getCapital().getHomeBlockOrNull().getWorldCoord();
         Location homeBlockLocation = new Location(homeBlockCoord.getBukkitWorld(), 
                                                     homeBlockCoord.getX() * TownySettings.getTownBlockSize(),
@@ -116,10 +149,11 @@ public class SiegeWarDominationAwardsUtil {
                                                     homeBlockCoord.getZ()* TownySettings.getTownBlockSize());
         Chunk homeBlockChunk = homeBlockLocation.getChunk();
         //Drop artefacts into chests               
-        SiegeWar.getSiegeWar().getServer().getScheduler().runTask(SiegeWar.getSiegeWar(), ()->  dropItemsInChests(homeBlockChunk, artefactsToGrant));
+        SiegeWar.getSiegeWar().getServer().getScheduler().runTask(SiegeWar.getSiegeWar(), ()->  dropItemsInChests(nation, homeBlockChunk, artefactsToGrant));
+        return true;
     }
 
-    private static void dropItemsInChests(Chunk chunk, List<ItemStack> itemsToGrant) {
+    private static void dropItemsInChests(Nation nation, Chunk chunk, List<ItemStack> itemsToGrant) {
         try {
             chunk.setForceLoaded(true);
             chunk.load();
@@ -133,12 +167,9 @@ public class SiegeWarDominationAwardsUtil {
             depositArtefactsIntoChests(itemsToGrant, signedChests);
             if(itemsToGrant.size() > 0) 
                 depositArtefactsIntoChests(itemsToGrant, generalChests);
-            if(itemsToGrant.size() > 0)         
-                System.out.println("Could not deposit not enough chests");
-                //TODO - add propor message to above
-                
-            //TODO here --- Propor success message
-            System.out.println("Artefacts granted to nation");  
+            if(itemsToGrant.size() > 0)
+                TownyMessaging.sendPrefixedNationMessage(nation, Translatable.of("domination_awards_nation_grant_message_not_enough_chests"));
+
         } finally {
             chunk.setForceLoaded(false);
             chunk.unload();

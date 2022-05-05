@@ -103,7 +103,9 @@ public class SiegeWarTownyEventListener implements Listener {
             if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
                 TownPeacefulnessUtil.updateTownPeacefulnessCounters();
             }
-            SiegeWarDominationAwardsUtil.grantGlobalDominationAwards();
+            if(SiegeWarSettings.isDominationAwardsGlobalEnabled()) {
+                SiegeWarDominationAwardsUtil.grantGlobalDominationAwards();
+            }   
         }
     }
     
