@@ -1096,9 +1096,7 @@ public enum ConfigNodes {
 			"# List of Artefact Specifications.",
 			"# There are 2 possible entry types:",
 			"# 1. {weapon/armour name, artefact_tier, quantity, material_name, effect_name:power, (optional effect) (optional effect) ...}",
-		        "# 2. {potion/arrow name, artefact_tier, quantity, material_name, effect_name:power:duration:ambient:particles:icon, (optional effect) (optional effect) ...}",
-			"# TODO -arrow",
-			""),
+		    "# 2. {potion/arrow name, artefact_tier, quantity, material_name, effect_name:power:duration:ambient:particles:icon, (optional effect) (optional effect) ...}"),
 	DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS(
 			"domination_awards.artefact_chest_signs",
 			"artefacts, artifacts",

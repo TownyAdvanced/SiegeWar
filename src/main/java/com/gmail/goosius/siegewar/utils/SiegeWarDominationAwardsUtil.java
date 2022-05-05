@@ -73,7 +73,7 @@ public class SiegeWarDominationAwardsUtil {
                     nation = nations.get(nationPosition);            
                     //Gib money
                     nation.getAccount().deposit(moneyToGrant.get(nationPosition), "Global Domination Award");    
-                    //Gib artifacts
+                    //Gib artefacts
                     grantArtefactsToNation(artefactsToGrant.get(nationPosition), nation);
                     //Global message
                     System.out.println("Global Domination Awards Granted");

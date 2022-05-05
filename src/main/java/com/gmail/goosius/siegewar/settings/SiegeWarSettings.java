@@ -17,6 +17,7 @@ import java.time.LocalTime;
 import com.gmail.goosius.siegewar.objects.ArtefactOffer;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 
+import com.palmergames.bukkit.towny.object.Translatable;
 import org.bukkit.Material;
 
 import org.bukkit.NamespacedKey;
@@ -678,7 +679,7 @@ public class SiegeWarSettings {
 	        String name = specificationFields[0];
 			int tier = Integer.parseInt(specificationFields[1]);
 			List<String> lore = new ArrayList<>();
-			lore.add("Artifact - Tier " + tier);
+			lore.add("Artefact - Tier " + tier);
 			int quantity = Integer.parseInt(specificationFields[2]);
 			Material material = Material.matchMaterial("minecraft:" + specificationFields[3]);
 
@@ -741,7 +742,7 @@ public class SiegeWarSettings {
 		return new PotionEffect(potionEffectType, duration, amplifier, particles, ambient, icon);
 	}
 
-	public static List<String> getDominationAwardsArtimefactChestSignsLowercase() {
+	public static List<String> getDominationAwardsArtefactChestSignsLowercase() {
 		String listAsString = Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS);
 		String[] list = listAsString.toLowerCase().replace(" ","").split(",");
 		return Arrays.asList(list);
