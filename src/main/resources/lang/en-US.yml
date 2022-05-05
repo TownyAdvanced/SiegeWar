@@ -527,7 +527,7 @@ warn_nation_had_ally_removed: 'Warning: %s was removed as an ally from nation %s
 warn_your_nation_has_been_removed_as_an_ally: 'Warning: %s has removed your nation as an ally, while some of your nation members are located inside of siegezones, at %s.'
 
 domination_awards_global_grant_message_header: '&bDomination Awards Granted!'
-domination_awards_global_grant_message_recipient_line: '&d - %s . Money: %s. Artefacts: %s'
-domination_awards_global_grant_message_money_problem: 'Problem Granting Money'
-domination_awards_global_grant_message_artefact_problem: 'Problem Granting Artefacts'
-domination_awards_nation_grant_message_not_enough_chests: '&cNot enough chests in homeblock to deposit Artefacts' 
+domination_awards_global_grant_message_recipient_line: '&d - %s . Money: %s. Artefacts: %s.'
+domination_awards_global_grant_message_money_problem: 'Problem Granting Money.'
+domination_awards_global_grant_message_artefact_problem: 'Problem Granting Artefacts.'
+domination_awards_nation_grant_message_not_enough_chests: '&cNot enough chests in homeblock to deposit Artefacts.' 
