@@ -1,6 +1,6 @@
 ---
 name: SiegeWar
-version: 0.43
+version: 0.44
 language: french
 author: PainOchoco
 website: 'http://townyadvanced.github.io/'
@@ -423,3 +423,14 @@ msg_player_killed_for_logging_out_in_siege_zone: "%s was killed because they log
 msg_err_cannot_surrender_liberation_siege: "&cYou cannot surrender the defence at a liberation siege."
 msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cWhile the siege assembly is in progress you cannot destroy the siege banner or the block it is attached to."
 msg_err_cannot_alter_blocks_near_siege_banner: 'You cannot place/destroy blocks at this location near the Siege Banner.'
+#Added in 0.44
+#Message shown siege-wide when a player loses a siegewar rank while in a siegezone.
+warn_resident_had_rank_removed: 'Warning: %s had their rank %s taken from them while in the siegezone at %s.'
+#Message shown when a town kicks a resident who is in a siege zone.
+warn_resident_had_town_removed: 'Warning: %s was removed from town %s while in the siegezone at %s.'
+#Message shown when a nation kicks a town which has players in a siege zone.
+warn_nation_had_town_removed: 'Warning: %s was removed from nation %s while the player(s) %s were located in the siegezone at %s.'
+#Message shown when a nation removes an ally which has players in a siege zone.
+warn_nation_had_ally_removed: 'Warning: %s was removed as an ally from nation %s while the player(s) %s were located in the siegezone at %s.'
+#Message shown to the former allied nation's players when they have been removed as an ally.
+warn_your_nation_has_been_removed_as_an_ally: 'Warning: %s has removed your nation as an ally, while some of your nation members are located inside of siegezones, at %s.'
