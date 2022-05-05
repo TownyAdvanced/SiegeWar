@@ -648,7 +648,7 @@ public class SiegeWarSettings {
 
 	public static List<List<Integer>> getDominationAwardsGlobalGrantedOffers() {
 		List<List<Integer>> result = new ArrayList<>();
-		List<String> listOfOffersPerPosition = Settings.getListOfCurlyBracketedItems(ConfigNodes.DOMINATION_AWARDS_GLOBAL_GRANTED_ARTIFACT_OFFERS);
+		List<String> listOfOffersPerPosition = Settings.getListOfCurlyBracketedItems(ConfigNodes.DOMINATION_AWARDS_GLOBAL_GRANTED_ARTEFACT_OFFERS);
 		for(String listOfOffersAsString: listOfOffersPerPosition) {
 			List<Integer> listOfOffersAsIntegers = new ArrayList<>();
 			for(String numOffers: listOfOffersAsString.replaceAll(" ","").split(",")) {
@@ -671,7 +671,7 @@ public class SiegeWarSettings {
 	public static Map<Integer, List<ArtefactOffer>> getDominationAwardsArtefactOffers() {
 		Map<Integer, List<ArtefactOffer>> result = new HashMap<>();
 
-		for(String artefactOfferAsString: Settings.getListOfCurlyBracketedItems(ConfigNodes.DOMINATION_AWARDS_ARTIFACT_OFFERS)) {
+		for(String artefactOfferAsString: Settings.getListOfCurlyBracketedItems(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS)) {
 
 			//Create convenience variables
 			String[] specificationFields = artefactOfferAsString.replaceAll(" ","").split(",");
@@ -741,7 +741,7 @@ public class SiegeWarSettings {
 		return new PotionEffect(potionEffectType, duration, amplifier, particles, ambient, icon);
 	}
 
-	public static List<String> getDominationAwardsArtefactChestSignsLowercase() {
+	public static List<String> getDominationAwardsArtimefactChestSignsLowercase() {
 		String listAsString = Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS);
 		String[] list = listAsString.toLowerCase().replace(" ","").split(",");
 		return Arrays.asList(list);
