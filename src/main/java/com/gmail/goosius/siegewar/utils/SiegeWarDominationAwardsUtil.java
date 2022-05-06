@@ -71,6 +71,7 @@ public class SiegeWarDominationAwardsUtil {
             //Gib awards
             Nation nation = null;
             String moneyText;
+            int numArtefactsGranted;
             String artefactText;
             Translatable globalMessageHeader = Translatable.of("msg_global_domination_awards_header");
             List<Translatable> globalMessageLines = new ArrayList<>();
@@ -85,8 +86,8 @@ public class SiegeWarDominationAwardsUtil {
                         moneyText = Translatable.of("msg_na").toString();
                     }
                     //Gib artefacts
-                    grantArtefactsToNation(artefactsToGrant.get(nationPosition), nation);
-                    artefactText = Integer.toString(calculateTotalArtefacts(artefactsToGrant.get(nationPosition)));
+                    numArtefactsGranted = grantArtefactsToNation(artefactsToGrant.get(nationPosition), nation);
+                    artefactText = Integer.toString(numArtefactsGranted);
                     //Add to Global message                     
                     globalMessageLines.add(Translatable.of("msg_global_domination_awards_line", nationPosition+1, nation.getName(), moneyText, artefactText));
                 } catch(Throwable t) {
@@ -126,7 +127,7 @@ public class SiegeWarDominationAwardsUtil {
         return result;
     }
 
-    private static void grantArtefactsToNation(List<Integer> offersToGrantFromEachTier, Nation nation) {
+    private static int grantArtefactsToNation(List<Integer> offersToGrantFromEachTier, Nation nation) {
         List<ItemStack> artefactsToGrant = new ArrayList<>();
         for(int tier = 0; tier < offersToGrantFromEachTier.size(); tier++) {
             artefactsToGrant.addAll(generateArtefacts(tier, offersToGrantFromEachTier.get(tier)));
@@ -134,15 +135,16 @@ public class SiegeWarDominationAwardsUtil {
         //Get capital homeblock
         if(!nation.hasCapital()) {
             TownyMessaging.sendPrefixedNationMessage(nation, Translatable.of("msg_err_nation_domination_awards_no_capital"));
-            return;
+            return 0;
         }
         if(!nation.getCapital().hasHomeBlock()) {
             TownyMessaging.sendPrefixedNationMessage(nation, Translatable.of("msg_err_nation_domination_awards_no_capital_homeblock"));
-            return;
+            return 0;
         }
         WorldCoord homeBlockWorldCoord = nation.getCapital().getHomeBlockOrNull().getWorldCoord();
         //Drop artefacts into chests               
         SiegeWar.getSiegeWar().getServer().getScheduler().runTask(SiegeWar.getSiegeWar(), ()->  dropItemsInChests(nation, homeBlockWorldCoord, artefactsToGrant));
+        return artefactsToGrant.size();
     }
 
     private static void dropItemsInChests(Nation nation, WorldCoord chunkWorldCoord, List<ItemStack> itemsToGrant) {
@@ -287,4 +289,22 @@ public class SiegeWarDominationAwardsUtil {
             return nations;      
         }
     }
+
+    /**
+* Determine is a given item is an artefact
+* @param item the item
+*
+* @return true if the item is a artefact
+*/
+public static boolean isArtefact(ItemStack item) {
+       if(item.getItemMeta() != null
+               && item.getItemMeta().getLore() != null) {
+           for(String loreLine: item.getItemMeta().getLore()) {
+               if(loreLine.equals(SiegeWarSettings.getArtefactLoreLine1())) {
+                   return true;
+               }
+           }
+       }
+       return false;
+   }
 }

@@ -32,8 +32,10 @@ public class SiegeWarNationUtil {
                - TownyAPI.getInstance().getOnlinePlayers(getEffectiveNation(n1)).size();
     };
 
-    public static final Comparator<Nation> BY_GLOBAL_DOMINATION_RANKING =
-        Comparator.comparingInt(SiegeWarNationUtil::getGlobalDominationRank);
+    public static final Comparator<Nation> BY_GLOBAL_DOMINATION_RANKING = (n1, n2) -> {
+        return SiegeWarNationUtil.getGlobalDominationRank(n2)
+               - SiegeWarNationUtil.getGlobalDominationRank(n1);
+    };
 
     /**
      * Calculate the 'effective' nation,

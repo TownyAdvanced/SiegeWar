@@ -627,6 +627,14 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.DOMINATION_AWARDS_GLOBAL_ENABLED);
 	}
 
+	public static String getArtefactLoreLine1() {
+		return Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_LORE_LINE_1);
+	}
+
+	public static String getArtefactLoreLine2() {
+		return Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_LORE_LINE_2);
+	}
+
 	public static int getDominationAwardsGlobalMinimumAssessmentPeriodHours() {
 		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_PERIOD_HOURS);
 	}
@@ -679,7 +687,8 @@ public class SiegeWarSettings {
 	        String name = specificationFields[0];
 			int tier = Integer.parseInt(specificationFields[1]);
 			List<String> lore = new ArrayList<>();
-			lore.add("Artefact - Tier " + tier);
+			lore.add(getArtefactLoreLine1());
+			lore.add(String.format(getArtefactLoreLine2(), tier));
 			int quantity = Integer.parseInt(specificationFields[2]);
 			Material material = Material.matchMaterial("minecraft:" + specificationFields[3]);
 
