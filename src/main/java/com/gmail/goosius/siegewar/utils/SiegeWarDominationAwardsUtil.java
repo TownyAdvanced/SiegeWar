@@ -23,6 +23,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
+import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 
 import java.time.LocalDateTime;
@@ -43,13 +44,15 @@ public class SiegeWarDominationAwardsUtil {
     public static void grantGlobalDominationAwards() {
         if(LocalDateTime.now().getDayOfWeek() != SiegeWarSettings.getDominationAwardsGlobalGrantDayOfWeek())
             return;
-        grantGlobalDominationAwardsNow();
+        grantGlobalDominationAwardsNow(null);
     }
         
     /**
      * Grant the global domination awards now, without waiting for the correct day
+     *
+     * @param sender The sender. Null unless executed by SWA command
      */
-    public static void grantGlobalDominationAwardsNow() {
+    public static void grantGlobalDominationAwardsNow(CommandSender sender) {
         synchronized (GLOBAL_DOMINATION_AWARDS_LOCK) {
             List<Integer> moneyToGrant = SiegeWarSettings.getDominationAwardsGlobalGrantedMoney();
             List<List<Integer>> artefactsToGrant = SiegeWarSettings.getDominationAwardsGlobalGrantedOffers();
@@ -58,7 +61,12 @@ public class SiegeWarDominationAwardsUtil {
             List<Nation> nations = new ArrayList<>(TownyUniverse.getInstance().getNations());
             nations = cullNationsWithTooFewDominationRecords(nations);
             if(nations.size() == 0) {
-                SiegeWar.info("Global Domination Awards: No nations qualified for awards this week, due to having too few domination records.");
+                String message = "Global Domination Awards: No nations qualified for awards this week, due to having too few domination records.";
+                if(sender == null) {
+                    SiegeWar.info(message);
+                } else {
+                    sender.sendMessage(message);
+                }
                 return; 
             }
 

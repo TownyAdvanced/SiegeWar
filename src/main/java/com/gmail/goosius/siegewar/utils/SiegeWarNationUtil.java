@@ -33,8 +33,8 @@ public class SiegeWarNationUtil {
     };
 
     public static final Comparator<Nation> BY_GLOBAL_DOMINATION_RANKING = (n1, n2) -> {
-        return SiegeWarNationUtil.getGlobalDominationRank(n2)
-               - SiegeWarNationUtil.getGlobalDominationRank(n1);
+        return SiegeWarNationUtil.getGlobalDominationRank(n1)
+               - SiegeWarNationUtil.getGlobalDominationRank(n2);
     };
 
     /**
