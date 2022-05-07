@@ -15,6 +15,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.NationRemoveAllyEvent;
 import com.palmergames.bukkit.towny.event.NationRemoveTownEvent;
@@ -95,14 +96,16 @@ public class SiegeWarTownyEventListener implements Listener {
 			for (Map.Entry<String, String> map : translations.get(language).entrySet())
 				event.addTranslation(language, map.getKey(), map.getValue());
 	}
-	
-    /*
-     * Update town peacefulness counters.
-     */
+
     @EventHandler
     public void onNewDay(PreNewDayEvent event) {
-        if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
-            TownPeacefulnessUtil.updateTownPeacefulnessCounters();
+        if (SiegeWarSettings.getWarSiegeEnabled()) {
+            if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
+                TownPeacefulnessUtil.updateTownPeacefulnessCounters();
+            }
+            if(SiegeWarSettings.isDominationAwardsGlobalEnabled()) {
+                SiegeWarDominationAwardsUtil.grantGlobalDominationAwards();
+            }   
         }
     }
     
@@ -113,6 +116,7 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onNewHour(NewHourEvent event) {
         if(SiegeWarSettings.getWarSiegeEnabled()) {
             SiegeWarImmunityUtil.evaluateExpiredImmunities();
+            SiegeWarDominationAwardsUtil.addDominationRecords();
         }
     }
 

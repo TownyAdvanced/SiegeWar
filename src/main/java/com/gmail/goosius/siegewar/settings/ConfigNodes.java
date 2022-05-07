@@ -1073,7 +1073,84 @@ public enum ConfigNodes {
 			"0",
 			"",
 			"# Within the protection radius, players cannot build below this height.",
-			"# The height is relative to the siege banner height");
+			"# The height is relative to the siege banner height"),
+	DOMINATION_AWARDS(
+			"domination_awards",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                  DOMINATION AWARDS                   | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS(
+			"domination_awards.artefact_offers",
+			""
+			+ " {potion_of_true_invisibility, 1, 3, potion, invisibility:1:3600:false:false:true} "
+			+ " {sword_of_fiery_knockback, 2, 1, golden_sword, fire_aspect:4, knockback:4} "
+			+ " {helmet of missile shielding, 2, 1, iron_helmet, projectile_protection:10} "
+			+ " {arrow_of_doom, 3, 1, tipped_arrow, instant_damage:20:1:true:true:true} ",
+			"",
+			"# List of Artefact Specifications.",
+			"# There are 2 possible entry types:",
+			"# 1. {weapon/armour name, artefact_tier, quantity, material_name, effect_name:power, (optional effect) (optional effect) ...}",
+		    "# 2. {potion/arrow name, artefact_tier, quantity, material_name, effect_name:power:duration:ambient:particles:icon, (optional effect) (optional effect) ...}"),
+	DOMINATION_AWARDS_ARTEFACT_LORE_LINE_1(
+			"domination_awards.artefact_lore_line_1",
+			"Artefact",
+			"",
+			"# The first line of the artefact lore. Helps the system identify TCM artefacts."),
+	DOMINATION_AWARDS_ARTEFACT_LORE_LINE_2(
+			"domination_awards.artefact_lore_line_2",
+			"Tier %d",
+			"",
+			"# The second line of the artefact lore."),
+	DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS(
+			"domination_awards.artefact_chest_signs",
+			"artefacts, artifacts",
+			"",
+			"# When a nation is granted artefacts. the items get placed in chests in the capital homeblock.",
+			"# If the nation puts a sign on any chests with one of these texts, those chests will be preferred."),
+	DOMINATION_AWARDS_GLOBAL(
+			"domination_awards.global",
+			"",
+			""),
+	DOMINATION_AWARDS_GLOBAL_ENABLED(
+			"domination_awards.global.enabled",
+			"true",
+			"",
+			"# If this setting is true, then global domination awards are enabled."),
+	DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_CRITERION(
+			"domination_awards.global.assessment_criterion",
+			"num_residents",
+			"",
+			"# The criterion by which the award winners are chosen.",
+			"# Allowed values: num_residents, num_towns, num_townblocks, num_online_players"),
+	DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_PERIOD_HOURS(
+			"domination_awards.global.assessment_period_hours",
+			"150",
+			"",
+			"# The minimum assessment period required before awards are granted."),
+	DOMINATION_AWARDS_GLOBAL_GRANT_DAY_OF_WEEK(
+			"domination_awards.global.grant_day_of_week",
+			"Saturday",
+			"",
+			"# The day on which the award is granted. It will be granted on Towny New Day."),
+	DOMINATION_AWARDS_GLOBAL_GRANTED_MONEY(
+			"domination_awards.global.granted_money",
+			"700,600,500,400,300,200,100",
+			"",
+			"# The money granted by the awards.",
+			"# This list is in the form of: top_nation, next nation,......bottom_nation"),
+	DOMINATION_AWARDS_GLOBAL_GRANTED_ARTEFACT_OFFERS(
+			"domination_awards.global.granted_artefact_offers",
+			"{7,3,2} {6,3,1} {5,2,1} {4,2,1} {3,1} {2,1} {1}",
+			"",
+			"# The offers granted by the awards.",
+			"# This list is in the form of: {top_nation}, {next nation},......{bottom_nation}",
+			"# Within each nation, the form is: {num_tier_1_offers, num_tier_2_offers .....}. etc.");
 
 	private final String Root;
 	private final String Default;

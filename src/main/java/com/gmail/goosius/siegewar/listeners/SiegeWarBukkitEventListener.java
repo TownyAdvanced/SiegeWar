@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.listeners;
 
 import java.util.List;
 
+import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,6 +17,8 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -278,6 +281,31 @@ public class SiegeWarBukkitEventListener implements Listener {
 				event.setCancelled(true);
 				return;
 			}
+		}
+	}
+
+	@EventHandler (ignoreCancelled = true)
+	public void on (PrepareItemCraftEvent event) {
+		if (!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+		if (!SiegeWarSettings.isDominationAwardsGlobalEnabled())
+			return;
+		if(event.getInventory().getResult() != null
+				&& event.isRepair()
+				&& SiegeWarDominationAwardsUtil.isArtefact(event.getInventory().getResult())) {
+			event.getInventory().setResult(null); //Cannot repair artefact
+		}
+	}
+
+    @EventHandler (ignoreCancelled = true)
+	public void on (PrepareAnvilEvent event) {
+		if (!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+		if (!SiegeWarSettings.isDominationAwardsGlobalEnabled())
+			return;
+		if(event.getResult() != null
+				&& SiegeWarDominationAwardsUtil.isArtefact(event.getResult())) {
+			event.setResult(null); //Cannot repair artefact
 		}
 	}
 }

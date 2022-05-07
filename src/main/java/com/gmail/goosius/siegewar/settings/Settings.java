@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.bukkit.plugin.Plugin;
 
@@ -200,4 +204,23 @@ public class Settings {
 	public static CommentedConfiguration getConfig() {
 		return config;
 	}
+
+	/**
+	 * Get list of items, where each item is surrounded by curly brackets e.g. {a}{b}{c}
+	 * @param node the node where the list is configured
+	 * @return list of items
+	 */
+	public static List<String> getListOfCurlyBracketedItems(ConfigNodes node) {
+		return getListOfItems(node, "\\{([^}]+)}");
+	}
+	
+	public static List<String> getListOfItems(ConfigNodes node, String itemIdentifierRegex) {
+		List<String> result = new ArrayList<>();
+	    Pattern pattern = Pattern.compile(itemIdentifierRegex);
+    	Matcher matcher = pattern.matcher(getString(node));
+    	while(matcher.find()) {
+    		result.add(matcher.group(1));	
+		}
+		return result;
+	}	
 }

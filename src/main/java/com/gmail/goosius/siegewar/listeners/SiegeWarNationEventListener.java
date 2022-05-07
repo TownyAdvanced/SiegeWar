@@ -36,7 +36,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -46,26 +45,6 @@ import java.util.List;
  */
 public class SiegeWarNationEventListener implements Listener {
 
-
-	private static final Comparator<Nation> BY_NUM_RESIDENTS = (n1, n2) -> {
-        return SiegeWarNationUtil.getEffectiveNation(n2).getResidents().size() 
-          	   - SiegeWarNationUtil.getEffectiveNation(n1).getResidents().size();
-    };
-
-    private static final Comparator<Nation> BY_TOWNS= (n1, n2) -> {
-        return SiegeWarNationUtil.getEffectiveNation(n2).getNumTowns() 
-          	   - SiegeWarNationUtil.getEffectiveNation(n1).getNumTowns();
-    };
-
-    private static final Comparator<Nation> BY_TOWNBLOCKS= (n1, n2) -> {
-        return SiegeWarNationUtil.getEffectiveNation(n2).getNumTownblocks() 
-          	   - SiegeWarNationUtil.getEffectiveNation(n1).getNumTownblocks();
-    };
-
-    private static final Comparator<Nation> BY_ONLINE= (n1, n2) -> {    
-		return TownyAPI.getInstance().getOnlinePlayers(SiegeWarNationUtil.getEffectiveNation(n2)).size() 
-			   - TownyAPI.getInstance().getOnlinePlayers(SiegeWarNationUtil.getEffectiveNation(n1)).size();
-    };
 
 	@EventHandler
 	public void onNationRankGivenToPlayer(NationRankAddEvent event) {
@@ -308,16 +287,16 @@ public class SiegeWarNationEventListener implements Listener {
 		//Re-sort list, taking occupation into account
 		switch (event.getComparatorType()) {
 			case RESIDENTS:
-				nationList.sort(BY_NUM_RESIDENTS);
+				nationList.sort(SiegeWarNationUtil.BY_NUM_RESIDENTS);
 				break;
 			case TOWNBLOCKS:
-				nationList.sort(BY_TOWNBLOCKS);
+				nationList.sort(SiegeWarNationUtil.BY_NUM_TOWNBLOCKS);
 				break;
 			case ONLINE:
-				nationList.sort(BY_ONLINE);
+				nationList.sort(SiegeWarNationUtil.BY_NUM_ONLINE_PLAYERS);
 				break;
 			case TOWNS:
-				nationList.sort(BY_TOWNS);
+				nationList.sort(SiegeWarNationUtil.BY_NUM_TOWNS);
 				break;
 			default:
 				return;	

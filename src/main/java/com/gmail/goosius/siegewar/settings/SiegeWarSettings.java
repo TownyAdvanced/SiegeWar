@@ -1,16 +1,32 @@
 package com.gmail.goosius.siegewar.settings;
 
-import java.time.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.EnumSet;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Set;
+import java.util.EnumSet;
+import java.util.ArrayList;
+import java.util.Locale;
+
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import com.gmail.goosius.siegewar.objects.ArtefactOffer;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 
+import com.palmergames.bukkit.towny.object.Translatable;
 import org.bukkit.Material;
 
+import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.*;
 import org.jetbrains.annotations.Nullable;
 
 public class SiegeWarSettings {
@@ -606,4 +622,139 @@ public class SiegeWarSettings {
 	public static int getWarSiegeBattleSessionsDurationMinutes() {
 		return Settings.getInt(ConfigNodes.BATTLE_SESSION_SCHEDULER_DURATION_MINUTES);
 	}
+
+	public static boolean isDominationAwardsGlobalEnabled() {
+		return Settings.getBoolean(ConfigNodes.DOMINATION_AWARDS_GLOBAL_ENABLED);
+	}
+
+	public static String getArtefactLoreLine1() {
+		return Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_LORE_LINE_1);
+	}
+
+	public static String getArtefactLoreLine2() {
+		return Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_LORE_LINE_2);
+	}
+
+	public static int getDominationAwardsGlobalMinimumAssessmentPeriodHours() {
+		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_PERIOD_HOURS);
+	}
+
+	public static String getDominationAwardsGlobalAssessmentCriterion() {
+		return Settings.getString(ConfigNodes.DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_CRITERION);
+	}
+
+	public static DayOfWeek getDominationAwardsGlobalGrantDayOfWeek() {
+		return DayOfWeek.valueOf(Settings.getString(ConfigNodes.DOMINATION_AWARDS_GLOBAL_GRANT_DAY_OF_WEEK).toUpperCase());
+	}
+
+	public static List<Integer> getDominationAwardsGlobalGrantedMoney() {
+		List<Integer> result = new ArrayList<>();
+		for(String entry: Settings.getString(ConfigNodes.DOMINATION_AWARDS_GLOBAL_GRANTED_MONEY).replaceAll(" ","").split(",")) {
+			result.add(Integer.parseInt(entry));
+		}
+		return result;
+	}
+
+	public static List<List<Integer>> getDominationAwardsGlobalGrantedOffers() {
+		List<List<Integer>> result = new ArrayList<>();
+		List<String> listOfOffersPerPosition = Settings.getListOfCurlyBracketedItems(ConfigNodes.DOMINATION_AWARDS_GLOBAL_GRANTED_ARTEFACT_OFFERS);
+		for(String listOfOffersAsString: listOfOffersPerPosition) {
+			List<Integer> listOfOffersAsIntegers = new ArrayList<>();
+			for(String numOffers: listOfOffersAsString.replaceAll(" ","").split(",")) {
+				listOfOffersAsIntegers.add(Integer.parseInt(numOffers));
+			}
+			result.add(listOfOffersAsIntegers);
+		}
+		return result;
+	}	
+
+	/**
+	 * Get artefacts offers available for domination rewards.
+	 *
+	 * @return map of artefact offers
+	 * The map is in the form of:   tier -> List of offers
+	 *
+	 * WARNING:
+	 * Make sure to clone any of the items before granting.
+	 */
+	public static Map<Integer, List<ArtefactOffer>> getDominationAwardsArtefactOffers() {
+		Map<Integer, List<ArtefactOffer>> result = new HashMap<>();
+
+		for(String artefactOfferAsString: Settings.getListOfCurlyBracketedItems(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS)) {
+
+			//Create convenience variables
+			String[] specificationFields = artefactOfferAsString.replaceAll(" ","").split(",");
+	        String name = specificationFields[0];
+			int tier = Integer.parseInt(specificationFields[1]);
+			List<String> lore = new ArrayList<>();
+			lore.add(getArtefactLoreLine1());
+			lore.add(String.format(getArtefactLoreLine2(), tier));
+			int quantity = Integer.parseInt(specificationFields[2]);
+			Material material = Material.matchMaterial("minecraft:" + specificationFields[3]);
+
+			//Create artefact
+			ItemStack artefact = new ItemStack(material);
+			ItemMeta itemMeta = artefact.getItemMeta();
+			itemMeta.setDisplayName(name);
+			itemMeta.setLore(lore);
+			artefact.setItemMeta(itemMeta);
+			addSpecialEffects(artefact, specificationFields);
+
+			//Create offer and add to map
+			ArtefactOffer artefactOffer = new ArtefactOffer(artefact, quantity);
+			if(!result.containsKey(tier)) {
+				result.put(tier, new ArrayList<>());
+			} 
+			result.get(tier).add(artefactOffer);
+		}
+		return result;
+	}
+
+	private static void addSpecialEffects(ItemStack artefact, String[] specificationFields) {
+		//Create convenience variables
+		Material material = artefact.getType();
+		ItemMeta itemMeta = artefact.getItemMeta();
+        List<String[]> enchantmentSpecs = new ArrayList<>();
+        for(int i = 4; i < specificationFields.length; i++) {
+            enchantmentSpecs.add(specificationFields[i].split(":"));
+        }
+
+        //Add enchants
+        if(material == Material.POTION
+                || material == Material.SPLASH_POTION
+                || material == Material.LINGERING_POTION
+                || material == Material.TIPPED_ARROW ) {
+            for(String[] enchantSpec: enchantmentSpecs) {
+                PotionEffect potionEffect = generatePotionEffect(enchantSpec);
+				((PotionMeta)itemMeta).addCustomEffect(potionEffect, true);
+            }
+
+        } else {
+            for(String[] enchantSpec: enchantmentSpecs) {
+				Enchantment enchantment = Enchantment.getByKey(NamespacedKey.fromString("minecraft:"+ enchantSpec[0]));
+                int power = Integer.parseInt(enchantSpec[1]);
+                itemMeta.addEnchant(enchantment, power, true);
+            }
+		}
+
+		//Set updated item meta
+		artefact.setItemMeta(itemMeta);
+	}
+
+	private static PotionEffect generatePotionEffect(String[] effectSpec) {
+		PotionEffectType potionEffectType = PotionEffectType.getByKey(NamespacedKey.fromString("minecraft:" + effectSpec[0]));
+		int amplifier = Integer.parseInt(effectSpec[1]);
+		int duration = Integer.parseInt(effectSpec[2]);
+		boolean particles = Boolean.parseBoolean(effectSpec[3]);
+		boolean ambient = Boolean.parseBoolean(effectSpec[4]);
+		boolean icon = Boolean.parseBoolean(effectSpec[5]);
+		return new PotionEffect(potionEffectType, duration, amplifier, particles, ambient, icon);
+	}
+
+	public static List<String> getDominationAwardsArtefactChestSignsLowercase() {
+		String listAsString = Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS);
+		String[] list = listAsString.toLowerCase().replace(" ","").split(",");
+		return Arrays.asList(list);
+	}
+
 }
