@@ -92,7 +92,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			}
 		case "siege":
 			if (args.length == 2)
-				return NameUtil.filterByStart(new ArrayList<>(SiegeController.getSiegedTownNames()), args[1]);
+				return NameUtil.filterByStart(new ArrayList<>(SiegeController.getNamesOfSiegedTowns()), args[1]);
 
 			if (args.length == 3)
 				return NameUtil.filterByStart(siegewaradminSiegeTabCompletes, args[2]);
