@@ -1,8 +1,8 @@
 # SiegeWar
 *SiegeWar* adds a war system to *Towny*.
 ### Features
-* 🍎 **Healthy War Goals**: The purpose of wars is geopolitical domination. The top 7 nations receive awards of money and Artefacts.
-* ⚔️ **Sieges**: Wars are conducted by means of sieges. A siege occurs when a nation attacks a town.
+* 🍎 **Healthy War Goals:** The purpose of wars is geopolitical domination. The top 7 nations receive awards of money and Artefacts.
+* ⚔️ **Sieges:** Wars are conducted by means of sieges. A siege occurs when a nation attacks a town.
 * 🤖 **Automatic:** Sieges are started by players and automatically managed by the plugin. Daily staff management of sieges is not required.
 * 🏙️ **Minimally Destructive:** Towns cannot be damaged or stolen from during sieges.
 * 🚶 **Slow Paced:** Sieges last 3 days, giving defenders a chance to respond to attacks, and also making the system friendly to casual players.
