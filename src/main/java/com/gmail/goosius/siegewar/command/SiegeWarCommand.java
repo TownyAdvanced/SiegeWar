@@ -73,7 +73,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				break;					
 			case "hud":
 				if (args.length == 2)
-					return NameUtil.filterByStart(new ArrayList<>(SiegeController.getSiegedTownNames()), args[1]);
+					return NameUtil.filterByStart(new ArrayList<>(SiegeController.getNamesOfActivelySiegedTowns()), args[1]);
 				break;
 			case "preference":
 				if (args.length == 2)

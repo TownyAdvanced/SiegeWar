@@ -55,14 +55,12 @@ public class SiegeController {
 	//private final static Map<String, Siege> sieges = new ConcurrentHashMap<>();
 	private static Map<UUID, Siege> townSiegeMap = new ConcurrentHashMap<>();
 	private static List<Town> siegedTowns = new ArrayList<>();
-	private static List<String> siegedTownNames = new ArrayList<>();
 	private static List<SiegeCamp> siegeCamps = new ArrayList<>();
 
 	public static void newSiege(Town town) {
 		Siege siege = new Siege(town);
 		townSiegeMap.put(town.getUUID(), siege);
 		siegedTowns.add(town);
-		siegedTownNames.add(town.getName());
 	}
 
 	public static List<Siege> getSieges() {
@@ -72,7 +70,6 @@ public class SiegeController {
 	public static void clearSieges() {
 		townSiegeMap.clear();
 		siegedTowns.clear();
-		siegedTownNames.clear();
 	}
 
 	public static void saveSiege(Siege siege) {
@@ -268,7 +265,6 @@ public class SiegeController {
 		//Remove siege from collections
 		townSiegeMap.remove(town.getUUID());
 		siegedTowns.remove(siege.getTown());
-		siegedTownNames.remove(siege.getTown().getName());
 
 		CosmeticUtil.removeFakeBeacons(siege);
 
@@ -296,13 +292,21 @@ public class SiegeController {
 		return Collections.unmodifiableCollection(siegedTowns);
 	}
 
-	public static Collection<String> getSiegedTownNames() {
-		return Collections.unmodifiableCollection(siegedTownNames);
+	public static Collection<String> getNamesOfSiegedTowns() {
+		Set<String> result = new HashSet<>();
+		for(Siege siege: getSieges()) {
+			result.add(siege.getTown().getName());
+		}
+		return result;
 	}
 
-	public static void renameSiegedTownName(String oldname, String newname) {
-		siegedTownNames.remove(oldname);
-		siegedTownNames.add(newname);
+	public static Collection<String> getNamesOfActivelySiegedTowns() {
+		Set<String> result = new HashSet<>();
+		for(Siege siege: getSieges()) {
+			if(siege.getStatus().isActive())
+				result.add(siege.getTown().getName());
+		}
+		return result;
 	}
 
 	@Nullable
