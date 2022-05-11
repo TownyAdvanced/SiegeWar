@@ -1097,22 +1097,56 @@ public enum ConfigNodes {
 			"# There are 2 possible entry types:",
 			"# 1. {weapon/armour name, artefact_tier, quantity, material_name, effect_name:power, (optional effect) (optional effect) ...}",
 		    "# 2. {potion/arrow name, artefact_tier, quantity, material_name, effect_name:power:duration:ambient:particles:icon, (optional effect) (optional effect) ...}"),
-	DOMINATION_AWARDS_ARTEFACT_LORE_LINE_1(
-			"domination_awards.artefact_lore_line_1",
-			"Artefact",
-			"",
-			"# The first line of the artefact lore. Helps the system identify TCM artefacts."),
-	DOMINATION_AWARDS_ARTEFACT_LORE_LINE_2(
-			"domination_awards.artefact_lore_line_2",
-			"Tier %d",
-			"",
-			"# The second line of the artefact lore."),
 	DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS(
 			"domination_awards.artefact_chest_signs",
 			"artefacts, artifacts",
 			"",
 			"# When a nation is granted artefacts. the items get placed in chests in the capital homeblock.",
 			"# If the nation puts a sign on any chests with one of these texts, those chests will be preferred."),
+	DOMINATION_AWARDS_ARTEFACT_EXPIRY(
+			"domination_awards.artefact_expiry",
+			"",
+			"",
+			"",
+			"# +------------------------------------------------------+ #",
+			"# |                    Artefact Expiry                   | #",
+			"# +------------------------------------------------------+ #",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_EXPIRY_LIFETIME_DAYS(
+			"domination_awards.artefact_expiry.lifetime_days",
+			"7",
+			"",
+			"# The lifetime in days of each artefact."),
+	DOMINATION_AWARDS_ARTEFACT_EXPIRY_PERCENTAGE_CHANCE_PER_SHORT_TICK(
+			"domination_awards.artefact_expiry.percentage_chance_per_short_tick",
+			"10",
+			"",
+			"# The percentage chance per short tick, that all end-of-life artefacts within a player's inventory will expire.",
+			"# TIP: Keep this value low to avoid lag."),
+	DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS(
+			"domination_awards.artefact_expiry.explosions",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_ENABLED(
+			"domination_awards.artefact_expiry.explosions.enabled",
+			"true",
+			"",
+			"# If true, an artefact will explode on expiration."),
+	DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_BASE_POWER(
+			"domination_awards.artefact_expiry.explosions.base_power",
+			"5",
+			"",
+			"# The base power of the explosion."),
+	DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_EXTRA_POWER_PER_EXPIRED_ARTEFACT(
+			"domination_awards.artefact_expiry.explosions.extra_power_per_expired_artefact",
+			"2",
+			"",
+			"# If the player is carrying more than one end-of-life artefact, the explosion power increases."),
+	DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_MAX_POWER(
+			"domination_awards.artefact_expiry.explosions.max_power",
+			"20",
+			"",
+			"# The max power of the explosion."),
 	DOMINATION_AWARDS_GLOBAL(
 			"domination_awards.global",
 			"",

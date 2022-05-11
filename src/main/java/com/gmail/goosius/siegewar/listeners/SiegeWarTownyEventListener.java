@@ -135,6 +135,7 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeHUDManager.updateHUDs();
             SiegeWarTimerTaskController.evaluateBeacons();
             SiegeWarNotificationUtil.warnAllPlayersOfSiegeDanger();
+            SiegeWarDominationAwardsUtil.evaluateArtefactExpiries();
         }
     }
 
