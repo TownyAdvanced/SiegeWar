@@ -257,7 +257,8 @@ public class SiegeWarDominationAwardsUtil {
             for(int ii = 0; ii < offer.quantity; ii++) {
                 ItemStack artefact = offer.artefactTemplate.clone();
                 ItemMeta itemMeta =  artefact.getItemMeta();
-                itemMeta.getPersistentDataContainer().set(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE, System.currentTimeMillis() + (long)(SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays() * 864500000));
+                long expirationTime = System.currentTimeMillis() + (long)(SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays() * 864500000); 
+                itemMeta.getPersistentDataContainer().set(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE, expirationTime);
                 artefact.setItemMeta(itemMeta);
                 result.add(artefact);
             }
@@ -317,7 +318,7 @@ public class SiegeWarDominationAwardsUtil {
     * Determine is a given item is an expired artefact
     * @param item the item
     *
-    * @return true if the item is an expired
+    * @return true if the item is an expired artefact
     */
     public static boolean isExpiredArtefact(ItemStack item) {
         PersistentDataContainer persistentDataContainer;
@@ -334,7 +335,9 @@ public class SiegeWarDominationAwardsUtil {
     /**
      * This method scans a certain number of the online players
      * 
-     * If any of those online players are carrying expired artefacts, those artefacts are deleted.
+     * If any of those online players are carrying expired artefacts:
+     * 1. All their artefacts are deleted.
+     * 2. All their artefacts explode.
      */
     public static void evaluateArtefactExpiries() {
         if(!SiegeWarSettings.isDominationAwardsGlobalEnabled())
