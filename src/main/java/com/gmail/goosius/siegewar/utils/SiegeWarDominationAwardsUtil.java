@@ -365,9 +365,9 @@ public class SiegeWarDominationAwardsUtil {
             //Create explosion
             if(numExpiredArtefacts > 0 && SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsEnabled()) {
                 explosionPower = SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsBasePower()
-                                    + (SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsExtraPowerPerExpiredArtefact() * (numExpiredArtefacts -1));
-                explosionPower = Math.min(explosionPower, SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsMaxPower());
-                player.getWorld().createExplosion(player.getLocation(), explosionPower, true);
+                                    + (SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsExtraPowerPerExpiredArtefact() * numExpiredArtefacts);
+                int finalExplosionPower = Math.min(explosionPower, SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsMaxPower());                
+                SiegeWar.getSiegeWar().getServer().getScheduler().runTask(SiegeWar.getSiegeWar(), ()->  player.getWorld().createExplosion(player.getLocation(), finalExplosionPower, true));
             }
         }
     }

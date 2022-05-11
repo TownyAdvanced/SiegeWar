@@ -1134,17 +1134,17 @@ public enum ConfigNodes {
 			"# If true, an artefact will explode on expiration."),
 	DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_BASE_POWER(
 			"domination_awards.artefact_expiry.explosions.base_power",
-			"5",
+			"4",
 			"",
 			"# The base power of the explosion."),
 	DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_EXTRA_POWER_PER_EXPIRED_ARTEFACT(
 			"domination_awards.artefact_expiry.explosions.extra_power_per_expired_artefact",
-			"2",
+			"1",
 			"",
-			"# If the player is carrying more than one end-of-life artefact, the explosion power increases."),
+			"# The explosion power increases with every expired artefact the player is carrying."),
 	DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_MAX_POWER(
 			"domination_awards.artefact_expiry.explosions.max_power",
-			"20",
+			"9",
 			"",
 			"# The max power of the explosion."),
 	DOMINATION_AWARDS_GLOBAL(
