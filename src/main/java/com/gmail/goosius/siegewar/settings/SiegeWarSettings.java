@@ -19,6 +19,7 @@ import com.gmail.goosius.siegewar.objects.ArtefactOffer;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 
 import com.palmergames.bukkit.towny.object.Translatable;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import org.bukkit.NamespacedKey;
@@ -680,8 +681,8 @@ public class SiegeWarSettings {
 	        String name = specificationFields[0];
 			int tier = Integer.parseInt(specificationFields[1]);
 			List<String> lore = new ArrayList<>();
-			lore.add(Translatable.of("artefact_lore_line_1",tier).translate());
-			lore.add(Color.RED + Translatable.of("artefact_lore_line_2",SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays()).translate());
+			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_line_1",tier).translate()));
+			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_line_2",(int)SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays()).translate()));
 			int quantity = Integer.parseInt(specificationFields[2]);
 			Material material = Material.matchMaterial("minecraft:" + specificationFields[3]);
 
@@ -750,8 +751,8 @@ public class SiegeWarSettings {
 		return Arrays.asList(list);
 	}
 
-	public static int getDominationAwardsArtefactExpiryLifetimeDays() {
-		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_LIFETIME_DAYS);
+	public static double getDominationAwardsArtefactExpiryLifetimeDays() {
+		return Settings.getDouble(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_LIFETIME_DAYS);
 	}
 
 	public static double getDominationAwardsArtefactExpiryPercentageChancePerShortTick() {

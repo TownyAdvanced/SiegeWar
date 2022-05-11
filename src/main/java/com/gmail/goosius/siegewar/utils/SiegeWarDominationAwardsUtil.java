@@ -257,7 +257,7 @@ public class SiegeWarDominationAwardsUtil {
             for(int ii = 0; ii < offer.quantity; ii++) {
                 ItemStack artefact = offer.artefactTemplate.clone();
                 ItemMeta itemMeta =  artefact.getItemMeta();
-                itemMeta.getPersistentDataContainer().set(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE, System.currentTimeMillis() + (SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays() * 864500000));
+                itemMeta.getPersistentDataContainer().set(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE, System.currentTimeMillis() + (long)(SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays() * 864500000));
                 artefact.setItemMeta(itemMeta);
                 result.add(artefact);
             }
@@ -357,7 +357,7 @@ public class SiegeWarDominationAwardsUtil {
             //Delete Artefacts
             numExpiredArtefacts = 0;
             for(ItemStack item: player.getInventory().getContents()) {
-                if(isExpiredArtefact(item)) {
+                if(item != null && isExpiredArtefact(item)) {
                     item.setAmount(0);
                     numExpiredArtefacts++;
                 }
