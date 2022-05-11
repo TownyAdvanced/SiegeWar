@@ -1,0 +1,499 @@
+ name: SiegeWar
+version: 0.30
+language: german
+author: ConfusedAlex and Rebbit81
+website: 'http://townyadvanced.github.io/'
+description: >
+    Sprachdatei für alle Nachrichten. Verändere diese Datei nicht.
+    Wenn du irgendwelche Änderungen vornehmen möchtest, erstelle eine Kopie dieser Datei und benenne sie um.
+    Andere Sprachdateien können aktiviert werden in dem man den
+    [language] Eintrag in der config.yml ändert.
+#
+#
+#         You MUST retain spacing in the texts.
+#  If a text begins or ends with a space, it must remain that way.
+#
+#
+#       %s = data to be supplied by the plugin.
+
+# Text colouring
+# --------------
+# Black = &0, Navy = &1, Green = &2, Blue = &3, Red = &4
+# Purple = &5, Gold = &6, LightGray = &7, Gray = &8
+# DarkPurple = &9, LightGreen = &a, LightBlue = &b
+# Rose = &c, LightPurple = &d, Yellow = &e, White = &f
+
+plugin_prefix: '&f[&6SiegeWar&f] '
+msg_err_command_disable: '&cDu bist nicht berechtigt diesen Befehl auzuführen.'
+
+#Added in (Siegewar version)
+#Siege war happy-path messages
+msg_siege_war_attack_pay_war_chest: '&bEine Kriegskiste wurde von %s vorbereitet, mit dem Wert %s. Wer die Belagerung gewinnt kriegt das Geld.'
+msg_siege_war_attack_recover_war_chest: '&bDie Kriegskiste wurde von %s wiedererlangt, mit dem Wert %s.'
+msg_siege_war_defender_win: '&bDie Verteidiger von %s haben erfolgreich alle feindlichen Armeen besiegt. Die Belagerung ist fehlgeschlagen!'
+msg_siege_war_attacker_win: '&bEine Armee zugehörig zu %s hat erfolgreich die Verteidigung von %s gebrochen. Die Belagerung ist vorüber!'
+msg_siege_war_neutral_town_plundered: '&b%s wurde %s gestohlen von %s!'
+msg_siege_war_nation_town_plundered: '&b%s wurde %s gestohlen von %s!'
+msg_siege_war_town_ruined_from_plunder: '&b%s wurde zu einer Ruine dezimiert von %s!'
+msg_siege_war_town_bankrupted_from_plunder: '&b%s ist Bankrott gegangen wegen %s!'
+msg_siege_war_nation_defeated: '&b%s wurde bezwungen!'
+msg_siege_war_attacking_troops_at_siege_banner: '&bDie Belagerung auf %s > Angreifer sind am Belagerungsbanner.'
+msg_siege_war_banner_control_session_success: '&bBanner Kontrollrunde erfolgreich!. Du wurdest zu Banner Kontrollliste hinzugefügt.'
+msg_siege_war_banner_control_gained_by_attacker: '&bDie Belagerung auf %s > Die Angreifer haben nun Banner Kontrolle.'
+msg_siege_war_banner_control_gained_by_defender: '&bDie Belagerung auf %s > Die Verteidiger haben nun Banner Kontrolle.'
+msg_town_destroyed_by_nation_tax: '&b%s konnte die Steuern nichtmehr zahlen und ist gefallen.'
+msg_town_destroyed_by_nation_tax_multiple:  '&bDie folgenden Städte konnten sich die Nationssteuern nicht leisten und sind gefallen: '
+
+#Siege war error message
+#Town Toggling
+msg_err_siege_besieged_town_cannot_toggle_pvp: "&cBelagerte Städte haben gezwungenerweise PVP an."
+#Recruiting
+msg_err_siege_besieged_town_cannot_recruit: "&cBelagerte Städte können keine neuen Bürger aufnehmen."
+#Claiming/Unclaiming
+msg_err_siege_claim_too_near_siege_zone: "&cDer Anspruch ist zu nah an einer Belagerung."
+msg_err_siege_besieged_town_cannot_claim: "&cBelagerte Städte können keine neuen Bereiche beanspruchen."
+msg_err_siege_besieged_town_cannot_unclaim: "&cBelagerte Städte (oder Städte welche in der letzten Zeit eine Belagerung verloren haben) können kein Land aufgeben."
+msg_err_war_common_occupied_town_cannot_unclaim: "&cBesetzte Städte können kein Land aufgeben."
+#Revolt
+msg_err_siege_war_town_voluntary_leave_impossible: "&cStädte können Nationen nicht ohne Vereinbarung verlassen. Um deine Nation zu verlassen, musst du den König (oder einen Assistenten) überzeugen, deine Stadt zu kicken."
+msg_err_siege_war_revolt_immunity_active: "&cDeine Stadt hat Rebellionsimmunität. Sie kann nicht rebellieren bis diese vorbeigeht."
+#Attack
+msg_err_siege_war_banner_must_be_placed_above_ground: '&cDer Belagerungsbanner muss über dem Boden platziert werden.'
+msg_err_siege_war_action_not_a_town_member: '&cDu musst ein Mitglied einer Stadt sein um diese Aktion durchzuführen.'
+NUKE ???? msg_err_siege_war_action_not_a_nation_member: '&cDu musst ein Mitglied einer Nation sein um diese Aktion durchzuführen.'
+msg_err_siege_war_cannot_attack_own_town: '&cDu kannst nicht deine eigene Stadt angreifen.'
+msg_err_siege_war_cannot_attack_town_in_own_nation: '&cDu kannst keine Stadt angreifen die in deiner eigenen Nation ist.'
+msg_err_siege_war_cannot_attack_non_enemy_nation: '&cDu kannst keine Stadt angreifen es sei denn, die Nation der Stadt ist ein Feind deiner Nation.'
+msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cDu kannst diese Aktion nicht durchführen, weil der Chunk mehr als einem Stadtblock gegenübersteht. Versuch das Item in einem anderen Bereich zu platzieren.'
+msg_err_siege_war_nation_already_attacking_town: '&cDeine Nation greift diese Stadt schon an.'
+msg_err_siege_war_cannot_attack_siege_immunity: '&cDie Zielstadt hat Belagerungsimmunität. Sie kann nicht angegriffen werden, bis diese endet.'
+msg_err_siege_war_cannot_place_banner_far_above_town: 'Der Belagerungsbanner darf nicht auf einer viel höheren Höhenlage platziert werden als die Stadt. Versuch den Banner etwas tiefer zu stellen.'
+msg_err_siege_war_cannot_join_siege: '&cDu kannst eine Stadt nicht angreifen während sie von einer anderen Nation belagert wird.'
+msg_err_siege_war_nation_has_too_many_active_siege_attacks: '&cDeine Nation hat die höchste Anzahl an gleichzeitigen Belagerungen erreicht. Um eine andere Belagerung zu starten, muss eine oder mehr der laufenden Belagerungen beendet werden.'
+msg_err_siege_war_town_not_close_enough_to_nation: '&cDie Stadt ist zu weit entfernt von deiner Nationshauptstadt um angegriffen zu werden.'
+#Invade
+msg_err_siege_war_no_siege_on_target_town: '&cEs gibt keine aktive Belagerung auf die Zielstadt %s.'
+#Plunder
+msg_err_siege_war_cannot_plunder_without_victory: "&cDu kannst nicht plündern, es sei denn, deine Nation hat eine erfolgreiche Belagerung durchgeführt."
+msg_err_siege_war_cannot_plunder_without_economy: "&cDu kannst nicht plündern, weil kein Economy Plugin aktiv ist."
+msg_err_siege_war_town_already_plundered: '&cDiese Stadt wurde schon geplündert.'
+#Block change
+msg_err_siege_war_cannot_destroy_siege_banner: "&cWährend der Belagerung kannst du den Belagerungsbanner oder den Block an welchen dieser befestigt ist, nicht zerstören."
+msg_err_siege_war_banner_support_block_not_stable: "&cDu kannst den Banner nicht auf instabilem Untergrund platzieren wie z.B. Sand oder Kies."
+#Banner control
+msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'Du kannst dieses Item nicht während einer Banner Kontrollrunde verwenden.'
+
+#Town Info Siege Section
+status_town_revolt_immunity_timer: '&2Rebellionsimmunität Timer: &a%s'
+status_town_siege_status_in_progress: 'Im Gange'
+
+status_town_siege_status_banner_xyz: '&2 > Banner XYZ: &a%d,%d,%d'
+status_town_siege_immunity_timer: '&2 > Immunitätstimer: &a%s'
+status_town_siege_victory_timer: '&2 > Siegestimer: &a%s'
+status_town_banner_control: '&2 > Bannerkontrolle: %s &a[%s]&2: &f'
+status_town_banner_control_nobody: '&2 > Bannerkontrolle: %s'
+
+#General
+msg_days: ' Tage'
+status_no_green: '&aNO'
+msg_occupier: '&4*Besetzer*'
+msg_nobody: '&aNiemand'
+msg_attackers: '&aAngreifer'
+msg_defenders: '&aVerteidiger'
+
+#Town Peacefulness
+status_town_peacefulness_status_change_timer: '&2Countdown zur Friedensstatus Änderung: &a%d Tage'
+msg_war_common_town_declared_peaceful: '&bFriedlichkeit erklärt!. Die Stadt wird als friedlich erklärt in %d Tag(e).'
+msg_war_common_town_declared_non_peaceful: '&bNicht-Friedlichkeit erklärt!. Die Stadt wird als nicht-friedlich erklärt in %d Tag(e).'
+msg_war_common_town_peacefulness_countdown_cancelled: '&bDer Friedensstatus wurde geändert und der Countdown wurde gestoppt.'
+msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cNicht möglich dem Einwohner einen Militärrang zu geben, weil er in einer friedlichen Stadt lebt.'
+msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cKriegsallergie aktiv. Um diesen Effekt zu entfernen, verlasse die Belagerungszone umgehend.'
+msg_war_siege_err_cannot_attack_peaceful_town: '&cDu kannst keine friedliche Stadt angreifen.'
+
+#Siege immunities
+msg_set_siege_immunities_town: 'Die Belagerungsimmunität für %s wurde auf %s Stunden gesetzt.'
+msg_set_siege_immunities_nation: 'Die Belagerungsimmunität für alle Städte in der Nation %s wurde auf %s Stunden gesetzt.'
+msg_set_siege_immunities_all: 'Die Belagerungsimmunität für alle Städte wurde auf %s Stunden gesetzt.'
+
+#Siege-zone block placement restrictions
+msg_war_siege_zone_block_placement_forbidden: '&cDu kannst diese Art von Block nicht im Wildnisbereich einer Belagerungszone setzen.'
+msg_war_siege_zone_bucket_emptying_forbidden: '&cDu kannst diese Art von Eimer nicht im Wildnisbereich einer Belagerungszone setzen.'
+
+#Added in 0.02:
+admin_help_1: 'Neuladen der Config und Language Datei.'
+config_and_lang_file_reloaded_successfully: 'Config und Language Datei erfolgreich neugeladen.'
+config_and_lang_file_could_not_be_loaded: 'Neuladung nicht erfolgreich. Schau in die Konsole für Details.'
+status_yes: '&aJA'
+status_no: '&cNEIN'
+
+#Added in 0.03:
+msg_err_no_money: '&cEs ist nicht genug Geld in der Bank.'
+
+#Added in 0.04:
+msg_err_not_registered_1: '&c%s ist nicht regestriert.'
+msg_error_must_be_num: '&cAnzahl muss eine Zahl sein.'
+
+#Added in 0.05:
+msg_err_not_being_sieged: '&cDie Stadt %s hat keine aktiven Belagerungen.'
+msg_err_town_not_registered: '&cDie Stadt %s ist nicht regestriert.'
+
+#Scoreboard
+hud_title: 'Belagerung'
+hud_siegestatus: 'Belagerungsstatus'
+hud_attackers: 'ANG: '
+hud_defenders: 'VER: '
+hud_banner_control: "Bannerkontrolle: "
+hud_time_remaining: 'Verbleibende Zeit: '
+
+msg_err_peaceful_town_pvp_forced_off: '&cFriedliche Städte haben gezwungenerweise PVP aus.'
+msg_swa_resident_already_has_control: '&cDer Einwohner %s hat schon Kontrolle.'
+msg_swa_resident_doesnt_have_control: "&cDer Einwohner %s hat keine Kontrolle."
+msg_swa_set_plunder_success: '&bPlünderung auf %s gesetzt für %s.'
+
+siege_status_in_progress: 'Im Gange'
+siege_status_attacker_win: 'Die Angreifer gewinnen'
+siege_status_defender_win: 'Die Verteidiger gewinnen'
+siege_status_unknown: 'Unbekannt'
+
+dynmap_siege_banner_control: 'Bannerkontrolle: %s'
+dynmap_siege_time_left: 'Zeit übrig: %s'
+
+#Added in 0.06:
+msg_inventory_degrade_warning: '&4WARNUNG: &cDeine Ausrüstung geht fast kaputt wegen Inventarabbau.'
+msg_swa_remove_siege_success: '&bDie Belagerung erfolgreich behoben.'
+msg_war_siege_occupied_towns_cannot_surrender: '&cBesetzte Städte können nicht aufgeben.'
+msg_you_received_war_sickness: '&cDu bist kein Teilnehmer dieser Belagerung und darfst dich nicht in der Belagerungszone befinden. Bitte verlass diese Zone um die Kriegsallergie zu entfernen. Häufige Auslöser von Kriegsallergie: in einer friedlichen Stadt sein, kein Militärrang haben oder nicht auf der Seite von einer der beiden Seiten sein.'
+msg_you_will_get_sickness: '&cDu bist kein Teilnehmer dieser Belagerung und darfst dich nicht in der Belagerungszone befinden. Bitte verlass die Zone oder du kriegst Kriegsallergie in %s Sekunden.'
+
+#Added in 0.07:
+msg_war_siege_peaceful_town_cannot_revolt_zero_or_one_unsieged_guardian_towns_nearby:  '&cDu darfst derzeit nicht rebellieren, weil es noch weniger als 2 unbelagerte Verteidigerstädte in der nähe gibt (in %d Chunks). Eine Verteidigerstadt ist eine nicht-friedliche Stadt in einer offenen Nation, mit mindestens %d Plots.'
+
+#Added in 0.08:
+msg_swa_set_towns_gained_success: '&bErfolgreich den Städtezuwachs auf %d für %s gesetzt.'
+msg_swa_set_towns_lost_success: '&bErfolgreich den Städtenachlass auf %d für %s gesetzt.'
+msg_swa_set_plunder_gained_success: '&bErfolgreich den Beutezuwachs auf %d für %s gesetzt.'
+msg_swa_set_plunder_lost_success: '&bErfolgreich den Neutenachlass auf %d für %s gesetzt.'
+msg_err_nation_not_registered: '&cNation %s ist nicht regestriert.'
+
+msg_err_cannot_remove_enemy: '&cDu kannst eine Nation nicht als Feind entfernen wenn du eine aktive Belagerung gegen sie am laufen hast!'
+
+#Added in 0.09
+nation_help_11 : 'Sammel jegliches Einkommen von: Beute, Militärseinkommen oder Nationsrückzahlungen.'
+nation_help_12 : 'Bezahle deine Soldaten. Die gegebene Menge wird verteilt gemäß den Rängen.'
+msg_siege_war_nation_refund_available: "Eine Nationsrückzahlung von %s ist nun verfügbar. Sie kann eingesammelt werden mit '/sw collect'."
+msg_siege_war_plunder_available: "Beute %s ist nun verfügbar. Es kann eingesammelt werden mit '/sw collect'."
+msg_siege_war_military_salary_available: "Ein Militärseinkommen von %s ist nun verfügbar. Es kann eingesammelt werden mit '/sw collect'."
+msg_siege_war_nation_refund_collected: "Du hast eine Nationsrückzahlung im Wert von %s erhalten."
+msg_siege_war_plunder_collected: "Du hast Beute im Wert von %s erhalten."
+msg_siege_war_military_salary_collected: "Du hast ein Militärseinkommen im Wert von %s erhalten."
+msg_err_siege_war_collect_unavailable: "Ihnen stehen keine Einkünfte aus Plünderungen, Militäreinkommen oder Nationsrückzahlungen zu."
+msg_err_siege_war_no_soldiers_to_pay: "Es gibt keine Soldaten zum bezahlen."
+msg_err_siege_war_not_enough_nation_funds_to_pay: "Die Nation hat nicht genug Geld um diese Menge zu bezahlen."
+msg_siege_war_soldiers_paid: "Den Soldaten dieser Nation wurde %s gezahlt, welches gemäß dem Rang verteilt wurde."
+
+#Added in 0.10
+msg_err_cannot_fire_no_cannon_session: "Du kannst erst eine Kanone abfeuern, wenn ein hochrangiges Stadtmitglied eine Kanonenrunde startet"
+msg_err_cannon_in_two_towns: "&cDeine Kanonenblöcke sind über zwei Städte verteilt. Bitte stell sicher das deine Kanone nur in einer Stadt ist."
+msg_err_cannot_toggle_explosions_due_to_cannon_session: "&cDu kannst Explosionen erst umschalten, wenn die Kanonenrunde endet."
+
+#Added in 0.11
+msg_err_invalid_bool: "&cInvalid option. Options: on/off"
+msg_beacon_preference_set: "&bBeacon preference set to %s."
+
+# Misc
+msg_na: 'N/A'
+
+#Town screen
+status_town_siege_status_siege_balance: '&2 > Kontostand: &a%d'
+status_town_siege_status_warchest: '&2 > Kriegskiste: &a%s'
+
+#Battle sessions
+status_town_siege_battle: '&2Kampf'
+status_town_siege_battle_time_remaining: '&2 > Zeit verbleibend: &a%s'
+msg_war_siege_battle_session_started: "&bA neue Kampfrunde hat angefangen."
+msg_war_siege_battle_session_ended_with_battles: "&bDie Kampfrunde ist nun zuende. Folgende Teams haben ihre Kämpfe gewonnen:"
+msg_war_siege_battle_session_ended_without_battles: "&bDie Kampfrunde ist nun zuende. Es gab keine Kämpfe."
+msg_war_siege_battle_session_ended_attacker_result: "&b * Angreifer @ %s (%s)"
+msg_war_siege_battle_session_ended_defender_result: "&b * Verteidiger @ %s (%s)"
+msg_war_siege_battle_session_ended_draw_result: "&b * Gleichstand @ %s (0)"
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBannerkontrolle kann erst erlangt werden wenn die nächste Kampfrunde startet. Die nächste Kampfrunde startet in %s."
+
+#Hud
+hud_siege_balance: 'Belagerungs Bilanz: '
+hud_warchest: 'Kriegskiste: '
+hud_battle_time_remaining: 'KMF Zeit verbleibend: '
+
+#Dynmap
+dynmap_siege_battle_time_left: 'Kampf Zeit verbleibend: %s'
+
+#Banner control
+msg_siege_war_banner_control_reversed_by_attacker: '&bDie Belagerung auf %s > Die Angreifer haben die Bannerkontrolle von den Verteidigern erlangt!.'
+msg_siege_war_banner_control_reversed_by_defender: '&bDie Belagerung auf %s > Die Verteidiger haben die Bannerkontrolle von den Angreifern erlangt!.'
+msg_siege_war_banner_control_reversal_bonus: ' Umkehrungsbonus: %s%d'
+
+#Admin
+msg_swa_set_siege_balance_success: '&bErfolgreich die Belagerungs Bilanz auf %d für %s gesetzt.'
+
+#Added in 0.13
+msg_siege_war_version: '&bDie aktuelle SiegeWar Version ist: %s.'
+
+#Added in 0.14
+msg_err_cannot_alter_blocks_below_banner_in_timed_point_zone: 'You cannot place/destroy blocks below banner altitude in the timed point zone.'
+msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain close to the siege-banner (%d blocks horizonally, %d blocks vertically), not in the town, and not flying, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
+msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control session started. Remain close to the siege-banner (%d blocks horizonally, %d blocks above, %d blocks below), not below its altitude, not in the town, and not flying, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
+msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going into the town, or flying.'
+msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going below the altitude of the banner, going into the town, or flying.'
+
+##### Added in 0.15
+
+# Town Merging
+msg_err_cannot_merge_towns: '&cDu kannst keine Stadt zusammenführen die belagert wird!'
+
+# General
+siege.name: '%s vs %s'
+msg_err_action_disable: '&cDu hast keine Erlaubnis diese Aktion durchzuführen.'
+msg_err_unknown_town: '&cUnbekannte Stadt'
+msg_err_unknown_nation: '&cUnbekannte Nation'
+
+# Siege Types
+siege_type_conquest: 'Eroberung'
+siege_type_liberation: 'Befreiung'
+siege_type_revolt: 'Rebellion'
+siege_type_suppression: 'Unterdrückung'
+
+# Dynmap
+dynmap_siege_title: 'Belagerung: %s vs %s'
+dynmap_siege_type: 'Belagerungstyp: %s'
+dynmap_siege_town: 'Stadt: %s'
+dynmap_siege_balance: 'Belagerungs Bilanz: %d'
+dynmap_siege_war_chest: 'Kriegskiste: %s'
+dynmap_siege_battle_points: 'Kampfpunkte: %s / %s'
+
+# HUD
+hud_siege_type: 'Belagerungstyp: '
+hud_battle_attacker_points: 'ANG KMF Punkte: '
+hud_battle_defender_points: 'VER KMF Punkte: '
+
+# Starting sieges
+msg_err_cannot_start_siege_attack_at_peaceful_town: '&cDu kannst keine Belagerung in einer friedlichen Stadt starten.'
+msg_err_cannot_start_siege_at_ruined_town: '&cDu kannst keine Belagerung in einer ruinierten Stadt starten.'
+msg_err_cannot_start_siege_due_to_siege_immunity: '&cDu kannst nun eine Belagerung starten, weil die Stadt in der nähe nun Belagerungsimmunität hat.'
+msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cDu kannst keine Rebellbelagerung starten, weil die Stadt keine besetzte Stadt ist.'
+msg_err_siege_war_cannot_attack_occupied_town_non_enemy_nation: '&cDu kannst keine besetzte Stadt angreifen es sei denn, der Besetzer der Stadt ist ein Feind deiner Nation.'
+msg_conquest_siege_started_neutral_town: '&bEine Armee die zu %s gehört, hat %s attackiert. Eine EROBERUNGSBELAGERUNG hat begonnen!'
+msg_conquest_siege_started_nation_town: '&bEine Armee die zu %s gehört, hat %s attackiert an %s. Eine EROBERUNGSBELAGERUNG hat begonnen!'
+msg_liberation_siege_started_neutral_town: '&bEine Armee die zu %s gehört, hat %s attackiert an %s, Sie versuchen die Besetzung zu stürzen. Eine BEFREIUNGSBELAGERUNG hat begonnen!'
+msg_liberation_siege_started_nation_town: '&bEine Armee die zu %s gehört, hat %s attackiert an %s, Sie versuchen die Besetzung zu stürzen. Eine BEFREIUNGSBELAGERUNG hat begonnen!'
+msg_revolt_siege_started_neutral_town: '&bDie Einwohner von %s haben sich gegen die Armee von %s gestellt. Eine REBELLIONSBELAGERUNG hat begonnen!'
+msg_revolt_siege_started_nation_town: '&bDie Einwohner von %s, welche zur Nation %s gehören, haben sich gegen die Armee von %s gestellt. Eine REBELLIONSBELAGERUNG hat begonnen!'
+msg_suppression_siege_started_neutral_town: '&bDie Nation %s kümmert sich nun um rebellische Aktivität in %s. Eine UNTERDRÜCKUNGSBELAGERUNG hat begonnen!'
+msg_suppression_siege_started_nation_town: '&bDie Nation %s kümmert sich nun um rebellische Aktivität von %s in %s. Eine UNTERDRÜCKUNGSBELAGERUNG hat begonnen!'
+
+# Banner Control
+msg_siege_war_defending_troops_at_siege_banner: '&bDie Belagerung auf %s > Verteidiger sind am Belagerungsbanner.'
+
+# Town screen
+status_town_occupying_nation: '&2Die besetzende Nation: &a%s'
+status_town_siege: '&2Die Belagerung:'
+status_town_siege_type: '&2 > Type: &a%s'
+status_town_siege_status: '&2 > Status: &a%s'
+status_town_siege_attacker: '&2 > Angreifer: &a%s'
+status_town_siege_defender: '&2 > Verteidiger: &a%s'
+status_town_siege_battle_points: '&2 > Punkte: &a%s &2/ &a%s'
+status_town_siege_status_attacker_win: 'Die Angreifer haben gewonnen'
+status_town_siege_status_defender_win: 'Die Verteidiger haben gewonnen'
+status_town_siege_status_attacker_abandon: 'Die Angreifer haben aufgegeben'
+status_town_siege_status_pending_attacker_abandon: 'Die Angreifer geben auf in %s'
+status_town_siege_status_defender_surrender: 'Die Verteidiger haben aufgegeben'
+status_town_siege_status_pending_defender_surrender: 'Die Verteidiger geben auf in %s'
+status_town_siege_status_plundered: '&2 > Stadt geplündert: %s'
+status_town_siege_status_invaded: '   &2Stadt eingenommen: %s'
+
+# Siege statuses
+siege_status_attacker_abandon: 'Die Angreifer haben ihre Waffen fallen gelassen'
+siege_status_defender_surrender: 'Die Verteidiger haben aufgeben'
+siege_status_pending_attacker_abandon: 'Die Angreifer geben bald auf'
+siege_status_pending_defender_surrender: 'Die Verteidiger geben bald auf'
+
+# Nation screen
+status_nation_occupied_home_towns: '&2Eingenommene Heimatstädte &a[%s]&2: &f'
+status_nation_occupied_foreign_towns: '&2Eingenommene Auslandsstädte &a[%s]&2: &f'
+status_nation_offensive_sieges: '&2Offensive Belagerungen &a[%s]&2: &f'
+status_nation_defensive_sieges: '&2Defensive Belagerungen &a[%s]&2: &f'
+
+# Surrendering defences
+msg_conquest_siege_defender_surrender: '&bEROBERUNGSBELAGERUNG in %s > Die Stadt hat aufgegeben an die Armee von %s.'
+msg_liberation_siege_defender_surrender: '&bBEFREIUNGSBELAGERUNG in %s > Die Besetzerarmee von %s hat aufgegeben an %s, die Besetzung wurde ausgerottet.'
+msg_revolt_siege_defender_surrender: '&bREBELLIONSBELAGERUNG in %s > Die Besetzerarmee von %s hat aufgegeben an die Rebellen, und die Besetzung wurde ausgerottet.'
+msg_suppression_siege_defender_surrender: '&bUNTERDRÜCKUNGSBELAGERUNG in %s > Die Stadt hat aufgegeben an die Besetzerarmee von %s. '
+
+# Abandoning attacks
+msg_conquest_siege_attacker_abandon: '&bEROBERUNGSBELAGERUNG in %s > Die Armee von %s hat ihren Angriff fallen gelassen.'
+msg_liberation_siege_attacker_abandon: '&bBEFREIUNGSBELAGERUNG in %s > Die Armee von %s hat den Versuch fallen gelassen, die Stadt von %s zu befreien.'
+msg_revolt_siege_attacker_abandon: '&bREBELLIONSBELAGERUNG in %s > Die Rebellarmee hat ihre Waffen gegen %s fallen gelassen.'
+msg_suppression_siege_attacker_abandon: '&bUNTERDRÜCKUNGSBELAGERUNG in %s > Die Armee von %s hat die Waffen fallen gelassen und die Besetzung aufgegeben'
+msg_err_town_cannot_end_siege_as_no_siege: '&cDie Stadt in der nähe wird nicht belagert. Du kannst nicht aufgeben oder die Waffen fallen lassen.'
+msg_err_town_cannot_end_siege_as_finished: '&cDie Belagerung ist zuende oder kurz vorm Ende. Du kannst nichtmehr aufgeben oder die Waffen fallen lassen.'
+
+# Timed wins
+msg_conquest_siege_timed_attacker_win: '&bEROBERUNGSBELAGERUNG in %s > Die Angreiferarmee von %s hat die Armee von %s besiegt, und die Verteidigung der Stadt gebrochen.'
+msg_liberation_siege_timed_attacker_win: '&bBEFREIUNGSBELAGERUNG in %s > Die Angreiferarmee von %s hat die Besetzerarmee von %s besiegt, und hat die Stadteinwohner von der Besetzung befreit.'
+msg_revolt_siege_timed_attacker_win: '&bREBELLIONSBELAGERUNG in %s > Die Angreifende Rebellarmee hat sich aus den Strängen von %s gerissen.'
+msg_suppression_siege_timed_attacker_win: '&bUNTERDRÜCKUNGSBELAGERUNG in %s > Die Besetzerarmee von %s hat erfolgreich rebellische Aktivitäten beseitigt.'
+msg_conquest_siege_timed_defender_win: '&bEROBERUNGSBELAGERUNG in %s > Die Verteidigendearmee von %s hat die Armee von %s besiegt, und hat die Angreifer vertrieben.'
+msg_liberation_siege_timed_defender_win: '&bBEFREIUNGSBELAGERUNG in %s > Die Besetzerarmee von %s hat die Armee von %s besiegt, und hat die Befreiung der Stadt erfolgreich vermieden.'
+msg_revolt_siege_timed_defender_win: '&bREBELLIONSBELAGERUNG in %s > Die Besetzerarmee von %s hat die Angreifenden Rebellen ruhig gemacht, und die Rebellion beseitigt.'
+msg_suppression_siege_timed_defender_win: '&bUNTERDRÜCKUNGSBELAGERUNG in %s > Die Verteidigendearmee von %s hat die Armee von %s besiegt, und ist somit die versuchte Unterdrückung umgangen und hat sich von der Besetzung befreit.'
+
+# Generic Victory messages
+msg_immediate_attacker_victory: " Die Angreifer haben gewonnen!"
+msg_pending_attacker_victory: " Der Sieg der Angreifer wird in %s bestätigt."
+msg_immediate_defender_victory: " Die Verteidiger haben gewonnen!"
+msg_pending_defender_victory: " Der Sieg der Verteidiger wird in %s bestätigt."
+
+# Invasions
+msg_err_cannot_invade_own_town: '&cDu kannst nicht in deine eigene Stadt eindringen.'
+msg_err_cannot_invade_without_victory: "&cDu kannst erst eine Invasion starten wenn die Belagerung erfolgreich war."
+msg_err_cannot_invade_siege_still_in_progress: '&cDu kannst keine Invasion starten während einer Belagerung.'
+msg_err_cannot_invade_town_already_occupied: '&cEs gibt keinen Grund diese Stadt einzunehmen weil deine Nation dies schon getan hat.'
+msg_err_cannot_invade_town_already_invaded: '&cDeine Nation ist schon in diese Stadt eingedrungen.'
+msg_neutral_town_invaded: '&b%s wurde überfallen von %s, und ist nun besetzt!'
+msg_nation_town_invaded: '&b%s, welche zu %s gehört, wurde überfallen von %s, und ist nun besetzt!'
+
+# Plunder
+msg_err_siege_war_plunder_not_possible_rebels_won: '&cPlünderung nicht möglich, weil die lokalen Rebellen die Belagerung gewonnen haben.'
+
+# Peaceful towns
+msg_town_became_peaceful: '&b%s wurde als friedlich anerkannt. Die Stadt ist nun immun dazu belagert zu werden. Die Stadt wird automatisch besetzt von einer Nation mit einer starken Präsenz in näherem Bereich. (Schau in den User-Guide für weitere Infos). Einwohner können Belagerungsgebiete nicht betreten und keine Militärränge verdienen.'
+msg_town_became_non_peaceful: '&b%s wurde als nicht-friedlich anerkannt. Die Stadt ist nicht länger immun dazu belagert zu werden. Die Stadt kann nichtmehr automatisch besetzt werden. Einwohner dürfen Belagerungsgebiete betreten und Militärränge verdienen.'
+msg_town_returned_to_pre_peaceful_occupier: " Die Stadt wurde an den Besetzer gegeben, welchen es vor der Friedfertigkeit hatte - %s."
+
+msg_peaceful_town_total_switches: '&b%d Die friedliche Stadt %s %s wurde friedlich besetzt, oder von der Besetzung befreit.'
+
+msg_your_town_peacefully_occupied: "&bDeine Stadt wurde friedlich besetzt von %s."
+msg_home_town_peacefully_occupied: "&bEine Heimatstadt, %s, wurde friedlich besetzt von %s."
+msg_foreign_town_peacefully_occupied: "&bEine Auslandsstadt, %s, wurde friedlich besetzt von deiner Nation."
+
+msg_your_town_peacefully_released: "&bDeine Stadt wurde auf friedliche Art und Weise von der Besetzung von %s befreit."
+msg_home_town_peacefully_released: "&bEine Heimatstadt, %s, wurde auf friedliche Art und Weise von der Besetzung von %s befreit."
+msg_foreign_town_peacefully_released: "&bEine Auslandsstadt, %s, wurde auf friedliche Art und Weise von der Besetzung deiner Nation befreit."
+
+# Admin commands
+msg_err_swa_cannot_set_invade_due_to_siege_type: '&cDu kannst keine Invasionsflagge für diese Art von Belagerung setzen.'
+msg_err_swa_cannot_change_occupier_due_to_active_siege: '&cDu kannst den Besetzer nicht ändern, wenn eine Belagerung läuft.'
+msg_swa_set_invade_success: '&bSet invaded to %s for %s.'
+msg_swa_town_occupation_removal_success: '&bStadtbesetzer von %s entfernt.'
+msg_swa_town_occupation_change_success: '&bStadtbesetzer gewechselt zu %s für %s.'
+
+# Added in 0.16
+
+#Nation war history
+status_nation_town_stats: '&2Stadt Invasionshistorie - Ausland/Heimat: &a%d&2/&a%d'
+status_nation_plunder_stats: '&2Stadt Plünderungshistorie - Gewinne/Verluste: &a%d&2/&a%d'
+
+#Siege effects
+msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cNur Stadteinwohner können in einer belagerten Stadt oder einer Belagerungszone spawnen.'
+
+#Nation Siege Immunity
+msg_err_siege_affected_home_nation_cannot_recruit: "&cDeine Nation kann keine neuen Städte hinzufügen, weil eine ihrer Heimatstädte gerade belagert wird."
+msg_err_siege_affected_home_nation_town_cannot_recruit: "&cDeine Nation kann keine neuen Einwohner hinzufügen, weil eine ihrer Heimatstädte gerade belagert wird."
+msg_err_siege_affected_home_nation_town_cannot_claim: "&cDeine Nation kann kein neues Land besetzen, weil eine ihrer Heimatstädte gerade belagert wird."
+msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cDeine Nation kann kein altes Land aufgeben, weil eine ihrer Heimatstädte gerade belagert wird."
+
+# Added in 0.17
+
+# Peaceful towns homeblock move restrictions
+msg_err_peaceful_town_cannot_move_homeblock: "&cFriedliche Städte können ihre Heimatblöcke nicht bewegen. Wenn du deinen Heimatblock bewegen willst, musst du die Friedlichkeit ausstellen."
+
+# Added in 0.18
+
+# Homeblock move restrictions
+msg_err_besieged_town_cannot_move_homeblock: "&cBelagerte Städte können ihre Heimatblöcke nicht bewegen."
+msg_err_occupied_town_cannot_move_homeblock: "&cBesetzte Städte können ihre Heimatblöcke nicht bewegen."
+
+# Added in 0.20
+
+# Town status screen's pending balance adjustment
+status_town_siege_pending_balance_adjustment: '&2 | Ausstehend: &a%s'
+
+# Added in 0.21
+
+# General occupation commands error messages
+msg_err_cannot_change_occupation_town_not_occupied: '&cDu kannst den Besetzungsstatus nicht verändern weil die Stadt garnicht besetzt ist.'
+msg_err_cannot_change_occupation_by_foreign_nation: '&cDu kannst den Besetzungsstatus nicht verändern weil deine Nation der Besetzer ist.'
+msg_err_cannot_change_occupation_of_besieged_town: '&cDu kannst den Besetzungsstatus einer belagerten Stadt nicht verändern.'
+msg_err_cannot_change_occupation_peaceful_town: '&cDu kannst den Besetzungsstatus einer friedlichen Stadt nicht durch ein Befehl verändern.'
+msg_err_town_and_capital_too_far_apart: "&cDer Heimatblock bon %s ist zu weit entfernt von dem Heimatblock von %s's Hauptstadt."
+
+# Remove occupation command
+nation_help_14 : "Entferne die Besetzung deiner Nation in einer Stadt."
+msg_remove_occupation_success: '&bDie Nation %s hat die Besetzung von %s entfernt.'
+
+#Transfer occupation command
+nation_help_15 : "Transferiert die Besetzung deiner Nation einer Stadt zu einer anderen Nation"
+msg_err_cannot_transfer_occupation_king_not_online: "&cDer Besezungstransfer ist fehlgeschlagen, weil der König von %s (%s) nicht online ist."
+msg_would_you_accept_transfer_of_occupied_town: '&6Würdest du dem Transfer der Besetzung von %s, auf %s zu deiner Nation zustimmen?. Dies lässt die Stadt besetzt von deiner Nation werden.'
+msg_transfer_occupation_success: '&bDie Nation %s hat die Besetzung von %s transferiert. Die Stadt ist nun unter Besetzung von %s.'
+
+#Invite occupation command
+nation_help_16 : "Lad eine Nation ein, eine Stadt zu besetzen"
+msg_err_cannot_invite_occupation_town_already_occupied: '&cDu kannst niemanden zu der Besetzung einladen weil deine Stadt schon besetzt ist.'
+msg_err_cannot_invite_occupation_king_not_online: "&cDie Besetzungs-Einladung ist fehlgeschlagen weil der König von %s (%s) nicht online ist."
+msg_would_you_accept_town_request_for_occupation: '&6Sagst du ja zur Besetzung von %s?. Dies lässt die Stadt besetzt von deiner Nation werden.'
+msg_invite_occupation_success: '&bThe town %s has come under the occupation of %s, by its own request.'
+
+# Added in 0.22
+
+#Revolt immunities
+msg_set_revolt_immunities_town: 'Rebellionsimmunität für die Stadt %s auf %s Stunden gesetzt.'
+msg_set_revolt_immunities_nation: 'Rebellionsimmunität von allen Städten der Nation %s auf %s Stunden gesetzt.'
+msg_set_revolt_immunities_all: 'Rebellionsimmunität aller Städte auf %s Stunden gesetzt.'
+
+# Added in 0.23
+msg_siege_war_banner_control_remaining_session_time: 'Bannerkontrollrunde Zeit verbleibend: %s'
+
+# Added in 0.25
+msg_err_siege_war_too_many_adjacent_towns: '&cDu kannst diese Aktion nicht durchführen, weil der Chunk mehr als einem Stadtblock gegenübersteht. Versuch das Item in einem anderen Bereich zu platzieren.'
+
+# Added in 0.26
+msg_siege_war_attacker_death: '&bDie Belagerung von %s > Angreifer %s ist gestorben > Kampfpunkte -%d'
+msg_siege_war_defender_death: '&bDie Belagerung von %s > Verteidger %s ist gestorben > Kampfpunkte  +%d'
+msg_siege_war_attacker_killed_by_player: '&bDie Belagerung von %s > Angreifer %s wurde getötet von %s > Kampfpunkte  -%d'
+msg_siege_war_defender_killed_by_player: '&bDie Belagerung von %s > Verteidiger %s wurde getötet von %s > Kampfpunkte  +%d'
+msg_you_cannot_carry_items_in_siegezones: '&cDu kannst keine Items in Belagerungszonen mit dir tragen, bis auf Spitzhacken, Äxte, Schaufeln, und Scheren. Alle anderen Items werden automatisch aus deinem Inventar geschmissen.'
+status_town_days_to_peacefulness_status_change: 'Tage bis zur Friedlichkeitsstatus Veränderung'
+
+# Added in 0.27
+msg_next_siege_session_in_minutes: 'Die nächste Belagerungsrunde ist in %s.'
+msg_session_is_active_now: 'Die Belagerungsrunde ist nun gestartet!'
+msg_err_battle_session_active: "&cDie Belagerungsrunde hat schon gestartet."
+msg_err_battle_session_inactive: "&cDie Belagerungsrunde ist schon zuende."
+msg_battle_session_force_start: "&bDie Belagerungsrunde wurde gezwungenerweise gestartet."
+msg_battle_session_force_end: "&bDie Belagerungsrunde wurde gezwungenerweise beendet."
+
+# Added in 0.28
+msg_town_immunity_expired: 'Die Belagerungsimmunität deiner Stadt ist abgelaufen.'
+
+#Unsiegeable towns strings
+msg_permanent: "permanent"
+msg_error_must_be_num_or_permanent: '&cDie Anzahl muss eine Zahl sein oder ''permanent''.'
+
+msg_surrender_action_cancelled: 'Belagerungs Aufgabe abgebrochen.'
+msg_abandon_action_cancelled: 'Belagerungsbeendung abgebrochen.'
+
+# Added in 0.29
+msg_err_siegecamp_too_close_to_another_siegecamp: 'Belagerungscamp ist zu nah an anderem Belagerungscamp!'
+msg_err_too_soon_since_your_last_siegecamp: 'Es war zu bald, als du dass letzte mal versucht hast ein Belagerungscamp in dieser Stadt aufzubauen!'
+msg_err_your_siegecamp_failed_you_must_wait_x: 'Dein Belagerungscamp hat zu wenig Punkte erzielt, du darfst an keiner weiteren Belagerung für %s teilnehmen.'
+attackers_scored_points_towards_siege_camp_x_of_x: '%s hat Punkte für ihre Belagerungscamp Runde bekommen: %s/%s.'
+attacker_has_begun_a_siegecamp_session: '%s hat eine Belagerungscamp Runde gegen %s gestartet. Wenn es erfolgreich war wird eine Belagerung starten! Die Angreifer müssen %s Punkte erzielen in %s Minuten.'
+
+# Added in 0.30
+msg_bossbar_preference_set: "&bBossBar preference set to %s."
+bossbar_msg_battle_time_remaining: '&2Belagerungsrunde Zeit verbleibend: &a%s'
+msg_err_siege_war_revolt_immunity_permanent: "&cDeine Stadt hat permanente Rebellionsimmunität. Sie kann nicht rebellieren."
+status_sieged: "%s[%sBelagert%s]"
+status_nation_refund: "Nationsrückzahlung: "
+status_plunder: "Beute: "
+status_military_salary: "Militärsgehalt: "
+hover_message_click_to_claim: "Klicke um das Geld zu erhalten welches dir gehört."
