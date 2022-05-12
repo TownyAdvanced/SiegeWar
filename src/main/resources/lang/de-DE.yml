@@ -1,6 +1,6 @@
 ---
 name: SiegeWar
-version: 0.3
+version: 0.45
 language: german
 author: Rebbit81
 website: 'http://townyadvanced.github.io/'
@@ -439,5 +439,6 @@ msg_global_domination_awards_line: '&b%d - %s: %s + %s Artefacts.'
 msg_err_nation_domination_awards_no_capital: '&cNo capital town in which to deposit Artefacts.'
 msg_err_nation_domination_awards_no_capital_homeblock: '&cNo capital homeblock in which to deposit Artefacts.'
 msg_err_nation_domination_awards_not_enough_chests: '&cNot enough chests in homeblock to deposit Artefacts.'
+#Added on 0.45
 artefact_lore_line_1: 'Artefact Tier %d'
 artefact_lore_line_2: '&cWARNING: Unstable after %d days old.'
