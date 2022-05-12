@@ -18,6 +18,7 @@ import com.gmail.goosius.siegewar.objects.ArtefactOffer;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 
 import com.palmergames.bukkit.towny.object.Translatable;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import org.bukkit.NamespacedKey;
@@ -627,14 +628,6 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.DOMINATION_AWARDS_GLOBAL_ENABLED);
 	}
 
-	public static String getArtefactLoreLine1() {
-		return Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_LORE_LINE_1);
-	}
-
-	public static String getArtefactLoreLine2() {
-		return Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_LORE_LINE_2);
-	}
-
 	public static int getDominationAwardsGlobalMinimumAssessmentPeriodHours() {
 		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_PERIOD_HOURS);
 	}
@@ -687,8 +680,8 @@ public class SiegeWarSettings {
 	        String name = specificationFields[0];
 			int tier = Integer.parseInt(specificationFields[1]);
 			List<String> lore = new ArrayList<>();
-			lore.add(getArtefactLoreLine1());
-			lore.add(String.format(getArtefactLoreLine2(), tier));
+			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_line_1",tier).translate()));
+			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_line_2",(int)SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays()).translate()));
 			int quantity = Integer.parseInt(specificationFields[2]);
 			Material material = Material.matchMaterial("minecraft:" + specificationFields[3]);
 
@@ -755,6 +748,31 @@ public class SiegeWarSettings {
 		String listAsString = Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS);
 		String[] list = listAsString.toLowerCase().replace(" ","").split(",");
 		return Arrays.asList(list);
+	}
+
+	public static double getDominationAwardsArtefactExpiryLifetimeDays() {
+		return Settings.getDouble(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_LIFETIME_DAYS);
+	}
+
+	public static double getDominationAwardsArtefactExpiryPercentageChancePerShortTick() {
+		return Settings.getDouble(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_PERCENTAGE_CHANCE_PER_SHORT_TICK);
+	}
+
+
+	public static boolean getDominationAwardsArtefactExpiryExplosionsEnabled() {
+		return Settings.getBoolean(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_ENABLED);
+	}
+
+	public static int getDominationAwardsArtefactExpiryExplosionsBasePower() {
+		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_BASE_POWER);
+	}
+
+	public static int getDominationAwardsArtefactExpiryExplosionsExtraPowerPerExpiredArtefact() {
+		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_EXTRA_POWER_PER_EXPIRED_ARTEFACT);
+	}
+
+	public static int getDominationAwardsArtefactExpiryExplosionsMaxPower() {
+		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_MAX_POWER);
 	}
 
 }

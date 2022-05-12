@@ -16,6 +16,8 @@ import com.palmergames.bukkit.towny.object.WorldCoord;
 import org.bukkit.Location;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Bukkit;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -24,7 +26,11 @@ import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -37,6 +43,8 @@ import java.util.*;
 public class SiegeWarDominationAwardsUtil {
 
     public static final String GLOBAL_DOMINATION_AWARDS_LOCK = "Global Domination Awards Lock";
+    private static final NamespacedKey EXPIRATION_TIME_KEY = NamespacedKey.fromString("siegewar.artefactexpirytime");
+    private static final PersistentDataType<Long, Long> EXPIRATION_TIME_KEY_TYPE = PersistentDataType.LONG;
 
     /**
      * Grant the global domination awards
@@ -115,14 +123,6 @@ public class SiegeWarDominationAwardsUtil {
                 nationForRecordRemoval.save();
             }
         }       
-    }
-
-    private static int calculateTotalArtefacts(List<Integer> artefactTiers) {
-        int result = 0;
-        for(Integer artefactTier: artefactTiers) {
-            result += artefactTier;
-        }
-        return result;
     }
 
     private static List<Nation> cullNationsWithTooFewDominationRecords(List<Nation> nations) {
@@ -255,7 +255,12 @@ public class SiegeWarDominationAwardsUtil {
             ArtefactOffer offer = offersInTier.get((int)(Math.random() * offersInTier.size()));
             //Generate the artefacts specified by that offer
             for(int ii = 0; ii < offer.quantity; ii++) {
-                result.add(offer.artefactTemplate.clone());
+                ItemStack artefact = offer.artefactTemplate.clone();
+                ItemMeta itemMeta =  artefact.getItemMeta();
+                long expirationTime = System.currentTimeMillis() + (long)(SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays() * 864500000); 
+                itemMeta.getPersistentDataContainer().set(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE, expirationTime);
+                artefact.setItemMeta(itemMeta);
+                result.add(artefact);
             }
         }
         return result;
@@ -299,20 +304,74 @@ public class SiegeWarDominationAwardsUtil {
     }
 
     /**
-* Determine is a given item is an artefact
-* @param item the item
-*
-* @return true if the item is a artefact
-*/
-public static boolean isArtefact(ItemStack item) {
-       if(item.getItemMeta() != null
-               && item.getItemMeta().getLore() != null) {
-           for(String loreLine: item.getItemMeta().getLore()) {
-               if(loreLine.equals(SiegeWarSettings.getArtefactLoreLine1())) {
-                   return true;
-               }
-           }
-       }
-       return false;
+    * Determine is a given item is an artefact
+    * @param item the item
+    *
+    * @return true if the item is a artefact
+    */
+    public static boolean isArtefact(ItemStack item) {
+        return item.getItemMeta() != null
+                && item.getItemMeta().getPersistentDataContainer().has(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE);
    }
+
+    /**
+    * Determine is a given item is an expired artefact
+    * @param item the item
+    *
+    * @return true if the item is an expired artefact
+    */
+    public static boolean isExpiredArtefact(ItemStack item) {
+        PersistentDataContainer persistentDataContainer;
+        Long expiryTime;
+        if(item.getItemMeta() != null) {
+            persistentDataContainer = item.getItemMeta().getPersistentDataContainer();
+            expiryTime = persistentDataContainer.get(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE);
+            return expiryTime != null && System.currentTimeMillis() > expiryTime;
+        } else {
+            return false;
+        }
+   }
+
+    /**
+     * This method scans a certain number of the online players
+     * 
+     * If any of those online players are carrying expired artefacts:
+     * 1. All their artefacts are deleted.
+     * 2. All their artefacts explode.
+     */
+    public static void evaluateArtefactExpiries() {
+        if(!SiegeWarSettings.isDominationAwardsGlobalEnabled())
+            return;
+        //Decide which players to scan
+        List<Player> playersToScan = new ArrayList<>();
+        double normalizedScanChance;
+        for(Player player: Bukkit.getOnlinePlayers()) {
+            normalizedScanChance = SiegeWarSettings.getDominationAwardsArtefactExpiryPercentageChancePerShortTick() / 100;
+            if(Math.random() < normalizedScanChance) {
+                playersToScan.add(player);
+            }
+        }
+        if(playersToScan.size() == 0)
+            return;
+        //Scan the players
+        int numExpiredArtefacts;
+        int explosionPower;
+        for(Player player: playersToScan) {
+            //Delete Artefacts
+            numExpiredArtefacts = 0;
+            for(ItemStack item: player.getInventory().getContents()) {
+                if(item != null && isExpiredArtefact(item)) {
+                    item.setAmount(0);
+                    numExpiredArtefacts++;
+                }
+            }
+            //Create explosion
+            if(numExpiredArtefacts > 0 && SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsEnabled()) {
+                explosionPower = SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsBasePower()
+                                    + (SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsExtraPowerPerExpiredArtefact() * numExpiredArtefacts);
+                int finalExplosionPower = Math.min(explosionPower, SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsMaxPower());                
+                Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> player.getWorld().createExplosion(player.getEyeLocation(), finalExplosionPower, true));
+            }
+        }
+    }
 }
