@@ -370,7 +370,7 @@ public class SiegeWarDominationAwardsUtil {
                 explosionPower = SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsBasePower()
                                     + (SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsExtraPowerPerExpiredArtefact() * numExpiredArtefacts);
                 int finalExplosionPower = Math.min(explosionPower, SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsMaxPower());                
-                Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> player.getWorld().createExplosion(player.getEyeLocation(), finalExplosionPower, true));
+                Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> player.getWorld().createExplosion(player.getLocation(), finalExplosionPower, true));
             }
         }
     }
