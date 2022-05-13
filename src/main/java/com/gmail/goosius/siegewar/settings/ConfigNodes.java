@@ -1122,7 +1122,6 @@ public enum ConfigNodes {
 			+ "{Arrow of Knockup, 5, tipped_arrow, levitation:25:1:true:true:true}"
 			+ "{Super Spiky Helmet, 1, golden_helmet, thorns:8, unbreaking:1}"
 			+ "{Bountiful Pickaxe, 1, golden_pickaxe, fortune:5, efficiency:8}",
-			"",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER4(
 			"domination_awards.artefact_offers.default_14_5_2022.tier4",
