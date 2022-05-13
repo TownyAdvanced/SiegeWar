@@ -136,5 +136,15 @@
         "path": "peaceful_towns"
       }
     ]
+  },
+  {
+    "version": "0.8.0",
+    "changes": [
+      {
+        "type": "MOVE",
+        "path": "domination_awards.artefact_offers",
+        "value": "domination_awards.artefact_offers.legacy"
+      }
+    ]
   }
 ]
