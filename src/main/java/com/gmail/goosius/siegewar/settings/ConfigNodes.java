@@ -1110,15 +1110,15 @@ public enum ConfigNodes {
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER2(
 			"domination_awards.artefact_offers.default_14_5_2022.tier2",
-			"{Potion of True Invisibility, 3, potion, invisibility:1:180:false:false:true}"
-			+ "{Splash Potion of Enhanced Regeneration, 3, splash_potion, regeneration:4:30:true:true:true}"
-			+ "{Splash Potion of Enhanced Strength, 3, splash_potion, strength:4:30:true:true:true}"
-			+ "{Splash Potion of Enhanced Absorbtion, 3, splash_potion, absorption:4:30:true:true:true}",
+			"{Potion of True Invisibility, 3, potion, invisibility:1:300:false:false:true}"
+			+ "{Splash Potion of Enhanced Regeneration, 3, splash_potion, regeneration:4:60:true:true:true}"
+			+ "{Splash Potion of Enhanced Strength, 3, splash_potion, strength:4:60:true:true:true}"
+			+ "{Splash Potion of Enhanced Absorbtion, 3, splash_potion, absorption:4:60:true:true:true}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER3(
 			"domination_awards.artefact_offers.default_14_5_2022.tier3",
 			"{Arrow of Enhanced Hunger, 5, tipped_arrow, hunger:10:50:true:true:true}"
-			+ "{Potion of Enhanced Resistance, 3, potion, resistance:5:40:true:true:true}"
+			+ "{Potion of Invincibility, 3, potion, resistance:5:30:true:true:true}"
 			+ "{Arrow of Knockup, 5, tipped_arrow, levitation:25:1:true:true:true}"
 			+ "{Super Spiky Helmet, 1, golden_helmet, thorns:8, unbreaking:1}"
 			+ "{Bountiful_Pickaxe, 1, golden_pickaxe, fortune:5, efficiency:8}",
@@ -1132,8 +1132,8 @@ public enum ConfigNodes {
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER5(
 			"domination_awards.artefact_offers.default_14_5_2022.tier5",
-			"{Arrow Of Doom, 1, tipped_arrow, instant_damage:20:1:true:true:true}"
-			+ "{Vorpal Sword, 1, golden_sword, sharpness:20}"
+			"{Arrow|Of|Doom, 1, tipped_arrow, instant_damage:20:1:true:true:true}"
+			+ "{Vorpal|Sword, 1, golden_sword, sharpness:20}"
 			+ "{Chicago Typewriter, 1, crossbow, quick_charge:5}"
 			+ "{Trident of Zeus, 1, trident, channeling:5}"
 			+ "{Trident of Poseidon, 1, trident, riptide:12}"			
