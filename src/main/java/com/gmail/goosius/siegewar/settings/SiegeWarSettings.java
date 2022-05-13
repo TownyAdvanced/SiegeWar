@@ -24,7 +24,6 @@ import org.bukkit.Material;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.enchantments.EnchantmentOffer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -44,7 +43,7 @@ public class SiegeWarSettings {
 	@SuppressWarnings("unused")
     private static Boolean cachedWallBreachingDestroyEntityBlacklist = null;
     private static Map<Integer, List<ArtefactOffer>> cachedDominationAwardsArtefactOffers = null;
-    
+
 	protected static void resetCachedSettings() {
 		siegeZoneWildernessForbiddenBlockMaterials = null;
 		siegeZoneWildernessForbiddenBucketMaterials = null;

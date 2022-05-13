@@ -1102,18 +1102,18 @@ public enum ConfigNodes {
 			"domination_awards.artefact_offers.default_14_5_2022.tier1",
 			"{Cobble Eater, 1, golden_pickaxe, efficiency:7}"
 			+ "{Tree Feller, 1, golden_pickaxe, efficiency:7}"
-			+ "{Ground Digger, 1, iron_shovel, efficiency:7}"
+			+ "{Ground Digger, 1, golden_shovel, efficiency:7}"
 			+ "{Sword of Searing, 1, golden_sword, fire_aspect:4}"
-			+ "{Potion of Enhanced Regeneration, 3, potion, regeneration:4:30:true:true:true}"
-			+ "{Potion of Enhanced Strength, 3, potion, strength:4:30:true:true:true}"
-			+ "{Potion of Enhanced Absorbtion, 3, potion, absorption:4:30:true:true:true}",
+			+ "{Potion of Enhanced Regeneration, 3, potion, regeneration:3:60:true:true:true}"
+			+ "{Potion of Enhanced Strength, 3, potion, strength:3:120:true:true:true}"
+			+ "{Potion of Enhanced Absorbtion, 5, potion, absorption:3:120:true:true:true}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER2(
 			"domination_awards.artefact_offers.default_14_5_2022.tier2",
 			"{Potion of True Invisibility, 3, potion, invisibility:1:300:false:false:true}"
-			+ "{Splash Potion of Enhanced Regeneration, 3, splash_potion, regeneration:4:60:true:true:true}"
-			+ "{Splash Potion of Enhanced Strength, 3, splash_potion, strength:4:60:true:true:true}"
-			+ "{Splash Potion of Enhanced Absorbtion, 3, splash_potion, absorption:4:60:true:true:true}",
+			+ "{Splash Potion of Enhanced Regeneration, 3, splash_potion, regeneration:3:60:true:true:true}"
+			+ "{Splash Potion of Enhanced Strength, 3, splash_potion, strength:3:120:true:true:true}"
+			+ "{Splash Potion of Enhanced Absorbtion, 5, splash_potion, absorption:3:120:true:true:true}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER3(
 			"domination_awards.artefact_offers.default_14_5_2022.tier3",
@@ -1121,23 +1121,23 @@ public enum ConfigNodes {
 			+ "{Potion of Invincibility, 3, potion, resistance:5:30:true:true:true}"
 			+ "{Arrow of Knockup, 5, tipped_arrow, levitation:25:1:true:true:true}"
 			+ "{Super Spiky Helmet, 1, golden_helmet, thorns:8, unbreaking:1}"
-			+ "{Bountiful_Pickaxe, 1, golden_pickaxe, fortune:5, efficiency:8}",
+			+ "{Bountiful Pickaxe, 1, golden_pickaxe, fortune:5, efficiency:8}",
 			"",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER4(
 			"domination_awards.artefact_offers.default_14_5_2022.tier4",
 			"{Sword of Immolation, 1, golden_sword, fire_aspect:7}"
-			+ "{Axe of the Berserker, 1, golden_axe, sharpness:10, efficiency:10}"
+			+ "{Axe of the Berserker, 1, golden_axe, sharpness:7, efficiency:10}"
 			+ "{bow of displacement, 1, bow, punch: 10}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER5(
 			"domination_awards.artefact_offers.default_14_5_2022.tier5",
-			"{Arrow|Of|Doom, 1, tipped_arrow, instant_damage:20:1:true:true:true}"
-			+ "{Vorpal|Sword, 1, golden_sword, sharpness:20}"
+			"{Arrow Of Doom, 1, tipped_arrow, instant_damage:20:1:true:true:true}"
+			+ "{Vorpal Sword, 1, golden_sword, sharpness:20}"
 			+ "{Chicago Typewriter, 1, crossbow, quick_charge:5}"
 			+ "{Trident of Zeus, 1, trident, channeling:5}"
-			+ "{Trident of Poseidon, 1, trident, riptide:12}"			
-			+ "{Heavy Duty Chestplate, 1, golden_chestplate, protection:10}",			 
+			+ "{Trident of Poseidon, 1, trident, riptide:12}"
+			+ "{Chestplate of Mars, 1, golden_chestplate, protection:10}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM(
 			"domination_awards.artefact_offers.custom",
