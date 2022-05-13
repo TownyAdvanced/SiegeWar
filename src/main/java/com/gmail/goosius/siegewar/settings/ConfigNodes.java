@@ -1135,8 +1135,8 @@ public enum ConfigNodes {
 			"{Arrow Of Doom, 1, tipped_arrow, instant_damage:20:1:true:true:true}"
 			+ "{Vorpal Sword, 1, golden_sword, sharpness:20}"
 			+ "{Chicago Typewriter, 1, crossbow, quick_charge:5}"
-			+ "{Trident of Zeus, 1, trident, channelling:5}"
-			+ "{Trident of Poseidon, 1, trident, riptide: 12}"			
+			+ "{Trident of Zeus, 1, trident, channeling:5}"
+			+ "{Trident of Poseidon, 1, trident, riptide:12}"			
 			+ "{Heavy Duty Chestplate, 1, golden_chestplate, protection:10}",			 
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM(
