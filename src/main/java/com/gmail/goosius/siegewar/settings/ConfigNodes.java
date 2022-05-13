@@ -1087,16 +1087,67 @@ public enum ConfigNodes {
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS(
 			"domination_awards.artefact_offers",
-			""
-			+ " {potion_of_true_invisibility, 1, 3, potion, invisibility:1:3600:false:false:true} "
-			+ " {sword_of_fiery_knockback, 2, 1, golden_sword, fire_aspect:4, knockback:4} "
-			+ " {helmet of missile shielding, 2, 1, iron_helmet, projectile_protection:10} "
-			+ " {arrow_of_doom, 3, 1, tipped_arrow, instant_damage:20:1:true:true:true} ",
 			"",
-			"# List of Artefact Specifications.",
-			"# There are 2 possible entry types:",
-			"# 1. {weapon/armour name, artefact_tier, quantity, material_name, effect_name:power, (optional effect) (optional effect) ...}",
-		    "# 2. {potion/arrow name, artefact_tier, quantity, material_name, effect_name:power:duration:ambient:particles:icon, (optional effect) (optional effect) ...}"),
+			"",
+			"",
+			"# +------------------------------------------------------+ #",
+			"# |                    Artefact Offers                   | #",
+			"# +------------------------------------------------------+ #",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT(
+			"domination_awards.artefact_offers.default_14_5_2022",
+			"",
+			"These artefacts are the defaults provided by SW. Do not add custom items here."),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER1(
+			"domination_awards.artefact_offers.default_14_5_2022.tier1",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER2(
+			"domination_awards.artefact_offers.default_14_5_2022.tier2",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER3(
+			"domination_awards.artefact_offers.default_14_5_2022.tier3",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER4(
+			"domination_awards.artefact_offers.default_14_5_2022.tier4",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER5(
+			"domination_awards.artefact_offers.default_14_5_2022.tier5",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM(
+			"domination_awards.artefact_offers.custom",
+			"",
+			"These artefacts are configured by the server. You can add custom items here."),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER1(
+			"domination_awards.artefact_offers.custom.tier1",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER2(
+			"domination_awards.artefact_offers.custom.tier2",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER3(
+			"domination_awards.artefact_offers.custom.tier3",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER4(
+			"domination_awards.artefact_offers.custom.tier4",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER5(
+			"domination_awards.artefact_offers.custom.tier5",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_LEGACY(
+			"domination_awards.artefact_offers.legacy",
+			"",
+			"# This list is inactive. The artefacts here will not be offered.",
+			"# This list exists only to preserve any custom artefacts which users added in 0.7.15.",
+			"# To offer these artefacts, move them to the custom offers section above."),
 	DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS(
 			"domination_awards.artefact_chest_signs",
 			"artefacts, artifacts",
