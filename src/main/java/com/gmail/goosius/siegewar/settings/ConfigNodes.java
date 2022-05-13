@@ -1094,17 +1094,18 @@ public enum ConfigNodes {
 			"# |                    Artefact Offers                   | #",
 			"# +------------------------------------------------------+ #",
 			""),
+			
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT(
 			"domination_awards.artefact_offers.default_14_5_2022",
 			"",
-			"These artefacts are the defaults provided by SW. Do not add custom items here."),
+			"# These artefacts are the defaults provided by SW. Do not add custom items here."),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER1(
 			"domination_awards.artefact_offers.default_14_5_2022.tier1",
-			"",
+			" {Sword of Searing, 1, golden_sword, fire_aspect:3} ",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER2(
 			"domination_awards.artefact_offers.default_14_5_2022.tier2",
-			"",
+			"{Potion of True Invisibility, 3, potion, invisibility:1:3600:false:false:true}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER3(
 			"domination_awards.artefact_offers.default_14_5_2022.tier3",
@@ -1116,12 +1117,13 @@ public enum ConfigNodes {
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER5(
 			"domination_awards.artefact_offers.default_14_5_2022.tier5",
-			"",
+			"{Arrow Of Doom, 1, tipped_arrow, instant_damage:20:1:true:true:true}",
+			"{Sword of Immolation, 1, golden_sword, fire_aspect:5}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM(
 			"domination_awards.artefact_offers.custom",
 			"",
-			"These artefacts are configured by the server. You can add custom items here."),
+			"# These artefacts are configured by the server. You can add custom items here."),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER1(
 			"domination_awards.artefact_offers.custom.tier1",
 			"",
@@ -1145,9 +1147,10 @@ public enum ConfigNodes {
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_LEGACY(
 			"domination_awards.artefact_offers.legacy",
 			"",
+			"",
 			"# This list is inactive. The artefacts here will not be offered.",
 			"# This list exists only to preserve any custom artefacts which users added in 0.7.15.",
-			"# To offer these artefacts, move them to the custom offers section above."),
+			"# To offer these artefacts, move them into the custom offers configs above."),
 	DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS(
 			"domination_awards.artefact_chest_signs",
 			"artefacts, artifacts",
