@@ -249,7 +249,7 @@ public class SiegeWarDominationAwardsUtil {
 
     private static List<ItemStack> generateArtefacts(int tier, int numOffers) {
         List<ItemStack> result = new ArrayList<>();
-        List<ArtefactOffer> offersInTier = SiegeWarSettings.getDominationAwardsArtefactOffers().get(tier+1);
+        List<ArtefactOffer> offersInTier = SiegeWarSettings.getDominationAwardsArtefactOffers().get(tier);
         for(int i = 0; i < numOffers; i++) {
             //Identify Random offer
             ArtefactOffer offer = offersInTier.get((int)(Math.random() * offersInTier.size()));
