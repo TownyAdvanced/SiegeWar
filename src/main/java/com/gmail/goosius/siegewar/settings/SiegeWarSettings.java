@@ -681,7 +681,7 @@ public class SiegeWarSettings {
 			//Create convenience variables
 			String[] specificationFields = offerAsString.replaceAll(" ","").split(",");
 			String name = specificationFields[0];
-			SiegeWar.info("Loading Artefact Offer: " + name);
+			SiegeWar.info("Loading Domination Awards Artefact Offer: " + name);
 			List<String> lore = new ArrayList<>();
 			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_line_1",tier+1).translate()));
 			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_line_2",(int)SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays()).translate()));
