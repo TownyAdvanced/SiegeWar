@@ -727,22 +727,22 @@ public class SiegeWarSettings {
 		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER1,0));
 		result.put(0, offersInTier);
 
-		offersInTier.clear();
+		offersInTier = new ArrayList<>();
 		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER2,1));
 		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER2,1));
 		result.put(1, offersInTier);
 
-		offersInTier.clear();
+		offersInTier = new ArrayList<>();
 		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER3,2));
 		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER3,2));
 		result.put(2, offersInTier);
 
-		offersInTier.clear();
+		offersInTier = new ArrayList<>();
 		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER4,3));
 		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER4,3));
 		result.put(3, offersInTier);
 
-		offersInTier.clear();
+		offersInTier = new ArrayList<>();
 		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER5,4));
 		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER5,4));
 		result.put(4, offersInTier);
