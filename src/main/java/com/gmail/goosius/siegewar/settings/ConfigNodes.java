@@ -1253,7 +1253,7 @@ public enum ConfigNodes {
 			"# This list is in the form of: top_nation, next nation,......bottom_nation"),
 	DOMINATION_AWARDS_GLOBAL_GRANTED_ARTEFACT_OFFERS(
 			"domination_awards.global.granted_artefact_offers",
-			"{7,3,2} {6,3,1} {5,2,1} {4,2,1} {3,1} {2,1} {1}",
+			"{8,7,5,3,2} {7,6,4,2,1} {6,5,3,1} {5,4,2} {4,3,1} {3,2} {2,1}",
 			"",
 			"# The offers granted by the awards.",
 			"# This list is in the form of: {top_nation}, {next nation},......{bottom_nation}",
