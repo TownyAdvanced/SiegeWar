@@ -1135,7 +1135,6 @@ public enum ConfigNodes {
 			"{Arrow Of Doom, 1, tipped_arrow, instant_damage:20:1:true:true:true}"
 			+ "{Vorpal Sword, 1, golden_sword, sharpness:20}"
 			+ "{Chicago Typewriter, 1, crossbow, quick_charge:5}"
-               //Goosius, Channeling is mostly similar to mending that Level doesn't really have any effect on it so ill add Loyalty maybe 10 or so
 			+ "{Trident of Zeus, 1, trident, channeling:5, loyalty:15}"
 			+ "{Trident of Poseidon, 1, trident, riptide:12}"
 			+ "{Chestplate of Mars, 1, golden_chestplate, protection:15}",
