@@ -1106,7 +1106,7 @@ public enum ConfigNodes {
 			+ "{Sword of Searing, 1, golden_sword, fire_aspect:4}"
 			+ "{Potion of Enhanced Regeneration, 3, potion, regeneration:3:60:true:true:true}"
 			+ "{Potion of Enhanced Strength, 3, potion, strength:3:120:true:true:true}"
-			+ "{Potion of Enhanced Absorbtion, 5, potion, absorption:3:120:true:true:true}",
+			+ "{Potion of Enhanced Absorption, 5, potion, absorption:3:120:true:true:true}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER2(
 			"domination_awards.artefact_offers.default_14_5_2022.tier2",
