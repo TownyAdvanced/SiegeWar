@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.ArtefactOffer;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 
@@ -41,6 +42,8 @@ public class SiegeWarSettings {
     private static EnumSet<Material> cachedWallBreachingDestroyBlocksBlacklist = null;
 	@SuppressWarnings("unused")
     private static Boolean cachedWallBreachingDestroyEntityBlacklist = null;
+    private static Map<Integer, List<ArtefactOffer>> cachedDominationAwardsArtefactOffers = null;
+
 	protected static void resetCachedSettings() {
 		siegeZoneWildernessForbiddenBlockMaterials = null;
 		siegeZoneWildernessForbiddenBucketMaterials = null;
@@ -48,6 +51,7 @@ public class SiegeWarSettings {
 		cachedWallBreachingPlaceBlocksWhitelist = null;
 		cachedWallBreachingDestroyBlocksBlacklist = null;
 		cachedWallBreachingDestroyEntityBlacklist = null;
+		cachedDominationAwardsArtefactOffers = null;
 	}
 
 	public static boolean getWarSiegeEnabled() {
@@ -659,32 +663,29 @@ public class SiegeWarSettings {
 			result.add(listOfOffersAsIntegers);
 		}
 		return result;
-	}	
+	}
 
 	/**
-	 * Get artefacts offers available for domination rewards.
-	 *
-	 * @return map of artefact offers
-	 * The map is in the form of:   tier -> List of offers
-	 *
-	 * WARNING:
-	 * Make sure to clone any of the items before granting.
+	 * Get the artefact offers specified in a particular config node
+	 * 
+	 * @param configNode the config node
+	 * @param tier the tier (this is used for lore)
+	 * 
+	 * @return the artefact offers
 	 */
-	public static Map<Integer, List<ArtefactOffer>> getDominationAwardsArtefactOffers() {
-		Map<Integer, List<ArtefactOffer>> result = new HashMap<>();
+	private static List<ArtefactOffer> getDominationAwardsArtefactOffers(ConfigNodes configNode, int tier) {
+		List<ArtefactOffer> result = new ArrayList<>();
 
-		for(String artefactOfferAsString: Settings.getListOfCurlyBracketedItems(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS)) {
-
+		for(String offerAsString: Settings.getListOfCurlyBracketedItems(configNode)) {
 			//Create convenience variables
-			String[] specificationFields = artefactOfferAsString.replaceAll(" ","").split(",");
-	        String name = specificationFields[0];
-			int tier = Integer.parseInt(specificationFields[1]);
+			String[] specificationFields = offerAsString.replaceAll(" ","").split(",");
+			String name = offerAsString.split(",")[0].trim();
+			SiegeWar.info("Loading Domination Awards Artefact Offer: " + name);
 			List<String> lore = new ArrayList<>();
-			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_line_1",tier).translate()));
+			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_line_1",tier+1).translate()));
 			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_line_2",(int)SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays()).translate()));
-			int quantity = Integer.parseInt(specificationFields[2]);
-			Material material = Material.matchMaterial("minecraft:" + specificationFields[3]);
-
+			int quantity = Integer.parseInt(specificationFields[1]);
+			Material material = Material.matchMaterial("minecraft:" + specificationFields[2]);
 			//Create artefact
 			ItemStack artefact = new ItemStack(material);
 			ItemMeta itemMeta = artefact.getItemMeta();
@@ -695,12 +696,57 @@ public class SiegeWarSettings {
 
 			//Create offer and add to map
 			ArtefactOffer artefactOffer = new ArtefactOffer(artefact, quantity);
-			if(!result.containsKey(tier)) {
-				result.put(tier, new ArrayList<>());
-			} 
-			result.get(tier).add(artefactOffer);
+			result.add(artefactOffer);
 		}
 		return result;
+	}
+
+	/**
+	 * Get artefacts offers available for domination rewards.
+	 *
+	 * @return map of artefact offers
+	 * The map is in the form of`:   tier -> List of offers
+	 *
+	 * WARNING:
+	 * The returned offers should considered as "templates"
+	 * Thus make sure to clone any of the items before granting.
+	 */
+	public static Map<Integer, List<ArtefactOffer>> getDominationAwardsArtefactOffers() {
+		return cachedDominationAwardsArtefactOffers;
+	}
+
+	/**
+	 * Loads the indicated list into cache
+	 */
+	public static void loadDominationAwardsArtefactOffers() {
+		Map<Integer, List<ArtefactOffer>> result = new HashMap<>();
+
+		List<ArtefactOffer> offersInTier = new ArrayList<>();
+		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER1,0));
+		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER1,0));
+		result.put(0, offersInTier);
+
+		offersInTier = new ArrayList<>();
+		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER2,1));
+		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER2,1));
+		result.put(1, offersInTier);
+
+		offersInTier = new ArrayList<>();
+		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER3,2));
+		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER3,2));
+		result.put(2, offersInTier);
+
+		offersInTier = new ArrayList<>();
+		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER4,3));
+		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER4,3));
+		result.put(3, offersInTier);
+
+		offersInTier = new ArrayList<>();
+		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER5,4));
+		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER5,4));
+		result.put(4, offersInTier);
+
+		cachedDominationAwardsArtefactOffers = result;
 	}
 
 	private static void addSpecialEffects(ItemStack artefact, String[] specificationFields) {
@@ -708,7 +754,7 @@ public class SiegeWarSettings {
 		Material material = artefact.getType();
 		ItemMeta itemMeta = artefact.getItemMeta();
         List<String[]> enchantmentSpecs = new ArrayList<>();
-        for(int i = 4; i < specificationFields.length; i++) {
+        for(int i = 3; i < specificationFields.length; i++) {
             enchantmentSpecs.add(specificationFields[i].split(":"));
         }
 
@@ -737,7 +783,7 @@ public class SiegeWarSettings {
 	private static PotionEffect generatePotionEffect(String[] effectSpec) {
 		PotionEffectType potionEffectType = PotionEffectType.getByKey(NamespacedKey.fromString("minecraft:" + effectSpec[0]));
 		int amplifier = Integer.parseInt(effectSpec[1]);
-		int duration = Integer.parseInt(effectSpec[2]);
+		int duration = Integer.parseInt(effectSpec[2]) * 20;  //Multiply by 20 to convert seconds to ticks
 		boolean particles = Boolean.parseBoolean(effectSpec[3]);
 		boolean ambient = Boolean.parseBoolean(effectSpec[4]);
 		boolean icon = Boolean.parseBoolean(effectSpec[5]);
@@ -774,5 +820,4 @@ public class SiegeWarSettings {
 	public static int getDominationAwardsArtefactExpiryExplosionsMaxPower() {
 		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_MAX_POWER);
 	}
-
 }

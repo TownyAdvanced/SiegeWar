@@ -1087,16 +1087,88 @@ public enum ConfigNodes {
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS(
 			"domination_awards.artefact_offers",
-			""
-			+ " {potion_of_true_invisibility, 1, 3, potion, invisibility:1:3600:false:false:true} "
-			+ " {sword_of_fiery_knockback, 2, 1, golden_sword, fire_aspect:4, knockback:4} "
-			+ " {helmet of missile shielding, 2, 1, iron_helmet, projectile_protection:10} "
-			+ " {arrow_of_doom, 3, 1, tipped_arrow, instant_damage:20:1:true:true:true} ",
 			"",
-			"# List of Artefact Specifications.",
-			"# There are 2 possible entry types:",
-			"# 1. {weapon/armour name, artefact_tier, quantity, material_name, effect_name:power, (optional effect) (optional effect) ...}",
-		    "# 2. {potion/arrow name, artefact_tier, quantity, material_name, effect_name:power:duration:ambient:particles:icon, (optional effect) (optional effect) ...}"),
+			"",
+			"",
+			"# +------------------------------------------------------+ #",
+			"# |                    Artefact Offers                   | #",
+			"# +------------------------------------------------------+ #",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT(
+			"domination_awards.artefact_offers.default_14_5_2022",
+			"",
+			"# These artefacts are the defaults provided by SW. Do not add custom items here."),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER1(
+			"domination_awards.artefact_offers.default_14_5_2022.tier1",
+			"{Cobble Eater, 1, golden_pickaxe, efficiency:7}"
+			+ "{Tree Feller, 1, golden_pickaxe, efficiency:7}"
+			+ "{Ground Digger, 1, golden_shovel, efficiency:7}"
+			+ "{Sword of Searing, 1, golden_sword, fire_aspect:4}"
+			+ "{Potion of Enhanced Regeneration, 3, potion, regeneration:3:60:true:true:true}"
+			+ "{Potion of Enhanced Strength, 3, potion, strength:3:120:true:true:true}"
+			+ "{Potion of Enhanced Absorbtion, 5, potion, absorption:3:120:true:true:true}",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER2(
+			"domination_awards.artefact_offers.default_14_5_2022.tier2",
+			"{Potion of True Invisibility, 3, potion, invisibility:1:300:false:false:true}"
+			+ "{Splash Potion of Enhanced Regeneration, 3, splash_potion, regeneration:3:60:true:true:true}"
+			+ "{Splash Potion of Enhanced Strength, 3, splash_potion, strength:3:120:true:true:true}"
+			+ "{Splash Potion of Enhanced Absorbtion, 5, splash_potion, absorption:3:120:true:true:true}",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER3(
+			"domination_awards.artefact_offers.default_14_5_2022.tier3",
+			"{Arrow of Enhanced Hunger, 5, tipped_arrow, hunger:10:50:true:true:true}"
+			+ "{Potion of Invincibility, 3, potion, resistance:5:30:true:true:true}"
+			+ "{Arrow of Knockup, 5, tipped_arrow, levitation:25:1:true:true:true}"
+			+ "{Super Spiky Helmet, 1, golden_helmet, thorns:8, unbreaking:1}"
+			+ "{Bountiful Pickaxe, 1, golden_pickaxe, fortune:5, efficiency:8}",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER4(
+			"domination_awards.artefact_offers.default_14_5_2022.tier4",
+			"{Sword of Immolation, 1, golden_sword, fire_aspect:7}"
+			+ "{Axe of the Berserker, 1, golden_axe, sharpness:7, efficiency:10}"
+			+ "{bow of displacement, 1, bow, punch: 10}",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER5(
+			"domination_awards.artefact_offers.default_14_5_2022.tier5",
+			"{Arrow Of Doom, 1, tipped_arrow, instant_damage:20:1:true:true:true}"
+			+ "{Vorpal Sword, 1, golden_sword, sharpness:20}"
+			+ "{Chicago Typewriter, 1, crossbow, quick_charge:5}"
+			+ "{Trident of Zeus, 1, trident, channeling:5}"
+			+ "{Trident of Poseidon, 1, trident, riptide:12}"
+			+ "{Chestplate of Mars, 1, golden_chestplate, protection:10}",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM(
+			"domination_awards.artefact_offers.custom",
+			"",
+			"# These artefacts are configured by the server. You can add custom items here."),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER1(
+			"domination_awards.artefact_offers.custom.tier1",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER2(
+			"domination_awards.artefact_offers.custom.tier2",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER3(
+			"domination_awards.artefact_offers.custom.tier3",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER4(
+			"domination_awards.artefact_offers.custom.tier4",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER5(
+			"domination_awards.artefact_offers.custom.tier5",
+			"",
+			""),
+	DOMINATION_AWARDS_ARTEFACT_OFFERS_LEGACY(
+			"domination_awards.artefact_offers.legacy",
+			"",
+			"",
+			"# This list is inactive. The artefacts here will not be offered.",
+			"# This list exists only to preserve any custom artefacts which users added in 0.7.15.",
+			"# To offer these artefacts, move them into the custom offers configs above."),
 	DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS(
 			"domination_awards.artefact_chest_signs",
 			"artefacts, artifacts",
@@ -1180,7 +1252,7 @@ public enum ConfigNodes {
 			"# This list is in the form of: top_nation, next nation,......bottom_nation"),
 	DOMINATION_AWARDS_GLOBAL_GRANTED_ARTEFACT_OFFERS(
 			"domination_awards.global.granted_artefact_offers",
-			"{7,3,2} {6,3,1} {5,2,1} {4,2,1} {3,1} {2,1} {1}",
+			"{8,7,5,3,2} {7,6,4,2,1} {6,5,3,1,0} {5,4,2,0,0} {4,3,1,0,0} {3,2,0,0,0} {2,1,0,0,0}",
 			"",
 			"# The offers granted by the awards.",
 			"# This list is in the form of: {top_nation}, {next nation},......{bottom_nation}",
