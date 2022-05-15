@@ -75,7 +75,7 @@ public class SiegeWar extends JavaPlugin {
             info("Towny version " + getTownyVersion() + " found.");
         }
         
-        registerAdminCommands();        
+        registerAdminCommands();
         handleLegacyConfigs();
         
         if (!loadAll()) {
