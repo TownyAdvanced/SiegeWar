@@ -532,11 +532,9 @@ msg_err_nation_domination_awards_no_capital: '&cNo capital town in which to depo
 msg_err_nation_domination_awards_no_capital_homeblock: '&cNo capital homeblock in which to deposit Artefacts.' 
 msg_err_nation_domination_awards_not_enough_chests: '&cNot enough chests in homeblock to deposit Artefacts.'
 
-#Added on 0.45
-artefact_lore_line_1: 'Artefact Tier %d'
-artefact_lore_line_2: '&cWARNING: Unstable after %d days old.'
-
-#Added in 9.46
+#Added in 0.46
+artefact_lore_summary_line: 'Artefact Tier %d'
+artefact_lore_warning_line: '&cWARNING: Unstable after %d days old.'
 artefact.name.tree_feller: 'Tree Feller'
 artefact.name.ground.digger: 'Ground Digger'
 artefact.name.cobble_eater: 'Cobble Eater'
@@ -556,9 +554,9 @@ artefact.name.bountiful_pickaxe: 'Bountiful Pickaxe'
 artefact.name.sword_of_immolation: 'Sword of Immolation'
 artefact.name.axe_of_the_berserker: 'Axe of the Berserker'
 artefact.name.bow_of_displacement: 'Bow of Displacement'
-artefact.name.ground.arrow_of_doom: 'Arrow of Doom'
-artefact.name.ground.vorpal_sword: 'Vorpal Sword'
-artefact.name.ground.chicago_typewriter: 'Chicago Typewriter'
-artefact.name.ground.trident_of_zeus: 'Trident of Zeus'
-artefact.name.ground.trident_of_poseidon: 'Trident of Poseidon'
-artefact.name.ground.chestplate_of_mars: 'Chestplate of Mars'
+artefact.name.arrow_of_doom: 'Arrow of Doom'
+artefact.name.vorpal_sword: 'Vorpal Sword'
+artefact.name.chicago_typewriter: 'Chicago Typewriter'
+artefact.name.trident_of_zeus: 'Trident of Zeus'
+artefact.name.trident_of_poseidon: 'Trident of Poseidon'
+artefact.name.chestplate_of_mars: 'Chestplate of Mars'
