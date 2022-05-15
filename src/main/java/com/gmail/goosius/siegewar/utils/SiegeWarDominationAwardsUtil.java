@@ -310,7 +310,7 @@ public class SiegeWarDominationAwardsUtil {
     * @return true if the item is a artefact
     */
     public static boolean isArtefact(ItemStack item) {
-        return item.getItemMeta() != null
+        return item.hasItemMeta()
                 && item.getItemMeta().getPersistentDataContainer().has(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE);
    }
 
@@ -323,7 +323,7 @@ public class SiegeWarDominationAwardsUtil {
     public static boolean isExpiredArtefact(ItemStack item) {
         PersistentDataContainer persistentDataContainer;
         Long expiryTime;
-        if(item.getItemMeta() != null) {
+        if (item.hasItemMeta()) {
             persistentDataContainer = item.getItemMeta().getPersistentDataContainer();
             expiryTime = persistentDataContainer.get(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE);
             return expiryTime != null && System.currentTimeMillis() > expiryTime;
