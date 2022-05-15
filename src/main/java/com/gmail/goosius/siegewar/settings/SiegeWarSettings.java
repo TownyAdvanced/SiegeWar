@@ -679,11 +679,11 @@ public class SiegeWarSettings {
 		for(String offerAsString: Settings.getListOfCurlyBracketedItems(configNode)) {
 			//Create convenience variables
 			String[] specificationFields = offerAsString.replaceAll(" ","").split(",");
-			String name = offerAsString.split(",")[0].trim();
-			SiegeWar.info("Loading Domination Awards Artefact Offer: " + name);
+			SiegeWar.info("Loading Domination Awards Artefact Offer: " +  specificationFields[0]);
+			String name = Translatable.of("artefact.name." + specificationFields[0].toLowerCase()).translate();
 			List<String> lore = new ArrayList<>();
-			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_line_1",tier+1).translate()));
-			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_line_2",(int)SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays()).translate()));
+			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_summary_line",tier+1).translate()));
+			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_warning_line",(int)SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays()).translate()));
 			int quantity = Integer.parseInt(specificationFields[1]);
 			Material material = Material.matchMaterial("minecraft:" + specificationFields[2]);
 			//Create artefact

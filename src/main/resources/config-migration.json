@@ -146,5 +146,34 @@
         "value": "domination_awards.artefact_offers.legacy"
       }
     ]
+  },
+    {
+    "version": "0.8.0",
+    "changes": [
+      {
+        "type": "REMOVE",
+        "path": "domination_awards.artefact_offers.default_14_5_2022"
+      },
+      {
+        "type": "REMOVE",
+        "path": "domination_awards.artefact_offers.default_14_5_2022.tier1"
+      },
+      {
+        "type": "REMOVE",
+        "path": "domination_awards.artefact_offers.default_14_5_2022.tier2"
+      },
+      {
+        "type": "REMOVE",
+        "path": "domination_awards.artefact_offers.default_14_5_2022.tier3"
+      },
+      {
+        "type": "REMOVE",
+        "path": "domination_awards.artefact_offers.default_14_5_2022.tier4"
+      },
+      {
+        "type": "REMOVE",
+        "path": "domination_awards.artefact_offers.default_14_5_2022.tier5"
+      }
+    ]
   }
 ]
