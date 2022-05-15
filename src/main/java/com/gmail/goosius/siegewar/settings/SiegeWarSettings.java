@@ -679,7 +679,7 @@ public class SiegeWarSettings {
 		for(String offerAsString: Settings.getListOfCurlyBracketedItems(configNode)) {
 			//Create convenience variables
 			String[] specificationFields = offerAsString.replaceAll(" ","").split(",");
-			String name = offerAsString.split(",")[0].trim();
+			String name = Translatable.of(specificationFields[0].toLowerCase()).translate();
 			SiegeWar.info("Loading Domination Awards Artefact Offer: " + name);
 			List<String> lore = new ArrayList<>();
 			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_line_1",tier+1).translate()));
