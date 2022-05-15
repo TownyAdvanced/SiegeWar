@@ -75,6 +75,7 @@ public class SiegeWar extends JavaPlugin {
             info("Towny version " + getTownyVersion() + " found.");
         }
         
+        registerAdminCommands();        
         handleLegacyConfigs();
         
         if (!loadAll()) {
@@ -82,7 +83,7 @@ public class SiegeWar extends JavaPlugin {
         }
 
 		cleanupBattleSession();
-		registerCommands();
+		registerPlayerCommands();
 		registerListeners();
 		checkIntegrations();
 		cleanupLegacyMetaData();
@@ -164,12 +165,19 @@ public class SiegeWar extends JavaPlugin {
 		}
 	}
 
-	private void registerCommands() {
+	private void registerAdminCommands() {
 		if(siegeWarPluginError) {
-			severe("SiegeWar is in safe mode. SiegeWar commands not registered");
+			severe("SiegeWar is in safe mode. SiegeWar admin commands not registered");
+		} else {
+			getCommand("siegewaradmin").setExecutor(new SiegeWarAdminCommand());
+		}
+	}
+
+	private void registerPlayerCommands() {
+		if(siegeWarPluginError) {
+			severe("SiegeWar is in safe mode. SiegeWar player commands not registered");
 		} else {
 			getCommand("siegewar").setExecutor(new SiegeWarCommand());
-			getCommand("siegewaradmin").setExecutor(new SiegeWarAdminCommand());
 			new SiegeWarNationAddonCommand();
 		}
 	}

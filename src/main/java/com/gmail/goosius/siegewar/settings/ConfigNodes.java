@@ -1100,13 +1100,13 @@ public enum ConfigNodes {
 			"# These artefacts are the defaults provided by SW. Do not add custom items here."),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER1(
 			"domination_awards.artefact_offers.default_0_8_0.tier1",
-			"{cobble_eater, 1, golden_pickaxe, efficiency:7}"
-			+ "{tree_feller, 1, golden_pickaxe, efficiency:7}"
-			+ "{ground_digger, 1, golden_shovel, efficiency:7}"
-			+ "{sword_of_Searing, 1, golden_sword, fire_aspect:4}"
+			"{cobble_eater, 1, golden_pickaxe, efficiency:8, unbreaking:1}"
+			+ "{tree_feller, 1, golden_axe, efficiency:8, unbreaking:1}"
+			+ "{ground_digger, 1, golden_shovel, efficiency:8, unbreaking:1}"
+			+ "{sword_of_searing, 1, golden_sword, fire_aspect:4}"
 			+ "{potion_of_enhanced_regeneration, 3, potion, regeneration:3:60:true:true:true}"
 			+ "{potion_of_enhanced_strength, 3, potion, strength:3:120:true:true:true}"
-			+ "{potion_of_enhanced Absorbtion, 5, potion, absorption:3:120:true:true:true}",
+			+ "{potion_of_enhanced_absorbtion, 5, potion, absorption:3:120:true:true:true}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER2(
 			"domination_awards.artefact_offers.default_0_8_0.tier2",
@@ -1134,8 +1134,8 @@ public enum ConfigNodes {
 			"{arrow_of_doom, 1, tipped_arrow, instant_damage:20:1:true:true:true}"
 			+ "{vorpal_sword, 1, golden_sword, sharpness:20}"
 			+ "{chicago_typewriter, 1, crossbow, quick_charge:5}"
-			+ "{trident_of Zeus, 1, trident, channeling:5}"
-			+ "{trident_of Poseidon, 1, trident, riptide:12}"
+			+ "{trident_of_zeus, 1, trident, channeling:5}"
+			+ "{trident_of_poseidon, 1, trident, riptide:12}"
 			+ "{chestplate_of_mars, 1, golden_chestplate, protection:10}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM(
