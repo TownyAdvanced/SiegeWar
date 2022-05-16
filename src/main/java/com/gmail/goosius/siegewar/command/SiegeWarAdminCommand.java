@@ -454,7 +454,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		if (args.length == 0) {
 			showGlobalDominationAwardsHelp(sender);
 		} else if (args[0].equalsIgnoreCase("giveglobal")) {
-			SiegeWarDominationAwardsUtil.grantGlobalDominationAwardsNow(sender);
+			SiegeWarDominationAwardsUtil.grantGlobalDominationAwardsNow(new ArrayList<>(TownyUniverse.getInstance().getNations()));
 		} else {
 			showGlobalDominationAwardsHelp(sender);
 		}

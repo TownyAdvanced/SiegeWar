@@ -299,7 +299,7 @@ public class SiegeWarDominationAwardsUtil {
             if(!SiegeWarSettings.isDominationAwardsGlobalEnabled())
                 return;
             //Add a domination record for each nation
-            List<Nation> sortedNationList = getNationsListSortedNormally();            
+            List<Nation> sortedNationList = getNationsListSortedForGlobalDominationAwards();
             List<String> dominationRecord;
             Nation nation;
             for(int i = 0; i < sortedNationList.size(); i++) {
@@ -312,7 +312,7 @@ public class SiegeWarDominationAwardsUtil {
         }
     }
 
-    public static List<Nation> getNationsListSortedNormally() {
+    public static List<Nation> getNationsListSortedForGlobalDominationAwards() {
         List<Nation> nations = new ArrayList<>(TownyUniverse.getInstance().getNations());
         Map<String, Comparator<Nation>> availableComparators = new HashMap<>();
         availableComparators.put("num_residents", SiegeWarNationUtil.BY_NUM_RESIDENTS);
@@ -321,7 +321,7 @@ public class SiegeWarDominationAwardsUtil {
         availableComparators.put("num_online_players", SiegeWarNationUtil.BY_NUM_RESIDENTS);               
         Comparator<Nation> nationSortComparator = availableComparators.get(SiegeWarSettings.getDominationAwardsGlobalAssessmentCriterion().toLowerCase());
         if(nationSortComparator == null) {
-            throw new RuntimeException("Problem Granting Global Domination Awards. Unknown criterion: " + SiegeWarSettings.getDominationAwardsGlobalAssessmentCriterion());
+            throw new RuntimeException("Problem adding global domination record. Unknown sorting criterion: " + SiegeWarSettings.getDominationAwardsGlobalAssessmentCriterion());
         } else {
             nations.sort(nationSortComparator);     
             return nations;      
