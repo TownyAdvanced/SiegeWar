@@ -781,7 +781,7 @@ public class SiegeWarSettings {
 	}
 
 	private static PotionEffect generatePotionEffect(String[] effectSpec) {
-		PotionEffectType potionEffectType = PotionEffectType.getByKey(NamespacedKey.fromString("minecraft:" + effectSpec[0]));
+		PotionEffectType potionEffectType = PotionEffectType.getByName(effectSpec[0]);
 		int amplifier = Integer.parseInt(effectSpec[1]);
 		int duration = Integer.parseInt(effectSpec[2]) * 20;  //Multiply by 20 to convert seconds to ticks
 		boolean particles = Boolean.parseBoolean(effectSpec[3]);
