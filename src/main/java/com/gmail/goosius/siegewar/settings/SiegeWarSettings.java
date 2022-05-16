@@ -28,6 +28,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.*;
 import org.jetbrains.annotations.Nullable;
 
@@ -781,6 +782,10 @@ public class SiegeWarSettings {
 
 	private static void addEffectToPotionOrArrow(ItemMeta itemMeta, String[] enchantSpec) {
 		if(enchantSpec[0].equalsIgnoreCase("custom_effect")) {
+			//Add tag for easy artefact recognition
+			NamespacedKey effect_key = NamespacedKey.fromString("siegewar." + enchantSpec[1]);
+			itemMeta.getPersistentDataContainer().set(effect_key, PersistentDataType.INTEGER, 0); 
+			//Add lore
 			List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
 			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_custom_effect_lore_" + enchantSpec[1]).translate()));
 			itemMeta.setLore(lore);
@@ -792,6 +797,10 @@ public class SiegeWarSettings {
 
 	private static void addEnchantmentToItem(ItemMeta itemMeta, String[] enchantSpec) {
 		if(enchantSpec[0].equalsIgnoreCase("custom_effect")) {
+			//Add tag for easy artefact recognition
+			NamespacedKey effect_key = NamespacedKey.fromString("siegewar." + enchantSpec[1]);
+			itemMeta.getPersistentDataContainer().set(effect_key, PersistentDataType.INTEGER, 0); 
+			//Add lore
 			List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
 			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_custom_effect_lore_" + enchantSpec[1]).translate()));
 			itemMeta.setLore(lore);
@@ -812,8 +821,6 @@ public class SiegeWarSettings {
 		return new PotionEffect(potionEffectType, duration, amplifier, particles, ambient, icon);
 	}
 
-
-
 	public static List<String> getDominationAwardsArtefactChestSignsLowercase() {
 		String listAsString = Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS);
 		String[] list = listAsString.toLowerCase().replace(" ","").split(",");
@@ -827,7 +834,6 @@ public class SiegeWarSettings {
 	public static double getDominationAwardsArtefactExpiryPercentageChancePerShortTick() {
 		return Settings.getDouble(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_PERCENTAGE_CHANCE_PER_SHORT_TICK);
 	}
-
 
 	public static boolean getDominationAwardsArtefactExpiryExplosionsEnabled() {
 		return Settings.getBoolean(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_ENABLED);

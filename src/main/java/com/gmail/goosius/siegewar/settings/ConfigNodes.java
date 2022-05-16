@@ -1134,7 +1134,7 @@ public enum ConfigNodes {
 			"{arrow_of_doom, 1, tipped_arrow, instant_damage:20:1:true:true:true}"
 			+ "{vorpal_sword, 1, golden_sword, sharpness:20}"
 			+ "{chicago_typewriter, 1, crossbow, quick_charge:5}"
-			+ "{trident_of_zeus, 1, trident, custom_effect:lightning_on_strike}"
+			+ "{trident_of_zeus, 1, trident, channeling:1, loyalty:1, custom_effect:lightning_on_strike}"
 			+ "{trident_of_poseidon, 1, trident, riptide:12}"
 			+ "{chestplate_of_mars, 1, golden_chestplate, protection:10}",
 			""),

@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.listeners;
 
 import java.util.List;
 
+import com.gmail.goosius.siegewar.events.ArtefactHitEntityEvent;
 import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import org.bukkit.Bukkit;
@@ -19,11 +20,9 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import com.gmail.goosius.siegewar.Messaging;
@@ -256,6 +255,17 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(!SiegeWarSettings.getWarSiegeEnabled()
 			|| !TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld()).isWarAllowed()) {
 			return;
+		}
+
+		//Artefact Usage
+		if(event.getDamager() instanceof Player) {
+			ItemStack itemInMainHand = ((Player) event.getDamager()).getInventory().getItemInMainHand();
+			if(itemInMainHand != null && SiegeWarDominationAwardsUtil.isArtefact(itemInMainHand)) {
+				ArtefactHitEntityEvent artefactHitEntityEvent = new ArtefactHitEntityEvent();
+				Bukkit.getPluginManager().callEvent(artefactHitEntityEvent);				
+			}
+		} else if
+			//Look for artefacc bow or arrow
 		}
 
 		//Return if the entity being damaged is not a player
