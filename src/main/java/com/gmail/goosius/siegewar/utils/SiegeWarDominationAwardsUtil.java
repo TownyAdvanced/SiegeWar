@@ -56,7 +56,7 @@ public class SiegeWarDominationAwardsUtil {
         //Get list of qualifying nations
         List<Nation> nations = new ArrayList<>(TownyUniverse.getInstance().getNations());
         nations = cullNationsWithTooFewDominationRecords(nations);
-        //Grant awards now
+        // Grant awards now
         grantGlobalDominationAwardsNow(nations);
     }
 
@@ -72,10 +72,8 @@ public class SiegeWarDominationAwardsUtil {
         synchronized (GLOBAL_DOMINATION_AWARDS_LOCK) {
             //The number of awardees will be as configured, or the size of the nations list, whichever is smaller, 
             int numberOfAwardees = Math.min(moneyToGrant.size(), nations.size());
-
-            //Sort nations by recorded dominance
+            //Sort the nations by their domination records
             nations.sort(SiegeWarNationUtil.BY_GLOBAL_DOMINATION_RANKING);     
-
             //Calculate awards
             List<Nation> awardees = new ArrayList<>();
             Map<Nation, Integer> nationMoneyMap = new HashMap<>();
