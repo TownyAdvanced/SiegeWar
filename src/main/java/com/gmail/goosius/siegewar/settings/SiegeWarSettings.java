@@ -680,19 +680,23 @@ public class SiegeWarSettings {
 			//Create convenience variables
 			String[] specificationFields = offerAsString.replaceAll(" ","").split(",");
 			SiegeWar.info("Loading Domination Awards Artefact Offer: " +  specificationFields[0]);
-			String name = Translatable.of("artefact.name." + specificationFields[0].toLowerCase()).translate();
-			List<String> lore = new ArrayList<>();
-			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_summary_line",tier+1).translate()));
-			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_warning_line",(int)SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays()).translate()));
+			String name = Translatable.of("artefact_name_" + specificationFields[0].toLowerCase()).translate();
 			int quantity = Integer.parseInt(specificationFields[1]);
 			Material material = Material.matchMaterial("minecraft:" + specificationFields[2]);
 			//Create artefact
 			ItemStack artefact = new ItemStack(material);
 			ItemMeta itemMeta = artefact.getItemMeta();
+			//Set name
 			itemMeta.setDisplayName(name);
+			//Add special effects
+			addSpecialEffects(artefact, itemMeta, specificationFields);
+			//Add non-effect lore
+			List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
+			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_summary_line",tier+1).translate()));
+			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_warning_line",(int)SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays()).translate()));
 			itemMeta.setLore(lore);
+			//Reset item meta
 			artefact.setItemMeta(itemMeta);
-			addSpecialEffects(artefact, specificationFields);
 
 			//Create offer and add to map
 			ArtefactOffer artefactOffer = new ArtefactOffer(artefact, quantity);
@@ -749,35 +753,53 @@ public class SiegeWarSettings {
 		cachedDominationAwardsArtefactOffers = result;
 	}
 
-	private static void addSpecialEffects(ItemStack artefact, String[] specificationFields) {
+	private static void addSpecialEffects(ItemStack artefact, ItemMeta itemMeta, String[] specificationFields) {
 		//Create convenience variables
 		Material material = artefact.getType();
-		ItemMeta itemMeta = artefact.getItemMeta();
         List<String[]> enchantmentSpecs = new ArrayList<>();
         for(int i = 3; i < specificationFields.length; i++) {
             enchantmentSpecs.add(specificationFields[i].split(":"));
         }
 
-        //Add enchants
         if(material == Material.POTION
                 || material == Material.SPLASH_POTION
                 || material == Material.LINGERING_POTION
                 || material == Material.TIPPED_ARROW ) {
             for(String[] enchantSpec: enchantmentSpecs) {
-                PotionEffect potionEffect = generatePotionEffect(enchantSpec);
-				((PotionMeta)itemMeta).addCustomEffect(potionEffect, true);
+				addEffectToPotionOrArrow(itemMeta, enchantSpec);
             }
 
         } else {
             for(String[] enchantSpec: enchantmentSpecs) {
-				Enchantment enchantment = Enchantment.getByKey(NamespacedKey.fromString("minecraft:"+ enchantSpec[0]));
-                int power = Integer.parseInt(enchantSpec[1]);
-                itemMeta.addEnchant(enchantment, power, true);
+				addEnchantmentToItem(itemMeta, enchantSpec);
             }
 		}
 
 		//Set updated item meta
 		artefact.setItemMeta(itemMeta);
+	}
+
+	private static void addEffectToPotionOrArrow(ItemMeta itemMeta, String[] enchantSpec) {
+		if(enchantSpec[0].equalsIgnoreCase("custom_effect")) {
+			List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
+			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_custom_effect_lore_" + enchantSpec[1]).translate()));
+			itemMeta.setLore(lore);
+		} else {
+			PotionEffect potionEffect = generatePotionEffect(enchantSpec);
+			((PotionMeta)itemMeta).addCustomEffect(potionEffect, true);
+		}
+	}
+
+	private static void addEnchantmentToItem(ItemMeta itemMeta, String[] enchantSpec) {
+		if(enchantSpec[0].equalsIgnoreCase("custom_effect")) {
+			List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
+			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_custom_effect_lore_" + enchantSpec[1]).translate()));
+			itemMeta.setLore(lore);
+		} else {
+			Enchantment enchantment = Enchantment.getByKey(NamespacedKey.fromString("minecraft:"+ enchantSpec[0]));
+			int power = Integer.parseInt(enchantSpec[1]);
+			itemMeta.addEnchant(enchantment, power, true);
+		}
 	}
 
 	private static PotionEffect generatePotionEffect(String[] effectSpec) {
@@ -789,6 +811,8 @@ public class SiegeWarSettings {
 		boolean icon = Boolean.parseBoolean(effectSpec[5]);
 		return new PotionEffect(potionEffectType, duration, amplifier, particles, ambient, icon);
 	}
+
+
 
 	public static List<String> getDominationAwardsArtefactChestSignsLowercase() {
 		String listAsString = Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS);
