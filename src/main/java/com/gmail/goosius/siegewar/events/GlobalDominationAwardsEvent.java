@@ -14,7 +14,7 @@ public class GlobalDominationAwardsEvent extends Event {
 
 	private static final HandlerList handlers = new HandlerList();
 	private List<Nation> awardees; //First to last
-	private Map<Nation, Integer> moneyAwards; 	
+	private Map<Nation, Integer> moneyAwards;
 	private Map<Nation, List<ItemStack>> artefactAwards;
 
 	public GlobalDominationAwardsEvent(List<Nation> awardees, Map<Nation, Integer> moneyAwards, Map<Nation, List<ItemStack>> artefactAwards) {
@@ -45,5 +45,5 @@ public class GlobalDominationAwardsEvent extends Event {
 	public static HandlerList getHandlerList() {
 		return handlers;
 	}
-	
+
 }

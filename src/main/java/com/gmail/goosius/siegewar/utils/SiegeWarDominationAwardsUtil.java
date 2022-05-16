@@ -59,7 +59,7 @@ public class SiegeWarDominationAwardsUtil {
         //Grant awards now
         grantGlobalDominationAwardsNow(nations);
     }
-	
+
     /**
      * Grant the global domination awards now, to the top nations on the given list
      *
@@ -82,13 +82,13 @@ public class SiegeWarDominationAwardsUtil {
             Map<Nation, List<ItemStack>> nationArtefactMap = new HashMap<>();
             Nation nation;
             for(int nationPosition = 0; nationPosition < numberOfAwardees; nationPosition++) {
-                nation = nations.get(nationPosition); 
+                nation = nations.get(nationPosition);
                 //Record awardee
                 awardees.add(nation);
                 //Record money
                 nationMoneyMap.put(nation, moneyToGrant.get(nationPosition));
                 //Record artefacts
-                nationArtefactMap.put(nation, generateArtefacts(numberOfArtefactsToGrant.get(nationPosition)));               
+                nationArtefactMap.put(nation, generateArtefacts(numberOfArtefactsToGrant.get(nationPosition)));
             }
 
             //Fire event so other plugins can read/modify the awards
@@ -107,7 +107,7 @@ public class SiegeWarDominationAwardsUtil {
         }       
     }
 
-    private static void grantGlobalDominationAwardsNow(GlobalDominationAwardsEvent event) {        
+    private static void grantGlobalDominationAwardsNow(GlobalDominationAwardsEvent event) {
         List<Nation> awardees = event.getAwardees();
         Map<Nation, Integer> moneyAwards = event.getMoneyAwards();
         Map<Nation, List<ItemStack>> artefactAwards = event.getArtefactAwards();
@@ -127,12 +127,12 @@ public class SiegeWarDominationAwardsUtil {
                     moneyText = TownyEconomyHandler.getFormattedBalance(moneyToGrant);
                 } else{
                     moneyText = Translatable.of("msg_na").toString();
-                }    
+                }
                 //Gib Artefacts
-                artefactsToGrant = artefactAwards.get(nation);            
+                artefactsToGrant = artefactAwards.get(nation);
                 grantArtefactsToNation(nation, artefactsToGrant);
                 artefactText = Integer.toString(artefactsToGrant.size());
-                //Add to Global message                     
+                //Add to Global message
                 readableNationPosition++;
                 globalMessageLines.add(Translatable.of("msg_global_domination_awards_line", readableNationPosition, nation.getName(), moneyText, artefactText));
             } catch (Throwable t) {
@@ -144,7 +144,7 @@ public class SiegeWarDominationAwardsUtil {
 
         //Send Global Message
         Translatable globalMessageHeader = Translatable.of("msg_global_domination_awards_header");
-        Messaging.sendGlobalMessage(globalMessageHeader, globalMessageLines);  
+        Messaging.sendGlobalMessage(globalMessageHeader, globalMessageLines);
     }
 
     private static List<Nation> cullNationsWithTooFewDominationRecords(List<Nation> nations) {
