@@ -454,7 +454,10 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		if (args.length == 0) {
 			showGlobalDominationAwardsHelp(sender);
 		} else if (args[0].equalsIgnoreCase("giveglobal")) {
-			SiegeWarDominationAwardsUtil.grantGlobalDominationAwardsNow(sender);
+			//Add one domination record to each nation (otherwise the grant will crash if there are none)
+			SiegeWarDominationAwardsUtil.addDominationRecords();
+			//Grant awards
+			SiegeWarDominationAwardsUtil.grantGlobalDominationAwardsNow(new ArrayList<>(TownyUniverse.getInstance().getNations()));
 		} else {
 			showGlobalDominationAwardsHelp(sender);
 		}
