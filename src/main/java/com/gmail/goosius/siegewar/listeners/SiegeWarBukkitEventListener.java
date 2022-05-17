@@ -1,23 +1,24 @@
 package com.gmail.goosius.siegewar.listeners;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.gmail.goosius.siegewar.events.ArtefactHitEntityEvent;
+import com.gmail.goosius.siegewar.events.ArtefactDamageEntityEvent;
 import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.*;
@@ -41,6 +42,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 
 import net.citizensnpcs.api.CitizensAPI;
+import org.bukkit.projectiles.ProjectileSource;
 
 /**
  * 
@@ -257,15 +259,30 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 		}
 
-		//Artefact Usage
+		//Check for Artefact Usage
 		if(event.getDamager() instanceof Player) {
+			//Check if melee weapon is an artefact
 			ItemStack itemInMainHand = ((Player) event.getDamager()).getInventory().getItemInMainHand();
-			if(itemInMainHand != null && SiegeWarDominationAwardsUtil.isArtefact(itemInMainHand)) {
-				ArtefactHitEntityEvent artefactHitEntityEvent = new ArtefactHitEntityEvent();
-				Bukkit.getPluginManager().callEvent(artefactHitEntityEvent);				
+			if(SiegeWarDominationAwardsUtil.isArtefact(itemInMainHand)) {
+				ArtefactDamageEntityEvent artefactDamageEntityEvent = new ArtefactDamageEntityEvent(event.getDamager(), event.getEntity(), itemInMainHand);
+				Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);						
 			}
-		} else if
-			//Look for artefacc bow or arrow
+		} else if (event.getDamager() instanceof Projectile) {						
+			ProjectileSource shooter = ((Projectile)event.getDamager()).getShooter();
+			if(shooter instanceof Player) {
+				//Check if projectile is an artefact
+				if(SiegeWarDominationAwardsUtil.isArtefact(event.getDamager())) {					
+					System.out.println("Artefact attack");
+					ArtefactDamageEntityEvent artefactDamageEntityEvent = new ArtefactDamageEntityEvent((Player)shooter, event.getEntity(), event.getDamager());
+					Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);			
+				}
+				//Check if shooting weapon is an artefact
+				ItemStack itemInMainHand = ((Player)shooter).getInventory().getItemInMainHand();
+				if(SiegeWarDominationAwardsUtil.isArtefact(itemInMainHand)) {
+					ArtefactDamageEntityEvent artefactDamageEntityEvent = new ArtefactDamageEntityEvent((Player)shooter, event.getEntity(), itemInMainHand);
+					Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);		
+				}				
+			}
 		}
 
 		//Return if the entity being damaged is not a player
@@ -300,8 +317,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 		if (!SiegeWarSettings.isDominationAwardsGlobalEnabled())
 			return;
-		if(event.getInventory().getResult() != null
-				&& event.isRepair()
+		if(event.isRepair()
 				&& SiegeWarDominationAwardsUtil.isArtefact(event.getInventory().getResult())) {
 			event.getInventory().setResult(null); //Cannot repair artefact
 		}
@@ -313,9 +329,27 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 		if (!SiegeWarSettings.isDominationAwardsGlobalEnabled())
 			return;
-		if(event.getResult() != null
-				&& SiegeWarDominationAwardsUtil.isArtefact(event.getResult())) {
+		if(SiegeWarDominationAwardsUtil.isArtefact(event.getResult())) {
 			event.setResult(null); //Cannot repair artefact
 		}
 	}
+
+	/**
+	 * If a bow/crossbow is fired, transfer any artefact tags to the projectile
+	 *
+	 * @param event the event
+	 */
+	public void on (EntityShootBowEvent event) {
+		if (!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+		if (!SiegeWarSettings.isDominationAwardsGlobalEnabled())
+			return;
+		if(SiegeWarDominationAwardsUtil.isArtefact(event.getConsumable())) {
+			long expiryTime = event.getConsumable().getItemMeta().getPersistentDataContainer().get(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE);
+			event.getProjectile().getPersistentDataContainer().set(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE, expiryTime);
+			String customEffects = event.getConsumable().getItemMeta().getPersistentDataContainer().get(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE);
+			event.getProjectile().getPersistentDataContainer().set(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE, customEffects);			
+		}
+	}
+	
 }

@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.events.GlobalDominationAwardsEvent;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.ArtefactOffer;
+import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -26,11 +27,16 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -43,9 +49,10 @@ import java.util.*;
 public class SiegeWarDominationAwardsUtil {
 
     public static final String GLOBAL_DOMINATION_AWARDS_LOCK = "Global Domination Awards Lock";
-    private static final NamespacedKey EXPIRATION_TIME_KEY = NamespacedKey.fromString("siegewar.artefactexpirytime");
-    private static final PersistentDataType<Long, Long> EXPIRATION_TIME_KEY_TYPE = PersistentDataType.LONG;
-
+    public static final NamespacedKey EXPIRATION_TIME_KEY = NamespacedKey.fromString("siegewar.artefactexpirytime");
+    public static final PersistentDataType<Long, Long> EXPIRATION_TIME_KEY_TYPE = PersistentDataType.LONG;
+    public static final NamespacedKey CUSTOM_EFFECTS_KEY = NamespacedKey.fromString("siegewar.customeffects");
+    public static final PersistentDataType<String, String> CUSTOM_EFFECTS_KEY_TYPE = PersistentDataType.STRING;
     /**
      * Grant the global domination awards
      */
@@ -326,16 +333,22 @@ public class SiegeWarDominationAwardsUtil {
         }
     }
 
+
     /**
-    * Determine is a given item is an artefact
-    * @param item the item
+    * Determine is a given candidate is an artefact
+    * @param candidate the candidate
     *
-    * @return true if the item is a artefact
-    */
-    public static boolean isArtefact(ItemStack item) {
-        return item.hasItemMeta()
-                && item.getItemMeta().getPersistentDataContainer().has(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE);
-   }
+    * @return true if the candidate is an artefact
+    */       
+    public static boolean isArtefact(Object candidate) {
+        //Get persistent data holder
+        PersistentDataHolder persistentDataHolder = getPersistentDataHolder(candidate);
+        if(candidate == null) {
+            return false;
+        }
+        //Determine if artefact
+        return persistentDataHolder.getPersistentDataContainer().has(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE);
+    }
 
     /**
     * Determine is a given item is an expired artefact
@@ -395,6 +408,33 @@ public class SiegeWarDominationAwardsUtil {
                 int finalExplosionPower = Math.min(explosionPower, SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsMaxPower());                
                 Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> player.getWorld().createExplosion(player.getLocation(), finalExplosionPower, true));
             }
+        }
+    }
+
+    public static List<String> getCustomEffects(Object artefact) {
+        //Get persistent data holder
+        PersistentDataHolder persistentDataHolder = getPersistentDataHolder(artefact);
+        if(persistentDataHolder == null) {
+            return new ArrayList<>();
+        }
+        //Get custom effects
+        if(persistentDataHolder.getPersistentDataContainer().has(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE)) {
+            return Settings.getListOfCurlyBracketedItems(persistentDataHolder.getPersistentDataContainer().get(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE));
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    @Nullable
+    public static PersistentDataHolder getPersistentDataHolder(Object artefact) {
+        if(artefact == null) {
+            return null;
+        } else if(artefact instanceof ItemStack && ((ItemStack) artefact).hasItemMeta()) {
+            return ((ItemStack) artefact).getItemMeta();
+        } else if (artefact instanceof Projectile) {
+            return (Projectile)artefact;
+        } else {
+            return null;
         }
     }
 }
