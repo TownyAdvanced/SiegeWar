@@ -363,15 +363,15 @@ status_sieged: "%s[%sKuşatıldı%s]"
 status_military_salary: "Askeri Maaş: "
 hover_message_click_to_claim: "Hakkın olan ödemeleri toplamak için tıkla."
 #Added in 0.31
-msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
+msg_next_session_cannot_be_determined: "Bir sonraki Kuşatma Oturumu planlanmadı. Daha sonra tekrar deneyin."
 #Added in 0.32
-msg_peaceful_town_subverted: "&b%s has been peacefully subverted and occupied by %s."
-msg_peaceful_town_revolted: "&b%s has peacefully revolted against %s, and freed itself from occupation."
+msg_peaceful_town_subverted: "&b%s barışçıl bir şekilde alt edildi ve %s tarafından işgal edildi."
+msg_peaceful_town_revolted: "&b%s, %s'e karşı barışçıl bir şekilde isyan etti ve kendisini işgalden kurtardı."
 msg_town_became_peaceful: '&7%s adlı kasaba Barışçıl olduğunu duyurdu. Kasaba şimdi kuşatma saldırılarına karşı bağışıklık kazanıyor. Kasaba, yerel bölgede güçlü bir varlığa sahip bir millet tarafından otomatik olarak işgal edilebilir. Sakinleri kuşatma bölgelerine giremezler veya ulus-askeri safları kazanamazlar.'
 msg_town_became_non_peaceful: '&7%s adlı kasaba Barışçıl olmadığını duyurdu. Kasaba artık kuşatma saldırılarına karşı bağışık değil. Kasaba artık otomatik olarak işgal edilemez. Sakinleri kuşatma bölgelerine girebilir ve ulus-askeri safları kazanabilirler.'
 msg_town_returned_to_pre_peaceful_occupier: " Kasaba barışçıla dönmeden önce olduğu işgalciye iade edildi - %s."
-msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already occupies it."
-msg_err_cannot_subvert_towns_in_own_nation: "&cYou cannot subvert towns which are in your own nation."
+msg_err_cannot_subvert_town_already_occupied: "&cBu kasabayı devirmeye gerek yok, çünkü ulusunuz burayı zaten işgal ediyor."
+msg_err_cannot_subvert_towns_in_own_nation: "&cKendi ulusunuzda bulunan kasabaları deviremezdiniz."
 msg_err_cannot_subvert_town_zero_influence: "&cYou cannot subvert this town, because your nation has no Towny-Influence in the local area."
 msg_err_cannot_subvert_town_insufficient_influence: "&cYou cannot subvert this town, because %s has more Towny-Influence in the local area (%d), than your nation (%d)."
 msg_err_cannot_invite_peaceful_town_occupation: "&cYou cannot invite occupation if your town is neutral."
