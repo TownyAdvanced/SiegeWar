@@ -1105,20 +1105,20 @@ public enum ConfigNodes {
 			+ "{ground_digger, 1, golden_shovel, efficiency:8, unbreaking:1}"
 			+ "{sword_of_searing, 1, golden_sword, fire_aspect:4}"
 			+ "{potion_of_enhanced_regeneration, 3, potion, regeneration:3:60:true:true:true}"
-			+ "{potion_of_enhanced_strength, 3, potion, strength:3:120:true:true:true}"
+			+ "{potion_of_enhanced_strength, 3, potion, increase_damage:3:120:true:true:true}"
 			+ "{potion_of_enhanced_absorbtion, 5, potion, absorption:3:120:true:true:true}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER2(
 			"domination_awards.artefact_offers.default_0_8_0.tier2",
 			"{potion_of_true_invisibility, 3, potion, invisibility:1:300:false:false:true}"
 			+ "{splash_potion_of_enhanced_regeneration, 3, splash_potion, regeneration:3:60:true:true:true}"
-			+ "{splash_potion_of_enhanced_strength, 3, splash_potion, strength:3:120:true:true:true}"
+			+ "{splash_potion_of_enhanced_strength, 3, splash_potion, increase_damage:3:120:true:true:true}"
 			+ "{splash_potion_of_enhanced_absorbtion, 5, splash_potion, absorption:3:120:true:true:true}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER3(
 			"domination_awards.artefact_offers.default_0_8_0.tier3",
 			"{arrow_of_enhanced_hunger, 5, tipped_arrow, hunger:10:50:true:true:true}"
-			+ "{potion_of_great_resistance, 3, potion, resistance:5:30:true:true:true}"
+			+ "{potion_of_great_resistance, 3, potion, damage_resistance:5:30:true:true:true}"
 			+ "{arrow_of_knockup, 5, tipped_arrow, levitation:25:1:true:true:true}"
 			+ "{super_spiky_helmet, 1, golden_helmet, thorns:8, unbreaking:1}"
 			+ "{bountiful_pickaxe, 1, golden_pickaxe, fortune:5, efficiency:8}",
@@ -1131,7 +1131,7 @@ public enum ConfigNodes {
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER5(
 			"domination_awards.artefact_offers.default_0_8_0.tier5",
-			"{arrow_of_doom, 1, tipped_arrow, instant_damage:20:1:true:true:true}"
+			"{arrow_of_doom, 1, tipped_arrow, harm:20:1:true:true:true}"
 			+ "{vorpal_sword, 1, golden_sword, sharpness:20}"
 			+ "{chicago_typewriter, 1, crossbow, quick_charge:5}"
 			+ "{trident_of_zeus, 1, trident, channeling:5}"
