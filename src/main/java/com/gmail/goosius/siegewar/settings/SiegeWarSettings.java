@@ -680,9 +680,9 @@ public class SiegeWarSettings {
 
 		for(String offerAsString: Settings.getListOfCurlyBracketedItems(configNode)) {
 			//Create convenience variables
-			String[] specificationFields = offerAsString.replaceAll(" ","").split(",");
+			String[] specificationFields = offerAsString.toLowerCase().replaceAll(" ","").split(",");
 			SiegeWar.info("Loading Domination Awards Artefact Offer: " +  specificationFields[0]);
-			String name = Translatable.of("artefact_name_" + specificationFields[0].toLowerCase()).translate();
+			String name = Translatable.of("artefact_name_" + specificationFields[0]).translate();
 			int quantity = Integer.parseInt(specificationFields[1]);
 			Material material = Material.matchMaterial("minecraft:" + specificationFields[2]);
 			//Create artefact
@@ -766,12 +766,16 @@ public class SiegeWarSettings {
 		for(String[] effectSpec: effectSpecs) {
 			addSpecialEffect(material, itemMeta, effectSpec);
 		}
+		
+		System.out.println("Has Custom effect?: " + itemMeta.getPersistentDataContainer().has(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE));
+		
 		//Set updated item meta
 		artefact.setItemMeta(itemMeta);
 	}
 
 	private static void addSpecialEffect(Material material, ItemMeta itemMeta, String[] effectSpec) {
 		if(effectSpec[0].equalsIgnoreCase("custom_effect")) {
+			System.out.println("Custom effect found");
 			addCustomEffect(itemMeta, effectSpec);
 		} else if(material == Material.POTION
                 || material == Material.SPLASH_POTION

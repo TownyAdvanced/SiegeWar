@@ -347,8 +347,8 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if (!SiegeWarSettings.isDominationAwardsGlobalEnabled())
 			return;
 		if(SiegeWarDominationAwardsUtil.isArtefact(event.getConsumable())) {
-			PersistentDataContainer itemStackDataContainer = SiegeWarDominationAwardsUtil.getPersistentDataContainer(event.getConsumable());
-			PersistentDataContainer projectileDataContainer = SiegeWarDominationAwardsUtil.getPersistentDataContainer(event.getProjectile());						
+			PersistentDataContainer itemStackDataContainer = event.getConsumable().getItemMeta().getPersistentDataContainer();
+			PersistentDataContainer projectileDataContainer = event.getProjectile().getPersistentDataContainer();						
 			//Transfer expiry time
 			long expiryTime = itemStackDataContainer.get(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE);
 			projectileDataContainer.set(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE, expiryTime);	
