@@ -27,10 +27,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -464,7 +461,7 @@ public class SiegeWarDominationAwardsUtil {
         if(artefact instanceof ItemStack) {
             persistentDataContainer = ((ItemStack) artefact).getItemMeta().getPersistentDataContainer();
         } else if (artefact instanceof Projectile) {
-            persistentDataContainer = ((Projectile) artefact).getPersistentDataContainer();        
+            persistentDataContainer = ((Projectile) artefact).getPersistentDataContainer();           
         } else {
             throw new RuntimeException("Unknown artefact class");
         }

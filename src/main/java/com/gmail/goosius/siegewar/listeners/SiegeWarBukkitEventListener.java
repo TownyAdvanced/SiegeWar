@@ -1,16 +1,16 @@
 package com.gmail.goosius.siegewar.listeners;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.goosius.siegewar.events.ArtefactConsumeItemEvent;
 import com.gmail.goosius.siegewar.events.ArtefactDamageEntityEvent;
+import com.gmail.goosius.siegewar.events.ArtefactThrownPotionEvent;
 import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -25,7 +25,6 @@ import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.potion.PotionEffectType;
 
 import com.gmail.goosius.siegewar.Messaging;
@@ -63,12 +62,20 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 	/*
 	 * SW will prevent someone in a banner area from curing their poisoning with milk.
+	 * 
+	 * Also Artefacts fire events
 	 */
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onPlayerConsume(PlayerItemConsumeEvent event) {
-
 		if(SiegeWarSettings.getWarSiegeEnabled()) {
 			try {
+				//Artefact Potions
+				if(SiegeWarDominationAwardsUtil.isArtefact(event.getItem())) {
+					System.out.println("Consumed artefact!");
+					ArtefactConsumeItemEvent artefactEvent = new ArtefactConsumeItemEvent(event.getPlayer(), event.getItem());
+					Bukkit.getPluginManager().callEvent(artefactEvent);
+					return;
+				}
 				//Prevent milk bucket usage while attempting to gain banner control
 				if(event.getItem().getType() == Material.MILK_BUCKET) {
 					for(Siege siege: SiegeController.getSieges()) {
@@ -78,7 +85,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 						}
 					}
 				}
-		
 			} catch (Exception e) {
 				SiegeWar.severe("Problem evaluating siege player consume event");
 				e.printStackTrace();
@@ -359,5 +365,16 @@ public class SiegeWarBukkitEventListener implements Listener {
 			}		
 		}
 	}
-	
+	 
+	@EventHandler (ignoreCancelled = true)
+	public void on (PotionSplashEvent event) {
+		if(SiegeWarSettings.getWarSiegeEnabled()) {
+			//Artefact Potions
+			if(SiegeWarDominationAwardsUtil.isArtefact(event.getPotion().getItem())) {
+				System.out.println("Thrown artefact!");
+				ArtefactThrownPotionEvent artefactEvent = new ArtefactThrownPotionEvent(event.getPotion(), event.getAffectedEntities());
+				Bukkit.getPluginManager().callEvent(artefactEvent);
+			}
+		}
+	}
 }

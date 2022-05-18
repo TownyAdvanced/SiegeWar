@@ -766,16 +766,12 @@ public class SiegeWarSettings {
 		for(String[] effectSpec: effectSpecs) {
 			addSpecialEffect(material, itemMeta, effectSpec);
 		}
-		
-		System.out.println("Has Custom effect?: " + itemMeta.getPersistentDataContainer().has(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE));
-		
 		//Set updated item meta
 		artefact.setItemMeta(itemMeta);
 	}
 
 	private static void addSpecialEffect(Material material, ItemMeta itemMeta, String[] effectSpec) {
 		if(effectSpec[0].equalsIgnoreCase("custom_effect")) {
-			System.out.println("Custom effect found");
 			addCustomEffect(itemMeta, effectSpec);
 		} else if(material == Material.POTION
                 || material == Material.SPLASH_POTION
