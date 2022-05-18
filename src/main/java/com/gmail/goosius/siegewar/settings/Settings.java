@@ -234,10 +234,10 @@ public class Settings {
 
 	public static List<String> getListOfItems(String inputText, String itemIdentifierRegex) {
 		List<String> result = new ArrayList<>();
-	    Pattern pattern = Pattern.compile(itemIdentifierRegex);
+		Pattern pattern = Pattern.compile(itemIdentifierRegex);
 		Matcher matcher = pattern.matcher(inputText);
-    	while(matcher.find()) {
-    		result.add(matcher.group(1));	
+		while(matcher.find()) {
+			result.add(matcher.group(1));	
 		}
 		return result;
 	}	
