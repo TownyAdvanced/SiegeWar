@@ -235,7 +235,7 @@ public class Settings {
 	public static List<String> getListOfItems(String inputText, String itemIdentifierRegex) {
 		List<String> result = new ArrayList<>();
 	    Pattern pattern = Pattern.compile(itemIdentifierRegex);
-    	Matcher matcher = pattern.matcher(inputText);
+		Matcher matcher = pattern.matcher(inputText);
     	while(matcher.find()) {
     		result.add(matcher.group(1));	
 		}

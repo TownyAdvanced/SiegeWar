@@ -18,11 +18,18 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.potion.PotionEffectType;
@@ -62,7 +69,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 	/*
 	 * SW will prevent someone in a banner area from curing their poisoning with milk.
-	 * 
+	 *
 	 * Also Artefacts fire events
 	 */
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
@@ -272,22 +279,22 @@ public class SiegeWarBukkitEventListener implements Listener {
 			ItemStack itemInMainHand = ((Player) event.getDamager()).getInventory().getItemInMainHand();
 			if(SiegeWarDominationAwardsUtil.isArtefact(itemInMainHand)) {
 				ArtefactDamageEntityEvent artefactDamageEntityEvent = new ArtefactDamageEntityEvent(event.getDamager(), event.getEntity(), itemInMainHand);
-				Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);						
+				Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);
 			}
-		} else if (event.getDamager() instanceof Projectile) {						
+		} else if (event.getDamager() instanceof Projectile) {
 			ProjectileSource shooter = ((Projectile)event.getDamager()).getShooter();
 			if(shooter instanceof Player) {
 				//Check if projectile is an artefact
-				if(SiegeWarDominationAwardsUtil.isArtefact(event.getDamager())) {					
+				if(SiegeWarDominationAwardsUtil.isArtefact(event.getDamager())) {
 					ArtefactDamageEntityEvent artefactDamageEntityEvent = new ArtefactDamageEntityEvent((Player)shooter, event.getEntity(), event.getDamager());
-					Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);			
+					Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);
 				}
 				//Check if shooting weapon is an artefact
 				ItemStack itemInMainHand = ((Player)shooter).getInventory().getItemInMainHand();
 				if(SiegeWarDominationAwardsUtil.isArtefact(itemInMainHand)) {
 					ArtefactDamageEntityEvent artefactDamageEntityEvent = new ArtefactDamageEntityEvent((Player)shooter, event.getEntity(), itemInMainHand);
-					Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);		
-				}				
+					Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);
+				}
 			}
 		}
 
@@ -353,18 +360,18 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 		if(SiegeWarDominationAwardsUtil.isArtefact(event.getConsumable())) {
 			PersistentDataContainer itemStackDataContainer = event.getConsumable().getItemMeta().getPersistentDataContainer();
-			PersistentDataContainer projectileDataContainer = event.getProjectile().getPersistentDataContainer();						
+			PersistentDataContainer projectileDataContainer = event.getProjectile().getPersistentDataContainer();			
 			//Transfer expiry time
 			long expiryTime = itemStackDataContainer.get(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE);
-			projectileDataContainer.set(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE, expiryTime);	
+			projectileDataContainer.set(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE, expiryTime);
 			//Transfer custom effects
 			if(itemStackDataContainer.has(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE)) {
 				String customEffects = itemStackDataContainer.get(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE);
-				projectileDataContainer.set(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE, customEffects);	
-			}		
+				projectileDataContainer.set(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE, customEffects);
+			}
 		}
 	}
-	 
+
 	@EventHandler (ignoreCancelled = true)
 	public void on (PotionSplashEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled()) {

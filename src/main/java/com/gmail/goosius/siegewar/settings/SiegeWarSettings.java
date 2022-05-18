@@ -786,7 +786,7 @@ public class SiegeWarSettings {
 		}
 	}
 
-	private static void addCustomEffect(ItemMeta itemMeta, String[] enchantSpec) {		
+	private static void addCustomEffect(ItemMeta itemMeta, String[] enchantSpec) {
 		//Add tag for easy artefact recognition
 		List<String> customEffects = SiegeWarDominationAwardsUtil.getCustomEffects(itemMeta);
 		customEffects.add(enchantSpec[1]);

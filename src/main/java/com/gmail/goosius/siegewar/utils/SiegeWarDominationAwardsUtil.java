@@ -5,7 +5,6 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.events.GlobalDominationAwardsEvent;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.ArtefactOffer;
-import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -27,13 +26,12 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -337,14 +335,14 @@ public class SiegeWarDominationAwardsUtil {
     * @param artefact the candidate
     *
     * @return true if the candidate is an artefact
-    */       
+    */
     public static boolean isArtefact(Object artefact) {
         //Get persistent data container
         PersistentDataContainer persistentDataContainer;
         if(artefact instanceof ItemStack) {
             persistentDataContainer = ((ItemStack) artefact).getItemMeta().getPersistentDataContainer();
         } else if (artefact instanceof Projectile) {
-            persistentDataContainer = ((Projectile) artefact).getPersistentDataContainer();        
+            persistentDataContainer = ((Projectile) artefact).getPersistentDataContainer();
         } else {
             return false;
         }
@@ -429,7 +427,7 @@ public class SiegeWarDominationAwardsUtil {
             return new ArrayList<>();
         }
     }
-    
+
     /**
      * Set the custom effects given an item meta
      *
@@ -455,7 +453,7 @@ public class SiegeWarDominationAwardsUtil {
         if(artefact instanceof ItemStack) {
             persistentDataContainer = ((ItemStack) artefact).getItemMeta().getPersistentDataContainer();
         } else if (artefact instanceof Projectile) {
-            persistentDataContainer = ((Projectile) artefact).getPersistentDataContainer();           
+            persistentDataContainer = ((Projectile) artefact).getPersistentDataContainer();
         } else {
             throw new RuntimeException("Unknown artefact class");
         }

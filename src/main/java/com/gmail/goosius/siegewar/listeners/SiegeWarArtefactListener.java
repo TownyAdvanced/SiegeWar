@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 /**
- * 
+ *
  * @author Goosius
  *
  */
@@ -15,7 +15,7 @@ public class SiegeWarArtefactListener implements Listener {
 
 	@SuppressWarnings("unused")
 	private final SiegeWar plugin;
-	
+
 	public SiegeWarArtefactListener(SiegeWar siegeWar) {
 		plugin = siegeWar;
 	}
