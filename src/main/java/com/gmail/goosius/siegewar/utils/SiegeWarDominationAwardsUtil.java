@@ -410,14 +410,48 @@ public class SiegeWarDominationAwardsUtil {
         }
     }
 
+    /**
+     * Get the custom effects given an item meta
+     * @param itemMeta the item meta
+     *
+     * @return list of custom effects
+     */
+    public static List<String> getCustomEffects(ItemMeta itemMeta) {
+        //Get persistent data container
+        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+        //Get custom effects
+        if(persistentDataContainer.has(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE)) {
+            return Arrays.asList(persistentDataContainer.get(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE).replaceAll(" ","").split(","));
+        } else {
+            return new ArrayList<>();
+        }
+    }
+    
+    /**
+     * Set the custom effects given an item meta
+     *
+     * @param itemMeta the item meta
+     * @param customEffects the custom effects
+     */
+    public static void setCustomEffects(ItemMeta itemMeta, List<String> customEffects) {
+        //Get persistent data container
+        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+        //Set custom effects
+        persistentDataContainer.set(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE, customEffects.toString().replace("[","").replace("]",""));
+    }
+
+    /**
+     * Get the custom effects of an artefact
+     * @param artefact the artefact
+     *
+     * @return list of custom effects
+     */
     public static List<String> getCustomEffects(Object artefact) {
         //Get persistent data container
         PersistentDataContainer persistentDataContainer = getPersistentDataContainer(artefact);
-        if(persistentDataContainer == null)
-            return new ArrayList<>();
         //Get custom effects
         if(persistentDataContainer.has(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE)) {
-            return Settings.getListOfCurlyBracketedItems(persistentDataContainer.get(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE));
+            return Arrays.asList(persistentDataContainer.get(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE).replaceAll(" ","").split(","));
         } else {
             return new ArrayList<>();
         }

@@ -16,6 +16,7 @@ import java.time.LocalTime;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.ArtefactOffer;
+import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 
 import com.palmergames.bukkit.towny.object.Translatable;
@@ -686,8 +687,8 @@ public class SiegeWarSettings {
 			Material material = Material.matchMaterial("minecraft:" + specificationFields[2]);
 			//Create artefact
 			ItemStack artefact = new ItemStack(material);
-			ItemMeta itemMeta = artefact.getItemMeta();
 			//Set name
+			ItemMeta itemMeta = artefact.getItemMeta();
 			itemMeta.setDisplayName(name);
 			//Add special effects
 			addSpecialEffects(artefact, itemMeta, specificationFields);
@@ -696,7 +697,7 @@ public class SiegeWarSettings {
 			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_summary_line",tier+1).translate()));
 			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_warning_line",(int)SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays()).translate()));
 			itemMeta.setLore(lore);
-			//Reset item meta
+			//Set item meta
 			artefact.setItemMeta(itemMeta);
 
 			//Create offer and add to map
@@ -757,58 +758,43 @@ public class SiegeWarSettings {
 	private static void addSpecialEffects(ItemStack artefact, ItemMeta itemMeta, String[] specificationFields) {
 		//Create convenience variables
 		Material material = artefact.getType();
-        List<String[]> enchantmentSpecs = new ArrayList<>();
+        List<String[]> effectSpecs = new ArrayList<>();
         for(int i = 3; i < specificationFields.length; i++) {
-            enchantmentSpecs.add(specificationFields[i].split(":"));
+            effectSpecs.add(specificationFields[i].split(":"));
         }
-
-        if(material == Material.POTION
-                || material == Material.SPLASH_POTION
-                || material == Material.LINGERING_POTION
-                || material == Material.TIPPED_ARROW ) {
-            for(String[] enchantSpec: enchantmentSpecs) {
-				addEffectToPotionOrArrow(itemMeta, enchantSpec);
-            }
-
-        } else {
-            for(String[] enchantSpec: enchantmentSpecs) {
-				addEnchantmentToItem(itemMeta, enchantSpec);
-            }
+		//Add special effects
+		for(String[] effectSpec: effectSpecs) {
+			addSpecialEffect(material, itemMeta, effectSpec);
 		}
-
 		//Set updated item meta
 		artefact.setItemMeta(itemMeta);
 	}
 
-	private static void addEffectToPotionOrArrow(ItemMeta itemMeta, String[] enchantSpec) {
-		if(enchantSpec[0].equalsIgnoreCase("custom_effect")) {
-			//Add tag for easy artefact recognition
-			NamespacedKey effect_key = NamespacedKey.fromString("siegewar." + enchantSpec[1]);
-			itemMeta.getPersistentDataContainer().set(effect_key, PersistentDataType.INTEGER, 0); 
-			//Add lore
-			List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
-			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_custom_effect_lore_" + enchantSpec[1]).translate()));
-			itemMeta.setLore(lore);
-		} else {
-			PotionEffect potionEffect = generatePotionEffect(enchantSpec);
+	private static void addSpecialEffect(Material material, ItemMeta itemMeta, String[] effectSpec) {
+		if(effectSpec[0].equalsIgnoreCase("custom_effect")) {
+			addCustomEffect(itemMeta, effectSpec);
+		} else if(material == Material.POTION
+                || material == Material.SPLASH_POTION
+                || material == Material.LINGERING_POTION
+                || material == Material.TIPPED_ARROW ) {
+			PotionEffect potionEffect = generatePotionEffect(effectSpec);
 			((PotionMeta)itemMeta).addCustomEffect(potionEffect, true);
+		} else {
+			Enchantment enchantment = Enchantment.getByKey(NamespacedKey.fromString("minecraft:"+ effectSpec[0]));
+			int power = Integer.parseInt(effectSpec[1]);
+			itemMeta.addEnchant(enchantment, power, true);
 		}
 	}
 
-	private static void addEnchantmentToItem(ItemMeta itemMeta, String[] enchantSpec) {
-		if(enchantSpec[0].equalsIgnoreCase("custom_effect")) {
-			//Add tag for easy artefact recognition
-			NamespacedKey effect_key = NamespacedKey.fromString("siegewar." + enchantSpec[1]);
-			itemMeta.getPersistentDataContainer().set(effect_key, PersistentDataType.INTEGER, 0); 
-			//Add lore
-			List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
-			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_custom_effect_lore_" + enchantSpec[1]).translate()));
-			itemMeta.setLore(lore);
-		} else {
-			Enchantment enchantment = Enchantment.getByKey(NamespacedKey.fromString("minecraft:"+ enchantSpec[0]));
-			int power = Integer.parseInt(enchantSpec[1]);
-			itemMeta.addEnchant(enchantment, power, true);
-		}
+	private static void addCustomEffect(ItemMeta itemMeta, String[] enchantSpec) {		
+		//Add tag for easy artefact recognition
+		List<String> customEffects = SiegeWarDominationAwardsUtil.getCustomEffects(itemMeta);
+		customEffects.add(enchantSpec[1]);
+		SiegeWarDominationAwardsUtil.setCustomEffects(itemMeta, customEffects);
+		//Add lore line
+		List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
+		lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_custom_effect_lore_" + enchantSpec[1]).translate()));
+		itemMeta.setLore(lore);
 	}
 
 	private static PotionEffect generatePotionEffect(String[] effectSpec) {
