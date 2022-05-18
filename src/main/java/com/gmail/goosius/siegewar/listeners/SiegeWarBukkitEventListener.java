@@ -71,7 +71,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 			try {
 				//Artefact Potions
 				if(SiegeWarDominationAwardsUtil.isArtefact(event.getItem())) {
-					System.out.println("Consumed artefact!");
 					ArtefactConsumeItemEvent artefactEvent = new ArtefactConsumeItemEvent(event.getPlayer(), event.getItem());
 					Bukkit.getPluginManager().callEvent(artefactEvent);
 					return;
@@ -371,7 +370,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()) {
 			//Artefact Potions
 			if(SiegeWarDominationAwardsUtil.isArtefact(event.getPotion().getItem())) {
-				System.out.println("Thrown artefact!");
 				ArtefactThrownPotionEvent artefactEvent = new ArtefactThrownPotionEvent(event.getPotion(), event.getAffectedEntities());
 				Bukkit.getPluginManager().callEvent(artefactEvent);
 			}

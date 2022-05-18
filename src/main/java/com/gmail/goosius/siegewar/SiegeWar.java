@@ -155,7 +155,7 @@ public class SiegeWar extends JavaPlugin {
 			pm.registerEvents(new SiegeWarTownEventListener(this), this);
 			pm.registerEvents(new SiegeWarPlotEventListener(this), this);
 			pm.registerEvents(new SiegeWarStatusScreenListener(), this);
-			pm.registerEvents(new SiegeWarArtefactListener(), this);
+			pm.registerEvents(new SiegeWarArtefactListener(this), this);
 		}
 	}
 

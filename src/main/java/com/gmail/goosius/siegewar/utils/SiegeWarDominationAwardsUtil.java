@@ -284,12 +284,6 @@ public class SiegeWarDominationAwardsUtil {
             for(int ii = 0; ii < offer.quantity; ii++) {
                 ItemStack artefact = offer.artefactTemplate.clone();
                 ItemMeta itemMeta = artefact.getItemMeta();
-                //Copy over the custom effects data because it does not clone
-                //TODO - Remomve I think it actually does clone
-                //if(offer.artefactTemplate.getItemMeta().getPersistentDataContainer().has(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE)) {
-                //    String customEffects = offer.artefactTemplate.getItemMeta().getPersistentDataContainer().get(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE);
-                //    itemMeta.getPersistentDataContainer().set(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE, customEffects);
-                //}
                 //Set expiration time
                 long expirationTime = System.currentTimeMillis() + (long)(SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays() * 864500000); 
                 itemMeta.getPersistentDataContainer().set(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE, expirationTime);
