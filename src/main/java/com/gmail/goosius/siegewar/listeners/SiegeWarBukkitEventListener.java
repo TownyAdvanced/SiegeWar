@@ -24,6 +24,8 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.potion.PotionEffectType;
 
 import com.gmail.goosius.siegewar.Messaging;
@@ -272,7 +274,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 			if(shooter instanceof Player) {
 				//Check if projectile is an artefact
 				if(SiegeWarDominationAwardsUtil.isArtefact(event.getDamager())) {					
-					System.out.println("Artefact attack");
 					ArtefactDamageEntityEvent artefactDamageEntityEvent = new ArtefactDamageEntityEvent((Player)shooter, event.getEntity(), event.getDamager());
 					Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);			
 				}
@@ -339,16 +340,23 @@ public class SiegeWarBukkitEventListener implements Listener {
 	 *
 	 * @param event the event
 	 */
+	@EventHandler (ignoreCancelled = true)
 	public void on (EntityShootBowEvent event) {
 		if (!SiegeWarSettings.getWarSiegeEnabled())
 			return;
 		if (!SiegeWarSettings.isDominationAwardsGlobalEnabled())
 			return;
 		if(SiegeWarDominationAwardsUtil.isArtefact(event.getConsumable())) {
-			long expiryTime = event.getConsumable().getItemMeta().getPersistentDataContainer().get(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE);
-			event.getProjectile().getPersistentDataContainer().set(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE, expiryTime);
-			String customEffects = event.getConsumable().getItemMeta().getPersistentDataContainer().get(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE);
-			event.getProjectile().getPersistentDataContainer().set(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE, customEffects);			
+			PersistentDataContainer itemStackDataContainer = SiegeWarDominationAwardsUtil.getPersistentDataContainer(event.getConsumable());
+			PersistentDataContainer projectileDataContainer = SiegeWarDominationAwardsUtil.getPersistentDataContainer(event.getProjectile());						
+			//Transfer expiry time
+			long expiryTime = itemStackDataContainer.get(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE);
+			projectileDataContainer.set(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE, expiryTime);	
+			//Transfer custom effects
+			if(itemStackDataContainer.has(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE)) {
+				String customEffects = itemStackDataContainer.get(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE);
+				projectileDataContainer.set(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE, customEffects);	
+			}		
 		}
 	}
 	

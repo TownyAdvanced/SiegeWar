@@ -23,6 +23,7 @@ public class ArtefactDamageEntityEvent extends Event {
 		this.victim = victim;
 		this.artefact = artefact;
 		this.customEffects = SiegeWarDominationAwardsUtil.getCustomEffects(artefact);
+		System.out.println("event setup");
 	}
 
 	@NotNull

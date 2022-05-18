@@ -341,13 +341,12 @@ public class SiegeWarDominationAwardsUtil {
     * @return true if the candidate is an artefact
     */       
     public static boolean isArtefact(Object candidate) {
-        //Get persistent data holder
-        PersistentDataHolder persistentDataHolder = getPersistentDataHolder(candidate);
-        if(candidate == null) {
+        //Get persistent data container
+        PersistentDataContainer persistentDataContainer = getPersistentDataContainer(candidate);
+        if(persistentDataContainer == null)
             return false;
-        }
         //Determine if artefact
-        return persistentDataHolder.getPersistentDataContainer().has(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE);
+        return persistentDataContainer.has(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE);
     }
 
     /**
@@ -412,27 +411,26 @@ public class SiegeWarDominationAwardsUtil {
     }
 
     public static List<String> getCustomEffects(Object artefact) {
-        //Get persistent data holder
-        PersistentDataHolder persistentDataHolder = getPersistentDataHolder(artefact);
-        if(persistentDataHolder == null) {
+        //Get persistent data container
+        PersistentDataContainer persistentDataContainer = getPersistentDataContainer(artefact);
+        if(persistentDataContainer == null)
             return new ArrayList<>();
-        }
         //Get custom effects
-        if(persistentDataHolder.getPersistentDataContainer().has(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE)) {
-            return Settings.getListOfCurlyBracketedItems(persistentDataHolder.getPersistentDataContainer().get(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE));
+        if(persistentDataContainer.has(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE)) {
+            return Settings.getListOfCurlyBracketedItems(persistentDataContainer.get(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE));
         } else {
             return new ArrayList<>();
         }
     }
 
     @Nullable
-    public static PersistentDataHolder getPersistentDataHolder(Object artefact) {
+    public static PersistentDataContainer getPersistentDataContainer(Object artefact) {
         if(artefact == null) {
             return null;
         } else if(artefact instanceof ItemStack && ((ItemStack) artefact).hasItemMeta()) {
-            return ((ItemStack) artefact).getItemMeta();
+            return ((ItemStack) artefact).getItemMeta().getPersistentDataContainer();
         } else if (artefact instanceof Projectile) {
-            return (Projectile)artefact;
+            return ((Projectile)artefact).getPersistentDataContainer();
         } else {
             return null;
         }
