@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.objects.ArtefactOffer;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 
 import com.palmergames.bukkit.towny.object.Translatable;
@@ -42,7 +41,7 @@ public class SiegeWarSettings {
     private static EnumSet<Material> cachedWallBreachingDestroyBlocksBlacklist = null;
 	@SuppressWarnings("unused")
     private static Boolean cachedWallBreachingDestroyEntityBlacklist = null;
-    private static Map<Integer, List<ArtefactOffer>> cachedDominationAwardsArtefactOffers = null;
+    private static Map<Integer, List<ItemStack>> cachedDominationAwardsArtefactOffers = null;
 
 	protected static void resetCachedSettings() {
 		siegeZoneWildernessForbiddenBlockMaterials = null;
@@ -673,8 +672,8 @@ public class SiegeWarSettings {
 	 * 
 	 * @return the artefact offers
 	 */
-	private static List<ArtefactOffer> getDominationAwardsArtefactOffers(ConfigNodes configNode, int tier) {
-		List<ArtefactOffer> result = new ArrayList<>();
+	private static List<ItemStack> getDominationAwardsArtefactOffers(ConfigNodes configNode, int tier) {
+		List<ItemStack> result = new ArrayList<>();
 
 		for(String offerAsString: Settings.getListOfCurlyBracketedItems(configNode)) {
 			//Create convenience variables
@@ -688,15 +687,14 @@ public class SiegeWarSettings {
 			Material material = Material.matchMaterial("minecraft:" + specificationFields[2]);
 			//Create artefact
 			ItemStack artefact = new ItemStack(material);
+			artefact.setAmount(quantity);
 			ItemMeta itemMeta = artefact.getItemMeta();
 			itemMeta.setDisplayName(name);
 			itemMeta.setLore(lore);
 			artefact.setItemMeta(itemMeta);
 			addSpecialEffects(artefact, specificationFields);
-
-			//Create offer and add to map
-			ArtefactOffer artefactOffer = new ArtefactOffer(artefact, quantity);
-			result.add(artefactOffer);
+			//Add artefact to result
+			result.add(artefact);
 		}
 		return result;
 	}
@@ -711,7 +709,7 @@ public class SiegeWarSettings {
 	 * The returned offers should considered as "templates"
 	 * Thus make sure to clone any of the items before granting.
 	 */
-	public static Map<Integer, List<ArtefactOffer>> getDominationAwardsArtefactOffers() {
+	public static Map<Integer, List<ItemStack>> getDominationAwardsArtefactOffers() {
 		return cachedDominationAwardsArtefactOffers;
 	}
 
@@ -719,9 +717,9 @@ public class SiegeWarSettings {
 	 * Loads the indicated list into cache
 	 */
 	public static void loadDominationAwardsArtefactOffers() {
-		Map<Integer, List<ArtefactOffer>> result = new HashMap<>();
+		Map<Integer, List<ItemStack>> result = new HashMap<>();
 
-		List<ArtefactOffer> offersInTier = new ArrayList<>();
+		List<ItemStack> offersInTier = new ArrayList<>();
 		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER1,0));
 		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER1,0));
 		result.put(0, offersInTier);

@@ -4,7 +4,6 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.events.GlobalDominationAwardsEvent;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
-import com.gmail.goosius.siegewar.objects.ArtefactOffer;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -110,6 +109,7 @@ public class SiegeWarDominationAwardsUtil {
         Map<Nation, Integer> moneyAwards = event.getMoneyAwards();
         Map<Nation, List<ItemStack>> artefactAwards = event.getArtefactAwards();
         int moneyToGrant;
+        int numArtefacts;
         String moneyText;
         String artefactText;
         List<ItemStack> artefactsToGrant;
@@ -129,7 +129,11 @@ public class SiegeWarDominationAwardsUtil {
                 //Gib Artefacts
                 artefactsToGrant = artefactAwards.get(nation);
                 grantArtefactsToNation(nation, artefactsToGrant);
-                artefactText = Integer.toString(artefactsToGrant.size());
+                numArtefacts = 0;
+                for(ItemStack artefact: artefactsToGrant) {
+                    numArtefacts += artefact.getAmount();
+                }
+                artefactText = Integer.toString(numArtefacts);
                 //Add to Global message
                 readableNationPosition++;
                 globalMessageLines.add(Translatable.of("msg_global_domination_awards_line", readableNationPosition, nation.getName(), moneyText, artefactText));
@@ -272,19 +276,17 @@ public class SiegeWarDominationAwardsUtil {
 
     private static List<ItemStack> generateArtefacts(int tier, int numOffers) {
         List<ItemStack> result = new ArrayList<>();
-        List<ArtefactOffer> offersInTier = SiegeWarSettings.getDominationAwardsArtefactOffers().get(tier);
+        List<ItemStack> offersInTier = SiegeWarSettings.getDominationAwardsArtefactOffers().get(tier);
         for(int i = 0; i < numOffers; i++) {
             //Identify Random offer
-            ArtefactOffer offer = offersInTier.get((int)(Math.random() * offersInTier.size()));
-            //Generate the artefacts specified by that offer
-            for(int ii = 0; ii < offer.quantity; ii++) {
-                ItemStack artefact = offer.artefactTemplate.clone();
-                ItemMeta itemMeta =  artefact.getItemMeta();
-                long expirationTime = System.currentTimeMillis() + (long)(SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays() * 864500000); 
-                itemMeta.getPersistentDataContainer().set(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE, expirationTime);
-                artefact.setItemMeta(itemMeta);
-                result.add(artefact);
-            }
+            ItemStack offer = offersInTier.get((int)(Math.random() * offersInTier.size()));
+            //Generate the artefact(s) specified by that offer
+            ItemStack artefact = offer.clone();
+            ItemMeta itemMeta =  artefact.getItemMeta();
+            long expirationTime = System.currentTimeMillis() + (long)(SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays() * 864500000); 
+            itemMeta.getPersistentDataContainer().set(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE, expirationTime);
+            artefact.setItemMeta(itemMeta);
+            result.add(artefact);
         }
         return result;
     }
