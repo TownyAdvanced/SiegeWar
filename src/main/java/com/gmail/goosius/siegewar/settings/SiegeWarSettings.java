@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 
 import com.palmergames.bukkit.towny.object.Translatable;
@@ -27,6 +28,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.*;
 import org.jetbrains.annotations.Nullable;
 
@@ -677,22 +679,27 @@ public class SiegeWarSettings {
 
 		for(String offerAsString: Settings.getListOfCurlyBracketedItems(configNode)) {
 			//Create convenience variables
-			String[] specificationFields = offerAsString.replaceAll(" ","").split(",");
+			String[] specificationFields = offerAsString.toLowerCase().replaceAll(" ","").split(",");
 			SiegeWar.info("Loading Domination Awards Artefact Offer: " +  specificationFields[0]);
-			String name = Translatable.of("artefact.name." + specificationFields[0].toLowerCase()).translate();
-			List<String> lore = new ArrayList<>();
-			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_summary_line",tier+1).translate()));
-			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_warning_line",(int)SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays()).translate()));
+			String name = Translatable.of("artefact_name_" + specificationFields[0]).translate();
 			int quantity = Integer.parseInt(specificationFields[1]);
 			Material material = Material.matchMaterial("minecraft:" + specificationFields[2]);
 			//Create artefact
 			ItemStack artefact = new ItemStack(material);
+			//Set Amount
 			artefact.setAmount(quantity);
+			//Set name
 			ItemMeta itemMeta = artefact.getItemMeta();
 			itemMeta.setDisplayName(name);
+			//Add special effects
+			addSpecialEffects(artefact, itemMeta, specificationFields);
+			//Add non-effect lore
+			List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
+			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_summary_line",tier+1).translate()));
+			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_warning_line",(int)SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays()).translate()));
 			itemMeta.setLore(lore);
+			//Set item meta
 			artefact.setItemMeta(itemMeta);
-			addSpecialEffects(artefact, specificationFields);
 			//Add artefact to result
 			result.add(artefact);
 		}
@@ -747,35 +754,46 @@ public class SiegeWarSettings {
 		cachedDominationAwardsArtefactOffers = result;
 	}
 
-	private static void addSpecialEffects(ItemStack artefact, String[] specificationFields) {
+	private static void addSpecialEffects(ItemStack artefact, ItemMeta itemMeta, String[] specificationFields) {
 		//Create convenience variables
 		Material material = artefact.getType();
-		ItemMeta itemMeta = artefact.getItemMeta();
-        List<String[]> enchantmentSpecs = new ArrayList<>();
+        List<String[]> effectSpecs = new ArrayList<>();
         for(int i = 3; i < specificationFields.length; i++) {
-            enchantmentSpecs.add(specificationFields[i].split(":"));
+            effectSpecs.add(specificationFields[i].split(":"));
         }
+		//Add special effects
+		for(String[] effectSpec: effectSpecs) {
+			addSpecialEffect(material, itemMeta, effectSpec);
+		}
+		//Set updated item meta
+		artefact.setItemMeta(itemMeta);
+	}
 
-        //Add enchants
-        if(material == Material.POTION
+	private static void addSpecialEffect(Material material, ItemMeta itemMeta, String[] effectSpec) {
+		if(effectSpec[0].equalsIgnoreCase("custom_effect")) {
+			addCustomEffect(itemMeta, effectSpec);
+		} else if(material == Material.POTION
                 || material == Material.SPLASH_POTION
                 || material == Material.LINGERING_POTION
                 || material == Material.TIPPED_ARROW ) {
-            for(String[] enchantSpec: enchantmentSpecs) {
-                PotionEffect potionEffect = generatePotionEffect(enchantSpec);
-				((PotionMeta)itemMeta).addCustomEffect(potionEffect, true);
-            }
-
-        } else {
-            for(String[] enchantSpec: enchantmentSpecs) {
-				Enchantment enchantment = Enchantment.getByKey(NamespacedKey.fromString("minecraft:"+ enchantSpec[0]));
-                int power = Integer.parseInt(enchantSpec[1]);
-                itemMeta.addEnchant(enchantment, power, true);
-            }
+			PotionEffect potionEffect = generatePotionEffect(effectSpec);
+			((PotionMeta)itemMeta).addCustomEffect(potionEffect, true);
+		} else {
+			Enchantment enchantment = Enchantment.getByKey(NamespacedKey.fromString("minecraft:"+ effectSpec[0]));
+			int power = Integer.parseInt(effectSpec[1]);
+			itemMeta.addEnchant(enchantment, power, true);
 		}
+	}
 
-		//Set updated item meta
-		artefact.setItemMeta(itemMeta);
+	private static void addCustomEffect(ItemMeta itemMeta, String[] enchantSpec) {
+		//Add tag for easy artefact recognition
+		List<String> customEffects = SiegeWarDominationAwardsUtil.getCustomEffects(itemMeta);
+		customEffects.add(enchantSpec[1]);
+		SiegeWarDominationAwardsUtil.setCustomEffects(itemMeta, customEffects);
+		//Add lore line
+		List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
+		lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_custom_effect_lore_" + enchantSpec[1]).translate()));
+		itemMeta.setLore(lore);
 	}
 
 	private static PotionEffect generatePotionEffect(String[] effectSpec) {
@@ -801,7 +819,6 @@ public class SiegeWarSettings {
 	public static double getDominationAwardsArtefactExpiryPercentageChancePerShortTick() {
 		return Settings.getDouble(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_PERCENTAGE_CHANCE_PER_SHORT_TICK);
 	}
-
 
 	public static boolean getDominationAwardsArtefactExpiryExplosionsEnabled() {
 		return Settings.getBoolean(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_ENABLED);

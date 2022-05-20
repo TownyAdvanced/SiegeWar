@@ -220,15 +220,24 @@ public class Settings {
 	 * @return list of items
 	 */
 	public static List<String> getListOfCurlyBracketedItems(ConfigNodes node) {
-		return getListOfItems(node, "\\{([^}]+)}");
+		return getListOfCurlyBracketedItems(getString(node));
 	}
-	
-	public static List<String> getListOfItems(ConfigNodes node, String itemIdentifierRegex) {
+
+	/**
+	 * Get list of items, where each item is surrounded by curly brackets e.g. {a}{b}{c}
+	 * @param inputText the text in which the list is contained
+	 * @return list of items
+	 */
+	public static List<String> getListOfCurlyBracketedItems(String inputText) {
+		return getListOfItems(inputText, "\\{([^}]+)}");
+	}
+
+	public static List<String> getListOfItems(String inputText, String itemIdentifierRegex) {
 		List<String> result = new ArrayList<>();
-	    Pattern pattern = Pattern.compile(itemIdentifierRegex);
-    	Matcher matcher = pattern.matcher(getString(node));
-    	while(matcher.find()) {
-    		result.add(matcher.group(1));	
+		Pattern pattern = Pattern.compile(itemIdentifierRegex);
+		Matcher matcher = pattern.matcher(inputText);
+		while(matcher.find()) {
+			result.add(matcher.group(1));	
 		}
 		return result;
 	}	

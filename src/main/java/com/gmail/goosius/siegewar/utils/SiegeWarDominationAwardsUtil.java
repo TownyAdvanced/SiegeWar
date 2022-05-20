@@ -26,6 +26,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -42,9 +43,10 @@ import java.util.*;
 public class SiegeWarDominationAwardsUtil {
 
     public static final String GLOBAL_DOMINATION_AWARDS_LOCK = "Global Domination Awards Lock";
-    private static final NamespacedKey EXPIRATION_TIME_KEY = NamespacedKey.fromString("siegewar.artefactexpirytime");
-    private static final PersistentDataType<Long, Long> EXPIRATION_TIME_KEY_TYPE = PersistentDataType.LONG;
-
+    public static final NamespacedKey EXPIRATION_TIME_KEY = NamespacedKey.fromString("siegewar.artefactexpirytime");
+    public static final PersistentDataType<Long, Long> EXPIRATION_TIME_KEY_TYPE = PersistentDataType.LONG;
+    public static final NamespacedKey CUSTOM_EFFECTS_KEY = NamespacedKey.fromString("siegewar.customeffects");
+    public static final PersistentDataType<String, String> CUSTOM_EFFECTS_KEY_TYPE = PersistentDataType.STRING;
     /**
      * Grant the global domination awards
      */
@@ -283,9 +285,11 @@ public class SiegeWarDominationAwardsUtil {
             //Generate the artefact(s) specified by that offer
             ItemStack artefact = offer.clone();
             ItemMeta itemMeta =  artefact.getItemMeta();
+            //Set expiration time
             long expirationTime = System.currentTimeMillis() + (long)(SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays() * 864500000); 
             itemMeta.getPersistentDataContainer().set(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE, expirationTime);
             artefact.setItemMeta(itemMeta);
+            //Add to result
             result.add(artefact);
         }
         return result;
@@ -328,16 +332,26 @@ public class SiegeWarDominationAwardsUtil {
         }
     }
 
+
     /**
-    * Determine is a given item is an artefact
-    * @param item the item
+    * Determine is a given candidate is an artefact
+    * @param artefact the candidate
     *
-    * @return true if the item is a artefact
+    * @return true if the candidate is an artefact
     */
-    public static boolean isArtefact(ItemStack item) {
-        return item.hasItemMeta()
-                && item.getItemMeta().getPersistentDataContainer().has(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE);
-   }
+    public static boolean isArtefact(Object artefact) {
+        //Get persistent data container
+        PersistentDataContainer persistentDataContainer;
+        if(artefact instanceof ItemStack) {
+            persistentDataContainer = ((ItemStack) artefact).getItemMeta().getPersistentDataContainer();
+        } else if (artefact instanceof Projectile) {
+            persistentDataContainer = ((Projectile) artefact).getPersistentDataContainer();
+        } else {
+            return false;
+        }
+        //Determine if artefact
+        return persistentDataContainer.has(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE);
+    }
 
     /**
     * Determine is a given item is an expired artefact
@@ -397,6 +411,60 @@ public class SiegeWarDominationAwardsUtil {
                 int finalExplosionPower = Math.min(explosionPower, SiegeWarSettings.getDominationAwardsArtefactExpiryExplosionsMaxPower());                
                 Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> player.getWorld().createExplosion(player.getLocation(), finalExplosionPower, true));
             }
+        }
+    }
+
+    /**
+     * Get the custom effects given an item meta
+     * @param itemMeta the item meta
+     *
+     * @return list of custom effects
+     */
+    public static List<String> getCustomEffects(ItemMeta itemMeta) {
+        //Get persistent data container
+        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+        //Get custom effects
+        if(persistentDataContainer.has(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE)) {
+            return Arrays.asList(persistentDataContainer.get(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE).replaceAll(" ","").split(","));
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Set the custom effects given an item meta
+     *
+     * @param itemMeta the item meta
+     * @param customEffects the custom effects
+     */
+    public static void setCustomEffects(ItemMeta itemMeta, List<String> customEffects) {
+        //Get persistent data container
+        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+        //Set custom effects
+        persistentDataContainer.set(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE, customEffects.toString().replace("[","").replace("]",""));
+    }
+
+    /**
+     * Get the custom effects of an artefact
+     * @param artefact the artefact
+     *
+     * @return list of custom effects
+     */
+    public static List<String> getCustomEffects(Object artefact) {
+        //Get persistent data container
+        PersistentDataContainer persistentDataContainer;
+        if(artefact instanceof ItemStack) {
+            persistentDataContainer = ((ItemStack) artefact).getItemMeta().getPersistentDataContainer();
+        } else if (artefact instanceof Projectile) {
+            persistentDataContainer = ((Projectile) artefact).getPersistentDataContainer();
+        } else {
+            throw new RuntimeException("Unknown artefact class");
+        }
+        //Get custom effects
+        if(persistentDataContainer.has(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE)) {
+            return Arrays.asList(persistentDataContainer.get(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE).replaceAll(" ","").split(","));
+        } else {
+            return new ArrayList<>();
         }
     }
 }
