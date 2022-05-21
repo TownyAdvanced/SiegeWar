@@ -28,7 +28,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.*;
 import org.jetbrains.annotations.Nullable;
 
@@ -692,7 +691,10 @@ public class SiegeWarSettings {
 			ItemMeta itemMeta = artefact.getItemMeta();
 			itemMeta.setDisplayName(name);
 			//Add special effects
-			addSpecialEffects(artefact, itemMeta, specificationFields);
+			if (!addSpecialEffects(artefact, itemMeta, specificationFields)) {
+			    SiegeWar.severe("Domination Awards Artefact Offer: " +  specificationFields[0] + " cannot be loaded, check the " + (isPotionBased(material) ? "PotionEffectType" : "EnchantmentType") + ". Skipping...");
+			    continue;
+			}
 			//Add non-effect lore
 			List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
 			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_summary_line",tier+1).translate()));
@@ -754,7 +756,7 @@ public class SiegeWarSettings {
 		cachedDominationAwardsArtefactOffers = result;
 	}
 
-	private static void addSpecialEffects(ItemStack artefact, ItemMeta itemMeta, String[] specificationFields) {
+	private static boolean addSpecialEffects(ItemStack artefact, ItemMeta itemMeta, String[] specificationFields) {
 		//Create convenience variables
 		Material material = artefact.getType();
         List<String[]> effectSpecs = new ArrayList<>();
@@ -763,19 +765,44 @@ public class SiegeWarSettings {
         }
 		//Add special effects
 		for(String[] effectSpec: effectSpecs) {
+		    if (!validEffect(material, effectSpec[0]))
+		        return false;
 			addSpecialEffect(material, itemMeta, effectSpec);
 		}
 		//Set updated item meta
 		artefact.setItemMeta(itemMeta);
+		return true;
 	}
 
-	private static void addSpecialEffect(Material material, ItemMeta itemMeta, String[] effectSpec) {
-		if(effectSpec[0].equalsIgnoreCase("custom_effect")) {
-			addCustomEffect(itemMeta, effectSpec);
-		} else if(material == Material.POTION
+	// Make sure that the config has been given a valid PotionEffectType or Enchantment name.
+    private static boolean validEffect(Material material, String name) {
+        return !name.isEmpty() && (name.equalsIgnoreCase("custom_effect") || isValid(material, name));
+    }
+
+    private static boolean isValid(Material material, String name) {
+        return (isPotionBased(material) && validatePotionEffectType(name))
+            || (!isPotionBased(material) && validateEnchantmentType(name));
+    }
+
+    private static boolean validateEnchantmentType(String enchantSpec) {
+        return Enchantment.getByKey(NamespacedKey.fromString("minecraft:"+ enchantSpec)) != null;
+    }
+
+    private static boolean validatePotionEffectType(String effectSpec) {
+        return PotionEffectType.getByName(effectSpec) != null;
+    }
+
+    private static boolean isPotionBased(Material material) {
+        return material == Material.POTION
                 || material == Material.SPLASH_POTION
                 || material == Material.LINGERING_POTION
-                || material == Material.TIPPED_ARROW ) {
+                || material == Material.TIPPED_ARROW;
+    }
+
+    private static void addSpecialEffect(Material material, ItemMeta itemMeta, String[] effectSpec) {
+		if(effectSpec[0].equalsIgnoreCase("custom_effect")) {
+			addCustomEffect(itemMeta, effectSpec);
+		} else if (isPotionBased(material)) {
 			PotionEffect potionEffect = generatePotionEffect(effectSpec);
 			((PotionMeta)itemMeta).addCustomEffect(potionEffect, true);
 		} else {
