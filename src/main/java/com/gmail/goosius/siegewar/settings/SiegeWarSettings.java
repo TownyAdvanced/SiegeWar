@@ -779,7 +779,7 @@ public class SiegeWarSettings {
     private static boolean validateEffect(Material material, String name) {
         return !name.isEmpty()
                 && name.equals("custom_effect") // ignore custom_effect
-                && ((isPotionBased(material) && !validatePotionEffectType(name))
+                || ((isPotionBased(material) && !validatePotionEffectType(name))
                     || !isPotionBased(material) && !validateEnchantmentType(name));
     }
 
