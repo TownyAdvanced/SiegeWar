@@ -693,7 +693,7 @@ public class SiegeWarSettings {
 			itemMeta.setDisplayName(name);
 			//Add special effects
 			if (!addSpecialEffects(artefact, itemMeta, specificationFields)) {
-			    SiegeWar.info("Domination Awards Artefact Offer: " +  specificationFields[0] + " cannot be loaded, check the PotionEffecType.");
+			    SiegeWar.severe("Domination Awards Artefact Offer: " +  specificationFields[0] + " cannot be loaded, check the " + (isPotionBased(material) ? "PotionEffectType" : "EnchantmentType") + ". Skipping...");
 			    continue;
 			}
 			//Add non-effect lore
@@ -783,12 +783,12 @@ public class SiegeWarSettings {
                     || !isPotionBased(material) && !validateEnchantmentType(name));
     }
 
-	private static boolean validateEnchantmentType(String enchantSpec) {
+    private static boolean validateEnchantmentType(String enchantSpec) {
         return Enchantment.getByKey(NamespacedKey.fromString("minecraft:"+ enchantSpec)) != null;
     }
 
     private static boolean validatePotionEffectType(String effectSpec) {
-	    return PotionEffectType.getByName(effectSpec) != null;
+        return PotionEffectType.getByName(effectSpec) != null;
     }
 
     private static boolean isPotionBased(Material material) {
