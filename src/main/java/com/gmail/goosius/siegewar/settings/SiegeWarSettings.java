@@ -778,7 +778,7 @@ public class SiegeWarSettings {
 	// Make sure that the config has been given a valid PotionEffectType or Enchantment name.
     private static boolean validateEffect(Material material, String name) {
         return !name.isEmpty()
-                && !name.equals("custom_effect") // ignore custom_effect
+                && name.equals("custom_effect") // ignore custom_effect
                 && ((isPotionBased(material) && !validatePotionEffectType(name))
                     || !isPotionBased(material) && !validateEnchantmentType(name));
     }
