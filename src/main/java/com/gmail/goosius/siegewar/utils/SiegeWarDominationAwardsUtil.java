@@ -342,7 +342,7 @@ public class SiegeWarDominationAwardsUtil {
     public static boolean isArtefact(Object artefact) {
         //Get persistent data container
         PersistentDataContainer persistentDataContainer;
-        if(artefact instanceof ItemStack) {
+        if(artefact instanceof ItemStack && ((ItemStack) artefact).hasItemMeta()) {
             persistentDataContainer = ((ItemStack) artefact).getItemMeta().getPersistentDataContainer();
         } else if (artefact instanceof Projectile) {
             persistentDataContainer = ((Projectile) artefact).getPersistentDataContainer();
