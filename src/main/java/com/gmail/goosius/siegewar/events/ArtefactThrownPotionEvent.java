@@ -3,7 +3,6 @@ package com.gmail.goosius.siegewar.events;
 import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
