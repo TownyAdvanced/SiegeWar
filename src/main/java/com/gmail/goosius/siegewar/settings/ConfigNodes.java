@@ -1131,7 +1131,7 @@ public enum ConfigNodes {
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER5(
 			"domination_awards.artefact_offers.default_0_7_17.tier5",
-			"{arrow_of_doom, 1, tipped_arrow, instant_damage:20:1:true:true:true}"
+			"{arrow_of_doom, 1, tipped_arrow, harm:20:1:true:true:true}"
 			+ "{vorpal_sword, 1, golden_sword, sharpness:20}"
 			+ "{chicago_typewriter, 1, crossbow, quick_charge:5}"
 			+ "{trident_of_zeus, 1, trident, channeling:1, loyalty:2, custom_effect:lightning_strike_on_hit}"
