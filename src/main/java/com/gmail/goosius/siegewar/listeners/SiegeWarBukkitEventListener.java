@@ -11,7 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Entity;
@@ -352,7 +351,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		boolean arrowIsArtefact = SiegeWarDominationAwardsUtil.isArtefact(event.getConsumable());
 		boolean bowIsArtefact = SiegeWarDominationAwardsUtil.isArtefact(event.getBow());
 		if(arrowIsArtefact || bowIsArtefact)
-			setupProjectileArtefactTag(event.getProjectile());  //Setup projectile to be artefact
+			setupArtefactIdentificationTag(event.getProjectile());  //Setup projectile to be artefact
 		if(arrowIsArtefact)
 			transferCustomEffectTags(event.getConsumable(), event.getProjectile()); //Transfer custom effect tags
 		if(bowIsArtefact)
@@ -374,21 +373,31 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 		ItemStack itemInMainHand = ((Player) event.getEntity().getShooter()).getInventory().getItemInMainHand();
 		if(SiegeWarDominationAwardsUtil.isArtefact(itemInMainHand)) {
-			setupProjectileArtefactTag(event.getEntity()); 
+			setupArtefactIdentificationTag(event.getEntity());
 			transferCustomEffectTags(itemInMainHand, event.getEntity());
 		}
 	}
 
-	private void setupProjectileArtefactTag(Entity projectile) {
-		//setup dummy tag
+	/**
+	 * Setup an artefact tag, to allow the given projectile to be identified later as an artefact
+	 * To do this,we add a dummy expiration time.
+	 *
+	 * @param projectile the projectile
+	 */
+	private void setupArtefactIdentificationTag(Entity projectile) {
+		PersistentDataContainer projectileDataContainer = projectile.getPersistentDataContainer();
+		projectileDataContainer.set(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE, 1L);
 	}
 
+	/**
+	 * Transfer custom effect tags from itemstack to projectile
+	 *
+	 * @param itemStack the itemstack
+	 * @param projectile the projectile
+	 */
 	private void transferCustomEffectTags(ItemStack itemStack, Entity projectile) {
-				PersistentDataContainer itemStackDataContainer = itemInMainHand.getItemMeta().getPersistentDataContainer();
-		PersistentDataContainer projectileDataContainer = event.getEntity().getPersistentDataContainer();			
-		//Transfer expiry time
-		long expiryTime = itemStackDataContainer.get(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE);
-		projectileDataContainer.set(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE, expiryTime);
+		PersistentDataContainer itemStackDataContainer = itemStack.getItemMeta().getPersistentDataContainer();
+		PersistentDataContainer projectileDataContainer = projectile.getPersistentDataContainer();
 		//Transfer custom effects
 		if(itemStackDataContainer.has(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE)) {
 			String customEffects = itemStackDataContainer.get(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE);
@@ -406,6 +415,4 @@ public class SiegeWarBukkitEventListener implements Listener {
 			}
 		}
 	}
-	
-
 }
