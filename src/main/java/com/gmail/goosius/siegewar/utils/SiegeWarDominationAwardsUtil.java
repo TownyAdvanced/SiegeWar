@@ -425,7 +425,7 @@ public class SiegeWarDominationAwardsUtil {
         PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
         //Get custom effects
         if(persistentDataContainer.has(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE)) {
-            return Arrays.asList(persistentDataContainer.get(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE).replaceAll(" ","").split(","));
+            return new ArrayList<>(Arrays.asList(persistentDataContainer.get(CUSTOM_EFFECTS_KEY, CUSTOM_EFFECTS_KEY_TYPE).replaceAll(" ","").split(",")));
         } else {
             return new ArrayList<>();
         }
