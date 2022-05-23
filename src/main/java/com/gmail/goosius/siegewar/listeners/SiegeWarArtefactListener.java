@@ -5,7 +5,7 @@ import com.gmail.goosius.siegewar.events.ArtefactConsumeItemEvent;
 import com.gmail.goosius.siegewar.events.ArtefactDamageEntityEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.Towny;
-import org.bukkit.Bukkit;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
@@ -32,6 +32,24 @@ public class SiegeWarArtefactListener implements Listener {
 				switch (customEffect) {
 					case "lightning_strike_on_hit":
 						event.getAttacker().getWorld().strikeLightning(event.getVictim().getLocation());
+					break;
+					case "poison_on_hit":
+						if(event.getVictim() instanceof LivingEntity) {
+							Towny.getPlugin().getServer().getScheduler().runTask
+								(Towny.getPlugin(), () -> ((LivingEntity)event.getVictim()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 0)));
+						}
+					break;
+					case "strong_poison_on_hit":
+						if(event.getVictim() instanceof LivingEntity) {
+							Towny.getPlugin().getServer().getScheduler().runTask
+								(Towny.getPlugin(), () -> ((LivingEntity)event.getVictim()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 3)));
+						}
+					break;
+					case "slow_on_hit":
+						if(event.getVictim() instanceof LivingEntity) {
+							Towny.getPlugin().getServer().getScheduler().runTask
+								(Towny.getPlugin(), () -> ((LivingEntity)event.getVictim()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0)));
+						}
 					break;
 				}
 			}
