@@ -36,19 +36,19 @@ public class SiegeWarArtefactListener implements Listener {
 					case "poison_on_hit":
 						if(event.getVictim() instanceof LivingEntity) {
 							Towny.getPlugin().getServer().getScheduler().runTask
-								(Towny.getPlugin(), () -> ((LivingEntity)event.getVictim()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 0)));
+								(Towny.getPlugin(), () -> ((LivingEntity)event.getVictim()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 320, 0)));
 						}
 					break;
 					case "strong_poison_on_hit":
 						if(event.getVictim() instanceof LivingEntity) {
 							Towny.getPlugin().getServer().getScheduler().runTask
-								(Towny.getPlugin(), () -> ((LivingEntity)event.getVictim()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 3)));
+								(Towny.getPlugin(), () -> ((LivingEntity)event.getVictim()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 320, 2)));
 						}
 					break;
 					case "slow_on_hit":
 						if(event.getVictim() instanceof LivingEntity) {
 							Towny.getPlugin().getServer().getScheduler().runTask
-								(Towny.getPlugin(), () -> ((LivingEntity)event.getVictim()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0)));
+								(Towny.getPlugin(), () -> ((LivingEntity)event.getVictim()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 320, 0)));
 						}
 					break;
 				}
