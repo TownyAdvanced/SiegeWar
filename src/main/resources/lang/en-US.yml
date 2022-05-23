@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.46
+version: 0.47
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -561,3 +561,7 @@ artefact_name_trident_of_zeus: 'Trident of Zeus'
 artefact_name_trident_of_poseidon: 'Trident of Poseidon'
 artefact_name_chestplate_of_mars: 'Chestplate of Mars'
 artefact_custom_effect_lore_lightning_strike_on_hit: '&7Lightning Strike on Hit'
+
+#Added in 0.47
+artefact_name_antimatter_potion: 'Antimatter Potion'
+artefact_custom_effect_lore_delayed_massive_self_explosion_on_consume: '&7Drinker Explodes in 7 seconds'

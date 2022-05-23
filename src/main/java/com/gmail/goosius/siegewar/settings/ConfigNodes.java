@@ -1095,11 +1095,11 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT(
-			"domination_awards.artefact_offers.default_0_7_18",
+			"domination_awards.artefact_offers.default_0_8_0_official",
 			"",
 			"# These artefacts are the defaults provided by SW. Do not add custom items here."),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER1(
-			"domination_awards.artefact_offers.default_0_7_18.tier1",
+			"domination_awards.artefact_offers.default_0_8_0_official.tier1",
 			"{cobble_eater, 1, diamond_pickaxe, efficiency:7}"
 			+ "{tree_feller, 1, diamond_axe, efficiency:7}"
 			+ "{ground_digger, 1, diamond_shovel, efficiency:7}"
@@ -1109,14 +1109,14 @@ public enum ConfigNodes {
 			+ "{potion_of_enhanced_absorbtion, 3, potion, absorption:3:120:true:true:true}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER2(
-			"domination_awards.artefact_offers.default_0_7_18.tier2",
+			"domination_awards.artefact_offers.default_0_8_0_official.tier2",
 			"{potion_of_true_invisibility, 3, potion, invisibility:1:180:false:false:true}"
 			+ "{splash_potion_of_enhanced_regeneration, 3, splash_potion, regeneration:3:60:true:true:true}"
 			+ "{splash_potion_of_enhanced_strength, 3, splash_potion, increase_damage:3:120:true:true:true}"
 			+ "{splash_potion_of_enhanced_absorbtion, 5, splash_potion, absorption:3:120:true:true:true}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER3(
-			"domination_awards.artefact_offers.default_0_7_18.tier3",
+			"domination_awards.artefact_offers.default_0_8_0_official.tier3",
 			"{arrow_of_enhanced_hunger, 5, tipped_arrow, hunger:12:50:true:true:true}"
 			+ "{potion_of_great_resistance, 3, potion, damage_resistance:5:30:true:true:true}"
 			+ "{arrow_of_knockup, 5, tipped_arrow, levitation:20:1:true:true:true}"
@@ -1124,19 +1124,20 @@ public enum ConfigNodes {
 			+ "{bountiful_pickaxe, 1, diamond_pickaxe, fortune:5, efficiency:8}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER4(
-			"domination_awards.artefact_offers.default_0_7_18.tier4",
+			"domination_awards.artefact_offers.default_0_8_0_official.tier4",
 			"{sword_of_immolation, 1, golden_sword, fire_aspect:7}"
 			+ "{axe_of_the_berserker, 1, golden_axe, sharpness:10, efficiency:10}"
 			+ "{bow_of_displacement, 1, bow, punch: 7}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER5(
-			"domination_awards.artefact_offers.default_0_7_18.tier5",
+			"domination_awards.artefact_offers.default_0_8_0_official.tier5",
 			"{arrow_of_doom, 1, tipped_arrow, harm:20:1:true:true:true}"
 			+ "{vorpal_sword, 1, golden_sword, sharpness:15}"
 			+ "{chicago_typewriter, 1, crossbow, quick_charge:5}"
 			+ "{trident_of_zeus, 1, trident, channeling:1, loyalty:2, custom_effect:lightning_strike_on_hit}"
 			+ "{trident_of_poseidon, 1, trident, riptide:12}"
-			+ "{chestplate_of_mars, 1, golden_chestplate, protection:10}",
+			+ "{chestplate_of_mars, 1, golden_chestplate, protection:10}"
+			+ "{antimatter_potion, 1, potion, poison:1:7:true:true:true, custom_effect:delayed_massive_self_explosion_on_consume}",
 			""),
 	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM(
 			"domination_awards.artefact_offers.custom",

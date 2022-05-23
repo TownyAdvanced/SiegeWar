@@ -11,7 +11,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -23,6 +25,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -282,19 +285,11 @@ public class SiegeWarBukkitEventListener implements Listener {
 				Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);
 			}
 		} else if (event.getDamager() instanceof Projectile) {
+			//Check if missile is an artefact
 			ProjectileSource shooter = ((Projectile)event.getDamager()).getShooter();
-			if(shooter instanceof Player) {
-				//Check if projectile is an artefact
-				if(SiegeWarDominationAwardsUtil.isArtefact(event.getDamager())) {
-					ArtefactDamageEntityEvent artefactDamageEntityEvent = new ArtefactDamageEntityEvent((Player)shooter, event.getEntity(), event.getDamager());
-					Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);
-				}
-				//Check if shooting weapon is an artefact
-				ItemStack itemInMainHand = ((Player)shooter).getInventory().getItemInMainHand();
-				if(SiegeWarDominationAwardsUtil.isArtefact(itemInMainHand)) {
-					ArtefactDamageEntityEvent artefactDamageEntityEvent = new ArtefactDamageEntityEvent((Player)shooter, event.getEntity(), itemInMainHand);
-					Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);
-				}
+			if(shooter instanceof Player && SiegeWarDominationAwardsUtil.isArtefact(event.getDamager())) {
+				ArtefactDamageEntityEvent artefactDamageEntityEvent = new ArtefactDamageEntityEvent((Player)shooter, event.getEntity(), event.getDamager());
+				Bukkit.getPluginManager().callEvent(artefactDamageEntityEvent);
 			}
 		}
 
@@ -356,19 +351,62 @@ public class SiegeWarBukkitEventListener implements Listener {
 	public void on (EntityShootBowEvent event) {
 		if (!SiegeWarSettings.getWarSiegeEnabled())
 			return;
-		if (!SiegeWarSettings.isDominationAwardsGlobalEnabled())
+		if(!(event.getEntity() instanceof Player))
 			return;
-		if(SiegeWarDominationAwardsUtil.isArtefact(event.getConsumable())) {
-			PersistentDataContainer itemStackDataContainer = event.getConsumable().getItemMeta().getPersistentDataContainer();
-			PersistentDataContainer projectileDataContainer = event.getProjectile().getPersistentDataContainer();			
-			//Transfer expiry time
-			long expiryTime = itemStackDataContainer.get(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE);
-			projectileDataContainer.set(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE, expiryTime);
-			//Transfer custom effects
-			if(itemStackDataContainer.has(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE)) {
-				String customEffects = itemStackDataContainer.get(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE);
-				projectileDataContainer.set(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE, customEffects);
-			}
+		boolean arrowIsArtefact = SiegeWarDominationAwardsUtil.isArtefact(event.getConsumable());
+		boolean bowIsArtefact = SiegeWarDominationAwardsUtil.isArtefact(event.getBow());
+		if(arrowIsArtefact || bowIsArtefact)
+			setupArtefactIdentificationTag(event.getProjectile());  //Setup projectile to be artefact
+		if(arrowIsArtefact)
+			transferCustomEffectTags(event.getConsumable(), event.getProjectile()); //Transfer custom effect tags
+		if(bowIsArtefact)
+			transferCustomEffectTags(event.getBow(), event.getProjectile()); //Transfer custom effect tags
+	}
+
+	/**
+	 * If a trident is launched, transfer any artefact tags to the projectile
+	 *
+	 * @param event the event
+	 */
+	@EventHandler (ignoreCancelled = true)
+	public void on(ProjectileLaunchEvent event) {
+		if(!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+		if(!(event.getEntity().getShooter() instanceof Player))
+			return;
+		if(event.getEntityType() != EntityType.TRIDENT)
+			return;
+		ItemStack itemInMainHand = ((Player) event.getEntity().getShooter()).getInventory().getItemInMainHand();
+		if(SiegeWarDominationAwardsUtil.isArtefact(itemInMainHand)) {
+			setupArtefactIdentificationTag(event.getEntity());
+			transferCustomEffectTags(itemInMainHand, event.getEntity());
+		}
+	}
+
+	/**
+	 * Setup an artefact tag, to allow the given projectile to be identified later as an artefact
+	 * To do this,we add a dummy expiration time.
+	 *
+	 * @param projectile the projectile
+	 */
+	private void setupArtefactIdentificationTag(Entity projectile) {
+		PersistentDataContainer projectileDataContainer = projectile.getPersistentDataContainer();
+		projectileDataContainer.set(SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY, SiegeWarDominationAwardsUtil.EXPIRATION_TIME_KEY_TYPE, 1L);
+	}
+
+	/**
+	 * Transfer custom effect tags from itemstack to projectile
+	 *
+	 * @param itemStack the itemstack
+	 * @param projectile the projectile
+	 */
+	private void transferCustomEffectTags(ItemStack itemStack, Entity projectile) {
+		PersistentDataContainer itemStackDataContainer = itemStack.getItemMeta().getPersistentDataContainer();
+		PersistentDataContainer projectileDataContainer = projectile.getPersistentDataContainer();
+		//Transfer custom effects
+		if(itemStackDataContainer.has(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE)) {
+			String customEffects = itemStackDataContainer.get(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE);
+			projectileDataContainer.set(SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY, SiegeWarDominationAwardsUtil.CUSTOM_EFFECTS_KEY_TYPE, customEffects);
 		}
 	}
 
