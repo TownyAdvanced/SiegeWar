@@ -1,13 +1,13 @@
 # SiegeWar
 *SiegeWar* adds a war system to *Towny*.
 ### Features
-* 🍎 **Healthy War Goals:** The purpose of wars is geopolitical domination. The top 7 nations receive awards of money and Artefacts.
+* 🍎 **Healthy War Goals:** The purpose of war is geopolitical domination. The top 7 nations receive awards of money and Artefacts.
 * ⚔️ **Sieges:** Wars are conducted by means of sieges. A siege occurs when a nation attacks a town.
 * 🤖 **Automatic:** Sieges are started by players and automatically managed by the plugin. Daily staff management of sieges is not required.
 * 🏙️ **Minimally Destructive:** Towns cannot be damaged or stolen from during sieges.
 * 🚶 **Slow Paced:** Sieges last 3 days, giving defenders a chance to respond to attacks, and also making the system friendly to casual players.
-* 🌍 **Inclusive:** The whole server is involved, with no opt-outs. Towns have a cost-free *Neutrality* (***0.7.9+***) option, where they can become immune to attack, but vulnerable to instant-peaceful-occupation.
-* ♟️ **Strategic:** The system has many strategic elements (*e.g. deciding when/where/who to attack, organizing army composition/logisitics/movement, and  diplomacy/occupation/neutrality etc*). This can be great for thoughful/mature playerbases, but for servers which require more simplistic PVP contests, alternative war systems should be considered.
+* 🌍 **Inclusive:** The whole server is involved, with no opt-outs. Towns have a cost-free *Neutrality* option, where they can become immune to attack, but vulnerable to instant-peaceful-occupation.
+* ♟️ **Strategic:** The system has many strategic elements (*e.g. deciding who/when/where to attack, & neutrality/occupation etc*). This can be great for thoughful/mature playerbases, but for servers which require more simplistic PVP contests, alternative war systems should be considered.
 
 ### Videos
 * https://www.youtube.com/watch?v=0UU9-lVuHSY: Demonstrates how the plugin fits into a geopolitical context (*nation building, diplomacy, and war*), and also demonstrates some tactical features of sieges.
