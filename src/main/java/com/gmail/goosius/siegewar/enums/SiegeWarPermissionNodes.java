@@ -57,13 +57,17 @@ public enum SiegeWarPermissionNodes {
 
 	// ----- Admin Command Nodes -----
 	SIEGEWAR_COMMAND_SIEGEWARADMIN("siegewar.command.siegewaradmin.*"),
-		SIEGEWAR_COMMAND_SIEGEWARADMIN_IMMUNITY("siegewar.command.siegewaradmin.immunity"),
+		SIEGEWAR_COMMAND_SIEGEWARADMIN_DURATION("siegewar.command.siegewaradmin.siegeduration"),
+		SIEGEWAR_COMMAND_SIEGEWARADMIN_SIEGEIMMUNITY("siegewar.command.siegewaradmin.siegeimmunity"),
+		SIEGEWAR_COMMAND_SIEGEWARADMIN_REVOLTIMMUNITY("siegewar.command.siegewaradmin.revoltimmunity"),
 		SIEGEWAR_COMMAND_SIEGEWARADMIN_RELOAD("siegewar.command.siegewaradmin.reload"),
 		SIEGEWAR_COMMAND_SIEGEWARADMIN_SIEGE("siegewar.command.siegewaradmin.siege"),
 		SIEGEWAR_COMMAND_SIEGEWARADMIN_TOWN("siegewar.command.siegewaradmin.town"),
 		SIEGEWAR_COMMAND_SIEGEWARADMIN_NATION("siegewar.command.siegewaradmin.nation"),
 		SIEGEWAR_COMMAND_SIEGEWARADMIN_INSTALLPERMS("siegewar.command.siegewaradmin.installperms"),
+		SIEGEWAR_COMMAND_SIEGEWARADMIN_DOMINATIONAWARDS("siegewar.command.siegewaradmin.dominationawards"),
 		SIEGEWAR_COMMAND_SIEGEWARADMIN_BATTLESESSION("siegewar.command.siegewaradmin.battlesession");
+	
 
 	private String value;
 

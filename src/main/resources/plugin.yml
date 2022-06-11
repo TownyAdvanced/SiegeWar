@@ -28,7 +28,10 @@ permissions:
         description: User is able to use all /siegewaradmin commands.
         default: op
         children:
-            siegewar.command.siegewaradmin.immunity: true
+            siegewar.command.siegewaradmin.siegeimmunity: true
+            siegewar.command.siegewaradmin.revoltimmunity: true
+            siegewar.command.siegewaradmin.siegeduration: true
+            siegewar.command.siegewaradmin.dominationawards: true
             siegewar.command.siegewaradmin.reload: true
             siegewar.command.siegewaradmin.siege: true
             siegewar.command.siegewaradmin.town: true
