@@ -573,4 +573,4 @@ artefact_custom_effect_lore_strong_poison_on_hit: '&7Strong Poison on Hit'
 artefact_custom_effect_lore_slow_on_hit: '&7Slowness on Hit'
 
 #Added in 0.48
-hours_added_to_sieges: '%s hours have been added to all sieges' durations.'
+hours_added_to_sieges: '%s hours have been added to all sieges'' durations.'
