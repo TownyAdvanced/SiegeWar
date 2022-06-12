@@ -56,10 +56,8 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		case "siegeduration":
 			if (args.length == 2)
 				return NameUtil.filterByStart(siegeDurationTabCompletes, args[1]);
-			
 			if (args.length == 3)
 				return Arrays.asList("1","2","3","4","5","6");
-						
 		case "siegeimmunity":
 			if (args.length == 2)
 				return NameUtil.filterByStart(siegewaradminSiegeImmunityTabCompletes, args[1]);
