@@ -628,6 +628,10 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.BATTLE_SESSION_SCHEDULER_DURATION_MINUTES);
 	}
 
+	public static boolean cancelBattleSessionWhenNoActiveSieges() {
+		return Settings.getBoolean(ConfigNodes.BATTLE_SESSION_SCHEDULER_CANCEL_SESSION_WHEN_NO_SIEGES);
+	}
+
 	public static boolean isDominationAwardsGlobalEnabled() {
 		return Settings.getBoolean(ConfigNodes.DOMINATION_AWARDS_GLOBAL_ENABLED);
 	}

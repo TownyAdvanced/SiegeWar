@@ -573,4 +573,8 @@ artefact_custom_effect_lore_strong_poison_on_hit: '&7Strong Poison on Hit'
 artefact_custom_effect_lore_slow_on_hit: '&7Slowness on Hit'
 
 #Added in 0.48
+
+#Shown when an admin adds hours using /swa siegeduration addhours
 hours_added_to_sieges: '%s hours have been added to all sieges'' durations.'
+#Shown when SW cancels a battle session because there's no active sieges.
+battle_session_cancelled_no_sieges: 'No active Sieges, cancelling Battle Session'
