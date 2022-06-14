@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.events.PreInvadeEvent;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -20,6 +21,7 @@ import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -81,6 +83,14 @@ public class InvadeTown {
 			if (effectiveNumTowns >= TownySettings.getMaxTownsPerNation()){
 				throw new TownyException(String.format(translator.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
 			}
+		}
+
+		PreInvadeEvent preEvent = new PreInvadeEvent(residentsNation, nearbyTown, siege);
+		Bukkit.getPluginManager().callEvent(preEvent);
+		if (preEvent.isCancelled()) {
+			if (!preEvent.getCancellationMsg().isEmpty())
+				Messaging.sendErrorMsg(player, preEvent.getCancellationMsg());
+			return;
 		}
 
 		invadeTown(residentsNation, nearbyTown, siege);
