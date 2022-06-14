@@ -111,9 +111,9 @@ public class SiegeWarNationAddonCommand implements TabExecutor {
 	}
 
 	private void showHelp() {
-		sender.sendMessage(ChatTools.formatTitle("/nation siegewar"));
-		sender.sendMessage(ChatTools.formatCommand("/nation siegewar", "occupiedhometowns [nation]", ""));
-		sender.sendMessage(ChatTools.formatCommand("/nation siegewar", "occupiedforeigntowns [nation]", ""));		
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/nation siegewar"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("/nation siegewar", "occupiedhometowns [nation]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("/nation siegewar", "occupiedforeigntowns [nation]", ""));		
 	}
 
 }

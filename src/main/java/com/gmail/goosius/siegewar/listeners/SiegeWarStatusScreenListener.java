@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
@@ -24,20 +25,21 @@ import com.palmergames.adventure.text.TextComponent;
 import com.palmergames.adventure.text.event.ClickEvent;
 import com.palmergames.adventure.text.event.HoverEvent;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
-import com.palmergames.bukkit.towny.TownyFormatter;
 import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.ResidentStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.TownStatusScreenEvent;
 import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
+import com.palmergames.bukkit.towny.utils.TownyComponents;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
 
 public class SiegeWarStatusScreenListener implements Listener {
 
+	public static final String keyValueFormat = "%s%s %s%s";
+	
 	/*
 	 * SiegeWar will show a resident if they can collect money due to them,
 	 * via the resident status screen. Components are clickable to
@@ -49,9 +51,9 @@ public class SiegeWarStatusScreenListener implements Listener {
 		if (salary > 0) {
 			final Translator translator = Translator.locale(Translation.getLocale(event.getCommandSender()));
 			event.getStatusScreen().addComponentOf("siegeWarNationSalary",
-					formatKeyValue(translator.of("status_military_salary"), formatMoney(salary)),
-					HoverEvent.showText(Component.text(translator.of("hover_message_click_to_claim"))),
-					ClickEvent.runCommand("/sw collect"));
+					formatKeyValue(translator.of("status_military_salary"), formatMoney(salary))
+						.hoverEvent(HoverEvent.showText(Component.text(translator.of("hover_message_click_to_claim"))))
+						.clickEvent(ClickEvent.runCommand("/sw collect")));
 		}
 	}
 	
@@ -123,14 +125,14 @@ public class SiegeWarStatusScreenListener implements Listener {
 			//Occupying Nation: Empire of the Fluffy Bunnies
 			if(SiegeWarSettings.getWarSiegeInvadeEnabled() && TownOccupationController.isTownOccupied(town)) {
 				Nation townOccupier = TownOccupationController.getTownOccupier(town);
-				event.getStatusScreen().addComponentOf("siegeWar_townOccupier", translator.of("status_town_occupying_nation", townOccupier.getFormattedName()));
+				event.getStatusScreen().addComponentOf("siegeWar_townOccupier", translator.comp("status_town_occupying_nation", townOccupier.getFormattedName()));
 			}
 			
 	        //Revolt Immunity Timer: 71.8 hours
 	        long immunity = TownMetaDataController.getRevoltImmunityEndTime(town);
 	        if (SiegeWarSettings.getRevoltSiegesEnabled() && immunity == -1l || System.currentTimeMillis() < immunity) {
 	            String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
-	            event.getStatusScreen().addComponentOf("siegeWar_revoltImmunityTimer", translator.of("status_town_revolt_immunity_timer", time));
+	            event.getStatusScreen().addComponentOf("siegeWar_revoltImmunityTimer", translator.comp("status_town_revolt_immunity_timer", time));
 	        }
 
 	        immunity = TownMetaDataController.getSiegeImmunityEndTime(town);
@@ -191,7 +193,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 							out.add(translator.of("status_town_banner_control_nobody", siege.getBannerControllingSide().getFormattedName().forLocale(event.getCommandSender())));
 						} else {
 							
-							String[] bannerControllingResidents = TownyFormatter.getFormattedNames(siege.getBannerControllingResidents().toArray(new Resident[0]));
+							String[] bannerControllingResidents = (String[]) siege.getBannerControllingResidents().stream().map(res -> res.getFormattedName()).toArray(); 
 							if (bannerControllingResidents.length > 34) {
 								String[] entire = bannerControllingResidents;
 								bannerControllingResidents = new String[36];
@@ -230,11 +232,11 @@ public class SiegeWarStatusScreenListener implements Listener {
 						break;
 	            }
 
-				TextComponent hoverText = Component.empty();
+				Component hoverText = Component.empty();
 				for (String line : out) {
 					hoverText = hoverText.append(Component.text(line).append(Component.newline()));
 				}
-				event.getStatusScreen().addComponentOf("siegeWar_siegeHover", hoverFormat(translator.of("status_sieged")), HoverEvent.showText(hoverText));
+				event.getStatusScreen().addComponentOf("siegeWar_siegeHover", hoverFormat(translator.of("status_sieged")).hoverEvent(HoverEvent.showText(hoverText)));
 
 	        } else {
 	            if(!SiegeController.hasActiveSiege(town)
@@ -242,11 +244,13 @@ public class SiegeWarStatusScreenListener implements Listener {
 					|| immunity == -1l) {
 	                //Siege:
 	                // > Immunity Timer: 40.8 hours
-					String time = immunity == -1l ? Translation.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
-					TextComponent immunityComp = Component.newline()
-							.append(Component.text(Translation.of("status_town_siege")))
+					String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
+					Component immunityComp = Component.newline()
+							.append(Component.text(translator.of("status_town_siege")))
 							.append(Component.newline())
-							.append(Component.text(Translation.of("status_town_siege_immunity_timer", time))); 
+							.append(Component.text(translator.of("status_town_siege_immunity_timer", time)));
+					SiegeWar.getSiegeWar().getLogger().info(TownyComponents.unMiniMessage(immunityComp));
+					immunityComp = TownyComponents.miniMessage(immunityComp);
 					event.getStatusScreen().addComponentOf("siegeWar_siegeImmunity", immunityComp);
 	            }
 	        }
@@ -322,16 +326,15 @@ public class SiegeWarStatusScreenListener implements Listener {
 		}
 	}
 
-	private String hoverFormat(String hover) {
-		return String.format(hover,
+	private Component hoverFormat(String hover) {
+		return Component.text(String.format(hover,
 				Translation.of("status_format_hover_bracket_colour"),
 				Translation.of("status_format_hover_key"),
-				Translation.of("status_format_hover_bracket_colour"));
+				Translation.of("status_format_hover_bracket_colour")));
 	}
 	
-	private String formatKeyValue(String key, String value) {
-		return Translation.of("status_format_key_value_key") + key + 
-			Translation.of("status_format_key_value_value") + value;
+	private Component formatKeyValue(String key, String value) {
+		return TownyComponents.miniMessage(String.format(keyValueFormat, Translation.of("status_format_key_value_key"), key, Translation.of("status_format_key_value_value"), value));
 	}
 	
 	private static String getFormattedTownList(List<Town> towns) {
