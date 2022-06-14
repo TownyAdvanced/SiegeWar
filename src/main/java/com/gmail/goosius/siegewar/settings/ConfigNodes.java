@@ -978,6 +978,11 @@ public enum ConfigNodes {
 			"",
 			"# This value determines the duration of each battle session.",
 			"# TIP: The default value of 50 is deliberately designed to give players a 10 minute break after each battle session, for reasons of health and safety."),
+	BATTLE_SESSION_SCHEDULER_CANCEL_SESSION_WHEN_NO_SIEGES(
+			"battle_session_scheduler.cancel_session_when_no_active_sieges",
+			"true",
+			"",
+			"# Should sessions be cancelled when there are no active sieges?"),
 	CAPPING_LIMITER(
 			"capping_limiter",
 			"",
