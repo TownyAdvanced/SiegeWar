@@ -45,7 +45,7 @@ import java.util.List;
 public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
-	private final Version requiredTownyVersion = Version.fromString("0.98.0.0");
+	private final Version requiredTownyVersion = Version.fromString("0.98.2.0");
 	private static final SiegeHUDManager siegeHUDManager = new SiegeHUDManager();
 
 	private static boolean siegeWarPluginError = false;

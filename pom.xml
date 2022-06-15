@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.gmail.goosius</groupId>
   <artifactId>SiegeWar</artifactId>
-  <version>0.8.0</version>
+  <version>0.8.1</version>
   <name>siegewar</name> <!-- Leave lower-cased -->
 
   <properties>
@@ -48,7 +48,7 @@
 	<dependency>
       <groupId>com.palmergames.bukkit.towny</groupId>
       <artifactId>towny</artifactId>
-      <version>0.98.0.0</version>
+      <version>0.98.2.0</version>
       <scope>provided</scope>
 	</dependency>
     <dependency>
