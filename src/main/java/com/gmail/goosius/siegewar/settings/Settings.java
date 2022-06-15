@@ -48,7 +48,6 @@ public class Settings {
 			Plugin plugin = SiegeWar.getSiegeWar(); 
 			Path langFolderPath = Paths.get(plugin.getDataFolder().getPath()).resolve("lang");
 			TranslationLoader loader = new TranslationLoader(langFolderPath, plugin, SiegeWar.class);
-			loader.setConvertLegacyCodes(true);
 			loader.load();
 			TownyAPI.getInstance().addTranslations(plugin, loader.getTranslations());
 		} catch (Exception e) {
