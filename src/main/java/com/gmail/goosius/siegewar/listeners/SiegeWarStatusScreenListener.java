@@ -66,7 +66,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 			// Occupied Home Towns[3]: Town1, Town2, Town3
 			List<Town> occupiedHomeTowns = TownOccupationController.getOccupiedHomeTowns(nation);
 			if (occupiedHomeTowns.size() > 0) {
-				Component comp = Component.newline()
+				Component comp = Component.empty()
+						.append(Component.newline())
 						.append(Component.text(translator.of("status_nation_occupied_home_towns", occupiedHomeTowns.size())
 							+ getFormattedTownList(occupiedHomeTowns))
 						.clickEvent(ClickEvent.runCommand("/nation siegewar occupiedhometowns " + nation.getName()))
@@ -77,7 +78,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 			// Occupied Foreign Towns[3]: Town4, Town5, Town6
 			List<Town> occupiedForeignTowns = TownOccupationController.getOccupiedForeignTowns(nation);
 			if (occupiedForeignTowns.size() > 0) {
-				Component comp = Component.newline()
+				Component comp = Component.empty()
+						.append(Component.newline())
 						.append(Component.text(translator.of("status_nation_occupied_foreign_towns", occupiedForeignTowns.size())
 							+ getFormattedTownList(occupiedForeignTowns))
 						.clickEvent(ClickEvent.runCommand("/nation siegewar occupiedforeigntowns " + nation.getName()))
@@ -102,9 +104,9 @@ public class SiegeWarStatusScreenListener implements Listener {
 				out.add(translator.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation)));
 			}
 			
-			Component comp = Component.empty().append(Component.newline());
+			Component comp = Component.empty();
 			for (String line : out)
-				comp = comp.append(Component.text(line)).append(Component.newline());
+				comp = comp.append(Component.newline()).append(Component.text(line));
 			event.getStatusScreen().addComponentOf("siegeWarNation", comp);
 		}
 	}
