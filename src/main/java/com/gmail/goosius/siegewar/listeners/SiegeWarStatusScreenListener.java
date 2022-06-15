@@ -20,7 +20,6 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.ChatTools;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.palmergames.adventure.text.Component;
-import com.palmergames.adventure.text.TextComponent;
 import com.palmergames.adventure.text.event.ClickEvent;
 import com.palmergames.adventure.text.event.HoverEvent;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
@@ -67,7 +66,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 			// Occupied Home Towns[3]: Town1, Town2, Town3
 			List<Town> occupiedHomeTowns = TownOccupationController.getOccupiedHomeTowns(nation);
 			if (occupiedHomeTowns.size() > 0) {
-				TextComponent comp = Component.newline()
+				Component comp = Component.empty()
+						.append(Component.newline())
 						.append(Component.text(translator.of("status_nation_occupied_home_towns", occupiedHomeTowns.size())
 							+ getFormattedTownList(occupiedHomeTowns))
 						.clickEvent(ClickEvent.runCommand("/nation siegewar occupiedhometowns " + nation.getName()))
@@ -78,7 +78,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 			// Occupied Foreign Towns[3]: Town4, Town5, Town6
 			List<Town> occupiedForeignTowns = TownOccupationController.getOccupiedForeignTowns(nation);
 			if (occupiedForeignTowns.size() > 0) {
-				TextComponent comp = Component.newline()
+				Component comp = Component.empty()
+						.append(Component.newline())
 						.append(Component.text(translator.of("status_nation_occupied_foreign_towns", occupiedForeignTowns.size())
 							+ getFormattedTownList(occupiedForeignTowns))
 						.clickEvent(ClickEvent.runCommand("/nation siegewar occupiedforeigntowns " + nation.getName()))
@@ -103,9 +104,9 @@ public class SiegeWarStatusScreenListener implements Listener {
 				out.add(translator.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation)));
 			}
 			
-			TextComponent comp = Component.empty();
+			Component comp = Component.empty();
 			for (String line : out)
-				comp = comp.append(Component.text(line)).append(Component.newline());
+				comp = comp.append(Component.newline()).append(Component.text(line));
 			event.getStatusScreen().addComponentOf("siegeWarNation", comp);
 		}
 	}
@@ -230,11 +231,15 @@ public class SiegeWarStatusScreenListener implements Listener {
 						break;
 	            }
 
-				TextComponent hoverText = Component.empty();
+				Component hoverText = Component.empty();
 				for (String line : out) {
 					hoverText = hoverText.append(Component.text(line).append(Component.newline()));
 				}
-				event.getStatusScreen().addComponentOf("siegeWar_siegeHover", hoverFormat(translator.of("status_sieged")), HoverEvent.showText(hoverText));
+				event.getStatusScreen().addComponentOf("siegeWar_siegeHover", 
+						Component.empty()
+							.append(Component.newline())
+							.append(Component.text(hoverFormat(translator.of("status_sieged")))
+							.hoverEvent(HoverEvent.showText(hoverText))));
 
 	        } else {
 	            if(!SiegeController.hasActiveSiege(town)
@@ -243,7 +248,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 	                //Siege:
 	                // > Immunity Timer: 40.8 hours
 					String time = immunity == -1l ? Translation.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
-					TextComponent immunityComp = Component.newline()
+					Component immunityComp = Component.empty()
+							.append(Component.newline())
 							.append(Component.text(Translation.of("status_town_siege")))
 							.append(Component.newline())
 							.append(Component.text(Translation.of("status_town_siege_immunity_timer", time))); 
