@@ -90,35 +90,35 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	}
 
 	private void showSiegeWarHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/siegewar"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw guide", "", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw collect", "", Translatable.of("nation_help_11").forLocale(sender)));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw town", "inviteoccupation [nation]", Translatable.of("nation_help_16").forLocale(sender)));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "removeoccupation [town]", Translatable.of("nation_help_14").forLocale(sender)));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "transferoccupation [town] [nation]", Translatable.of("nation_help_15").forLocale(sender)));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nextsession", "", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw version", "", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewar"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw guide", "", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw collect", "", Translatable.of("nation_help_11").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw town", "inviteoccupation [nation]", Translatable.of("nation_help_16").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "removeoccupation [town]", Translatable.of("nation_help_14").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "transferoccupation [town] [nation]", Translatable.of("nation_help_15").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nextsession", "", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw version", "", ""));
 	}
 
 	private void showNationHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/siegewar nation"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "removeoccupation [town]", Translatable.of("nation_help_14").forLocale(sender)));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw nation", "transferoccupation [town] [nation]", Translatable.of("nation_help_15").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewar nation"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "removeoccupation [town]", Translatable.of("nation_help_14").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "transferoccupation [town] [nation]", Translatable.of("nation_help_15").forLocale(sender)));
 	}
 
 	private void showTownHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/siegewar town"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw town", "inviteoccupation [nation]", Translatable.of("nation_help_16").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewar town"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw town", "inviteoccupation [nation]", Translatable.of("nation_help_16").forLocale(sender)));
 	}
 
 	private void showPreferenceHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/siegewar preference"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference beacons [on/off]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/sw", "preference bossbars [on/off]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewar preference"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw", "preference beacons [on/off]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw", "preference bossbars [on/off]", ""));
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -215,8 +215,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void parseSiegeWarHudCommand(Player player, String[] args) {
 		try {
 			if (args.length == 0) {
-				player.sendMessage(ChatTools.formatTitle("/siegewar hud"));
-				player.sendMessage(ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
+				TownyMessaging.sendMessage(player, ChatTools.formatTitle("/siegewar hud"));
+				TownyMessaging.sendMessage(player, ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 			} else {
 				Town town = TownyUniverse.getInstance().getTown(args[0]);
 				if (town == null) 

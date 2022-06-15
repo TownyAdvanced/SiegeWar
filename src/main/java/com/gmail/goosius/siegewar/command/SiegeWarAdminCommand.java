@@ -385,74 +385,74 @@ public class SiegeWarAdminCommand implements TabExecutor {
 	}
 
 	private void showHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/siegewaradmin"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "reload", Translatable.of("admin_help_1").forLocale(sender)));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "installperms", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity town [town_name] [hours|permanent]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity nation [nation_name] [hours|permanent]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity alltowns [hours|permanent]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity town [town_name] [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity nation [nation_name] [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity alltowns [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setbalance [points]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupier [town]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] removeoccupier", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplundergained [amount]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplunderlost [amount]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownsgained [amount]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownslost [amount]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "battlesession [start/end]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "dominationawards giveglobal", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeduration addhours [1,2,3,4,5...]", "Add a number of hours to every siege."));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewaradmin"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "reload", Translatable.of("admin_help_1").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "installperms", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siegeimmunity town [town_name] [hours|permanent]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siegeimmunity nation [nation_name] [hours|permanent]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siegeimmunity alltowns [hours|permanent]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "revoltimmunity town [town_name] [hours]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "revoltimmunity nation [nation_name] [hours]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "revoltimmunity alltowns [hours]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setbalance [points]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupier [town]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] removeoccupier", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplundergained [amount]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplunderlost [amount]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownsgained [amount]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownslost [amount]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "battlesession [start/end]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "dominationawards giveglobal", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siegeduration addhours [1,2,3,4,5...]", "Add a number of hours to every siege."));
 	}
 
 	private void showBattleSessionHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/swa battlesession"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "battlesession [start/end]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/swa battlesession"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "battlesession [start/end]", ""));
 	}
 
 	private void showGlobalDominationAwardsHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/swa dominationawards"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "dominationawards giveglobal", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/swa dominationawards"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "dominationawards giveglobal", ""));
 	}
 	
 	private void showSiegeImmunityHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/swa siegeimmunity"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity town [town_name] [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity nation [nation_name] [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siegeimmunity alltowns [hours]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/swa siegeimmunity"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siegeimmunity town [town_name] [hours]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siegeimmunity nation [nation_name] [hours]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siegeimmunity alltowns [hours]", ""));
 	}
 
 	private void showRevoltImmunityHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/swa revoltimmunity"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity town [town_name] [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity nation [nation_name] [hours]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "revoltimmunity alltowns [hours]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/swa revoltimmunity"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "revoltimmunity town [town_name] [hours]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "revoltimmunity nation [nation_name] [hours]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "revoltimmunity alltowns [hours]", ""));
 	}
 
 	private void showSiegeHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/swa siege"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setbalance [points]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/swa siege"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setbalance [points]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
 	}
 
 	private void showTownHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/swa town"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupier [town]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "town [town_name] removeoccupier", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/swa town"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupier [town]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] removeoccupier", ""));
 	}
 
 	private void showNationHelp(CommandSender sender) {
-		sender.sendMessage(ChatTools.formatTitle("/swa nation"));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplundergained [amount]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplunderlost [amount]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownsgained [amount]", ""));
-		sender.sendMessage(ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownslost [amount]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/swa nation"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplundergained [amount]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplunderlost [amount]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownsgained [amount]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownslost [amount]", ""));
 	}
 
 	private void parseSiegeWarReloadCommand(CommandSender sender) {
