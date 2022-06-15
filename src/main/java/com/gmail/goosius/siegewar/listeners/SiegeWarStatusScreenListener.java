@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
@@ -18,10 +17,8 @@ import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.ChatTools;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.palmergames.adventure.text.Component;
-import com.palmergames.adventure.text.TextComponent;
 import com.palmergames.adventure.text.event.ClickEvent;
 import com.palmergames.adventure.text.event.HoverEvent;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
@@ -65,49 +62,49 @@ public class SiegeWarStatusScreenListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			final Translator translator = Translator.locale(Translation.getLocale(event.getCommandSender()));
 			Nation nation = event.getNation();
-			List<String> out = new ArrayList<>();
+			List<Component> out = new ArrayList<>();
 			// Occupied Home Towns[3]: Town1, Town2, Town3
 			List<Town> occupiedHomeTowns = TownOccupationController.getOccupiedHomeTowns(nation);
 			if (occupiedHomeTowns.size() > 0) {
-				TextComponent comp = Component.newline()
-						.append(Component.text(translator.of("status_nation_occupied_home_towns", occupiedHomeTowns.size())
-							+ getFormattedTownList(occupiedHomeTowns))
+				Component comp = Component.newline()
+						.append(translator.comp("status_nation_occupied_home_towns", occupiedHomeTowns.size())
+						.append(getFormattedTownList(occupiedHomeTowns))
 						.clickEvent(ClickEvent.runCommand("/nation siegewar occupiedhometowns " + nation.getName()))
-						.hoverEvent(HoverEvent.showText(Component.text(translator.of("status_hover_click_for_more")))));
+						.hoverEvent(HoverEvent.showText(translator.comp("status_hover_click_for_more"))));
 				event.getStatusScreen().addComponentOf("siegeWarNationOccupiedHomeTowns", comp);
 			}
 
 			// Occupied Foreign Towns[3]: Town4, Town5, Town6
 			List<Town> occupiedForeignTowns = TownOccupationController.getOccupiedForeignTowns(nation);
 			if (occupiedForeignTowns.size() > 0) {
-				TextComponent comp = Component.newline()
-						.append(Component.text(translator.of("status_nation_occupied_foreign_towns", occupiedForeignTowns.size())
-							+ getFormattedTownList(occupiedForeignTowns))
+				Component comp = Component.newline()
+						.append(translator.comp("status_nation_occupied_foreign_towns", occupiedForeignTowns.size())
+						.append(getFormattedTownList(occupiedForeignTowns))
 						.clickEvent(ClickEvent.runCommand("/nation siegewar occupiedforeigntowns " + nation.getName()))
-						.hoverEvent(HoverEvent.showText(Component.text(translator.of("status_hover_click_for_more")))));
+						.hoverEvent(HoverEvent.showText(translator.comp("status_hover_click_for_more"))));
 				event.getStatusScreen().addComponentOf("siegeWarNationOccupiedForeignTowns", comp);
 			}
 
 			// Offensive Sieges [3]: TownA, TownB, TownC
 	        List<Town> siegeAttacks = new ArrayList<>(SiegeController.getActiveOffensiveSieges(nation).values());
 			if (siegeAttacks.size() > 0)
-				out.add(translator.of("status_nation_offensive_sieges", siegeAttacks.size())
-					+ getFormattedTownList(siegeAttacks));
+				out.add(translator.comp("status_nation_offensive_sieges", siegeAttacks.size())
+					.append(getFormattedTownList(siegeAttacks)));
 
 	        // Defensive Sieges [3]: TownX, TownY, TownZ
 	        List<Town> siegeDefences = new ArrayList<>(SiegeController.getActiveDefensiveSieges(nation).values());
 			if (siegeDefences.size() > 0)
-				out.add(translator.of("status_nation_defensive_sieges", siegeDefences.size())
-					+ getFormattedTownList(siegeDefences));
+				out.add(translator.comp("status_nation_defensive_sieges", siegeDefences.size())
+					.append(getFormattedTownList(siegeDefences)));
 
 			if (SiegeWarSettings.getWarSiegeNationStatisticsEnabled()) {
-				out.add(translator.of("status_nation_town_stats", NationMetaDataController.getTotalTownsGained(nation), NationMetaDataController.getTotalTownsLost(nation)));
-				out.add(translator.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation)));
+				out.add(translator.comp("status_nation_town_stats", NationMetaDataController.getTotalTownsGained(nation), NationMetaDataController.getTotalTownsLost(nation)));
+				out.add(translator.comp("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation)));
 			}
 			
-			TextComponent comp = Component.empty();
-			for (String line : out)
-				comp = comp.append(Component.text(line)).append(Component.newline());
+			Component comp = Component.empty();
+			for (Component line : out)
+				comp = comp.append(line).append(Component.newline());
 			event.getStatusScreen().addComponentOf("siegeWarNation", comp);
 		}
 	}
@@ -137,37 +134,37 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 	        immunity = TownMetaDataController.getSiegeImmunityEndTime(town);
 	        if (SiegeController.hasSiege(town)) {
-	        	List<String> out = new ArrayList<>();
+	        	List<Component> out = new ArrayList<>();
 				Siege siege = SiegeController.getSiege(town);
 				SiegeStatus siegeStatus= siege.getStatus();
 				String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis()); 
 
 				// > Type: Conquest
-				out.add(translator.of("status_town_siege_type", siege.getSiegeType().getTranslatedName()));
+				out.add(translator.comp("status_town_siege_type", siege.getSiegeType().getTranslatedName()));
 
 				// > Status: In Progress
-				out.add(translator.of("status_town_siege_status", getStatusTownSiegeSummary(siege, translator)));
+				out.add(translator.comp("status_town_siege_status", getStatusTownSiegeSummary(siege, translator)));
 
 				// > Attacker: Darkness
-				out.add(translator.of("status_town_siege_attacker", siege.getAttackerNameForDisplay()));
+				out.add(translator.comp("status_town_siege_attacker", siege.getAttackerNameForDisplay()));
 
 				// > Defender: Light
-				out.add(translator.of("status_town_siege_defender", siege.getDefenderNameForDisplay()));
+				out.add(translator.comp("status_town_siege_defender", siege.getDefenderNameForDisplay()));
 
 				switch (siegeStatus) {
 					case IN_PROGRESS:
 						// > Balance: 530
-						String balanceLine = translator.of("status_town_siege_status_siege_balance", siege.getSiegeBalance());
+						Component balanceLine = translator.comp("status_town_siege_status_siege_balance", siege.getSiegeBalance());
 						// > Balance: 530 | Pending: +130
 						int pending = SiegeWarBattleSessionUtil.calculateSiegeBalanceAdjustment(siege);
 						if(pending != 0)
-							balanceLine += translator.of("status_town_siege_pending_balance_adjustment", ((pending > 0 ? "+" : "") + pending));
+							balanceLine.append(translator.comp("status_town_siege_pending_balance_adjustment", ((pending > 0 ? "+" : "") + pending)));
 						out.add(balanceLine); 
 
 						if(SiegeWarSettings.isBannerXYZTextEnabled()) {
 							// > Banner XYZ: {2223,82,9877}
 							out.add(
-									translator.of("status_town_siege_status_banner_xyz",
+									translator.comp("status_town_siege_status_banner_xyz",
 											siege.getFlagLocation().getBlockX(),
 											siege.getFlagLocation().getBlockY(),
 											siege.getFlagLocation().getBlockZ())
@@ -175,22 +172,22 @@ public class SiegeWarStatusScreenListener implements Listener {
 						}
 
 						// >  Victory Timer: 5.3 hours
-						String victoryTimer = translator.of("status_town_siege_victory_timer", siege.getFormattedHoursUntilScheduledCompletion());
+						Component victoryTimer = translator.comp("status_town_siege_victory_timer", siege.getFormattedHoursUntilScheduledCompletion());
 						out.add(victoryTimer);
 
 						// >  War Chest: $12,800
 						if(TownyEconomyHandler.isActive()) {
 							String warChest = TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount());
-							out.add(translator.of("status_town_siege_status_warchest", warChest));
+							out.add(translator.comp("status_town_siege_status_warchest", warChest));
 						}
 
 						//Battle:
-						String battle = translator.of("status_town_siege_battle");
+						Component battle = translator.comp("status_town_siege_battle");
 						out.add(battle);
 
 						// > Banner Control: Attackers [4] Killbot401x, NerfeyMcNerferson, WarCriminal80372
 						if (siege.getBannerControllingSide() == SiegeSide.NOBODY) {
-							out.add(translator.of("status_town_banner_control_nobody", siege.getBannerControllingSide().getFormattedName().forLocale(event.getCommandSender())));
+							out.add(translator.comp("status_town_banner_control_nobody", siege.getBannerControllingSide().getFormattedName().forLocale(event.getCommandSender())));
 						} else {
 							
 							String[] bannerControllingResidents = (String[]) siege.getBannerControllingResidents().stream().map(res -> res.getFormattedName()).toArray(); 
@@ -200,29 +197,30 @@ public class SiegeWarStatusScreenListener implements Listener {
 								System.arraycopy(entire, 0, bannerControllingResidents, 0, 35);
 								bannerControllingResidents[35] = translator.of("status_town_reslist_overlength");
 							}
-							out.addAll(ChatTools.listArr(bannerControllingResidents, translator.of("status_town_banner_control", siege.getBannerControllingSide().getFormattedName().forLocale(event.getCommandSender()), siege.getBannerControllingResidents().size())));
+							out.add(translator.comp("status_town_banner_control", siege.getBannerControllingSide().getFormattedName().forLocale(event.getCommandSender()), siege.getBannerControllingResidents().size())
+									.append(Component.text(StringMgmt.join(bannerControllingResidents, ", "))));
 						}
 
 						// > Points: +90 / -220
-						out.add(translator.of("status_town_siege_battle_points", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
+						out.add(translator.comp("status_town_siege_battle_points", siege.getFormattedAttackerBattlePoints(), siege.getFormattedDefenderBattlePoints()));
 
 						// > Time Remaining: 22 minutes
-						out.add(translator.of("status_town_siege_battle_time_remaining", siege.getFormattedBattleTimeRemaining(translator)));
+						out.add(translator.comp("status_town_siege_battle_time_remaining", siege.getFormattedBattleTimeRemaining(translator)));
 						
 						// > Breach Points: 15
 						if(SiegeWarSettings.isWallBreachingEnabled() && SiegeWarSettings.getWallBreachBonusBattlePoints() != 0)
-							out.add(translator.of("status_town_siege_breach_points", siege.getFormattedBreachPoints()));
+							out.add(translator.comp("status_town_siege_breach_points", siege.getFormattedBreachPoints()));
 						break;
 
 	                case ATTACKER_WIN:
 	                case DEFENDER_SURRENDER:
 					case DEFENDER_WIN:
 					case ATTACKER_ABANDON:
-	                    String invadedPlunderedStatus = getInvadedPlunderedStatusLine(siege, translator);
-						if(!invadedPlunderedStatus.isEmpty())
+	                    Component invadedPlunderedStatus = getInvadedPlunderedStatusLine(siege, translator);
+						if(!invadedPlunderedStatus.equals(Component.empty()))
 							out.add(invadedPlunderedStatus);
 
-	                    String siegeImmunityTimer = translator.of("status_town_siege_immunity_timer", time);
+	                    Component siegeImmunityTimer = translator.comp("status_town_siege_immunity_timer", time);
 	                    out.add(siegeImmunityTimer);
 	                    break;
 
@@ -233,8 +231,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 	            }
 
 				Component hoverText = Component.empty();
-				for (String line : out) {
-					hoverText = hoverText.append(Component.text(line).append(Component.newline()));
+				for (Component line : out) {
+					hoverText = hoverText.append(line).append(Component.newline());
 				}
 				event.getStatusScreen().addComponentOf("siegeWar_siegeHover", hoverFormat(translator.of("status_sieged")).hoverEvent(HoverEvent.showText(hoverText)));
 
@@ -246,11 +244,9 @@ public class SiegeWarStatusScreenListener implements Listener {
 	                // > Immunity Timer: 40.8 hours
 					String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
 					Component immunityComp = Component.newline()
-							.append(Component.text(translator.of("status_town_siege")))
+							.append(translator.comp("status_town_siege"))
 							.append(Component.newline())
-							.append(Component.text(translator.of("status_town_siege_immunity_timer", time)));
-					SiegeWar.getSiegeWar().getLogger().info(TownyComponents.unMiniMessage(immunityComp));
-					immunityComp = TownyComponents.miniMessage(immunityComp);
+							.append(translator.comp("status_town_siege_immunity_timer", time));
 					event.getStatusScreen().addComponentOf("siegeWar_siegeImmunity", immunityComp);
 	            }
 	        }
@@ -278,14 +274,14 @@ public class SiegeWarStatusScreenListener implements Listener {
         }
     }
 
-    private static String getInvadedPlunderedStatusLine(Siege siege, Translator translator) {
+    private static Component getInvadedPlunderedStatusLine(Siege siege, Translator translator) {
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
 			case LIBERATION:
 				switch (siege.getStatus()) {
 					case ATTACKER_WIN:
 					case DEFENDER_SURRENDER:
-						return getPlunderStatusLine(siege, translator) + getInvadeStatusLine(siege, translator);
+						return getPlunderStatusLine(siege, translator).append(getInvadeStatusLine(siege, translator));
 					default:
 						break;
 				}
@@ -309,20 +305,20 @@ public class SiegeWarStatusScreenListener implements Listener {
 				}
 				break;
 		}
-		return "";
+		return Component.empty();
 	}
 
-	private static String getPlunderStatusLine(Siege siege, Translator translator) {
+	private static Component getPlunderStatusLine(Siege siege, Translator translator) {
 		String plunderedYesNo = siege.isTownPlundered() ? translator.of("status_yes") : translator.of("status_no_green");
-		return translator.of("status_town_siege_status_plundered", plunderedYesNo);
+		return translator.comp("status_town_siege_status_plundered", plunderedYesNo);
 	}
 
-	private static String getInvadeStatusLine(Siege siege, Translator translator) {
+	private static Component getInvadeStatusLine(Siege siege, Translator translator) {
 		if(siege.getSiegeType() == SiegeType.REVOLT && siege.getSiegeType() == SiegeType.SUPPRESSION) {
-			return "";
+			return Component.empty();
 		} else {
 			String invadedYesNo = siege.isTownInvaded() ? translator.of("status_yes") : translator.of("status_no_green");
-			return translator.of("status_town_siege_status_invaded", invadedYesNo);
+			return translator.comp("status_town_siege_status_invaded", invadedYesNo);
 		}
 	}
 
@@ -337,18 +333,18 @@ public class SiegeWarStatusScreenListener implements Listener {
 		return TownyComponents.miniMessage(String.format(keyValueFormat, Translation.of("status_format_key_value_key"), key, Translation.of("status_format_key_value_value"), value));
 	}
 	
-	private static String getFormattedTownList(List<Town> towns) {
+	private static Component getFormattedTownList(List<Town> towns) {
 		List<String> lines = new ArrayList<>();
 		int i = 0;
 		for (Town town : towns) {
 			i++;
 			if (i == 11) {
 				lines.add(Translation.of("status_town_reslist_overlength"));
-				return StringMgmt.join(lines, ", ");
+				return TownyComponents.miniMessage(StringMgmt.join(lines, ", "));
 			}
 			lines.add(town.getName());
 		}
-		return StringMgmt.join(lines, ", ");
+		return TownyComponents.miniMessage(StringMgmt.join(lines, ", "));
 	}
 
 	private String formatMoney(int refund) {
