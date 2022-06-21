@@ -90,10 +90,9 @@ public class InvadeTown {
 		if (preEvent.isCancelled()) {
 			if (!preEvent.getCancellationMsg().isEmpty())
 				Messaging.sendErrorMsg(player, preEvent.getCancellationMsg());
-			return;
+		} else {
+			invadeTown(residentsNation, nearbyTown, siege);	
 		}
-
-		invadeTown(residentsNation, nearbyTown, siege);
 	}
 
 	/**
@@ -101,7 +100,7 @@ public class InvadeTown {
 	 *
 	 * @param siege the siege
 	 */
-    private static void invadeTown(Nation invadingNation, Town invadedTown, Siege siege) {
+    public static void invadeTown(Nation invadingNation, Town invadedTown, Siege siege) {
 		Nation nationOfInvadedTown = null;
 
         if(invadedTown.hasNation()) {

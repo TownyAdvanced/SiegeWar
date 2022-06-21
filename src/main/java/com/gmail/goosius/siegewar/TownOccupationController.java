@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar;
 
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -39,7 +40,7 @@ public class TownOccupationController {
             occupyingNationUUID = TownMetaDataController.getOccupyingNationUUID(town);
             if (occupyingNationUUID == null) {
                 //Occupier uuid not found. Fix data if required and move to next town
-                if (town.isConquered()) {
+                if (town.isConquered() && SiegeWarSettings.getWarCommonOccupiedTownCorrectConquerStatus()) {
                     town.setConquered(false);
                     town.save();
                 }
@@ -122,7 +123,7 @@ public class TownOccupationController {
      public static boolean isTownOccupied(Town occupiedTown) {
          String occupierUUID = TownMetaDataController.getOccupyingNationUUID(occupiedTown);
          if (occupierUUID == null) {
-             if(occupiedTown.isConquered())
+             if(occupiedTown.isConquered() && SiegeWarSettings.getWarCommonOccupiedTownCorrectConquerStatus())
                  occupiedTown.setConquered(false); //Fix data if required
              return false;
          } else {
@@ -156,8 +157,10 @@ public class TownOccupationController {
             } else {
                 //Nation could not be loaded. Fix data
                 TownMetaDataController.removeOccupationMetadata(occupiedTown);
-                occupiedTown.setConquered(false);
-                occupiedTown.save();
+                if (SiegeWarSettings.getWarCommonOccupiedTownCorrectConquerStatus()) {
+                    occupiedTown.setConquered(false);
+                    occupiedTown.save();
+                }
                 throw new RuntimeException("Error loading occupier data for " + occupiedTown.getName() + " Data fixed automatically by de-occupying town");
             }
         }

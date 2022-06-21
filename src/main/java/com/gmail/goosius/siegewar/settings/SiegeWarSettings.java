@@ -193,6 +193,10 @@ public class SiegeWarSettings {
 	public static boolean getWarCommonOccupiedTownUnClaimingDisabled() {
 		return Settings.getBoolean(ConfigNodes.OCCUPIED_TOWN_UNCLAIMING_DISABLED);
 	}
+	
+	public static boolean getWarCommonOccupiedTownCorrectConquerStatus() {
+		return Settings.getBoolean(ConfigNodes.OCCUPIED_TOWN_CORRECT_CONQUERED_STATUS);
+	}
 
 	public static boolean isWarSiegeCounterattackBoosterEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_COUNTERATTACK_BOOSTER_ENABLED);
