@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.events.PreInvadeEvent;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -20,6 +21,7 @@ import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -83,7 +85,14 @@ public class InvadeTown {
 			}
 		}
 
-		invadeTown(residentsNation, nearbyTown, siege);
+		PreInvadeEvent preEvent = new PreInvadeEvent(player, residentsNation, nearbyTown, siege);
+		Bukkit.getPluginManager().callEvent(preEvent);
+		if (preEvent.isCancelled()) {
+			if (!preEvent.getCancellationMsg().isEmpty())
+				Messaging.sendErrorMsg(player, preEvent.getCancellationMsg());
+		} else {
+			invadeTown(residentsNation, nearbyTown, siege);	
+		}
 	}
 
 	/**
@@ -91,7 +100,7 @@ public class InvadeTown {
 	 *
 	 * @param siege the siege
 	 */
-    private static void invadeTown(Nation invadingNation, Town invadedTown, Siege siege) {
+    public static void invadeTown(Nation invadingNation, Town invadedTown, Siege siege) {
 		Nation nationOfInvadedTown = null;
 
         if(invadedTown.hasNation()) {
