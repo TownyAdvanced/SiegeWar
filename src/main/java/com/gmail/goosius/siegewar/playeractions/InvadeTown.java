@@ -85,7 +85,7 @@ public class InvadeTown {
 			}
 		}
 
-		PreInvadeEvent preEvent = new PreInvadeEvent(residentsNation, nearbyTown, siege);
+		PreInvadeEvent preEvent = new PreInvadeEvent(player, residentsNation, nearbyTown, siege);
 		Bukkit.getPluginManager().callEvent(preEvent);
 		if (preEvent.isCancelled()) {
 			if (!preEvent.getCancellationMsg().isEmpty())

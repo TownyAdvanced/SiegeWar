@@ -3,6 +3,8 @@ package com.gmail.goosius.siegewar.events;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
+
+import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -19,11 +21,12 @@ import org.jetbrains.annotations.NotNull;
  * player who tried to invade.
  *
  * @author LlmDl
- * @since 0.8.1
+ * @since 0.8.2
  */
 public class PreInvadeEvent extends Event implements Cancellable {
 
 	private static final HandlerList handlers = new HandlerList();
+	private final Player player;
 	private final Nation nation;
 	private final Town town;
 	private final Siege siege;
@@ -31,7 +34,8 @@ public class PreInvadeEvent extends Event implements Cancellable {
 	private boolean isCancelled;
 	private String cancellationMsg = "Invasion prevented by another plugin.";
 
-	public PreInvadeEvent(Nation nation, Town town, Siege siege) {
+	public PreInvadeEvent(Player player, Nation nation, Town town, Siege siege) {
+		this.player = player;
 		this.nation = nation;
 		this.town = town;
 		this.siege = siege;
@@ -45,6 +49,10 @@ public class PreInvadeEvent extends Event implements Cancellable {
 
 	public static HandlerList getHandlerList() {
 		return handlers;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 
 	public Town getInvadedTown() {
