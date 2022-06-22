@@ -12,6 +12,8 @@ import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -241,12 +243,20 @@ public class Siege {
 		this.town = town;
 	}
 
+	public Block getFlagBlock() {
+		return siegeBannerLocation.getBlock();
+	}
+
 	public Location getFlagLocation() {
 		return siegeBannerLocation;
 	}
 
 	public void setFlagLocation(Location location) {
 		this.siegeBannerLocation = location;
+	}
+	
+	public boolean isFlagBannerOrBlockBelow(Block block) {
+		return block.equals(getFlagBlock()) || block.equals(getFlagBlock().getRelative(BlockFace.DOWN));
 	}
 
 	public Integer getSiegeBalance() {
