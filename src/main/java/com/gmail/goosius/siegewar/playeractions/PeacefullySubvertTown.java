@@ -41,7 +41,7 @@ public class PeacefullySubvertTown {
 	 */
 	public static void processActionRequest(Player player, Nation residentsNation, Town targetTown) throws TownyException {
 		// Throws an exception if the peaceful subversion of this town would not be allowed.
-		allowSubversionOrThrow(player, residentsNation, targetTown, Translator.locale(Translation.getLocale(player)));
+		allowSubversionOrThrow(player, residentsNation, targetTown);
 
 		//Subvert town now
 		subvertTown(residentsNation, targetTown);
@@ -73,7 +73,8 @@ public class PeacefullySubvertTown {
 		));
 	}
 
-	private static void allowSubversionOrThrow(Player player, Nation residentsNation, Town targetTown, Translator translator) throws TownyException {
+	private static void allowSubversionOrThrow(Player player, Nation residentsNation, Town targetTown) throws TownyException {
+		final Translator translator =  Translator.locale(Translation.getLocale(player));
 		if(!SiegeWarSettings.isPeacefulTownsSubvertEnabled())
 			throw new TownyException(translator.of("msg_err_action_disable"));
 
