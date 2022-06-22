@@ -377,7 +377,8 @@ public class PlaceBlock {
 				throw new TownyException(translator.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));
 
 			if (TownOccupationController.isTownOccupied(nearbyTown)) {
-				if (residentsNation == TownOccupationController.getTownOccupier(nearbyTown)) {
+				Nation occupierOfNearbyTown = TownOccupationController.getTownOccupier(nearbyTown);
+				if (residentsNation == occupierOfNearbyTown) {
 					//Suppression siege
 					StartSuppressionSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 				} else {
