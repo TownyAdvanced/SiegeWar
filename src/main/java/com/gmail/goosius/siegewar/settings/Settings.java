@@ -12,12 +12,13 @@ import java.util.regex.Pattern;
 import org.bukkit.plugin.Plugin;
 
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.settings.migrator.ConfigMigrator;
 import com.gmail.goosius.siegewar.utils.FileMgmt;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.palmergames.bukkit.config.CommentedConfiguration;
+import com.palmergames.bukkit.config.migration.ConfigMigrator;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.TranslationLoader;
+import com.palmergames.bukkit.util.Version;
 import com.palmergames.util.TimeTools;
 
 public class Settings {
@@ -37,7 +38,7 @@ public class Settings {
         }
 
 		if (Settings.getLastRunVersion(SiegeWar.getSiegeWar().getVersion()).equals(SiegeWar.getSiegeWar().getVersion())) {
-			ConfigMigrator migrator = new ConfigMigrator(config, "config-migration.json", false);
+			ConfigMigrator migrator = new ConfigMigrator(SiegeWar.getSiegeWar(), config, "config-migration.json", getLastRunVersion(), false);
 			migrator.migrate();
 		}
 		
@@ -204,6 +205,10 @@ public class Settings {
 
 		setProperty(ConfigNodes.LAST_RUN_VERSION.getRoot(), currentVersion);
 		config.save();
+	}
+
+	public static Version getLastRunVersion() {
+		return Version.fromString(config.getString(ConfigNodes.LAST_RUN_VERSION.getRoot(), "0.0.0.0"));
 	}
 
 	public static File getBattleIconFile() {
