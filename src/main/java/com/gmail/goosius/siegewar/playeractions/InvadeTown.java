@@ -41,7 +41,7 @@ public class InvadeTown {
 	public static void processInvadeTownRequest(Player player, Nation residentsNation, Town targetTown, Siege siege) throws TownyException {
 		
 		// Throw an exception if this is not an allowable invasion.
-		allowInvasionOrThrow(player, residentsNation, targetTown, siege, Translator.locale(Translation.getLocale(player)));
+		allowInvasionOrThrow(player, residentsNation, targetTown, siege);
 
 		PreInvadeEvent preEvent = new PreInvadeEvent(player, residentsNation, targetTown, siege);
 		Bukkit.getPluginManager().callEvent(preEvent);
@@ -99,7 +99,8 @@ public class InvadeTown {
 		}
     }
 
-    private static void allowInvasionOrThrow(Player player, Nation residentsNation, Town targetTown, Siege siege, Translator translator) throws TownyException {
+	private static void allowInvasionOrThrow(Player player, Nation residentsNation, Town targetTown, Siege siege) throws TownyException {
+		final Translator translator = Translator.locale(Translation.getLocale(player));
 		if(!SiegeWarSettings.getWarSiegeInvadeEnabled())
 			throw new TownyException(translator.of("msg_err_action_disable"));
 
