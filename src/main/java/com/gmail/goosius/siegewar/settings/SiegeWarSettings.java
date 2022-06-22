@@ -14,10 +14,11 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-
+import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Translatable;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -33,6 +34,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class SiegeWarSettings {
 	
+	private static List<DayOfWeek> allowedDaysList = null;
 	private static List<Material> siegeZoneWildernessForbiddenBlockMaterials = null;
 	private static List<Material> siegeZoneWildernessForbiddenBucketMaterials = null;
 	private static List<EntityType> siegeZoneWildernessForbiddenExplodeEntityTypes = null;
@@ -45,6 +47,7 @@ public class SiegeWarSettings {
     private static Map<Integer, List<ItemStack>> cachedDominationAwardsArtefactOffers = null;
 
 	protected static void resetCachedSettings() {
+		allowedDaysList = null;
 		siegeZoneWildernessForbiddenBlockMaterials = null;
 		siegeZoneWildernessForbiddenBucketMaterials = null;
 		siegeZoneWildernessForbiddenExplodeEntityTypes = null;
@@ -160,6 +163,10 @@ public class SiegeWarSettings {
 
 	public static int getWarSiegeMaxActiveSiegeAttacksPerNation() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_MAX_ACTIVE_SIEGE_ATTACKS_PER_NATION);
+	}
+
+	public static boolean doesThisNationHaveTooManyActiveSieges(Nation nation) {
+		return SiegeController.getActiveOffensiveSieges(nation).size() >= getWarSiegeMaxActiveSiegeAttacksPerNation();
 	}
 
 	public static boolean getWarCommonPeacefulTownsEnabled() {
@@ -403,6 +410,12 @@ public class SiegeWarSettings {
 			}
 
 		return  allowedDaysList;
+	}
+
+	public static boolean doesTodayAllowASiegeToStart() {
+		if (allowedDaysList == null)
+			allowedDaysList = getSiegeStartDayLimiterAllowedDays();
+		return allowedDaysList.contains(LocalDate.now().getDayOfWeek());
 	}
 
 	public static boolean isWallBreachingEnabled() {
