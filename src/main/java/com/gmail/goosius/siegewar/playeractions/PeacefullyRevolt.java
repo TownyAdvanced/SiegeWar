@@ -38,21 +38,7 @@ public class PeacefullyRevolt {
     public static void processActionRequest(Player player,
                                             Town targetTown) throws TownyException {
 
-    	final Translator translator = Translator.locale(Translation.getLocale(player));
-        if (!SiegeWarSettings.isPeacefulTownsRevoltEnabled())
-            throw new TownyException(translator.of("msg_err_action_disable"));
-
-        if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_REVOLT_PEACEFULLY.getNode()))
-            throw new TownyException(translator.of("msg_err_action_disable"));
-
-        if(!TownOccupationController.isTownOccupied(targetTown))
-            throw new TownyException(translator.of("msg_err_cannot_peacefully_revolt_because_unoccupied"));
-
-		if(SiegeController.hasActiveSiege(targetTown)) {
-			throw new TownyException(translator.of("msg_err_cannot_change_occupation_of_besieged_town"));
-		}
-
-        verifyThatOccupierHasZeroTownyInfluence(targetTown);
+		allowPeacefulRevoltOrThrow(player, targetTown);
 
         peacefullyRevolt(targetTown);
     }
@@ -66,13 +52,24 @@ public class PeacefullyRevolt {
         revoltingTown.save();
 
         //Messaging
-        Messaging.sendGlobalMessage(
-        	Translatable.of("msg_peaceful_town_revolted",
-                revoltingTown.getName(),
-                occupier.getName()
-        ));
+        Messaging.sendGlobalMessage(Translatable.of("msg_peaceful_town_revolted", revoltingTown.getName(), occupier.getName()));
     }
 
+	private static void allowPeacefulRevoltOrThrow(Player player, Town targetTown) throws TownyException {
+		final Translator translator = Translator.locale(Translation.getLocale(player));
+		if (!SiegeWarSettings.isPeacefulTownsRevoltEnabled()
+		|| !TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_REVOLT_PEACEFULLY.getNode()))
+			throw new TownyException(translator.of("msg_err_action_disable"));
+
+		if (!TownOccupationController.isTownOccupied(targetTown))
+			throw new TownyException(translator.of("msg_err_cannot_peacefully_revolt_because_unoccupied"));
+
+		if (SiegeController.hasActiveSiege(targetTown))
+			throw new TownyException(translator.of("msg_err_cannot_change_occupation_of_besieged_town"));
+
+		verifyThatOccupierHasZeroTownyInfluence(targetTown);
+	}
+	
     /**
 	 * Verify that the occupier has zero Towny-Influence.
 	 *
