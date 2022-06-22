@@ -3,9 +3,6 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
-import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.WorldCoord;
 
@@ -16,9 +13,9 @@ import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * This class contains utility functions related to blocks 
@@ -48,13 +45,10 @@ public class SiegeWarBlockUtil {
 	 * @return list of all adjacent sieges (active or not)
 	 */
 	public static Set<Siege> getAllAdjacentSieges(Block block) {
-		Set<Siege> result = new HashSet<>();
-		for(TownBlock townBlock: getAllAdjacentTownBlocks(block)) {
-			if(townBlock.hasTown() & SiegeController.hasSiege(townBlock.getTownOrNull())) {
-				result.add(SiegeController.getSiege(townBlock.getTownOrNull()));
-			}
-		}
-		return result;
+		return getAllAdjacentTownBlocks(block).stream()
+			.filter(tb -> tb.hasTown() && SiegeController.hasSiege(tb.getTownOrNull()))
+			.map(tb -> SiegeController.getSiege(tb.getTownOrNull()))
+			.collect(Collectors.toSet());
 	}
 
 	/**
@@ -89,17 +83,11 @@ public class SiegeWarBlockUtil {
 		return getTownBlocks(coOrdinates);
 	}
 
-	private static List<TownBlock> getTownBlocks(List<WorldCoord> coOrdinatesToSearch) {
-		List<TownBlock> townBlocks = new ArrayList<>();
-
-		for(WorldCoord nearbyCoord: coOrdinatesToSearch){
-			if(!TownyAPI.getInstance().isWilderness(nearbyCoord))
-				try {
-					townBlocks.add(TownyUniverse.getInstance().getTownBlock(nearbyCoord));
-				} catch (NotRegisteredException ignored) {}
-		}
-
-		return townBlocks;
+	private static List<TownBlock> getTownBlocks(List<WorldCoord> coords) {
+		return coords.stream()
+			.filter(wc -> wc.hasTownBlock())
+			.map(wc -> wc.getTownBlockOrNull())
+			.collect(Collectors.toList());
 	}
 
 	/**

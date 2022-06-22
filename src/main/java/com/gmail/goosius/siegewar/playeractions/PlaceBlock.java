@@ -5,17 +5,20 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
+import com.palmergames.adventure.text.Component;
+import com.palmergames.adventure.text.format.NamedTextColor;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -35,7 +38,6 @@ import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -90,32 +92,39 @@ public class PlaceBlock {
 
 			//Trap warfare block protection
 			Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
-			if(nearbySiege != null
-					&& SiegeWarSettings.isTrapWarfareMitigationEnabled()
-					&& SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(
-						event.getLocation(),
-						nearbySiege)) {
+			if(qualifiesAsTrapWarfareMitigation(event, nearbySiege)) {
 				event.setCancelled(true);
-				event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_near_siege_banner")));
+				TownyMessaging.sendActionBarMessageToPlayer(player, Component.text(translator.of("msg_err_cannot_alter_blocks_near_siege_banner", NamedTextColor.DARK_RED)));
 				return;
 			}
 
 			//Forbidden material placement prevention
-			if(nearbySiege != null
-				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenBlockMaterials().contains(mat)
-				&& TownyAPI.getInstance().isWilderness(block)) {
-					throw new TownyException(translator.of("msg_war_siege_zone_block_placement_forbidden"));
-			}
+			if(qualifiesAsSiegeZoneForbiddenMaterial(block, mat, nearbySiege))
+				throw new TownyException(translator.of("msg_war_siege_zone_block_placement_forbidden"));
+
 		} catch (TownyException e) {
 			event.setCancelled(true);
 			event.setMessage(e.getMessage());
 		}
 	}
 
+	private static boolean qualifiesAsTrapWarfareMitigation(TownyBuildEvent event, Siege nearbySiege) {
+		return nearbySiege != null
+			&& SiegeWarSettings.isTrapWarfareMitigationEnabled()
+			&& SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(event.getLocation(), nearbySiege);
+	}
+
+	private static boolean qualifiesAsSiegeZoneForbiddenMaterial(Block block, Material mat, Siege nearbySiege) {
+		return nearbySiege != null
+			&& SiegeWarSettings.getSiegeZoneWildernessForbiddenBlockMaterials().contains(mat)
+			&& TownyAPI.getInstance().isWilderness(block);
+	}
+	
 	/**
 	 * Evaluate a possible wall breach
 	 *
 	 * @return true if a wall breach has occurred
+	 * @throws TownyException 
 	 */
 	@SuppressWarnings("unused")
     private static boolean evaluateWallBreach(Translator translator, Block block, TownyBuildEvent event) throws TownyException {
@@ -182,12 +191,10 @@ public class PlaceBlock {
 		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 		if (resident == null || !resident.hasTown())
 			throw new TownyException(translator.of("msg_err_siege_war_action_not_a_town_member"));
-		Town residentsTown = resident.getTown();
 
-		//Get resident's nation (if any, for convenience)
-		Nation residentsNation = null;
-		if (residentsTown.hasNation())
-			residentsNation = residentsTown.getNation();
+		//Get resident's town and possibly their nation
+		Town residentsTown = resident.getTownOrNull();
+		Nation residentsNation = resident.getNationOrNull();
 
 		//Ensure there is at least 1 adjacent town
 		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
@@ -200,12 +207,9 @@ public class PlaceBlock {
 			throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
 
 		//Get 1st nearby townblock
-		TownBlock townBlock;
-		if(adjacentCardinalTownBlocks.size() > 0) {
-			townBlock = adjacentCardinalTownBlocks.get(0);
-		} else {
-			townBlock = adjacentNonCardinalTownBlocks.get(0);
-		}
+		TownBlock townBlock = adjacentCardinalTownBlocks.size() > 0
+			? adjacentCardinalTownBlocks.get(0)
+			: adjacentNonCardinalTownBlocks.get(0);
 
 		if (isWhiteBanner(block)) {
 			evaluatePlaceWhiteBannerNearTown(player, residentsTown, residentsNation, townBlock.getTownOrNull());
@@ -226,9 +230,9 @@ public class PlaceBlock {
 		 * @param nearbyTown the nearby town
          */
 	private static void evaluatePlaceWhiteBannerNearTown(Player player,
-												   Town residentsTown,
-												   Nation residentsNation,
-												   Town nearbyTown) throws TownyException {
+														 Town residentsTown,
+														 Nation residentsNation,
+														 Town nearbyTown) throws TownyException {
 		final Translator translator = Translator.locale(Translation.getLocale(player));
 		//Ensure that there is a siege
 		if (!SiegeController.hasSiege(nearbyTown))
@@ -326,8 +330,7 @@ public class PlaceBlock {
 			//Town is not peaceful, so this action is a start-siege or invade-town request
 			if (SiegeController.hasSiege(nearbyTown)) {
 				//If there is a siege, it is an attempt to invade the town
-				Siege siege = SiegeController.getSiege(nearbyTown);
-				InvadeTown.processInvadeTownRequest(player, residentsNation, nearbyTown, siege);
+				InvadeTown.processInvadeTownRequest(player, residentsNation, nearbyTown, SiegeController.getSiege(nearbyTown));
 			} else {
 				//If there is no siege, it is an attempt to start a new siege
 				evaluateStartNewSiegeAttempt(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
@@ -346,8 +349,7 @@ public class PlaceBlock {
 																  Nation residentsNation,
 													 			  TownBlock nearbyTownBlock,
 													 			  Town nearbyTown,
-													 			  Block bannerBlock
-											         			  ) throws TownyException {
+													 			  Block bannerBlock) throws TownyException {
 		final Translator translator = Translator.locale(Translation.getLocale(player));
 		if (nearbyTown.isRuined())
 			throw new TownyException(translator.of("msg_err_cannot_start_siege_at_ruined_town"));
@@ -355,7 +357,7 @@ public class PlaceBlock {
 		if(SiegeWarBlockUtil.isSupportBlockUnstable(bannerBlock))
 			throw new TownyException(translator.of("msg_err_siege_war_banner_support_block_not_stable"));
 
-        if(!SiegeWarSettings.getSiegeStartDayLimiterAllowedDays().contains(LocalDate.now().getDayOfWeek()))
+		if (!SiegeWarSettings.doesTodayAllowASiegeToStart())
 			throw new TownyException(translator.of("msg_err_cannot_start_sieges_today"));
 
 		if (residentsTown == nearbyTown) {
@@ -365,19 +367,17 @@ public class PlaceBlock {
 			if (residentsNation == null)
 				throw new TownyException(translator.of("msg_err_action_disable"));
 
-			if (System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(nearbyTown)
-			|| TownMetaDataController.getSiegeImmunityEndTime(nearbyTown) == -1l)
+			if (SiegeWarImmunityUtil.isTownSiegeImmune(nearbyTown))
 				throw new TownyException(translator.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
 
-			if (TownyEconomyHandler.isActive() && !residentsNation.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.calculateSiegeCost(nearbyTown)))
+			if (!SiegeWarMoneyUtil.canNationPayCostToSiegeTown(residentsNation, nearbyTown))
 				throw new TownyException(translator.of("msg_err_no_money"));
 
-			if(SiegeController.getActiveOffensiveSieges(residentsNation).size() >= SiegeWarSettings.getWarSiegeMaxActiveSiegeAttacksPerNation())
+			if (SiegeWarSettings.doesThisNationHaveTooManyActiveSieges(residentsNation))
 				throw new TownyException(translator.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));
 
 			if (TownOccupationController.isTownOccupied(nearbyTown)) {
-				Nation occupierOfNearbyTown = TownOccupationController.getTownOccupier(nearbyTown);
-				if (residentsNation == occupierOfNearbyTown) {
+				if (residentsNation == TownOccupationController.getTownOccupier(nearbyTown)) {
 					//Suppression siege
 					StartSuppressionSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 				} else {
@@ -404,9 +404,10 @@ public class PlaceBlock {
 		
 		if(!TownyEconomyHandler.isActive())
 			throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_economy"));
+
+		Set<Siege> adjacentSieges = SiegeWarBlockUtil.getAllAdjacentSieges(block);
 		
 		//If there are no sieges nearby, do normal block placement
-		Set<Siege> adjacentSieges = SiegeWarBlockUtil.getAllAdjacentSieges(block);
 		if(adjacentSieges.size() == 0)
 			return;
 

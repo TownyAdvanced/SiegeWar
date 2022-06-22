@@ -125,4 +125,9 @@ public class SiegeWarImmunityUtil {
 				TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_town_immunity_expired"));
 		}
 	}
+	
+	public static boolean isTownSiegeImmune(Town town) {
+		return System.currentTimeMillis() < TownMetaDataController.getSiegeImmunityEndTime(town)
+		|| TownMetaDataController.getSiegeImmunityEndTime(town) == -1l;
+	}
 }
