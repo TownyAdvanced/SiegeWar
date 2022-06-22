@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
+import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
@@ -41,6 +42,7 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 
@@ -617,6 +619,47 @@ public class SiegeController {
 	 */
 	public static void removeSiegeCamp(SiegeCamp camp) {
 		siegeCamps.remove(camp);
+	}
+	
+	/**
+	 * Called internally from the StartTYPESiege classes, to begin a Siege,
+	 * potentially starting with the SiegeCamp minigame.
+	 * 
+	 * Note: SiegeCamps are called SiegeAssemblies in the config and ingame lingo.
+	 * 
+	 * @param player             Player starting the siege using a Banner.
+	 * @param bannerBlock        Block which is the Banner.
+	 * @param siegeType          SiegeType that the Siege will be.
+	 * @param targetTown         Town about to be Sieged.
+	 * @param attacker           Government which is attacking the town.
+	 * @param defender           Government which is defending the town.
+	 * @param townOfSiegeStarter Town of the player who started the siege.
+	 * @param townBlock          TownBlock of the Town which is adjacent to the
+	 *                           banner.
+	 * @throws TownyException if the PreSiegeCampEvent is cancelled or if the
+	 *                        SiegeCamp is unable to start.
+	 */
+	public static void startSiegeCampProcess (Player player,
+											  Block bannerBlock,
+											  SiegeType siegeType,
+											  Town targetTown,
+											  Government attacker,
+											  Government defender,
+											  Town townOfSiegeStarter,
+											  TownBlock townBlock) throws TownyException {
+		SiegeCamp camp = new SiegeCamp(player, bannerBlock, siegeType, targetTown, attacker, defender, townOfSiegeStarter, townBlock);
+		
+		PreSiegeCampEvent event = new PreSiegeCampEvent(camp);
+		Bukkit.getPluginManager().callEvent(event);
+		if (event.isCancelled())
+			throw new TownyException(event.getCancellationMsg());
+		
+		if (SiegeWarSettings.areSiegeCampsEnabled())
+			// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest. 
+			SiegeController.beginSiegeCamp(camp);
+		else 
+			// SiegeCamps are disabled, just do the Siege.
+			camp.startSiege();
 	}
 	
 	/**

@@ -3,8 +3,6 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
-import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -16,7 +14,6 @@ import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.util.MathUtil;
 
-import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -57,19 +54,8 @@ public class StartLiberationSiege {
 		// Allow the siege or throw a TownyException. 
 		allowSiegeOrThrow(player, nationOfSiegeStarter, occupierNation, targetTown);
 
-		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.LIBERATION, targetTown, nationOfSiegeStarter, occupierNation, townOfSiegeStarter, townBlock);
-
-		PreSiegeCampEvent event = new PreSiegeCampEvent(camp);
-		Bukkit.getPluginManager().callEvent(event);
-		if (event.isCancelled())
-			throw new TownyException(event.getCancellationMsg());
-
-		if (SiegeWarSettings.areSiegeCampsEnabled())
-			// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest.
-			SiegeController.beginSiegeCamp(camp);
-		else
-			// SiegeCamps are disabled, just do the Siege.
-			camp.startSiege();
+		// Start a SiegeCamp that will kick off the Siege (or if SiegeAssemblies are disabled, start the Siege immediately.)
+		SiegeController.startSiegeCampProcess(player, bannerBlock, SiegeType.LIBERATION, targetTown, nationOfSiegeStarter, occupierNation, townOfSiegeStarter, townBlock);
 	}
 
 	private static void allowSiegeOrThrow(Player player, Nation nationOfSiegeStarter, Nation occupierNation, Town targetTown) throws TownyException {
