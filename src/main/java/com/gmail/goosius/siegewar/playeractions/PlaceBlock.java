@@ -415,7 +415,7 @@ public class PlaceBlock {
 			throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
 
 		//Attempt plunder.
-		PlunderTown.processPlunderTownRequest(player, adjacentSieges.iterator().next().getTown());
+		PlunderTown.processPlunderTownRequest(player, adjacentSieges.iterator().next());
 	}
 	
 	private static boolean isWhiteBanner(Block block) {
