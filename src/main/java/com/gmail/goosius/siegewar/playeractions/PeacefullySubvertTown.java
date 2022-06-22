@@ -10,12 +10,12 @@ import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
+import com.palmergames.util.MathUtil;
 
 import org.bukkit.entity.Player;
 
@@ -40,76 +40,13 @@ public class PeacefullySubvertTown {
 	 * @throws TownyException if subvert is not allowed
 	 */
 	public static void processActionRequest(Player player, Nation residentsNation, Town targetTown) throws TownyException {
-		final Translator translator = Translator.locale(com.palmergames.bukkit.towny.object.Translation.getLocale(player));
-		if(!SiegeWarSettings.isPeacefulTownsSubvertEnabled())
-			throw new TownyException(translator.of("msg_err_action_disable"));
-
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_SUBVERTPEACEFULTOWN.getNode()))
-			throw new TownyException(translator.of("msg_err_action_disable"));
-
-		if(residentsNation == null)
-			throw new TownyException(translator.of("msg_err_action_disable"));  //Can't subvert if nationless
-
-		if(SiegeController.hasActiveSiege(targetTown)) {
-			throw new TownyException(translator.of("msg_err_cannot_change_occupation_of_besieged_town"));
-		}
-
-		if(targetTown.hasNation() && targetTown.getNation() == residentsNation)
-			throw new TownyException(translator.of("msg_err_cannot_subvert_towns_in_own_nation"));
-
-		if(TownOccupationController.isTownOccupied(targetTown) && TownOccupationController.getTownOccupier(targetTown) == residentsNation)
-			throw new TownyException(translator.of("msg_err_cannot_subvert_town_already_occupied"));
-
-		if (TownySettings.getNationRequiresProximity() > 0) {
-			Coord capitalCoord = residentsNation.getCapital().getHomeBlock().getCoord();
-			Coord townCoord = targetTown.getHomeBlock().getCoord();
-			if (!residentsNation.getCapital().getHomeBlock().getWorld().getName().equals(targetTown.getHomeBlock().getWorld().getName())) {
-				throw new TownyException(translator.of("msg_err_nation_homeblock_in_another_world"));
-			}
-			double distance;
-			distance = Math.sqrt(Math.pow(capitalCoord.getX() - townCoord.getX(), 2) + Math.pow(capitalCoord.getZ() - townCoord.getZ(), 2));
-			if (distance > TownySettings.getNationRequiresProximity()) {
-				throw new TownyException(String.format(translator.of("msg_err_town_not_close_enough_to_nation"), targetTown.getName()));
-			}
-		}
-
-		if (TownySettings.getMaxTownsPerNation() > 0) {
-			int effectiveNumTowns = SiegeWarNationUtil.getEffectiveNation(residentsNation).getNumTowns();
-			if (effectiveNumTowns >= TownySettings.getMaxTownsPerNation()){
-				throw new TownyException(String.format(translator.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
-			}
-		}
-
-		verifyThatNationHasEnoughTownyInfluenceToSubvertTown(residentsNation, targetTown);
+		// Throws an exception if the peaceful subversion of this town would not be allowed.
+		allowSubversionOrThrow(player, residentsNation, targetTown, Translator.locale(Translation.getLocale(player)));
 
 		//Subvert town now
 		subvertTown(residentsNation, targetTown);
 	}
-
-	/**
-	 * Verify if the given nation has enough Towny-Influence to subvert the given town
-	 *
-	 * @param nation the nation attempting subversion
-	 * @param targetTown the town targeted for subversion
-	 *
-	 * @throws TownyException if the nation does not have enough Towny-Influence
-	 */
-	private static void verifyThatNationHasEnoughTownyInfluenceToSubvertTown(Nation nation, Town targetTown) throws TownyException {
-		Map<Nation, Integer> townyInfluenceMap = TownPeacefulnessUtil.calculateTownyInfluenceMap(targetTown);
-		if(townyInfluenceMap.size() == 0) {
-			//No nation has towny-influence in the local area
-			throw new TownyException(Translation.of("msg_err_cannot_subvert_town_zero_influence"));
-		} else {
-			Nation topNation = townyInfluenceMap.keySet().iterator().next();
-			if(topNation != nation) {
-				//A different nation is top of the towny-influence map
-				int nationScore = townyInfluenceMap.get(nation) != null ? townyInfluenceMap.get(nation) : 0;
-				int topNationScore = townyInfluenceMap.get(topNation);
-				throw new TownyException(Translation.of("msg_err_cannot_subvert_town_insufficient_influence", topNation.getName(), topNationScore, nationScore));
-			}
-		}
-	}
-
+	
 	/**
 	 * Subvert the town
 	 *
@@ -134,5 +71,76 @@ public class PeacefullySubvertTown {
 					targetTown.getName(),
 					subvertingNation.getName()
 		));
+	}
+
+	private static void allowSubversionOrThrow(Player player, Nation residentsNation, Town targetTown, Translator translator) throws TownyException {
+		if(!SiegeWarSettings.isPeacefulTownsSubvertEnabled())
+			throw new TownyException(translator.of("msg_err_action_disable"));
+
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_SUBVERTPEACEFULTOWN.getNode()))
+			throw new TownyException(translator.of("msg_err_action_disable"));
+
+		if(residentsNation == null)
+			throw new TownyException(translator.of("msg_err_action_disable"));  //Can't subvert if nationless
+
+		if(SiegeController.hasActiveSiege(targetTown))
+			throw new TownyException(translator.of("msg_err_cannot_change_occupation_of_besieged_town"));
+
+		if(targetTown.hasNation() && targetTown.getNationOrNull() == residentsNation)
+			throw new TownyException(translator.of("msg_err_cannot_subvert_towns_in_own_nation"));
+
+		if(townIsAlreadyOccupiedByNation(residentsNation, targetTown))
+			throw new TownyException(translator.of("msg_err_cannot_subvert_town_already_occupied"));
+
+		if (TownySettings.getNationRequiresProximity() > 0) {
+			if (townsAreNotInTheSameWorld(residentsNation, targetTown))
+				throw new TownyException(translator.of("msg_err_nation_homeblock_in_another_world"));
+
+			if (townsAreTooFarApart(residentsNation, targetTown))
+				throw new TownyException(String.format(translator.of("msg_err_town_not_close_enough_to_nation"), targetTown.getName()));
+		}
+
+		if (nationHasTooManyTownsAlready(residentsNation))
+			throw new TownyException(String.format(translator.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
+		
+		verifyThatNationHasEnoughTownyInfluenceToSubvertTown(residentsNation, targetTown);
+	}
+
+	private static boolean townIsAlreadyOccupiedByNation(Nation residentsNation, Town targetTown) {
+		return TownOccupationController.isTownOccupied(targetTown) && TownOccupationController.getTownOccupier(targetTown) == residentsNation;
+	}
+
+	private static boolean nationHasTooManyTownsAlready(Nation residentsNation) {
+		return TownySettings.getMaxTownsPerNation() > 0 && SiegeWarNationUtil.getEffectiveNation(residentsNation).getNumTowns() >= TownySettings.getMaxTownsPerNation();
+	}
+
+	private static boolean townsAreTooFarApart(Nation residentsNation, Town nearbyTown) throws TownyException {
+		return MathUtil.distance(residentsNation.getCapital().getHomeBlock().getCoord(), nearbyTown.getHomeBlock().getCoord()) > TownySettings.getNationRequiresProximity();
+	}
+
+	private static boolean townsAreNotInTheSameWorld(Nation residentsNation, Town nearbyTown) throws TownyException {
+		return !residentsNation.getCapital().getHomeBlock().getWorld().getName().equals(nearbyTown.getHomeBlock().getWorld().getName());
+	}
+	
+	/**
+	 * Verify if the given nation has enough Towny-Influence to subvert the given town
+	 *
+	 * @param nation the nation attempting subversion
+	 * @param targetTown the town targeted for subversion
+	 *
+	 * @throws TownyException if the nation does not have enough Towny-Influence
+	 */
+	private static void verifyThatNationHasEnoughTownyInfluenceToSubvertTown(Nation nation, Town targetTown) throws TownyException {
+		Map<Nation, Integer> townyInfluenceMap = TownPeacefulnessUtil.calculateTownyInfluenceMap(targetTown);
+		if(townyInfluenceMap.size() == 0)
+			//No nation has towny-influence in the local area
+			throw new TownyException(Translation.of("msg_err_cannot_subvert_town_zero_influence"));
+
+		Nation topNation = townyInfluenceMap.keySet().iterator().next();
+		if(topNation != nation)
+			//A different nation is top of the towny-influence map
+			throw new TownyException(Translation.of("msg_err_cannot_subvert_town_insufficient_influence", topNation.getName(),
+					townyInfluenceMap.get(topNation),            // Top scorer. 
+					townyInfluenceMap.getOrDefault(nation, 0))); // The nation's score.
 	}
 }
