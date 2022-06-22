@@ -2,13 +2,13 @@ package com.gmail.goosius.siegewar;
 
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TownOccupationController {
 
@@ -31,82 +31,63 @@ public class TownOccupationController {
         }
     }
 
-    public static void loadTownOccupationData() {
-        String occupyingNationUUID;
-        Nation occupyingNation = null;
-        Set<Town> occupiedTowns;
+	public static void loadTownOccupationData() {
+		Nation occupyingNation = null;
+		for (Town town : TownyUniverse.getInstance().getTowns()) {
+			occupyingNation = loadOccupationData(town);
+			if (occupyingNation == null)
+				continue;
+			// Populate the map
+			if (nationTownsOccupationMap.containsKey(occupyingNation))
+				nationTownsOccupationMap.get(occupyingNation).add(town);
+			else
+				nationTownsOccupationMap.put(occupyingNation, Collections.singleton(town));
+		}
+	}
 
-        for (Town town : TownyUniverse.getInstance().getTowns()) {
-            occupyingNationUUID = TownMetaDataController.getOccupyingNationUUID(town);
-            if (occupyingNationUUID == null) {
-                //Occupier uuid not found. Fix data if required and move to next town
-                if (town.isConquered() && SiegeWarSettings.getWarCommonOccupiedTownCorrectConquerStatus()) {
-                    town.setConquered(false);
-                    town.save();
-                }
-                continue;
-            } else {
-                //Occupier uuid found
-                if(TownyUniverse.getInstance().hasNation(UUID.fromString(occupyingNationUUID))) {
-                    //Nation UUID is known to towny. Fixed data if required.
-                    if (!town.isConquered()) {
-                        town.setConquered(true);
-                        town.save();
-                    }
-                } else {
-                    //Nation UUID is not known to Towny. Fix data if required and move to next town
-                    if(town.isConquered()) {
-                        town.setConquered(false);
-                        town.save();
-                        continue;
-                    }
-                }
-            }
+	private static Nation loadOccupationData(Town town) {
+		String occupyingNationUUID = TownMetaDataController.getOccupyingNationUUID(town);
+		// Occupier uuid not found.
+		if (occupyingNationUUID == null) {
+			if (town.isConquered() && SiegeWarSettings.getWarCommonOccupiedTownCorrectConquerStatus()) // Fixed data if required.
+				setConqueredInTowny(town, false);
+			return null;
+		}
 
-            //At this point, valid occupier data has been found
-            //Get nation
-            occupyingNation = TownyUniverse.getInstance().getNation(UUID.fromString(occupyingNationUUID));
-            //Populate the map
-            if (nationTownsOccupationMap.containsKey(occupyingNation)) {
-                occupiedTowns = nationTownsOccupationMap.get(occupyingNation);
-                occupiedTowns.add(town);
-            } else {
-                occupiedTowns = new HashSet<>();
-                occupiedTowns.add(town);
-                nationTownsOccupationMap.put(occupyingNation, occupiedTowns);
-            }
+		// Occupier uuid found in MetaData DB, get the Nation or null from TownyUniverse.
+		Nation occupyingNation = TownyUniverse.getInstance().getNation(UUID.fromString(occupyingNationUUID));
 
-        }
-    }
+		// Nation is not known to Towny.
+		if (occupyingNation == null) {
+			if (town.isConquered()) // Fixed data if required.
+				setConqueredInTowny(town, false);
+			return null;
+		}
 
-    public static List<Town> getOccupiedForeignTowns(Nation nation) {
-        List<Town> occupiedForeignTowns = new ArrayList<>();
-        Map<Nation, Set<Town>> nationTownsOccupationMapCopy = new HashMap<>(nationTownsOccupationMap);
+		// Nation is known to towny. Return discovered occupying nation.
+		if (!town.isConquered()) // Fixed data if required. 
+			setConqueredInTowny(town, true);
 
-        if (nationTownsOccupationMapCopy.containsKey(nation)) {
-            for(Town occupiedTown: nationTownsOccupationMapCopy.get(nation)) {
-                if(!occupiedTown.hasNation() || TownyAPI.getInstance().getTownNationOrNull(occupiedTown) != nation) {
-                    occupiedForeignTowns.add(occupiedTown);
-                }
-            }
-            return occupiedForeignTowns;
-        } else {
-            return new ArrayList<>();
-        }
-    }
+		return occupyingNation;
+	}
 
-    public static List<Town> getOccupiedHomeTowns(Nation nation) {
-        List<Town> occupiedHomeTowns = new ArrayList<>();
-        Map<Nation, Set<Town>> nationTownsOccupationMapCopy = new HashMap<>(nationTownsOccupationMap);
-
-        for(Set<Town> occupiedTowns: nationTownsOccupationMapCopy.values()) {
-            for(Town occupiedTown: occupiedTowns) {
-                if(occupiedTown.hasNation() && TownyAPI.getInstance().getTownNationOrNull(occupiedTown) == nation)
-				    occupiedHomeTowns.add(occupiedTown);
-            }
-        }
-        return occupiedHomeTowns;
-    }
+	public static List<Town> getOccupiedForeignTowns(Nation nation) {
+		// Get either a Set of (Occupied) Towns or an emptySet, then parse out any towns
+		// which are home towns (natural towns in the nation proper,) then turn it into
+		// a List.
+		return new HashMap<>(nationTownsOccupationMap).getOrDefault(nation, Collections.emptySet()).stream()
+				.filter(town -> !town.hasNation() || town.getNationOrNull() != nation)
+				.collect(Collectors.toList());
+	}
+	
+	public static List<Town> getOccupiedHomeTowns(Nation nation) {
+		// Get either a Set of (Occupied) Towns or an emptySet, then parse out any towns
+		// which are foreign towns (not properly part of the nation,) then turn it into
+		// a List.
+		return new HashMap<>(nationTownsOccupationMap).getOrDefault(nation, Collections.emptySet()).stream()
+				.filter(town -> town.hasNation() && town.getNationOrNull() == nation)
+				.collect(Collectors.toList());
+	}
 
     /**
      * Determine if a town is occupied.
@@ -121,56 +102,52 @@ public class TownOccupationController {
      *
      */
      public static boolean isTownOccupied(Town occupiedTown) {
-         String occupierUUID = TownMetaDataController.getOccupyingNationUUID(occupiedTown);
-         if (occupierUUID == null) {
+         if (TownMetaDataController.getOccupyingNationUUID(occupiedTown) == null) {
+             // This town isn't occupied according to SiegeWar.
              if(occupiedTown.isConquered() && SiegeWarSettings.getWarCommonOccupiedTownCorrectConquerStatus())
-                 occupiedTown.setConquered(false); //Fix data if required
+                 setConqueredInTowny(occupiedTown, false); //Fix data if required and set up to do so in the config.
              return false;
-         } else {
-             if (!occupiedTown.isConquered())
-                 occupiedTown.setConquered(true); //Fix data if required
-             return true;
          }
+         // This town is occupied. 
+         if (!occupiedTown.isConquered())
+             setConqueredInTowny(occupiedTown, true); //Fix data if required
+         return true;
     }
 
-    /**
-     * Get the occupying nation
-     *
-     * If there is any uncertainty whether the town is actually occupied,
-     * make sure to call isTownOccupied(town) before calling this method
-     *
-     * @param occupiedTown the occupied town
-     * @return the occupying nation.
-     * @throws RuntimeException if no occupier is found
-     */
-    public static Nation getTownOccupier(Town occupiedTown) {
-        String occupierUUID = TownMetaDataController.getOccupyingNationUUID(occupiedTown);
-        if (occupierUUID == null) {
-            throw new RuntimeException("Occupier not found");
-        } else {
-            if(TownyUniverse.getInstance().hasNation(UUID.fromString(occupierUUID))) {
-                if(!occupiedTown.isConquered()) {
-                    occupiedTown.setConquered(true); //Fix data if required
-                    occupiedTown.save();
-                }
-                return TownyUniverse.getInstance().getNation(UUID.fromString(occupierUUID));
-            } else {
-                //Nation could not be loaded. Fix data
-                TownMetaDataController.removeOccupationMetadata(occupiedTown);
-                if (SiegeWarSettings.getWarCommonOccupiedTownCorrectConquerStatus()) {
-                    occupiedTown.setConquered(false);
-                    occupiedTown.save();
-                }
-                throw new RuntimeException("Error loading occupier data for " + occupiedTown.getName() + " Data fixed automatically by de-occupying town");
-            }
-        }
-    }
+	/**
+	 * Get the occupying nation
+	 *
+	 * If there is any uncertainty whether the town is actually occupied, make sure
+	 * to call isTownOccupied(town) before calling this method
+	 *
+	 * @param occupiedTown the occupied town
+	 * @return the occupying nation.
+	 * @throws RuntimeException if no occupier is found
+	 */
+	public static Nation getTownOccupier(Town occupiedTown) {
+		String occupierUUID = TownMetaDataController.getOccupyingNationUUID(occupiedTown);
+		if (occupierUUID == null)
+			throw new RuntimeException("Occupier not found");
+
+		Nation nation = TownyUniverse.getInstance().getNation(UUID.fromString(occupierUUID));
+		if (nation == null) {
+			// Nation could not be loaded. Fix data
+			TownMetaDataController.removeOccupationMetadata(occupiedTown);
+			if (SiegeWarSettings.getWarCommonOccupiedTownCorrectConquerStatus()) // Fix data if required
+				setConqueredInTowny(occupiedTown, false);
+			throw new RuntimeException("Error loading occupier data for " + occupiedTown.getName() + " Data fixed automatically by de-occupying town");
+		}
+
+		if (!occupiedTown.isConquered())
+			setConqueredInTowny(occupiedTown, true); // Fix data if required
+
+		return nation;
+	}
 
     public static void removeTownOccupation(Town occupiedTown) {
         //Remove occupation
         TownMetaDataController.removeOccupationMetadata(occupiedTown);
-        occupiedTown.setConquered(false);
-        occupiedTown.save();
+        setConqueredInTowny(occupiedTown, false);
         //Adjust occupation map
         synchronized (NATION_TOWNS_OCCUPATION_MAP_LOCK) {
             //Remove town if it appears anywhere in the occupation map
@@ -194,19 +171,15 @@ public class TownOccupationController {
         removeTownOccupation(occupiedTown);
         //Add occupation
         TownMetaDataController.setOccupyingNationUUID(occupiedTown, occupyingNation.getUUID().toString());
-        occupiedTown.setConquered(true);
-        occupiedTown.save();
+        setConqueredInTowny(occupiedTown, true);
         //Adjust occupation map
         synchronized (NATION_TOWNS_OCCUPATION_MAP_LOCK) {
             if (nationTownsOccupationMap.containsKey(occupyingNation)) {
                 //Nation already on map
-                Set<Town> occupiedTownsList = nationTownsOccupationMap.get(occupyingNation);
-                occupiedTownsList.add(occupiedTown);
+                nationTownsOccupationMap.get(occupyingNation).add(occupiedTown);
             } else {
                 //Nation not yet on map
-                Set<Town> occupiedTownsList = new HashSet<>();
-                occupiedTownsList.add(occupiedTown);
-                nationTownsOccupationMap.put(occupyingNation, occupiedTownsList);
+                nationTownsOccupationMap.put(occupyingNation, Collections.singleton(occupiedTown));
             }
         }
     }
@@ -215,9 +188,8 @@ public class TownOccupationController {
         synchronized (NATION_TOWNS_OCCUPATION_MAP_LOCK) {
             if(nationTownsOccupationMap.containsKey(nation)) {
                 for(Town occupiedTown: nationTownsOccupationMap.get(nation)) {
-                    occupiedTown.setConquered(false);
                     TownMetaDataController.removeOccupationMetadata(occupiedTown);
-                    occupiedTown.save();
+                    setConqueredInTowny(occupiedTown, false);
                 }
                 nationTownsOccupationMap.remove(nation);
             }
@@ -233,5 +205,10 @@ public class TownOccupationController {
         }
         return result;
     }
+    
+	private static void setConqueredInTowny(Town town, boolean conquered) {
+		town.setConquered(conquered);
+		town.save();
+	}
 }
 
