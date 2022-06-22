@@ -9,7 +9,10 @@ import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
+import com.palmergames.adventure.text.Component;
+import com.palmergames.adventure.text.format.NamedTextColor;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -22,7 +25,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.block.Block;
 import org.bukkit.ChatColor;
-import org.bukkit.block.BlockFace;
 
 
 /**
@@ -44,39 +46,48 @@ public class DestroyBlock {
 		if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
 			return;
 
-		final Translator translator = Translator.locale(Translation.getLocale(event.getPlayer()));
-
 		//Get nearby siege
 		Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
 		if(nearbySiege == null)
 			return;
 		
-        //Trap warfare block protection
-        if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
-				&& SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(
-					event.getLocation(), 
-					nearbySiege)) {
+		final Translator translator = Translator.locale(Translation.getLocale(event.getPlayer()));
+
+		// Trap warfare block protection
+		if (qualifiesAsTrapWarfare(event, nearbySiege)) {
+			TownyMessaging.sendActionBarMessageToPlayer(event.getPlayer(), Component.text(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"), NamedTextColor.DARK_RED));
 			event.setCancelled(true);
-			event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + translator.of("msg_err_cannot_alter_blocks_near_siege_banner")));
-			return;        	
+			return;
 		}
 
 		//Prevent destruction of siege-banner or support block
-		if (event.getBlock().getLocation().equals(nearbySiege.getFlagLocation().getBlock().getLocation())
-				|| event.getBlock().getLocation().equals(nearbySiege.getFlagLocation().getBlock().getRelative(BlockFace.DOWN).getLocation())) {
+		if (qualifiesAsBreakingASiegeBanner(event, nearbySiege)) {
 			event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_banner"));
 			event.setCancelled(true);
 			return;
 		}
 
-        //Prevent destruction of siege camp banner or support block
-        if(SiegeWarSettings.areSiegeCampsEnabled()
-				&& SiegeWarBlockUtil.isBlockNearAnActiveSiegeCampBanner(event.getBlock())) {
+		// Prevent destruction of siege camp banner or support block
+		if (qualifiesAsSiegeCamp(event)) {
 			event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_camp_banner"));
 			event.setCancelled(true);
 			return;
-        }
-    }
+		}
+	}
+
+	private static boolean qualifiesAsSiegeCamp(TownyDestroyEvent event) {
+		return SiegeWarSettings.areSiegeCampsEnabled()
+			&& SiegeWarBlockUtil.isBlockNearAnActiveSiegeCampBanner(event.getBlock());
+	}
+
+	private static boolean qualifiesAsBreakingASiegeBanner(TownyDestroyEvent event, Siege nearbySiege) {
+		return nearbySiege.isFlagBannerOrBlockBelow(event.getBlock());
+	}
+
+	private static boolean qualifiesAsTrapWarfare(TownyDestroyEvent event, Siege nearbySiege) {
+		return SiegeWarSettings.isTrapWarfareMitigationEnabled()
+			&& SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(event.getLocation(), nearbySiege);
+	}
 
 	/**
 	 * Evaluate a possible wall breach

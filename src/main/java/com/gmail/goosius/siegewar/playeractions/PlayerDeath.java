@@ -20,11 +20,11 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.permissions.TownyPermissionSource;
 import org.bukkit.Color;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Banner;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -120,9 +120,9 @@ public class PlayerDeath {
 				//Award penalty points w/ notification if siege is in progress
 				if(confirmedCandidateSiege.getStatus() == SiegeStatus.IN_PROGRESS) {
 					if (SiegeWarSettings.getWarSiegeDeathSpawnFireworkEnabled()) {
-						if (isBannerMissing(confirmedCandidateSiege.getFlagLocation()))
-							replaceMissingBanner(confirmedCandidateSiege.getFlagLocation());
-						Color bannerColor = ((Banner) confirmedCandidateSiege.getFlagLocation().getBlock().getState()).getBaseColor().getColor();
+						if (isBannerMissing(confirmedCandidateSiege.getFlagBlock()))
+							replaceMissingBanner(confirmedCandidateSiege.getFlagBlock());
+						Color bannerColor = ((Banner) confirmedCandidateSiege.getFlagBlock().getState()).getBaseColor().getColor();
 						CosmeticUtil.spawnFirework(deadPlayer.getLocation().add(0, 2, 0), Color.RED, bannerColor, true);
 					}
 
@@ -149,14 +149,14 @@ public class PlayerDeath {
 		}
 	}
 
-	private static boolean isBannerMissing(Location location) {
-		return !Tag.BANNERS.isTagged(location.getBlock().getType());
+	private static boolean isBannerMissing(Block block) {
+		return !Tag.BANNERS.isTagged(block.getType());
 	}
 
-	private static void replaceMissingBanner(Location location) {
-		if (SiegeWarBlockUtil.isSupportBlockUnstable(location.getBlock()))
-			location.getBlock().getRelative(BlockFace.DOWN).setType(Material.STONE);
+	private static void replaceMissingBanner(Block block) {
+		if (SiegeWarBlockUtil.isSupportBlockUnstable(block))
+			block.getRelative(BlockFace.DOWN).setType(Material.STONE);
 		
-		location.getBlock().setType(Material.BLACK_BANNER);
+		block.setType(Material.BLACK_BANNER);
 	}
 }
