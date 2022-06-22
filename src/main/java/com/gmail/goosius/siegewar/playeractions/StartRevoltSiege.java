@@ -50,25 +50,10 @@ public class StartRevoltSiege {
                                                 TownBlock townBlock,
                                                 Town targetTown,
                                                 Block bannerBlock) throws TownyException {
-        final Translator translator = Translator.locale(Translation.getLocale(player));
-        if (!SiegeWarSettings.getRevoltSiegesEnabled())
-            throw new TownyException(translator.of("msg_err_action_disable"));
 
-        if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToStartSiege(SiegeType.REVOLT)))
-            throw new TownyException(translator.of("msg_err_action_disable"));
+		allowSiegeOrThrow(player, targetTown);
 
-        if(!TownOccupationController.isTownOccupied(targetTown))
-            throw new TownyException(translator.of("msg_err_cannot_start_revolt_siege_as_town_is_unoccupied"));
-
-        long immunity = TownMetaDataController.getRevoltImmunityEndTime(targetTown);
-        if (immunity == -1L)
-        	throw new TownyException(translator.of("msg_err_siege_war_revolt_immunity_permanent"));
-        if (System.currentTimeMillis() < immunity)
-            throw new TownyException(translator.of("msg_err_siege_war_revolt_immunity_active"));
-
-        Nation occupierNation = TownOccupationController.getTownOccupier(targetTown);
-
-		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, occupierNation, townOfSiegeStarter, townBlock);
+		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, TownOccupationController.getTownOccupier(targetTown), townOfSiegeStarter, townBlock);
 
 		PreSiegeCampEvent event = new PreSiegeCampEvent(camp);
 		Bukkit.getPluginManager().callEvent(event);
@@ -82,4 +67,20 @@ public class StartRevoltSiege {
 			// SiegeCamps are disabled, just do the Siege.
 			camp.startSiege();
     }
+
+	private static void allowSiegeOrThrow(Player player, Town targetTown) throws TownyException {
+		final Translator translator = Translator.locale(Translation.getLocale(player));
+        if (!SiegeWarSettings.getRevoltSiegesEnabled()
+        || !TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToStartSiege(SiegeType.REVOLT)))
+            throw new TownyException(translator.of("msg_err_action_disable"));
+
+        if(!TownOccupationController.isTownOccupied(targetTown))
+            throw new TownyException(translator.of("msg_err_cannot_start_revolt_siege_as_town_is_unoccupied"));
+
+        long immunity = TownMetaDataController.getRevoltImmunityEndTime(targetTown);
+        if (immunity == -1L)
+        	throw new TownyException(translator.of("msg_err_siege_war_revolt_immunity_permanent"));
+        if (System.currentTimeMillis() < immunity)
+            throw new TownyException(translator.of("msg_err_siege_war_revolt_immunity_active"));
+	}
 }
