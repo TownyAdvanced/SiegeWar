@@ -9,12 +9,12 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
+import com.palmergames.util.MathUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
@@ -52,35 +52,8 @@ public class StartSuppressionSiege {
                                                 Town targetTown,
                                                 Block bannerBlock) throws TownyException {
 
-        final Translator translator = Translator.locale(Translation.getLocale(player));
-        if (!SiegeWarSettings.getSuppressionSiegesEnabled())
-            throw new TownyException(translator.of("msg_err_action_disable"));
-
-        if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToStartSiege(SiegeType.SUPPRESSION)))
-            throw new TownyException(translator.of("msg_err_action_disable"));
-
-        if (targetTown.hasNation()) {
-            Nation nationOfDefendingTown = targetTown.getNation();
-
-            if (nationOfSiegeStarter == nationOfDefendingTown)
-                throw new TownyException(translator.of("msg_err_siege_war_cannot_attack_town_in_own_nation"));
-
-            if (!nationOfSiegeStarter.hasEnemy(nationOfDefendingTown))
-                throw new TownyException(translator.of("msg_err_siege_war_cannot_attack_non_enemy_nation"));
-        }
-
-        if (TownySettings.getNationRequiresProximity() > 0) {
-            Coord capitalCoord = nationOfSiegeStarter.getCapital().getHomeBlock().getCoord();
-            Coord townCoord = targetTown.getHomeBlock().getCoord();
-            if (!nationOfSiegeStarter.getCapital().getHomeBlock().getWorld().getName().equals(targetTown.getHomeBlock().getWorld().getName())) {
-                throw new TownyException(translator.of("msg_err_nation_homeblock_in_another_world"));
-            }
-            double distance;
-            distance = Math.sqrt(Math.pow(capitalCoord.getX() - townCoord.getX(), 2) + Math.pow(capitalCoord.getZ() - townCoord.getZ(), 2));
-            if (distance > TownySettings.getNationRequiresProximity()) {
-                throw new TownyException(translator.of("msg_err_siege_war_town_not_close_enough_to_nation"));
-            }
-        }
+		// Either allow the Siege or throw a Towny Exception 
+		allowSiegeOrThrow(player, nationOfSiegeStarter, targetTown);
 
 		SiegeCamp camp = new SiegeCamp(player, bannerBlock, SiegeType.SUPPRESSION, targetTown, nationOfSiegeStarter, targetTown, townOfSiegeStarter, townBlock);
 
@@ -95,5 +68,38 @@ public class StartSuppressionSiege {
 		else
 			// SiegeCamps are disabled, just do the Siege.
 			camp.startSiege();
-    }
+	}
+
+	private static void allowSiegeOrThrow(Player player, Nation nationOfSiegeStarter, Town targetTown) throws TownyException {
+		final Translator translator = Translator.locale(Translation.getLocale(player));
+		if (!SiegeWarSettings.getSuppressionSiegesEnabled()
+		|| !TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToStartSiege(SiegeType.SUPPRESSION)))
+			throw new TownyException(translator.of("msg_err_action_disable"));
+
+		if (targetTown.hasNation()) {
+			Nation nationOfDefendingTown = targetTown.getNationOrNull();
+
+			if (nationOfSiegeStarter == nationOfDefendingTown)
+				throw new TownyException(translator.of("msg_err_siege_war_cannot_attack_town_in_own_nation"));
+
+			if (!nationOfSiegeStarter.hasEnemy(nationOfDefendingTown))
+				throw new TownyException(translator.of("msg_err_siege_war_cannot_attack_non_enemy_nation"));
+		}
+
+		if (TownySettings.getNationRequiresProximity() > 0) {
+			if (townsAreNotInTheSameWorld(nationOfSiegeStarter, targetTown))
+				throw new TownyException(translator.of("msg_err_nation_homeblock_in_another_world"));
+
+			if (townsAreTooFarApart(nationOfSiegeStarter, targetTown))
+				throw new TownyException(translator.of("msg_err_town_not_close_enough_to_nation", targetTown.getName()));
+		}
+	}
+
+	private static boolean townsAreTooFarApart(Nation residentsNation, Town targetTown) throws TownyException {
+		return MathUtil.distance(residentsNation.getCapital().getHomeBlock().getCoord(), targetTown.getHomeBlock().getCoord()) > TownySettings.getNationRequiresProximity();
+	}
+
+	private static boolean townsAreNotInTheSameWorld(Nation nation, Town targetTown) throws TownyException {
+		return !nation.getCapital().getHomeBlock().getWorld().getName().equals(targetTown.getHomeBlock().getWorld().getName());
+	}
 }
