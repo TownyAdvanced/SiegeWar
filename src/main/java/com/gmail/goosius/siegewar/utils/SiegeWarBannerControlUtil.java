@@ -57,12 +57,11 @@ public class SiegeWarBannerControlUtil {
 
 	private static void evaluateNewBannerControlSessions(Siege siege) {
 		try {
-			TownyUniverse universe = TownyUniverse.getInstance();
 			Resident resident;
 
 			for(Player player: Bukkit.getOnlinePlayers()) {
 
-				resident = universe.getResident(player.getUniqueId());
+				resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 	            if (resident == null)
 	            	throw new TownyException(Translation.of("msg_err_not_registered_1", player.getName()));
 
@@ -70,9 +69,8 @@ public class SiegeWarBannerControlUtil {
 					continue;
 
 				if(!BattleSession.getBattleSession().isActive()) {
-					Translatable message = Translatable.of("msg_war_siege_battle_session_break_cannot_get_banner_control",
-													SiegeWarBattleSessionUtil.getFormattedTimeUntilNextBattleSessionStarts());
-					Messaging.sendErrorMsg(player, message);
+					Messaging.sendErrorMsg(player, Translatable.of("msg_war_siege_battle_session_break_cannot_get_banner_control",
+													SiegeWarBattleSessionUtil.getFormattedTimeUntilNextBattleSessionStarts()));
 					continue;
 				}
 
@@ -197,70 +195,70 @@ public class SiegeWarBannerControlUtil {
 		if(!BattleSession.getBattleSession().isActive())
 			return;
 		
+		// A BannerControlSession is a representation of a Player who is involved in a
+		// BannerControl scenario. It contains the Player, Resident, SiegeSide and the
+		// end of the BannerControl period time. This loops over all of the players
+		// currently contesting the Banner, in a bid to take BannerControl.
 		for(BannerControlSession bannerControlSession: siege.getBannerControlSessions().values()) {
 			try {
 				//Check if session failed
 				if (!doesPlayerMeetBasicSessionRequirements(siege, bannerControlSession.getPlayer(), bannerControlSession.getResident())) {
-					siege.removeBannerControlSession(bannerControlSession);
+					// Send an error message, because this player has done something to fail their BannerControlSession.
 					Translatable errorMessage = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? Translatable.of("msg_siege_war_banner_control_session_failure_with_altitude") : Translatable.of("msg_siege_war_banner_control_session_failure");
-					BossBarUtil.removeBannerCapBossBar(bannerControlSession.getPlayer());
 					Messaging.sendMsg(bannerControlSession.getPlayer(), errorMessage);
-					//Update beacon
-					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
-					//Remove glowing effect
-					if(bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
-						Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-							@Override
-							public void run() {
-								bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
-							}
-						});
-					}
+					/*
+					 * Clean up:
+					 *  - Player removed from BannerControlSession
+					 *  - Boss Bar removed
+					 *  - Beacon evaluated
+					 *  - Glowing removed
+					 */
+					cleanUpPlayerFromBannerControlSession(siege, bannerControlSession);
+					
 					continue;
 				}
 
 				//Check if session is in progress or succeeded. Countdown accurate to 1 second, not less
-				if((System.currentTimeMillis() / 1000) < (bannerControlSession.getSessionEndTime() / 1000)) {
+				if (bannerControlSessionIsNotOver(bannerControlSession)) {
 					//Session still in progress
 					remainingSessionTime = TimeMgmt.getFormattedTimeValue(bannerControlSession.getSessionEndTime() - System.currentTimeMillis());
 					inProgressMessage = bossBarMessageColor + Translatable.of("msg_siege_war_banner_control_remaining_session_time", remainingSessionTime).forLocale(bannerControlSession.getPlayer());
 					BossBarUtil.updateBannerCapBossBar(bannerControlSession.getPlayer(), inProgressMessage, bannerControlSession);
 				} else {
-					//Session success
-					siege.removeBannerControlSession(bannerControlSession);
-					//Update beacon
-					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
-					//Remove bossbar
-					BossBarUtil.removeBannerCapBossBar(bannerControlSession.getPlayer());
-					//Remove glowing effect
-					if(bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
-						Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-							@Override
-							public void run() {
-								bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
-							}
-						});
-					}
+					//BannerControlSession has concluded.
+
+					/*
+					 * Clean up:
+					 *  - Player removed from BannerControlSession
+					 *  - Boss Bar removed
+					 *  - Beacon evaluated
+					 *  - Glowing removed
+					 */
+					cleanUpPlayerFromBannerControlSession(siege, bannerControlSession);
 
 					//Mark the player as having capped (info is used by capping limiter)
 					SiegeWarBattleSessionUtil.markResidentAsHavingCappedAtCurrentBattleSession(bannerControlSession.getResident());
 
 					//Update siege
 					if(bannerControlSession.getSiegeSide() == siege.getBannerControllingSide()) {
-						//Player contributes to ongoing banner control
+						//Player's side is in control of the Banner.
 						siege.addBannerControllingResident(bannerControlSession.getResident());
 						Messaging.sendMsg(bannerControlSession.getPlayer(), Translatable.of("msg_siege_war_banner_control_session_success"));
+
 					} else {
-						//Player gains banner control for their side
-						boolean reversal = false;
-						if(siege.getBannerControllingSide() != SiegeSide.NOBODY
-							&& bannerControlSession.getSiegeSide() != siege.getBannerControllingSide()) {
-							reversal = true;
-							//Apply reversal bonus if required setting is enabled
-							if(SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled()) {
-								siege.setNumberOfBannerControlReversals(siege.getNumberOfBannerControlReversals()+1);
-							}
-						}
+						//Player's side is now in control of the Banner, where as in the previous BannerControl period they were not.
+
+						// As long as the siege is not set to SiegeSide.NOBODY, this is a reversal.
+						boolean reversal = siege.getBannerControllingSide() != SiegeSide.NOBODY;
+						if (reversal && SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled())
+							siege.setNumberOfBannerControlReversals(siege.getNumberOfBannerControlReversals() + 1);
+
+						// TODO: From LlmDl: I don't quite understand this, as it would appear that
+						// we're going to be wiping out the BannerControllingResidents and setting the
+						// BannerControllingSide every time the For loop picks up a resident that isn't
+						// on the current siege#getBannerControllingSide. Ultimately it does appear to
+						// work though, because the SiegeWarNotificationUtil call below is only sent one
+						// time.
 						siege.clearBannerControllingResidents();
 						siege.setBannerControllingSide(bannerControlSession.getSiegeSide());
 						siege.addBannerControllingResident(bannerControlSession.getResident());
@@ -268,26 +266,7 @@ public class SiegeWarBannerControlUtil {
 						//Inform player
 						Messaging.sendMsg(bannerControlSession.getPlayer(), Translatable.of("msg_siege_war_banner_control_session_success"));
 						//Inform town/nation participants
-						Translatable[] message = new Translatable[2];
-						if(reversal) {
-							if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
-								message[0] = Translatable.of("msg_siege_war_banner_control_reversed_by_attacker", siege.getTown().getFormattedName());
-							} else {
-								message[0] = Translatable.of("msg_siege_war_banner_control_reversed_by_defender", siege.getTown().getFormattedName());
-							}
-							if(SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled()) {
-								double battlePointMultiplierDouble = siege.getNumberOfBannerControlReversals() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor();
-								DecimalFormat decimalFormat = new DecimalFormat("#.##");
-								message[1] = Translatable.of("msg_siege_war_banner_control_reversal_bonus", decimalFormat.format(battlePointMultiplierDouble));
-							}
-						} else {
-							if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
-								message[0] = Translatable.of("msg_siege_war_banner_control_gained_by_attacker", siege.getTown().getFormattedName());
-							} else {
-								message[0] = Translatable.of("msg_siege_war_banner_control_gained_by_defender", siege.getTown().getFormattedName());
-							}
-						}
-						SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
+						SiegeWarNotificationUtil.informSiegeParticipants(siege, getParticipantsMessage(siege, bannerControlSession, reversal));
 					}
 				}
 			} catch (Exception e) {
@@ -295,6 +274,46 @@ public class SiegeWarBannerControlUtil {
 				SiegeWar.severe("Problem evaluating banner control session for player " + bannerControlSession.getPlayer().getName());
 			}
 		}
+	}
+
+	private static Translatable[] getParticipantsMessage(Siege siege, BannerControlSession bannerControlSession, boolean reversal) {
+		Translatable[] message = new Translatable[2];
+		if(reversal) {
+			if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
+				message[0] = Translatable.of("msg_siege_war_banner_control_reversed_by_attacker", siege.getTown().getFormattedName());
+			} else {
+				message[0] = Translatable.of("msg_siege_war_banner_control_reversed_by_defender", siege.getTown().getFormattedName());
+			}
+			if(SiegeWarSettings.isWarSiegeBannerControlReversalBonusEnabled()) {
+				double battlePointMultiplierDouble = siege.getNumberOfBannerControlReversals() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor();
+				DecimalFormat decimalFormat = new DecimalFormat("#.##");
+				message[1] = Translatable.of("msg_siege_war_banner_control_reversal_bonus", decimalFormat.format(battlePointMultiplierDouble));
+			}
+		} else {
+			if (bannerControlSession.getSiegeSide() == SiegeSide.ATTACKERS) {
+				message[0] = Translatable.of("msg_siege_war_banner_control_gained_by_attacker", siege.getTown().getFormattedName());
+			} else {
+				message[0] = Translatable.of("msg_siege_war_banner_control_gained_by_defender", siege.getTown().getFormattedName());
+			}
+		}
+		return message;
+	}
+
+	private static boolean bannerControlSessionIsNotOver(BannerControlSession bannerControlSession) {
+		return (System.currentTimeMillis() / 1000) < (bannerControlSession.getSessionEndTime() / 1000);
+	}
+
+	private static void cleanUpPlayerFromBannerControlSession(Siege siege, BannerControlSession bannerControlSession) {
+		Player player = bannerControlSession.getPlayer();
+		//Remove from BCS. 
+		siege.removeBannerControlSession(bannerControlSession);
+		//Update beacon
+		CosmeticUtil.evaluateBeacon(player, siege);
+		//Remove bossbar
+		BossBarUtil.removeBannerCapBossBar(player);
+		//Remove glowing effect
+		if(player.hasPotionEffect(PotionEffectType.GLOWING))
+			Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), ()-> player.removePotionEffect(PotionEffectType.GLOWING));
 	}
 
 	private static void evaluateBannerControlPoints(Siege siege) {
