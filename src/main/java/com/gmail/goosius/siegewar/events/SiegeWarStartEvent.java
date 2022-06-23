@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.events;
 
-import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -25,7 +24,7 @@ public class SiegeWarStartEvent extends Event {
         this.siegeType = siege.getSiegeType().getName();
         this.targetTown = siege.getTown();
         this.townOfSiegeStarter = townOfSiegeStarter;
-        this.nation = siege.getSiegeType().equals(SiegeType.REVOLT) ? TownOccupationController.getTownOccupier(targetTown) : (Nation)siege.getAttackingNationIfPossibleElseTown();
+        this.nation = siege.isRevoltSiege() ? TownOccupationController.getTownOccupier(targetTown) : (Nation)siege.getAttackingNationIfPossibleElseTown();
         this.flag = siege.getFlagLocation().getBlock();
     }
 

@@ -3,7 +3,6 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -65,7 +64,7 @@ public class PlunderTown {
 		if(siege.isTownPlundered())
 			throw new TownyException(translator.of("msg_err_siege_war_town_already_plundered", townToBePlundered.getName()));
 
-		if(siege.getSiegeType() == SiegeType.REVOLT) {
+		if(siege.isRevoltSiege()) {
 			// A revolt siege means a town was rebelling against their Occupying nation.
 			
 			// Rebels do not plunder when they win or the occupying nation surrenders.

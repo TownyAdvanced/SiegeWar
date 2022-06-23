@@ -11,7 +11,6 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -320,7 +319,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 	}
 
 	private static String getInvadeStatusLine(Siege siege, Translator translator) {
-		if(siege.getSiegeType() == SiegeType.REVOLT && siege.getSiegeType() == SiegeType.SUPPRESSION) {
+		if(siege.isRevoltSiege() || siege.isSuppressionSiege()) {
 			return "";
 		} else {
 			String invadedYesNo = siege.isTownInvaded() ? translator.of("status_yes") : translator.of("status_no_green");

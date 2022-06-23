@@ -152,7 +152,7 @@ public class SiegeWarNationEventListener implements Listener {
 				break;
 			}
 
-			if (siege.getSiegeType() == SiegeType.REVOLT) {
+			if (siege.isRevoltSiege()) {
 				//Cancel if one of your towns is revolting against them
 				if (siege.getTown().hasNation()
 						&& TownyAPI.getInstance().getTownNationOrNull(siege.getTown()) == nation
