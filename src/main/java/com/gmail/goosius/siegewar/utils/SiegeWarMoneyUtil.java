@@ -207,6 +207,6 @@ public class SiegeWarMoneyUtil {
 	}
 	
 	public static boolean canNationPayCostToSiegeTown(Nation nation, Town town) {
-		return TownyEconomyHandler.isActive() && !nation.getAccount().canPayFromHoldings(calculateSiegeCost(town));
+		return TownyEconomyHandler.isActive() && nation.getAccount().canPayFromHoldings(calculateSiegeCost(town));
 	}
 }
