@@ -409,6 +409,22 @@ public class Siege {
 		this.siegeType = siegeType;
 	}
 
+	public boolean isConquestSiege() {
+		return siegeType == SiegeType.CONQUEST;
+	}
+
+	public boolean isSuppressionSiege() {
+		return siegeType == SiegeType.SUPPRESSION;
+	}
+	
+	public boolean isRevoltSiege() {
+		return siegeType == SiegeType.REVOLT;
+	}
+	
+	public boolean isLiberationtSiege() {
+		return siegeType == SiegeType.LIBERATION;
+	}
+	
 	/**
 	 * Record who is the primary government of the town
 	 * If the town has a nation, nation uuid will be recorded,

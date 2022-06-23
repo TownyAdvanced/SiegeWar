@@ -250,7 +250,7 @@ public class SiegeController {
 			SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown(), siege);
 
 			//Return warchest only if siege is not revolt
-			if(siege.getSiegeType() != SiegeType.REVOLT) {
+			if(!siege.isRevoltSiege()) {
 				if (refundSideIfSiegeIsActive == SiegeSide.ATTACKERS)
 					SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
 				else if (refundSideIfSiegeIsActive == SiegeSide.DEFENDERS)

@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.enums.SiegeSide;
-import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -78,11 +77,9 @@ public class SiegeWarAllegianceUtil {
     public static boolean isSideHostileToTown(SiegeSide gunnerSiegeSide, Siege siege) {
         switch (gunnerSiegeSide) {
             case ATTACKERS:
-                return siege.getSiegeType() == SiegeType.CONQUEST 
-                        || siege.getSiegeType() == SiegeType.SUPPRESSION;
+                return siege.isConquestSiege() || siege.isSuppressionSiege();
             case DEFENDERS:
-                return siege.getSiegeType() == SiegeType.LIBERATION 
-                        || siege.getSiegeType() == SiegeType.REVOLT;
+                return siege.isLiberationtSiege() || siege.isRevoltSiege();
             default:
                 return false;
         }
@@ -96,9 +93,9 @@ public class SiegeWarAllegianceUtil {
         SiegeSide playerSiegeSide = calculateCandidateSiegePlayerSide(player, gunnerResidentTown, siege);
         switch(playerSiegeSide) {
             case DEFENDERS:
-                return siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION; 
+                return siege.isConquestSiege() || siege.isSuppressionSiege();
             case ATTACKERS:
-                return siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.LIBERATION;
+                return siege.isLiberationtSiege() || siege.isRevoltSiege();
             default:
                 return false;
         }
@@ -112,9 +109,9 @@ public class SiegeWarAllegianceUtil {
         SiegeSide playerSiegeSide = calculateCandidateSiegePlayerSide(player, gunnerResidentTown, siege);
         switch(playerSiegeSide) {
             case ATTACKERS:
-                return siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION; 
+                return siege.isConquestSiege() || siege.isSuppressionSiege(); 
             case DEFENDERS:
-                return siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.LIBERATION;
+                return siege.isLiberationtSiege() || siege.isRevoltSiege();
             default:
                 return false;
         }

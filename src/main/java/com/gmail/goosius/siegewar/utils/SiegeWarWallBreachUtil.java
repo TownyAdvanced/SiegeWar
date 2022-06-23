@@ -3,7 +3,6 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -58,12 +57,12 @@ public class SiegeWarWallBreachUtil {
             case NOBODY:
                 return;
             case ATTACKERS:
-                if(siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION) 
+                if(siege.isConquestSiege() || siege.isSuppressionSiege()) 
                     return;
                 break;
             case DEFENDERS:
-                if(siege.getSiegeType() == SiegeType.REVOLT || siege.getSiegeType() == SiegeType.LIBERATION) 
-                    return;                                               
+                if(siege.isRevoltSiege() || siege.isLiberationtSiege()) 
+                    return;
                 break;
         }
 
@@ -122,7 +121,7 @@ public class SiegeWarWallBreachUtil {
         if(newAwardees.size() > 0) {         
             //Adjust Battle Points
             int battlePointsBonus = SiegeWarSettings.getWallBreachBonusBattlePoints() * newAwardees.size();
-            if(siege.getSiegeType() == SiegeType.CONQUEST || siege.getSiegeType() == SiegeType.SUPPRESSION) {
+            if(siege.isConquestSiege() || siege.isSuppressionSiege()) {
                 siege.adjustAttackerBattlePoints(battlePointsBonus);                
             } else {
                 siege.adjustDefenderBattlePoints(battlePointsBonus);
