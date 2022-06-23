@@ -9,6 +9,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
@@ -47,8 +48,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 
@@ -61,14 +60,8 @@ import org.bukkit.projectiles.ProjectileSource;
  *
  */
 public class SiegeWarBukkitEventListener implements Listener {
-
-	@SuppressWarnings("unused")
-	private final SiegeWar plugin;
 	
-	public SiegeWarBukkitEventListener(SiegeWar instance) {
-
-		plugin = instance;
-	}
+	public SiegeWarBukkitEventListener() {}
 
 	/*
 	 * SW will prevent someone in a banner area from curing their poisoning with milk.
@@ -168,14 +161,18 @@ public class SiegeWarBukkitEventListener implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		//Check for siege-war related death effects
-		if(SiegeWarSettings.getWarSiegeEnabled()) {
+		if(isSWEnabledAndIsThisAWarAllowedWorld(event.getEntity().getWorld())) {
 			PlayerDeath.evaluateSiegePlayerDeath(event.getEntity(), event);
 		}
 	}
 	
 	@EventHandler(ignoreCancelled = true)
 	public void onPlayerTeleport(PlayerTeleportEvent event) {
-		
+		// Check if SiegeWar is set to disallow non-residents teleporting into a siege
+		// zone, limiting to only plugin and command TeleportCauses.
+		if (!siegeWarStopsNonResidentsTeleporting(event))
+			return;
+
 		// Don't stop admins/ops. towny.admin.spawn is part of towny.admin.
 		if (event.getPlayer().hasPermission("towny.admin.spawn") || event.getPlayer().isOp())
 			return;
@@ -184,41 +181,47 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if (Towny.getPlugin().isCitizens2() && CitizensAPI.getNPCRegistry().isNPC(event.getPlayer()))
 			return;
 		
-		if (SiegeWarSettings.getWarSiegeEnabled()
-			&& SiegeWarSettings.getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled()
-			&& (event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND)) {
-			if (TownyAPI.getInstance().isWilderness(event.getTo())) { // The teleport destination is in the wilderness.
-				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
-					Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
-					event.setCancelled(true);
-				}
-			} else { // The teleport destination is inside a town.
-				Town destinationTown = TownyAPI.getInstance().getTown(event.getTo());
-				Resident resident = TownyUniverse.getInstance().getResident(event.getPlayer().getUniqueId());
-
-				if (destinationTown.hasResident(resident))
-					return;
-
-				//Check IF TP destination is a besieged town
-				if(SiegeController.hasActiveSiege(destinationTown)) {
-					Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
-					event.setCancelled(true);
-					return;
-				}
-
-				//Check if the destination is inside a siege zone
-				if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
-					Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
-					event.setCancelled(true);
-				}
+		// The teleport destination is in the wilderness.
+		if (TownyAPI.getInstance().isWilderness(event.getTo())) {
+			// A part of an active siege zone in the wilderness, we stop it.
+			if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
+				Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
+				event.setCancelled(true);
 			}
+			// An otherwise allowed teleport to this type of wilderness.
+			return;
 		}
+		// The teleport destination is inside a town.
+
+		// Don't stop a resident spawning into their own town.
+		Town destinationTown = TownyAPI.getInstance().getTown(event.getTo());
+		if (destinationTown.hasResident(event.getPlayer()))
+			return;
+
+		// Stop anyone else teleporting into a town with an active siege.
+		if(SiegeController.hasActiveSiege(destinationTown)) {
+			Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
+			event.setCancelled(true);
+			return;
+		}
+
+		// Finally, stop a teleport into a town which is in another town's active siege zone.
+		if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getTo())) {
+			Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
+			event.setCancelled(true);
+		}
+	}
+
+	private boolean siegeWarStopsNonResidentsTeleporting(PlayerTeleportEvent event) {
+		return SiegeWarSettings.getWarSiegeEnabled()
+			&& SiegeWarSettings.getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled()
+			&& (event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND);
 	}
 
 	@EventHandler
 	public void on(PlayerJoinEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled() && TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()) {
-		    Siege siegeAtPlayerLocation = SiegeController.getActiveSiegeAtLocation(event.getPlayer().getLocation());	    
+		if(isSWEnabledAndIsThisAWarAllowedWorld(event.getPlayer().getWorld())) {
+		    Siege siegeAtPlayerLocation = SiegeController.getActiveSiegeAtLocation(event.getPlayer().getLocation());
 		    if(siegeAtPlayerLocation != null) {
 		    	SiegeWarDistanceUtil.registerPlayerToActiveSiegeZone(event.getPlayer(), siegeAtPlayerLocation);
 		    	SiegeWarNotificationUtil.warnPlayerOfActiveSiegeDanger(event.getPlayer(), siegeAtPlayerLocation);
@@ -228,24 +231,18 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		if(!SiegeWarSettings.getWarSiegeEnabled())
+		if(!isSWEnabledAndIsThisAWarAllowedWorld(event.getPlayer().getWorld()))
 			return;
 
 		//Remove banner-control related glowing
 		if(SiegeController.getPlayersInBannerControlSessions().contains(event.getPlayer()) 
 		  && event.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
-			Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-				@Override
-				public void run() {
-					event.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
-				}
-			});
+			Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), () -> event.getPlayer().removePotionEffect(PotionEffectType.GLOWING));
 		}
 
 		//Kill players in Siege-Zones
 		if(event.getPlayer().getHealth() > 0
 				&& SiegeWarSettings.getKillPlayersWhoLogoutInSiegeZones()
-				&& TownyAPI.getInstance().getTownyWorld(event.getPlayer().getWorld()).isWarAllowed()
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getPlayer().getLocation())) {
 			event.setQuitMessage(Translatable.of("msg_player_killed_for_logging_out_in_siege_zone", event.getPlayer().getName()).translate());
 			event.getPlayer().setHealth(0);
@@ -255,7 +252,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 	//Stops TNT/Minecarts from destroying blocks in the siegezone wilderness
 	@EventHandler
 	public void on(EntityExplodeEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled()
+		if(isSWEnabledAndIsThisAWarAllowedWorld(event.getEntity().getWorld())
 				&& !event.isCancelled()
 				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenExplodeEntityTypes().contains(event.getEntityType())
 				&& TownyAPI.getInstance().getTown(event.getLocation()) == null
@@ -271,10 +268,8 @@ public class SiegeWarBukkitEventListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void on(EntityDamageByEntityEvent event) {	
-		if(!SiegeWarSettings.getWarSiegeEnabled()
-			|| !TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld()).isWarAllowed()) {
+		if(!isSWEnabledAndIsThisAWarAllowedWorld(event.getEntity().getWorld()))
 			return;
-		}
 
 		//Check for Artefact Usage
 		if(event.getDamager() instanceof Player) {
@@ -419,5 +414,9 @@ public class SiegeWarBukkitEventListener implements Listener {
 				Bukkit.getPluginManager().callEvent(artefactEvent);
 			}
 		}
+	}
+	
+	private static boolean isSWEnabledAndIsThisAWarAllowedWorld(World world) {
+		return SiegeWarSettings.getWarSiegeEnabled() && TownyAPI.getInstance().getTownyWorld(world).isWarAllowed();
 	}
 }
