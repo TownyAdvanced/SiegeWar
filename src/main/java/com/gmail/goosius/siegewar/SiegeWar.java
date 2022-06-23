@@ -4,7 +4,6 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.settings.migrator.ConfigMigrator;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translation;
@@ -16,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.gmail.goosius.siegewar.settings.ConfigNodes;
 import com.gmail.goosius.siegewar.settings.Settings;
 import com.palmergames.bukkit.config.CommentedConfiguration;
+import com.palmergames.bukkit.config.migration.ConfigMigrator;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
@@ -106,7 +106,7 @@ public class SiegeWar extends JavaPlugin {
 		if (!config.load() || config.getString(ConfigNodes.LAST_RUN_VERSION.getRoot(), "0.0.0.0").equals(getVersion()))
 			return;
 		
-		ConfigMigrator earlyMigrator = new ConfigMigrator(config, "config-migration.json", true);
+		ConfigMigrator earlyMigrator = new ConfigMigrator(getSiegeWar(), config, "config-migration.json", Settings.getLastRunVersion(), true);
 		earlyMigrator.migrate();
 	}
 
