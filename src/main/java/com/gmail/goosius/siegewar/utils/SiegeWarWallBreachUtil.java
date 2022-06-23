@@ -61,7 +61,7 @@ public class SiegeWarWallBreachUtil {
                     return;
                 break;
             case DEFENDERS:
-                if(siege.isRevoltSiege() || siege.isLiberationtSiege()) 
+                if(siege.isRevoltSiege() || siege.isLiberationSiege()) 
                     return;
                 break;
         }

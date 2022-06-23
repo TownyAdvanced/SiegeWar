@@ -79,7 +79,7 @@ public class SiegeWarAllegianceUtil {
             case ATTACKERS:
                 return siege.isConquestSiege() || siege.isSuppressionSiege();
             case DEFENDERS:
-                return siege.isLiberationtSiege() || siege.isRevoltSiege();
+                return siege.isLiberationSiege() || siege.isRevoltSiege();
             default:
                 return false;
         }
@@ -95,7 +95,7 @@ public class SiegeWarAllegianceUtil {
             case DEFENDERS:
                 return siege.isConquestSiege() || siege.isSuppressionSiege();
             case ATTACKERS:
-                return siege.isLiberationtSiege() || siege.isRevoltSiege();
+                return siege.isLiberationSiege() || siege.isRevoltSiege();
             default:
                 return false;
         }
@@ -111,7 +111,7 @@ public class SiegeWarAllegianceUtil {
             case ATTACKERS:
                 return siege.isConquestSiege() || siege.isSuppressionSiege(); 
             case DEFENDERS:
-                return siege.isLiberationtSiege() || siege.isRevoltSiege();
+                return siege.isLiberationSiege() || siege.isRevoltSiege();
             default:
                 return false;
         }

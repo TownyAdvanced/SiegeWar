@@ -421,7 +421,7 @@ public class Siege {
 		return siegeType == SiegeType.REVOLT;
 	}
 	
-	public boolean isLiberationtSiege() {
+	public boolean isLiberationSiege() {
 		return siegeType == SiegeType.LIBERATION;
 	}
 	
