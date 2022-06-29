@@ -2,7 +2,6 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
-import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -48,12 +47,8 @@ public class SiegeWarScoringUtil {
 										  Player player,
 										  Siege siege) {
 
-		//No penalty points without an active battle session
-		if(!BattleSession.getBattleSession().isActive())
-			return;
-
 		//Give battle points to opposing side
-		int battlePoints;
+		int battlePoints; 
 		if (residentIsAttacker) {
 			battlePoints = SiegeWarSettings.getWarBattlePointsForAttackerDeath();
 			battlePoints = applyBattlePointsPenaltyForBannerControl(true, battlePoints, siege);
