@@ -72,7 +72,9 @@ public class SiegeWarNotificationUtil {
 
 			//Inform battlefield observers
 			for(Player player: Bukkit.getOnlinePlayers()) {
-				if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NOTIFICATIONS_ALL.getNode())) {
+				if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NOTIFICATIONS_ALL.getNode())
+				&& !nationHasPlayer(nationsToInform, player)
+				&& !townHasPlayer(townsToInform, player)) {
 					for (Translatable line : message)
 						if (line != null)
 							Messaging.sendMsg(player, line);
@@ -85,6 +87,21 @@ public class SiegeWarNotificationUtil {
 			e.printStackTrace();
 		}
 	}
+
+	private static boolean townHasPlayer(Set<Town> towns, Player player) {
+		for (Town town : towns)
+			if (town.hasResident(player.getName()))
+				return true;
+		return false;
+	}
+
+	private static boolean nationHasPlayer(Set<Nation> nations, Player player) {
+		for (Nation nation : nations)
+			if (nation.hasResident(player.getName()))
+				return true;
+		return false;
+	}
+
 
 	/**
 	 * Warn player who we know is in an active siege zones
