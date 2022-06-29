@@ -188,6 +188,10 @@ public class SiegeWarSettings {
 	public static boolean getWarSiegeBesiegedTownUnClaimingDisabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BESIEGED_TOWN_UNCLAIMING_DISABLED);
 	}
+	
+	public static boolean getWarSiegeBesiegedCapitalsCannotChangeKing() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BESIEGED_TOWN_CANNOT_CHANGE_KING);
+	}
 
 	public static int getWarSiegeExtraMoneyPercentagePerTownLevel() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_EXTRA_MONEY_PERCENTAGE_PER_TOWN_LEVEL);

@@ -1,5 +1,5 @@
 name: SiegeWar
-version: 0.48
+version: 0.49
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -578,3 +578,7 @@ artefact_custom_effect_lore_slow_on_hit: '&7Slowness on Hit'
 hours_added_to_sieges: '%s hours have been added to all sieges'' durations.'
 #Shown when SW cancels a battle session because there's no active sieges.
 battle_session_cancelled_no_sieges: 'No active Sieges, cancelling Battle Session'
+
+#Added in 0.49
+#Shown when a nation tries to set their capital city while it is sieged.
+msg_err_besieged_capital_cannot_change_king: "&cYour nation is not allowed to change kings while your cities are sieged."

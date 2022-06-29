@@ -23,11 +23,12 @@ import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumTownsCalc
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumResidentsCalculationEvent;
 import com.palmergames.bukkit.towny.event.nation.NationListDisplayedNumTownBlocksCalculationEvent;
 import com.palmergames.bukkit.towny.event.nation.DisplayedNationsListSortEvent;
-
+import com.palmergames.bukkit.towny.event.nation.NationKingChangeEvent;
 import com.palmergames.bukkit.towny.event.nation.toggle.NationToggleNeutralEvent;
 import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translation;
 
 import org.bukkit.Bukkit;
@@ -316,6 +317,18 @@ public class SiegeWarNationEventListener implements Listener {
 		if (event.getFutureState()) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("msg_err_nation_neutrality_not_supported"));
+		}
+	}
+
+	public void onNationChangeKingEvent(NationKingChangeEvent event) {
+		Town oldCapital = event.getOldKing().getTownOrNull();
+		Town newCapital = event.getNewKing().getTownOrNull();
+		if (SiegeWarSettings.getWarSiegeEnabled()
+			&& SiegeWarSettings.getWarSiegeBesiegedCapitalsCannotChangeKing()
+			&& event.isCapitalChange()
+			&& (SiegeController.hasSiege(oldCapital) || SiegeController.hasSiege(newCapital))) {
+			event.setCancelled(true);
+			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_besieged_capital_cannot_change_king"));
 		}
 	}
 }
