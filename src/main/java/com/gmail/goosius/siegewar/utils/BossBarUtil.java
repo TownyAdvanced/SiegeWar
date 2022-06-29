@@ -42,7 +42,7 @@ public class BossBarUtil {
 			Resident resident = TownyAPI.getInstance().getResident(player);
 			if (resident == null || ResidentMetaDataController.getBossBarsDisabled(resident))
 				continue;
-			BossBar bossBar = bossBarBattleSessionMap.containsKey(player) ? bossBarBattleSessionMap.get(player) : BossBar.bossBar(comp, 0, Color.WHITE, Overlay.PROGRESS);
+			BossBar bossBar = bossBarBattleSessionMap.getOrDefault(player, BossBar.bossBar(comp, 0, Color.WHITE, Overlay.PROGRESS));
 			bossBar.progress((float) (remaining/100.0));
 			bossBar.name(comp);
 			if (!bossBarBattleSessionMap.containsKey(player)) {
@@ -66,7 +66,7 @@ public class BossBarUtil {
 			return;
 		TextComponent comp = Component.text(msg);
 		float remaining = getRemainder(bannerControlSession.getSessionEndTime(), SiegeWarSettings.getWarSiegeBannerControlSessionDurationMinutes());
-		BossBar bossBar = bossBarBannerCapMap.containsKey(player) ? bossBarBannerCapMap.get(player) : BossBar.bossBar(comp, 0, Color.WHITE, Overlay.PROGRESS);
+		BossBar bossBar = bossBarBannerCapMap.getOrDefault(player, BossBar.bossBar(comp, 0, Color.WHITE, Overlay.PROGRESS));
 		bossBar.progress(remaining);
 		bossBar.name(comp);
 		if (!bossBarBannerCapMap.containsKey(player)) {
