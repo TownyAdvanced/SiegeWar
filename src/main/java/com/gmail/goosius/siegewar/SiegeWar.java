@@ -105,8 +105,9 @@ public class SiegeWar extends JavaPlugin {
 		CommentedConfiguration config = new CommentedConfiguration(configPath);
 		if (!config.load() || config.getString(ConfigNodes.LAST_RUN_VERSION.getRoot(), "0.0.0.0").equals(getVersion()))
 			return;
-		
-		ConfigMigrator earlyMigrator = new ConfigMigrator(getSiegeWar(), config, "config-migration.json", Settings.getLastRunVersion(), true);
+
+		Version lastRun = Version.fromString(config.getString(ConfigNodes.LAST_RUN_VERSION.getRoot(), "0.0.0.0"));
+		ConfigMigrator earlyMigrator = new ConfigMigrator(getSiegeWar(), config, "config-migration.json", lastRun, true);
 		earlyMigrator.migrate();
 	}
 
