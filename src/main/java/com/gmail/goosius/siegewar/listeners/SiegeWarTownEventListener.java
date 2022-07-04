@@ -96,7 +96,7 @@ public class SiegeWarTownEventListener implements Listener {
 	/*
 	 * On toggle neutral, SW will evaluate a number of things.
 	 */
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void onTownToggleNeutral(TownToggleNeutralEvent event) {
 		if (!SiegeWarSettings.getWarSiegeEnabled())
 			return;
