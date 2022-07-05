@@ -405,7 +405,7 @@ public class SiegeWarSettings {
 
 	public static List<DayOfWeek> getSiegeStartDayLimiterAllowedDays() {
 		List<DayOfWeek> allowedDaysList = new ArrayList<>();
-		String[] allowedDaysStringArray = Settings.getString(ConfigNodes.SIEGE_START_DAY_LIMITER_ALLOWED_DAYS).toUpperCase().replaceAll(" ", "").split(",");
+		String[] allowedDaysStringArray = Settings.getString(ConfigNodes.SIEGE_START_DAY_LIMITER_ALLOWED_DAYS).toUpperCase(Locale.ROOT).replaceAll(" ", "").split(",");
 
 			DayOfWeek allowedDay;
 			for(String allowedDayString: allowedDaysStringArray) {
