@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class TownOccupationController {
 
-    private static Map<Nation, Set<Town>> nationTownsOccupationMap = new HashMap<>();
+    private static final Map<Nation, Set<Town>> nationTownsOccupationMap = new HashMap<>();
     private final static String NATION_TOWNS_OCCUPATION_MAP_LOCK = "";
 
     public static void clearTownOccupations() {
@@ -40,8 +40,12 @@ public class TownOccupationController {
 			// Populate the map
 			if (nationTownsOccupationMap.containsKey(occupyingNation))
 				nationTownsOccupationMap.get(occupyingNation).add(town);
-			else
-				nationTownsOccupationMap.put(occupyingNation, Collections.singleton(town));
+			else {
+                Set<Town> towns = new HashSet<>();
+                towns.add(town);
+
+                nationTownsOccupationMap.put(occupyingNation, towns);
+            }
 		}
 	}
 
@@ -179,7 +183,10 @@ public class TownOccupationController {
                 nationTownsOccupationMap.get(occupyingNation).add(occupiedTown);
             } else {
                 //Nation not yet on map
-                nationTownsOccupationMap.put(occupyingNation, Collections.singleton(occupiedTown));
+                Set<Town> towns = new HashSet<>();
+                towns.add(occupiedTown);
+
+                nationTownsOccupationMap.put(occupyingNation, towns);
             }
         }
     }
