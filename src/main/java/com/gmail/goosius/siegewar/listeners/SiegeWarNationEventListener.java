@@ -187,8 +187,7 @@ public class SiegeWarNationEventListener implements Listener {
 	@EventHandler
 	public void on(NationBonusCalculationEvent event) {
 		Nation effectiveNation = SiegeWarNationUtil.getEffectiveNation(event.getNation());
-		int bonusBlocks = (Integer) TownySettings.getNationLevel(effectiveNation).get(TownySettings.NationLevel.TOWN_BLOCK_LIMIT_BONUS);
-		event.setBonusBlocks(bonusBlocks);
+		event.setBonusBlocks(TownySettings.getNationLevel(effectiveNation).townBlockLimitBonus());
 	}
 
 	/**
