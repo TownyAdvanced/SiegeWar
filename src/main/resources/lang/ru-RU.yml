@@ -1,6 +1,6 @@
 ---
 name: SiegeWar
-version: 0.49
+version: 0.50
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -15,16 +15,16 @@ description: >
 #Purple = &5, Gold = &6, LightGray = &7, Gray = &8
 #DarkPurple = &9, LightGreen = &a, LightBlue = &b
 #Rose = &c, LightPurple = &d, Yellow = &e, White = &f
-siegewar_plugin_prefix: '&f[&6Asedio&f] '
+siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
 #Added in (Siegewar version)
 #Siege war happy-path messages
-msg_siege_war_attack_pay_war_chest: '&bUn cofre de guerra ha sido preparado por %s, con un valor de %s. Quien gane el asedio obtendrá este dinero.'
-msg_siege_war_attack_recover_war_chest: '&bEl cofre de guerra ha sido recuperado por %s, con un valor de %s.'
-msg_siege_war_neutral_town_plundered: '&b%s ha sido saqueado por %s por %s!'
+msg_siege_war_attack_pay_war_chest: '&b%s Подготовил сундук войны со стоимостью %s. Тот, кто победит в осаде, получит эти деньги.'
+msg_siege_war_attack_recover_war_chest: '&bThe war chest has been recovered by %s, with a value of %s.'
+msg_siege_war_neutral_town_plundered: '&b%s has been plundered of %s by %s!'
 msg_siege_war_nation_town_plundered: '&b%s has been plundered of %s by %s!'
-msg_siege_war_town_ruined_from_plunder: '&b%s ha sido reducido a ruinas por %s!'
-msg_siege_war_town_bankrupted_from_plunder: '&b%s fue llevado a bancarota por %s!'
-msg_siege_war_nation_defeated: '&b%s ha sido derrotado!'
+msg_siege_war_town_ruined_from_plunder: '&b%s has been reduced to ruins by %s!'
+msg_siege_war_town_bankrupted_from_plunder: '&b%s has been bankrupted by %s!'
+msg_siege_war_nation_defeated: '&b%s has been defeated!'
 msg_siege_war_attacking_troops_at_siege_banner: '&bSiege on %s > Attackers are at the siege banner.'
 msg_siege_war_banner_control_session_success: '&bBanner control session succeeded!. You have been added to the banner control list.'
 msg_siege_war_banner_control_gained_by_attacker: '&bSiege on %s > The attackers have gained banner control.'
@@ -261,7 +261,7 @@ msg_suppression_siege_timed_defender_win: '&bSUPPRESSION SIEGE at %s > The defen
 #Generic Victory messages
 msg_immediate_attacker_victory: " The attackers are victorious!"
 msg_pending_attacker_victory: " Attacker victory will be confirmed in %s."
-msg_immediate_defender_victory: " The defenders are victorious!"
+msg_immediate_defender_victory: " Защитники победили!"
 msg_pending_defender_victory: " Defender victory will be confirmed in %s."
 #Invasions
 msg_err_cannot_invade_own_town: '&cYou cannot invade your own town.'
