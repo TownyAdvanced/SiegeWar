@@ -46,12 +46,18 @@ public class DestroyBlock {
 		if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
 			return;
 
+		final Translator translator = Translator.locale(Translation.getLocale(event.getPlayer()));
+
 		//Get nearby siege
 		Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
-		if(nearbySiege == null)
+		if(nearbySiege == null) {
+			// Prevent destruction of siege camp banner or support block
+			if (qualifiesAsSiegeCamp(event)) {
+				event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_camp_banner"));
+				event.setCancelled(true);
+			}
 			return;
-		
-		final Translator translator = Translator.locale(Translation.getLocale(event.getPlayer()));
+		}
 
 		// Trap warfare block protection
 		if (qualifiesAsTrapWarfare(event, nearbySiege)) {
