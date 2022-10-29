@@ -654,14 +654,23 @@ public class SiegeController {
 		if (event.isCancelled())
 			throw new TownyException(event.getCancellationMsg());
 		
-		if (SiegeWarSettings.areSiegeCampsEnabled())
+		if (SiegeWarSettings.areSiegeCampsEnabled()) {
+			if (hasSiegeCamp(targetTown))
+				throw new TownyException(Translatable.of("msg_err_town_already_has_a_siege_assembly"));
 			// Launch a SiegeCamp, a (by default) 10 minute minigame. If successful the Siege will be initiated in ernest. 
 			SiegeController.beginSiegeCamp(camp);
-		else 
+		} else 
 			// SiegeCamps are disabled, just do the Siege.
 			camp.startSiege();
 	}
 	
+	private static boolean hasSiegeCamp(Town targetTown) {
+		for (SiegeCamp camp : getSiegeCamps())
+			if (camp.getTargetTown().equals(targetTown))
+				return true;
+		return false;
+	}
+
 	/**
 	 * Initiates a {@link SiegeCamp}, leads to a {@link Siege} if successfully camped.
 	 * @param camp {@link SiegeCamp} to begin.
