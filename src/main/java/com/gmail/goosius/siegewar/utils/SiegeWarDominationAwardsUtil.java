@@ -286,7 +286,7 @@ public class SiegeWarDominationAwardsUtil {
             ItemStack artefact = offer.clone();
             ItemMeta itemMeta =  artefact.getItemMeta();
             //Set expiration time
-            long expirationTime = System.currentTimeMillis() + (long)(SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays() * 864500000); 
+            long expirationTime = System.currentTimeMillis() + (long)(SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays() * 86400000); 
             itemMeta.getPersistentDataContainer().set(EXPIRATION_TIME_KEY, EXPIRATION_TIME_KEY_TYPE, expirationTime);
             artefact.setItemMeta(itemMeta);
             //Add to result
