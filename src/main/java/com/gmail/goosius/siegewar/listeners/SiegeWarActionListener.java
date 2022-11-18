@@ -47,7 +47,7 @@ public class SiegeWarActionListener implements Listener {
 				DestroyBlock.evaluateSiegeWarDestroyBlockRequest(event);
 			} catch (TownyException e) {
 				event.setCancelled(true);
-				event.setMessage(e.getMessage());
+				event.setCancelMessage(e.getMessage());
 			}
 		}
 	}
@@ -72,7 +72,7 @@ public class SiegeWarActionListener implements Listener {
 				&& SiegeWarSettings.getSiegeZoneWildernessForbiddenBucketMaterials().contains(event.getMaterial())
 				&& event.isInWilderness() 
 				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getLocation())) {
-			event.setMessage(Translatable.of("msg_war_siege_zone_bucket_emptying_forbidden").forLocale(event.getPlayer()));
+			event.setCancelMessage(Translatable.of("msg_war_siege_zone_bucket_emptying_forbidden").forLocale(event.getPlayer()));
 			event.setCancelled(true);
 		}
 	}
