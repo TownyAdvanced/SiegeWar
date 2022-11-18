@@ -102,7 +102,7 @@ public class SiegeWarTownEventListener implements Listener {
 			return;
 		
 		if(!SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && !event.isAdminAction()) {
-			event.setCancellationMsg(Translation.of("msg_err_command_disable"));
+			event.setCancelMessage(Translation.of("msg_err_command_disable"));
 			event.setCancelled(true);
 			return;
 		}
@@ -141,7 +141,7 @@ public class SiegeWarTownEventListener implements Listener {
 						}
 					}
 				}
-				event.setCancellationMsg(Translation.of("siegewar_plugin_prefix") + Translation.of("status_town_peacefulness_status_change_timer", days));
+				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("status_town_peacefulness_status_change_timer", days));
 				event.setCancelled(true);
 				
 			} else {
@@ -150,7 +150,7 @@ public class SiegeWarTownEventListener implements Listener {
 				TownMetaDataController.setPeacefulnessChangeDays(town, 0);
 				//Send message to town
 				TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_peacefulness_countdown_cancelled")));				
-				event.setCancellationMsg(Translation.of("msg_war_common_town_peacefulness_countdown_cancelled"));
+				event.setCancelMessage(Translation.of("msg_war_common_town_peacefulness_countdown_cancelled"));
 				event.setCancelled(true);
 			}
 		}
