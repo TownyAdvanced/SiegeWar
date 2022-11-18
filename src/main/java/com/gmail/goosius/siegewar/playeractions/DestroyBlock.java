@@ -53,7 +53,7 @@ public class DestroyBlock {
 		if(nearbySiege == null) {
 			// Prevent destruction of siege camp banner or support block
 			if (qualifiesAsSiegeCamp(event)) {
-				event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_camp_banner"));
+				event.setCancelMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_camp_banner"));
 				event.setCancelled(true);
 			}
 			return;
@@ -68,14 +68,14 @@ public class DestroyBlock {
 
 		//Prevent destruction of siege-banner or support block
 		if (qualifiesAsBreakingASiegeBanner(event, nearbySiege)) {
-			event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_banner"));
+			event.setCancelMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_banner"));
 			event.setCancelled(true);
 			return;
 		}
 
 		// Prevent destruction of siege camp banner or support block
 		if (qualifiesAsSiegeCamp(event)) {
-			event.setMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_camp_banner"));
+			event.setCancelMessage(translator.of("msg_err_siege_war_cannot_destroy_siege_camp_banner"));
 			event.setCancelled(true);
 			return;
 		}
@@ -110,12 +110,12 @@ public class DestroyBlock {
 			return false; //SW doesn't un-cancel events in unsieged towns
 		//Ensure player has permission
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(event.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_USE_BREACH_POINTS.getNode())) {
-			event.setMessage(translator.of("msg_err_action_disable"));
+			event.setCancelMessage(translator.of("msg_err_action_disable"));
 			return false;
 		}
 		//No wall breaching outside battle sessions
 		if(!BattleSession.getBattleSession().isActive()) {
-			event.setMessage(translator.of("msg_err_cannot_breach_without_battle_session"));
+			event.setCancelMessage(translator.of("msg_err_cannot_breach_without_battle_session"));
 			return false;
 		}
 		//Ensure player is on the town-hostile siege side
@@ -127,17 +127,17 @@ public class DestroyBlock {
 			return false;
 		//Ensure there are enough breach points
 		if(siege.getWallBreachPoints() < SiegeWarSettings.getWallBreachingBlockDestructionCost()) {
-			event.setMessage(translator.of("msg_err_not_enough_breach_points_for_action", SiegeWarSettings.getWallBreachingBlockDestructionCost(), siege.getFormattedBreachPoints()));
+			event.setCancelMessage(translator.of("msg_err_not_enough_breach_points_for_action", SiegeWarSettings.getWallBreachingBlockDestructionCost(), siege.getFormattedBreachPoints()));
 			return false;
 		}
 		//Ensure height is ok
 		if(!SiegeWarWallBreachUtil.validateBreachHeight(block, town, siege)) {
-			event.setMessage(translator.of("msg_err_cannot_breach_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
+			event.setCancelMessage(translator.of("msg_err_cannot_breach_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
 			return false;
 		}
 		//Ensure material is ok
 		if(!SiegeWarWallBreachUtil.validateDestroyMaterial(block, event.getLocation())) {
-			event.setMessage(translator.of("msg_err_cannot_destroy_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
+			event.setCancelMessage(translator.of("msg_err_cannot_destroy_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
 			return false;
 		}
 		//IF we get here, it is a wall breach!!
