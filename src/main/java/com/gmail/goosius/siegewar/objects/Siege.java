@@ -473,6 +473,19 @@ public class Siege {
 		this.siegeWinner = siegeWinner;
 	}
 
+	public boolean isDefenderWinning() {
+		return siegeWinner == SiegeSide.DEFENDERS;
+	}
+
+	public boolean isAttackerWinning() {
+		return siegeWinner == SiegeSide.ATTACKERS;
+	}
+
+	public String getSiegeWinnerFormatted() {
+		return getSiegeWinner() == SiegeSide.NOBODY ? Translation.of("msg_nobody") : 
+				isDefenderWinning() ? Translation.of("msg_defenders") : Translation.of("msg_attackers");
+	}
+
 	public String getAttackerName() {
 		return attackerName;
 	}
