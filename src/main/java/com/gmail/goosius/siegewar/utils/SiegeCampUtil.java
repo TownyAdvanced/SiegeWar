@@ -99,12 +99,13 @@ public class SiegeCampUtil {
 				TownyMessaging.sendPrefixedNationMessage((Nation) attacker, Translatable.of("msg_err_your_siegecamp_failed_you_must_wait_x", TimeMgmt.formatCountdownTime(SiegeWarSettings.getFailedSiegeCampCooldown())));
 
 			String failedCamps = TownMetaDataController.getFailedSiegeCampList(camp.getTargetTown());
+			long endTime = (System.currentTimeMillis() + (SiegeWarSettings.getFailedSiegeCampCooldown() * 1000));
 			if (failedCamps == null) {
 				// No metadata, start a new failedCamps string.
-				failedCamps = camp.getTargetTown().getUUID() + ":" + System.currentTimeMillis();
+				failedCamps = camp.getTargetTown().getUUID() + ":" + endTime;
 			} else {
 				// This target town already had at least one failed siegecamp.
-				failedCamps += "," + camp.getTargetTown().getUUID() + ":" + System.currentTimeMillis() + (SiegeWarSettings.getFailedSiegeCampCooldown() * 1000);
+				failedCamps += "," + camp.getTargetTown().getUUID() + ":" + endTime;
 			}
 
 			// Set the metadata on the target town.
