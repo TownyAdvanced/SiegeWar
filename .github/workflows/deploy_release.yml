@@ -28,6 +28,6 @@ jobs:
           Version: ""
         run: |
           mvn help:evaluate -Dexpression=project.version -q -DforceStdout
-          Version = mvn help:evaluate -Dexpression=project.version -q -DforceStdout
+          $Version = mvn help:evaluate -Dexpression=project.version -q -DforceStdout
           echo ""CURR_VER=$Version" >> $GITHUB_ENV"
           echo ${{ env.CURR_VER }}
