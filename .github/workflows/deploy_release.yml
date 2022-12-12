@@ -3,26 +3,60 @@ on:
   workflow_dispatch:
 env:
   CURR_VER: 0.0.0
+  SUPPORTED: " for Towny 0.98.4.0+"
+  TOWNY_VERSION: "0.98.4.0"
 jobs:
   deploy_release:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         java: ['17']
-    name: Deploying Towny Prerelease
+    name: Deploying SiegeWar Release
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content to github runner.
-#      - name: set up eclipse temurin
-#        uses: actions/setup-java@v3
-#        with:
-#          distribution: 'temurin'
-#          java-version: ${{ matrix.java }}
-#          java-package: jdk
-#          cache: 'maven'
-#      - name: compile towny with maven
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: set up eclipse temurin
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
+          java-package: jdk
+          cache: 'maven'
+      - name: compile siegewar with maven
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B clean package
       - name: find current version
         run: |
-          echo mvn help:evaluate -Dexpression=project.version -q -DforceStdout
+          export POM_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "CURR_VER=$POM_VERSION" >> $GITHUB_ENV
+      - name: print current version
+        run: |
+          echo "Release version set to: ${{ env.CURR_VER }}"
+      - name: create release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: |
+            <table align=center width=50%>
+            <tr>
+            <td colspan=2>
+
+            ## Update Guide:<br>
+            1. Ensure you have *Towny* ${{ env.TOWNY_VERSION }} or newer.<br>
+            2. Download SiegeWar-${{ env.CURR_VER }}.jar from the assets section below⏬, and drop it into your plugins folder.<br>
+            3. Restart your server.<br>
+            <tr>
+            <td align=center width=50%><h3><a href="https://github.com/TownyAdvanced/SiegeWar/wiki/Siege-War-Installation">Installation Guide</a></td>
+            <td align=center width=50%><h3><a href="https://github.com/TownyAdvanced/SiegeWar/wiki">Wiki</a></td></tr>
+            <tr><td colspan=2 align=center><h3>⏬ Download available as a .jar file in the Assets section below:</td></tr>
+            </table>
+          append_body: true
+          draft: true
+          prerelease: false
+          token: ${{ github.token }}
+          tag_name: ${{ env.CURR_VER }}
+          name: ${{ env.CURR_VER }}${{ env.SUPPORTED }}
+          files: |
+            ./target/SiegeWar-${{ env.CURR_VER }}.jar
+        env:
+          GITHUB_REPOSITORY: my_gh_org/my_gh_repo
