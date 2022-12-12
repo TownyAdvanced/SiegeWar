@@ -28,6 +28,7 @@ jobs:
           export POM_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "version in pom: " $POM_VERSION
           echo '"CURR_VER='$POM_VERSION'" >> $GITHUB_ENV'
+          echo ${{ env.CURR_VER }}
       - name: print current version
         run: |
           echo ${{ env.CURR_VER }}
