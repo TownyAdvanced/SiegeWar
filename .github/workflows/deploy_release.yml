@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
 env:
   CURR_VER: 0.0.0
+  SUPPORTED: " for Towny 0.98.4.0+"
+  TOWNY_VERSION: "0.98.4.0"
 jobs:
   deploy_release:
     runs-on: ubuntu-latest
@@ -29,4 +31,32 @@ jobs:
           echo "CURR_VER='$POM_VERSION'" >> $GITHUB_ENV
       - name: print current version
         run: |
-          echo ${{ env.CURR_VER }}
+          echo "Release version set to: ${{ env.CURR_VER }}"
+      - name: create pre-release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: |
+            <table align=center width=50%>
+            <th colspan=2>
+            <tr>
+            <td colspan=2>
+            ## Update Guide:
+            1. Ensure you have *Towny* ${{ env.TOWNY_VERSION }} or newer.
+            2. Download SiegeWar-${{ env.CURR_VER }}".jar from the assets section below⏬, and drop it into your plugins folder.
+            3. Restart your server.
+            <tr>
+            <td align=center width=50%><h3><a href="https://github.com/TownyAdvanced/SiegeWar/wiki/Siege-War-Installation">Installation Guide</a></td>
+            <td align=center width=50%><h3><a href="https://github.com/TownyAdvanced/SiegeWar/wiki">Wiki</a></td></tr>
+            <tr><td colspan=2 align=center><h3>⏬ Download available as a .jar file in the Assets section below:</td></tr>
+            </table>
+          append_body: true
+          draft: true
+          prerelease: false
+          generate_release_notes: true
+          token: ${{ github.token }}
+          tag_name: ${{ env.CURR_VER }}
+          name: ${{ env.CURR_VER }}${{ env.SUPPORTED }}
+          files: |
+            ./target/SiegeWar-${{ env.CURR_VER }}.jar
+        env:
+          GITHUB_REPOSITORY: my_gh_org/my_gh_repo
