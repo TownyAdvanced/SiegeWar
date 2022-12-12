@@ -51,7 +51,7 @@ jobs:
             <td align=center width=50%><h3><a href="https://github.com/TownyAdvanced/SiegeWar/wiki">Wiki</a></td></tr>
             <tr><td colspan=2 align=center><h3>⏬ Download available as a .jar file in the Assets section below:</td></tr>
             </table>
-          append_body: true
+          append_body: false
           draft: true
           prerelease: false
           token: ${{ github.token }}
