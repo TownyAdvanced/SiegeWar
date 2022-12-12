@@ -1,1 +1,28 @@
-
+name: Deploy Release
+on:
+  workflow_dispatch:
+env:
+  CURR_VER: 0.0.0
+jobs:
+  deploy_release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['17']
+    name: Deploying Towny Prerelease
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v3 # checkout the repository content to github runner.
+#      - name: set up eclipse temurin
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'temurin'
+#          java-version: ${{ matrix.java }}
+#          java-package: jdk
+#          cache: 'maven'
+#      - name: compile towny with maven
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: find current version
+        run: |
+          echo mvn help:evaluate -Dexpression=project.version -q -DforceStdout
