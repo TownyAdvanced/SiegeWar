@@ -37,19 +37,19 @@ jobs:
         with:
           body: |
             <table align=center width=50%>
-            <th colspan=2>
             <tr>
             <td colspan=2>
-            ## Update Guide:
-            1. Ensure you have *Towny* ${{ env.TOWNY_VERSION }} or newer.
-            2. Download SiegeWar-${{ env.CURR_VER }}".jar from the assets section below⏬, and drop it into your plugins folder.
-            3. Restart your server.
+
+            ## Update Guide:<br>
+            1. Ensure you have *Towny* ${{ env.TOWNY_VERSION }} or newer.<br>
+            2. Download SiegeWar-${{ env.CURR_VER }}".jar from the assets section below⏬, and drop it into your plugins folder.<br>
+            3. Restart your server.<br>
             <tr>
             <td align=center width=50%><h3><a href="https://github.com/TownyAdvanced/SiegeWar/wiki/Siege-War-Installation">Installation Guide</a></td>
             <td align=center width=50%><h3><a href="https://github.com/TownyAdvanced/SiegeWar/wiki">Wiki</a></td></tr>
             <tr><td colspan=2 align=center><h3>⏬ Download available as a .jar file in the Assets section below:</td></tr>
             </table>
-          append_body: true
+          append_body: false
           draft: true
           prerelease: false
           generate_release_notes: true
