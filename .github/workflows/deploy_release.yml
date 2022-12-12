@@ -24,7 +24,9 @@ jobs:
 #        env:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: find current version
+        env:
+          Version: mvn help:evaluate -Dexpression=project.version -q -DforceStdout
         run: |
           mvn help:evaluate -Dexpression=project.version -q -DforceStdout
-          echo "CURR_VER=' + mvn help:evaluate -Dexpression=project.version -q -DforceStdout + '" >> $GITHUB_ENV
+          echo "CURR_VER=$Version" >> $GITHUB_ENV
           echo ${{ env.CURR_VER }}
