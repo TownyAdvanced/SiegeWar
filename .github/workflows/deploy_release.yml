@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         java: ['17']
-    name: Deploying Towny Prerelease
+    name: Deploying SiegeWar Release
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content to github runner.
@@ -25,4 +25,4 @@ jobs:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: find current version
         run: |
-          echo mvn help:evaluate -Dexpression=project.version -q -DforceStdout
+          mvn help:evaluate -Dexpression=project.version -q -DforceStdout
