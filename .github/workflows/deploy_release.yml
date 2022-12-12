@@ -36,7 +36,6 @@ jobs:
       - name: create release
         uses: softprops/action-gh-release@v1
         with:
-          generate_release_notes: true
           body: |
             <table align=center width=50%>
             <tr>
@@ -51,7 +50,7 @@ jobs:
             <td align=center width=50%><h3><a href="https://github.com/TownyAdvanced/SiegeWar/wiki">Wiki</a></td></tr>
             <tr><td colspan=2 align=center><h3>⏬ Download available as a .jar file in the Assets section below:</td></tr>
             </table>
-          append_body: false
+          append_body: true
           draft: true
           prerelease: false
           token: ${{ github.token }}
