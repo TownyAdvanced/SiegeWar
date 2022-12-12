@@ -32,7 +32,7 @@ jobs:
       - name: print current version
         run: |
           echo "Release version set to: ${{ env.CURR_VER }}"
-      - name: create pre-release
+      - name: create release
         uses: softprops/action-gh-release@v1
         with:
           body: |
