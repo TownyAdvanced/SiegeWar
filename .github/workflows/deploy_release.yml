@@ -26,3 +26,5 @@ jobs:
       - name: find current version
         run: |
           mvn help:evaluate -Dexpression=project.version -q -DforceStdout
+          echo "CURR_VER=' + mvn help:evaluate -Dexpression=project.version -q -DforceStdout + '" >> $GITHUB_ENV
+          echo ${{ CURR_VER }}
