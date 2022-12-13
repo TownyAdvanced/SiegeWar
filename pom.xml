@@ -9,6 +9,7 @@
     <java.version>1.8</java.version>
     <project.bukkitAPIVersion>1.13</project.bukkitAPIVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <towny.version>0.98.4.0</towny.version>
   </properties>
 
   <repositories>
@@ -48,7 +49,7 @@
 	<dependency>
       <groupId>com.palmergames.bukkit.towny</groupId>
       <artifactId>towny</artifactId>
-      <version>0.98.4.0</version>
+      <version>${towny.version}</version>
       <scope>provided</scope>
 	</dependency>
     <dependency>
