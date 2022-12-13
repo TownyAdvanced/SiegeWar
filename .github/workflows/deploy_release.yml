@@ -1,4 +1,7 @@
-name: Deploy Release
+# This file will result in a new SiegeWar release version being deployed as a draft.
+# After the draft is made, the Whats Changed section that is automatically generated
+# manually moved into the table, and the release can be published.
+name: Deploy Release As Draft
 on:
   workflow_dispatch:
 env:
@@ -6,12 +9,12 @@ env:
   SUPPORTED: " for Towny 0.98.4.0+"
   TOWNY_VERSION: "0.98.4.0"
 jobs:
-  deploy_release:
+  deploy_release_as_draft:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         java: ['17']
-    name: Deploying SiegeWar Release
+    name: Drafting SiegeWar Release
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3 # checkout the repository content to github runner.
@@ -37,10 +40,13 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body: |
-            <table align=center width=50%>
-            <tr>
-            <td colspan=2>
-
+            <table align=center width=50%><br>
+            <th colspan=2><br>
+            <h1>SiegeWar ${{ env.CURR_VER }} is a release of SiegeWar<br>
+            <tr><br>
+            <td colspan=2><br>
+            <br>
+            <!-- paste Whats Changed and Changelog here -->
             ## Update Guide:<br>
             1. Ensure you have *Towny* ${{ env.TOWNY_VERSION }} or newer.<br>
             2. Download SiegeWar-${{ env.CURR_VER }}.jar from the assets section below⏬, and drop it into your plugins folder.<br>
