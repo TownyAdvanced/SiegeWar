@@ -107,6 +107,14 @@ public class SiegeWarTownEventListener implements Listener {
 			return;
 		}
 		
+		// Check if we're becoming peaceful, a capital city and capitals cannot become peaceful. 
+		if (event.getFutureState() && event.getTown().isCapital() 
+				&& !SiegeWarSettings.capitalsAllowedTownPeacefulness() && !event.isAdminAction()) {
+			event.setCancelMessage(Translation.of("msg_err_command_disable"));
+			event.setCancelled(true);
+			return;
+		}
+		
 		Town town = event.getTown();
 		
 		if (event.isAdminAction()) {

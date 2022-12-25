@@ -706,6 +706,11 @@ public enum ConfigNodes {
             "# - Town may get automatically peacefully occupied without a siege.",
 			"#   (see user guide for full details)",
 			"#"),
+	PEACEFUL_CAPITALS_ENABLED(
+			"neutral_towns.capitals_allowed_neutrality",
+			"true",
+			"",
+			"# If this is true, a nation capital can be a peaceful town. If false, any capital will not be able to turn peaceful."),
 	PEACEFUL_TOWNS_CONFIRMATION_REQUIREMENT_DAYS(
 			"neutral_towns.confirmation_requirement_days",
 			"5",
