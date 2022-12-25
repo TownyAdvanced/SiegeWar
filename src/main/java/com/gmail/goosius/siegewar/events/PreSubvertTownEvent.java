@@ -51,11 +51,11 @@ public class PreSubvertTownEvent extends Event implements Cancellable {
 		return player;
 	}
 
-	public Town getInvadedTown() {
+	public Town getPeacfulTown() {
 		return town;
 	}
 
-	public Nation getInvadingNation() {
+	public Nation getSubvertingNation() {
 		return nation;
 	}
 
