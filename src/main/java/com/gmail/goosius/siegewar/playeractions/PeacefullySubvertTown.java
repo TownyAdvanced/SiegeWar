@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.events.PreSubvertTownEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
@@ -17,6 +18,7 @@ import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.util.MathUtil;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -43,8 +45,15 @@ public class PeacefullySubvertTown {
 		// Throws an exception if the peaceful subversion of this town would not be allowed.
 		allowSubversionOrThrow(player, residentsNation, targetTown);
 
-		//Subvert town now
-		subvertTown(residentsNation, targetTown);
+		PreSubvertTownEvent preEvent = new PreSubvertTownEvent(player, residentsNation, targetTown);
+		Bukkit.getPluginManager().callEvent(preEvent);
+		if (preEvent.isCancelled()) {
+			if (!preEvent.getCancellationMsg().isEmpty())
+				Messaging.sendErrorMsg(player, preEvent.getCancellationMsg());
+		} else {
+			//Subvert town now
+			subvertTown(residentsNation, targetTown);
+		}
 	}
 	
 	/**
