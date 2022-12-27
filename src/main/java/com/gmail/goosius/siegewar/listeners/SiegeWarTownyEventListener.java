@@ -38,7 +38,6 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.TranslationLoader;
 import com.palmergames.util.StringMgmt;
-import com.palmergames.util.TimeMgmt;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -50,8 +49,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -337,8 +339,7 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeWarNotificationUtil.informSiegeParticipants(siege,
                     // Message: 'Warning: %s was removed as an ally from nation %s while the player(s) %s were located in the siegezone at %s.'
                     Translatable.of("warn_nation_had_ally_removed", removedNation.getName(), nation.getName(),
-                        StringMgmt.join(siegePlayerMap.get(siege), ", "),
-                        TimeMgmt.getFormattedTimeValue(System.currentTimeMillis())));
+                        StringMgmt.join(siegePlayerMap.get(siege), ", "), getDateAndTime()));
     }
 
     /**
@@ -354,8 +355,7 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeWarNotificationUtil.informSiegeParticipants(siege,
                     // Message: 'Warning: %s was removed from nation %s while the player(s) %s were located in the siegezone at %s.'
                     Translatable.of("warn_nation_had_town_removed", town.getName(), nation.getName(),
-                            StringMgmt.join(siegePlayerMap.get(siege), ", "),
-                            TimeMgmt.getFormattedTimeValue(System.currentTimeMillis())));
+                            StringMgmt.join(siegePlayerMap.get(siege), ", "), getDateAndTime()));
         }
     }
 
@@ -406,8 +406,12 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeWarNotificationUtil.informSiegeParticipants(siege,
                     // Message: 'Warning: %s was removed from town %s while in the siegezone at %s.'
                     Translatable.of("warn_resident_had_town_removed",
-                    resident.getName(), town.getName(), TimeMgmt.getFormattedTimeValue(System.currentTimeMillis())));
+                    resident.getName(), town.getName(), getDateAndTime())); 
     }
+
+	private String getDateAndTime() {
+		return DateFormat.getInstance().format(Date.from(Instant.now()));
+	}
 
     /**
      * Check if a player is in the SiegeZone and losing a SiegeWar rank and
@@ -422,8 +426,7 @@ public class SiegeWarTownyEventListener implements Listener {
             if (siege != null)
                 SiegeWarNotificationUtil.informSiegeParticipants(siege,
                         // Message: 'Warning: %s had their rank %s taken from them while in the siegezone at %s.'
-                        Translatable.of("warn_resident_had_rank_removed", resident.getName(), rank,
-                                TimeMgmt.getFormattedTimeValue(System.currentTimeMillis())));
+                        Translatable.of("warn_resident_had_rank_removed", resident.getName(), rank, getDateAndTime()));
         }
     }
 
