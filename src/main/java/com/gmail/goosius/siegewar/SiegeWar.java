@@ -195,7 +195,7 @@ public class SiegeWar extends JavaPlugin {
 					 System.lineSeparator() + "#2DE2E6          /_______  /|__|\\___  >___  / \\___  >#FF6C11\\__/\\  /  (____  /__|   " +
 					 System.lineSeparator() + "#2DE2E6                  \\/         \\/_____/      \\/      #FF6C11\\/        \\/" +
 					 System.lineSeparator() + "#791E94                                By Goosius & LlmDl" + System.lineSeparator(); 
-		Bukkit.getLogger().info(Colors.translateColorCodes(art));
+		Bukkit.getConsoleSender().sendMessage(Colors.translateColorCodes(art));
 	}
 	
 	public static boolean isCannonsPluginInstalled() {
