@@ -162,7 +162,7 @@ dynmap_siege_battle_time_left: 'Savaşın Bitmesine: %s'
 #Banner control
 msg_siege_war_banner_control_reversed_by_attacker: '&7%s üzerindeki kuşatma &8- &7Kuşatmacılar, savunuculardan bayrak kontrolünü çaldılar!'
 msg_siege_war_banner_control_reversed_by_defender: '&7%s üzerindeki kuşatma &8- &7Savunucular, kuşatmacılardan bayrak kontrolünü çaldılar!'
-msg_siege_war_banner_control_reversal_bonus: ' Katlanma Bonusu: %s%d'
+msg_siege_war_banner_control_reversal_bonus: ' Katlanma Bonusu: %s'
 #Admin
 msg_swa_set_siege_balance_success: '&7Successfully set siege balance to %d for %s.'
 #Added in 0.13
