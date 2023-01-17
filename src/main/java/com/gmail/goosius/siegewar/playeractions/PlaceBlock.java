@@ -26,6 +26,7 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 
@@ -195,6 +196,9 @@ public class PlaceBlock {
 		//Get resident's town and possibly their nation
 		Town residentsTown = resident.getTownOrNull();
 		Nation residentsNation = resident.getNationOrNull();
+		
+		if (!residentsTown.isAllowedToWar())
+			throw new TownyException(translator.of("msg_err_your_town_is_not_allowed_to_start_a_siege"));
 
 		//Ensure there is at least 1 adjacent town
 		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
@@ -319,6 +323,9 @@ public class PlaceBlock {
 														   TownBlock nearbyTownBlock,
 														   Town nearbyTown,
 														   Block bannerBlock) throws TownyException {
+		if(!nearbyTown.isAllowedToWar())
+			throw new TownyException(Translatable.of("msg_err_this_town_is_not_allowed_to_be_sieged"));
+
 		if(nearbyTown.isNeutral()) {
 			//Town is peaceful, so this action is a subversion or peaceful-revolt attempt
 			if(residentsTown == nearbyTown) {
