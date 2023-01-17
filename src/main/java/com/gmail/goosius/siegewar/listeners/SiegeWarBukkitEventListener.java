@@ -46,12 +46,11 @@ import com.gmail.goosius.siegewar.playeractions.PlayerDeath;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.hooks.PluginIntegrations;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 
-import net.citizensnpcs.api.CitizensAPI;
 import org.bukkit.projectiles.ProjectileSource;
 
 /**
@@ -178,7 +177,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 		
 		// Let's ignore Citizens NPCs
-		if (Towny.getPlugin().isCitizens2() && CitizensAPI.getNPCRegistry().isNPC(event.getPlayer()))
+		if (PluginIntegrations.getInstance().checkCitizens(event.getPlayer()))
 			return;
 		
 		// The teleport destination is in the wilderness.
