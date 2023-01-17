@@ -15,52 +15,52 @@ description: >
 #Purple = &5, Gold = &6, LightGray = &7, Gray = &8
 #DarkPurple = &9, LightGreen = &a, LightBlue = &b
 #Rose = &c, LightPurple = &d, Yellow = &e, White = &f
-siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
+siegewar_plugin_prefix: '&f[&6Осадная война&f]'
 #Added in (Siegewar version)
 #Siege war happy-path messages
 msg_siege_war_attack_pay_war_chest: '&b%s Подготовил сундук войны со стоимостью %s. Тот, кто победит в осаде, получит эти деньги.'
-msg_siege_war_attack_recover_war_chest: '&bThe war chest has been recovered by %s, with a value of %s.'
-msg_siege_war_neutral_town_plundered: '&b%s has been plundered of %s by %s!'
-msg_siege_war_nation_town_plundered: '&b%s has been plundered of %s by %s!'
-msg_siege_war_town_ruined_from_plunder: '&b%s has been reduced to ruins by %s!'
-msg_siege_war_town_bankrupted_from_plunder: '&b%s has been bankrupted by %s!'
-msg_siege_war_nation_defeated: '&b%s has been defeated!'
-msg_siege_war_attacking_troops_at_siege_banner: '&bSiege on %s > Attackers are at the siege banner.'
-msg_siege_war_banner_control_session_success: '&bBanner control session succeeded!. You have been added to the banner control list.'
-msg_siege_war_banner_control_gained_by_attacker: '&bSiege on %s > The attackers have gained banner control.'
-msg_siege_war_banner_control_gained_by_defender: '&bSiege on %s > The defenders have gained banner control.'
-msg_town_destroyed_by_nation_tax: '&b%s couldn''t pay taxes and has fallen.'
-msg_town_destroyed_by_nation_tax_multiple: '&bThe following towns could not afford the nation tax and have fallen: '
+msg_siege_war_attack_recover_war_chest: '&bВоенный сундук был получен %s, с %s.'
+msg_siege_war_neutral_town_plundered: '&b%s был разграблен %s %s!'
+msg_siege_war_nation_town_plundered: '&b%s был разграблен %s %s!'
+msg_siege_war_town_ruined_from_plunder: '&b%s был снижен до развалин силами %s!'
+msg_siege_war_town_bankrupted_from_plunder: '&b%s обанкротился силами %s!'
+msg_siege_war_nation_defeated: '&b%s был повержен!'
+msg_siege_war_attacking_troops_at_siege_banner: '&bОсада на %s > Атакующие на Знамени Осады.'
+msg_siege_war_banner_control_session_success: '&bBanner control session успешно пройден!. Вы были добавлены в список контроля баннеров.'
+msg_siege_war_banner_control_gained_by_attacker: '&bОсада на %s > Атакующие захватили Баннер Осады.'
+msg_siege_war_banner_control_gained_by_defender: '&bОсада на %s > Защитники получили контроль над Баннером Осады.'
+msg_town_destroyed_by_nation_tax: '&b%s не смог оплатить налоги и обанкротился.'
+msg_town_destroyed_by_nation_tax_multiple: '&bСледующие покорённые города не смогли уплатить налог нации и превратились в руины: '
 #Siege war error message
 #Recruiting
-msg_err_siege_besieged_town_cannot_recruit: "&cBesieged towns cannot recruit new residents."
+msg_err_siege_besieged_town_cannot_recruit: "&cОсажденные города не могут вербовать новых жителей."
 #Claiming/Unclaiming
-msg_err_siege_claim_too_near_siege_zone: "&cThe claim is too close to a siege."
-msg_err_siege_besieged_town_cannot_claim: "&cBesieged towns cannot claim new land."
-msg_err_siege_besieged_town_cannot_unclaim: "&cBesieged towns (or towns which recently lost a siege) cannot un-claim land."
-msg_err_war_common_occupied_town_cannot_unclaim: "&cOccupied towns cannot un-claim land."
+msg_err_siege_claim_too_near_siege_zone: "&cСлишком близко к осаде."
+msg_err_siege_besieged_town_cannot_claim: "&cОсажденные города не могут претендовать на новую землю."
+msg_err_siege_besieged_town_cannot_unclaim: "&cОсажденные города (или города, которые недавно проиграли осаду) не могут освободить землю."
+msg_err_war_common_occupied_town_cannot_unclaim: "&cОккупированные города не могут освободить землю."
 #Revolt
-msg_err_siege_war_town_voluntary_leave_impossible: "&cTowns cannot leave nations without agreement. To leave your nation, persuade the king (or an assistant) to kick your town."
-msg_err_siege_war_revolt_immunity_active: "&cYour town has revolt immunity. It cannot revolt until the revolt immunity expires."
+msg_err_siege_war_town_voluntary_leave_impossible: "&cГорода не могут покинуть нации без соглашения. Чтобы оставить свою нацию, убедите короля (или помощника) выгнать ваш город."
+msg_err_siege_war_revolt_immunity_active: "&cВаш город имеет иммунитет к восстанию. Он не может восстать до тех пор, пока не истечет иммунитет восстания."
 #Attack
-msg_err_siege_war_banner_must_be_placed_above_ground: '&cThe siege banner must be placed above ground.'
-msg_err_siege_war_action_not_a_town_member: '&cYou must be a member of a town to do this action.'
-NUKE ???? msg_err_siege_war_action_not_a_nation_member: '&cYou must be a member of a nation to do this action.'
-msg_err_siege_war_cannot_attack_own_town: '&cYou cannot attack your own town.'
-msg_err_siege_war_cannot_attack_town_in_own_nation: '&cYou cannot attack a town in your own nation.'
-msg_err_siege_war_cannot_attack_non_enemy_nation: '&cYou cannot attack a town unless the nation of that town is an enemy of your nation.'
-msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cYou cannot perform this action because this chunk is facing more than one town block. Try placing the item in a different area.'
-msg_err_siege_war_nation_already_attacking_town: '&cYour nation is already attacking this town.'
-msg_err_siege_war_cannot_attack_siege_immunity: '&cThe target town has siege immunity. It cannot be attacked until the siege immunity expires.'
-msg_err_siege_war_cannot_join_siege: '&cYou cannot attack a town while it is under siege by another nation.'
-msg_err_siege_war_nation_has_too_many_active_siege_attacks: '&cYour nation is at the maximum number of concurrent siege-attacks. To start another attack, one or more of the current attacks must finish.'
-msg_err_siege_war_town_not_close_enough_to_nation: '&cThe town is too far away from your nation capital to be attacked.'
+msg_err_siege_war_banner_must_be_placed_above_ground: '&cБаннер Осады должен быть помещен над землёй.'
+msg_err_siege_war_action_not_a_town_member: '&cВы должны быть членом города для выполнения этого действия.'
+NUKE ???? msg_err_siege_war_action_not_a_nation_member: '&cДля этого действия вы должны быть членом нации.'
+msg_err_siege_war_cannot_attack_own_town: '&cВы не можете атаковать свой город.'
+msg_err_siege_war_cannot_attack_town_in_own_nation: '&cВы не можете атаковать город в своей нации.'
+msg_err_siege_war_cannot_attack_non_enemy_nation: '&cВы не можете атаковать город, если это государство не является врагом вашей нации.'
+msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cВы не можете выполнить это действие, потому что этот чанк встречает более одного блока города. Попробуйте разместить элемент в другой области.'
+msg_err_siege_war_nation_already_attacking_town: '&cВаша нация уже атакует этот город'
+msg_err_siege_war_cannot_attack_siege_immunity: '&cУ целевого города есть иммунитет от осад. Его нельзя атаковать до тех пор, пока не истечет иммунитет осады.'
+msg_err_siege_war_cannot_join_siege: '&cВы не можете атаковать город, пока он находится под осадой другой страны.'
+msg_err_siege_war_nation_has_too_many_active_siege_attacks: '&cВаша нация имеет максимальное количество одновременных осадных атак, для начала другой атаки, должна завершиться одна или несколько текущей атаки.'
+msg_err_siege_war_town_not_close_enough_to_nation: '&cГород находится слишком далеко от столицы вашей нации, чтобы быть атакованным.'
 #Invade
-msg_err_siege_war_no_siege_on_target_town: '&cThere is no siege on the target town of %s.'
+msg_err_siege_war_no_siege_on_target_town: '&cВ указанном городе  %s нет осад.'
 #Plunder
-msg_err_siege_war_cannot_plunder_without_victory: "&cYou cannot plunder unless your nation is victorious in the siege."
-msg_err_siege_war_cannot_plunder_without_economy: "&cYou cannot plunder because no economy plugin is active"
-msg_err_siege_war_town_already_plundered: '&cThis town has already been plundered.'
+msg_err_siege_war_cannot_plunder_without_victory: "&cВы не можете грабить, пока ваша страна не победит в осаде."
+msg_err_siege_war_cannot_plunder_without_economy: "&cВы не можете разграбить, потому что не активен плагин экономики"
+msg_err_siege_war_town_already_plundered: '&cЭтот город уже был разграблен.'
 #Block change
 msg_err_siege_war_cannot_destroy_siege_banner: "&cWhile the siege is in progress you cannot destroy the siege banner or the block it is attached to."
 msg_err_siege_war_banner_support_block_not_stable: "&cYou cannot place the banner on unstable ground e.g. sand or gravel."
