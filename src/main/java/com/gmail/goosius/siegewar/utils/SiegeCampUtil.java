@@ -1,5 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -18,6 +20,7 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
 
 public class SiegeCampUtil {
@@ -100,7 +103,7 @@ public class SiegeCampUtil {
 
 			String failedCamps = TownMetaDataController.getFailedSiegeCampList(camp.getTargetTown());
 			long endTime = (System.currentTimeMillis() + (SiegeWarSettings.getFailedSiegeCampCooldown() * 1000));
-			if (failedCamps == null) {
+			if (failedCamps == null || failedCamps.isEmpty()) {
 				// No metadata, start a new failedCamps string.
 				failedCamps = camp.getTargetTown().getUUID() + ":" + endTime;
 			} else {
@@ -116,42 +119,54 @@ public class SiegeCampUtil {
 	}
 	
 	/**
-	 * Does this {@link Town} a failed {@link SiegeCamp} from the given siegeCandidate town?
+	 * Does this {@link Town} have a failed {@link SiegeCamp} from the given
+	 * siegeCandidate town?
 	 * 
-	 * Evaluates a town's metadata for failed SiegeCamps, creating new metadata during
-	 * the evaluation (clearing out any out-dated entries as it goes.)
+	 * Evaluates a town's metadata for failed SiegeCamps, creating new metadata
+	 * during the evaluation (clearing out any out-dated entries as it goes.)
 	 * 
-	 * @param town {@link Town} to check for failed SiegeCamp metas.
-	 * @param siegeCandidate {@link Town} which is trying to start a Siege via a SiegeCamp.
+	 * @param town           {@link Town} to check for failed SiegeCamp metas.
+	 * @param siegeCandidate {@link Town} which is trying to start a Siege via a
+	 *                       SiegeCamp.
 	 */
 	public static boolean hasFailedCamp(Town town, Town siegeCandidate) {
 		String failedSiegeCamps = TownMetaDataController.getFailedSiegeCampList(town);
 		// No metadata, so no failed camps.
-		if (failedSiegeCamps == null)
+		if (failedSiegeCamps == null || failedSiegeCamps.isEmpty())
 			return false;
 		boolean hasFailedCamp = false;
-		String newFailedSiegeCampsString = null;
+		List<String> validFailedSiegeCampList = new ArrayList<>();
 		// meta data is stored like so: townUUID:time,townUUID:time,townUUID:time 
 		String[] failedCamps = failedSiegeCamps.split(",");
 		for (String campString : failedCamps) {
 			String[] UUIDAndTime = campString.split(":");
-			UUID uuid = UUID.fromString(UUIDAndTime[0]);
+			UUID uuid = getUUID(UUIDAndTime[0]);
 			long time = Long.parseLong(UUIDAndTime[1]);
-			// This campString is not expired, add it to the newFailedSiegeCampsString and check if our siegeCandidate is here. 
+			// This campString is not expired, add it to the validFailedSiegeCampList and check if our siegeCandidate is here.
 			if (time > System.currentTimeMillis()) {
-				newFailedSiegeCampsString += (newFailedSiegeCampsString != null ? "," : "") + uuid + ":" + time;
+				validFailedSiegeCampList.add(campString);
 				if (uuid.equals(siegeCandidate.getUUID()))
 					hasFailedCamp = true;
 			}
 		}
 
 		// Set the meta if we dont have an empty list, otherwise remove the now expired meta.
-		if (newFailedSiegeCampsString != null)
-			TownMetaDataController.setFailedCampSiegeList(town, newFailedSiegeCampsString);
+		if (validFailedSiegeCampList.size() > 0)
+			TownMetaDataController.setFailedCampSiegeList(town, StringMgmt.join(validFailedSiegeCampList, ","));
 		else 
 			TownMetaDataController.removeFailedCampSiegeList(town);
-			
+
 		// Return true if we found siegeCandidate in the metadata at any point.
 		return hasFailedCamp;
+	}
+
+	// A bug in SiegeWar 1.2.0 and earlier resulted in the uuid's being prefixed
+	// with null, making SiegeWar unable to load.
+	private static UUID getUUID(String string) {
+		String uuidString = string;
+		if (uuidString.startsWith("null"))
+			uuidString.replaceFirst("null", "");
+		UUID uuid = UUID.fromString(uuidString);
+		return uuid;
 	}
 }
