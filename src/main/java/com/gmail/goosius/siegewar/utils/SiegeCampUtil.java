@@ -165,7 +165,7 @@ public class SiegeCampUtil {
 	private static UUID getUUID(String string) {
 		String uuidString = string;
 		if (uuidString.startsWith("null"))
-			uuidString.replaceFirst("null", "");
+			uuidString = uuidString.replaceFirst("null", "");
 		UUID uuid = UUID.fromString(uuidString);
 		return uuid;
 	}
