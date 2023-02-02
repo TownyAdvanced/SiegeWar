@@ -400,7 +400,7 @@ msg_wall_breach_bonus_awarded: "&bBạn đã được thưởng Phần thưởng
 msg_err_already_received_wall_breach_bonus: '&cBạn đã nhận được Phần thưởng Phá Tường cho Phiên Chiến đấu này.'
 #Wall-Breach Cannons Integration
 msg_err_cannot_fire_cannon_without_battle_session: '&cBạn không thể bắn đại bác trong khu vực bị bao vây cho đến khi diễn ra Phiên Chiến đấu tiếp theo.'
-msg_err_cannot_fire_cannon_without_perms: '&cYou cannot fire this cannon. Check that you are an official participant in the local siege, and that you have a rank which allows cannon-firing.'
+msg_err_cannot_fire_cannon_without_perms: '&cBạn không thể bắn khẩu pháo này. Kiểm tra xem bạn có phải là người tham gia chính thức trong cuộc bao vây hay không và bạn có cấp bậc cho phép bắn đại bác hay không.'
 #configuration-errors
 msg_error_misconfigured_place_blocks_whitelist: '&cMisconfigured Material on Wall-Breaching-Place-Blocks-Whitelist. Problem Entry: %s.'
 msg_error_misconfigured_destroy_blocks_blacklist: '&cMisconfigured Material on Wall-Breaching-Destroy-Blocks-Blacklist. Problem Entry: %s.'
