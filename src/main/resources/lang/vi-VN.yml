@@ -15,7 +15,7 @@ description: >
 #Purple = &5, Gold = &6, LightGray = &7, Gray = &8
 #DarkPurple = &9, LightGreen = &a, LightBlue = &b
 #Rose = &c, LightPurple = &d, Yellow = &e, White = &f
-siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
+siegewar_plugin_prefix: '&f[&6Chiến Sự&f] '
 #Added in (Siegewar version)
 #Siege war happy-path messages
 msg_siege_war_attack_pay_war_chest: '&bMột rương chiến tranh đã được chuẩn bị bởi %s, với giá trị là %s. Ai thắng cuộc bao vây sẽ nhận được số tiền này.'
@@ -30,26 +30,26 @@ msg_siege_war_banner_control_session_success: '&bPhiên kiểm soát biểu ng�
 msg_siege_war_banner_control_gained_by_attacker: '&bChiến sự %s > Những kẻ tấn công đã giành được quyền kiểm soát biểu ngữ.'
 msg_siege_war_banner_control_gained_by_defender: '&bChiến sự %s > Đội phòng thủ đã giành được quyền kiểm soát biểu ngữ.'
 msg_town_destroyed_by_nation_tax: '&b%s không thể nộp thuế và đã bị khai trừ.'
-msg_town_destroyed_by_nation_tax_multiple: '&bThe following towns could not afford the nation tax and have fallen: '
+msg_town_destroyed_by_nation_tax_multiple: '&bCác thị trấn sau đây không đủ khả năng nộp thuế quốc gia và đã sụp đổ: '
 #Siege war error message
 #Recruiting
-msg_err_siege_besieged_town_cannot_recruit: "&cBesieged towns cannot recruit new residents."
+msg_err_siege_besieged_town_cannot_recruit: "&cCác thị trấn bị tấn công không thể thêm cư dân mới."
 #Claiming/Unclaiming
-msg_err_siege_claim_too_near_siege_zone: "&cThe claim is too close to a siege."
-msg_err_siege_besieged_town_cannot_claim: "&cBesieged towns cannot claim new land."
-msg_err_siege_besieged_town_cannot_unclaim: "&cBesieged towns (or towns which recently lost a siege) cannot un-claim land."
-msg_err_war_common_occupied_town_cannot_unclaim: "&cOccupied towns cannot un-claim land."
+msg_err_siege_claim_too_near_siege_zone: "&cYêu cầu quá gần với một chiến trường."
+msg_err_siege_besieged_town_cannot_claim: "&cCác thị trấn bị tấn công không thể mua được vùng đất mới."
+msg_err_siege_besieged_town_cannot_unclaim: "&cCác thị trấn bị tấn công (hoặc các thị trấn vừa bị tấn công) không thể hủy sở hữu đất đai."
+msg_err_war_common_occupied_town_cannot_unclaim: "&cCác thị trấn bị chiếm đóng không thể hủy đất đai."
 #Revolt
-msg_err_siege_war_town_voluntary_leave_impossible: "&cTowns cannot leave nations without agreement. To leave your nation, persuade the king (or an assistant) to kick your town."
-msg_err_siege_war_revolt_immunity_active: "&cYour town has revolt immunity. It cannot revolt until the revolt immunity expires."
+msg_err_siege_war_town_voluntary_leave_impossible: "&cCác thị trấn không thể rời khỏi các quốc gia mà không có sự đồng ý của nhà vua. Để rời khỏi quốc gia của bạn, hãy thuyết phục nhà vua (hoặc một trợ lý) tách khỏi thị trấn của bạn."
+msg_err_siege_war_revolt_immunity_active: "&cThị trấn của bạn có khả năng miễn trừ nổi loạn. Không ai có thể nổi dậy cho đến khi quyền miễn trừ nổi dậy kết thúc."
 #Attack
-msg_err_siege_war_banner_must_be_placed_above_ground: '&cThe siege banner must be placed above ground.'
-msg_err_siege_war_action_not_a_town_member: '&cYou must be a member of a town to do this action.'
-NUKE ???? msg_err_siege_war_action_not_a_nation_member: '&cYou must be a member of a nation to do this action.'
-msg_err_siege_war_cannot_attack_own_town: '&cYou cannot attack your own town.'
-msg_err_siege_war_cannot_attack_town_in_own_nation: '&cYou cannot attack a town in your own nation.'
-msg_err_siege_war_cannot_attack_non_enemy_nation: '&cYou cannot attack a town unless the nation of that town is an enemy of your nation.'
-msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cYou cannot perform this action because this chunk is facing more than one town block. Try placing the item in a different area.'
+msg_err_siege_war_banner_must_be_placed_above_ground: '&cBiểu ngữ bao vây phải được đặt trên mặt đất.'
+msg_err_siege_war_action_not_a_town_member: '&cBạn phải là thành viên của một thị trấn để thực hiện hành động này.'
+NUKE ???? msg_err_siege_war_action_not_a_nation_member: '&cBạn phải là thành viên của một quốc gia để thực hiện hành động này.'
+msg_err_siege_war_cannot_attack_own_town: '&cBạn không thể tấn công thị trấn của chính mình.'
+msg_err_siege_war_cannot_attack_town_in_own_nation: '&cBạn không thể tấn công một thị trấn trong quốc gia của mình.'
+msg_err_siege_war_cannot_attack_non_enemy_nation: '&cBạn không thể tấn công một thị trấn trừ khi quốc gia của thị trấn đó là kẻ thù của quốc gia bạn.'
+msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cBạn không thể thực hiện hành động này vì khu vực này đối diện với nhiều thành phố. Hãy thử đặt vật phẩm ở một khu vực khác.'
 msg_err_siege_war_nation_already_attacking_town: '&cYour nation is already attacking this town.'
 msg_err_siege_war_cannot_attack_siege_immunity: '&cThe target town has siege immunity. It cannot be attacked until the siege immunity expires.'
 msg_err_siege_war_cannot_join_siege: '&cYou cannot attack a town while it is under siege by another nation.'
