@@ -229,15 +229,14 @@ public class TownOccupationController {
 		if (!TownyEconomyHandler.isActive())
 			return;
 		for (Nation nation : nationTownsOccupationMap.keySet()) {
-			if (NationMetaDataController.getNationOccupationTax(nation) > 0)
-				collectNationOccupationTax(nation);
+			double tax = NationMetaDataController.getNationOccupationTax(nation); 
+			if (tax > 0)
+				collectNationOccupationTax(nation, tax);
 		}
 	}
 
-	private static void collectNationOccupationTax(Nation nation) {
-		double tax = NationMetaDataController.getNationOccupationTax(nation);
-		List<Town> occupiedTowns = new ArrayList<>(nationTownsOccupationMap.get(nation));
-		for (Town town : occupiedTowns)
+	private static void collectNationOccupationTax(Nation nation, double tax) {
+		for (Town town : new ArrayList<>(nationTownsOccupationMap.get(nation)))
 			collectNationOccupationTax(nation, tax, town);
 	}
 
