@@ -613,3 +613,6 @@ msg_plunder_debt_payed_bankrupt: "Your town paid the daily plunder debt of %s by
 
 #Shown when a town cannot pay their daily plunder debt.
 msg_plunder_debt_cannot_be_payed: "The Town %s could not pay their daily plunder debt and has been removed!"
+
+#Shown in the town status screen when a town has plunder debt.
+status_town_plunder_debt: "Plunder Debt Owing: %s, %s daily payments of %s remain."
