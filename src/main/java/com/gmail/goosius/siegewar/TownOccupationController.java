@@ -1,10 +1,17 @@
 package com.gmail.goosius.siegewar;
 
+import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyEconomyHandler;
+import com.palmergames.bukkit.towny.TownyMessaging;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.utils.MoneyUtil;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -216,6 +223,57 @@ public class TownOccupationController {
 	private static void setConqueredInTowny(Town town, boolean conquered) {
 		town.setConquered(conquered);
 		town.save();
+	}
+
+	public static void chargeNationOccupationTax() {
+		if (!TownyEconomyHandler.isActive())
+			return;
+		for (Nation nation : nationTownsOccupationMap.keySet()) {
+			if (NationMetaDataController.getNationOccupationTax(nation) > 0)
+				collectNationOccupationTax(nation);
+		}
+	}
+
+	private static void collectNationOccupationTax(Nation nation) {
+		double tax = NationMetaDataController.getNationOccupationTax(nation);
+		List<Town> occupiedTowns = new ArrayList<>(nationTownsOccupationMap.get(nation));
+		for (Town town : occupiedTowns)
+			collectNationOccupationTax(nation, tax, town);
+	}
+
+	private static void collectNationOccupationTax(Nation nation, double tax, Town town) {
+		if (town.getAccount().canPayFromHoldings(tax)) {
+			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_occupation_tax_payed", getMoney(tax)));
+			town.getAccount().payTo(tax, nation.getAccount(), "Nation Occupation Tax");
+			return;
+		}
+
+		if (TownySettings.isTownBankruptcyEnabled()) {
+			// Set the Town's debtcap fresh.
+			town.getAccount().setDebtCap(MoneyUtil.getEstimatedValueOfTown(town));
+			double debtCap = town.getAccount().getDebtCap();
+
+			if (town.getAccount().getHoldingBalance() - tax < debtCap * -1) {
+				// The Town cannot afford to pay the nation occupation tax.
+				Messaging.sendGlobalMessage(Translatable.of("msg_occupation_tax_cannot_be_payed", town.getName()));
+				removeTownOccupation(town);
+				TownyUniverse.getInstance().getDataSource().removeTown(town);
+				return;
+			}
+
+			// Charge the town (using .withdraw() which will allow for going into bankruptcy.)
+			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_occupation_tax_payed_bankrupt", getMoney(tax)));
+			town.getAccount().payTo(tax, nation.getAccount(), "Nation Occupation Tax");
+
+		} else {
+			Messaging.sendGlobalMessage(Translatable.of("msg_occupation_tax_cannot_be_payed", town.getName()));
+			removeTownOccupation(town);
+			TownyUniverse.getInstance().getDataSource().removeTown(town);
+		}
+	}
+
+	private static String getMoney(double amount) {
+		return TownyEconomyHandler.getFormattedBalance(amount);
 	}
 }
 

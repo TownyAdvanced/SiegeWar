@@ -619,3 +619,15 @@ status_town_plunder_debt: "Plunder Debt Owing: %s, %s daily payments of %s remai
 
 #Shown when the nation sets their occupationtax
 msg_occupation_tax_set: "Your nation has set a daily occupation tax of %s."
+
+#Shown when a town pays their nation occupation tax.
+msg_occupation_tax_payed: "Your town paid the nation occupation tax of %s."
+
+#Shown when a town pays their nation occupation tax with bankruptcy.
+msg_occupation_tax_payed_bankrupt: "Your town paid the nation occupation tax of %s by going bankrupt."
+
+#Shown when a town cannot pay their nation occupation tax.
+msg_occupation_tax_cannot_be_payed: "The Town %s could not pay their nation occupation tax and has been removed!"
+
+#Shown in the nation status screen when a nation has nation occupation tax.
+status_nation_occupation_tax: "Occupation Tax: %s"

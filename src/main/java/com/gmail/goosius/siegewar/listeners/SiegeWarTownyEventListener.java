@@ -119,6 +119,7 @@ public class SiegeWarTownyEventListener implements Listener {
 			if (SiegeWarSettings.isPlunderPaidOutOverDays()) {
 				SiegeWarMoneyUtil.payDailyPlunderDebt();
 			}
+			TownOccupationController.chargeNationOccupationTax();
 		}
 	}
     

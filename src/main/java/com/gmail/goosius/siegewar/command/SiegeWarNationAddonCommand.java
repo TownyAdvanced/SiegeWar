@@ -1,5 +1,7 @@
 package com.gmail.goosius.siegewar.command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -9,66 +11,109 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
-import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.TownOccupationController;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyCommandAddonAPI;
 import com.palmergames.bukkit.towny.TownyCommandAddonAPI.CommandType;
-import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
-import com.palmergames.bukkit.towny.command.BaseCommand;
-import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.AddonCommand;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.util.ChatTools;
-import com.palmergames.util.MathUtil;
+import com.palmergames.util.StringMgmt;
 
-public class SiegeWarNationAddonCommand extends BaseCommand implements TabExecutor {
+public class SiegeWarNationAddonCommand implements TabExecutor {
 
 	public SiegeWarNationAddonCommand() {
-		AddonCommand nationSetSiegeWarCommand = new AddonCommand(CommandType.NATION_SET, "occupationtax", this);
-		TownyCommandAddonAPI.addSubCommand(nationSetSiegeWarCommand);
+		AddonCommand nationSiegeWarCommand = new AddonCommand(CommandType.NATION, "siegewar", this);
+		TownyCommandAddonAPI.addSubCommand(nationSiegeWarCommand);
 	}
 	
 	private CommandSender sender;
 
+	private static final List<String> nationSiegeWarTabCompletes = Arrays.asList(
+			"occupiedhometowns",
+			"occupiedforeigntowns"
+	);
+
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-		return Collections.emptyList();
+		
+		switch (args[0].toLowerCase()) {
+		case "occupiedhometowns":
+		case "occupiedforeigntowns":
+			if (args.length == 2)
+				return SiegeWarAdminCommand.getTownyStartingWith(args[1], "n");
+		}
+		
+		if (args.length == 1)
+			return NameUtil.filterByStart(nationSiegeWarTabCompletes, args[0]);
+		else
+			return Collections.emptyList();
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		this.sender = sender;
-		try {
-			parseNationSetOccupationTaxCommand(args);
-		} catch (TownyException e) {
-			Messaging.sendErrorMsg(sender, e.getMessage(sender));
-		}
+		parseNationSiegeWarCommand(args);
 		return true;
 	}
 
-	private void parseNationSetOccupationTaxCommand(String[] args) throws TownyException {
+	private void parseNationSiegeWarCommand(String[] args) {
 		if (args.length == 0) {
 			showHelp();
 			return;
 		}
-
-		Player player = catchConsole(sender);
-		Nation nation = getNationFromPlayerOrThrow(player);
-		int tax = MathUtil.getPositiveIntOrThrow(args[0]);
-		tax = Math.min(SiegeWarSettings.MaxNationOccupationTax(), tax);
-		NationMetaDataController.setNationOccupationTax(nation, tax);
-		TownyMessaging.sendMsg(player, Translatable.of("msg_occupation_tax_set", getMoney(tax)));
+		Nation nation = null;
+		if (args.length == 1 && sender instanceof Player) {
+			nation = TownyAPI.getInstance().getResident((Player) sender).getNationOrNull();
+			if (nation == null) {
+				TownyMessaging.sendErrorMsg(Translatable.of("msg_err_dont_belong_nation"));
+				return;
+			}
+		} else if (args.length == 1) {
+			showHelp();
+			return;
+		} else if (args.length == 2) {
+			nation = TownyAPI.getInstance().getNation(args[1]);
+			if (nation == null) {
+				TownyMessaging.sendErrorMsg(Translatable.of("msg_err_invalid_name", args[2]));
+				return;
+			}
+		}		
+		
+		switch (args[0].toLowerCase()) {
+		case "occupiedhometowns":
+			Messaging.sendMsg(sender, getFormattedStrings(Translatable.of("status_nation_occupied_home_towns").forLocale(sender), TownOccupationController.getOccupiedHomeTowns(nation)));
+			break;
+		case "occupiedforeigntowns":
+			Messaging.sendMsg(sender, getFormattedStrings(Translatable.of("status_nation_occupied_foreign_towns").forLocale(sender), TownOccupationController.getOccupiedForeignTowns(nation)));
+			break;
+		default:
+			showHelp();
+		}
+		
 	}
 
-	private String getMoney(int tax) {
-		return TownyEconomyHandler.isActive() ? TownyEconomyHandler.getFormattedBalance(tax) : String.valueOf(tax);
+	private String getFormattedStrings(String prefix, List<Town> list) {
+		return String.format(prefix, list.size()) + getFormattedTownList(list);
+	}
+
+	private static String getFormattedTownList(List<Town> towns) {
+		List<String> lines = new ArrayList<>();
+		boolean longname = towns.size() < 20;
+		for (Town town : towns) {
+			lines.add(longname ? town.getFormattedName() : town.getName());
+		}
+		return StringMgmt.join(lines, ", ");
 	}
 
 	private void showHelp() {
-		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/nation set occupationtax"));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("/nation set occupationtax", "[amount]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/nation siegewar"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("/nation siegewar", "occupiedhometowns [nation]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("/nation siegewar", "occupiedforeigntowns [nation]", ""));		
 	}
 
 }
