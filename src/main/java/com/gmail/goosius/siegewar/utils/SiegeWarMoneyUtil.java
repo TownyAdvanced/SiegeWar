@@ -2,11 +2,13 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
+import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Government;
@@ -15,9 +17,11 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.utils.MoneyUtil;
 
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class SiegeWarMoneyUtil {
@@ -219,5 +223,55 @@ public class SiegeWarMoneyUtil {
 			throw new TownyException(Translatable.of("msg_err_no_siege_economy_not_active"));
 		if (!nation.getAccount().canPayFromHoldings(cost))
 			throw new TownyException(Translatable.of("msg_err_you_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(cost)));
+	}
+
+	public static void payDailyPlunderDebt() {
+		for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns()))
+			payDailyPlunderDebt(town);
+	}
+
+	private static void payDailyPlunderDebt(Town town) {
+		if (!TownMetaDataController.hasPlunderDebt(town))
+			return;
+		int days = TownMetaDataController.getPlunderDebtDays(town);
+
+		payPlunderDebt(town, TownMetaDataController.getDailyPlunderDebt(town));
+
+		if (days <= 1)
+			TownMetaDataController.removePlunderDebt(town);
+		else 
+			TownMetaDataController.setPlunderDebtDays(town, days - 1);
+	}
+
+	private static void payPlunderDebt(Town town, double amount) {
+		if (amount <= 0)
+			return;
+
+		if (town.getAccount().canPayFromHoldings(amount)) {
+			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_plunder_debt_payed", amount));
+			town.getAccount().withdraw(amount, "Daily Plunder Debt Repayment");
+			return;
+		}
+
+		if (TownySettings.isTownBankruptcyEnabled()) {
+			// Set the Town's debtcap fresh.
+			town.getAccount().setDebtCap(MoneyUtil.getEstimatedValueOfTown(town));
+			double debtCap = town.getAccount().getDebtCap();
+
+			if (town.getAccount().getHoldingBalance() - amount < debtCap * -1) {
+				// The Town cannot afford to pay their plunder debt.
+				Messaging.sendGlobalMessage(Translatable.of("msg_plunder_debt_cannot_be_payed", town.getName()));
+				TownyUniverse.getInstance().getDataSource().removeTown(town);
+				return;
+			}
+
+			// Charge the town (using .withdraw() which will allow for going into bankruptcy.)
+			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_plunder_debt_payed_bankrupt", amount));
+			town.getAccount().withdraw(amount, "Daily Plunder Debt Repayment");
+
+		} else {
+			Messaging.sendGlobalMessage(Translatable.of("msg_plunder_debt_cannot_be_payed", town.getName()));
+			TownyUniverse.getInstance().getDataSource().removeTown(town);
+		}
 	}
 }

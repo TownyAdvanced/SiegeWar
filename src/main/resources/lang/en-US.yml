@@ -601,3 +601,18 @@ msg_err_no_siege_economy_not_active: "You cannot start a siege while the Economy
 
 #Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
 msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the battle session, resulting in a prison break, freeing %s."
+
+#Shown when a town takes on daily plunder debt.
+msg_plunder_debt_earned: "Your town's plunder costs were paid by the server! You will have to pay %s every day for %s days, to pay this back."
+
+#Shown when a town pays their daily plunder debt.
+msg_plunder_debt_payed: "Your town paid the daily plunder debt of %s."
+
+#Shown when a town pays their daily plunder debt with bankruptcy.
+msg_plunder_debt_payed_bankrupt: "Your town paid the daily plunder debt of %s by going bankrupt."
+
+#Shown when a town cannot pay their daily plunder debt.
+msg_plunder_debt_cannot_be_payed: "The Town %s could not pay their daily plunder debt and has been removed!"
+
+#Shown in the town status screen when a town has plunder debt.
+status_town_plunder_debt: "Plunder Debt Owing: %s, %s daily payments of %s remain."

@@ -119,6 +119,12 @@ public class SiegeWarStatusScreenListener implements Listener {
 			final Translator translator = Translator.locale(Translation.getLocale(event.getCommandSender()));
 			
 			Town town = event.getTown();
+			
+			if (TownMetaDataController.hasPlunderDebt(town)) {
+				int days = TownMetaDataController.getPlunderDebtDays(town);
+				double amount = TownMetaDataController.getDailyPlunderDebt(town);
+				event.getStatusScreen().addComponentOf("siegeWar_plunderDebt", Component.text(translator.of("status_town_plunder_debt", getMoney(days * amount), days, getMoney(amount))).appendNewline());
+			}
 
 			//Occupying Nation: Empire of the Fluffy Bunnies
 			if(SiegeWarSettings.getWarSiegeInvadeEnabled() && TownOccupationController.isTownOccupied(town)) {
@@ -256,6 +262,10 @@ public class SiegeWarStatusScreenListener implements Listener {
 	            }
 	        }
 		}
+	}
+
+	private String getMoney(double amount) {
+		return TownyEconomyHandler.isActive() ? TownyEconomyHandler.getFormattedBalance(amount) : String.valueOf(amount);
 	}
 
 	private static String getStatusTownSiegeSummary(@NotNull Siege siege, Translator translator) {
