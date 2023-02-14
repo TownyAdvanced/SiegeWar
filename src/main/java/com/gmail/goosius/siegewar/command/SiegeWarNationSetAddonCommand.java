@@ -57,7 +57,11 @@ public class SiegeWarNationSetAddonCommand extends BaseCommand implements TabExe
 		Player player = catchConsole(sender);
 		Nation nation = getNationFromPlayerOrThrow(player);
 		int tax = MathUtil.getPositiveIntOrThrow(args[0]);
-		tax = Math.min(SiegeWarSettings.MaxNationOccupationTax(), tax);
+		
+		int maxNationOccupationTax = SiegeWarSettings.maxNationOccupationTax();
+		if (tax > maxNationOccupationTax)
+			Messaging.sendMsg(player, Translatable.of("msg_err_occupation_tax_cannot_be_more_than", maxNationOccupationTax));
+		tax = Math.min(maxNationOccupationTax, tax);
 		NationMetaDataController.setNationOccupationTax(nation, tax);
 		TownyMessaging.sendMsg(player, Translatable.of("msg_occupation_tax_set", getMoney(tax)));
 	}
