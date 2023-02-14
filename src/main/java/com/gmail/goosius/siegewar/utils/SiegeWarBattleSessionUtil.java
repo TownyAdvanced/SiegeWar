@@ -13,9 +13,14 @@ import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.jail.UnJailReason;
+import com.palmergames.bukkit.towny.utils.JailUtil;
+import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -102,6 +107,15 @@ public class SiegeWarBattleSessionUtil {
 
 					//Prepare result for messaging
 					battleResults.put(siege, siegeBalanceAdjustment);
+
+					// Potentially unjail the siegedTowns' prisoners if they attackers lost the battlesession.
+					if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()
+							&& SiegeWarSettings.isUnjailingAttackerResidents()
+							&& siege.getDefender() instanceof Town
+							&& siege.getAttacker() instanceof Nation) {
+						unjailPlayers((Nation) siege.getAttacker(), (Town) siege.getDefender());
+					}
+
 				}
 
 				//Remove glowing effects from players in bc sessions
@@ -144,6 +158,21 @@ public class SiegeWarBattleSessionUtil {
 			}
 			t.printStackTrace();
 		}
+	}
+
+	private static void unjailPlayers(Nation attacker, Town defender) {
+		if (!defender.hasJails())
+			return;
+		List<String> freedNames = new ArrayList<>();
+		defender.getJailedResidents().stream()
+			.filter(r -> attacker.hasResident(r))
+			.forEach(r -> {
+				JailUtil.unJailResident(r, UnJailReason.JAILBREAK);
+				freedNames.add(r.getName());
+			});
+		if (freedNames.isEmpty())
+			return;
+		Messaging.sendGlobalMessage(Translatable.of("msg_attackers_have_triggered_a_jail_break_freeing", StringMgmt.join(freedNames, ", ")));
 	}
 
 	public static void evaluateBattleSessions() {
