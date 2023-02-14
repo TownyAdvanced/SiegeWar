@@ -262,7 +262,8 @@ public class TownOccupationController {
 
 			// Charge the town (using .withdraw() which will allow for going into bankruptcy.)
 			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_occupation_tax_payed_bankrupt", getMoney(tax)));
-			town.getAccount().payTo(tax, nation.getAccount(), "Nation Occupation Tax");
+			town.getAccount().withdraw(tax, "Nation Occupation Tax paid to " + nation.getName());
+			nation.getAccount().deposit(tax, "Nation Occupation Tax from " + town.getName());
 
 		} else {
 			Messaging.sendGlobalMessage(Translatable.of("msg_occupation_tax_cannot_be_payed", town.getName()));
