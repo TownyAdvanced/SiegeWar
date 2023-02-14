@@ -20,6 +20,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.NationRemoveAllyEvent;
 import com.palmergames.bukkit.towny.event.NationRemoveTownEvent;
+import com.palmergames.bukkit.towny.event.NewDayEvent;
 import com.palmergames.bukkit.towny.event.PreNewDayEvent;
 import com.palmergames.bukkit.towny.event.TownRemoveResidentEvent;
 import com.palmergames.bukkit.towny.event.TownRemoveResidentRankEvent;
@@ -101,19 +102,25 @@ public class SiegeWarTownyEventListener implements Listener {
 	}
 
     @EventHandler
-    public void onNewDay(PreNewDayEvent event) {
+    public void onPreNewDay(PreNewDayEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled()) {
             if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
                 TownPeacefulnessUtil.updateTownPeacefulnessCounters();
             }
             if(SiegeWarSettings.isDominationAwardsGlobalEnabled()) {
                 SiegeWarDominationAwardsUtil.grantGlobalDominationAwards();
-            }
+            }   
+        }
+    }
+
+	@EventHandler
+	public void onNewDay(NewDayEvent event) {
+		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			if (SiegeWarSettings.isPlunderPaidOutOverDays()) {
 				SiegeWarMoneyUtil.payDailyPlunderDebt();
 			}
-        }
-    }
+		}
+	}
     
     /*
      * On NewHours SW makes some calculations.
