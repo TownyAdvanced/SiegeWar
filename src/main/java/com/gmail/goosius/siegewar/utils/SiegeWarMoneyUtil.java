@@ -234,12 +234,13 @@ public class SiegeWarMoneyUtil {
 		if (!TownMetaDataController.hasPlunderDebt(town))
 			return;
 		int days = TownMetaDataController.getPlunderDebtDays(town);
-		if (days == 1)
+
+		payPlunderDebt(town, TownMetaDataController.getDailyPlunderDebt(town));
+
+		if (days <= 1)
 			TownMetaDataController.removePlunderDebt(town);
 		else 
 			TownMetaDataController.setPlunderDebtDays(town, days - 1);
-
-		payPlunderDebt(town, TownMetaDataController.getDailyPlunderDebt(town));
 	}
 
 	private static void payPlunderDebt(Town town, double amount) {
