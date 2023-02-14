@@ -289,7 +289,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 						for (String perm : TownyPerms.getResidentPerms(possibleSoldier).keySet()) {
 							if (perm.startsWith("towny.nation.siege.pay.grade.")) {
 								soldierShare = Integer.parseInt(perm.replace("towny.nation.siege.pay.grade.", ""));
-								soldierShareMap.put(resident, soldierShare);
+								soldierShareMap.put(possibleSoldier, soldierShare);
 								break; //Next resident please
 							}
 						}
