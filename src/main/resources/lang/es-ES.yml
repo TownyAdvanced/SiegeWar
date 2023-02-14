@@ -492,3 +492,19 @@ msg_err_town_already_has_a_siege_assembly: '&cEsta ciudad ya tiene una Planifica
 msg_err_your_town_is_not_allowed_to_start_a_siege: 'Your town is not allowed to start sieges because they are not allowed to war.'
 #Shown when a town cannot start a siege because of the target town's isAllowedToWar setting.
 msg_err_this_town_is_not_allowed_to_be_sieged: 'You cannot siege this Town because they are not allowed to war.'
+#Shown when a nation cannot afford to start a siege.
+msg_err_you_cannot_afford_to_siege_for_x: "Your nation cannot afford to begin this Siege, it would cost %s."
+#Show when a nation tries to start a siege when the economy is not active.
+msg_err_no_siege_economy_not_active: "You cannot start a siege while the Economy is disabled in Towny."
+#Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
+msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the battle session, resulting in a prison break, freeing %s."
+#Shown when a town takes on daily plunder debt.
+msg_plunder_debt_earned: "Your town's plunder costs were paid by the server! You will have to pay %s every day for %s days, to pay this back."
+#Shown when a town pays their daily plunder debt.
+msg_plunder_debt_payed: "Your town paid the daily plunder debt of %s."
+#Shown when a town pays their daily plunder debt with bankruptcy.
+msg_plunder_debt_payed_bankrupt: "Your town paid the daily plunder debt of %s by going bankrupt."
+#Shown when a town cannot pay their daily plunder debt.
+msg_plunder_debt_cannot_be_payed: "The Town %s could not pay their daily plunder debt and has been removed!"
+#Shown in the town status screen when a town has plunder debt.
+status_town_plunder_debt: "Plunder Debt Owing: %s, %s daily payments of %s remain."
