@@ -377,8 +377,8 @@ public class PlaceBlock {
 			if (SiegeWarImmunityUtil.isTownSiegeImmune(nearbyTown))
 				throw new TownyException(translator.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
 
-			if (!SiegeWarMoneyUtil.canNationPayCostToSiegeTown(residentsNation, nearbyTown))
-				throw new TownyException(translator.of("msg_err_no_money"));
+			// Throws exception if nation cannot pay.
+			SiegeWarMoneyUtil.canNationPayCostToSiegeTown(residentsNation, nearbyTown);
 
 			if (SiegeWarSettings.doesThisNationHaveTooManyActiveSieges(residentsNation))
 				throw new TownyException(translator.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));
