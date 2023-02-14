@@ -61,11 +61,14 @@ public class SiegeWarStatusScreenListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			final Translator translator = Translator.locale(Translation.getLocale(event.getCommandSender()));
 			Nation nation = event.getNation();
+
 			double occupationTax = NationMetaDataController.getNationOccupationTax(nation); 
-			if (occupationTax > 0) {
-				Component comp = Component.text(translator.of("status_nation_occupation_tax", occupationTax)).appendNewline();
+			if (occupationTax > 0 && TownyEconomyHandler.isActive()) {
+				String tax = TownyEconomyHandler.getFormattedBalance(occupationTax);
+				Component comp = Component.text(translator.of("status_nation_occupation_tax", tax)).appendNewline();
 				event.getStatusScreen().addComponentOf("siegeWarOccupationTax", comp);
 			}
+
 			List<String> out = new ArrayList<>();
 			// Occupied Home Towns[3]: Town1, Town2, Town3
 			List<Town> occupiedHomeTowns = TownOccupationController.getOccupiedHomeTowns(nation);
