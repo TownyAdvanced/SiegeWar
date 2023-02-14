@@ -205,8 +205,19 @@ public class SiegeWarMoneyUtil {
 		}
 		return true;
 	}
-	
-	public static boolean canNationPayCostToSiegeTown(Nation nation, Town town) {
-		return TownyEconomyHandler.isActive() && nation.getAccount().canPayFromHoldings(calculateSiegeCost(town));
+
+	/**
+	 * Can the nation afford to start their siege?
+	 * 
+	 * @param nation Nation starting a siege.
+	 * @param town Town being sieged.
+	 * @throws TownyException thrown if the economy is off, or the nation cannot pay.
+	 */
+	public static void canNationPayCostToSiegeTown(Nation nation, Town town) throws TownyException {
+		double cost = calculateSiegeCost(town);
+		if (!TownyEconomyHandler.isActive())
+			throw new TownyException(Translatable.of("msg_err_no_siege_economy_not_active"));
+		if (!nation.getAccount().canPayFromHoldings(cost))
+			throw new TownyException(Translatable.of("msg_err_you_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(cost)));
 	}
 }
