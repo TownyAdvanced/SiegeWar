@@ -141,6 +141,13 @@ public enum ConfigNodes {
 			"# If this value is true then players who log out in Siege-Zones will be killed.",
 			"# TIP 1: This setting is important to prevent reinforcements/ambushers appearing unnaturally in SiegeZones.",
 			"# TIP 2: The setting is essential when using the Wall Breaching feature, to stop players logging in/out at the homeblock"),
+	WAR_SIEGE_UNJAIL_RESIDENTS_WHEN_ATTACKERS_WIN_SESSION(
+			"war.siege.switches.unjail_residents_when_attackers_win_battle_session",
+			"false",
+			"",
+			"# When true, if an attackers wins the battlesession against a sieged town, that",
+			"# town's jailed players that belong to the attacking nation will be freed from the town's jail."),
+
 	WAR_SIEGE_MONEY(
 			"war.siege.money",
 			"",

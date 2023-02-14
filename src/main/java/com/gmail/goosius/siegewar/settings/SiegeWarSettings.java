@@ -891,4 +891,8 @@ public class SiegeWarSettings {
 	public static int getDominationAwardsArtefactExpiryExplosionsMaxPower() {
 		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_MAX_POWER);
 	}
+
+	public static boolean isUnjailingAttackerResidents() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_UNJAIL_RESIDENTS_WHEN_ATTACKERS_WIN_SESSION);
+	}
 }

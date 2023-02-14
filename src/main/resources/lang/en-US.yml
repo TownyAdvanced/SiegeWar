@@ -598,3 +598,6 @@ msg_err_you_cannot_afford_to_siege_for_x: "Your nation cannot afford to begin th
 
 #Show when a nation tries to start a siege when the economy is not active.
 msg_err_no_siege_economy_not_active: "You cannot start a siege while the Economy is disabled in Towny."
+
+#Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
+msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the battle session, resulting in a prison break, freeing %s."
