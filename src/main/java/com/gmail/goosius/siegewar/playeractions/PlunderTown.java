@@ -219,7 +219,7 @@ public class PlunderTown {
 
 	private static void createDailyPaymentsForTown(Town town, double totalPlunderAmount) {
 		int days = SiegeWarSettings.plunderDays();
-		double payment = totalPlunderAmount / days;
+		int payment = (int) totalPlunderAmount / days;
 		TownMetaDataController.setDailyPlunderDebt(town, payment);
 		TownMetaDataController.setPlunderDebtDays(town, days);
 		TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_plunder_debt_earned", TownyEconomyHandler.getFormattedBalance(payment), days));
