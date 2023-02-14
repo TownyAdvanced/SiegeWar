@@ -24,6 +24,7 @@ public class NationMetaDataController {
         dominationRecordKey = "siegewar_dominationrecord";
 
     private static final LongDataField pendingSiegeImmunityMillis = new LongDataField("siegewar_pendingSiegeImmunityMillis");
+    private static final IntegerDataField nationPeacefulOccupationTax = new IntegerDataField("siegeWar_nationPeacefulOccupationTax", 0);
 
     public NationMetaDataController(SiegeWar plugin) {
         this.plugin = plugin;
@@ -145,4 +146,12 @@ public class NationMetaDataController {
         String string = dominationRecord.size() > 0 ? dominationRecord.toString().replace("[", "").replace("]","") : "";
         setSdf(nation, dominationRecordKey, string);
     }
+
+	public static void setNationPeacefulOccupationTax(Nation nation, int tax) {
+		MetaDataUtil.setInt(nation, nationPeacefulOccupationTax, tax, true);
+	}
+
+	public static int getNationPeacefulOccupationTax(Nation nation) {
+		return MetaDataUtil.getInt(nation, nationPeacefulOccupationTax);
+	}
 }

@@ -217,6 +217,13 @@ public enum ConfigNodes {
 			"# Level 4 (12 residents), 80 plots. Cost = (20 * 80) + 150% = 4000",
 			"# ",
 			"# If the value is 0, then money amounts are not modified."),
+	WAR_SIEGE_MAX_PEACEFUL_OCCUPATION_TAX(
+			"war.siege.money.max_nation_peaceful_occupation_tax",
+			"0",
+			"",
+			"# The maximum that a nation can set for an peacefuloccupationtax using /n set peacefuloccupationtax.",
+			"# This tax is applied to the nation's occupied towns which are peaceful."),
+
 	WAR_SIEGE_QUANTITIES(
 			"war.siege.quantities",
 			"",
