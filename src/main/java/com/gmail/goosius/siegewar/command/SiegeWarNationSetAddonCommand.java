@@ -26,7 +26,7 @@ import com.palmergames.util.MathUtil;
 public class SiegeWarNationSetAddonCommand extends BaseCommand implements TabExecutor {
 
 	public SiegeWarNationSetAddonCommand() {
-		AddonCommand nationSetSiegeWarCommand = new AddonCommand(CommandType.NATION_SET, "occupationtax", this);
+		AddonCommand nationSetSiegeWarCommand = new AddonCommand(CommandType.NATION_SET, "peacefuloccupationtax", this);
 		TownyCommandAddonAPI.addSubCommand(nationSetSiegeWarCommand);
 	}
 	
@@ -58,12 +58,12 @@ public class SiegeWarNationSetAddonCommand extends BaseCommand implements TabExe
 		Nation nation = getNationFromPlayerOrThrow(player);
 		int tax = MathUtil.getPositiveIntOrThrow(args[0]);
 		
-		int maxNationOccupationTax = SiegeWarSettings.maxNationOccupationTax();
+		int maxNationOccupationTax = SiegeWarSettings.maxNationPeacefulOccupationTax();
 		if (tax > maxNationOccupationTax)
-			Messaging.sendMsg(player, Translatable.of("msg_err_occupation_tax_cannot_be_more_than", maxNationOccupationTax));
+			Messaging.sendMsg(player, Translatable.of("msg_err_peaceful_occupation_tax_cannot_be_more_than", maxNationOccupationTax));
 		tax = Math.min(maxNationOccupationTax, tax);
-		NationMetaDataController.setNationOccupationTax(nation, tax);
-		TownyMessaging.sendMsg(player, Translatable.of("msg_occupation_tax_set", getMoney(tax)));
+		NationMetaDataController.setNationPeacefulOccupationTax(nation, tax);
+		TownyMessaging.sendMsg(player, Translatable.of("msg_peaceful_occupation_tax_set", getMoney(tax)));
 	}
 
 	private String getMoney(int tax) {
@@ -71,8 +71,8 @@ public class SiegeWarNationSetAddonCommand extends BaseCommand implements TabExe
 	}
 
 	private void showHelp() {
-		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/nation set occupationtax"));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("/nation set occupationtax", "[amount]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/nation set peacefuloccupationtax"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("/nation set peacefuloccupationtax", "[amount]", ""));
 	}
 
 }

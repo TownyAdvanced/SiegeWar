@@ -225,25 +225,26 @@ public class TownOccupationController {
 		town.save();
 	}
 
-	public static void chargeNationOccupationTax() {
+	public static void chargeNationPeacefulOccupationTax() {
 		if (!TownyEconomyHandler.isActive())
 			return;
 		for (Nation nation : nationTownsOccupationMap.keySet()) {
-			double tax = NationMetaDataController.getNationOccupationTax(nation); 
+			double tax = NationMetaDataController.getNationPeacefulOccupationTax(nation); 
 			if (tax > 0)
-				collectNationOccupationTax(nation, tax);
+				collectNationPeacefulOccupationTax(nation, tax);
 		}
 	}
 
-	private static void collectNationOccupationTax(Nation nation, double tax) {
+	private static void collectNationPeacefulOccupationTax(Nation nation, double tax) {
 		for (Town town : new ArrayList<>(nationTownsOccupationMap.get(nation)))
-			collectNationOccupationTax(nation, tax, town);
+			if (town.isNeutral())
+				collectNationPeacefulOccupationTax(nation, tax, town);
 	}
 
-	private static void collectNationOccupationTax(Nation nation, double tax, Town town) {
+	private static void collectNationPeacefulOccupationTax(Nation nation, double tax, Town town) {
 		if (town.getAccount().canPayFromHoldings(tax)) {
-			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_occupation_tax_payed", getMoney(tax)));
-			town.getAccount().payTo(tax, nation.getAccount(), "Nation Occupation Tax");
+			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_peaceful_occupation_tax_payed", getMoney(tax)));
+			town.getAccount().payTo(tax, nation.getAccount(), "Nation Peaceful Occupation Tax");
 			return;
 		}
 
@@ -254,19 +255,19 @@ public class TownOccupationController {
 
 			if (town.getAccount().getHoldingBalance() - tax < debtCap * -1) {
 				// The Town cannot afford to pay the nation occupation tax.
-				Messaging.sendGlobalMessage(Translatable.of("msg_occupation_tax_cannot_be_payed", town.getName()));
+				Messaging.sendGlobalMessage(Translatable.of("msg_peaceful_occupation_tax_cannot_be_payed", town.getName()));
 				removeTownOccupation(town);
 				TownyUniverse.getInstance().getDataSource().removeTown(town);
 				return;
 			}
 
 			// Charge the town (using .withdraw() which will allow for going into bankruptcy.)
-			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_occupation_tax_payed_bankrupt", getMoney(tax)));
-			town.getAccount().withdraw(tax, "Nation Occupation Tax paid to " + nation.getName());
-			nation.getAccount().deposit(tax, "Nation Occupation Tax from " + town.getName());
+			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_peaceful_occupation_tax_payed_bankrupt", getMoney(tax)));
+			town.getAccount().withdraw(tax, "Nation Peaceful Occupation Tax paid to " + nation.getName());
+			nation.getAccount().deposit(tax, "Nation Peaceful Occupation Tax from " + town.getName());
 
 		} else {
-			Messaging.sendGlobalMessage(Translatable.of("msg_occupation_tax_cannot_be_payed", town.getName()));
+			Messaging.sendGlobalMessage(Translatable.of("msg_peaceful_occupation_tax_cannot_be_payed", town.getName()));
 			removeTownOccupation(town);
 			TownyUniverse.getInstance().getDataSource().removeTown(town);
 		}

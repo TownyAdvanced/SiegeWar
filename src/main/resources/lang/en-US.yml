@@ -633,4 +633,4 @@ msg_occupation_tax_cannot_be_payed: "The Town %s could not pay their nation occu
 status_nation_occupation_tax: "Occupation Tax: %s"
 
 #Shown when the nation tries to set a nation occupation tax over the maximum.
-msg_err_occupation_tax_cannot_be_more_than: "Nations cannot set an occupation tax greater than %s."
+msg_err_occupation_tax_cannot_be_more_than: "Nations cannot set a peaceful occupation tax greater than %s."
