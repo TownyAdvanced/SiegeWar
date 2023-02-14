@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
+import com.palmergames.bukkit.towny.object.metadata.DecimalDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
@@ -28,7 +29,9 @@ public class TownMetaDataController {
 	private static StringDataField prePeacefulOccupierUUID = new StringDataField("siegewar_prePeacefulOccupierUUID", "");
 	//List of failed SiegeCamps on the town.
 	private static StringDataField failedCampList = new StringDataField("siegewar_failedCampList", "");
-
+	private static IntegerDataField plunderDebtDays = new IntegerDataField("siegewar_plunderDays", 0);
+	private static DecimalDataField dailyPlunderCost = new DecimalDataField("siegewar_dailyPlunderCost", 0.0);
+	
 	public TownMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
 	}
@@ -176,5 +179,31 @@ public class TownMetaDataController {
 		StringDataField sdf = (StringDataField) prePeacefulOccupierUUID.clone();
 		if (town.hasMeta(sdf.getKey()))
 			town.removeMetaData(sdf);
+	}
+
+	public static boolean hasPlunderDebt(Town town) {
+		return MetaDataUtil.hasMeta(town, plunderDebtDays);
+	}
+
+	public static void removePlunderDebt(Town town) {
+		town.removeMetaData(plunderDebtDays.getKey());
+		town.removeMetaData(dailyPlunderCost.getKey());
+		town.save();
+	}
+
+	public static void setPlunderDebtDays(Town town, int days) {
+		MetaDataUtil.setInt(town, plunderDebtDays, days, true);
+	}
+
+	public static int getPlunderDebtDays(Town town) {
+		return MetaDataUtil.getInt(town, plunderDebtDays);
+	}
+
+	public static void setDailyPlunderDebt(Town town, double amount) {
+		MetaDataUtil.setDouble(town, dailyPlunderCost, amount, true);
+	}
+
+	public static double getDailyPlunderDebt(Town town) {
+		return MetaDataUtil.getDouble(town, dailyPlunderCost);
 	}
 }

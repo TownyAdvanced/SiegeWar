@@ -173,6 +173,24 @@ public enum ConfigNodes {
 			"40.0",
 			"",
 			"# This is the amount which an attacking nation will plunder if they choose to do so after a siege victory."),
+	WAR_SIEGE_PLUNDER(
+			"war.siege.money.plunder","","",""),
+	WAR_SIEGE_PLUNDER_PAID_OVER_TIME(
+			"war.siege.money.plunder.plunder_paid_over_time",
+			"false",
+			"",
+			"# When true, plunder will function differently, when a town cannot afford to pay the full plunder costs.",
+			"# Initially the money is paid to the plunderer in full, from either the Towny server-account (used in closed_economies),",
+			"# or else from thin air.",
+			"# The money is then paid back on a daily basis from the plundered town, using the set number of days.",
+			"# The goal of this system is to make sure that attackers get paid, while giving plundered towns a ",
+			"# chance to pay their debt over time."),
+	WAR_SIEGE_PLUNDER_DAYS(
+			"war.siege.money.plunder.number_of_payments",
+			"7",
+			"",
+			"# When plunder_paid_over_time is true, how many days will the plunder debt be paid over?"),
+	
 	WAR_SIEGE_CAPITAL_SIEGE_COST_INCREASE_PERCENTAGE(
 			"war.siege.money.capital_siege_cost_increase_percentage",
 			"0",

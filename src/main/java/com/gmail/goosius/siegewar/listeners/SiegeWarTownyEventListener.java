@@ -13,6 +13,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
@@ -107,7 +108,10 @@ public class SiegeWarTownyEventListener implements Listener {
             }
             if(SiegeWarSettings.isDominationAwardsGlobalEnabled()) {
                 SiegeWarDominationAwardsUtil.grantGlobalDominationAwards();
-            }   
+            }
+			if (SiegeWarSettings.isPlunderPaidOutOverDays()) {
+				SiegeWarMoneyUtil.payDailyPlunderDebt();
+			}
         }
     }
     

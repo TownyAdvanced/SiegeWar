@@ -77,6 +77,14 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_PLUNDER_ENABLED);
 	}
 
+	public static boolean isPlunderPaidOutOverDays() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_PLUNDER_PAID_OVER_TIME);
+	}
+
+	public static int plunderDays() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_PLUNDER_DAYS);
+	}
+
 	public static boolean getWarSiegeMilitarySalaryEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MILITARY_SALARY_ENABLED);
 	}
