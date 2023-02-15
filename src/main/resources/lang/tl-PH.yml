@@ -508,3 +508,15 @@ msg_plunder_debt_payed_bankrupt: "Your town paid the daily plunder debt of %s by
 msg_plunder_debt_cannot_be_payed: "The Town %s could not pay their daily plunder debt and has been removed!"
 #Shown in the town status screen when a town has plunder debt.
 status_town_plunder_debt: "Plunder Debt Owing: %s, %s daily payments of %s remain."
+#Shown when the nation sets their peacefuloccupationtax
+msg_peaceful_occupation_tax_set: "Your nation has set a daily peaceful occupation tax of %s."
+#Shown when a town pays their nation peaceful occupation tax.
+msg_peaceful_occupation_tax_payed: "Your town paid the nationpeaceful occupation tax of %s."
+#Shown when a town pays their nation peaceful occupation tax with bankruptcy.
+msg_peaceful_occupation_tax_payed_bankrupt: "Your town paid the nation peaceful occupation tax of %s by going bankrupt."
+#Shown when a town cannot pay their nation peaceful occupation tax.
+msg_peaceful_occupation_tax_cannot_be_payed: "The Town %s could not pay their nation peaceful occupation tax and has been removed!"
+#Shown in the nation status screen when a nation has nation peaceful occupation tax.
+status_nation_peaceful_occupation_tax: "Peaceful Occupation Tax: %s"
+#Shown when the nation tries to set a nation peaceful occupation tax over the maximum.
+msg_err_peaceful_occupation_tax_cannot_be_more_than: "Nations cannot set a peaceful occupation tax greater than %s."
