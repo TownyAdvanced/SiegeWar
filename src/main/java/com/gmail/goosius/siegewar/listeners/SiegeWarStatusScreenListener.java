@@ -65,7 +65,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 			double occupationTax = NationMetaDataController.getNationPeacefulOccupationTax(nation); 
 			if (occupationTax > 0 && TownyEconomyHandler.isActive()) {
 				String tax = TownyEconomyHandler.getFormattedBalance(occupationTax);
-				Component comp = Component.text(translator.of("status_peaceful_nation_occupation_tax", tax)).appendNewline();
+				Component comp = Component.text(translator.of("status_nation_peaceful_occupation_tax", tax));
 				event.getStatusScreen().addComponentOf("siegeWarPeacefulOccupationTax", comp);
 			}
 

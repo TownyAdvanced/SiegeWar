@@ -630,7 +630,10 @@ msg_peaceful_occupation_tax_payed_bankrupt: "Your town paid the nation peaceful 
 msg_peaceful_occupation_tax_cannot_be_payed: "The Town %s could not pay their nation peaceful occupation tax and has been removed!"
 
 #Shown in the nation status screen when a nation has nation peaceful occupation tax.
-status_nation_peaceful_occupation_tax: "Peaceful Occupation Tax: %s"
+status_nation_peaceful_occupation_tax: "&2Peaceful Occupation Tax: &a%s"
 
 #Shown when the nation tries to set a nation peaceful occupation tax over the maximum.
 msg_err_peaceful_occupation_tax_cannot_be_more_than: "Nations cannot set a peaceful occupation tax greater than %s."
+
+#Shown to nation when they are paid their peaceful occupation taxes.
+msg_peaceful_occupation_taxes_paid_totaling: "Your nation received a peaceful occupation taxes totalling: %s."

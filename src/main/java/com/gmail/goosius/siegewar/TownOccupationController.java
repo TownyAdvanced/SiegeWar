@@ -236,16 +236,19 @@ public class TownOccupationController {
 	}
 
 	private static void collectNationPeacefulOccupationTax(Nation nation, double tax) {
+		double taxesPaid = 0;
 		for (Town town : new ArrayList<>(nationTownsOccupationMap.get(nation)))
 			if (town.isNeutral())
-				collectNationPeacefulOccupationTax(nation, tax, town);
+				taxesPaid += collectNationPeacefulOccupationTax(nation, tax, town);
+		
+		TownyMessaging.sendPrefixedNationMessage(nation, Translatable.of("msg_peaceful_occupation_taxes_paid_totaling", getMoney(taxesPaid)));
 	}
 
-	private static void collectNationPeacefulOccupationTax(Nation nation, double tax, Town town) {
+	private static double collectNationPeacefulOccupationTax(Nation nation, double tax, Town town) {
 		if (town.getAccount().canPayFromHoldings(tax)) {
 			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_peaceful_occupation_tax_payed", getMoney(tax)));
 			town.getAccount().payTo(tax, nation.getAccount(), "Nation Peaceful Occupation Tax");
-			return;
+			return tax;
 		}
 
 		if (TownySettings.isTownBankruptcyEnabled()) {
@@ -258,18 +261,19 @@ public class TownOccupationController {
 				Messaging.sendGlobalMessage(Translatable.of("msg_peaceful_occupation_tax_cannot_be_payed", town.getName()));
 				removeTownOccupation(town);
 				TownyUniverse.getInstance().getDataSource().removeTown(town);
-				return;
+				return 0;
 			}
 
 			// Charge the town (using .withdraw() which will allow for going into bankruptcy.)
 			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_peaceful_occupation_tax_payed_bankrupt", getMoney(tax)));
 			town.getAccount().withdraw(tax, "Nation Peaceful Occupation Tax paid to " + nation.getName());
 			nation.getAccount().deposit(tax, "Nation Peaceful Occupation Tax from " + town.getName());
-
+			return tax;
 		} else {
 			Messaging.sendGlobalMessage(Translatable.of("msg_peaceful_occupation_tax_cannot_be_payed", town.getName()));
 			removeTownOccupation(town);
 			TownyUniverse.getInstance().getDataSource().removeTown(town);
+			return 0;
 		}
 	}
 
