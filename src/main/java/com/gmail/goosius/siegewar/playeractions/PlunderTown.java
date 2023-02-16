@@ -114,17 +114,19 @@ public class PlunderTown {
 				* SiegeWarMoneyUtil.getMoneyMultiplier(town);
 		
 		//Redistribute money
-		if(town.getAccount().canPayFromHoldings(totalPlunderAmount)) {
-			//Town can afford plunder
-			transferPlunderToNation(siege, nation, totalPlunderAmount, true);
+		
+		if (SiegeWarSettings.isPlunderPaidOutOverDays()) {
+			// Plunder is paid out of server, and paid back over time.
+			totalPlunderAmount = createPlunderForNation(siege, nation, townName, totalPlunderAmount);
+			createDailyPaymentsForTown(town, totalPlunderAmount);
 		} else {
-			//Town cannot afford plunder
-			if (SiegeWarSettings.isPlunderPaidOutOverDays()) {
-				// Plunder is paid out of server, and paid back over time.
-				totalPlunderAmount = createPlunderForNation(siege, nation, townName, totalPlunderAmount);
-				createDailyPaymentsForTown(town, totalPlunderAmount);
-
+			// Plunder is paid immediately by the sieged Town.
+			if(town.getAccount().canPayFromHoldings(totalPlunderAmount)) {
+				// Town can afford plunder
+				transferPlunderToNation(siege, nation, totalPlunderAmount, true);
 			} else {
+				// Town cannot afford plunder
+
 				// Plunder can bankrupt and destroy a town.
 				double townBalance = town.getAccount().getHoldingBalance();
 				if (TownySettings.isTownBankruptcyEnabled()) {

@@ -131,7 +131,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 			if (TownMetaDataController.hasPlunderDebt(town)) {
 				int days = TownMetaDataController.getPlunderDebtDays(town);
 				double amount = TownMetaDataController.getDailyPlunderDebt(town);
-				event.getStatusScreen().addComponentOf("siegeWar_plunderDebt", Component.text(translator.of("status_town_plunder_debt", getMoney(days * amount), days, getMoney(amount))).appendNewline());
+				event.getStatusScreen().addComponentOf("siegeWar_plunderDebt", Component.text(translator.of("status_town_plunder_debt", getMoney(days * amount), days, getMoney(amount))));
 			}
 
 			//Occupying Nation: Empire of the Fluffy Bunnies
