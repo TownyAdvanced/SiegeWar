@@ -237,6 +237,8 @@ public class SiegeWarDistanceUtil {
 	 */
 	public static int getDistanceToSiege(Location location1, Siege siege) {
 		Location location2 = siege.getFlagLocation();
+		if(!location1.getWorld().getName().equalsIgnoreCase(location2.getWorld().getName()))
+			return Integer.MAX_VALUE;
 		return (int)MathUtil.distance(location1.getX(), location2.getX(), location1.getZ(), location2.getZ());
 	}
 

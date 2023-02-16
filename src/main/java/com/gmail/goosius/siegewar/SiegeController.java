@@ -340,15 +340,13 @@ public class SiegeController {
 		int distanceToCandidateSiege = 0;
 		for (Siege candidateSiege : getSieges()) {
 			if (candidateSiege.getStatus().isActive()) {
+				if (!candidateSiege.getFlagBlock().getWorld().getName().equals(loc.getWorld().getName()))
+					continue;
 				distanceToCandidateSiege = SiegeWarDistanceUtil.getDistanceToSiege(loc, candidateSiege);
 				if(distanceToCandidateSiege < SiegeWarSettings.getWarSiegeZoneRadiusBlocks()) {
-					if(resultSiege == null) {
+					if(resultSiege == null || distanceToCandidateSiege < distanceToResultSiege) {
 						resultSiege = candidateSiege;
-					} else {
-						if(distanceToCandidateSiege < distanceToResultSiege) {
-							resultSiege = candidateSiege;
-							distanceToResultSiege = distanceToCandidateSiege;
-						}
+						distanceToResultSiege = distanceToCandidateSiege;
 					}
 				}
 			}
