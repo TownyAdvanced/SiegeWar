@@ -248,7 +248,7 @@ public class SiegeWarMoneyUtil {
 			return;
 
 		if (town.getAccount().canPayFromHoldings(amount)) {
-			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_plunder_debt_payed", amount));
+			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_plunder_debt_payed", getMoney(amount)));
 			town.getAccount().withdraw(amount, "Daily Plunder Debt Repayment");
 			return;
 		}
@@ -266,12 +266,16 @@ public class SiegeWarMoneyUtil {
 			}
 
 			// Charge the town (using .withdraw() which will allow for going into bankruptcy.)
-			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_plunder_debt_payed_bankrupt", amount));
+			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_plunder_debt_payed_bankrupt", getMoney(amount)));
 			town.getAccount().withdraw(amount, "Daily Plunder Debt Repayment");
 
 		} else {
 			Messaging.sendGlobalMessage(Translatable.of("msg_plunder_debt_cannot_be_payed", town.getName()));
 			TownyUniverse.getInstance().getDataSource().removeTown(town);
 		}
+	}
+
+	private static String getMoney(double amount) {
+		return TownyEconomyHandler.getFormattedBalance(amount);
 	}
 }
