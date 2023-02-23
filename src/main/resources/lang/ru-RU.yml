@@ -379,41 +379,41 @@ msg_err_cannot_peacefully_revolt_because_unoccupied: "&cНет необходи�
 msg_err_cannot_peacefully_revolt_because_occupier_has_influence: "&cYour town cannot peacefully revolt, because its occupier, %s, still has some Towny-Influence in the local area (%d)."
 #Added in 0.33
 nation_help_11: 'Collect any income due to you from military salary.'
-msg_err_siege_war_collect_unavailable: "There is nothing for you to collect."
+msg_err_siege_war_collect_unavailable: "Вам нечего собирать."
 msg.battle.session.cleanup.starting: "The previous Battle Session did not complete. Initiating Battle Session Cleanup. Each battle will be resolved as a draw, with both attacker and defender battle points being applied to the siege balance."
-msg.battle.session.cleanup.complete: "Battle Session Cleanup complete. %d battles were resolved."
-msg_err_cannot_start_sieges_today: "&cYour server has limited the days-of-the-week when sieges can be started. Sieges cannot be started today."
+msg.battle.session.cleanup.complete: "Очистка битвы завершена. Разрешено %d сражений."
+msg_err_cannot_start_sieges_today: "&cВаш сервер ограничил дни недели, когда можно начинать осады. Осады не могут быть начаты сегодня."
 #Added in 0.35
 #Wall-Breach-Actions
 hud_breach_points: "Очки разрушения: "
 msg_wall_breach_successful: 'Успешное Разрушение Стены!'
 status_town_siege_breach_points: '&2 > Очки разрушения: &a%s'
-msg_err_not_enough_breach_points_for_action: '&cThere are not enough breach points for this action. Required: %d, Actual: %s.'
-msg_err_cannot_breach_without_battle_session: '&cYou cannot do a Wall-Breach action unless a battle session is in progress.'
-msg_err_cannot_breach_at_this_height: '&cYou cannot do a Wall-Breach action at this height. Height limits apply when close to the homeblock. Compared to Siege-Banner Height, MIN = %d, MAX = %d.'
-msg_err_breaching_cannot_place_this_material: '&cYou cannot place this type of block.'
-msg_err_breaching_cannot_destroy_this_material: '&cYou cannot destroy this type of block.'
+msg_err_not_enough_breach_points_for_action: '&cНедостаточно очков разрушения для этого действия. Требуется: %d, Текущие: %s.'
+msg_err_cannot_breach_without_battle_session: '&cВы не можете выполнить действие по разрушению стены до тех пор, пока не начнётся битва.'
+msg_err_cannot_breach_at_this_height: '&cВы не можете выполнить действие по разрушению стены на этой высоте. Ограничения по высоте применяются при приближении к домашнему блоку. По сравнению с высотой флага осады, минимум = %d, максимум = %d.'
+msg_err_breaching_cannot_place_this_material: '&cВы не можете разместить этот тип блока.'
+msg_err_breaching_cannot_destroy_this_material: '&cВы не можете уничтожить этот тип блока.'
 #Wall-Breach-Bonus
-msg_wall_breach_bonus_awarded_to_attackers: "&bSiege on %s > %d attackers have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
-msg_wall_breach_bonus_awarded_to_defenders: "&bSiege on %s > %d defenders have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
-msg_wall_breach_bonus_awarded: "&bYou have been awarded a Wall Breach Bonus!"
-msg_err_already_received_wall_breach_bonus: '&cYou already received a Wall Breach Bonus for this Battle Session.'
+msg_wall_breach_bonus_awarded_to_attackers: "&bОсада на %s > %d атакующих достигли домашнего блока. Бонус Разрушения Стены: +%d Боевых очков."
+msg_wall_breach_bonus_awarded_to_defenders: "&bОсада на %s > %d защитников достигли домашнего блока. Бонус Разрушения Стены: +%d Боевых очков."
+msg_wall_breach_bonus_awarded: "&bВы получили бонус разрушения стены!"
+msg_err_already_received_wall_breach_bonus: '&cВы уже получили бонус к разрушению стены для этой битвы.'
 #Wall-Breach Cannons Integration
-msg_err_cannot_fire_cannon_without_battle_session: '&cYou cannot fire a cannon in a siegezone unless there is a Battle Session in progress.'
-msg_err_cannot_fire_cannon_without_perms: '&cYou cannot fire this cannon. Check that you are an official participant in the local siege, and that you have a rank which allows cannon-firing.'
+msg_err_cannot_fire_cannon_without_battle_session: '&cВы не можете стрелять из пушки в зоне осады, если только не идёт битва.'
+msg_err_cannot_fire_cannon_without_perms: '&cВы не можете стрелять из этой пушки. Убедитесь, что вы являетесь официальным участником местной осады и что у вас есть ранг, позволяющий стрелять из пушки.'
 #configuration-errors
-msg_error_misconfigured_place_blocks_whitelist: '&cMisconfigured Material on Wall-Breaching-Place-Blocks-Whitelist. Problem Entry: %s.'
-msg_error_misconfigured_destroy_blocks_blacklist: '&cMisconfigured Material on Wall-Breaching-Destroy-Blocks-Blacklist. Problem Entry: %s.'
+msg_error_misconfigured_place_blocks_whitelist: '&cНеправильно сконфигурированный материал в Wall-Breaching-Place-Blocks-Whitelist. Запись о проблеме: %s.'
+msg_error_misconfigured_destroy_blocks_blacklist: '&cНеправильно сконфигурированный материал в Wall-Breaching-Destroy-Blocks-Blacklis. Запись о проблеме: %s.'
 #Added in 0.36
-msg_err_nation_neutrality_not_supported: '&cSiegeWar does not support nation neutrality.'
-msg.townyperms.installation.complete: "Towny perms file adjusted for recommended SW setup."
-msg.townyconfig.installation.complete: "Towny config file adjusted for recommended SW setup."
+msg_err_nation_neutrality_not_supported: '&cОсадная война не поддерживает нейтралитет нации.'
+msg.townyperms.installation.complete: "Файл Towny perms скорректирован в соответствии с рекомендуемой настройкой SW."
+msg.townyconfig.installation.complete: "Файл Towny config скорректирован в соответствии с рекомендуемой настройкой SW."
 msg.installation.complete: "Установка завершена."
 #Added in 0.37
-msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cWithin SiegeZones, cannons can only be fired if they are in the wilderness or the besieged town."
+msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cВ зоне осады пушки могут стрелять только в том случае, если они находятся в дикой местности или осаждённом городе."
 #Added in 0.41
-msg_capping_limiter_limit_exceeded_warning: "&cYou have exceeded your daily Capping Limit of %d Battle Sessions. You can cap again in %s."
-msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To avoid War Sickness, leave the Siege-Zone immediately.'
+msg_capping_limiter_limit_exceeded_warning: "&cВы превысили свой ежедневный лимит в %d битв. Будет доступен снова через %s."
+msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cКак мирный житель города, вы не можете легко пройти через зоны осады. Чтобы избежать военной болезни, немедленно покиньте зону осады.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cКак мирный житель города, вы не можете легко пройти через зоны осады. Чтобы избавиться от военной болезни, немедленно покиньте зону осады.'
 #Added in 0.42
 msg_siege_zone_proximity_warning: "&cВНИМАНИЕ: Вы находитесь в зоне осады!. Защита от PVP отключена здесь."
@@ -425,9 +425,9 @@ msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cВо время сбор�
 msg_err_cannot_alter_blocks_near_siege_banner: 'Вы не можете размещать/уничтожать блоки в этом месте возле флага осады.'
 #Added in 0.44
 #Message shown siege-wide when a player loses a siegewar rank while in a siegezone.
-warn_resident_had_rank_removed: 'Warning: %s had their rank %s taken from them while in the siegezone at %s.'
+warn_resident_had_rank_removed: 'Предупреждение: у %s потерял ранг %s во время осады в %s.'
 #Message shown when a town kicks a resident who is in a siege zone.
-warn_resident_had_town_removed: 'Warning: %s was removed from town %s while in the siegezone at %s.'
+warn_resident_had_town_removed: 'Предупреждение: %s был удалён из города %s во время осады в %s.'
 #Message shown when a nation kicks a town which has players in a siege zone.
 warn_nation_had_town_removed: 'Warning: %s was removed from nation %s while the player(s) %s were located in the siegezone at %s.'
 #Message shown when a nation removes an ally which has players in a siege zone.
