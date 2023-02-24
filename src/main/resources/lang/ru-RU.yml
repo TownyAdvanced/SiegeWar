@@ -201,16 +201,16 @@ msg_err_cannot_start_siege_at_ruined_town: '&cВы не можете начат�
 msg_err_cannot_start_siege_due_to_siege_immunity: '&cВы не можете начать осаду сейчас, потому что ближайщий город имеет иммунитет к осаде.'
 msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cВы не можете начать восстание, потому что город не находится в оккупации.'
 msg_err_siege_war_cannot_attack_occupied_town_non_enemy_nation: '&cВы не можете атаковать оккупированный город без захвата этого города врагом вашей нации.'
-msg_conquest_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A CONQUEST SIEGE has begun!'
-msg_conquest_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A CONQUEST SIEGE has begun!'
-msg_liberation_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s at %s, in an attempt to remove the occupation. A LIBERATION SIEGE has begun!'
-msg_liberation_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s, in an attempt to remove the occupation. A LIBERATION SIEGE has begun!'
-msg_revolt_siege_started_neutral_town: '&bThe townspeople of %s have risen up against the occupying army of %s. A REVOLT SIEGE has begun!'
-msg_revolt_siege_started_nation_town: '&bThe townspeople of %s, whose home nation is %s, have risen up against the occupying army of %s. A REVOLT SIEGE has begun!'
-msg_suppression_siege_started_neutral_town: '&bThe nation of %s has moved to stamp out rebel activity at %s. A SUPPRESSION SIEGE has begun!'
-msg_suppression_siege_started_nation_town: '&bThe nation of %s has moved to stamp out rebel activity by %s at %s. A SUPPRESSION SIEGE has begun!'
+msg_conquest_siege_started_neutral_town: '&bАрмия, принадлежащая %s, атаковала %s. ЗАВОЕВАТЕЛЬНАЯ ОСАДА началась!'
+msg_conquest_siege_started_nation_town: '&bАрмия, принадлежащая %s, атаковала %s в %s. ЗАВОЕВАТЕЛЬНАЯ ОСАДА началась!'
+msg_liberation_siege_started_neutral_town: '&bАрмия, принадлежащая %s, атаковала %s в %s в попытке устранить оккупацию. ОСВОБОДИТЕЛЬНАЯ ОСАДА началась!'
+msg_liberation_siege_started_nation_town: '&bАрмия, принадлежащая %s, атаковала %s в %s в попытке устранить оккупацию. ОСВОБОДИТЕЛЬНАЯ ОСАДА началась!'
+msg_revolt_siege_started_neutral_town: '&bГорожане %s восстали против оккупационной армии %s. ВОССТАНИЕ началось!'
+msg_revolt_siege_started_nation_town: '&bГорожане %s, нация которых %s, восстали против оккупационной армии %s. ВОССТАНИЕ началось!'
+msg_suppression_siege_started_neutral_town: '&bНация %s предприняла шаги по пресечению повстанческой деятельности в %s. ОСАДА ПОДАВЛЕНИЯ началась!'
+msg_suppression_siege_started_nation_town: '&bНация %s предприняла шаги по пресечению повстанческой деятельности с помощью %s в %s. ОСАДА ПОДАВЛЕНИЯ началась!'
 #Banner Control
-msg_siege_war_defending_troops_at_siege_banner: '&bSiege on %s > Defenders are at the siege banner.'
+msg_siege_war_defending_troops_at_siege_banner: '&bОсада в %s > Защитники находятся у флага осады.'
 #Town screen
 status_town_occupying_nation: '&2Оккупирующая нация: &a%s'
 status_town_siege: '&2Осада:'
@@ -241,7 +241,7 @@ status_nation_defensive_sieges: '&2Оборонительные осады &:[%s
 msg_conquest_siege_defender_surrender: '&bЗАВОЕВАТЕЛЬНАЯ ОСАДА в %s > Город сдался армии %s.'
 msg_liberation_siege_defender_surrender: '&bОСВОБОДИТЕЛЬНАЯ ОСАДА в %s > Оккупированная армия %s сдалась армии %s, и оккупация была снята.'
 msg_revolt_siege_defender_surrender: '&bВОССТАНИЕ в %s > Оккупированная армия %s сдалась повстанцам, и оккупация была снята.'
-msg_suppression_siege_defender_surrender: '&bSUPPRESSION SIEGE at %s > The town has surrendered to the occupying army of %s. '
+msg_suppression_siege_defender_surrender: '&bОСАДА ПОДАВЛЕНИЯ в %s > Город сдался оккупационной армии %s. '
 #Abandoning attacks
 msg_conquest_siege_attacker_abandon: '&bЗАВОЕВАТЕЛЬНАЯ ОСАДА в %s > Войска %s покинули атаку.'
 msg_liberation_siege_attacker_abandon: '&bОСВОБОДИТЕЛЬНАЯ ОСАДА в %s > Войска %s отказались от попытки освободить город от %s.'
@@ -257,7 +257,7 @@ msg_suppression_siege_timed_attacker_win: '&bПОДАВЛЕНИЕ МЯТЕЖА �
 msg_conquest_siege_timed_defender_win: '&bЗАВОЕВАТЕЛЬНАЯ ОСАДА в %s > Войска обороны %s уничтожили армию %s и прогнали атакующих.'
 msg_liberation_siege_timed_defender_win: '&bОСВОБОДИТЕЛЬНАЯ ОСАДА в %s > Оккупирующая армия %s одержала победу над %s и не дала освободить город.'
 msg_revolt_siege_timed_defender_win: '&bВОССТАНИЕ в %s > Оккупирующая армия %s успешно разгромила мятеж. Город теперь открыт для вторжения и/или разграбления.'
-msg_suppression_siege_timed_defender_win: '&bSUPPRESSION SIEGE at %s > The defending army of %s has defeated the attacking army of %s, preventing the attempted suppression, and freeing the town from occupation.'
+msg_suppression_siege_timed_defender_win: '&bОСАДА ПОДАВЛЕНИЯ в %s > Обороняющаяся армия %s разгромила атакующую армию %s, предотвратив попытку подавления и освободив город от оккупации.'
 #Generic Victory messages
 msg_immediate_attacker_victory: " Атакующие победили!"
 msg_pending_attacker_victory: " Победа атакующих будет подтверждена через %s."
@@ -277,22 +277,22 @@ msg_err_siege_war_plunder_not_possible_rebels_won: '&cРазграбление �
 msg_err_swa_cannot_set_invade_due_to_siege_type: '&cВы не можете установить флаг вторжения для осады данного типа.'
 msg_err_swa_cannot_change_occupier_due_to_active_siege: '&cВы не можете сменить оккупанта, если город находится в активной осаде.'
 msg_swa_set_invade_success: '&bВторгся в %s для %s.'
-msg_swa_town_occupation_removal_success: '&bTown occupier removed for %s.'
-msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
+msg_swa_town_occupation_removal_success: '&bГородской житель удален для %s.'
+msg_swa_town_occupation_change_success: '&bГородской житель изменён на %s для %s.'
 #Added in 0.16
 #Nation war history
-status_nation_town_stats: '&2Town Invasion History - Foreign/Home: &a%d&2/&a%d'
-status_nation_plunder_stats: '&2Town Plunder History - Gains/Losses: &a%d&2/&a%d'
+status_nation_town_stats: '&2История вторжения в город - Иностранный/Домашний: &a%d&2/&a%d'
+status_nation_plunder_stats: '&2История разграбления города - Прибыль/Убытки: &a%d&2/&a%d'
 #Siege effects
-msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone.'
+msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cТолько жители города могут появляться в осаждённом городе или зоне осады.'
 #Nation Siege Immunity
-msg_err_siege_affected_home_nation_cannot_recruit: "&cThe nation cannot add new towns, because one of its home towns is under siege attack."
-msg_err_siege_affected_home_nation_town_cannot_recruit: "&cThe town cannot add new residents, because one of its nation's home towns is under siege attack."
-msg_err_siege_affected_home_nation_town_cannot_claim: "&cCannot claim land, because one of your nation's home towns is under siege attack."
-msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cCannot unclaim land, because one of your nation's home towns is under siege attack."
+msg_err_siege_affected_home_nation_cannot_recruit: "&cНация не может добавить новые города, потому что один из её родных городов находится в осаде."
+msg_err_siege_affected_home_nation_town_cannot_recruit: "&cГород не может добавить новых жителей, потому что один из его родных городов находится в осаде."
+msg_err_siege_affected_home_nation_town_cannot_claim: "&cВы не можете претендовать на землю, потому что один из родных городов вашей нации находится в осаде."
+msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cВы не можете вернуть землю, потому что один из родных городов вашей нации находится в осаде."
 #Added in 0.17
 #Peaceful towns homeblock move restrictions
-msg_err_peaceful_town_cannot_move_homeblock: "&cNeutral towns cannot move their homeblocks. If you wish to move your homeblock, first toggle neutrality off."
+msg_err_peaceful_town_cannot_move_homeblock: "&cНейтральные города не могут перемещать свои домашние блоки. Если вы хотите переместить свой домашний блок, сначала отключите нейтральность."
 #Added in 0.18
 #Homeblock move restrictions
 msg_err_besieged_town_cannot_move_homeblock: "&cBesieged towns cannot move their homeblocks."
@@ -429,26 +429,26 @@ warn_resident_had_rank_removed: 'Предупреждение: у %s потер�
 #Message shown when a town kicks a resident who is in a siege zone.
 warn_resident_had_town_removed: 'Предупреждение: %s был удалён из города %s во время осады в %s.'
 #Message shown when a nation kicks a town which has players in a siege zone.
-warn_nation_had_town_removed: 'Warning: %s was removed from nation %s while the player(s) %s were located in the siegezone at %s.'
+warn_nation_had_town_removed: 'Предупреждение: %s был удалён из нации %s, в то время как игрок(и) %s находился(лись) в зоне осады %s.'
 #Message shown when a nation removes an ally which has players in a siege zone.
-warn_nation_had_ally_removed: 'Warning: %s was removed as an ally from nation %s while the player(s) %s were located in the siegezone at %s.'
+warn_nation_had_ally_removed: 'Предупреждение: %s был удален как союзник из нации %s, в то время как игрок(и) %s находился(лись) в зоне осады в %s.'
 #Message shown to the former allied nation's players when they have been removed as an ally.
-warn_your_nation_has_been_removed_as_an_ally: 'Warning: %s has removed your nation as an ally, while some of your nation members are located inside of siegezones, at %s.'
-msg_global_domination_awards_header: '&bDomination Awards Granted!'
-msg_global_domination_awards_line: '&b%d - %s: %s + %s Artefacts.'
-msg_err_nation_domination_awards_no_capital: '&cNo capital town in which to deposit Artefacts.'
-msg_err_nation_domination_awards_no_capital_homeblock: '&cNo capital homeblock in which to deposit Artefacts.'
-msg_err_nation_domination_awards_not_enough_chests: '&cNot enough chests in homeblock to deposit Artefacts.'
+warn_your_nation_has_been_removed_as_an_ally: 'Предупреждение: %s удалил вашу нацию из списка союзников, в то время как некоторые члены вашей нации находятся внутри зон осады, в %s.'
+msg_global_domination_awards_header: '&bНаграды за превосходство получены!'
+msg_global_domination_awards_line: '&b%d - %s: %s + %s артефактов.'
+msg_err_nation_domination_awards_no_capital: '&cНет столицы, в которой можно было бы хранить артефакты.'
+msg_err_nation_domination_awards_no_capital_homeblock: '&cНет капитального жилого блока, в которой можно было бы хранить артефакты.'
+msg_err_nation_domination_awards_not_enough_chests: '&cВ домашнем блоке недостаточно сундуков для хранения артефактов.'
 #Added in 0.46
-artefact_lore_summary_line: '&5Artefact Tier %d'
-artefact_lore_warning_line: '&cWARNING: Unstable after %d days old.'
-artefact_name_tree_feller: 'Tree Feller'
-artefact_name_ground_digger: 'Ground Digger'
-artefact_name_cobble_eater: 'Cobble Eater'
-artefact_name_sword_of_searing: 'Sword of Searing'
-artefact_name_potion_of_enhanced_regeneration: 'Potion of Enhanced Regeneration'
-artefact_name_potion_of_enhanced_strength: 'Potion of Enhanced Strength'
-artefact_name_potion_of_enhanced_absorbtion: 'Potion of Enhanced Absorbtion'
+artefact_lore_summary_line: '&5Уровень артефактов %d'
+artefact_lore_warning_line: '&cПРЕДУПРЕЖДЕНИЕ: Нестабилен после %d-дневной давности.'
+artefact_name_tree_feller: 'Падающее дерево'
+artefact_name_ground_digger: 'Наземный копатель'
+artefact_name_cobble_eater: 'Пожиратель булыжников'
+artefact_name_sword_of_searing: 'Обжигающий меч'
+artefact_name_potion_of_enhanced_regeneration: 'Зелье улучшенной регенерации'
+artefact_name_potion_of_enhanced_strength: 'Зелье увеличенной силы'
+artefact_name_potion_of_enhanced_absorbtion: 'Зелье увеличенного поглощения'
 artefact_name_potion_of_true_invisibility: 'Зелье невидимости'
 artefact_name_splash_potion_of_enhanced_regeneration: 'Взрывное зелье улучшенной регенерации'
 artefact_name_splash_potion_of_enhanced_strength: 'Взрывное зелье увеличенной силы'
@@ -457,11 +457,11 @@ artefact_name_arrow_of_enhanced_hunger: 'Стрела повышенного г�
 artefact_name_potion_of_great_resistance: 'Зелье увеличенного сопротивления'
 artefact_name_arrow_of_knockup: 'Стрела нокаута'
 artefact_name_super_spiky_helmet: 'Превосходный шлем с шипами'
-artefact_name_bountiful_pickaxe: 'Bountiful Pickaxe'
+artefact_name_bountiful_pickaxe: 'Огромная кирка'
 artefact_name_sword_of_immolation: 'Меч самосожжения'
 artefact_name_axe_of_the_berserker: 'Топор Берсерка'
 artefact_name_bow_of_displacement: 'Лук Перемещения'
-artefact_name_arrow_of_doom: 'Arrow of Doom'
+artefact_name_arrow_of_doom: 'Стрела судьбы'
 artefact_name_vorpal_sword: 'Меч Ворпала'
 artefact_name_chicago_typewriter: 'Чикагская пишущая машинка'
 artefact_name_trident_of_zeus: 'Трезубец Зевса'
@@ -470,7 +470,7 @@ artefact_name_chestplate_of_mars: 'Нагрудник Марса'
 artefact_custom_effect_lore_lightning_strike_on_hit: '&7Молниеносный удар при попадании'
 #Added in 0.47
 artefact_name_antimatter_potion: 'Зелье антивещества'
-artefact_custom_effect_lore_delayed_massive_self_explosion_on_consume: '&7Drinker Explodes in 7 seconds'
+artefact_custom_effect_lore_delayed_massive_self_explosion_on_consume: '&7Поилка взрывается через 7 секунд'
 artefact_name_splash_potion_of_true_invisibility: 'Всплеск зелья невидимости'
 artefact_name_poison_blade: 'Отравленный клинок'
 artefact_custom_effect_lore_poison_on_hit: '&7Яд при попадании'
