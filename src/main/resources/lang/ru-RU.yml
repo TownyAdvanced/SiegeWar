@@ -304,16 +304,16 @@ status_town_siege_pending_balance_adjustment: '&2 | Pending: &a%s'
 #General occupation commands error messages
 msg_err_cannot_change_occupation_town_not_occupied: '&cYou cannot change the occupation status because the town is not occupied.'
 msg_err_cannot_change_occupation_by_foreign_nation: '&cYou cannot change the occupation status because your nation is not the occupier.'
-msg_err_cannot_change_occupation_of_besieged_town: '&cYou cannot change the occupation status of a besieged town.'
-msg_err_town_and_capital_too_far_apart: "&cThe homeblock of %s is too far away from the homeblock of %s's capital."
+msg_err_cannot_change_occupation_of_besieged_town: '&cВы не можете изменить статус оккупации осаждённого города.'
+msg_err_town_and_capital_too_far_apart: "&cДомашний блок %s находится слишком далеко от домашнего блока столицы %s."
 #Remove occupation command
 nation_help_14: "Отменить оккупацию города вашей нацией."
 msg_remove_occupation_success: '&b Нация %s убрала оккупацию %s.'
 #Transfer occupation command
 nation_help_15: "Передайте оккупацию города вашей нацией другой нации"
-msg_err_cannot_transfer_occupation_king_not_online: "&cThe occupation-transfer failed because the king of %s (%s) is not online."
-msg_would_you_accept_transfer_of_occupied_town: '&6Would you agree to transfer the occupation of %s, from %s to your nation?. This will cause the town to become occupied by your nation.'
-msg_transfer_occupation_success: '&bThe nation %s has transferred its occupation of %s. The town is now under the occupation of %s.'
+msg_err_cannot_transfer_occupation_king_not_online: "&cНе удалось переместить оккупацию, потому что король %s (%s) не в сети."
+msg_would_you_accept_transfer_of_occupied_town: '&6Согласились бы вы перенести оккупацию %s с %s на вашу нацию?. Это приведёт к тому, что город будет оккупирован вашей нацией.'
+msg_transfer_occupation_success: '&bНация %s передала свою оккупацию %s. Город сейчас находится под оккупацией %s.'
 #Invite occupation command
 nation_help_16: "Пригласите нацию оккупировать ваш город"
 msg_err_cannot_invite_occupation_town_already_occupied: '&cВы не можете пригласить для оккупации, потому что ваш город уже оккупирован.'
@@ -328,7 +328,7 @@ msg_set_revolt_immunities_all: 'Иммунитет к восстанию для 
 #Added in 0.23
 msg_siege_war_banner_control_remaining_session_time: 'Таймер закрытия флага: %s'
 #Added in 0.25
-msg_err_siege_war_too_many_adjacent_towns: '&cYou cannot perform this action because the target chunk faces too many townblocks. Try placing the item in a different area.'
+msg_err_siege_war_too_many_adjacent_towns: '&cВы не можете выполнить это действие, потому что этот чанк содержит много городских блоков. Попробуйте поместить элемент в другую область.'
 #Added in 0.26
 msg_siege_war_attacker_death: '&bОсада %s > Атакующий %s умер > Очки битвы -%d'
 msg_siege_war_defender_death: '&bОсада %s > Защитник %s умер > Очки битвы +%d'
@@ -351,9 +351,9 @@ msg_surrender_action_cancelled: 'Осадная казнь отменена.'
 msg_abandon_action_cancelled: 'Осада отменена.'
 #Added in 0.29
 msg_err_siegecamp_too_close_to_another_siegecamp: 'Сборка осады слишком близко к другой сборке осады!'
-msg_err_too_soon_since_your_last_siegecamp: 'It has been too soon since you last tried to attack this town!'
-msg_err_your_siegecamp_failed_you_must_wait_x: 'Your Siege-Assembly failed to score enough points, you cannot attempt to attack the town again for %s.'
-attackers_scored_points_towards_siege_camp_x_of_x: '%s has scored points towards their Siege-Assembly: %s/%s.'
+msg_err_too_soon_since_your_last_siegecamp: 'Прошло слишком много времени с тех пор, как вы в последний раз пытались напасть на этот город!'
+msg_err_your_siegecamp_failed_you_must_wait_x: 'Сборка осадных орудий не смогла заработать достаточное количество очков, вы сможете атаковать город снова через %s секунд.'
+attackers_scored_points_towards_siege_camp_x_of_x: '%s набрал очки за свою осадную сборку: %s/%s.'
 attacker_has_begun_a_siegecamp_session: '%s has begun a Siege-Assembly against %s. If successful a Siege will begin! The attackers must score %s points within %s minutes.'
 #Added in 0.30
 msg_bossbar_preference_set: "&bBossBar preference set to %s."
