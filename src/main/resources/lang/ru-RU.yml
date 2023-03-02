@@ -198,7 +198,7 @@ hud_battle_attacker_points: 'Баллы ATK BAT: '
 hud_battle_defender_points: 'Баллы DEF BAT: '
 #Starting sieges
 msg_err_cannot_start_siege_at_ruined_town: '&cВы не можете начать осаду разрушенного города.'
-msg_err_cannot_start_siege_due_to_siege_immunity: '&cВы не можете начать осаду сейчас, потому что ближайщий город имеет иммунитет к осаде.'
+msg_err_cannot_start_siege_due_to_siege_immunity: '&cВы не можете начать осаду сейчас, потому что ближайший город имеет иммунитет к осаде.'
 msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cВы не можете начать восстание, потому что город не находится в оккупации.'
 msg_err_siege_war_cannot_attack_occupied_town_non_enemy_nation: '&cВы не можете атаковать оккупированный город без захвата этого города врагом вашей нации.'
 msg_conquest_siege_started_neutral_town: '&bАрмия, принадлежащая %s, атаковала %s. ЗАВОЕВАТЕЛЬНАЯ ОСАДА началась!'
