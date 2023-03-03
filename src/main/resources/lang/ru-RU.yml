@@ -146,7 +146,7 @@ status_town_siege_status_warchest: '&2 > Сундук Войны: &%s'
 #Battle sessions
 status_town_siege_battle: '&2Битва'
 status_town_siege_battle_time_remaining: '&2 > Оставшееся время до захвата: %s'
-msg_war_siege_battle_session_started: "&bНачалась новая боевая сессия."
+msg_war_siege_battle_session_started: "&bНачалась новая битва."
 msg_war_siege_battle_session_ended_with_battles: "&bТекущая сессия завершена. Следующие команды выиграли свои сражения:"
 msg_war_siege_battle_session_ended_without_battles: "&bТекущая сессия завершена. Битвы не было."
 msg_war_siege_battle_session_ended_attacker_result: "&b * Атакующие @ %s (%s)"
@@ -158,7 +158,7 @@ hud_siege_balance: 'Баланс осады: '
 hud_warchest: 'Боевой Сундук: '
 hud_battle_time_remaining: 'Время битвы осталось: '
 #Dynmap
-dynmap_siege_battle_time_left: 'Время битвы осталось: %s'
+dynmap_siege_battle_time_left: 'Оставшееся время битвы: %s'
 #Banner control
 msg_siege_war_banner_control_reversed_by_attacker: '&bОсада на %s > Атакующие захватили у защитников баннер!'
 msg_siege_war_banner_control_reversed_by_defender: '&bОсада на %s > Защитники захватили контроль над баннером от нападающих!'
@@ -336,7 +336,7 @@ msg_siege_war_attacker_killed_by_player: '&bОсада %s > Атакующий %
 msg_siege_war_defender_killed_by_player: '&bОсада %s > Защитник %s был убит %s > Очки битвы +%d'
 status_town_days_to_peacefulness_status_change: 'Дни до изменения нейтрального статуса'
 #Added in 0.27
-msg_next_siege_session_in_minutes: 'Следующая битва начнётся в %s.'
+msg_next_siege_session_in_minutes: 'Следующая битва начнётся через %s минут.'
 msg_session_is_active_now: 'Битва активна!'
 msg_err_battle_session_active: "&cБитва начата."
 msg_err_battle_session_inactive: "&cБитва завершена."
