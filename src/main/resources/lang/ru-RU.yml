@@ -69,11 +69,11 @@ msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'Вы 
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2Таймер иммунитета к восстанию: &a%s'
 status_town_siege_status_in_progress: 'В процессе'
-status_town_siege_status_banner_xyz: '&2 > Баннер XYZ: &a%d,%d,%d'
+status_town_siege_status_banner_xyz: '&2 > Флаг XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > Таймер иммунитета: &%s'
 status_town_siege_victory_timer: '&2 > Таймер победы: &%s'
 status_town_banner_control: '&2 > Контроль баннера: %s &a[%s]&2: &f'
-status_town_banner_control_nobody: '&2 > Контроль баннера: %s'
+status_town_banner_control_nobody: '&2 > Контроль флага: %s'
 #General
 status_no_green: '&aНЕТ'
 msg_occupier: '&4*Захватчик*'
@@ -103,9 +103,9 @@ msg_err_town_not_registered: '&cГород %s не зарегистрирова�
 #Scoreboard
 hud_title: 'Осада'
 hud_siegestatus: 'Статус осады'
-hud_attackers: 'Атака: '
+hud_attackers: 'АТК: '
 hud_defenders: 'ЗАЩ: '
-hud_banner_control: "Контроль баннера: "
+hud_banner_control: "Контроль флага: "
 hud_time_remaining: 'Оставшееся время: '
 msg_swa_resident_already_has_control: '&cЖитель %s уже имеет контроль.'
 msg_swa_resident_doesnt_have_control: "&cЖитель %s не имеет контроля."
@@ -326,7 +326,7 @@ msg_set_revolt_immunities_town: 'Иммунитет к восстанию для
 msg_set_revolt_immunities_nation: 'Иммунитет к восстанию для всех городов нации %s установлен на %s часов.'
 msg_set_revolt_immunities_all: 'Иммунитет к восстанию для всех городов установлен на %s часов.'
 #Added in 0.23
-msg_siege_war_banner_control_remaining_session_time: 'Таймер закрытия флага: %s'
+msg_siege_war_banner_control_remaining_session_time: 'Таймер до окончания контроля над флагом: %s'
 #Added in 0.25
 msg_err_siege_war_too_many_adjacent_towns: '&cВы не можете выполнить это действие, потому что этот чанк содержит много городских блоков. Попробуйте поместить элемент в другую область.'
 #Added in 0.26
