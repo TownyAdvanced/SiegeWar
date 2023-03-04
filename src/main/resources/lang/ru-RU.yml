@@ -94,7 +94,7 @@ msg_set_siege_immunities_all: 'Иммунитет осадных орудий д
 msg_war_siege_zone_block_placement_forbidden: '&cВы не можете поместить этот тип блока в зону осадной зоны.'
 msg_war_siege_zone_bucket_emptying_forbidden: '&cВы не можете использовать этот тип ведра в зоне осадной зоны.'
 #Added in 0.02:
-admin_help_1: 'Перезагрузите конфигурацию и языковой файл.'
+admin_help_1: 'Перезагрузить конфигурацию и языковой файл.'
 config_and_lang_file_reloaded_successfully: 'Конфигурация и языковой файл успешно перезагружены.'
 config_and_lang_file_could_not_be_loaded: 'Не удалось перезагрузить. Подробности в консоли.'
 #Added in 0.05:
@@ -146,9 +146,9 @@ status_town_siege_status_warchest: '&2 > Сундук Войны: &%s'
 #Battle sessions
 status_town_siege_battle: '&2Битва'
 status_town_siege_battle_time_remaining: '&2 > Оставшееся время до захвата: %s'
-msg_war_siege_battle_session_started: "&bНачалась новая битва."
-msg_war_siege_battle_session_ended_with_battles: "&bТекущая сессия завершена. Следующие команды выиграли свои сражения:"
-msg_war_siege_battle_session_ended_without_battles: "&bТекущая сессия завершена. Битвы не было."
+msg_war_siege_battle_session_started: "&bНачалась новая боевая сессия."
+msg_war_siege_battle_session_ended_with_battles: "&bТекущая боевая сессия завершена. Следующие команды выиграли свои сражения:"
+msg_war_siege_battle_session_ended_without_battles: "&bТекущая боевая сессия завершена. Битв не было."
 msg_war_siege_battle_session_ended_attacker_result: "&b * Атакующие @ %s (%s)"
 msg_war_siege_battle_session_ended_defender_result: "&b * Защитники @ %s (%s)"
 msg_war_siege_battle_session_ended_draw_result: "&b * Ничья @ %s (0)"
@@ -336,12 +336,12 @@ msg_siege_war_attacker_killed_by_player: '&bОсада %s > Атакующий %
 msg_siege_war_defender_killed_by_player: '&bОсада %s > Защитник %s был убит %s > Очки битвы +%d'
 status_town_days_to_peacefulness_status_change: 'Дни до изменения нейтрального статуса'
 #Added in 0.27
-msg_next_siege_session_in_minutes: 'Следующая битва начнётся через %s минут.'
+msg_next_siege_session_in_minutes: 'Следующая боевая сессия начнётся через %s минут.'
 msg_session_is_active_now: 'Битва активна!'
-msg_err_battle_session_active: "&cБитва начата."
-msg_err_battle_session_inactive: "&cБитва завершена."
-msg_battle_session_force_start: "&bБитва принудительно начата."
-msg_battle_session_force_end: "&bБитва принудительно завершена."
+msg_err_battle_session_active: "&cБоевая сессия уже началась."
+msg_err_battle_session_inactive: "&cБоевая сессия уже завершена."
+msg_battle_session_force_start: "&bБоевая сессия была принудительно начата."
+msg_battle_session_force_end: "&bБоевая сессия была принудительно завершена."
 #Added in 0.28
 msg_town_immunity_expired: 'Иммунитет от осад для вашего города истек.'
 #Unsiegeable towns strings
@@ -357,7 +357,7 @@ attackers_scored_points_towards_siege_camp_x_of_x: '%s набрал очки з�
 attacker_has_begun_a_siegecamp_session: '%s начал сборку осады против %s. В случае успеха осада начнётся! Нападающие должны набрать %s очков в течение %s минут.'
 #Added in 0.30
 msg_bossbar_preference_set: "&bНастройки BossBar установлены на %s."
-bossbar_msg_battle_time_remaining: '&2Оставшееся время битвы: &a%s'
+bossbar_msg_battle_time_remaining: '&2Оставшееся время боевой сессии: &a%s'
 msg_err_siege_war_revolt_immunity_permanent: "&cУ вашего города постоянный иммунитет к восстаниям. Он не может восстать."
 status_sieged: "%s[%sПод осадой%s]"
 status_military_salary: "Зарплата военнослужащих: "
@@ -407,7 +407,7 @@ msg_error_misconfigured_destroy_blocks_blacklist: '&cНеправильно ск
 #Added in 0.36
 msg_err_nation_neutrality_not_supported: '&cОсадная война не поддерживает нейтралитет нации.'
 msg.townyperms.installation.complete: "Файл Towny perms скорректирован в соответствии с рекомендуемой настройкой SW."
-msg.townyconfig.installation.complete: "Файл Towny config скорректирован в соответствии с рекомендуемой настройкой SW."
+msg.townyconfig.installation.complete: "Конфигурация Towny скорректирована в соответствии с рекомендуемой настройкой SW."
 msg.installation.complete: "Установка завершена."
 #Added in 0.37
 msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cВ зоне осады пушки могут стрелять только в том случае, если они находятся в дикой местности или осаждённом городе."
@@ -481,7 +481,7 @@ artefact_custom_effect_lore_slow_on_hit: '&7Замедление при попа
 #Shown when an admin adds hours using /swa siegeduration addhours
 hours_added_to_sieges: '%s часов были добавлены к длительности всех осад.'
 #Shown when SW cancels a battle session because there's no active sieges.
-battle_session_cancelled_no_sieges: 'Нет активных осад, отмена сражения'
+battle_session_cancelled_no_sieges: 'Нет активных осад, отмена боевой сессии'
 #Added in 0.49
 #Shown when a nation tries to set their capital city while it is sieged.
 msg_err_besieged_capital_cannot_change_king: "&cВашей нации не разрешается менять королей, пока ваши города находятся в осаде."
