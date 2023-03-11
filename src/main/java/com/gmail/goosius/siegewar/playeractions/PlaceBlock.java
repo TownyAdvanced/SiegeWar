@@ -372,7 +372,7 @@ public class PlaceBlock {
 			StartRevoltSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 		} else {
 			if (residentsNation == null)
-				throw new TownyException(translator.of("msg_err_action_disable"));
+				throw new TownyException(translator.of("msg_err_dont_belong_nation"));
 
 			if (SiegeWarImmunityUtil.isTownSiegeImmune(nearbyTown))
 				throw new TownyException(translator.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
