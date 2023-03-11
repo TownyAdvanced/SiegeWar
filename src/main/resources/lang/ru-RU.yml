@@ -15,7 +15,7 @@ description: >
 #Purple = &5, Gold = &6, LightGray = &7, Gray = &8
 #DarkPurple = &9, LightGreen = &a, LightBlue = &b
 #Rose = &c, LightPurple = &d, Yellow = &e, White = &f
-siegewar_plugin_prefix: '&f[&6Осадная война&f]'
+siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
 #Added in (Siegewar version)
 #Siege war happy-path messages
 msg_siege_war_attack_pay_war_chest: '&b%s Подготовил сундук войны со стоимостью %s. Тот, кто победит в осаде, получит эти деньги.'
@@ -25,18 +25,18 @@ msg_siege_war_nation_town_plundered: '&b%s был разграблен %s %s!'
 msg_siege_war_town_ruined_from_plunder: '&b%s был снижен до развалин силами %s!'
 msg_siege_war_town_bankrupted_from_plunder: '&b%s обанкротился силами %s!'
 msg_siege_war_nation_defeated: '&b%s был повержен!'
-msg_siege_war_attacking_troops_at_siege_banner: '&bОсада на %s > Атакующие на Знамени Осады.'
+msg_siege_war_attacking_troops_at_siege_banner: '&bОсада %s > Атакующие находятся у флага осады.'
 msg_siege_war_banner_control_session_success: '&bBanner control session успешно пройден!. Вы были добавлены в список контроля баннеров.'
-msg_siege_war_banner_control_gained_by_attacker: '&bОсада на %s > Атакующие захватили Баннер Осады.'
+msg_siege_war_banner_control_gained_by_attacker: '&bОсада %s > Атакующие получили контроль над флагом.'
 msg_siege_war_banner_control_gained_by_defender: '&bОсада на %s > Защитники получили контроль над Баннером Осады.'
-msg_town_destroyed_by_nation_tax: '&b%s не смог оплатить налоги и обанкротился.'
+msg_town_destroyed_by_nation_tax: '&b%s не смог уплатить налоги и обанкротился.'
 msg_town_destroyed_by_nation_tax_multiple: '&bСледующие покорённые города не смогли уплатить налог нации и превратились в руины: '
 #Siege war error message
 #Recruiting
-msg_err_siege_besieged_town_cannot_recruit: "&cОсажденные города не могут вербовать новых жителей."
+msg_err_siege_besieged_town_cannot_recruit: "&cОсаждённые города не могут вербовать новых жителей."
 #Claiming/Unclaiming
 msg_err_siege_claim_too_near_siege_zone: "&cСлишком близко к осаде."
-msg_err_siege_besieged_town_cannot_claim: "&cОсажденные города не могут претендовать на новую землю."
+msg_err_siege_besieged_town_cannot_claim: "&cОсаждённые города не могут претендовать на новую землю."
 msg_err_siege_besieged_town_cannot_unclaim: "&cОсажденные города (или города, которые недавно проиграли осаду) не могут освободить землю."
 msg_err_war_common_occupied_town_cannot_unclaim: "&cОккупированные города не могут освободить землю."
 #Revolt
@@ -46,9 +46,9 @@ msg_err_siege_war_revolt_immunity_active: "&cВаш город имеет имм
 msg_err_siege_war_banner_must_be_placed_above_ground: '&cБаннер Осады должен быть помещен над землёй.'
 msg_err_siege_war_action_not_a_town_member: '&cВы должны быть членом города для выполнения этого действия.'
 NUKE ???? msg_err_siege_war_action_not_a_nation_member: '&cДля этого действия вы должны быть членом нации.'
-msg_err_siege_war_cannot_attack_own_town: '&cВы не можете атаковать свой город.'
-msg_err_siege_war_cannot_attack_town_in_own_nation: '&cВы не можете атаковать город в своей нации.'
-msg_err_siege_war_cannot_attack_non_enemy_nation: '&cВы не можете атаковать город, если это государство не является врагом вашей нации.'
+msg_err_siege_war_cannot_attack_own_town: '&cВы не можете атаковать ваш собственный город.'
+msg_err_siege_war_cannot_attack_town_in_own_nation: '&cВы не можете атаковать город в вашей собственной нации.'
+msg_err_siege_war_cannot_attack_non_enemy_nation: '&cВы не можете атаковать город, если только нация этого города не является врагом вашей нации.'
 msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cВы не можете выполнить это действие, потому что этот чанк встречает более одного блока города. Попробуйте разместить элемент в другой области.'
 msg_err_siege_war_nation_already_attacking_town: '&cВаша нация уже атакует этот город'
 msg_err_siege_war_cannot_attack_siege_immunity: '&cУ целевого города есть иммунитет от осад. Его нельзя атаковать до тех пор, пока не истечет иммунитет осады.'
@@ -69,11 +69,11 @@ msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'Вы 
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2Таймер иммунитета к восстанию: &a%s'
 status_town_siege_status_in_progress: 'В процессе'
-status_town_siege_status_banner_xyz: '&2 > Баннер XYZ: &a%d,%d,%d'
+status_town_siege_status_banner_xyz: '&2 > Флаг XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > Таймер иммунитета: &%s'
 status_town_siege_victory_timer: '&2 > Таймер победы: &%s'
 status_town_banner_control: '&2 > Контроль баннера: %s &a[%s]&2: &f'
-status_town_banner_control_nobody: '&2 > Контроль баннера: %s'
+status_town_banner_control_nobody: '&2 > Контроль флага: %s'
 #General
 status_no_green: '&aНЕТ'
 msg_occupier: '&4*Захватчик*'
@@ -81,7 +81,7 @@ msg_nobody: '&aНикто'
 msg_attackers: '&aАтакующие'
 msg_defenders: '&aЗащитники'
 #Town Neutrality
-status_town_peacefulness_status_change_timer: '&2Обратный отсчет для изменения статуса нейтральности: &%d дней'
+status_town_peacefulness_status_change_timer: '&2Обратный отсчёт для изменения статуса нейтралитета: &a%d дней'
 msg_war_common_town_declared_peaceful: '&bОтказ от нейтральности!. Город будет подтверждён как не-нейтральный через %d дней.'
 msg_war_common_town_declared_non_peaceful: '&bОтказ от нейтральности!. Город будет подтверждён как не-нейтральный через %d дней.'
 msg_war_common_town_peacefulness_countdown_cancelled: '&bОтсчет времени изменения статуса нейтрализации был отменен.'
@@ -94,7 +94,7 @@ msg_set_siege_immunities_all: 'Иммунитет осадных орудий д
 msg_war_siege_zone_block_placement_forbidden: '&cВы не можете поместить этот тип блока в зону осадной зоны.'
 msg_war_siege_zone_bucket_emptying_forbidden: '&cВы не можете использовать этот тип ведра в зоне осадной зоны.'
 #Added in 0.02:
-admin_help_1: 'Перезагрузите конфигурацию и языковой файл.'
+admin_help_1: 'Перезагрузить конфигурацию и языковой файл.'
 config_and_lang_file_reloaded_successfully: 'Конфигурация и языковой файл успешно перезагружены.'
 config_and_lang_file_could_not_be_loaded: 'Не удалось перезагрузить. Подробности в консоли.'
 #Added in 0.05:
@@ -102,10 +102,10 @@ msg_err_not_being_sieged: '&cГород %s не имеет активных ос
 msg_err_town_not_registered: '&cГород %s не зарегистрирован.'
 #Scoreboard
 hud_title: 'Осада'
-hud_siegestatus: 'Статус Осады'
-hud_attackers: 'Атака: '
+hud_siegestatus: 'Статус осады'
+hud_attackers: 'АТК: '
 hud_defenders: 'ЗАЩ: '
-hud_banner_control: "Контроль баннера: "
+hud_banner_control: "Контроль флага: "
 hud_time_remaining: 'Оставшееся время: '
 msg_swa_resident_already_has_control: '&cЖитель %s уже имеет контроль.'
 msg_swa_resident_doesnt_have_control: "&cЖитель %s не имеет контроля."
@@ -131,24 +131,24 @@ msg_err_cannot_remove_enemy: '&cВы не можете удалить стран
 #Added in 0.09
 nation_help_12: 'Платите своим солдатам. Указанная сумма будет распределена согласно рангам.'
 msg_siege_war_military_salary_available: "Военный оклад из %s теперь доступен для вас. Можно получить с помощью '/sw collect'."
-msg_siege_war_military_salary_collected: "Вы получили зарплату в размере %s."
-msg_err_siege_war_no_soldiers_to_pay: "Не было солдат кому можно заплатить."
-msg_err_siege_war_not_enough_nation_funds_to_pay: "У страны недостаточно средств для выплаты этой суммы."
+msg_siege_war_military_salary_collected: "Вы получили зарплату военнослужащего в размере %s."
+msg_err_siege_war_no_soldiers_to_pay: "Нет солдат, кому можно заплатить."
+msg_err_siege_war_not_enough_nation_funds_to_pay: "У нации недостаточно средств для выплаты этой суммы."
 msg_siege_war_soldiers_paid: "Военнослужащие нации получили в общей сложности %s, которые распределены по рангу."
 #Added in 0.11
 msg_err_invalid_bool: "&cНедопустимый параметр. Параметры: вкл/выкл"
-msg_beacon_preference_set: "&bНастройки маяка изменены на %s."
+msg_beacon_preference_set: "&bНастройки маяка установлены на %s."
 #Misc
 msg_na: 'Н/А'
 #Town screen
-status_town_siege_status_siege_balance: '&2 > Баланс: &%d'
+status_town_siege_status_siege_balance: '&2 > Баланс: &a%d'
 status_town_siege_status_warchest: '&2 > Сундук Войны: &%s'
 #Battle sessions
 status_town_siege_battle: '&2Битва'
 status_town_siege_battle_time_remaining: '&2 > Оставшееся время до захвата: %s'
 msg_war_siege_battle_session_started: "&bНачалась новая боевая сессия."
-msg_war_siege_battle_session_ended_with_battles: "&bТекущая сессия завершена. Следующие команды выиграли свои сражения:"
-msg_war_siege_battle_session_ended_without_battles: "&bТекущая сессия завершена. Битвы не было."
+msg_war_siege_battle_session_ended_with_battles: "&bТекущая боевая сессия завершена. Следующие команды выиграли свои сражения:"
+msg_war_siege_battle_session_ended_without_battles: "&bТекущая боевая сессия завершена. Битв не было."
 msg_war_siege_battle_session_ended_attacker_result: "&b * Атакующие @ %s (%s)"
 msg_war_siege_battle_session_ended_defender_result: "&b * Защитники @ %s (%s)"
 msg_war_siege_battle_session_ended_draw_result: "&b * Ничья @ %s (0)"
@@ -158,7 +158,7 @@ hud_siege_balance: 'Баланс осады: '
 hud_warchest: 'Боевой Сундук: '
 hud_battle_time_remaining: 'Время битвы осталось: '
 #Dynmap
-dynmap_siege_battle_time_left: 'Время Битвы осталось: %s'
+dynmap_siege_battle_time_left: 'Оставшееся время битвы: %s'
 #Banner control
 msg_siege_war_banner_control_reversed_by_attacker: '&bОсада на %s > Атакующие захватили у защитников баннер!'
 msg_siege_war_banner_control_reversed_by_defender: '&bОсада на %s > Защитники захватили контроль над баннером от нападающих!'
@@ -166,7 +166,7 @@ msg_siege_war_banner_control_reversal_bonus: '. Cap-Point-Generation-Rate X %s.'
 #Admin
 msg_swa_set_siege_balance_success: '&bУспешно установлен осадный баланс на %d для %s.'
 #Added in 0.13
-msg_siege_war_version: '&bТекущая версия осадной войны: %s.'
+msg_siege_war_version: '&bТекущая версия SiegeWar: %s.'
 #Added in 0.14
 msg_siege_war_banner_control_session_started: 'Сессия контроля баннерами начата. Оставайтесь рядом с баннером осады (%d блоков горизонтально, %d блоков сверху, %d блоков ниже), не в городе, для %s. Если ваш сеанс пройдёт успешно, вы получите контроль баннера для вашей стороны (или будет добавлен в список контроля баннеров).'
 msg_siege_war_banner_control_session_started_with_altitude: 'Сессия контроля баннерами начата. Оставайтесь рядом с баннером осады (%d блоков горизонтально, %d блоков сверху %d блоков ниже), не ниже его высоты, не в городе, для %s. Если ваш сеанс пройдёт успешно, вы получите контроль баннера для вашей стороны (или будет добавлен в список контроля баннеров).'
@@ -174,351 +174,351 @@ msg_siege_war_banner_control_session_failure: 'Сессия контроля б�
 msg_siege_war_banner_control_session_failure_with_altitude: '&cСбой сеанса контроля баннеров!. К числу основных причин этого: смерть, слишком далеко от баннера, попадая под высоту баннера, попадая в город или летая.'
 ##### Added in 0.15
 #Town Merging
-msg_err_cannot_merge_towns: '&cНевозможно объединить осадный город!'
+msg_err_cannot_merge_towns: '&cНевозможно объединить город, который находится в осаде!'
 #General
 siege.name: '%s против %s'
 msg_err_action_disable: '&cУ вас недостаточно прав для этого действия.'
 msg_err_unknown_town: '&cНеизвестный город'
-msg_err_unknown_nation: '&cUnknown Nation'
+msg_err_unknown_nation: '&cНеизвестная нация'
 #Siege Types
-siege_type_conquest: 'Conquest'
-siege_type_liberation: 'Liberation'
-siege_type_revolt: 'Revolt'
-siege_type_suppression: 'Suppression'
+siege_type_conquest: 'Завоевание'
+siege_type_liberation: 'Освобождение'
+siege_type_revolt: 'Восстание'
+siege_type_suppression: 'Подавление'
 #Dynmap
-dynmap_siege_title: 'Siege: %s vs %s'
-dynmap_siege_type: 'Type: %s'
-dynmap_siege_town: 'Town: %s'
-dynmap_siege_balance: 'Siege Balance: %d'
-dynmap_siege_war_chest: 'War Chest: %s'
-dynmap_siege_battle_points: 'Battle Points: %s / %s'
+dynmap_siege_title: 'Осада: %s против %s'
+dynmap_siege_type: 'Тип: %s'
+dynmap_siege_town: 'Город: %s'
+dynmap_siege_balance: 'Баланс осады: %d'
+dynmap_siege_war_chest: 'Сундук Войны: %s'
+dynmap_siege_battle_points: 'Очки битвы: %s / %s'
 #HUD
-hud_siege_type: 'Type: '
-hud_battle_attacker_points: 'ATK BAT Points: '
-hud_battle_defender_points: 'DEF BAT Points: '
+hud_siege_type: 'Тип: '
+hud_battle_attacker_points: 'Баллы ATK BAT: '
+hud_battle_defender_points: 'Баллы DEF BAT: '
 #Starting sieges
-msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruined town.'
-msg_err_cannot_start_siege_due_to_siege_immunity: '&cYou cannot start a siege now, because the nearby town has siege immunity.'
-msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cYou cannot start a revolt siege because the town is not in an occupied state.'
-msg_err_siege_war_cannot_attack_occupied_town_non_enemy_nation: '&cYou cannot attack an occupied town unless the occupier of that town is an enemy of your nation.'
-msg_conquest_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A CONQUEST SIEGE has begun!'
-msg_conquest_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A CONQUEST SIEGE has begun!'
-msg_liberation_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s at %s, in an attempt to remove the occupation. A LIBERATION SIEGE has begun!'
-msg_liberation_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s, in an attempt to remove the occupation. A LIBERATION SIEGE has begun!'
-msg_revolt_siege_started_neutral_town: '&bThe townspeople of %s have risen up against the occupying army of %s. A REVOLT SIEGE has begun!'
-msg_revolt_siege_started_nation_town: '&bThe townspeople of %s, whose home nation is %s, have risen up against the occupying army of %s. A REVOLT SIEGE has begun!'
-msg_suppression_siege_started_neutral_town: '&bThe nation of %s has moved to stamp out rebel activity at %s. A SUPPRESSION SIEGE has begun!'
-msg_suppression_siege_started_nation_town: '&bThe nation of %s has moved to stamp out rebel activity by %s at %s. A SUPPRESSION SIEGE has begun!'
+msg_err_cannot_start_siege_at_ruined_town: '&cВы не можете начать осаду разрушенного города.'
+msg_err_cannot_start_siege_due_to_siege_immunity: '&cВы не можете начать осаду сейчас, потому что ближайший город имеет иммунитет к осаде.'
+msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cВы не можете начать восстание, потому что город не находится в оккупации.'
+msg_err_siege_war_cannot_attack_occupied_town_non_enemy_nation: '&cВы не можете атаковать оккупированный город без захвата этого города врагом вашей нации.'
+msg_conquest_siege_started_neutral_town: '&bАрмия, принадлежащая %s, атаковала %s. ЗАВОЕВАНИЕ началось!'
+msg_conquest_siege_started_nation_town: '&bАрмия, принадлежащая %s, атаковала %s в %s. ЗАВОЕВАНИЕ началось!'
+msg_liberation_siege_started_neutral_town: '&bАрмия, принадлежащая %s, атаковала %s в %s в попытке снять оккупацию. ОСВОБОЖДЕНИЕ началось!'
+msg_liberation_siege_started_nation_town: '&bАрмия, принадлежащая %s, атаковала %s в %s в попытке снять оккупацию. ОСВОБОЖДЕНИЕ началось!'
+msg_revolt_siege_started_neutral_town: '&bГорожане %s восстали против оккупационной армии %s. ВОССТАНИЕ началось!'
+msg_revolt_siege_started_nation_town: '&bГорожане %s, нация которых %s, восстали против оккупационной армии %s. ВОССТАНИЕ началось!'
+msg_suppression_siege_started_neutral_town: '&bНация %s предприняла шаги по пресечению повстанческой деятельности в %s. ОСАДА ПОДАВЛЕНИЯ началась!'
+msg_suppression_siege_started_nation_town: '&bНация %s предприняла шаги по пресечению повстанческой деятельности с помощью %s в %s. ОСАДА ПОДАВЛЕНИЯ началась!'
 #Banner Control
-msg_siege_war_defending_troops_at_siege_banner: '&bSiege on %s > Defenders are at the siege banner.'
+msg_siege_war_defending_troops_at_siege_banner: '&bОсада %s > Защитники находятся у флага осады.'
 #Town screen
-status_town_occupying_nation: '&2Occupying Nation: &a%s'
-status_town_siege: '&2Siege:'
-status_town_siege_type: '&2 > Type: &a%s'
-status_town_siege_status: '&2 > Status: &a%s'
-status_town_siege_attacker: '&2 > Attacker: &a%s'
-status_town_siege_defender: '&2 > Defender: &a%s'
-status_town_siege_battle_points: '&2 > Points: &a%s &2/ &a%s'
-status_town_siege_status_attacker_win: 'Attacker Victory'
-status_town_siege_status_defender_win: 'Defender Victory'
-status_town_siege_status_attacker_abandon: 'Attacker Abandon'
-status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending, in %s'
-status_town_siege_status_defender_surrender: 'Defender Surrender'
-status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending, in %s'
-status_town_siege_status_plundered: '&2 > Town Plundered: %s'
-status_town_siege_status_invaded: '   &2Town Invaded: %s'
+status_town_occupying_nation: '&2Нация-владелец: &a%s'
+status_town_siege: '&2Осада:'
+status_town_siege_type: '&2 > Тип: &a%s'
+status_town_siege_status: '&2 > Статус: &a%s'
+status_town_siege_attacker: '&2 > Атакующий: &a%s'
+status_town_siege_defender: '&2 > Защитник: &a%s'
+status_town_siege_battle_points: '&2 > Очки: &a%s &2/ &a%s'
+status_town_siege_status_attacker_win: 'Победа атакующих'
+status_town_siege_status_defender_win: 'Победа защитников'
+status_town_siege_status_attacker_abandon: 'Атакующие отступили'
+status_town_siege_status_pending_attacker_abandon: 'Атакующие отступят через %s'
+status_town_siege_status_defender_surrender: 'Защитники сдались'
+status_town_siege_status_pending_defender_surrender: 'Защитники сдадутся через %s'
+status_town_siege_status_plundered: '&2 > Город разграблен: %s'
+status_town_siege_status_invaded: '   &2Вторжение в город: %s'
 #Siege statuses
-siege_status_attacker_abandon: 'Attacker Abandon'
-siege_status_defender_surrender: 'Defender Surrender'
-siege_status_pending_attacker_abandon: 'Pending Attacker Abandon'
-siege_status_pending_defender_surrender: 'Pending Defender Surrender'
+siege_status_attacker_abandon: 'Атакующие отступили'
+siege_status_defender_surrender: 'Защитники сдались'
+siege_status_pending_attacker_abandon: 'В ожидании отступления атакующих'
+siege_status_pending_defender_surrender: 'В ожидании капитуляции защитников'
 #Nation screen
 status_nation_occupied_home_towns: '&2Оккупированные Национальные Города &a[%s]&2: &f'
 status_nation_occupied_foreign_towns: '&2Оккупированные Иностранные Города &a[%s]&2: &f'
 status_nation_offensive_sieges: '&2Наступательные осады[%s]&2: &f'
 status_nation_defensive_sieges: '&2Оборонительные осады &:[%s]&2: &f'
 #Surrendering defences
-msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has surrendered to the army of %s.'
-msg_liberation_siege_defender_surrender: '&bLIBERATION SIEGE at %s > The occupying army of %s has surrendered to the army of %s, and the occupation has been removed.'
-msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The occupying army of %s has surrendered to the rebels, and the occupation has been removed.'
-msg_suppression_siege_defender_surrender: '&bSUPPRESSION SIEGE at %s > The town has surrendered to the occupying army of %s. '
+msg_conquest_siege_defender_surrender: '&bЗАВОЕВАНИЕ %s > Город сдался армии %s.'
+msg_liberation_siege_defender_surrender: '&bОСВОБОЖДЕНИЕ %s > Оккупационная армия %s сдалась армии %s, и оккупация была снята.'
+msg_revolt_siege_defender_surrender: '&bВОССТАНИЕ в %s > Оккупационная армия %s сдалась повстанцам, и оккупация была снята.'
+msg_suppression_siege_defender_surrender: '&bПОДАВЛЕНИЕ в %s > Город сдался оккупационной армии %s. '
 #Abandoning attacks
-msg_conquest_siege_attacker_abandon: '&bЗАВОЕВАТЕЛЬНАЯ ОСАДА в %s > Войска %s покинули атаку.'
-msg_liberation_siege_attacker_abandon: '&bОСВОБОДИТЕЛЬНАЯ ОСАДА в %s > Войска %s отказались от попытки освободить город от %s.'
+msg_conquest_siege_attacker_abandon: '&bЗАВОЕВАНИЕ %s > Армия %s прекратила своё наступление.'
+msg_liberation_siege_attacker_abandon: '&bОСВОБОЖДЕНИЕ %s > Армия %s отказалась от освобождения города от %s.'
 msg_revolt_siege_attacker_abandon: '&bВОССТАНИЕ в %s > Повстанческая армия отказалась от своего восстания против %s.'
-msg_suppression_siege_attacker_abandon: '&bПОДАВЛЕНИЕ МЯТЕЖА в %s > Войска %s покинули свою атаку и освободили город от оккупации.'
+msg_suppression_siege_attacker_abandon: '&bПОДАВЛЕНИЕ в %s > Армия %s прекратила своё наступление и освободила город от оккупации.'
 msg_err_town_cannot_end_siege_as_no_siege: '&cВ близлежащем городе нет осады. Отступление не возможно.'
 msg_err_town_cannot_end_siege_as_finished: '&cОсада закончена или запланирована к завершению. Отступление невозможно.'
 #Timed wins
-msg_conquest_siege_timed_attacker_win: '&b ЗАВОЕВАТЕЛЬНАЫ ОСАДА %s > Атакующая армия %s победила оборонительную армию %s. Город в настоящее время является открытым для вторжения и/или грабежей.'
-msg_liberation_siege_timed_attacker_win: '&bОСВОБОДИТЕЛЬНАЯ ОСАДА в %s > Войска атакующих %s одолели армию захватчиков из %s и освободили жителей от оккупации.'
-msg_revolt_siege_timed_attacker_win: '&bВОССТАНИЕ в %s > Атакующая армия повстанцев прогнала армию захватчиков из %s.'
-msg_suppression_siege_timed_attacker_win: '&bПОДАВЛЕНИЕ МЯТЕЖА в %s > Оккупирующая армия %s успешно пресекла всю деятельность повстанцев. Город теперь открыт для нашествия и/или грабежа.'
-msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has defeated the army of %s, and driven the attackers off.'
-msg_liberation_siege_timed_defender_win: '&bLIBERATION SIEGE at %s > The occupying army of %s has defeated the army of %s, and successfully prevented the liberation of the town.'
-msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The occupying army of %s has successfully crushed the rebellion. The town now stands open for invasion and/or plunder.'
-msg_suppression_siege_timed_defender_win: '&bSUPPRESSION SIEGE at %s > The defending army of %s has defeated the attacking army of %s, preventing the attempted suppression, and freeing the town from occupation.'
+msg_conquest_siege_timed_attacker_win: '&bЗАВОЕВАНИЕ %s > Атакующая армия %s победила армию обороны %s. Город теперь открыт для вторжения и/или разграбления.'
+msg_liberation_siege_timed_attacker_win: '&bОСВОБОЖДЕНИЕ %s > Атакующая армия %s победила оккупационную армию %s и освободила жителей от оккупации.'
+msg_revolt_siege_timed_attacker_win: '&bВОССТАНИЕ в %s > Атакующая повстанческая армия прогнала оккупационную армию из %s.'
+msg_suppression_siege_timed_attacker_win: '&bПОДАВЛЕНИЕ в %s > Оккупационная армия %s успешно подавила всю активность повстанцев. Теперь город открыт для вторжения и/или разграбления.'
+msg_conquest_siege_timed_defender_win: '&bЗАВОЕВАНИЕ %s > Армия обороны %s уничтожила армию %s и прогнала атакующих.'
+msg_liberation_siege_timed_defender_win: '&bОСВОБОЖДЕНИЕ %s > Оккупационная армия %s одержала победу над %s и не дала освободить город.'
+msg_revolt_siege_timed_defender_win: '&bВОССТАНИЕ в %s > Оккупационная армия %s успешно разгромила восстание. Город теперь открыт для вторжения и/или разграбления.'
+msg_suppression_siege_timed_defender_win: '&bПОДАВЛЕНИЕ в %s > Армия обороны %s разгромила атакующую армию %s, предотвратив попытку подавления и освободив город от оккупации.'
 #Generic Victory messages
-msg_immediate_attacker_victory: " The attackers are victorious!"
-msg_pending_attacker_victory: " Attacker victory will be confirmed in %s."
+msg_immediate_attacker_victory: " Атакующие победили!"
+msg_pending_attacker_victory: " Победа атакующих будет подтверждена через %s."
 msg_immediate_defender_victory: " Защитники победили!"
-msg_pending_defender_victory: " Defender victory will be confirmed in %s."
+msg_pending_defender_victory: " Победа защитников будет подтверждена через %s."
 #Invasions
-msg_err_cannot_invade_own_town: '&cYou cannot invade your own town.'
-msg_err_cannot_invade_without_victory: "&cYou cannot invade the town unless your nation is victorious in the siege."
-msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot invade while the siege is still in progress.'
-msg_err_cannot_invade_town_already_occupied: '&cThere is no need to invade because your nation already occupies the town.'
-msg_err_cannot_invade_town_already_invaded: '&cYour nation has already invaded the town.'
-msg_neutral_town_invaded: '&b%s has been invaded by %s, and placed under occupation!'
-msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and placed under occupation!'
+msg_err_cannot_invade_own_town: '&cВы не можете вторгнуться в свой собственный город.'
+msg_err_cannot_invade_without_victory: "&cВы не можете вторгнуться в город, пока ваша нация не одержит победу в осаде."
+msg_err_cannot_invade_siege_still_in_progress: '&cВы не можете вторгнуться во время осады.'
+msg_err_cannot_invade_town_already_occupied: '%cНет необходимости вторгаться, потому что ваша нация уже оккупировала этот город.'
+msg_err_cannot_invade_town_already_invaded: '&cВаша нация уже вторглась этот город.'
+msg_neutral_town_invaded: '&b%s был атакован %s и помещен под оккупацию!'
+msg_nation_town_invaded: '&b%s, принадлежащий %s, был захвачен %s и помещён под оккупацию!'
 #Plunder
-msg_err_siege_war_plunder_not_possible_rebels_won: '&cPlunder not possible because the town rebels won the siege.'
+msg_err_siege_war_plunder_not_possible_rebels_won: '&cРазграбление невозможно, потому что городские повстанцы выиграли осаду.'
 #Admin commands
-msg_err_swa_cannot_set_invade_due_to_siege_type: '&cYou cannot set the invaded flag for this type of siege.'
-msg_err_swa_cannot_change_occupier_due_to_active_siege: '&cYou cannot change the occupier if the town has an active siege.'
-msg_swa_set_invade_success: '&bSet invaded to %s for %s.'
-msg_swa_town_occupation_removal_success: '&bTown occupier removed for %s.'
-msg_swa_town_occupation_change_success: '&bTown occupier changed to %s for %s.'
+msg_err_swa_cannot_set_invade_due_to_siege_type: '&cВы не можете установить флаг вторжения для осады данного типа.'
+msg_err_swa_cannot_change_occupier_due_to_active_siege: '&cВы не можете сменить оккупанта, если город находится в активной осаде.'
+msg_swa_set_invade_success: '&bВторгся в %s для %s.'
+msg_swa_town_occupation_removal_success: '&bГородской житель удален для %s.'
+msg_swa_town_occupation_change_success: '&bГородской житель изменён на %s для %s.'
 #Added in 0.16
 #Nation war history
-status_nation_town_stats: '&2Town Invasion History - Foreign/Home: &a%d&2/&a%d'
-status_nation_plunder_stats: '&2Town Plunder History - Gains/Losses: &a%d&2/&a%d'
+status_nation_town_stats: '&2История вторжения в город - Иностранный/Домашний: &a%d&2/&a%d'
+status_nation_plunder_stats: '&2История разграбления города - Прибыль/Убытки: &a%d&2/&a%d'
 #Siege effects
-msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone.'
+msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cТолько жители города могут появляться в осаждённом городе или зоне осады.'
 #Nation Siege Immunity
-msg_err_siege_affected_home_nation_cannot_recruit: "&cThe nation cannot add new towns, because one of its home towns is under siege attack."
-msg_err_siege_affected_home_nation_town_cannot_recruit: "&cThe town cannot add new residents, because one of its nation's home towns is under siege attack."
-msg_err_siege_affected_home_nation_town_cannot_claim: "&cCannot claim land, because one of your nation's home towns is under siege attack."
-msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cCannot unclaim land, because one of your nation's home towns is under siege attack."
+msg_err_siege_affected_home_nation_cannot_recruit: "&cНация не может добавить новые города, потому что один из её родных городов находится в осаде."
+msg_err_siege_affected_home_nation_town_cannot_recruit: "&cГород не может добавить новых жителей, потому что один из городов нации находится в осаде."
+msg_err_siege_affected_home_nation_town_cannot_claim: "&cВы не можете претендовать на землю, потому что один из родных городов вашей нации находится в осаде."
+msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cВы не можете вернуть землю, потому что один из родных городов вашей нации находится в осаде."
 #Added in 0.17
 #Peaceful towns homeblock move restrictions
-msg_err_peaceful_town_cannot_move_homeblock: "&cNeutral towns cannot move their homeblocks. If you wish to move your homeblock, first toggle neutrality off."
+msg_err_peaceful_town_cannot_move_homeblock: "&cНейтральные города не могут перемещать свои домашние блоки. Если вы хотите переместить свой домашний блок, сначала отключите нейтральность."
 #Added in 0.18
 #Homeblock move restrictions
-msg_err_besieged_town_cannot_move_homeblock: "&cBesieged towns cannot move their homeblocks."
-msg_err_occupied_town_cannot_move_homeblock: "&cOccupied towns cannot move their homeblocks."
+msg_err_besieged_town_cannot_move_homeblock: "&cОсаждённые города не могут переместить свои домашние блоки."
+msg_err_occupied_town_cannot_move_homeblock: "&cОккупированные города не могут переместить свои домашние блоки."
 #Added in 0.20
 #Town status screen's pending balance adjustment
-status_town_siege_pending_balance_adjustment: '&2 | Pending: &a%s'
+status_town_siege_pending_balance_adjustment: '&2 | Ожидание: &a%s'
 #Added in 0.21
 #General occupation commands error messages
-msg_err_cannot_change_occupation_town_not_occupied: '&cYou cannot change the occupation status because the town is not occupied.'
-msg_err_cannot_change_occupation_by_foreign_nation: '&cYou cannot change the occupation status because your nation is not the occupier.'
-msg_err_cannot_change_occupation_of_besieged_town: '&cYou cannot change the occupation status of a besieged town.'
-msg_err_town_and_capital_too_far_apart: "&cThe homeblock of %s is too far away from the homeblock of %s's capital."
+msg_err_cannot_change_occupation_town_not_occupied: '&cВы не можете изменить статус оккупации, потому что город не оккупирован.'
+msg_err_cannot_change_occupation_by_foreign_nation: '&cВы не можете изменить статус оккупации, потому что ваша нация не является оккупантом.'
+msg_err_cannot_change_occupation_of_besieged_town: '&cВы не можете изменить статус оккупации осаждённого города.'
+msg_err_town_and_capital_too_far_apart: "&cДомашний блок %s находится слишком далеко от домашнего блока столицы %s."
 #Remove occupation command
-nation_help_14: "Remove your nation's occupation of a town."
-msg_remove_occupation_success: '&bThe nation %s has removed its occupation of %s.'
+nation_help_14: "Снять оккупацию города вашей нацией."
+msg_remove_occupation_success: '&bНация %s сняла свою оккупацию города %s.'
 #Transfer occupation command
-nation_help_15: "Transfer your nation's occupation of a town to another nation"
-msg_err_cannot_transfer_occupation_king_not_online: "&cThe occupation-transfer failed because the king of %s (%s) is not online."
-msg_would_you_accept_transfer_of_occupied_town: '&6Would you agree to transfer the occupation of %s, from %s to your nation?. This will cause the town to become occupied by your nation.'
-msg_transfer_occupation_success: '&bThe nation %s has transferred its occupation of %s. The town is now under the occupation of %s.'
+nation_help_15: "Передайте оккупацию города вашей нацией другой нации"
+msg_err_cannot_transfer_occupation_king_not_online: "&cНе удалось перенести оккупацию, потому что король %s (%s) не в сети."
+msg_would_you_accept_transfer_of_occupied_town: '&6Согласились бы вы перенести оккупацию %s с %s к вашей нации?. Это приведёт к тому, что город будет оккупирован вашей нацией.'
+msg_transfer_occupation_success: '&bНация %s передала свою оккупацию %s. Город сейчас находится под оккупацией %s.'
 #Invite occupation command
-nation_help_16: "Invite a nation to occupy your town"
-msg_err_cannot_invite_occupation_town_already_occupied: '&cYou cannot invite occupation because your town is already occupied.'
-msg_err_cannot_invite_occupation_king_not_online: "&cThe occupation-invitation failed because the king of %s (%s) is not online."
-msg_would_you_accept_town_request_for_occupation: '&6Would you agree to occupy %s?. This will cause the town to become occupied by your nation.'
-msg_invite_occupation_success: '&bThe town %s has come under the occupation of %s, by its own request.'
+nation_help_16: "Пригласите нацию оккупировать ваш город"
+msg_err_cannot_invite_occupation_town_already_occupied: '&cВы не можете пригласить для оккупации, потому что ваш город уже оккупирован.'
+msg_err_cannot_invite_occupation_king_not_online: "&cНе удалось отправить приглашение на оккупацию, потому что король %s (%s) не в сети."
+msg_would_you_accept_town_request_for_occupation: '&6Вы согласны оккупировать %s?. Это приведет к тому, что город будет оккупирован вашей нацией.'
+msg_invite_occupation_success: '&bГород %s попал под оккупацию %s по его собственной просьбе.'
 #Added in 0.22
 #Revolt immunities
-msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s hours.'
-msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s hours.'
-msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s hours.'
+msg_set_revolt_immunities_town: 'Иммунитет к восстанию для города %s установлен на %s часов.'
+msg_set_revolt_immunities_nation: 'Иммунитет к восстанию для всех городов нации %s установлен на %s часов.'
+msg_set_revolt_immunities_all: 'Иммунитет к восстанию для всех городов установлен на %s часов.'
 #Added in 0.23
-msg_siege_war_banner_control_remaining_session_time: 'Banner Cap Timer: %s'
+msg_siege_war_banner_control_remaining_session_time: 'Таймер до окончания контроля над флагом: %s'
 #Added in 0.25
-msg_err_siege_war_too_many_adjacent_towns: '&cYou cannot perform this action because the target chunk faces too many townblocks. Try placing the item in a different area.'
+msg_err_siege_war_too_many_adjacent_towns: '&cВы не можете выполнить это действие, потому что этот чанк содержит много городских блоков. Попробуйте поместить элемент в другую область.'
 #Added in 0.26
-msg_siege_war_attacker_death: '&bSiege of %s > Attacker %s died > Battle Points -%d'
-msg_siege_war_defender_death: '&bSiege of %s > Defender %s died > Battle Points +%d'
-msg_siege_war_attacker_killed_by_player: '&bSiege of %s > Attacker %s was killed by %s > Battle Points -%d'
-msg_siege_war_defender_killed_by_player: '&bSiege of %s > Defender %s was killed by %s > Battle Points +%d'
-status_town_days_to_peacefulness_status_change: 'Days To Neutrality Status Change'
+msg_siege_war_attacker_death: '&bОсада %s > Атакующий %s умер > Очки битвы -%d'
+msg_siege_war_defender_death: '&bОсада %s > Защитник %s умер > Очки битвы +%d'
+msg_siege_war_attacker_killed_by_player: '&bОсада %s > Атакующий %s был убит %s > Очки битвы -%d'
+msg_siege_war_defender_killed_by_player: '&bОсада %s > Защитник %s был убит %s > Очки битвы +%d'
+status_town_days_to_peacefulness_status_change: 'Дни до изменения статуса нейтралитета'
 #Added in 0.27
-msg_next_siege_session_in_minutes: 'The next Battle Session is in %s.'
-msg_session_is_active_now: 'A Battle Session is active now!'
-msg_err_battle_session_active: "&cA Battle session has already started."
-msg_err_battle_session_inactive: "&cThe Battle session has already ended."
-msg_battle_session_force_start: "&bA Battle session has been force started."
-msg_battle_session_force_end: "&bThe Battle session has been force ended."
+msg_next_siege_session_in_minutes: 'Следующая боевая сессия начнётся через %s минут.'
+msg_session_is_active_now: 'Боевая сессия активна!'
+msg_err_battle_session_active: "&cБоевая сессия уже началась."
+msg_err_battle_session_inactive: "&cБоевая сессия уже завершена."
+msg_battle_session_force_start: "&bБоевая сессия была принудительно начата."
+msg_battle_session_force_end: "&bБоевая сессия была принудительно завершена."
 #Added in 0.28
-msg_town_immunity_expired: 'Your town''s Siege Immunity has expired.'
+msg_town_immunity_expired: 'Иммунитет от осад для вашего города истек.'
 #Unsiegeable towns strings
-msg_permanent: "permanent"
-msg_error_must_be_num_or_permanent: '&cAmount must be a number or ''permanent''.'
+msg_permanent: "постоянный"
+msg_error_must_be_num_or_permanent: '&cСумма должна быть числом или ''постоянной''.'
 msg_surrender_action_cancelled: 'Осадная казнь отменена.'
-msg_abandon_action_cancelled: 'Siege abandon cancelled.'
+msg_abandon_action_cancelled: 'Осада отменена.'
 #Added in 0.29
-msg_err_siegecamp_too_close_to_another_siegecamp: 'Siege-Assembly too close to another Siege-Assembly!'
-msg_err_too_soon_since_your_last_siegecamp: 'It has been too soon since you last tried to attack this town!'
-msg_err_your_siegecamp_failed_you_must_wait_x: 'Your Siege-Assembly failed to score enough points, you cannot attempt to attack the town again for %s.'
-attackers_scored_points_towards_siege_camp_x_of_x: '%s has scored points towards their Siege-Assembly: %s/%s.'
-attacker_has_begun_a_siegecamp_session: '%s has begun a Siege-Assembly against %s. If successful a Siege will begin! The attackers must score %s points within %s minutes.'
+msg_err_siegecamp_too_close_to_another_siegecamp: 'Сборка осады слишком близко к другой сборке осады!'
+msg_err_too_soon_since_your_last_siegecamp: 'Прошло слишком много времени с тех пор, как вы в последний раз пытались атаковать этот город!'
+msg_err_your_siegecamp_failed_you_must_wait_x: 'Сборка осадных орудий не смогла заработать достаточное количество очков, вы сможете атаковать город снова через %s секунд.'
+attackers_scored_points_towards_siege_camp_x_of_x: '%s набрал очки за свою осадную сборку: %s/%s.'
+attacker_has_begun_a_siegecamp_session: '%s начал сборку осады против %s. В случае успеха осада начнётся! Нападающие должны набрать %s очков в течение %s минут.'
 #Added in 0.30
-msg_bossbar_preference_set: "&bBossBar preference set to %s."
-bossbar_msg_battle_time_remaining: '&2Battle Session Time Remaining: &a%s'
-msg_err_siege_war_revolt_immunity_permanent: "&cYour town has permanent revolt immunity. It cannot revolt."
-status_sieged: "%s[%sSieged%s]"
-status_military_salary: "Military Salary: "
-hover_message_click_to_claim: "Click to claim money owed to you."
+msg_bossbar_preference_set: "&bНастройки BossBar установлены на %s."
+bossbar_msg_battle_time_remaining: '&2Оставшееся время боевой сессии: &a%s'
+msg_err_siege_war_revolt_immunity_permanent: "&cУ вашего города постоянный иммунитет к восстаниям. Он не может восстать."
+status_sieged: "%s[%sПод осадой%s]"
+status_military_salary: "Зарплата военнослужащих: "
+hover_message_click_to_claim: "Нажмите, чтобы потребовать причитающиеся вам деньги."
 #Added in 0.31
-msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
+msg_next_session_cannot_be_determined: "Следующая осада не была запланирована. Попробуйте еще раз позже."
 #Added in 0.32
-msg_peaceful_town_subverted: "&b%s has been peacefully subverted and occupied by %s."
-msg_peaceful_town_revolted: "&b%s has peacefully revolted against %s, and freed itself from occupation."
-msg_town_became_peaceful: '&b%s has been confirmed as Neutral. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot enter siege-zones or gain nation-military ranks.'
-msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Neutral. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can enter siege-zones and gain nation-military ranks.'
-msg_town_returned_to_pre_peaceful_occupier: " The town has been returned to the occupier it had before it turned neutral - %s."
-msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already occupies it."
-msg_err_cannot_subvert_towns_in_own_nation: "&cYou cannot subvert towns which are in your own nation."
-msg_err_cannot_subvert_town_zero_influence: "&cYou cannot subvert this town, because your nation has no Towny-Influence in the local area."
-msg_err_cannot_subvert_town_insufficient_influence: "&cYou cannot subvert this town, because %s has more Towny-Influence in the local area (%d), than your nation (%d)."
-msg_err_cannot_invite_peaceful_town_occupation: "&cYou cannot invite occupation if your town is neutral."
-msg_err_cannot_peacefully_revolt_because_unoccupied: "&cThere is no need to peacefully revolt, because your town is not occupied."
-msg_err_cannot_peacefully_revolt_because_occupier_has_influence: "&cYour town cannot peacefully revolt, because its occupier, %s, still has some Towny-Influence in the local area (%d)."
+msg_peaceful_town_subverted: "&b%s был мирно свергнут и оккупирован %s."
+msg_peaceful_town_revolted: "&b%s мирно поднял восстание против %s и освободил себя от оккупации."
+msg_town_became_peaceful: '&b%s был подтверждён как нейтральный. Город теперь защищён от осадных атак, но уязвим для подрывной деятельности близлежащих наций. Жители не могут входить в зоны осады или получать национальные военные звания.'
+msg_town_became_non_peaceful: '&b%s был подтвержден как не нейтральный. Город больше не защищён от осадных атак и больше не уязвим для подрывной деятельности близлежащих наций. Жители могут входить в зоны осады и получать национальные военные звания.'
+msg_town_returned_to_pre_peaceful_occupier: " Город был возвращён захватчику, который был у него до того, как он стал нейтральным - %s."
+msg_err_cannot_subvert_town_already_occupied: "&cНет необходимости разрушать этот город, потому что ваша нация уже оккупировала его."
+msg_err_cannot_subvert_towns_in_own_nation: "&cВы не можете разрушать города вашей нации."
+msg_err_cannot_subvert_town_zero_influence: "&cВы не можете разрушить этот город, потому что ваша нация не имеет местного влияния в этом районе."
+msg_err_cannot_subvert_town_insufficient_influence: "&cВы не можете разрушить этот город, потому что %s имеет больше влияния в локальной зоне (%d), чем в вашей нации (%d)."
+msg_err_cannot_invite_peaceful_town_occupation: "&cВы не можете пригласить оккупацию занять город, если он является нейтральным."
+msg_err_cannot_peacefully_revolt_because_unoccupied: "&cНет необходимости в мирном восстании, потому что ваш город не находится под оккупацией."
+msg_err_cannot_peacefully_revolt_because_occupier_has_influence: "&cВаш город не может мирно восстать, потому что захватчик, %s, все еще оказывает влияние на город (%d)."
 #Added in 0.33
-nation_help_11: 'Collect any income due to you from military salary.'
-msg_err_siege_war_collect_unavailable: "There is nothing for you to collect."
-msg.battle.session.cleanup.starting: "The previous Battle Session did not complete. Initiating Battle Session Cleanup. Each battle will be resolved as a draw, with both attacker and defender battle points being applied to the siege balance."
-msg.battle.session.cleanup.complete: "Battle Session Cleanup complete. %d battles were resolved."
-msg_err_cannot_start_sieges_today: "&cYour server has limited the days-of-the-week when sieges can be started. Sieges cannot be started today."
+nation_help_11: 'Соберите доход с военной заработной платы.'
+msg_err_siege_war_collect_unavailable: "Вам нечего собирать."
+msg.battle.session.cleanup.starting: "Предыдущая битва не была завершена. Инициирую очистку битвы. Каждое сражение будет закончено вничью, при этом боевые очки как атакующего, так и защитника будут применены к балансу осады."
+msg.battle.session.cleanup.complete: "Очистка битвы завершена. Разрешено %d сражений."
+msg_err_cannot_start_sieges_today: "&cВаш сервер ограничил дни недели, когда можно начинать осады. Осады не могут быть начаты сегодня."
 #Added in 0.35
 #Wall-Breach-Actions
-hud_breach_points: "Breach Points: "
-msg_wall_breach_successful: 'Wall Breach Successful!'
-status_town_siege_breach_points: '&2 > Breach Points: &a%s'
-msg_err_not_enough_breach_points_for_action: '&cThere are not enough breach points for this action. Required: %d, Actual: %s.'
-msg_err_cannot_breach_without_battle_session: '&cYou cannot do a Wall-Breach action unless a battle session is in progress.'
-msg_err_cannot_breach_at_this_height: '&cYou cannot do a Wall-Breach action at this height. Height limits apply when close to the homeblock. Compared to Siege-Banner Height, MIN = %d, MAX = %d.'
-msg_err_breaching_cannot_place_this_material: '&cYou cannot place this type of block.'
-msg_err_breaching_cannot_destroy_this_material: '&cYou cannot destroy this type of block.'
+hud_breach_points: "Очки разрушения: "
+msg_wall_breach_successful: 'Успешное Разрушение Стены!'
+status_town_siege_breach_points: '&2 > Очки разрушения: &a%s'
+msg_err_not_enough_breach_points_for_action: '&cНедостаточно очков разрушения для этого действия. Требуется: %d, Текущие: %s.'
+msg_err_cannot_breach_without_battle_session: '&cВы не можете выполнить действие по разрушению стены до тех пор, пока не начнётся битва.'
+msg_err_cannot_breach_at_this_height: '&cВы не можете выполнить действие по разрушению стены на этой высоте. Ограничения по высоте применяются при приближении к домашнему блоку. По сравнению с высотой флага осады, минимум = %d, максимум = %d.'
+msg_err_breaching_cannot_place_this_material: '&cВы не можете поставить этот тип блока.'
+msg_err_breaching_cannot_destroy_this_material: '&cВы не можете уничтожить этот тип блока.'
 #Wall-Breach-Bonus
-msg_wall_breach_bonus_awarded_to_attackers: "&bSiege on %s > %d attackers have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
-msg_wall_breach_bonus_awarded_to_defenders: "&bSiege on %s > %d defenders have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
-msg_wall_breach_bonus_awarded: "&bYou have been awarded a Wall Breach Bonus!"
-msg_err_already_received_wall_breach_bonus: '&cYou already received a Wall Breach Bonus for this Battle Session.'
+msg_wall_breach_bonus_awarded_to_attackers: "&bОсада на %s > %d атакующих достигли домашнего блока. Бонус Разрушения Стены: +%d Боевых очков."
+msg_wall_breach_bonus_awarded_to_defenders: "&bОсада на %s > %d защитников достигли домашнего блока. Бонус Разрушения Стены: +%d Боевых очков."
+msg_wall_breach_bonus_awarded: "&bВы получили бонус разрушения стены!"
+msg_err_already_received_wall_breach_bonus: '&cВы уже получили бонус к разрушению стены для этой битвы.'
 #Wall-Breach Cannons Integration
-msg_err_cannot_fire_cannon_without_battle_session: '&cYou cannot fire a cannon in a siegezone unless there is a Battle Session in progress.'
-msg_err_cannot_fire_cannon_without_perms: '&cYou cannot fire this cannon. Check that you are an official participant in the local siege, and that you have a rank which allows cannon-firing.'
+msg_err_cannot_fire_cannon_without_battle_session: '&cВы не можете стрелять из пушки в зоне осады, если только не идёт битва.'
+msg_err_cannot_fire_cannon_without_perms: '&cВы не можете стрелять из этой пушки. Убедитесь, что вы являетесь официальным участником местной осады и что у вас есть ранг, позволяющий стрелять из пушки.'
 #configuration-errors
-msg_error_misconfigured_place_blocks_whitelist: '&cMisconfigured Material on Wall-Breaching-Place-Blocks-Whitelist. Problem Entry: %s.'
-msg_error_misconfigured_destroy_blocks_blacklist: '&cMisconfigured Material on Wall-Breaching-Destroy-Blocks-Blacklist. Problem Entry: %s.'
+msg_error_misconfigured_place_blocks_whitelist: '&cНеправильно сконфигурированный материал в Wall-Breaching-Place-Blocks-Whitelist. Запись о проблеме: %s.'
+msg_error_misconfigured_destroy_blocks_blacklist: '&cНеправильно сконфигурированный материал в Wall-Breaching-Destroy-Blocks-Blacklis. Запись о проблеме: %s.'
 #Added in 0.36
-msg_err_nation_neutrality_not_supported: '&cSiegeWar does not support nation neutrality.'
-msg.townyperms.installation.complete: "Towny perms file adjusted for recommended SW setup."
-msg.townyconfig.installation.complete: "Towny config file adjusted for recommended SW setup."
-msg.installation.complete: "Installation Complete."
+msg_err_nation_neutrality_not_supported: '&cSiegeWar не поддерживает нейтралитет нации.'
+msg.townyperms.installation.complete: "Файл Towny perms скорректирован в соответствии с рекомендуемой настройкой SW."
+msg.townyconfig.installation.complete: "Конфигурация Towny скорректирована в соответствии с рекомендуемой настройкой SW."
+msg.installation.complete: "Установка завершена."
 #Added in 0.37
-msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cWithin SiegeZones, cannons can only be fired if they are in the wilderness or the besieged town."
+msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cВ зоне осады пушки могут стрелять только в том случае, если они находятся в дикой местности или осаждённом городе."
 #Added in 0.41
-msg_capping_limiter_limit_exceeded_warning: "&cYou have exceeded your daily Capping Limit of %d Battle Sessions. You can cap again in %s."
-msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To avoid War Sickness, leave the Siege-Zone immediately.'
-msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To remove the War Sickness, leave the Siege-Zone immediately.'
+msg_capping_limiter_limit_exceeded_warning: "&cВы превысили свой ежедневный лимит в %d битв. Будет доступен снова через %s."
+msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cКак мирный житель города, вы не можете легко пройти через зоны осады. Чтобы избежать военной болезни, немедленно покиньте зону осады.'
+msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cКак мирный житель города, вы не можете легко пройти через зоны осады. Чтобы избавиться от военной болезни, немедленно покиньте зону осады.'
 #Added in 0.42
-msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!. PVP protections are disabled here."
-msg_siege_zone_proximity_warning_with_logout_risk: "&cWARNING: You are in a Siege-Zone!. PVP protections are disabled here. You will be killed if you logout while in the Siege-Zone."
-msg_player_killed_for_logging_out_in_siege_zone: "%s was killed because they logged out while in a Siege-Zone."
+msg_siege_zone_proximity_warning: "&cВНИМАНИЕ: Вы находитесь в зоне осады!. Защита от PVP отключена здесь."
+msg_siege_zone_proximity_warning_with_logout_risk: "&cВНИМАНИЕ: Вы находитесь в зоне осады!. Защита от PVP отключена здесь. Вы будете убиты, если выйдете из игры во время нахождения в зоне осады."
+msg_player_killed_for_logging_out_in_siege_zone: "%s был убит, потому что они вышли, находясь в зоне осады."
 #Added in 0.43
-msg_err_cannot_surrender_liberation_siege: "&cYou cannot surrender the defence at a liberation siege."
-msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cWhile the siege assembly is in progress you cannot destroy the siege banner or the block it is attached to."
-msg_err_cannot_alter_blocks_near_siege_banner: 'You cannot place/destroy blocks at this location near the Siege Banner.'
+msg_err_cannot_surrender_liberation_siege: "&cВы не можете сдать оборону во время освобождения."
+msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cВо время сборки осады вы не можете уничтожить флаг осады или блок, к которому он прикреплён."
+msg_err_cannot_alter_blocks_near_siege_banner: 'Вы не можете размещать/уничтожать блоки в этом месте возле флага осады.'
 #Added in 0.44
 #Message shown siege-wide when a player loses a siegewar rank while in a siegezone.
-warn_resident_had_rank_removed: 'Warning: %s had their rank %s taken from them while in the siegezone at %s.'
+warn_resident_had_rank_removed: 'Предупреждение: у %s потерял ранг %s во время осады в %s.'
 #Message shown when a town kicks a resident who is in a siege zone.
-warn_resident_had_town_removed: 'Warning: %s was removed from town %s while in the siegezone at %s.'
+warn_resident_had_town_removed: 'Предупреждение: %s был удалён из города %s во время осады в %s.'
 #Message shown when a nation kicks a town which has players in a siege zone.
-warn_nation_had_town_removed: 'Warning: %s was removed from nation %s while the player(s) %s were located in the siegezone at %s.'
+warn_nation_had_town_removed: 'Предупреждение: %s был удалён из нации %s, в то время как игрок(и) %s находился(лись) в зоне осады %s.'
 #Message shown when a nation removes an ally which has players in a siege zone.
-warn_nation_had_ally_removed: 'Warning: %s was removed as an ally from nation %s while the player(s) %s were located in the siegezone at %s.'
+warn_nation_had_ally_removed: 'Предупреждение: %s был удален как союзник из нации %s, в то время как игрок(и) %s находился(лись) в зоне осады в %s.'
 #Message shown to the former allied nation's players when they have been removed as an ally.
-warn_your_nation_has_been_removed_as_an_ally: 'Warning: %s has removed your nation as an ally, while some of your nation members are located inside of siegezones, at %s.'
-msg_global_domination_awards_header: '&bDomination Awards Granted!'
-msg_global_domination_awards_line: '&b%d - %s: %s + %s Artefacts.'
-msg_err_nation_domination_awards_no_capital: '&cNo capital town in which to deposit Artefacts.'
-msg_err_nation_domination_awards_no_capital_homeblock: '&cNo capital homeblock in which to deposit Artefacts.'
-msg_err_nation_domination_awards_not_enough_chests: '&cNot enough chests in homeblock to deposit Artefacts.'
+warn_your_nation_has_been_removed_as_an_ally: 'Предупреждение: %s удалил вашу нацию из списка союзников, в то время как некоторые члены вашей нации находятся внутри зон осады, в %s.'
+msg_global_domination_awards_header: '&bНаграды за превосходство получены!'
+msg_global_domination_awards_line: '&b%d - %s: %s + %s артефактов.'
+msg_err_nation_domination_awards_no_capital: '&cНет столицы, в которой можно было бы хранить артефакты.'
+msg_err_nation_domination_awards_no_capital_homeblock: '&cНет капитального жилого блока, в которой можно было бы хранить артефакты.'
+msg_err_nation_domination_awards_not_enough_chests: '&cВ домашнем блоке недостаточно сундуков для хранения артефактов.'
 #Added in 0.46
-artefact_lore_summary_line: '&5Artefact Tier %d'
-artefact_lore_warning_line: '&cWARNING: Unstable after %d days old.'
-artefact_name_tree_feller: 'Tree Feller'
-artefact_name_ground_digger: 'Ground Digger'
-artefact_name_cobble_eater: 'Cobble Eater'
-artefact_name_sword_of_searing: 'Sword of Searing'
-artefact_name_potion_of_enhanced_regeneration: 'Potion of Enhanced Regeneration'
-artefact_name_potion_of_enhanced_strength: 'Potion of Enhanced Strength'
-artefact_name_potion_of_enhanced_absorbtion: 'Potion of Enhanced Absorbtion'
-artefact_name_potion_of_true_invisibility: 'Potion of True Invisibility'
-artefact_name_splash_potion_of_enhanced_regeneration: 'Splash Potion of Enhanced Regeneration'
-artefact_name_splash_potion_of_enhanced_strength: 'Splash Potion of Enhanced Strength'
-artefact_name_splash_potion_of_enhanced_absorbtion: 'Splash Potion of Enhanced Absorbtion'
-artefact_name_arrow_of_enhanced_hunger: 'Arrow of Enhanced Hunger'
-artefact_name_potion_of_great_resistance: 'Potion of Great Resistance'
-artefact_name_arrow_of_knockup: 'Arrow of Knockup'
-artefact_name_super_spiky_helmet: 'Super Spiky Helmet'
-artefact_name_bountiful_pickaxe: 'Bountiful Pickaxe'
-artefact_name_sword_of_immolation: 'Sword of Immolation'
-artefact_name_axe_of_the_berserker: 'Axe of the Berserker'
-artefact_name_bow_of_displacement: 'Bow of Displacement'
-artefact_name_arrow_of_doom: 'Arrow of Doom'
-artefact_name_vorpal_sword: 'Vorpal Sword'
-artefact_name_chicago_typewriter: 'Chicago Typewriter'
-artefact_name_trident_of_zeus: 'Trident of Zeus'
-artefact_name_trident_of_poseidon: 'Trident of Poseidon'
-artefact_name_chestplate_of_mars: 'Chestplate of Mars'
-artefact_custom_effect_lore_lightning_strike_on_hit: '&7Lightning Strike on Hit'
+artefact_lore_summary_line: '&5Уровень артефактов %d'
+artefact_lore_warning_line: '&cПРЕДУПРЕЖДЕНИЕ: Нестабилен после %d-дневной давности.'
+artefact_name_tree_feller: 'Падающее дерево'
+artefact_name_ground_digger: 'Наземный копатель'
+artefact_name_cobble_eater: 'Пожиратель булыжников'
+artefact_name_sword_of_searing: 'Обжигающий меч'
+artefact_name_potion_of_enhanced_regeneration: 'Зелье улучшенной регенерации'
+artefact_name_potion_of_enhanced_strength: 'Зелье увеличенной силы'
+artefact_name_potion_of_enhanced_absorbtion: 'Зелье увеличенного поглощения'
+artefact_name_potion_of_true_invisibility: 'Зелье невидимости'
+artefact_name_splash_potion_of_enhanced_regeneration: 'Взрывное зелье улучшенной регенерации'
+artefact_name_splash_potion_of_enhanced_strength: 'Взрывное зелье увеличенной силы'
+artefact_name_splash_potion_of_enhanced_absorbtion: 'Взрывное зелье увеличенного поглощения'
+artefact_name_arrow_of_enhanced_hunger: 'Стрела повышенного голода'
+artefact_name_potion_of_great_resistance: 'Зелье увеличенного сопротивления'
+artefact_name_arrow_of_knockup: 'Стрела нокаута'
+artefact_name_super_spiky_helmet: 'Превосходный шлем с шипами'
+artefact_name_bountiful_pickaxe: 'Огромная кирка'
+artefact_name_sword_of_immolation: 'Меч самосожжения'
+artefact_name_axe_of_the_berserker: 'Топор Берсерка'
+artefact_name_bow_of_displacement: 'Лук Перемещения'
+artefact_name_arrow_of_doom: 'Стрела судьбы'
+artefact_name_vorpal_sword: 'Меч Ворпала'
+artefact_name_chicago_typewriter: 'Чикагская пишущая машинка'
+artefact_name_trident_of_zeus: 'Трезубец Зевса'
+artefact_name_trident_of_poseidon: 'Трезубец Посейдона'
+artefact_name_chestplate_of_mars: 'Нагрудник Марса'
+artefact_custom_effect_lore_lightning_strike_on_hit: '&7Молниеносный удар при попадании'
 #Added in 0.47
-artefact_name_antimatter_potion: 'Antimatter Potion'
-artefact_custom_effect_lore_delayed_massive_self_explosion_on_consume: '&7Drinker Explodes in 7 seconds'
-artefact_name_splash_potion_of_true_invisibility: 'Splash Potion of True Invisibility'
-artefact_name_poison_blade: 'Poison Blade'
-artefact_custom_effect_lore_poison_on_hit: '&7Poison on Hit'
-artefact_name_blade_of_the_viper: 'Blade of the Viper'
-artefact_custom_effect_lore_strong_poison_on_hit: '&7Strong Poison on Hit'
-artefact_custom_effect_lore_slow_on_hit: '&7Slowness on Hit'
+artefact_name_antimatter_potion: 'Зелье антивещества'
+artefact_custom_effect_lore_delayed_massive_self_explosion_on_consume: '&7Поилка взрывается через 7 секунд'
+artefact_name_splash_potion_of_true_invisibility: 'Всплеск зелья невидимости'
+artefact_name_poison_blade: 'Отравленный клинок'
+artefact_custom_effect_lore_poison_on_hit: '&7Яд при попадании'
+artefact_name_blade_of_the_viper: 'Клинок Гадюки'
+artefact_custom_effect_lore_strong_poison_on_hit: '&7Сильный яд при попадании'
+artefact_custom_effect_lore_slow_on_hit: '&7Замедление при попадании'
 #Added in 0.48
 #Shown when an admin adds hours using /swa siegeduration addhours
-hours_added_to_sieges: '%s hours have been added to all sieges'' durations.'
+hours_added_to_sieges: '%s часов были добавлены к длительности всех осад.'
 #Shown when SW cancels a battle session because there's no active sieges.
-battle_session_cancelled_no_sieges: 'No active Sieges, cancelling Battle Session'
+battle_session_cancelled_no_sieges: 'Нет активных осад, отмена боевой сессии'
 #Added in 0.49
 #Shown when a nation tries to set their capital city while it is sieged.
-msg_err_besieged_capital_cannot_change_king: "&cYour nation is not allowed to change kings while your cities are sieged."
+msg_err_besieged_capital_cannot_change_king: "&cВашей нации не разрешается менять королей, пока ваши города находятся в осаде."
 #Added in 0.50
 #Shown when a siege assembly is started in a town which already has a siege assembly.
-msg_err_town_already_has_a_siege_assembly: '&cThis town already has an active Siege Assembly.'
+msg_err_town_already_has_a_siege_assembly: '&cВ этом городе уже есть действующее Осадное орудие.'
 #Shown when a town cannot start a siege because of their isAllowedToWar setting.
-msg_err_your_town_is_not_allowed_to_start_a_siege: 'Your town is not allowed to start sieges because they are not allowed to war.'
+msg_err_your_town_is_not_allowed_to_start_a_siege: 'Вашему городу не разрешается начинать осады, потому что им не разрешено воевать.'
 #Shown when a town cannot start a siege because of the target town's isAllowedToWar setting.
-msg_err_this_town_is_not_allowed_to_be_sieged: 'You cannot siege this Town because they are not allowed to war.'
+msg_err_this_town_is_not_allowed_to_be_sieged: 'Вы не можете осадить этот город, потому что он не имеет разрешения на войну.'
 #Shown when a nation cannot afford to start a siege.
-msg_err_you_cannot_afford_to_siege_for_x: "Your nation cannot afford to begin this Siege, it would cost %s."
+msg_err_you_cannot_afford_to_siege_for_x: "Ваша нация не может позволить себе начать эту осаду, это будет стоить %s."
 #Show when a nation tries to start a siege when the economy is not active.
-msg_err_no_siege_economy_not_active: "You cannot start a siege while the Economy is disabled in Towny."
+msg_err_no_siege_economy_not_active: "Вы не можете начать осаду, пока экономика в Тowny отключена."
 #Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
-msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the battle session, resulting in a prison break, freeing %s."
+msg_attackers_have_triggered_a_jail_break_freeing: "Нападавшие одержали победу в сражении, в результате чего %s освободили из тюрьмы."
 #Shown when a town takes on daily plunder debt.
-msg_plunder_debt_earned: "Your town's plunder costs were paid by the server! You will have to pay %s every day for %s days, to pay this back."
+msg_plunder_debt_earned: "Расходы на разграбление вашего города были оплачены сервером! Вам придется платить %s каждый день в течение %s дней, чтобы вернуть этот долг."
 #Shown when a town pays their daily plunder debt.
-msg_plunder_debt_payed: "Your town paid the daily plunder debt of %s."
+msg_plunder_debt_payed: "Ваш город выплатил ежедневный долг за разграбление в размере %s."
 #Shown when a town pays their daily plunder debt with bankruptcy.
-msg_plunder_debt_payed_bankrupt: "Your town paid the daily plunder debt of %s by going bankrupt."
+msg_plunder_debt_payed_bankrupt: "Ваш город выплатил ежедневный долг за разграбление в размере %s, при этом обанкротившись."
 #Shown when a town cannot pay their daily plunder debt.
-msg_plunder_debt_cannot_be_payed: "The Town %s could not pay their daily plunder debt and has been removed!"
+msg_plunder_debt_cannot_be_payed: "Город %s не смог выплатить свой ежедневный долг за разграбление и был удалён!"
 #Shown in the town status screen when a town has plunder debt.
-status_town_plunder_debt: "Plunder Debt Owing: %s, %s daily payments of %s remain."
+status_town_plunder_debt: "Задолженность по разграблению: %s, %s ежедневных платежей осталось %s."
 #Shown when the nation sets their peacefuloccupationtax
-msg_peaceful_occupation_tax_set: "Your nation has set a daily peaceful occupation tax of %s."
+msg_peaceful_occupation_tax_set: "Ваша нация установила ежедневный налог на мирную оккупацию в размере %s."
 #Shown when a town pays their nation peaceful occupation tax.
-msg_peaceful_occupation_tax_payed: "Your town paid the nationpeaceful occupation tax of %s."
+msg_peaceful_occupation_tax_payed: "Ваш город оплатил национальный налог на мирную оккупацию в размере %s."
 #Shown when a town pays their nation peaceful occupation tax with bankruptcy.
-msg_peaceful_occupation_tax_payed_bankrupt: "Your town paid the nation peaceful occupation tax of %s by going bankrupt."
+msg_peaceful_occupation_tax_payed_bankrupt: "Ваш город заплатил национальный налог за мирную оккупацию в размере %s, при этом обанкротившись."
 #Shown when a town cannot pay their nation peaceful occupation tax.
-msg_peaceful_occupation_tax_cannot_be_payed: "The Town %s could not pay their nation peaceful occupation tax and has been removed!"
+msg_peaceful_occupation_tax_cannot_be_payed: "Город %s не смог заплатить налог за мирную оккупацию своей нации и был удалён!"
 #Shown in the nation status screen when a nation has nation peaceful occupation tax.
 status_nation_peaceful_occupation_tax: "Peaceful Occupation Tax: %s"
 #Shown when the nation tries to set a nation peaceful occupation tax over the maximum.
-msg_err_peaceful_occupation_tax_cannot_be_more_than: "Nations cannot set a peaceful occupation tax greater than %s."
+msg_err_peaceful_occupation_tax_cannot_be_more_than: "Налог на мирную оккупацию не может превышать %s."
 #Shown to nation when they are paid their peaceful occupation taxes.
-msg_peaceful_occupation_taxes_paid_totaling: "Your nation received a peaceful occupation taxes totalling: %s."
+msg_peaceful_occupation_taxes_paid_totaling: "Ваша нация получила налоги на мирную оккупацию на общую сумму: %s."
