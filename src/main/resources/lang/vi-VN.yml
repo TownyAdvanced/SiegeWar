@@ -326,7 +326,7 @@ msg_set_revolt_immunities_town: 'Miễn trừ nổi dậy cho thị trấn %s đ
 msg_set_revolt_immunities_nation: 'Miễn trừ nổi dậy cho tất cả các thị trấn trong quốc gia %s được đặt thành %s giờ.'
 msg_set_revolt_immunities_all: 'Miễn trừ nổi dậy cho tất cả các thị trấn được đặt thành %s giờ.'
 #Added in 0.23
-msg_siege_war_banner_control_remaining_session_time: 'Hẹn giờ biểu ngữ: %s'
+msg_siege_war_banner_control_remaining_session_time: 'Thời gian cắm biểu ngữ: %s'
 #Added in 0.25
 msg_err_siege_war_too_many_adjacent_towns: '&cBạn không thể thực hiện hành động này vì khu vực này phải đối mặt với quá nhiều thị trấn. Hãy thử đặt vật phẩm ở một khu vực khác.'
 #Added in 0.26
@@ -471,12 +471,12 @@ artefact_custom_effect_lore_lightning_strike_on_hit: '&7Triệu hồi sét trên
 #Added in 0.47
 artefact_name_antimatter_potion: 'Bình thuốc phản vật chất'
 artefact_custom_effect_lore_delayed_massive_self_explosion_on_consume: '&7Đồ uống phát nổ trong 7 giây'
-artefact_name_splash_potion_of_true_invisibility: 'Splash Potion of True Invisibility'
-artefact_name_poison_blade: 'Poison Blade'
+artefact_name_splash_potion_of_true_invisibility: 'Thuốc tàn hình có thể ném được'
+artefact_name_poison_blade: 'Lưỡi dao độc'
 artefact_custom_effect_lore_poison_on_hit: '&7Poison on Hit'
-artefact_name_blade_of_the_viper: 'Blade of the Viper'
+artefact_name_blade_of_the_viper: 'Lưỡi kiếm của Viper'
 artefact_custom_effect_lore_strong_poison_on_hit: '&7Strong Poison on Hit'
-artefact_custom_effect_lore_slow_on_hit: '&7Slowness on Hit'
+artefact_custom_effect_lore_slow_on_hit: '&7Làm chậm khi đánh'
 #Added in 0.48
 #Shown when an admin adds hours using /swa siegeduration addhours
 hours_added_to_sieges: '%s giờ đã được thêm vào thời lượng của tất cả các cuộc vây hãm.'
@@ -493,32 +493,32 @@ msg_err_your_town_is_not_allowed_to_start_a_siege: 'Thị trấn của bạn kh�
 #Shown when a town cannot start a siege because of the target town's isAllowedToWar setting.
 msg_err_this_town_is_not_allowed_to_be_sieged: 'Bạn không thể bao vây Thị trấn này vì họ không được phép tham chiến.'
 #Shown when a nation cannot afford to start a siege.
-msg_err_you_cannot_afford_to_siege_for_x: "Your nation cannot afford to begin this Siege, it would cost %s."
+msg_err_you_cannot_afford_to_siege_for_x: "Quốc gia của bạn không đủ khả năng để bắt đầu Cuộc vây hãm này, nó sẽ tiêu tốn %s."
 #Show when a nation tries to start a siege when the economy is not active.
-msg_err_no_siege_economy_not_active: "You cannot start a siege while the Economy is disabled in Towny."
+msg_err_no_siege_economy_not_active: "Bạn không thể bắt đầu một cuộc bao vây trong khi Nền kinh tế bị vô hiệu hóa ở Towny."
 #Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
-msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the battle session, resulting in a prison break, freeing %s."
+msg_attackers_have_triggered_a_jail_break_freeing: "Những kẻ tấn công đã giành chiến thắng trong phiên chiến đấu, có kẻ vượt ngục, giải thoát cho %s."
 #Shown when a town takes on daily plunder debt.
-msg_plunder_debt_earned: "Your town's plunder costs were paid by the server! You will have to pay %s every day for %s days, to pay this back."
+msg_plunder_debt_earned: "Chi phí cướp bóc của thị trấn của bạn đã được tạm ứng bởi máy chủ! Bạn sẽ phải trả %s mỗi ngày trong %s ngày để hoàn lại số tiền này."
 #Shown when a town pays their daily plunder debt.
-msg_plunder_debt_payed: "Your town paid the daily plunder debt of %s."
+msg_plunder_debt_payed: "Thị trấn của bạn đã trả khoản nợ cướp bóc hàng ngày là %s."
 #Shown when a town pays their daily plunder debt with bankruptcy.
-msg_plunder_debt_payed_bankrupt: "Your town paid the daily plunder debt of %s by going bankrupt."
+msg_plunder_debt_payed_bankrupt: "Thị trấn của bạn đã trả khoản nợ cướp bóc hàng ngày là %s bằng cách phá sản."
 #Shown when a town cannot pay their daily plunder debt.
-msg_plunder_debt_cannot_be_payed: "The Town %s could not pay their daily plunder debt and has been removed!"
+msg_plunder_debt_cannot_be_payed: "Thị trấn %s không thể trả khoản nợ cướp bóc hàng ngày của họ và đã bị xóa!"
 #Shown in the town status screen when a town has plunder debt.
-status_town_plunder_debt: "Plunder Debt Owing: %s, %s daily payments of %s remain."
+status_town_plunder_debt: "Mắc nợ do bị cướp bóc: %s, %s thanh toán hàng ngày của %s vẫn còn."
 #Shown when the nation sets their peacefuloccupationtax
-msg_peaceful_occupation_tax_set: "Your nation has set a daily peaceful occupation tax of %s."
+msg_peaceful_occupation_tax_set: "Quốc gia của bạn đã quy định mức thuế chiếm đóng hòa bình hàng ngày là %s."
 #Shown when a town pays their nation peaceful occupation tax.
-msg_peaceful_occupation_tax_payed: "Your town paid the nationpeaceful occupation tax of %s."
+msg_peaceful_occupation_tax_payed: "Quốc gia của bạn đã quy định mức thuế hòa bình phải đóng hàng ngày là %s."
 #Shown when a town pays their nation peaceful occupation tax with bankruptcy.
-msg_peaceful_occupation_tax_payed_bankrupt: "Your town paid the nation peaceful occupation tax of %s by going bankrupt."
+msg_peaceful_occupation_tax_payed_bankrupt: "Thị trấn của bạn đã trả %s thuế chiếm đóng hòa bình cho quốc gia bằng cách phá sản."
 #Shown when a town cannot pay their nation peaceful occupation tax.
-msg_peaceful_occupation_tax_cannot_be_payed: "The Town %s could not pay their nation peaceful occupation tax and has been removed!"
+msg_peaceful_occupation_tax_cannot_be_payed: "Thị trấn của bạn đã trả %s thuế chiếm đóng hòa bình cho quốc gia bằng cách phá sản!"
 #Shown in the nation status screen when a nation has nation peaceful occupation tax.
-status_nation_peaceful_occupation_tax: "Peaceful Occupation Tax: %s"
+status_nation_peaceful_occupation_tax: "Thuế chiếm đóng hòa bình: %s"
 #Shown when the nation tries to set a nation peaceful occupation tax over the maximum.
-msg_err_peaceful_occupation_tax_cannot_be_more_than: "Nations cannot set a peaceful occupation tax greater than %s."
+msg_err_peaceful_occupation_tax_cannot_be_more_than: "Các quốc gia không thể thiết lập thuế chiếm đóng hòa bình lớn hơn %s."
 #Shown to nation when they are paid their peaceful occupation taxes.
-msg_peaceful_occupation_taxes_paid_totaling: "Your nation received a peaceful occupation taxes totalling: %s."
+msg_peaceful_occupation_taxes_paid_totaling: "Quốc gia của bạn đã nhận được thuế chiếm đóng hòa bình với tổng số: %s."
