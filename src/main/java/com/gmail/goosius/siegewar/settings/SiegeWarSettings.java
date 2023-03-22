@@ -907,4 +907,8 @@ public class SiegeWarSettings {
 	public static boolean isUnjailingAttackerResidents() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_UNJAIL_RESIDENTS_WHEN_ATTACKERS_WIN_SESSION);
 	}
+
+	public static boolean isGlowingEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_GLOWING);
+	}
 }

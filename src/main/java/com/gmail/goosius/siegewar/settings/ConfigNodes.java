@@ -147,6 +147,11 @@ public enum ConfigNodes {
 			"",
 			"# When true, if an attackers wins the battlesession against a sieged town, that",
 			"# town's jailed players that belong to the attacking nation will be freed from the town's jail."),
+	WAR_SIEGE_GLOWING(
+			"war.siege.switches.enabled_glowing_on_players",
+			"true",
+			"",
+			"# When true, players will have a glowing effect."),
 
 	WAR_SIEGE_MONEY(
 			"war.siege.money",
