@@ -336,6 +336,9 @@ public class SiegeWarBannerControlUtil {
 	 * @param siege the siege
 	 */
 	private static void evaluatePlayerGlowing(Siege siege) throws Exception {
+		if (!SiegeWarSettings.isGlowingEnabled())
+			return;
+
 		//Create attacker and defender capper maps
 		Set<BannerControlSession> attackerSessions = new HashSet<>();
 		Set<BannerControlSession> defenderSessions = new HashSet<>();
