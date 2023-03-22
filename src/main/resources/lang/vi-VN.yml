@@ -137,7 +137,7 @@ msg_err_siege_war_not_enough_nation_funds_to_pay: "Quốc gia không có đủ t
 msg_siege_war_soldiers_paid: "Những người lính của quốc gia được trả tổng cộng %s, được phân phối theo cấp bậc."
 #Added in 0.11
 msg_err_invalid_bool: "&cTùy chọn không hợp lệ. Hãy thử: on/off"
-msg_beacon_preference_set: "&bBeacon preference set to %s."
+msg_beacon_preference_set: "&bĐã đặt tùy chọn đèn hiệu thành %s."
 #Misc
 msg_na: 'N/A'
 #Town screen
@@ -326,7 +326,7 @@ msg_set_revolt_immunities_town: 'Miễn trừ nổi dậy cho thị trấn %s đ
 msg_set_revolt_immunities_nation: 'Miễn trừ nổi dậy cho tất cả các thị trấn trong quốc gia %s được đặt thành %s giờ.'
 msg_set_revolt_immunities_all: 'Miễn trừ nổi dậy cho tất cả các thị trấn được đặt thành %s giờ.'
 #Added in 0.23
-msg_siege_war_banner_control_remaining_session_time: 'Banner Cap Timer: %s'
+msg_siege_war_banner_control_remaining_session_time: 'Thời gian cắm biểu ngữ: %s'
 #Added in 0.25
 msg_err_siege_war_too_many_adjacent_towns: '&cBạn không thể thực hiện hành động này vì khu vực này phải đối mặt với quá nhiều thị trấn. Hãy thử đặt vật phẩm ở một khu vực khác.'
 #Added in 0.26
@@ -334,7 +334,7 @@ msg_siege_war_attacker_death: '&bChiến sự %s > Kẻ tấn công %s đã ch�
 msg_siege_war_defender_death: '&bChiến sự %s > Bên phòng thủ %s đã chết > Điểm Chiến đấu +%d'
 msg_siege_war_attacker_killed_by_player: '&bChiến sự %s > Kẻ tấn công %s đã bị giết bởi %s > Điểm Chiến đấu -%d'
 msg_siege_war_defender_killed_by_player: '&bChiến sự %s > Bên phòng thủ %s bị giết bởi %s > Điểm Chiến đấu +%d'
-status_town_days_to_peacefulness_status_change: 'Days To Neutrality Status Change'
+status_town_days_to_peacefulness_status_change: 'Số ngày để thay đổi trạng thái trung lập'
 #Added in 0.27
 msg_next_siege_session_in_minutes: 'Phiên Chiến đấu tiếp theo sẽ diễn ra trong %s.'
 msg_session_is_active_now: 'Phiên chiến đấu đang hoạt động!'
@@ -435,48 +435,48 @@ warn_nation_had_ally_removed: 'Cảnh báo: %s đã bị xóa khỏi tư cách l
 #Message shown to the former allied nation's players when they have been removed as an ally.
 warn_your_nation_has_been_removed_as_an_ally: 'Cảnh báo: %s đã loại bỏ quốc gia của bạn với tư cách là đồng minh, trong khi một số thành viên quốc gia của bạn đang ở bên trong vùng chiến sự tại %s.'
 msg_global_domination_awards_header: '&bGiải thưởng thống trị đã được cấp!'
-msg_global_domination_awards_line: '&b%d - %s: %s + %s Artefacts.'
-msg_err_nation_domination_awards_no_capital: '&cNo capital town in which to deposit Artefacts.'
-msg_err_nation_domination_awards_no_capital_homeblock: '&cNo capital homeblock in which to deposit Artefacts.'
-msg_err_nation_domination_awards_not_enough_chests: '&cNot enough chests in homeblock to deposit Artefacts.'
+msg_global_domination_awards_line: '&b%d - %s: %s + %s Cổ Vật.'
+msg_err_nation_domination_awards_no_capital: '&cKhông có thành phố, thủ đô nào để cất giữ Cổ Vật.'
+msg_err_nation_domination_awards_no_capital_homeblock: '&cKhông có homeblock để cất giữ Cổ Vật.'
+msg_err_nation_domination_awards_not_enough_chests: '&cKhông đủ rương trong homeblock để cất giữ Cổ Vật.'
 #Added in 0.46
-artefact_lore_summary_line: '&5Artefact Tier %d'
+artefact_lore_summary_line: '&5Cổ vật loại: %d'
 artefact_lore_warning_line: '&cCẢNH Báo: Không ổn định sau %d ngày.'
-artefact_name_tree_feller: 'Tree Feller'
-artefact_name_ground_digger: 'Ground Digger'
-artefact_name_cobble_eater: 'Cobble Eater'
-artefact_name_sword_of_searing: 'Sword of Searing'
-artefact_name_potion_of_enhanced_regeneration: 'Potion of Enhanced Regeneration'
-artefact_name_potion_of_enhanced_strength: 'Potion of Enhanced Strength'
-artefact_name_potion_of_enhanced_absorbtion: 'Potion of Enhanced Absorbtion'
-artefact_name_potion_of_true_invisibility: 'Potion of True Invisibility'
-artefact_name_splash_potion_of_enhanced_regeneration: 'Splash Potion of Enhanced Regeneration'
-artefact_name_splash_potion_of_enhanced_strength: 'Splash Potion of Enhanced Strength'
-artefact_name_splash_potion_of_enhanced_absorbtion: 'Splash Potion of Enhanced Absorbtion'
-artefact_name_arrow_of_enhanced_hunger: 'Arrow of Enhanced Hunger'
-artefact_name_potion_of_great_resistance: 'Potion of Great Resistance'
-artefact_name_arrow_of_knockup: 'Arrow of Knockup'
-artefact_name_super_spiky_helmet: 'Super Spiky Helmet'
-artefact_name_bountiful_pickaxe: 'Bountiful Pickaxe'
-artefact_name_sword_of_immolation: 'Sword of Immolation'
-artefact_name_axe_of_the_berserker: 'Axe of the Berserker'
-artefact_name_bow_of_displacement: 'Bow of Displacement'
-artefact_name_arrow_of_doom: 'Arrow of Doom'
-artefact_name_vorpal_sword: 'Vorpal Sword'
-artefact_name_chicago_typewriter: 'Chicago Typewriter'
-artefact_name_trident_of_zeus: 'Trident of Zeus'
-artefact_name_trident_of_poseidon: 'Trident of Poseidon'
-artefact_name_chestplate_of_mars: 'Chestplate of Mars'
-artefact_custom_effect_lore_lightning_strike_on_hit: '&7Lightning Strike on Hit'
+artefact_name_tree_feller: 'Người chặt cây'
+artefact_name_ground_digger: 'Máy đào đất'
+artefact_name_cobble_eater: 'Ruột sắt'
+artefact_name_sword_of_searing: 'Thanh kiếm của Địa chủ Searing'
+artefact_name_potion_of_enhanced_regeneration: 'Thuốc tái tạo tăng cường'
+artefact_name_potion_of_enhanced_strength: 'Thuốc cường hóa sức mạnh'
+artefact_name_potion_of_enhanced_absorbtion: 'Thuốc tăng cường hấp thụ'
+artefact_name_potion_of_true_invisibility: 'Thuốc tàng hình'
+artefact_name_splash_potion_of_enhanced_regeneration: 'Thuốc tái tạo tăng cường có thể ném được'
+artefact_name_splash_potion_of_enhanced_strength: 'Thuốc cường hóa sức mạnh có thể ném được'
+artefact_name_splash_potion_of_enhanced_absorbtion: 'Thuốc tăng cường hấp thụ có thể ném được'
+artefact_name_arrow_of_enhanced_hunger: 'Mũi tên của sự đói khát được tăng cường'
+artefact_name_potion_of_great_resistance: 'Thuốc kháng cự mạnh'
+artefact_name_arrow_of_knockup: 'Mũi tên hất tung'
+artefact_name_super_spiky_helmet: 'Mũ Bảo Hiểm Siêu Gai'
+artefact_name_bountiful_pickaxe: 'Cuốc Địa chủ'
+artefact_name_sword_of_immolation: 'Thanh kiếm bất tử'
+artefact_name_axe_of_the_berserker: 'Rìu của Địa chủ Berserker'
+artefact_name_bow_of_displacement: 'Cung dịch chuyển'
+artefact_name_arrow_of_doom: 'Mũi tên diệt vong'
+artefact_name_vorpal_sword: 'Thanh kiếm Vorpal'
+artefact_name_chicago_typewriter: 'Máy đánh chữ'
+artefact_name_trident_of_zeus: 'Cây đinh ba của thần Zeus'
+artefact_name_trident_of_poseidon: 'Cây đinh ba của thần Poseidon'
+artefact_name_chestplate_of_mars: 'Giáp ngực của người sao Hỏa'
+artefact_custom_effect_lore_lightning_strike_on_hit: '&7Triệu hồi sét trên các đòn đánh'
 #Added in 0.47
-artefact_name_antimatter_potion: 'Antimatter Potion'
-artefact_custom_effect_lore_delayed_massive_self_explosion_on_consume: '&7Drinker Explodes in 7 seconds'
-artefact_name_splash_potion_of_true_invisibility: 'Splash Potion of True Invisibility'
-artefact_name_poison_blade: 'Poison Blade'
+artefact_name_antimatter_potion: 'Bình thuốc phản vật chất'
+artefact_custom_effect_lore_delayed_massive_self_explosion_on_consume: '&7Đồ uống phát nổ trong 7 giây'
+artefact_name_splash_potion_of_true_invisibility: 'Thuốc tàn hình có thể ném được'
+artefact_name_poison_blade: 'Lưỡi dao độc'
 artefact_custom_effect_lore_poison_on_hit: '&7Poison on Hit'
-artefact_name_blade_of_the_viper: 'Blade of the Viper'
+artefact_name_blade_of_the_viper: 'Lưỡi kiếm của Viper'
 artefact_custom_effect_lore_strong_poison_on_hit: '&7Strong Poison on Hit'
-artefact_custom_effect_lore_slow_on_hit: '&7Slowness on Hit'
+artefact_custom_effect_lore_slow_on_hit: '&7Làm chậm khi đánh'
 #Added in 0.48
 #Shown when an admin adds hours using /swa siegeduration addhours
 hours_added_to_sieges: '%s giờ đã được thêm vào thời lượng của tất cả các cuộc vây hãm.'
@@ -493,32 +493,32 @@ msg_err_your_town_is_not_allowed_to_start_a_siege: 'Thị trấn của bạn kh�
 #Shown when a town cannot start a siege because of the target town's isAllowedToWar setting.
 msg_err_this_town_is_not_allowed_to_be_sieged: 'Bạn không thể bao vây Thị trấn này vì họ không được phép tham chiến.'
 #Shown when a nation cannot afford to start a siege.
-msg_err_you_cannot_afford_to_siege_for_x: "Your nation cannot afford to begin this Siege, it would cost %s."
+msg_err_you_cannot_afford_to_siege_for_x: "Quốc gia của bạn không đủ khả năng để bắt đầu Cuộc vây hãm này, nó sẽ tiêu tốn %s."
 #Show when a nation tries to start a siege when the economy is not active.
-msg_err_no_siege_economy_not_active: "You cannot start a siege while the Economy is disabled in Towny."
+msg_err_no_siege_economy_not_active: "Bạn không thể bắt đầu một cuộc bao vây trong khi Nền kinh tế bị vô hiệu hóa ở Towny."
 #Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
-msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the battle session, resulting in a prison break, freeing %s."
+msg_attackers_have_triggered_a_jail_break_freeing: "Những kẻ tấn công đã giành chiến thắng trong phiên chiến đấu, có kẻ vượt ngục, giải thoát cho %s."
 #Shown when a town takes on daily plunder debt.
-msg_plunder_debt_earned: "Your town's plunder costs were paid by the server! You will have to pay %s every day for %s days, to pay this back."
+msg_plunder_debt_earned: "Chi phí cướp bóc của thị trấn của bạn đã được tạm ứng bởi máy chủ! Bạn sẽ phải trả %s mỗi ngày trong %s ngày để hoàn lại số tiền này."
 #Shown when a town pays their daily plunder debt.
-msg_plunder_debt_payed: "Your town paid the daily plunder debt of %s."
+msg_plunder_debt_payed: "Thị trấn của bạn đã trả khoản nợ cướp bóc hàng ngày là %s."
 #Shown when a town pays their daily plunder debt with bankruptcy.
-msg_plunder_debt_payed_bankrupt: "Your town paid the daily plunder debt of %s by going bankrupt."
+msg_plunder_debt_payed_bankrupt: "Thị trấn của bạn đã trả khoản nợ cướp bóc hàng ngày là %s bằng cách phá sản."
 #Shown when a town cannot pay their daily plunder debt.
-msg_plunder_debt_cannot_be_payed: "The Town %s could not pay their daily plunder debt and has been removed!"
+msg_plunder_debt_cannot_be_payed: "Thị trấn %s không thể trả khoản nợ cướp bóc hàng ngày của họ và đã bị xóa!"
 #Shown in the town status screen when a town has plunder debt.
-status_town_plunder_debt: "Plunder Debt Owing: %s, %s daily payments of %s remain."
+status_town_plunder_debt: "Mắc nợ do bị cướp bóc: %s, %s thanh toán hàng ngày của %s vẫn còn."
 #Shown when the nation sets their peacefuloccupationtax
-msg_peaceful_occupation_tax_set: "Your nation has set a daily peaceful occupation tax of %s."
+msg_peaceful_occupation_tax_set: "Quốc gia của bạn đã quy định mức thuế chiếm đóng hòa bình hàng ngày là %s."
 #Shown when a town pays their nation peaceful occupation tax.
-msg_peaceful_occupation_tax_payed: "Your town paid the nationpeaceful occupation tax of %s."
+msg_peaceful_occupation_tax_payed: "Quốc gia của bạn đã quy định mức thuế hòa bình phải đóng hàng ngày là %s."
 #Shown when a town pays their nation peaceful occupation tax with bankruptcy.
-msg_peaceful_occupation_tax_payed_bankrupt: "Your town paid the nation peaceful occupation tax of %s by going bankrupt."
+msg_peaceful_occupation_tax_payed_bankrupt: "Thị trấn của bạn đã trả %s thuế chiếm đóng hòa bình cho quốc gia bằng cách phá sản."
 #Shown when a town cannot pay their nation peaceful occupation tax.
-msg_peaceful_occupation_tax_cannot_be_payed: "The Town %s could not pay their nation peaceful occupation tax and has been removed!"
+msg_peaceful_occupation_tax_cannot_be_payed: "Thị trấn của bạn đã trả %s thuế chiếm đóng hòa bình cho quốc gia bằng cách phá sản!"
 #Shown in the nation status screen when a nation has nation peaceful occupation tax.
-status_nation_peaceful_occupation_tax: "Peaceful Occupation Tax: %s"
+status_nation_peaceful_occupation_tax: "Thuế chiếm đóng hòa bình: %s"
 #Shown when the nation tries to set a nation peaceful occupation tax over the maximum.
-msg_err_peaceful_occupation_tax_cannot_be_more_than: "Nations cannot set a peaceful occupation tax greater than %s."
+msg_err_peaceful_occupation_tax_cannot_be_more_than: "Các quốc gia không thể thiết lập thuế chiếm đóng hòa bình lớn hơn %s."
 #Shown to nation when they are paid their peaceful occupation taxes.
-msg_peaceful_occupation_taxes_paid_totaling: "Your nation received a peaceful occupation taxes totalling: %s."
+msg_peaceful_occupation_taxes_paid_totaling: "Quốc gia của bạn đã nhận được thuế chiếm đóng hòa bình với tổng số: %s."
