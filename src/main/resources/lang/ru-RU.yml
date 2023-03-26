@@ -438,7 +438,7 @@ msg_global_domination_awards_header: '&bНаграды за превосходс
 msg_global_domination_awards_line: '&b%d - %s: %s + %s артефактов.'
 msg_err_nation_domination_awards_no_capital: '&cНет столицы, в которой можно было бы хранить артефакты.'
 msg_err_nation_domination_awards_no_capital_homeblock: '&cНет капитального жилого блока, в которой можно было бы хранить артефакты.'
-msg_err_nation_domination_awards_not_enough_chests: '&cВ домашнем блоке недостаточно сундуков для хранения артефактов.'
+msg_err_nation_domination_awards_not_enough_chests: '&cВ центральном участке недостаточно сундуков для хранения артефактов.'
 #Added in 0.46
 artefact_lore_summary_line: '&5Уровень артефактов %d'
 artefact_lore_warning_line: '&cПРЕДУПРЕЖДЕНИЕ: Нестабилен после %d-дневной давности.'
