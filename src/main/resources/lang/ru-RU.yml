@@ -24,7 +24,7 @@ msg_siege_war_neutral_town_plundered: '&b%s был разграблен %s %s!'
 msg_siege_war_nation_town_plundered: '&b%s был разграблен %s %s!'
 msg_siege_war_town_ruined_from_plunder: '&b%s был снижен до развалин силами %s!'
 msg_siege_war_town_bankrupted_from_plunder: '&b%s обанкротился силами %s!'
-msg_siege_war_nation_defeated: '&b%s был повержен!'
+msg_siege_war_nation_defeated: '&b%s побеждена!'
 msg_siege_war_attacking_troops_at_siege_banner: '&bОсада %s > Атакующие находятся у флага осады.'
 msg_siege_war_banner_control_session_success: '&bСессия контроля флага успешно пройдена!. Вы были добавлены в список контроля флага.'
 msg_siege_war_banner_control_gained_by_attacker: '&bОсада %s > Атакующие захватили флаг.'
@@ -255,9 +255,9 @@ msg_liberation_siege_timed_attacker_win: '&bОСВОБОЖДЕНИЕ %s > Ата
 msg_revolt_siege_timed_attacker_win: '&bВОССТАНИЕ в %s > Атакующая повстанческая армия прогнала оккупационную армию из %s.'
 msg_suppression_siege_timed_attacker_win: '&bПОДАВЛЕНИЕ в %s > Оккупационная армия %s успешно подавила всю активность повстанцев. Теперь город открыт для вторжения и/или разграбления.'
 msg_conquest_siege_timed_defender_win: '&bЗАВОЕВАНИЕ %s > Армия обороны %s победила армию %s и прогнала атакующих.'
-msg_liberation_siege_timed_defender_win: '&bОСВОБОЖДЕНИЕ %s > Оккупационная армия %s одержала победу над %s и не дала освободить город.'
+msg_liberation_siege_timed_defender_win: '&bОСВОБОЖДЕНИЕ %s > Оккупационная армия %s победила армию %s и не дала освободить город.'
 msg_revolt_siege_timed_defender_win: '&bВОССТАНИЕ в %s > Оккупационная армия %s успешно разгромила восстание. Город теперь открыт для вторжения и/или разграбления.'
-msg_suppression_siege_timed_defender_win: '&bПОДАВЛЕНИЕ в %s > Армия обороны %s разгромила атакующую армию %s, предотвратив попытку подавления и освободив город от оккупации.'
+msg_suppression_siege_timed_defender_win: '&bПОДАВЛЕНИЕ в %s > Армия обороны %s победила атакующую армию %s, предотвратив попытку подавления и освободив город от оккупации.'
 #Generic Victory messages
 msg_immediate_attacker_victory: " Атакующие победили!"
 msg_pending_attacker_victory: " Победа атакующих будет подтверждена через %s."
