@@ -136,7 +136,7 @@ msg_err_siege_war_no_soldiers_to_pay: "Нет солдат, кому можно 
 msg_err_siege_war_not_enough_nation_funds_to_pay: "У нации недостаточно средств для выплаты этой суммы."
 msg_siege_war_soldiers_paid: "Военнослужащие нации получили в общей сложности %s, которые распределены по рангу."
 #Added in 0.11
-msg_err_invalid_bool: "&cНедопустимый параметр. Параметры: вкл/выкл"
+msg_err_invalid_bool: "&cНедопустимый аргумент. Допустимые аргументы: on/off"
 msg_beacon_preference_set: "&bНастройки маяка установлены на %s."
 #Misc
 msg_na: 'Н/А'
@@ -254,7 +254,7 @@ msg_conquest_siege_timed_attacker_win: '&bЗАВОЕВАНИЕ %s > Атакую
 msg_liberation_siege_timed_attacker_win: '&bОСВОБОЖДЕНИЕ %s > Атакующая армия %s победила оккупационную армию %s и освободила жителей от оккупации.'
 msg_revolt_siege_timed_attacker_win: '&bВОССТАНИЕ в %s > Атакующая повстанческая армия прогнала оккупационную армию из %s.'
 msg_suppression_siege_timed_attacker_win: '&bПОДАВЛЕНИЕ в %s > Оккупационная армия %s успешно подавила всю активность повстанцев. Теперь город открыт для вторжения и/или разграбления.'
-msg_conquest_siege_timed_defender_win: '&bЗАВОЕВАНИЕ %s > Армия обороны %s уничтожила армию %s и прогнала атакующих.'
+msg_conquest_siege_timed_defender_win: '&bЗАВОЕВАНИЕ %s > Армия обороны %s победила армию %s и прогнала атакующих.'
 msg_liberation_siege_timed_defender_win: '&bОСВОБОЖДЕНИЕ %s > Оккупационная армия %s одержала победу над %s и не дала освободить город.'
 msg_revolt_siege_timed_defender_win: '&bВОССТАНИЕ в %s > Оккупационная армия %s успешно разгромила восстание. Город теперь открыт для вторжения и/или разграбления.'
 msg_suppression_siege_timed_defender_win: '&bПОДАВЛЕНИЕ в %s > Армия обороны %s разгромила атакующую армию %s, предотвратив попытку подавления и освободив город от оккупации.'
