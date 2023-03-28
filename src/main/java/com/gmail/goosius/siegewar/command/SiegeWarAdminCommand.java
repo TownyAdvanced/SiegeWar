@@ -13,7 +13,6 @@ import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -39,7 +38,7 @@ import java.util.List;
 
 public class SiegeWarAdminCommand implements TabExecutor {
 
-	private static final List<String> siegewaradminTabCompletes = Arrays.asList("dominationawards","battlesession","install","nation","reload","revoltimmunity","siege","siegeimmunity","town","siegeduration");
+	private static final List<String> siegewaradminTabCompletes = Arrays.asList("battlesession","install","nation","reload","revoltimmunity","siege","siegeimmunity","town","siegeduration");
 	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
@@ -167,9 +166,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				break;
 			case "battlesession":
 				parseSiegeWarBattleSessionCommand(sender, StringMgmt.remFirstArg(args));
-				break;
-			case "dominationawards":
-				parseSiegeWarGlobalDominationAwardsCommand(sender, StringMgmt.remFirstArg(args));
 				break;
 
 			/*
@@ -466,19 +462,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		}
 	}
 
-	private void parseSiegeWarGlobalDominationAwardsCommand(CommandSender sender, String[] args) {
-		if (args.length == 0) {
-			showGlobalDominationAwardsHelp(sender);
-		} else if (args[0].equalsIgnoreCase("giveglobal")) {
-			//Add one domination record to each nation (otherwise the grant will crash if there are none)
-			SiegeWarDominationAwardsUtil.addDominationRecords();
-			//Grant awards
-			SiegeWarDominationAwardsUtil.grantGlobalDominationAwardsNow(new ArrayList<>(TownyUniverse.getInstance().getNations()));
-		} else {
-			showGlobalDominationAwardsHelp(sender);
-		}
-	}
-
 	private void parseSiegeWarSiegeImmunityCommand(CommandSender sender, String[] args) {
 		if (args.length < 2) {
 			showSiegeImmunityHelp(sender);
@@ -682,10 +665,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_set_plunder_success", Boolean.toString(plundered).toUpperCase(), town.getName()));
 					return;
 				case "setinvaded":
-					if(siege.isRevoltSiege() || siege.isSuppressionSiege()) {
-						Messaging.sendErrorMsg(sender, Translatable.of("msg_err_swa_cannot_set_invade_due_to_siege_type", args[0]));
-						return;
-					}
 					boolean invaded = Boolean.parseBoolean(args[2]);
 					if(invaded) {
 						siege.setTownInvaded(true);

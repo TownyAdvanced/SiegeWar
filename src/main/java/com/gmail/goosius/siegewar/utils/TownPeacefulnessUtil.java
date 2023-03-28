@@ -56,33 +56,8 @@ public class TownPeacefulnessUtil {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			if (town.isNeutral()) {
 				message = Translation.of("msg_town_became_peaceful", town.getFormattedName());
-
-				//If town is occupied, record the occupier
-				if(TownOccupationController.isTownOccupied(town)) {
-					TownMetaDataController.setPrePeacefulOccupierUUID(town, TownOccupationController.getTownOccupier(town).getUUID().toString());
-				}
 			} else {
 				message = Translation.of("msg_town_became_non_peaceful", town.getFormattedName());
-
-				/*
-				 * If the town was occupied before turning peaceful,
-				 * return it to the previous occupier.
-				 * If the previous occupier is now the town's home nation, do not re-occupy.
-				 */
-				try {
-					String prePeacefulOccupierUUID = TownMetaDataController.getPrePeacefulOccupierUUID(town);
-					if(prePeacefulOccupierUUID != null) {
-						Nation prePeacefulOccupierNation = TownyUniverse.getInstance().getNation(UUID.fromString(prePeacefulOccupierUUID));
-							if (!(town.hasNation() && town.getNation() == prePeacefulOccupierNation)) {
-								TownOccupationController.setTownOccupation(town, prePeacefulOccupierNation);
-								TownMetaDataController.removePrePeacefulOccupierUUID(town);
-								message += Translation.of("msg_town_returned_to_pre_peaceful_occupier",prePeacefulOccupierNation.getName());
-						}
-					}
-				} catch (Throwable t) {
-					SiegeWar.severe("Issue with re-assigning pre-peaceful occupier for town " + town.getName());
-					t.printStackTrace();
-				}
 			}
 		} else {
 			if (town.isNeutral()) {

@@ -38,7 +38,6 @@ import com.gmail.goosius.siegewar.listeners.SiegeWarSelfListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarStatusScreenListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarArtefactListener;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -169,7 +168,6 @@ public class SiegeWar extends JavaPlugin {
 			pm.registerEvents(new SiegeWarTownEventListener(this), this);
 			pm.registerEvents(new SiegeWarPlotEventListener(this), this);
 			pm.registerEvents(new SiegeWarStatusScreenListener(), this);
-			pm.registerEvents(new SiegeWarArtefactListener(this), this);
 			pm.registerEvents(new SiegeWarSelfListener(), this);
 		}
 	}

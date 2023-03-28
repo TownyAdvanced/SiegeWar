@@ -45,21 +45,11 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If true, then nations can start conquest sieges."),
-	WAR_SIEGE_LIBERATION_SIEGES_ENABLED(
-			"war.siege.switches.liberation_sieges_enabled",
-			"true",
-			"",
-			"# If true, then nations can start liberation sieges."),
 	WAR_SIEGE_REVOLT_SIEGES_ENABLED(
 			"war.siege.switches.revolt_sieges_enabled",
 			"true",
 			"",
 			"# If true, then towns can start revolt sieges."),
-	WAR_SIEGE_SUPPRESSION_SIEGES_ENABLED(
-			"war.siege.switches.suppression_sieges_enabled",
-			"true",
-			"",
-			"# If true, then nations can start suppression sieges."),
 	WAR_SIEGE_ABANDON_ENABLED(
 			"war.siege.switches.abandon_enabled",
 			"true",
@@ -765,11 +755,6 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If this setting is true, then peaceful subversion (instant occupation) of neutral towns is enabled."),
-	PEACEFUL_TOWNS_PEACEFUL_REVOLT_ENABLED(
-			"neutral_towns.revolt_enabled",
-			"true",
-			"",
-			"# If this setting is true, then peaceful revolt (instant de-occupation) by neutral towns is enabled."),
 	PEACEFUL_TOWNS_TOWNY_INFLUENCE_RADIUS(
 			"neutral_towns.towny_influence_radius",
 			"1200",
@@ -1132,220 +1117,7 @@ public enum ConfigNodes {
 			"0",
 			"",
 			"# Within the protection radius, players cannot build below this height.",
-			"# The height is relative to the siege banner height"),
-	DOMINATION_AWARDS(
-			"domination_awards",
-			"",
-			"",
-			"",
-			"############################################################",
-			"# +------------------------------------------------------+ #",
-			"# |                  DOMINATION AWARDS                   | #",
-			"# +------------------------------------------------------+ #",
-			"############################################################",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS(
-			"domination_awards.artefact_offers",
-			"",
-			"",
-			"",
-			"# +------------------------------------------------------+ #",
-			"# |                    Artefact Offers                   | #",
-			"# +------------------------------------------------------+ #",
-			"",
-			"# These offers determine which artefacts are available for granting.",
-			"# ",
-			"# OVERALL SECTIONS",
-			"# There are 2 overall sections:",
-			"# - Default: Do not modify. Provided by the plugin. If there are any issues with these, report to plugin team.",
-			"# - Custom: You can add new artefacts here.",
-			"# ",
-			"# ARTEFACT SECTIONS",
-			"# Each artefact offer has 3+ sections:",
-			"# Section 1 - key      ..... this key must be unique.",
-			"# Section 2 - quantity ..... the number of artefacts in the offer.",
-			"# Section 3 - material ..... the material the artefacts are made of.",
-			"# Section 4 - [OPTIONAL] effect 1 ...... A Special effect. There are 3 format options. See below.",
-			"# Section 5 - [OPTIONAL] effect 2 ...... A Special effect.  A new section can be added for each additional effects.",
-			"# ",
-			"# SPECIAL EFFECT FORMAT OPTIONS",
-			"# Option 1:  For tools/weapons/armour:  <effect_type>:<amplifier>",
-			"# Option 2:  For potions/arrows:   <potion_type>:<amplifier>:<duration_seconds>:<particles>:<ambient>:<icon>",
-			"# Option 3:  For custom effects:     custom_effect:<custom_effect_key>",
-			"# ",
-			"# NOTES",
-			"# 1. For all artefacts, the name must appear in the language file.",
-			"# 2. For custom effects, an effect description must also appear in the language file.",
-			"# ",
-			"# +------------------------------------------------------+ #",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT(
-			"domination_awards.artefact_offers.default_0_8_0_official",
-			"",
-			"# These artefacts are the defaults provided by SW. Do not add custom items here."),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER1(
-			"domination_awards.artefact_offers.default_0_8_0_official.tier1",
-			"{cobble_eater, 1, diamond_pickaxe, efficiency:7}"
-			+ "{tree_feller, 1, diamond_axe, efficiency:7}"
-			+ "{ground_digger, 1, diamond_shovel, efficiency:7}"
-			+ "{sword_of_searing, 1, golden_sword, fire_aspect:4}"
-			+ "{poison_blade, 1, golden_sword, custom_effect:poison_on_hit}"
-			+ "{potion_of_enhanced_regeneration, 3, potion, regeneration:3:60:true:true:true}"
-			+ "{potion_of_enhanced_strength, 3, potion, increase_damage:3:120:true:true:true}"
-			+ "{potion_of_enhanced_absorbtion, 3, potion, absorption:3:120:true:true:true}",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER2(
-			"domination_awards.artefact_offers.default_0_8_0_official.tier2",
-			"{potion_of_true_invisibility, 3, potion, invisibility:1:180:false:false:true}"
-			+ "{splash_potion_of_enhanced_regeneration, 3, splash_potion, regeneration:3:60:true:true:true}"
-			+ "{splash_potion_of_enhanced_strength, 3, splash_potion, increase_damage:3:120:true:true:true}"
-			+ "{splash_potion_of_enhanced_absorbtion, 3, splash_potion, absorption:3:120:true:true:true}",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER3(
-			"domination_awards.artefact_offers.default_0_8_0_official.tier3",
-			"{arrow_of_enhanced_hunger, 5, tipped_arrow, hunger:12:50:true:true:true}"
-			+ "{potion_of_great_resistance, 3, potion, damage_resistance:4:30:true:true:true}"
-			+ "{splash_potion_of_true_invisibility, 3, splash_potion, invisibility:1:180:false:false:true}"
-			+ "{arrow_of_knockup, 5, tipped_arrow, levitation:20:1:true:true:true}"
-			+ "{super_spiky_helmet, 1, golden_helmet, thorns:8, unbreaking:2}"
-			+ "{bountiful_pickaxe, 1, diamond_pickaxe, fortune:5, efficiency:8}",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER4(
-			"domination_awards.artefact_offers.default_0_8_0_official.tier4",
-			"{sword_of_immolation, 1, golden_sword, fire_aspect:7}"
-			+ "{axe_of_the_berserker, 1, golden_axe, sharpness:10, efficiency:10}"
-			+ "{bow_of_displacement, 1, bow, punch: 7}"
-			+ "{blade_of_the_viper, 1, golden_sword, custom_effect:strong_poison_on_hit, custom_effect:slow_on_hit}",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER5(
-			"domination_awards.artefact_offers.default_0_8_0_official.tier5",
-			"{arrow_of_doom, 5, tipped_arrow, harm:20:1:true:true:true}"
-			+ "{vorpal_sword, 1, golden_sword, sharpness:15}"
-			+ "{chicago_typewriter, 1, crossbow, quick_charge:5}"
-			+ "{trident_of_zeus, 1, trident, channeling:1, loyalty:2, custom_effect:lightning_strike_on_hit}"
-			+ "{trident_of_poseidon, 1, trident, riptide:12}"
-			+ "{chestplate_of_mars, 1, golden_chestplate, protection:10}"
-			+ "{antimatter_potion, 1, potion, poison:1:7:true:true:true, custom_effect:delayed_massive_self_explosion_on_consume}",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM(
-			"domination_awards.artefact_offers.custom",
-			"",
-			"# These artefacts are configured by the server. You can add custom items here."),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER1(
-			"domination_awards.artefact_offers.custom.tier1",
-			"",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER2(
-			"domination_awards.artefact_offers.custom.tier2",
-			"",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER3(
-			"domination_awards.artefact_offers.custom.tier3",
-			"",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER4(
-			"domination_awards.artefact_offers.custom.tier4",
-			"",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER5(
-			"domination_awards.artefact_offers.custom.tier5",
-			"",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_OFFERS_LEGACY(
-			"domination_awards.artefact_offers.legacy",
-			"",
-			"",
-			"# This list is inactive. The artefacts here will not be offered.",
-			"# This list exists only to preserve any custom artefacts which users added in 0.7.15.",
-			"# To offer these artefacts, move them into the custom offers configs above."),
-	DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS(
-			"domination_awards.artefact_chest_signs",
-			"artefacts, artifacts",
-			"",
-			"# When a nation is granted artefacts. the items get placed in chests in the capital homeblock.",
-			"# If the nation puts a sign on any chests with one of these texts, those chests will be preferred."),
-	DOMINATION_AWARDS_ARTEFACT_EXPIRY(
-			"domination_awards.artefact_expiry",
-			"",
-			"",
-			"",
-			"# +------------------------------------------------------+ #",
-			"# |                    Artefact Expiry                   | #",
-			"# +------------------------------------------------------+ #",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_EXPIRY_LIFETIME_DAYS(
-			"domination_awards.artefact_expiry.lifetime_days",
-			"7",
-			"",
-			"# The lifetime in days of each artefact."),
-	DOMINATION_AWARDS_ARTEFACT_EXPIRY_PERCENTAGE_CHANCE_PER_SHORT_TICK(
-			"domination_awards.artefact_expiry.percentage_chance_per_short_tick",
-			"10",
-			"",
-			"# The percentage chance per short tick, that all end-of-life artefacts within a player's inventory will expire.",
-			"# TIP: Keep this value low to avoid lag."),
-	DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS(
-			"domination_awards.artefact_expiry.explosions",
-			"",
-			""),
-	DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_ENABLED(
-			"domination_awards.artefact_expiry.explosions.enabled",
-			"true",
-			"",
-			"# If true, an artefact will explode on expiration."),
-	DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_BASE_POWER(
-			"domination_awards.artefact_expiry.explosions.base_power",
-			"4",
-			"",
-			"# The base power of the explosion."),
-	DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_EXTRA_POWER_PER_EXPIRED_ARTEFACT(
-			"domination_awards.artefact_expiry.explosions.extra_power_per_expired_artefact",
-			"1",
-			"",
-			"# The explosion power increases with every expired artefact the player is carrying."),
-	DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_MAX_POWER(
-			"domination_awards.artefact_expiry.explosions.max_power",
-			"9",
-			"",
-			"# The max power of the explosion."),
-	DOMINATION_AWARDS_GLOBAL(
-			"domination_awards.global",
-			"",
-			""),
-	DOMINATION_AWARDS_GLOBAL_ENABLED(
-			"domination_awards.global.enabled",
-			"true",
-			"",
-			"# If this setting is true, then global domination awards are enabled."),
-	DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_CRITERION(
-			"domination_awards.global.assessment_criterion",
-			"num_residents",
-			"",
-			"# The criterion by which the award winners are chosen.",
-			"# Allowed values: num_residents, num_towns, num_townblocks, num_online_players"),
-	DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_PERIOD_HOURS(
-			"domination_awards.global.assessment_period_hours",
-			"150",
-			"",
-			"# The minimum assessment period required before awards are granted."),
-	DOMINATION_AWARDS_GLOBAL_GRANT_DAY_OF_WEEK(
-			"domination_awards.global.grant_day_of_week",
-			"Saturday",
-			"",
-			"# The day on which the award is granted. It will be granted on Towny New Day."),
-	DOMINATION_AWARDS_GLOBAL_GRANTED_MONEY(
-			"domination_awards.global.granted_money",
-			"2000,1500,1250,1000,750,500,250",
-			"",
-			"# The money granted by the awards.",
-			"# This list is in the form of: top_nation, next nation,......bottom_nation"),
-	DOMINATION_AWARDS_GLOBAL_GRANTED_ARTEFACT_OFFERS(
-			"domination_awards.global.granted_artefact_offers",
-			"{8,7,5,3,2} {7,6,4,2,1} {6,5,3,1,0} {5,4,2,0,0} {4,3,1,0,0} {3,2,0,0,0} {2,1,0,0,0}",
-			"",
-			"# The offers granted by the awards.",
-			"# This list is in the form of: {top_nation}, {next nation},......{bottom_nation}",
-			"# Within each nation, the form is: {num_tier_1_offers, num_tier_2_offers .....}. etc.");
+			"# The height is relative to the siege banner height");
 
 	private final String Root;
 	private final String Default;

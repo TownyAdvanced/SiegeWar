@@ -23,8 +23,6 @@ public class DefenderTimedWin {
         Translatable[] message =  new Translatable[2];
         switch (siege.getSiegeType()) {
             case CONQUEST:
-            case SUPPRESSION:
-            case LIBERATION:
                 message[0] = Translatable.of(key,
                         siege.getTown().getName(),
                         siege.getDefender().getName(),

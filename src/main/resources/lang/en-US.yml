@@ -308,7 +308,6 @@ msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and pla
 msg_err_siege_war_plunder_not_possible_rebels_won: '&cPlunder not possible because the town rebels won the siege.'
 
 # Admin commands
-msg_err_swa_cannot_set_invade_due_to_siege_type: '&cYou cannot set the invaded flag for this type of siege.'
 msg_swa_set_invade_success: '&bSet invaded to %s for %s.'
 
 # Added in 0.16

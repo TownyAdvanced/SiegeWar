@@ -1,21 +1,10 @@
 package com.gmail.goosius.siegewar.settings;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Translatable;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.DayOfWeek;
@@ -36,7 +25,6 @@ public class SiegeWarSettings {
     private static EnumSet<Material> cachedWallBreachingDestroyBlocksBlacklist = null;
 	@SuppressWarnings("unused")
     private static Boolean cachedWallBreachingDestroyEntityBlacklist = null;
-    private static Map<Integer, List<ItemStack>> cachedDominationAwardsArtefactOffers = null;
 
 	protected static void resetCachedSettings() {
 		allowedDaysList = null;
@@ -46,7 +34,6 @@ public class SiegeWarSettings {
 		cachedWallBreachingPlaceBlocksWhitelist = null;
 		cachedWallBreachingDestroyBlocksBlacklist = null;
 		cachedWallBreachingDestroyEntityBlacklist = null;
-		cachedDominationAwardsArtefactOffers = null;
 	}
 
 	public static boolean getWarSiegeEnabled() {
@@ -85,16 +72,8 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_CONQUEST_SIEGES_ENABLED);
 	}
 
-	public static boolean getLiberationSiegesEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_LIBERATION_SIEGES_ENABLED);
-	}
-
 	public static boolean getRevoltSiegesEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_REVOLT_SIEGES_ENABLED);
-	}
-
-	public static boolean getSuppressionSiegesEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_SUPPRESSION_SIEGES_ENABLED);
 	}
 
 	public static boolean getWarSiegeClaimingDisabledNearSiegeZones() {
@@ -266,10 +245,6 @@ public class SiegeWarSettings {
 
 	public static boolean isPeacefulTownsSubvertEnabled() {
 		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_SUBVERT_ENABLED);
-	}
-
-	public static boolean isPeacefulTownsRevoltEnabled() {
-		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_PEACEFUL_REVOLT_ENABLED);
 	}
 
 	public static int getPeacefulTownsTownyInfluenceRadius() {
@@ -659,241 +634,6 @@ public class SiegeWarSettings {
 
 	public static boolean cancelBattleSessionWhenNoActiveSieges() {
 		return Settings.getBoolean(ConfigNodes.BATTLE_SESSION_SCHEDULER_CANCEL_SESSION_WHEN_NO_SIEGES);
-	}
-
-	public static boolean isDominationAwardsGlobalEnabled() {
-		return Settings.getBoolean(ConfigNodes.DOMINATION_AWARDS_GLOBAL_ENABLED);
-	}
-
-	public static int getDominationAwardsGlobalMinimumAssessmentPeriodHours() {
-		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_PERIOD_HOURS);
-	}
-
-	public static String getDominationAwardsGlobalAssessmentCriterion() {
-		return Settings.getString(ConfigNodes.DOMINATION_AWARDS_GLOBAL_MINIMUM_ASSESSMENT_CRITERION);
-	}
-
-	public static DayOfWeek getDominationAwardsGlobalGrantDayOfWeek() {
-		return DayOfWeek.valueOf(Settings.getString(ConfigNodes.DOMINATION_AWARDS_GLOBAL_GRANT_DAY_OF_WEEK).toUpperCase());
-	}
-
-	public static List<Integer> getDominationAwardsGlobalGrantedMoney() {
-		List<Integer> result = new ArrayList<>();
-		for(String entry: Settings.getString(ConfigNodes.DOMINATION_AWARDS_GLOBAL_GRANTED_MONEY).replaceAll(" ","").split(",")) {
-			result.add(Integer.parseInt(entry));
-		}
-		return result;
-	}
-
-	public static List<List<Integer>> getDominationAwardsGlobalGrantedOffers() {
-		List<List<Integer>> result = new ArrayList<>();
-		List<String> listOfOffersPerPosition = Settings.getListOfCurlyBracketedItems(ConfigNodes.DOMINATION_AWARDS_GLOBAL_GRANTED_ARTEFACT_OFFERS);
-		for(String listOfOffersAsString: listOfOffersPerPosition) {
-			List<Integer> listOfOffersAsIntegers = new ArrayList<>();
-			for(String numOffers: listOfOffersAsString.replaceAll(" ","").split(",")) {
-				listOfOffersAsIntegers.add(Integer.parseInt(numOffers));
-			}
-			result.add(listOfOffersAsIntegers);
-		}
-		return result;
-	}
-
-	/**
-	 * Get the artefact offers specified in a particular config node
-	 * 
-	 * @param configNode the config node
-	 * @param tier the tier (this is used for lore)
-	 * 
-	 * @return the artefact offers
-	 */
-	private static List<ItemStack> getDominationAwardsArtefactOffers(ConfigNodes configNode, int tier) {
-		List<ItemStack> result = new ArrayList<>();
-
-		for(String offerAsString: Settings.getListOfCurlyBracketedItems(configNode)) {
-			//Create convenience variables
-			String[] specificationFields = offerAsString.toLowerCase().replaceAll(" ","").split(",");
-			SiegeWar.info("Loading Domination Awards Artefact Offer: " +  specificationFields[0]);
-			String name = Translatable.of("artefact_name_" + specificationFields[0]).translate();
-			int quantity = Integer.parseInt(specificationFields[1]);
-			Material material = Material.matchMaterial("minecraft:" + specificationFields[2]);
-			//Create artefact
-			ItemStack artefact = new ItemStack(material);
-			//Set Amount
-			artefact.setAmount(quantity);
-			//Set name
-			ItemMeta itemMeta = artefact.getItemMeta();
-			itemMeta.setDisplayName(name);
-			//Add special effects
-			if (!addSpecialEffects(artefact, itemMeta, specificationFields)) {
-			    SiegeWar.severe("Domination Awards Artefact Offer: " +  specificationFields[0] + " cannot be loaded, check the " + (isPotionBased(material) ? "PotionEffectType" : "EnchantmentType") + ". Skipping...");
-			    continue;
-			}
-			//Add non-effect lore
-			List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
-			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_summary_line",tier+1).translate()));
-			lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_lore_warning_line",(int)SiegeWarSettings.getDominationAwardsArtefactExpiryLifetimeDays()).translate()));
-			itemMeta.setLore(lore);
-			//Set item meta
-			artefact.setItemMeta(itemMeta);
-			//Add artefact to result
-			result.add(artefact);
-		}
-		return result;
-	}
-
-	/**
-	 * Get artefacts offers available for domination rewards.
-	 *
-	 * @return map of artefact offers
-	 * The map is in the form of`:   tier -> List of offers
-	 *
-	 * WARNING:
-	 * The returned offers should considered as "templates"
-	 * Thus make sure to clone any of the items before granting.
-	 */
-	public static Map<Integer, List<ItemStack>> getDominationAwardsArtefactOffers() {
-		return cachedDominationAwardsArtefactOffers;
-	}
-
-	/**
-	 * Loads the indicated list into cache
-	 */
-	public static void loadDominationAwardsArtefactOffers() {
-		Map<Integer, List<ItemStack>> result = new HashMap<>();
-
-		List<ItemStack> offersInTier = new ArrayList<>();
-		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER1,0));
-		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER1,0));
-		result.put(0, offersInTier);
-
-		offersInTier = new ArrayList<>();
-		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER2,1));
-		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER2,1));
-		result.put(1, offersInTier);
-
-		offersInTier = new ArrayList<>();
-		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER3,2));
-		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER3,2));
-		result.put(2, offersInTier);
-
-		offersInTier = new ArrayList<>();
-		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER4,3));
-		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER4,3));
-		result.put(3, offersInTier);
-
-		offersInTier = new ArrayList<>();
-		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_CUSTOM_TIER5,4));
-		offersInTier.addAll(getDominationAwardsArtefactOffers(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_OFFERS_DEFAULT_TIER5,4));
-		result.put(4, offersInTier);
-
-		cachedDominationAwardsArtefactOffers = result;
-	}
-
-	private static boolean addSpecialEffects(ItemStack artefact, ItemMeta itemMeta, String[] specificationFields) {
-		//Create convenience variables
-		Material material = artefact.getType();
-        List<String[]> effectSpecs = new ArrayList<>();
-        for(int i = 3; i < specificationFields.length; i++) {
-            effectSpecs.add(specificationFields[i].split(":"));
-        }
-		//Add special effects
-		for(String[] effectSpec: effectSpecs) {
-		    if (!validEffect(material, effectSpec[0]))
-		        return false;
-			addSpecialEffect(material, itemMeta, effectSpec);
-		}
-		//Set updated item meta
-		artefact.setItemMeta(itemMeta);
-		return true;
-	}
-
-	// Make sure that the config has been given a valid PotionEffectType or Enchantment name.
-    private static boolean validEffect(Material material, String name) {
-        return !name.isEmpty() && (name.equalsIgnoreCase("custom_effect") || isValid(material, name));
-    }
-
-    private static boolean isValid(Material material, String name) {
-        return (isPotionBased(material) && validatePotionEffectType(name))
-            || (!isPotionBased(material) && validateEnchantmentType(name));
-    }
-
-    private static boolean validateEnchantmentType(String enchantSpec) {
-        return Enchantment.getByKey(NamespacedKey.fromString("minecraft:"+ enchantSpec)) != null;
-    }
-
-    private static boolean validatePotionEffectType(String effectSpec) {
-        return PotionEffectType.getByName(effectSpec) != null;
-    }
-
-    private static boolean isPotionBased(Material material) {
-        return material == Material.POTION
-                || material == Material.SPLASH_POTION
-                || material == Material.LINGERING_POTION
-                || material == Material.TIPPED_ARROW;
-    }
-
-    private static void addSpecialEffect(Material material, ItemMeta itemMeta, String[] effectSpec) {
-		if(effectSpec[0].equalsIgnoreCase("custom_effect")) {
-			addCustomEffect(itemMeta, effectSpec);
-		} else if (isPotionBased(material)) {
-			PotionEffect potionEffect = generatePotionEffect(effectSpec);
-			((PotionMeta)itemMeta).addCustomEffect(potionEffect, true);
-		} else {
-			Enchantment enchantment = Enchantment.getByKey(NamespacedKey.fromString("minecraft:"+ effectSpec[0]));
-			int power = Integer.parseInt(effectSpec[1]);
-			itemMeta.addEnchant(enchantment, power, true);
-		}
-	}
-
-	private static void addCustomEffect(ItemMeta itemMeta, String[] enchantSpec) {
-		//Add tag for easy artefact recognition
-		List<String> customEffects = SiegeWarDominationAwardsUtil.getCustomEffects(itemMeta);
-		customEffects.add(enchantSpec[1]);
-		SiegeWarDominationAwardsUtil.setCustomEffects(itemMeta, customEffects);
-		//Add lore line
-		List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : new ArrayList<>();
-		lore.add(ChatColor.translateAlternateColorCodes('&', Translatable.of("artefact_custom_effect_lore_" + enchantSpec[1]).translate()));
-		itemMeta.setLore(lore);
-	}
-
-	private static PotionEffect generatePotionEffect(String[] effectSpec) {
-		PotionEffectType potionEffectType = PotionEffectType.getByName(effectSpec[0]);
-		int amplifier = Integer.parseInt(effectSpec[1]);
-		int duration = Integer.parseInt(effectSpec[2]) * 20;  //Multiply by 20 to convert seconds to ticks
-		boolean particles = Boolean.parseBoolean(effectSpec[3]);
-		boolean ambient = Boolean.parseBoolean(effectSpec[4]);
-		boolean icon = Boolean.parseBoolean(effectSpec[5]);
-		return new PotionEffect(potionEffectType, duration, amplifier, particles, ambient, icon);
-	}
-
-	public static List<String> getDominationAwardsArtefactChestSignsLowercase() {
-		String listAsString = Settings.getString(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_CHEST_SIGNS);
-		String[] list = listAsString.toLowerCase().replace(" ","").split(",");
-		return Arrays.asList(list);
-	}
-
-	public static double getDominationAwardsArtefactExpiryLifetimeDays() {
-		return Settings.getDouble(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_LIFETIME_DAYS);
-	}
-
-	public static double getDominationAwardsArtefactExpiryPercentageChancePerShortTick() {
-		return Settings.getDouble(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_PERCENTAGE_CHANCE_PER_SHORT_TICK);
-	}
-
-	public static boolean getDominationAwardsArtefactExpiryExplosionsEnabled() {
-		return Settings.getBoolean(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_ENABLED);
-	}
-
-	public static int getDominationAwardsArtefactExpiryExplosionsBasePower() {
-		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_BASE_POWER);
-	}
-
-	public static int getDominationAwardsArtefactExpiryExplosionsExtraPowerPerExpiredArtefact() {
-		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_EXTRA_POWER_PER_EXPIRED_ARTEFACT);
-	}
-
-	public static int getDominationAwardsArtefactExpiryExplosionsMaxPower() {
-		return Settings.getInt(ConfigNodes.DOMINATION_AWARDS_ARTEFACT_EXPIRY_EXPLOSIONS_MAX_POWER);
 	}
 
 	public static boolean isUnjailingAttackerResidents() {

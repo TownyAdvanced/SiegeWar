@@ -9,23 +9,9 @@ import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
-import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
+import com.gmail.goosius.siegewar.utils.*;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.event.NationRemoveAllyEvent;
-import com.palmergames.bukkit.towny.event.NationRemoveTownEvent;
-import com.palmergames.bukkit.towny.event.NewDayEvent;
-import com.palmergames.bukkit.towny.event.PreNewDayEvent;
-import com.palmergames.bukkit.towny.event.TownRemoveResidentEvent;
-import com.palmergames.bukkit.towny.event.TownRemoveResidentRankEvent;
-import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
-import com.palmergames.bukkit.towny.event.TranslationLoadEvent;
+import com.palmergames.bukkit.towny.event.*;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyExplosionDamagesEntityEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyFriendlyFireTestEvent;
@@ -34,11 +20,7 @@ import com.palmergames.bukkit.towny.event.teleport.OutlawTeleportEvent;
 import com.palmergames.bukkit.towny.event.time.NewHourEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.TranslationLoader;
+import com.palmergames.bukkit.towny.object.*;
 import com.palmergames.util.StringMgmt;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -53,12 +35,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 
@@ -82,7 +59,6 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onTownyDatabaseLoad(TownyLoadedDatabaseEvent event) {
     	SiegeWar.info("Towny database reload detected, reloading sieges...");
         SiegeController.loadAll();
-        TownOccupationController.loadAll();
     }
     
 	/*
@@ -107,9 +83,6 @@ public class SiegeWarTownyEventListener implements Listener {
             if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
                 TownPeacefulnessUtil.updateTownPeacefulnessCounters();
             }
-            if(SiegeWarSettings.isDominationAwardsGlobalEnabled()) {
-                SiegeWarDominationAwardsUtil.grantGlobalDominationAwards();
-            }   
         }
     }
 
@@ -130,7 +103,6 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onNewHour(NewHourEvent event) {
         if(SiegeWarSettings.getWarSiegeEnabled()) {
             SiegeWarImmunityUtil.evaluateExpiredImmunities();
-            SiegeWarDominationAwardsUtil.addDominationRecords();
         }
     }
 
@@ -149,7 +121,6 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeHUDManager.updateHUDs();
             SiegeWarTimerTaskController.evaluateBeacons();
             SiegeWarNotificationUtil.warnAllPlayersOfSiegeDanger();
-            SiegeWarDominationAwardsUtil.evaluateArtefactExpiries();
         }
     }
 

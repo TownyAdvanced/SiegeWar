@@ -73,15 +73,6 @@ public class Settings {
 			loadSuccessFlag = false;
 		}
 
-		//Load Artefacts
-		try {
-			SiegeWarSettings.loadDominationAwardsArtefactOffers();
-		} catch (Exception e) {
-			e.printStackTrace();
-			SiegeWar.severe("Could not load artefact specifications! Disabling!");
-			loadSuccessFlag = false;
-		}
-
 		return loadSuccessFlag;
 	}
 	

@@ -277,7 +277,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 				switch (siege.getStatus()) {
 					case DEFENDER_WIN:
 					case ATTACKER_ABANDON:
-						return getPlunderStatusLine(siege, translator);
+						return getPlunderStatusLine(siege, translator) + getInvadeStatusLine(siege, translator);
 					default:
 						break;
 				}
@@ -292,12 +292,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 	}
 
 	private static String getInvadeStatusLine(Siege siege, Translator translator) {
-		if(siege.isRevoltSiege() || siege.isSuppressionSiege()) {
-			return "";
-		} else {
-			String invadedYesNo = siege.isTownInvaded() ? translator.of("status_yes") : translator.of("status_no_green");
-			return translator.of("status_town_siege_status_invaded", invadedYesNo);
-		}
+		String invadedYesNo = siege.isTownInvaded() ? translator.of("status_yes") : translator.of("status_no_green");
+		return translator.of("status_town_siege_status_invaded", invadedYesNo);
 	}
 
 	private String hoverFormat(String hover) {
