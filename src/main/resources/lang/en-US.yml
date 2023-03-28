@@ -300,9 +300,6 @@ msg_err_cannot_invade_own_town: '&cYou cannot invade your own town.'
 msg_err_cannot_invade_without_victory: "&cYou cannot invade the town unless your nation is victorious in the siege."
 msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot invade while the siege is still in progress.'
 msg_err_cannot_invade_town_already_occupied: '&cThere is no need to invade because your nation already occupies the town.'
-msg_err_cannot_invade_town_already_invaded: '&cYour nation has already invaded the town.'
-msg_neutral_town_invaded: '&b%s has been invaded by %s, and placed under occupation!'
-msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded by %s, and placed under occupation!'
 
 # Plunder
 msg_err_siege_war_plunder_not_possible_rebels_won: '&cPlunder not possible because the town rebels won the siege.'
@@ -345,13 +342,6 @@ status_town_siege_pending_balance_adjustment: '&2 | Pending: &a%s'
 
 # General occupation commands error messages
 msg_err_town_and_capital_too_far_apart: "&cThe homeblock of %s is too far away from the homeblock of %s's capital."
-
-#Invite occupation command
-nation_help_16 : "Invite a nation to occupy your town"
-msg_err_cannot_invite_occupation_town_already_occupied: '&cYou cannot invite occupation because your town is already occupied.'
-msg_err_cannot_invite_occupation_king_not_online: "&cThe occupation-invitation failed because the king of %s (%s) is not online."
-msg_would_you_accept_town_request_for_occupation: '&6Would you agree to occupy %s?. This will cause the town to become occupied by your nation.'
-msg_invite_occupation_success: '&bThe town %s has come under the occupation of %s, by its own request.'
 
 # Added in 0.22
 
@@ -410,11 +400,8 @@ hover_message_click_to_claim: "Click to claim money owed to you."
 msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
 
 #Added in 0.32
-msg_peaceful_town_subverted: "&b%s has been peacefully subverted and occupied by %s."
-msg_peaceful_town_revolted: "&b%s has peacefully revolted against %s, and freed itself from occupation."
 msg_town_became_peaceful: '&b%s has been confirmed as Neutral. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot enter siege-zones or gain nation-military ranks.'
 msg_town_became_non_peaceful: '&b%s has been confirmed as Not-Neutral. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can enter siege-zones and gain nation-military ranks.'
-msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already occupies it."
 msg_err_cannot_subvert_towns_in_own_nation: "&cYou cannot subvert towns which are in your own nation."
 msg_err_cannot_subvert_town_zero_influence: "&cYou cannot subvert this town, because your nation has no Towny-Influence in the local area."
 msg_err_cannot_subvert_town_insufficient_influence: "&cYou cannot subvert this town, because %s has more Towny-Influence in the local area (%d), than your nation (%d)."
@@ -597,6 +584,13 @@ msg_err_peaceful_occupation_tax_cannot_be_more_than: "Nations cannot set a peace
 msg_peaceful_occupation_taxes_paid_totaling: "Your nation received a peaceful occupation taxes totalling: %s."
 
 #Added/Updated in 0.51
+#Invasion
+msg_err_cannot_invade_town_already_invaded: '&cYour nation has already captured the town.'
+msg_neutral_town_invaded: '&b%s has been invaded and captured by %s!'
+msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded and captured by %s!'
+#Subverting
+msg_peaceful_town_subverted: "&b%s has been peacefully subverted and captured by %s."
+msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already owns it."
 #Surrendering Defence
 msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The former occupying army, belonging to %s, has admitted defeat and retreated from the town.'
 #Revolting
