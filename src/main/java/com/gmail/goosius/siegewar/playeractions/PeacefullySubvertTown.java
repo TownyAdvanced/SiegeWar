@@ -58,23 +58,25 @@ public class PeacefullySubvertTown {
 	 * @param targetTown the target town
 	 */
 	private static void subvertTown(Nation subvertingNation, Town targetTown) {
-		//Occupy town (also saves data)
-		TownOccupationController.setTownOccupation(targetTown, subvertingNation);
-		
-		//Save to db
-		targetTown.save();
-		
 		/*
 		 * Messaging
-		 *
-		 * Note that we do not publicly mention the nation (if any) of the subverted town.
-		 * Because the logic is simpler, and because subverting is generally less 'aggressive' than invasion.
+		 * This section is here rather than the customary bottom of the method
+		 * because we want to send the siegewar messages (town invaded, nation defeated etc.)
+		 * before we send the standard towny messages (town has left nation, nation has been deleted etc.)
 		 */
 		Messaging.sendGlobalMessage(
 			Translatable.of("msg_peaceful_town_subverted",
 					targetTown.getName(),
 					subvertingNation.getName()
 		));
+		Nation nationOfSubvertedTown = targetTown.getNationOrNull();
+		if(nationOfSubvertedTown != null && nationOfSubvertedTown.getNumTowns() == 0) {
+			Messaging.sendGlobalMessage(
+					Translatable.of("msg_siege_war_nation_defeated",nationOfSubvertedTown.getName()));
+		}
+
+		//Occupy town (also saves data)
+		TownOccupationController.setTownOccupation(targetTown, subvertingNation);
 	}
 
 	private static void allowSubversionOrThrow(Player player, Nation residentsNation, Town targetTown) throws TownyException {
