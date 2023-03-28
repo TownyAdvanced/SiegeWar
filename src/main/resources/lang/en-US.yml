@@ -600,5 +600,6 @@ msg_peaceful_occupation_taxes_paid_totaling: "Your nation received a peaceful oc
 #Surrendering Defence
 msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The former occupying army, belonging to %s, has admitted defeat and retreated from the town.'
 #Revolting
-msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying army of %s. A REVOLT SIEGE has begun!'
+msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying nation of %s, and declared themselves free to choose their own destiny. A REVOLT SIEGE has begun!'
 msg_err_neutral_towns_cannot_revolt: '&cPeaceful towns cannot revolt'
+msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation status of %s to %s.'

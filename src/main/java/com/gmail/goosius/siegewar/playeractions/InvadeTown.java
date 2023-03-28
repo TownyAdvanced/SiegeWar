@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.events.PreInvadeEvent;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
@@ -102,8 +103,18 @@ public class InvadeTown {
 		if(TownOccupationController.isTownOccupiedByNation(residentsNation, targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_invade_town_already_occupied"));
 
-		if(residentsNation != siege.getAttacker())
-			throw new TownyException(translator.of("msg_err_action_disable"));  //Can't invade unless you are the attacker
+		switch(siege.getSiegeType()) {
+			case CONQUEST:
+				//In a conquest siege, only the attacker can invade
+				if(residentsNation != siege.getAttacker())
+					throw new TownyException(translator.of("msg_err_action_disable"));
+			break;
+			case REVOLT:
+				//In a revolt siege, only the defender can invade
+				if(residentsNation != siege.getDefender())
+					throw new TownyException(translator.of("msg_err_action_disable"));
+			break;
+		}
 
 		if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
 			throw new TownyException(translator.of("msg_err_cannot_invade_without_victory"));
@@ -120,7 +131,4 @@ public class InvadeTown {
 		if (SiegeWarNationUtil.doesNationHaveTooManyTowns(residentsNation))
 			throw new TownyException(String.format(translator.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
 	}
-
-
-
 }

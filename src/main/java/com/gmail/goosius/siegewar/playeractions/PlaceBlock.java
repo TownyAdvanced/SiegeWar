@@ -331,8 +331,10 @@ public class PlaceBlock {
 			throw new TownyException(translator.of("msg_err_cannot_start_sieges_today"));
 
 		if (residentsTown == nearbyTown) {
-			//Revolt siege
+			//Start Revolt siege
 			StartRevoltSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
+			//Immediately remove occupation
+			TownOccupationController.removeTownOccupation(nearbyTown);
 		} else {
 			if (residentsNation == null)
 				throw new TownyException(translator.of("msg_err_dont_belong_nation"));
