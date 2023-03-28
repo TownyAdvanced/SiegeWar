@@ -70,7 +70,7 @@ public class PeacefullySubvertTown {
 					subvertingNation.getName()
 		));
 		Nation nationOfSubvertedTown = targetTown.getNationOrNull();
-		if(nationOfSubvertedTown != null && nationOfSubvertedTown.getNumTowns() == 0) {
+		if(nationOfSubvertedTown != null && nationOfSubvertedTown.getNumTowns() == 1) {
 			Messaging.sendGlobalMessage(
 					Translatable.of("msg_siege_war_nation_defeated",nationOfSubvertedTown.getName()));
 		}

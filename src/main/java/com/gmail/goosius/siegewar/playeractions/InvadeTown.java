@@ -56,18 +56,6 @@ public class InvadeTown {
     public static void invadeTown(Nation invadingNation, Town targetTown, Siege siege)  {
 		Nation nationOfInvadedTown = targetTown.hasNation() ? targetTown.getNationOrNull() : null;
 
-		//Update nation stats
-		NationMetaDataController.setTotalTownsGained(invadingNation, NationMetaDataController.getTotalTownsGained(invadingNation) + 1);
-		invadingNation.save();
-		if(nationOfInvadedTown != null) {
-            NationMetaDataController.setTotalTownsLost(nationOfInvadedTown, NationMetaDataController.getTotalTownsLost(nationOfInvadedTown) + 1);
-			nationOfInvadedTown.save();
-        }
-
-		//Update siege flags & save siege data
-		siege.setTownInvaded(true);
-		SiegeController.saveSiege(siege);
-
 		/*
 		 * Messaging
 		 * This section is here rather than the customary bottom of the method
@@ -88,10 +76,22 @@ public class InvadeTown {
 							invadingNation.getName()
 					));
 		}
-		if(nationOfInvadedTown != null && nationOfInvadedTown.getNumTowns() == 0) {
+		if(nationOfInvadedTown != null && nationOfInvadedTown.getNumTowns() == 1) {
 			Messaging.sendGlobalMessage(
 					Translatable.of("msg_siege_war_nation_defeated",nationOfInvadedTown.getName()));
 		}
+
+		//Update nation stats
+		NationMetaDataController.setTotalTownsGained(invadingNation, NationMetaDataController.getTotalTownsGained(invadingNation) + 1);
+		invadingNation.save();
+		if(nationOfInvadedTown != null) {
+			NationMetaDataController.setTotalTownsLost(nationOfInvadedTown, NationMetaDataController.getTotalTownsLost(nationOfInvadedTown) + 1);
+			nationOfInvadedTown.save();
+		}
+
+		//Update siege flags & save siege data
+		siege.setTownInvaded(true);
+		SiegeController.saveSiege(siege);
 
 		//Occupy town
 		TownOccupationController.setTownOccupation(targetTown, invadingNation);
