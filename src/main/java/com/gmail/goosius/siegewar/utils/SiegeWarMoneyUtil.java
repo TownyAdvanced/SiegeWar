@@ -291,11 +291,9 @@ public class SiegeWarMoneyUtil {
 
 			//If king is online, send message
 			if(king.isOnline()) {
-				Messaging.sendMsg(
-						king.getPlayer(),
-						String.format(
-								Translation.of("msg_siege_war_nation_refund_available"),
-								TownyEconomyHandler.getFormattedBalance(amountToRefund)));
+				Messaging.sendMsg(king.getPlayer(),
+					Translatable.of("msg_siege_war_nation_refund_available",
+								TownyEconomyHandler.getFormattedBalance(amountToRefund)).forLocale(king.getPlayer()));
 			}
 		}
 	}
