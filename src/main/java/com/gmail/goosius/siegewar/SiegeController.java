@@ -45,6 +45,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
+
 /**
  * 
  * @author LlmDl
@@ -129,6 +130,7 @@ public class SiegeController {
 				newSiege(town);
 
 				setSiege(town, true);
+
 			}
 	}
 

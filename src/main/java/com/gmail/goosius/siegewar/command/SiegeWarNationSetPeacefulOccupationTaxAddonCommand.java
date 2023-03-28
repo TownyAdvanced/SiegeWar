@@ -22,6 +22,7 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.MathUtil;
+
 public class SiegeWarNationSetPeacefulOccupationTaxAddonCommand extends BaseCommand implements TabExecutor {
 
 	public SiegeWarNationSetPeacefulOccupationTaxAddonCommand() {
