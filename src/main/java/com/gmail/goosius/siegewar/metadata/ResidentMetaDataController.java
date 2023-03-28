@@ -172,7 +172,8 @@ public class ResidentMetaDataController {
 		if (resident.hasMeta(idf.getKey())) {
 			int existingRefundAmount = getNationRefundAmount(resident);
 			int updatedRefundAmount = existingRefundAmount + nationRefundAmount;
-			setNationRefundAmount(resident, updatedRefundAmount);
+			resident.removeMetaData(idf);
+			resident.addMetaData(new IntegerDataField("siegewar_nationrefund", updatedRefundAmount, "Nation Refund"));
 		} else {
 			setNationRefundAmount(resident, nationRefundAmount);
 		}
