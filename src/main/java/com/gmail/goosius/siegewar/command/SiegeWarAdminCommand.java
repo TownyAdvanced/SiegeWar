@@ -393,12 +393,12 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupied [true/false]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplundergained [amount]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplunderlost [amount]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownsgained [amount]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownslost [amount]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "battlesession [start/end]", ""));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "dominationawards giveglobal", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siegeduration addhours [1,2,3,4,5...]", "Add a number of hours to every siege."));
 	}
 
@@ -431,8 +431,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 
 	private void showTownHelp(CommandSender sender) {
 		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/swa town"));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupier [town]", ""));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] removeoccupier", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupied [true/false]", ""));
 	}
 
 	private void showNationHelp(CommandSender sender) {
