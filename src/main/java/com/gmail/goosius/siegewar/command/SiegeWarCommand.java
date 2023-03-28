@@ -37,7 +37,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
 	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "guide", "preference", "version", "nextsession");
 	
-	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers, claimrefund");
+	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "claimrefund");
 
 	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("beacons", "bossbars");
 	
@@ -198,11 +198,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	}
 
 	private void parseSiegeWarNationCommand(Player player, String[] args) {
-		if (args.length < 2) {
-			showNationHelp(player);
-			return;
-		}
-
 		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_NATION.getNode(args[0]))) {
 			player.sendMessage(Translatable.of("msg_err_command_disable").forLocale(player));
 			return;
@@ -211,6 +206,10 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		switch (args[0]) {
 			case "paysoldiers":
 				try {
+					if (args.length != 2) {
+						showNationHelp(player);
+						return;
+					}
 					if(!TownyEconomyHandler.isActive())
 						return;
 
@@ -279,6 +278,10 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 			case "claimrefund":
 				try {
+					if (args.length != 1) {
+						showNationHelp(player);
+						return;
+					}
 					SiegeWarMoneyUtil.claimNationRefund(player);
 				} catch (Exception e) {
 					player.sendMessage(e.getMessage());
