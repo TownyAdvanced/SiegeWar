@@ -271,9 +271,8 @@ public class SiegeWarMoneyUtil {
 
 	public static void makeNationRefundAvailable(Resident king) {
 		//Refund some of the initial setup cost to the king
-		if (SiegeWarSettings.getWarSiegeEnabled()
-				&& TownySettings.isUsingEconomy()
-				&& SiegeWarSettings.getWarSiegeRefundInitialNationCostOnDelete()) {
+		if (TownySettings.isUsingEconomy()
+			&& SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() > 0) {
 
 			//Make the nation refund available
 			//The player can later do "/n claim refund" to receive the money
@@ -288,6 +287,33 @@ public class SiegeWarMoneyUtil {
 								Translation.of("msg_siege_war_nation_refund_available"),
 								TownyEconomyHandler.getFormattedBalance(amountToRefund)));
 			}
+		}
+	}
+
+	/**
+	 * If the player is due a nation refund, pays the refund to the player
+	 *
+	 * @param player claiming the nation refund.
+	 * @throws Exception when payment cannot be made for various reasons.
+	 */
+	public static void claimNationRefund(Player player) throws Exception {
+		if (!TownySettings.isUsingEconomy()
+				|| SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() == 0) {
+			throw new TownyException(Translation.of("msg_err_command_disable"));
+		}
+		//TODO - Check for sw enabled?
+
+		Resident formerKing = TownyUniverse.getInstance().getResident(player.getUniqueId());
+		if (formerKing == null)
+			throw new TownyException(Translation.of("msg_err_not_registered_1", player.getName()));
+
+		if(ResidentMetaDataController.getNationRefundAmount(formerKing) != 0) {
+			int refundAmount = ResidentMetaDataController.getNationRefundAmount(formerKing);
+			formerKing.getAccount().deposit(refundAmount, "Nation Refund");
+			ResidentMetaDataController.setNationRefundAmount(formerKing, 0);
+			Messaging.sendMsg(player, Translation.of("msg_siege_war_nation_refund_claimed", TownyEconomyHandler.getFormattedBalance(refundAmount)));
+		} else {
+			throw new TownyException(Translation.of("msg_err_siege_war_nation_refund_unavailable"));
 		}
 	}
 

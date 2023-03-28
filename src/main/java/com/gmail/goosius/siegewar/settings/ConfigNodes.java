@@ -218,14 +218,13 @@ public enum ConfigNodes {
 			"",
 			"# The maximum that a nation can set for an peacefuloccupationtax using /n set peacefuloccupationtax.",
 			"# This tax is applied to the nation's occupied towns which are peaceful."),
-	WAR_SIEGE_REFUND_INITIAL_NATION_COST_ON_DELETE(
-			"war.siege.money.refund_initial_nation_cost_on_delete",
-			"true",
+	WAR_SIEGE_NATION_COST_REFUND_PERCENTAGE_ON_DELETE(
+			"war.siege.money.nation_cost_refund_percentage_on_delete",
+			"80.0",
 			"",
-			"# If this is true, then when a nation is deleted/destroyed,",
-			"# a refund amount will be made available to the former king.",
-			"# This money can then be reclaim using /n claim refund.",
-			"# This supports nations which actively participate in geopolitics but are ultimately defeated by stronger opponents."),
+			"# The value specifies what proportion of the initial nation cost is refunded, when the nation is deleted or defeated.",
+			"# This feature supports nations which actively participate in geopolitics but are ultimately defeated by stronger opponents.",
+			"# Set to 0.0 to disable"),
 	WAR_SIEGE_QUANTITIES(
 			"war.siege.quantities",
 			"",

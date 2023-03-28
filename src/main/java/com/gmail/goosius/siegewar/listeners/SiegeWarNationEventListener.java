@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -61,6 +62,9 @@ public class SiegeWarNationEventListener implements Listener {
 	 */
 	@EventHandler
 	public void onDeleteNation(DeleteNationEvent event) {
+		if(!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+
 		/*
 		 * Adjust sieges if needed
 		 */
@@ -96,6 +100,9 @@ public class SiegeWarNationEventListener implements Listener {
 
 	@EventHandler
 	public void onPreNationEnemyRemove(NationPreRemoveEnemyEvent event) {
+		if(!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+
 		boolean cancel = false;
 		Nation nation = event.getNation();
 		Nation enemyNation = event.getEnemy();
@@ -164,6 +171,9 @@ public class SiegeWarNationEventListener implements Listener {
 	 */
 	@EventHandler(ignoreCancelled = true)
 	public void on(NationToggleNeutralEvent event) {
+		if(!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+
 		if (event.getFutureState()) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("msg_err_nation_neutrality_not_supported"));
@@ -171,6 +181,9 @@ public class SiegeWarNationEventListener implements Listener {
 	}
 
 	public void onNationChangeKingEvent(NationKingChangeEvent event) {
+		if(!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+
 		Town oldCapital = event.getOldKing().getTownOrNull();
 		Town newCapital = event.getNewKing().getTownOrNull();
 		if (SiegeWarSettings.getWarSiegeEnabled()
