@@ -47,6 +47,7 @@ public enum SiegeWarPermissionNodes {
 			SIEGEWAR_COMMAND_SIEGEWAR_TOWN_INVITE_OCCUPATION("siegewar.command.siegewar.town.inviteoccupation"),
 		SIEGEWAR_COMMAND_SIEGEWAR_NATION("siegewar.command.siegewar.nation.*"),
 			SIEGEWAR_COMMAND_SIEGEWAR_NATION_PAYSOLDIERS("siegewar.command.siegewar.nation.paysoldiers"),
+			SIEGEWAR_COMMAND_SIEGEWAR_NATION_CLAIMREFUND("siegewar.command.siegewar.nation.claimrefund"),
 	    	SIEGEWAR_COMMAND_SIEGEWAR_NATION_REMOVE_OCCUPATION("siegewar.command.siegewar.nation.removeoccupation"),
 	    	SIEGEWAR_COMMAND_SIEGEWAR_NATION_TRANSFER_OCCUPATION("siegewar.command.siegewar.nation.transferoccupation"),
 		SIEGEWAR_COMMAND_SIEGEWAR_COLLECT("siegewar.command.siegewar.collect"),

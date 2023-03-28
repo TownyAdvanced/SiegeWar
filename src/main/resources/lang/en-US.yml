@@ -637,3 +637,10 @@ msg_err_peaceful_occupation_tax_cannot_be_more_than: "Nations cannot set a peace
 
 #Shown to nation when they are paid their peaceful occupation taxes.
 msg_peaceful_occupation_taxes_paid_totaling: "Your nation received a peaceful occupation taxes totalling: %s."
+
+#Nation Refund
+
+nation_help_refund : "Claim any nation refund which is available to you."
+msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw nation claimrefund'"
+msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
+msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
