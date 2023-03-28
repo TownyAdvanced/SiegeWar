@@ -277,7 +277,7 @@ public class SiegeWarMoneyUtil {
 			//Make the nation refund available
 			//The player can later do "/n claim refund" to receive the money
 			int amountToRefund = (int)(TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
-			ResidentMetaDataController.setNationRefundAmount(king, amountToRefund);
+			ResidentMetaDataController.addNationRefundAmount(king, amountToRefund);
 
 			//If king is online, send message
 			if(king.isOnline()) {
@@ -301,8 +301,6 @@ public class SiegeWarMoneyUtil {
 				|| SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() == 0) {
 			throw new TownyException(Translation.of("msg_err_command_disable"));
 		}
-		//TODO - Check for sw enabled?
-
 		Resident formerKing = TownyUniverse.getInstance().getResident(player.getUniqueId());
 		if (formerKing == null)
 			throw new TownyException(Translation.of("msg_err_not_registered_1", player.getName()));

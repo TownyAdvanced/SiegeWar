@@ -167,6 +167,17 @@ public class ResidentMetaDataController {
 		return nationRefundAmount;
 	}
 
+	public static void addNationRefundAmount(Resident resident, int nationRefundAmount) {
+		IntegerDataField idf = (IntegerDataField) nationRefund.clone();
+		if (resident.hasMeta(idf.getKey())) {
+			int existingRefundAmount = getNationRefundAmount(resident);
+			int updatedRefundAmount = existingRefundAmount + nationRefundAmount;
+			setNationRefundAmount(resident, updatedRefundAmount);
+		} else {
+			setNationRefundAmount(resident, nationRefundAmount);
+		}
+	}
+
 	public static void setNationRefundAmount(Resident resident, int nationRefundAmount) {
 		IntegerDataField idf = (IntegerDataField) nationRefund.clone();
 		if (resident.hasMeta(idf.getKey())) {
