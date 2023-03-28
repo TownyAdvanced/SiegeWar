@@ -302,9 +302,9 @@ public class SiegeWarMoneyUtil {
 	 * If the player is due a nation refund, pays the refund to the player
 	 *
 	 * @param player claiming the nation refund.
-	 * @throws Exception when payment cannot be made for various reasons.
+	 * @throws TownyException when payment cannot be made for various reasons.
 	 */
-	public static void claimNationRefund(Player player) throws Exception {
+	public static void claimNationRefund(Player player) throws TownyException {
 		if (!TownySettings.isUsingEconomy()
 				|| SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() == 0) {
 			throw new TownyException(Translation.of("msg_err_command_disable"));
