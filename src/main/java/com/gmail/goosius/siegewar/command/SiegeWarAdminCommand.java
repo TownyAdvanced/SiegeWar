@@ -43,7 +43,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
-	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setoccupier","removeoccupier");
 	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost");
 	private static final List<String> siegewaradminBattleSessionTabCompletes = Arrays.asList("end","start");
 	private static final List<String> siegewarglobalDominationAwardsTabCompletes = Arrays.asList("giveglobal");
@@ -110,18 +109,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				if (args[2].equalsIgnoreCase("setinvaded"))
 					return Arrays.asList("true","false");
 			}
-		case "town":
-			if (args.length == 2)
-				return getTownyStartingWith(args[1], "t");
-
-			if (args.length == 3)
-				return NameUtil.filterByStart(siegewaradminTownTabCompletes, args[2]);
-
-			if (args.length == 4) {
-				if (args[2].equalsIgnoreCase("setoccupier")) {
-					return getTownyStartingWith(args[3], "n");
-				}
-			}
 		case "nation":
 			if (args.length == 2)
 				return getTownyStartingWith(args[1], "n");
@@ -171,9 +158,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				break;
 			case "siege":
 				parseSiegeWarSiegeCommand(sender, StringMgmt.remFirstArg(args));
-				break;
-			case "town":
-				parseSiegeWarTownCommand(sender, StringMgmt.remFirstArg(args));
 				break;
 			case "nation":
 				parseSiegeWarNationCommand(sender, StringMgmt.remFirstArg(args));
@@ -397,8 +381,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupier [town]", ""));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] removeoccupier", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplundergained [amount]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplunderlost [amount]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownsgained [amount]", ""));
@@ -438,12 +420,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
-	}
-
-	private void showTownHelp(CommandSender sender) {
-		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/swa town"));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupier [town]", ""));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] removeoccupier", ""));
 	}
 
 	private void showNationHelp(CommandSender sender) {
@@ -729,60 +705,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 
 		} else
 			showSiegeHelp(sender);
-	}
-
-	private void parseSiegeWarTownCommand(CommandSender sender, String[] args) {
-		if (args.length >= 2) {
-			Town town = TownyUniverse.getInstance().getTown(args[0]);
-			if (town == null) {
-				Messaging.sendErrorMsg(sender, Translatable.of("msg_err_town_not_registered", args[0]));
-				return;
-			}
-
-			switch (args[1].toLowerCase()) {
-				case "setoccupier":
-					if (args.length < 3) {
-						showSiegeHelp(sender);
-						return;
-					}
-
-					/*
-					 * This restriction is to prevent sieges getting messed up.
-					 * For example, if you removed an occupier in the middle of a liberation siege,
-					 * that siege would need to get deleted or transformed to a conquest siege...
-					 */
-					if(SiegeController.hasActiveSiege(town)) {
-						Messaging.sendErrorMsg(sender, Translatable.of("msg_err_swa_cannot_change_occupier_due_to_active_siege"));
-						return;
-					}
-
-					if(!TownyUniverse.getInstance().hasNation(args[2].toLowerCase())) {
-						Messaging.sendErrorMsg(sender, Translatable.of("msg_err_unknown_nation"));
-						return;
-					}
-
-					Nation occupier = TownyUniverse.getInstance().getNation(args[2].toLowerCase());
-					TownOccupationController.setTownOccupation(town, occupier);
-					Messaging.sendMsg(sender, Translatable.of("msg_swa_town_occupation_change_success", occupier.getName(), town.getName()));
-					break;
-
-				case "removeoccupier":
-					/*
-					 * This restriction is to prevent sieges getting messed up.
-					 * For example, if you removed an occupier in the middle of a liberation siege,
-					 * that siege would need to get deleted or transformed to a conquest siege...
-					 */
-					if(SiegeController.hasActiveSiege(town)) {
-						Messaging.sendErrorMsg(sender, Translatable.of("msg_err_swa_cannot_change_occupier_due_to_active_siege"));
-						return;
-					}
-
-					TownOccupationController.removeTownOccupation(town);
-					Messaging.sendMsg(sender, Translatable.of("msg_swa_town_occupation_removal_success", town.getName()));
-					break;
-			}
-		} else
-			showTownHelp(sender);
 	}
 
 	private void parseSiegeWarNationCommand(CommandSender sender, String[] args) {

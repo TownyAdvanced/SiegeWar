@@ -3,13 +3,11 @@ package com.gmail.goosius.siegewar.metadata;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translation;
-import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
-import com.palmergames.bukkit.towny.object.metadata.DecimalDataField;
-import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
-import com.palmergames.bukkit.towny.object.metadata.LongDataField;
-import com.palmergames.bukkit.towny.object.metadata.StringDataField;
+import com.palmergames.bukkit.towny.object.metadata.*;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
 
 /**
  * 
@@ -24,14 +22,14 @@ public class TownMetaDataController {
 	private static BooleanDataField desiredPeacefulness = new BooleanDataField("siegewar_desiredPeaceSetting", false);
 	private static LongDataField revoltImmunityEndTime = new LongDataField("siegewar_revoltImmunityEndTime", 0l);
 	private static LongDataField siegeImmunityEndTime = new LongDataField("siegewar_siegeImmunityEndTime", 0l);
-	private static StringDataField occupyingNationUUID = new StringDataField("siegewar_occupyingNationUUID", "");
-	//The nation who was the occupier prior to peacefulness confirmation
-	private static StringDataField prePeacefulOccupierUUID = new StringDataField("siegewar_prePeacefulOccupierUUID", "");
-	//List of failed SiegeCamps on the town.
 	private static StringDataField failedCampList = new StringDataField("siegewar_failedCampList", "");
 	private static IntegerDataField plunderDebtDays = new IntegerDataField("siegewar_plunderDays", 0);
 	private static DecimalDataField dailyPlunderCost = new DecimalDataField("siegewar_dailyPlunderCost", 0.0);
-	
+
+	//Legacy Metadata
+	private static StringDataField legacyDataOccupyingNationUUID = new StringDataField("siegewar_occupyingNationUUID", "");
+	private static StringDataField legacyDataPrePeacefulOccupierUUID = new StringDataField("siegewar_prePeacefulOccupierUUID", "");
+
 	public TownMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
 	}
@@ -137,50 +135,6 @@ public class TownMetaDataController {
 		}
 	}
 
-	@Nullable
-	public static String getOccupyingNationUUID(Town town) {
-		StringDataField sdf = (StringDataField) occupyingNationUUID.clone();
-		if (town.hasMeta(sdf.getKey()))
-			return MetaDataUtil.getString(town, sdf);
-		return null;
-	}
-
-	public static void setOccupyingNationUUID(Town town, String uuid) {
-		StringDataField sdf = (StringDataField) occupyingNationUUID.clone();
-		if (town.hasMeta(sdf.getKey()))
-			MetaDataUtil.setString(town, sdf, uuid, true);
-		else
-			town.addMetaData(new StringDataField("siegewar_occupyingNationUUID", uuid));
-	}
-
-	public static void removeOccupationMetadata(Town town) {
-		StringDataField sdf = (StringDataField) occupyingNationUUID.clone();
-		if (town.hasMeta(sdf.getKey()))
-			town.removeMetaData(sdf);
-	}
-
-	@Nullable
-	public static String getPrePeacefulOccupierUUID(Town town) {
-		StringDataField sdf = (StringDataField) prePeacefulOccupierUUID.clone();
-		if (town.hasMeta(sdf.getKey()))
-			return MetaDataUtil.getString(town, sdf);
-		return null;
-	}
-
-	public static void setPrePeacefulOccupierUUID(Town town, String uuid) {
-		StringDataField sdf = (StringDataField) prePeacefulOccupierUUID.clone();
-		if (town.hasMeta(sdf.getKey()))
-			MetaDataUtil.setString(town, sdf, uuid, true);
-		else
-			town.addMetaData(new StringDataField("siegewar_prePeacefulOccupierUUID", uuid));
-	}
-
-	public static void removePrePeacefulOccupierUUID(Town town) {
-		StringDataField sdf = (StringDataField) prePeacefulOccupierUUID.clone();
-		if (town.hasMeta(sdf.getKey()))
-			town.removeMetaData(sdf);
-	}
-
 	public static boolean hasPlunderDebt(Town town) {
 		return MetaDataUtil.hasMeta(town, plunderDebtDays);
 	}
@@ -205,5 +159,27 @@ public class TownMetaDataController {
 
 	public static double getDailyPlunderDebt(Town town) {
 		return MetaDataUtil.getDouble(town, dailyPlunderCost);
+	}
+
+	public static boolean hasLegacyOccupierUUID(Town town) {
+		return MetaDataUtil.hasMeta(town, legacyDataOccupyingNationUUID);
+	}
+
+	public static boolean hasLegacyPrePeacefulOccupierUUID(Town town) {
+		return MetaDataUtil.hasMeta(town, legacyDataPrePeacefulOccupierUUID);
+	}
+
+	public static String getLegacyOccupierUUID(Town town) {
+		return MetaDataUtil.getString(town, legacyDataOccupyingNationUUID);
+	}
+
+	public static void removeLegacyOccupierUUID(Town town) {
+		town.removeMetaData(legacyDataOccupyingNationUUID.getKey());
+		town.save();
+	}
+
+	public static void removeLegacyPrePeacefulOccupierUUID(Town town) {
+		town.removeMetaData(legacyDataPrePeacefulOccupierUUID.getKey());
+		town.save();
 	}
 }

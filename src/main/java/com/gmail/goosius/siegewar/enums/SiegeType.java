@@ -5,9 +5,7 @@ import com.palmergames.bukkit.towny.object.Translation;
 
 public enum SiegeType {
     CONQUEST,
-    LIBERATION,
-    REVOLT,
-    SUPPRESSION;
+    REVOLT;
 
     private final static String langKeyTemplate_siegeType = "siege_type_%s";
     private final String siegeTypeLangKey;
@@ -29,12 +27,8 @@ public enum SiegeType {
         switch (line) {
             case "CONQUEST":
                 return CONQUEST;
-            case "LIBERATION":
-                return LIBERATION;
             case "REVOLT":
                 return REVOLT;
-            case "SUPPRESSION":
-                return SUPPRESSION;
             default:
                 throw new RuntimeException("Unrecognized enum name");
         }

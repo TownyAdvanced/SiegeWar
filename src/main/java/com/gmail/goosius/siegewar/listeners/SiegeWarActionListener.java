@@ -1,13 +1,7 @@
 package com.gmail.goosius.siegewar.listeners;
 
-import com.gmail.goosius.siegewar.playeractions.DestroyBlock;
-import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Translatable;
-
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.playeractions.DestroyBlock;
 import com.gmail.goosius.siegewar.playeractions.PlaceBlock;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
@@ -15,6 +9,10 @@ import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyBurnEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Translatable;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 /**
  * 

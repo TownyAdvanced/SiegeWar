@@ -9,18 +9,12 @@ import com.gmail.goosius.siegewar.events.PreInvadeEvent;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.Translation;
-import com.palmergames.bukkit.towny.object.Translator;
-import com.palmergames.util.MathUtil;
-
+import com.palmergames.bukkit.towny.object.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -36,7 +30,7 @@ public class InvadeTown {
 	 * Process an invade town request
 	 *
 	 * @param siege the siege of the town.
-	 * @throws TownyException when the invasion wont be allowed.
+	 * @throws TownyException when the invasion won't be allowed.
 	 */
 	public static void processInvadeTownRequest(Player player, Nation residentsNation, Town targetTown, Siege siege) throws TownyException {
 		
@@ -58,41 +52,33 @@ public class InvadeTown {
 	 *
 	 * @param siege the siege
 	 */
-    public static void invadeTown(Nation invadingNation, Town invadedTown, Siege siege) {
-		Nation nationOfInvadedTown = null;
+    public static void invadeTown(Nation invadingNation, Town targetTown, Siege siege)  {
+		Nation nationOfInvadedTown = targetTown.hasNation() ? targetTown.getNationOrNull() : null;
 
-        if(invadedTown.hasNation()) {
-			//Update stats of defeated nation
-            nationOfInvadedTown = TownyAPI.getInstance().getTownNationOrNull(invadedTown);
-			NationMetaDataController.setTotalTownsLost(nationOfInvadedTown, NationMetaDataController.getTotalTownsLost(nationOfInvadedTown) + 1);
+		//Update nation stats
+		NationMetaDataController.setTotalTownsGained(invadingNation, NationMetaDataController.getTotalTownsGained(invadingNation) + 1);
+		if(nationOfInvadedTown != null) {
+            NationMetaDataController.setTotalTownsLost(nationOfInvadedTown, NationMetaDataController.getTotalTownsLost(nationOfInvadedTown) + 1);
         }
 
-		//Set town to occupied
-		TownOccupationController.setTownOccupation(invadedTown, invadingNation);
-        //Update siege flags
-		siege.setTownInvaded(true);
-		//Update stats of victorious nation
-		NationMetaDataController.setTotalTownsGained(invadingNation, NationMetaDataController.getTotalTownsGained(invadingNation) + 1);
+		//Occupy town (This also saves town & nation data)
+		TownOccupationController.setTownOccupation(targetTown, invadingNation);
 
-		//Save to db
-        SiegeController.saveSiege(siege);
-		invadedTown.save();
-		invadingNation.save();
-		if(nationOfInvadedTown != null) {
-			nationOfInvadedTown.save();
-		}
-		
+		//Update siege flags & save siege data
+		siege.setTownInvaded(true);
+		SiegeController.saveSiege(siege);
+
 		//Messaging
 		if(nationOfInvadedTown == null) {
 			Messaging.sendGlobalMessage(
 					Translatable.of("msg_neutral_town_invaded",
-							invadedTown.getName(),
+							targetTown.getName(),
 							invadingNation.getName()
 					));
 		} else {
 			Messaging.sendGlobalMessage(
 					Translatable.of("msg_nation_town_invaded",
-							invadedTown.getName(),
+							targetTown.getName(),
 							nationOfInvadedTown.getName(),
 							invadingNation.getName()
 					));
@@ -113,7 +99,7 @@ public class InvadeTown {
 		if(siege.getStatus().isActive())
 			throw new TownyException(translator.of("msg_err_cannot_invade_siege_still_in_progress"));
 
-		if(townIsAlreadyOccupiedByNation(residentsNation, targetTown))
+		if(TownOccupationController.isTownOccupiedByNation(residentsNation, targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_invade_town_already_occupied"));
 
 		if(residentsNation != siege.getAttacker())
@@ -125,31 +111,16 @@ public class InvadeTown {
 		if (siege.isTownInvaded())
 			throw new TownyException(translator.of("msg_err_town_already_invaded"));
 
-		if (TownySettings.getNationRequiresProximity() > 0) {
-			if (townsAreNotInTheSameWorld(residentsNation, targetTown))
-				throw new TownyException(translator.of("msg_err_nation_homeblock_in_another_world"));
+		if (SiegeWarDistanceUtil.isTownTooFarFromNationCapitalByWorld(residentsNation, targetTown))
+			throw new TownyException(translator.of("msg_err_nation_homeblock_in_another_world"));
 
-			if (townsAreTooFarApart(residentsNation, targetTown))
-				throw new TownyException(String.format(translator.of("msg_err_town_not_close_enough_to_nation"), targetTown.getName()));
-		}
+		if (SiegeWarDistanceUtil.isTownTooFarFromNationCapitalByDistance(residentsNation, targetTown))
+			throw new TownyException(String.format(translator.of("msg_err_town_not_close_enough_to_nation"), targetTown.getName()));
 
-		if (nationHasTooManyTownsAlready(residentsNation))
+		if (SiegeWarNationUtil.doesNationHaveTooManyTowns(residentsNation))
 			throw new TownyException(String.format(translator.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
 	}
 
-	private static boolean townIsAlreadyOccupiedByNation(Nation residentsNation, Town nearbyTown) {
-		return TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation;
-	}
 
-	private static boolean nationHasTooManyTownsAlready(Nation residentsNation) {
-		return TownySettings.getMaxTownsPerNation() > 0 && SiegeWarNationUtil.getEffectiveNation(residentsNation).getNumTowns() >= TownySettings.getMaxTownsPerNation();
-	}
 
-	private static boolean townsAreTooFarApart(Nation residentsNation, Town nearbyTown) throws TownyException {
-		return MathUtil.distance(residentsNation.getCapital().getHomeBlock().getCoord(), nearbyTown.getHomeBlock().getCoord()) > TownySettings.getNationRequiresProximity();
-	}
-
-	private static boolean townsAreNotInTheSameWorld(Nation residentsNation, Town nearbyTown) throws TownyException {
-		return !residentsNation.getCapital().getHomeBlock().getWorld().getName().equals(nearbyTown.getHomeBlock().getWorld().getName());
-	}
 }

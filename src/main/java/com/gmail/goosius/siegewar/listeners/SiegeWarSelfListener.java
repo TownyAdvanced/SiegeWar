@@ -1,12 +1,11 @@
 package com.gmail.goosius.siegewar.listeners;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.events.BattleSessionPreStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.object.Translatable;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 public class SiegeWarSelfListener implements Listener {
 	

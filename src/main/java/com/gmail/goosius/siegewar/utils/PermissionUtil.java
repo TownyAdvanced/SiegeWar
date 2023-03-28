@@ -1,9 +1,9 @@
 package com.gmail.goosius.siegewar.utils;
 
-import java.util.List;
-
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.palmergames.bukkit.towny.permissions.TownyPerms;
+
+import java.util.List;
 
 public class PermissionUtil {
 

@@ -13,14 +13,7 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.UUID;
-import java.util.Comparator;
-import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 public class TownPeacefulnessUtil {
 

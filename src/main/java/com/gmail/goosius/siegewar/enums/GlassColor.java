@@ -1,9 +1,9 @@
 package com.gmail.goosius.siegewar.enums;
 
+import org.bukkit.Material;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.bukkit.Material;
 
 public enum GlassColor {
     WHITE(Material.WHITE_STAINED_GLASS, "White"),

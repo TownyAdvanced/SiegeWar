@@ -2,10 +2,14 @@ package com.gmail.goosius.siegewar;
 
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
+import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translation;
 
 import org.bukkit.Bukkit;
@@ -21,7 +25,6 @@ import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
-import com.gmail.goosius.siegewar.command.SiegeWarNationAddonCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarNationSetPeacefulOccupationTaxAddonCommand;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
@@ -90,6 +93,7 @@ public class SiegeWar extends JavaPlugin {
 		registerListeners();
 		checkIntegrations();
 		cleanupLegacyMetaData();
+		migrateTownOccupationData();
 
 		if(siegeWarPluginError) {
 			severe("SiegeWar did not load successfully, and is now in safe mode!");
@@ -120,8 +124,7 @@ public class SiegeWar extends JavaPlugin {
     private boolean loadAll() {
     	return !Towny.getPlugin().isError()
 				&& Settings.loadSettingsAndLang()
-				&& SiegeController.loadAll()
-				&& TownOccupationController.loadAll();
+				&& SiegeController.loadAll();
     }
 
 	public String getVersion() {
@@ -184,7 +187,6 @@ public class SiegeWar extends JavaPlugin {
 			severe("SiegeWar is in safe mode. SiegeWar player commands not registered");
 		} else {
 			getCommand("siegewar").setExecutor(new SiegeWarCommand());
-			new SiegeWarNationAddonCommand();
 			new SiegeWarNationSetPeacefulOccupationTaxAddonCommand();
 		}
 	}
@@ -254,6 +256,31 @@ public class SiegeWar extends JavaPlugin {
 	private void cleanupLegacyMetaData() {
 		for(Resident resident: TownyUniverse.getInstance().getResidents()) {
 			ResidentMetaDataController.clearPlunder(resident);
+		}
+	}
+
+	/**
+	 * In some previous SW versions,
+	 * a town could have both a regular nation, and a different occupying nation.
+	 * -
+	 * This method migrates the old data,
+	 * so that if the older data schema is detected,
+	 * and a town has an occupying nation,
+	 * that town will be transferred to that occupying nation.
+	 */
+	public static void migrateTownOccupationData() {
+		SiegeWar.info("Migrating Town Occupation Data...");
+		for(Town town: new ArrayList<>(TownyAPI.getInstance().getTowns())) {
+			if(TownMetaDataController.hasLegacyOccupierUUID(town)) {
+				Nation occupyingNation = TownyAPI.getInstance().getNation(TownMetaDataController.getLegacyOccupierUUID(town));
+				if(occupyingNation != null) {
+					TownOccupationController.setTownOccupation(town, occupyingNation);
+				}
+				TownMetaDataController.removeLegacyOccupierUUID(town);
+			}
+			if(TownMetaDataController.hasLegacyPrePeacefulOccupierUUID(town)) {
+				TownMetaDataController.removeLegacyPrePeacefulOccupierUUID(town);
+			}
 		}
 	}
 }

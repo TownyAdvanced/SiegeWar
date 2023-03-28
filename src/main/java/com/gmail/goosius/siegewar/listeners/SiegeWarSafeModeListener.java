@@ -1,10 +1,12 @@
 package com.gmail.goosius.siegewar.listeners;
 
+import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
+import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
-
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -13,11 +15,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-
-import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
-import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
 
 public class SiegeWarSafeModeListener implements Listener {
 

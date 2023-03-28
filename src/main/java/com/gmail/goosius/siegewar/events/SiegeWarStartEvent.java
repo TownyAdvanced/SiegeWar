@@ -1,7 +1,7 @@
 package com.gmail.goosius.siegewar.events;
 
-import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.block.Block;

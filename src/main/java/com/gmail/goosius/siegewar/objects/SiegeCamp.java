@@ -1,9 +1,5 @@
 package com.gmail.goosius.siegewar.objects;
 
-import org.bukkit.Bukkit;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeType;
@@ -12,12 +8,11 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
-import com.palmergames.bukkit.towny.object.Government;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.TownBlock;
-import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.*;
 import com.palmergames.util.TimeTools;
+import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 public class SiegeCamp {
 	private final Player player;

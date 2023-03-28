@@ -1,16 +1,5 @@
 package com.gmail.goosius.siegewar.settings;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.bukkit.plugin.Plugin;
-
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.utils.FileMgmt;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
@@ -20,6 +9,16 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.TranslationLoader;
 import com.palmergames.bukkit.util.Version;
 import com.palmergames.util.TimeTools;
+import org.bukkit.plugin.Plugin;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Settings {
 	private static CommentedConfiguration config, newConfig;

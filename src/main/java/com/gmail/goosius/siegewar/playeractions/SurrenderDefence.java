@@ -54,15 +54,8 @@ public class SurrenderDefence {
 		String message = "";
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
-			case SUPPRESSION:
 				message = Translation.of(key,
 						siege.getTown().getName(),
-						siege.getAttacker().getName());
-				break;
-			case LIBERATION:
-				message = Translation.of(key,
-						siege.getTown().getName(),
-						siege.getDefender().getName(),
 						siege.getAttacker().getName());
 				break;
 			case REVOLT:

@@ -744,10 +744,10 @@ public enum ConfigNodes {
 			"#   (see user guide for full details)",
 			"#"),
 	PEACEFUL_CAPITALS_ENABLED(
-			"neutral_towns.capitals_allowed_neutrality",
-			"true",
+			"neutral_towns.nation_capital_can_be_neutral",
+			"false",
 			"",
-			"# If this is true, a nation capital can be a peaceful town. If false, any capital will not be able to turn peaceful."),
+			"# If this is true, a nation capital can be a neutral town. If false, any capital will not be able to turn peaceful."),
 	PEACEFUL_TOWNS_CONFIRMATION_REQUIREMENT_DAYS(
 			"neutral_towns.confirmation_requirement_days",
 			"5",

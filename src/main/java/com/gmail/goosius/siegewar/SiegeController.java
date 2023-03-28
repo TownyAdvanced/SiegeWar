@@ -1,28 +1,21 @@
 package com.gmail.goosius.siegewar;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-
+import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
+import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
+import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.CosmeticUtil;
-import com.gmail.goosius.siegewar.utils.SiegeCampUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.*;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
-import com.palmergames.bukkit.towny.object.Government;
+import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.*;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -31,20 +24,9 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
-import com.gmail.goosius.siegewar.enums.SiegeSide;
-import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
-import com.gmail.goosius.siegewar.objects.Siege;
-import com.gmail.goosius.siegewar.objects.SiegeCamp;
-import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
-import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.TownBlock;
-import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.Translation;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * 
@@ -104,6 +86,7 @@ public class SiegeController {
 
 	public static boolean loadAll() {
 		try {
+
 			SiegeWar.info("Loading Siege Data...");
 			clearSieges();
 			SiegeWar.info("Loading Siege List Data...");
@@ -126,9 +109,7 @@ public class SiegeController {
 			if (SiegeMetaDataController.hasSiege(town)) {
 				SiegeWar.info("Siege List Data: Found siege in Town " + town.getName());
 				newSiege(town);
-
 				setSiege(town, true);
-
 			}
 	}
 
@@ -157,8 +138,6 @@ public class SiegeController {
 		//Load Attacker
 		switch (siege.getSiegeType()) {
 			case CONQUEST:
-			case LIBERATION:
-			case SUPPRESSION:
 				String uuid = SiegeMetaDataController.getAttackerUUID(town);
 				if (uuid == null)
 					return false;
@@ -175,10 +154,8 @@ public class SiegeController {
 		//Load defender
 		switch (siege.getSiegeType()) {
 			case CONQUEST:
-			case SUPPRESSION:
 				siege.setDefender(town);
 				break;
-			case LIBERATION:
 			case REVOLT:
 				String uuid = SiegeMetaDataController.getDefenderUUID(town);
 				if (uuid == null)
@@ -534,54 +511,13 @@ public class SiegeController {
 					));
 				}
 				break;
-			case LIBERATION:
-				if (siege.getTown().hasNation()) {
-					Messaging.sendGlobalMessage(
-							Translatable.of("msg_liberation_siege_started_nation_town",
-							siege.getAttacker().getName(),
-							siege.getDefender().getName(),
-							siege.getTown().getName()
-					));
-				} else {
-					Messaging.sendGlobalMessage(
-							Translatable.of("msg_liberation_siege_started_neutral_town",
-							siege.getAttacker().getName(),
-							siege.getDefender().getName(),
-							siege.getTown().getName()
-					));
-				}
-				break;
+
 			case REVOLT:
-				if (siege.getTown().hasNation()) {
-					Messaging.sendGlobalMessage(
-							Translatable.of("msg_revolt_siege_started_nation_town",
-							siege.getTown().getName(),
-							TownyAPI.getInstance().getTownNationOrNull(siege.getTown()).getName(),
-							TownOccupationController.getTownOccupier(siege.getTown()).getName()
-					));
-				} else {
-					Messaging.sendGlobalMessage(
-							Translatable.of("msg_revolt_siege_started_neutral_town",
-							siege.getTown().getName(),
-							TownOccupationController.getTownOccupier(siege.getTown()).getName()
-					));
-				}
-				break;
-			case SUPPRESSION:
-				if (siege.getTown().hasNation()) {
-					Messaging.sendGlobalMessage(
-							Translatable.of("msg_suppression_siege_started_nation_town",
-							siege.getAttacker().getName(),
-							TownyAPI.getInstance().getTownNationOrNull(siege.getTown()).getName(),
-							siege.getTown().getName()
-					));
-				} else {
-					Messaging.sendGlobalMessage(
-							Translatable.of("msg_suppression_siege_started_neutral_town",
-							siege.getAttacker().getName(),
-							siege.getTown().getName()
-					));
-				}
+				Messaging.sendGlobalMessage(
+						Translatable.of("msg_revolt_siege_started",
+						siege.getTown().getName(),
+						siege.getDefender().getName()
+				));
 				break;
 		}
 	}
@@ -690,4 +626,6 @@ public class SiegeController {
 		addSiegeCamp(camp);
 		Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> SiegeCampUtil.evaluateCamp(camp, true));
 	}
+
+
 }

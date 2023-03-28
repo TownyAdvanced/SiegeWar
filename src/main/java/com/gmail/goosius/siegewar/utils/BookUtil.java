@@ -1,12 +1,11 @@
 package com.gmail.goosius.siegewar.utils;
 
-import org.bukkit.entity.Player;
-
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.util.BookFactory;
 import com.palmergames.util.TimeMgmt;
+import org.bukkit.entity.Player;
 
 public class BookUtil {
 	

@@ -3,7 +3,6 @@ package com.gmail.goosius.siegewar.command;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
@@ -16,10 +15,7 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.TownySettings;
-import com.palmergames.bukkit.towny.confirmations.Confirmation;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -29,7 +25,6 @@ import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -42,9 +37,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
 	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "guide", "preference", "version", "nextsession");
 	
-	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "removeoccupation", "transferoccupation");
-
-	private static final List<String> siegewarTownTabCompletes = Arrays.asList("inviteoccupation");
+	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers");
 
 	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("beacons", "bossbars");
 	
@@ -54,23 +47,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			case "nation":
 				if (args.length == 2)
 					return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
-				if (args.length == 3 && args[1].equalsIgnoreCase("removeoccupation")) {
-					return NameUtil.filterByStart(new ArrayList<>(TownOccupationController.getAllOccupiedTownNames()), args[2]);
-				}
-				if (args.length == 3 && args[1].equalsIgnoreCase("transferoccupation")) {
-					return NameUtil.filterByStart(new ArrayList<>(TownOccupationController.getAllOccupiedTownNames()), args[2]);
-				}
-				if (args.length == 4 && args[1].equalsIgnoreCase("transferoccupation")) {
-					return SiegeWarAdminCommand.getTownyStartingWith(args[3], "n");
-				}
 				break;
-			case "town":
-				if (args.length == 2)
-					return NameUtil.filterByStart(siegewarTownTabCompletes, args[1]);
-				if (args.length == 3 && args[1].equalsIgnoreCase("inviteoccupation")) {
-					return SiegeWarAdminCommand.getTownyStartingWith(args[2], "n");
-				}
-				break;					
 			case "hud":
 				if (args.length == 2)
 					return NameUtil.filterByStart(new ArrayList<>(SiegeController.getNamesOfActivelySiegedTowns()), args[1]);
@@ -94,10 +71,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw guide", "", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw collect", "", Translatable.of("nation_help_11").forLocale(sender)));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw town", "inviteoccupation [nation]", Translatable.of("nation_help_16").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "removeoccupation [town]", Translatable.of("nation_help_14").forLocale(sender)));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "transferoccupation [town] [nation]", Translatable.of("nation_help_15").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nextsession", "", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw version", "", ""));
@@ -106,13 +80,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void showNationHelp(CommandSender sender) {
 		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewar nation"));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "removeoccupation [town]", Translatable.of("nation_help_14").forLocale(sender)));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "transferoccupation [town] [nation]", Translatable.of("nation_help_15").forLocale(sender)));
-	}
-
-	private void showTownHelp(CommandSender sender) {
-		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewar town"));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw town", "inviteoccupation [nation]", Translatable.of("nation_help_16").forLocale(sender)));
 	}
 
 	private void showPreferenceHelp(CommandSender sender) {
@@ -156,9 +123,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			break;
 		case "nextsession":
 			parseSiegeWarNextSessionCommand(player);
-			break;
-		case "town":
-			parseSiegeWarTownCommand(player, StringMgmt.remFirstArg(args));
 			break;
 		case "preference":
 			parseSiegewarPreferenceCommand(player, StringMgmt.remFirstArg(args));
@@ -312,195 +276,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				}
 				break;
 
-			case "removeoccupation":
-				try {
-					String townName = args[1];
-
-					//Ensure resident has a town & nation
-					Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-					if (resident == null || !resident.hasTown() || !resident.getTown().hasNation())
-						throw new TownyException(Translatable.of("msg_err_command_disable").forLocale(player));
-
-					Town residentsTown = TownyAPI.getInstance().getResidentTownOrNull(resident);
-					Nation residentsNation = TownyAPI.getInstance().getTownNationOrNull(residentsTown);
-
-					//Ensure the specified town exists
-					if (!TownyUniverse.getInstance().hasTown(townName))
-						throw new TownyException(Translatable.of("msg_err_unknown_town").forLocale(player));
-
-					//Ensure the specified town is occupied by the resident's nation
-					Town townToRelease = TownyUniverse.getInstance().getTown(townName);
-					if(!TownOccupationController.isTownOccupied(townToRelease))
-						throw new TownyException(Translatable.of("msg_err_cannot_change_occupation_town_not_occupied").forLocale(player));
-					if(TownOccupationController.getTownOccupier(townToRelease) != residentsNation)
-						throw new TownyException(Translatable.of("msg_err_cannot_change_occupation_by_foreign_nation").forLocale(player));
-
-					//Ensure besieged towns cannot be de-occupied
-					if(SiegeController.hasActiveSiege(townToRelease))
-						throw new TownyException(Translatable.of("msg_err_cannot_change_occupation_of_besieged_town").forLocale(player));
-
-					//Remove occupation
-					TownOccupationController.removeTownOccupation(townToRelease);
-
-					//Send global message
-					TownyMessaging.sendGlobalMessage(Translatable.of("msg_remove_occupation_success", residentsNation.getName(), townToRelease.getName()).forLocale(player));
-				} catch (Exception e) {
-					Messaging.sendErrorMsg(player, e.getMessage());
-				}
-				break;
-
-			case "transferoccupation":
-				if (args.length < 3) {
-					showNationHelp(player);
-					return;
-				}
-
-				try {
-					String townName = args[1];
-					String nationName = args[2];
-
-					//Ensure resident has a town & nation
-					Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-					if (resident == null || !resident.hasTown() || !resident.getTown().hasNation())
-						throw new TownyException(Translatable.of("msg_err_command_disable").forLocale(player));
-
-					Town residentsTown = TownyAPI.getInstance().getResidentTownOrNull(resident);
-					Nation residentsNation = TownyAPI.getInstance().getTownNationOrNull(residentsTown);
-
-					//Ensure the specified town exists
-					if (!TownyUniverse.getInstance().hasTown(townName))
-						throw new TownyException(Translatable.of("msg_err_unknown_town").forLocale(player));
-
-					//Ensure the specified town is occupied by the resident's nation
-					Town townToTransfer = TownyUniverse.getInstance().getTown(townName);
-					if(!TownOccupationController.isTownOccupied(townToTransfer))
-						throw new TownyException(Translatable.of("msg_err_cannot_change_occupation_town_not_occupied").forLocale(player));
-					if(TownOccupationController.getTownOccupier(townToTransfer) != residentsNation)
-						throw new TownyException(Translatable.of("msg_err_cannot_change_occupation_by_foreign_nation").forLocale(player));
-
-					//Ensure besieged towns cannot be de-occupied
-					if(SiegeController.hasActiveSiege(townToTransfer))
-						throw new TownyException(Translatable.of("msg_err_cannot_change_occupation_of_besieged_town").forLocale(player));
-
-					//Ensure the receiving nation exists
-					if (!TownyUniverse.getInstance().hasNation(nationName))
-						throw new TownyException(Translatable.of("msg_err_unknown_nation").forLocale(player));
-
-					//Check distance
-					Nation receivingNation = TownyUniverse.getInstance().getNation(nationName);
-					if (TownySettings.getNationRequiresProximity() > 0) {
-						if (!receivingNation.getCapital().getHomeBlock().getWorld().getName().equals(townToTransfer.getHomeBlock().getWorld().getName())) {
-							throw new TownyException(Translatable.of("msg_err_town_and_capital_too_far_apart", townToTransfer.getName(), receivingNation.getName()).forLocale(player));
-						}
-						Coord capitalCoord = receivingNation.getCapital().getHomeBlock().getCoord();
-						Coord townCoord = townToTransfer.getHomeBlock().getCoord();
-						double distance = Math.sqrt(Math.pow(capitalCoord.getX() - townCoord.getX(), 2) + Math.pow(capitalCoord.getZ() - townCoord.getZ(), 2));
-						if (distance > TownySettings.getNationRequiresProximity()) {
-							throw new TownyException(Translatable.of("msg_err_town_and_capital_too_far_apart", townToTransfer.getName(), receivingNation.getName()).forLocale(player));
-						}						
-					}
-
-					//Ensure the king of the receiving nation is online
-					Resident kingOfReceivingNation = receivingNation.getKing();
-					if (!kingOfReceivingNation.isOnline()){
-						throw new TownyException(Translatable.of("msg_err_cannot_transfer_occupation_king_not_online", receivingNation.getName(), kingOfReceivingNation.getName()).forLocale(player));
-					}
-
-					//Send request to king of receiving nation					
-					TownyMessaging.sendMessage(kingOfReceivingNation, Translatable.of("msg_would_you_accept_transfer_of_occupied_town", townName, residentsNation.getName()).forLocale(player));
-					Confirmation.runOnAccept(() -> {
-						//Transfer occupation
-						TownOccupationController.setTownOccupation(townToTransfer, receivingNation);					
-						//Send global message
-						TownyMessaging.sendGlobalMessage(Translatable.of("msg_transfer_occupation_success", residentsNation.getName(), townToTransfer.getName(), receivingNation.getName()));
-					})	
-					.sendTo(kingOfReceivingNation.getPlayer());
-
-				} catch (Exception e) {
-					Messaging.sendErrorMsg(player, e.getMessage());
-				}
-				break;
-				
 			default:
 				showNationHelp(player);
-		}
-	}
-
-	private void parseSiegeWarTownCommand(Player player, String[] args) {
-		if (args.length < 2) {
-			showTownHelp(player);
-			return;
-		}
-
-		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_TOWN.getNode(args[0]))) {
-			player.sendMessage(Translatable.of("msg_err_command_disable").forLocale(player));
-			return;
-		}
-
-		switch (args[0]) {
-
-			case "inviteoccupation":
-				try {
-					//Ensure resident has town
-					Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-					if (resident == null || !resident.hasTown())
-						throw new TownyException(Translatable.of("msg_err_command_disable").forLocale(player));
-
-					//Ensure the specified town is not peaceful
-					Town townToTransfer = TownyAPI.getInstance().getResidentTownOrNull(resident);
-					if (townToTransfer.isNeutral())
-						throw new TownyException(Translatable.of("msg_err_cannot_invite_peaceful_town_occupation").forLocale(player));
-
-					//Ensure the town is unoccupied
-					if(TownOccupationController.isTownOccupied(townToTransfer))
-						throw new TownyException(Translatable.of("msg_err_cannot_invite_occupation_town_already_occupied").forLocale(player));
-
-					//Ensure town is not besieged
-					if(SiegeController.hasActiveSiege(townToTransfer))
-						throw new TownyException(Translatable.of("msg_err_cannot_change_occupation_of_besieged_town").forLocale(player));
-
-					//Ensure the receiving nation exists
-					String nameOfReceivingNation = args[1];
-					if (!TownyUniverse.getInstance().hasNation(nameOfReceivingNation))
-						throw new TownyException(Translatable.of("msg_err_unknown_nation").forLocale(player));
-
-					//Check distance
-					Nation receivingNation = TownyUniverse.getInstance().getNation(nameOfReceivingNation);
-					if (TownySettings.getNationRequiresProximity() > 0) {
-						Coord capitalCoord = receivingNation.getCapital().getHomeBlock().getCoord();
-						Coord townCoord = townToTransfer.getHomeBlock().getCoord();
-						if (!receivingNation.getCapital().getHomeBlock().getWorld().getName().equals(townToTransfer.getHomeBlock().getWorld().getName())) {
-							throw new TownyException(Translatable.of("msg_err_town_and_capital_too_far_apart", townToTransfer.getName(), receivingNation.getName()).forLocale(player));
-						}
-						double distance = Math.sqrt(Math.pow(capitalCoord.getX() - townCoord.getX(), 2) + Math.pow(capitalCoord.getZ() - townCoord.getZ(), 2));
-						if (distance > TownySettings.getNationRequiresProximity()) {
-							throw new TownyException(Translatable.of("msg_err_town_and_capital_too_far_apart", townToTransfer.getName(), receivingNation.getName()).forLocale(player));
-						}						
-					}
-
-					//Ensure the king of the receiving nation is online
-					Resident kingOfReceivingNation = receivingNation.getKing();
-					if (!kingOfReceivingNation.isOnline()) {
-						throw new TownyException(Translatable.of("msg_err_cannot_invite_occupation_king_not_online", receivingNation.getName(), kingOfReceivingNation.getName()).forLocale(player));
-					}
-
-					//Send request to king of receiving nation
-					TownyMessaging.sendMessage(kingOfReceivingNation, Translatable.of("msg_would_you_accept_town_request_for_occupation", townToTransfer).forLocale(player));
-					Confirmation.runOnAccept(() -> {
-						//Occupy town
-						TownOccupationController.setTownOccupation(townToTransfer, receivingNation);
-						//Send global message
-						TownyMessaging.sendGlobalMessage(Translatable.of("msg_invite_occupation_success", townToTransfer.getName(), receivingNation.getName()).forLocale(player));
-					})
-					.sendTo(kingOfReceivingNation.getPlayer());
-
-				} catch (Exception e) {
-					Messaging.sendErrorMsg(player, e.getMessage());
-				}
-				break;
-				
-			default:
-				showTownHelp(player);
 		}
 	}
 

@@ -1,19 +1,5 @@
 package com.gmail.goosius.siegewar.settings;
 
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.EnumSet;
-import java.util.ArrayList;
-import java.util.Locale;
-
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
@@ -22,15 +8,21 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Translatable;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.*;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.Nullable;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
 
 public class SiegeWarSettings {
 	

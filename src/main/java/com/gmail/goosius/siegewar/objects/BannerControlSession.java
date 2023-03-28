@@ -2,7 +2,6 @@ package com.gmail.goosius.siegewar.objects;
 
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.palmergames.bukkit.towny.object.Resident;
-
 import org.bukkit.entity.Player;
 
 public class BannerControlSession {

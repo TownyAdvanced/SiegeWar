@@ -5,6 +5,8 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -73,13 +75,14 @@ public class StartConquestSiege {
 				throw new TownyException(translator.of("msg_err_siege_war_cannot_attack_non_enemy_nation"));
 		}
 
-		if (TownySettings.getNationRequiresProximity() > 0) {
-			if (townsAreNotInTheSameWorld(nationOfSiegeStarter, targetTown))
-				throw new TownyException(translator.of("msg_err_nation_homeblock_in_another_world"));
+		if(SiegeWarDistanceUtil.isTownTooFarFromNationCapitalByWorld(nationOfSiegeStarter, targetTown))
+			throw new TownyException(translator.of("msg_err_nation_homeblock_in_another_world"));
 
-			if (townsAreTooFarApart(nationOfSiegeStarter, targetTown))
-				throw new TownyException(translator.of("msg_err_town_not_close_enough_to_nation", targetTown.getName()));
-		}
+		if(SiegeWarDistanceUtil.isTownTooFarFromNationCapitalByDistance(nationOfSiegeStarter, targetTown))
+			throw new TownyException(String.format(translator.of("msg_err_town_not_close_enough_to_nation"), targetTown.getName()));
+
+		if(SiegeWarNationUtil.doesNationHaveTooManyTowns(nationOfSiegeStarter))
+			throw new TownyException(String.format(translator.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
 	}
 
 	private static boolean townsAreTooFarApart(Nation residentsNation, Town targetTown) throws TownyException {

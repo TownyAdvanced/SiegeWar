@@ -26,9 +26,9 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.HashSet;
 
 /**
  * This class contains utility functions related to banner control

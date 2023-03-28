@@ -8,12 +8,7 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
+import com.gmail.goosius.siegewar.utils.*;
 import com.palmergames.adventure.text.Component;
 import com.palmergames.adventure.text.format.NamedTextColor;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -22,14 +17,7 @@ import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.TownBlock;
-import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.Translation;
-import com.palmergames.bukkit.towny.object.Translator;
-
+import com.palmergames.bukkit.towny.object.*;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -263,37 +251,12 @@ public class PlaceBlock {
 					throw new TownyException(translator.of("msg_err_action_disable"));
 				}
 				break;
-			case LIBERATION:
-				if (residentsNation != null && residentsNation == siege.getAttacker()) {
-					//'Liberator'
-					AbandonAttack.processAbandonAttackRequest(player, siege);
-				} else if (residentsTown == nearbyTown) {
-					//Resident of town
-					throw new TownyException(translator.of("msg_err_cannot_surrender_liberation_siege"));
-				} else if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
-					//Occupier of town
-					throw new TownyException(translator.of("msg_err_cannot_surrender_liberation_siege"));
-				} else {
-					throw new TownyException(translator.of("msg_err_action_disable"));
-				}
-				break;
 			case REVOLT:
 				if (residentsTown == nearbyTown) {
 					//Resident of town
 					AbandonAttack.processAbandonAttackRequest(player, siege);
 				} else if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
 					//Occupier of town
-					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
-				} else {
-					throw new TownyException(translator.of("msg_err_action_disable"));
-				}
-				break;
-			case SUPPRESSION:
-				if (residentsNation != null && TownOccupationController.isTownOccupied(nearbyTown) && TownOccupationController.getTownOccupier(nearbyTown) == residentsNation) {
-					//Occupier of town
-					AbandonAttack.processAbandonAttackRequest(player, siege);
-				} else if (residentsTown == nearbyTown) {
-					//Resident of town
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException(translator.of("msg_err_action_disable"));
@@ -329,7 +292,7 @@ public class PlaceBlock {
 		if(nearbyTown.isNeutral()) {
 			//Town is peaceful, so this action is a subversion or peaceful-revolt attempt
 			if(residentsTown == nearbyTown) {
-				PeacefullyRevolt.processActionRequest(player, nearbyTown);
+				throw new TownyException(Translatable.of("neutral_towns_cannot_revolt"));
 			} else {
 				PeacefullySubvertTown.processActionRequest(player, residentsNation, nearbyTown);
 			}
@@ -383,19 +346,8 @@ public class PlaceBlock {
 			if (SiegeWarSettings.doesThisNationHaveTooManyActiveSieges(residentsNation))
 				throw new TownyException(translator.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));
 
-			if (TownOccupationController.isTownOccupied(nearbyTown)) {
-				Nation occupierOfNearbyTown = TownOccupationController.getTownOccupier(nearbyTown);
-				if (residentsNation == occupierOfNearbyTown) {
-					//Suppression siege
-					StartSuppressionSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
-				} else {
-					//Liberation siege
-					StartLiberationSiege.processStartSiegeRequest(player, residentsTown, residentsNation, occupierOfNearbyTown, nearbyTownBlock, nearbyTown, bannerBlock);
-				}
-			} else {
-				//Conquest siege
-				StartConquestSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
-			}
+			//Conquest siege
+			StartConquestSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 		}
 	}
 

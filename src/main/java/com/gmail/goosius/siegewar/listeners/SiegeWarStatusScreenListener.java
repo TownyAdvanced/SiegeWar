@@ -1,14 +1,6 @@
 package com.gmail.goosius.siegewar.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.jetbrains.annotations.NotNull;
-
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
@@ -26,13 +18,15 @@ import com.palmergames.bukkit.towny.TownyFormatter;
 import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.ResidentStatusScreenEvent;
 import com.palmergames.bukkit.towny.event.statusscreen.TownStatusScreenEvent;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.Translation;
-import com.palmergames.bukkit.towny.object.Translator;
+import com.palmergames.bukkit.towny.object.*;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SiegeWarStatusScreenListener implements Listener {
 
@@ -70,29 +64,6 @@ public class SiegeWarStatusScreenListener implements Listener {
 			}
 
 			List<String> out = new ArrayList<>();
-			// Occupied Home Towns[3]: Town1, Town2, Town3
-			List<Town> occupiedHomeTowns = TownOccupationController.getOccupiedHomeTowns(nation);
-			if (occupiedHomeTowns.size() > 0) {
-				Component comp = Component.empty()
-						.append(Component.newline())
-						.append(Component.text(translator.of("status_nation_occupied_home_towns", occupiedHomeTowns.size())
-							+ getFormattedTownList(occupiedHomeTowns))
-						.clickEvent(ClickEvent.runCommand("/nation siegewar occupiedhometowns " + nation.getName()))
-						.hoverEvent(HoverEvent.showText(Component.text(translator.of("status_hover_click_for_more")))));
-				event.getStatusScreen().addComponentOf("siegeWarNationOccupiedHomeTowns", comp);
-			}
-
-			// Occupied Foreign Towns[3]: Town4, Town5, Town6
-			List<Town> occupiedForeignTowns = TownOccupationController.getOccupiedForeignTowns(nation);
-			if (occupiedForeignTowns.size() > 0) {
-				Component comp = Component.empty()
-						.append(Component.newline())
-						.append(Component.text(translator.of("status_nation_occupied_foreign_towns", occupiedForeignTowns.size())
-							+ getFormattedTownList(occupiedForeignTowns))
-						.clickEvent(ClickEvent.runCommand("/nation siegewar occupiedforeigntowns " + nation.getName()))
-						.hoverEvent(HoverEvent.showText(Component.text(translator.of("status_hover_click_for_more")))));
-				event.getStatusScreen().addComponentOf("siegeWarNationOccupiedForeignTowns", comp);
-			}
 
 			// Offensive Sieges [3]: TownA, TownB, TownC
 	        List<Town> siegeAttacks = new ArrayList<>(SiegeController.getActiveOffensiveSieges(nation).values());
@@ -134,12 +105,6 @@ public class SiegeWarStatusScreenListener implements Listener {
 				event.getStatusScreen().addComponentOf("siegeWar_plunderDebt", Component.text(translator.of("status_town_plunder_debt", getMoney(days * amount), days, getMoney(amount))));
 			}
 
-			//Occupying Nation: Empire of the Fluffy Bunnies
-			if(SiegeWarSettings.getWarSiegeInvadeEnabled() && TownOccupationController.isTownOccupied(town)) {
-				Nation townOccupier = TownOccupationController.getTownOccupier(town);
-				event.getStatusScreen().addComponentOf("siegeWar_townOccupier", translator.of("status_town_occupying_nation", townOccupier.getFormattedName()));
-			}
-			
 	        //Revolt Immunity Timer: 71.8 hours
 	        long immunity = TownMetaDataController.getRevoltImmunityEndTime(town);
 	        if (SiegeWarSettings.getRevoltSiegesEnabled() && immunity == -1l || System.currentTimeMillis() < immunity) {
@@ -300,20 +265,10 @@ public class SiegeWarStatusScreenListener implements Listener {
     private static String getInvadedPlunderedStatusLine(Siege siege, Translator translator) {
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
-			case LIBERATION:
 				switch (siege.getStatus()) {
 					case ATTACKER_WIN:
 					case DEFENDER_SURRENDER:
 						return getPlunderStatusLine(siege, translator) + getInvadeStatusLine(siege, translator);
-					default:
-						break;
-				}
-				break;
-			case SUPPRESSION:
-				switch (siege.getStatus()) {
-					case ATTACKER_WIN:
-					case DEFENDER_SURRENDER:
-						return getPlunderStatusLine(siege, translator);
 					default:
 						break;
 				}
