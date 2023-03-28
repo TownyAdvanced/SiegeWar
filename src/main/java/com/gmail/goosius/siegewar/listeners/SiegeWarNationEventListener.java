@@ -8,13 +8,14 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.NationBonusCalculationEvent;
 import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
-import com.palmergames.bukkit.towny.event.PreDeleteNationEvent;
+import com.palmergames.bukkit.towny.event.DeleteNationEvent;
 import com.palmergames.bukkit.towny.event.NationPreAddTownEvent;
 import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
 import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
@@ -34,7 +35,6 @@ import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import java.util.List;
@@ -75,8 +75,11 @@ public class SiegeWarNationEventListener implements Listener {
 	 * A nation being deleted with a siege means the siege ends,
 	 * and a king may receive a refund.
 	 */
-	@EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
-	public void onDeleteNation(PreDeleteNationEvent event) {
+	@EventHandler
+	public void onDeleteNation(DeleteNationEvent event) {
+		if(!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+
 		/*
 		 * Adjust sieges if needed
 		 */
@@ -88,7 +91,7 @@ public class SiegeWarNationEventListener implements Listener {
 					 * Conquest or Suppression:
 					 * If attacker (which is a nation) disappears, we must delete the siege
 					 */
-					if(event.getNation() == siege.getAttacker()) { 
+					if(event.getNationUUID() == siege.getAttacker().getUUID()) {
 						SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
 					}
 					break;
@@ -100,11 +103,11 @@ public class SiegeWarNationEventListener implements Listener {
 					 *    we must ensure that the attacker does not lose any progress in the siege.
 					 *    We do this by transforming the siege into a conquest siege
 					 */
-					if(event.getNation() == siege.getAttacker()) { 
+					if(event.getNationUUID() == siege.getAttacker().getUUID()) { 
 						SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
 						break;
 			
-					} else if (event.getNation() == siege.getDefender()) { 
+					} else if (event.getNationUUID() == siege.getDefender().getUUID()) { 
 						siege.setSiegeType(SiegeType.CONQUEST);
 						siege.setDefender(siege.getTown());
 						SiegeController.saveSiege(siege);
@@ -116,7 +119,7 @@ public class SiegeWarNationEventListener implements Listener {
 					 * Revolt
 					 * If defender (which is a nation) disappears, we must delete the siege
 					 */
-					if (event.getNation() == siege.getDefender()) { 
+					if (event.getNationUUID() == siege.getDefender().getUUID()) {
 						SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
 					}
 				break;
@@ -126,7 +129,14 @@ public class SiegeWarNationEventListener implements Listener {
 		/*
 		 * Remove any town occupation data associated with that nation
 		 */
-		TownOccupationController.removeForeignTownOccupations(event.getNation());
+		TownOccupationController.removeForeignTownOccupations(TownyAPI.getInstance().getNation(event.getNationUUID()));
+		
+		//Award nation refund
+		event.getNationUUID();
+		Resident king = event.getLeader();
+		if (king != null) {
+			SiegeWarMoneyUtil.makeNationRefundAvailable(king);
+		}
 	}
 
 	@EventHandler
