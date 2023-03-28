@@ -604,6 +604,7 @@ msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occ
 msg_err_neutral_towns_cannot_revolt: '&cPeaceful towns cannot revolt'
 msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation status of %s to %s.'
 #Nation Refund
+nation_help_refund : "Claim any nation refund which is available to you."
 msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw nation refund'"
 msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
 msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."

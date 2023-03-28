@@ -37,7 +37,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
 	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "guide", "preference", "version", "nextsession");
 	
-	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers");
+	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers, claimrefund");
 
 	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("beacons", "bossbars");
 	
@@ -80,6 +80,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void showNationHelp(CommandSender sender) {
 		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewar nation"));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "claimrefund [amount]", Translatable.of("nation_help_refund").forLocale(sender)));
 	}
 
 	private void showPreferenceHelp(CommandSender sender) {
@@ -273,6 +274,14 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 				} catch (TownyException te) {
 					Messaging.sendErrorMsg(player, te.getMessage());
+				}
+				break;
+
+			case "claimrefund":
+				try {
+					SiegeWarMoneyUtil.claimNationRefund(player);
+				} catch (Exception e) {
+					player.sendMessage(e.getMessage());
 				}
 				break;
 
