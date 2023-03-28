@@ -307,8 +307,8 @@ public class SiegeWarMoneyUtil {
 		if (formerKing == null)
 			throw new TownyException(Translation.of("msg_err_not_registered_1", player.getName()));
 
-		if(ResidentMetaDataController.getNationRefundAmount(formerKing) != 0) {
-			int refundAmount = ResidentMetaDataController.getNationRefundAmount(formerKing);
+		int refundAmount = ResidentMetaDataController.getNationRefundAmount(formerKing);
+		if(refundAmount != 0) {
 			formerKing.getAccount().deposit(refundAmount, "Nation Refund");
 			ResidentMetaDataController.setNationRefundAmount(formerKing, 0);
 			Messaging.sendMsg(player, Translation.of("msg_siege_war_nation_refund_claimed", TownyEconomyHandler.getFormattedBalance(refundAmount)));
