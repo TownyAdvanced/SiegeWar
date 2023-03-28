@@ -25,12 +25,7 @@ public class AttackerWin {
 		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege, siegeStatus);
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
-			case SUPPRESSION:
 				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
-				break;
-			case LIBERATION:
-				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
-				TownOccupationController.removeTownOccupation(siege.getTown());
 				break;
 			case REVOLT:
 				TownOccupationController.removeTownOccupation(siege.getTown());

@@ -8,6 +8,7 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Coord;
+import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyWorld;
@@ -282,5 +283,29 @@ public class SiegeWarDistanceUtil {
 		} else {
 			return false;  //Target location is not protected
 		}
+	}
+
+	/**
+	 * Return true if a town is too far from the nation capital by distance
+	 *
+	 * @param nation nation to check
+	 * @param town town to check
+	 * @return true if the town is too far by distance
+	 * @throws TownyException
+	 */
+	public static boolean isTownTooFarFromNationCapitalByDistance(Nation nation, Town town) throws TownyException {
+		return TownySettings.getNationRequiresProximity() > 0 && MathUtil.distance(nation.getCapital().getHomeBlock().getCoord(), town.getHomeBlock().getCoord()) > TownySettings.getNationRequiresProximity();
+	}
+	/**
+	 * Return true if a town is too far from the nation capital owing to being in different worlds
+	 *
+	 * @param nation nation to check
+	 * @param town town to check
+	 * @return true if the town is too far because capital & town are in different worlds
+	 * @throws TownyException
+	 */
+
+	public static boolean isTownTooFarFromNationCapitalByWorld(Nation nation, Town town) throws TownyException {
+		return TownySettings.getNationRequiresProximity() > 0 && !nation.getCapital().getHomeBlock().getWorld().getName().equals(town.getHomeBlock().getWorld().getName());
 	}
 }

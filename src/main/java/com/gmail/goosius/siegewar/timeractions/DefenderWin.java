@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.timeractions;
 
-import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -27,12 +26,8 @@ public class DefenderWin
 			case CONQUEST:
 				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefendingNationIfPossibleElseTown());
 				break;
-			case LIBERATION:
+			case REVOLT:
 				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefender());
-				break;
-			case SUPPRESSION:
-				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefendingNationIfPossibleElseTown());
-				TownOccupationController.removeTownOccupation(siege.getTown());
 				break;
 		}
     }

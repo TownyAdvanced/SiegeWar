@@ -16,7 +16,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.NationRemoveAllyEvent;
 import com.palmergames.bukkit.towny.event.NationRemoveTownEvent;
@@ -82,7 +81,6 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onTownyDatabaseLoad(TownyLoadedDatabaseEvent event) {
     	SiegeWar.info("Towny database reload detected, reloading sieges...");
         SiegeController.loadAll();
-        TownOccupationController.loadAll();
     }
     
 	/*
@@ -107,9 +105,6 @@ public class SiegeWarTownyEventListener implements Listener {
             if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
                 TownPeacefulnessUtil.updateTownPeacefulnessCounters();
             }
-            if(SiegeWarSettings.isDominationAwardsGlobalEnabled()) {
-                SiegeWarDominationAwardsUtil.grantGlobalDominationAwards();
-            }   
         }
     }
 
@@ -130,7 +125,6 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onNewHour(NewHourEvent event) {
         if(SiegeWarSettings.getWarSiegeEnabled()) {
             SiegeWarImmunityUtil.evaluateExpiredImmunities();
-            SiegeWarDominationAwardsUtil.addDominationRecords();
         }
     }
 
@@ -149,7 +143,6 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeHUDManager.updateHUDs();
             SiegeWarTimerTaskController.evaluateBeacons();
             SiegeWarNotificationUtil.warnAllPlayersOfSiegeDanger();
-            SiegeWarDominationAwardsUtil.evaluateArtefactExpiries();
         }
     }
 
