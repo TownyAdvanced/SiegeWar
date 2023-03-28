@@ -58,18 +58,22 @@ public class InvadeTown {
 
 		//Update nation stats
 		NationMetaDataController.setTotalTownsGained(invadingNation, NationMetaDataController.getTotalTownsGained(invadingNation) + 1);
+		invadingNation.save();
 		if(nationOfInvadedTown != null) {
             NationMetaDataController.setTotalTownsLost(nationOfInvadedTown, NationMetaDataController.getTotalTownsLost(nationOfInvadedTown) + 1);
+			nationOfInvadedTown.save();
         }
-
-		//Occupy town (This also saves town & nation data)
-		TownOccupationController.setTownOccupation(targetTown, invadingNation);
 
 		//Update siege flags & save siege data
 		siege.setTownInvaded(true);
 		SiegeController.saveSiege(siege);
 
-		//Messaging
+		/*
+		 * Messaging
+		 * This section is here rather than the customary bottom of the method
+		 * because we want to send the siegewar messages (town invaded, nation defeated etc.)
+		 * before we send the standard towny messages (town has left nation, nation has been deleted etc.)
+		 */
 		if(nationOfInvadedTown == null) {
 			Messaging.sendGlobalMessage(
 					Translatable.of("msg_neutral_town_invaded",
@@ -84,7 +88,14 @@ public class InvadeTown {
 							invadingNation.getName()
 					));
 		}
-    }
+		if(nationOfInvadedTown != null && nationOfInvadedTown.getNumTowns() == 0) {
+			Messaging.sendGlobalMessage(
+					Translatable.of("msg_siege_war_nation_defeated",nationOfInvadedTown.getName()));
+		}
+
+		//Occupy town
+		TownOccupationController.setTownOccupation(targetTown, invadingNation);
+	}
 
 	private static void allowInvasionOrThrow(Player player, Nation residentsNation, Town targetTown, Siege siege) throws TownyException {
 		final Translator translator = Translator.locale(Translation.getLocale(player));

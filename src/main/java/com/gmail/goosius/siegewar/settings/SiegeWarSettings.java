@@ -643,4 +643,9 @@ public class SiegeWarSettings {
 	public static boolean isGlowingEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_GLOWING);
 	}
+
+	public static boolean getWarSiegeRefundInitialNationCostOnDelete() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_REFUND_INITIAL_NATION_COST_ON_DELETE);
+	}
+
 }

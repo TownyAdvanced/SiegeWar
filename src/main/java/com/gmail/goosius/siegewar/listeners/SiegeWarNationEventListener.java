@@ -6,7 +6,9 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.event.DeleteNationEvent;
 import com.palmergames.bukkit.towny.event.NationPreAddTownEvent;
 import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
@@ -15,6 +17,7 @@ import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
 import com.palmergames.bukkit.towny.event.nation.toggle.NationToggleNeutralEvent;
 import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.event.EventHandler;
@@ -83,8 +86,12 @@ public class SiegeWarNationEventListener implements Listener {
 			}
 		}
 
-
-		//TODO - Add in nation refund
+		//Award nation refund
+		event.getNationUUID();
+		Resident king = event.getLeader();
+		if (king != null) {
+			SiegeWarMoneyUtil.makeNationRefundAvailable(king);
+		}
 	}
 
 	@EventHandler
