@@ -9,6 +9,7 @@ import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

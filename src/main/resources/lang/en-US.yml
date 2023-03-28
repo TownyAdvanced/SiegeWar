@@ -585,19 +585,28 @@ msg_peaceful_occupation_taxes_paid_totaling: "Your nation received a peaceful oc
 
 #Added/Updated in 0.51
 #Invasion
+
 msg_err_cannot_invade_town_already_invaded: '&cYour nation has already captured the town.'
 msg_neutral_town_invaded: '&b%s has been invaded and captured by %s!'
 msg_nation_town_invaded: '&b%s, belonging to %s, has been invaded and captured by %s!'
+
 #Subverting
+
 msg_peaceful_town_subverted: "&b%s has been peacefully subverted and captured by %s."
 msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already owns it."
+
 #Surrendering Defence
+
 msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The former occupying army, belonging to %s, has admitted defeat and retreated from the town.'
+
 #Revolting
+
 msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying nation of %s, and declared themselves free to choose their own destiny. A REVOLT SIEGE has begun!'
 msg_err_neutral_towns_cannot_revolt: '&cPeaceful towns cannot revolt'
 msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation status of %s to %s.'
+
 #Nation Refund
+
 nation_help_refund : "Claim any nation refund which is available to you."
 msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw nation claimrefund'"
 msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."

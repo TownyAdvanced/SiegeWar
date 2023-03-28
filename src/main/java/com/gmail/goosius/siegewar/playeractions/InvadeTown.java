@@ -4,7 +4,6 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.events.PreInvadeEvent;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
@@ -15,7 +14,12 @@ import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.*;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.Translator;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -54,7 +58,7 @@ public class InvadeTown {
 	 * @param siege the siege
 	 */
     public static void invadeTown(Nation invadingNation, Town targetTown, Siege siege)  {
-		Nation nationOfInvadedTown = targetTown.hasNation() ? targetTown.getNationOrNull() : null;
+		Nation nationOfInvadedTown = targetTown.getNationOrNull();
 
 		/*
 		 * Messaging

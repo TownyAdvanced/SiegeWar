@@ -267,12 +267,13 @@ public class SiegeWar extends JavaPlugin {
 	 * that town will be transferred to that occupying nation.
 	 */
 	public static void migrateTownOccupationData() {
-		SiegeWar.info("Migrating Town Occupation Data...");
+		boolean success = false;
 		for(Town town: new ArrayList<>(TownyAPI.getInstance().getTowns())) {
 			if(TownMetaDataController.hasLegacyOccupierUUID(town)) {
 				Nation occupyingNation = TownyAPI.getInstance().getNation(TownMetaDataController.getLegacyOccupierUUID(town));
 				if(occupyingNation != null) {
 					TownOccupationController.setTownOccupation(town, occupyingNation);
+					success = true;
 				}
 				TownMetaDataController.removeLegacyOccupierUUID(town);
 			}
@@ -280,5 +281,7 @@ public class SiegeWar extends JavaPlugin {
 				TownMetaDataController.removeLegacyPrePeacefulOccupierUUID(town);
 			}
 		}
+		if (success)
+			SiegeWar.info("Old Town Occupation Data migrated...");
 	}
 }

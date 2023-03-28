@@ -1,5 +1,11 @@
 package com.gmail.goosius.siegewar.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.BattleSession;
@@ -13,12 +19,6 @@ import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translation;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class BossBarUtil {
 
 	private static Map<Player, BossBar> bossBarBannerCapMap = new HashMap<>(); 

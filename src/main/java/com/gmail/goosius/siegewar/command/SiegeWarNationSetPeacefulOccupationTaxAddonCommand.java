@@ -1,5 +1,13 @@
 package com.gmail.goosius.siegewar.command;
 
+import java.util.Collections;
+import java.util.List;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
+import org.bukkit.entity.Player;
+
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -14,14 +22,6 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.MathUtil;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
-import org.bukkit.entity.Player;
-
-import java.util.Collections;
-import java.util.List;
-
 public class SiegeWarNationSetPeacefulOccupationTaxAddonCommand extends BaseCommand implements TabExecutor {
 
 	public SiegeWarNationSetPeacefulOccupationTaxAddonCommand() {
