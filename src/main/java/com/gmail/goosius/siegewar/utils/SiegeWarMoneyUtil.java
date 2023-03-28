@@ -278,4 +278,51 @@ public class SiegeWarMoneyUtil {
 	private static String getMoney(double amount) {
 		return TownyEconomyHandler.getFormattedBalance(amount);
 	}
+
+	public static void makeNationRefundAvailable(Resident king) {
+		//Refund some of the initial setup cost to the king
+		if (TownySettings.isUsingEconomy()
+			&& SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() > 0) {
+
+			//Make the nation refund available
+			//The player can later do "/n claim refund" to receive the money
+			int amountToRefund = (int)(TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
+			ResidentMetaDataController.addNationRefundAmount(king, amountToRefund);
+
+			//If king is online, send message
+			if(king.isOnline()) {
+				Messaging.sendMsg(
+						king.getPlayer(),
+						String.format(
+								Translation.of("msg_siege_war_nation_refund_available"),
+								TownyEconomyHandler.getFormattedBalance(amountToRefund)));
+			}
+		}
+	}
+
+	/**
+	 * If the player is due a nation refund, pays the refund to the player
+	 *
+	 * @param player claiming the nation refund.
+	 * @throws Exception when payment cannot be made for various reasons.
+	 */
+	public static void claimNationRefund(Player player) throws Exception {
+		if (!TownySettings.isUsingEconomy()
+				|| SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() == 0) {
+			throw new TownyException(Translation.of("msg_err_command_disable"));
+		}
+		Resident formerKing = TownyUniverse.getInstance().getResident(player.getUniqueId());
+		if (formerKing == null)
+			throw new TownyException(Translation.of("msg_err_not_registered_1", player.getName()));
+
+		int refundAmount = ResidentMetaDataController.getNationRefundAmount(formerKing);
+		if(refundAmount != 0) {
+			formerKing.getAccount().deposit(refundAmount, "Nation Refund");
+			ResidentMetaDataController.setNationRefundAmount(formerKing, 0);
+			Messaging.sendMsg(player, Translation.of("msg_siege_war_nation_refund_claimed", TownyEconomyHandler.getFormattedBalance(refundAmount)));
+		} else {
+			throw new TownyException(Translation.of("msg_err_siege_war_nation_refund_unavailable"));
+		}
+	}
+
 }

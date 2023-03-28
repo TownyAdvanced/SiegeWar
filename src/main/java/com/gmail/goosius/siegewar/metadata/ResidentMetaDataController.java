@@ -24,6 +24,7 @@ public class ResidentMetaDataController {
 	private SiegeWar plugin;
 	private static IntegerDataField plunderAmount = new IntegerDataField("siegewar_plunder", 0); //Field no longer in use
 	private static IntegerDataField militarySalaryAmount = new IntegerDataField("siegewar_militarysalary", 0);
+	private static IntegerDataField nationRefund = new IntegerDataField("siegewar_nationrefund", 0, "Nation Refund");
 	/*
 	 * A list of battle sessions the player was recently involved in
 	 * Sessions are identified by their start times (in millis)
@@ -151,5 +152,39 @@ public class ResidentMetaDataController {
 			MetaDataUtil.setString(resident, sdf, value, true);
 		else
 			resident.addMetaData(new StringDataField("siegewar_recentbattlesessions", value));
+	}
+
+	public static int getNationRefundAmount(Resident resident) {
+		int nationRefundAmount = 0;
+		IntegerDataField idf = (IntegerDataField) nationRefund.clone();
+		if (resident.hasMeta(idf.getKey())) {
+			CustomDataField<?> cdf = resident.getMetadata(idf.getKey());
+			if (cdf instanceof IntegerDataField) {
+				IntegerDataField amount = (IntegerDataField) cdf;
+				nationRefundAmount = amount.getValue();
+			}
+		}
+		return nationRefundAmount;
+	}
+
+	public static void addNationRefundAmount(Resident resident, int nationRefundAmount) {
+		IntegerDataField idf = (IntegerDataField) nationRefund.clone();
+		if (resident.hasMeta(idf.getKey())) {
+			int existingRefundAmount = getNationRefundAmount(resident);
+			int updatedRefundAmount = existingRefundAmount + nationRefundAmount;
+			resident.removeMetaData(idf);
+			resident.addMetaData(new IntegerDataField("siegewar_nationrefund", updatedRefundAmount, "Nation Refund"));
+		} else {
+			setNationRefundAmount(resident, nationRefundAmount);
+		}
+	}
+
+	public static void setNationRefundAmount(Resident resident, int nationRefundAmount) {
+		IntegerDataField idf = (IntegerDataField) nationRefund.clone();
+		if (resident.hasMeta(idf.getKey())) {
+			resident.removeMetaData(idf);
+		} else {
+			resident.addMetaData(new IntegerDataField("siegewar_nationrefund", nationRefundAmount, "Nation Refund"));
+		}
 	}
 }

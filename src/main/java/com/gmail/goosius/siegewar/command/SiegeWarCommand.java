@@ -42,7 +42,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
 	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "guide", "preference", "version", "nextsession");
 	
-	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "removeoccupation", "transferoccupation");
+	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "claimrefund", "removeoccupation", "transferoccupation");
 
 	private static final List<String> siegewarTownTabCompletes = Arrays.asList("inviteoccupation");
 
@@ -96,6 +96,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw collect", "", Translatable.of("nation_help_11").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw town", "inviteoccupation [nation]", Translatable.of("nation_help_16").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "claimrefund [amount]", Translatable.of("nation_help_refund").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "removeoccupation [town]", Translatable.of("nation_help_14").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "transferoccupation [town] [nation]", Translatable.of("nation_help_15").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
@@ -108,6 +109,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "removeoccupation [town]", Translatable.of("nation_help_14").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "transferoccupation [town] [nation]", Translatable.of("nation_help_15").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "claimrefund [amount]", Translatable.of("nation_help_refund").forLocale(sender)));
 	}
 
 	private void showTownHelp(CommandSender sender) {
@@ -309,6 +311,18 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 				} catch (TownyException te) {
 					Messaging.sendErrorMsg(player, te.getMessage());
+				}
+				break;
+
+			case "claimrefund":
+				try {
+					if (args.length != 1) {
+						showNationHelp(player);
+						return;
+					}
+					SiegeWarMoneyUtil.claimNationRefund(player);
+				} catch (Exception e) {
+					player.sendMessage(e.getMessage());
 				}
 				break;
 
