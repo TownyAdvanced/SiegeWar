@@ -45,7 +45,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setoccupied");
 	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost");
 	private static final List<String> siegewaradminBattleSessionTabCompletes = Arrays.asList("end","start");
-	private static final List<String> siegewarglobalDominationAwardsTabCompletes = Arrays.asList("giveglobal");
 	private static final List<String> siegeDurationTabCompletes = Arrays.asList("addhours");
 
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
@@ -130,9 +129,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		case "battlesession":
 			if (args.length == 2)
 				return NameUtil.filterByStart(siegewaradminBattleSessionTabCompletes, args[1]);
-		case "dominationawards":
-			if (args.length == 2)
-				return NameUtil.filterByStart(siegewarglobalDominationAwardsTabCompletes, args[1]);
 		default:
 			if (args.length == 1)
 				return NameUtil.filterByStart(siegewaradminTabCompletes, args[0]);

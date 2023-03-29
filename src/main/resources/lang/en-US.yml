@@ -471,52 +471,6 @@ warn_nation_had_ally_removed: 'Warning: %s was removed as an ally from nation %s
 #Message shown to the former allied nation's players when they have been removed as an ally.
 warn_your_nation_has_been_removed_as_an_ally: 'Warning: %s has removed your nation as an ally, while some of your nation members are located inside of siegezones, at %s.'
 
-msg_global_domination_awards_header: '&bDomination Awards Granted!'
-msg_global_domination_awards_line: '&b%d - %s: %s + %s Artefacts.'
-msg_err_nation_domination_awards_no_capital: '&cNo capital town in which to deposit Artefacts.' 
-msg_err_nation_domination_awards_no_capital_homeblock: '&cNo capital homeblock in which to deposit Artefacts.' 
-msg_err_nation_domination_awards_not_enough_chests: '&cNot enough chests in homeblock to deposit Artefacts.'
-
-#Added in 0.46
-artefact_lore_summary_line: '&5Artefact Tier %d'
-artefact_lore_warning_line: '&cWARNING: Unstable after %d days old.'
-artefact_name_tree_feller: 'Tree Feller'
-artefact_name_ground_digger: 'Ground Digger'
-artefact_name_cobble_eater: 'Cobble Eater'
-artefact_name_sword_of_searing: 'Sword of Searing'
-artefact_name_potion_of_enhanced_regeneration: 'Potion of Enhanced Regeneration'
-artefact_name_potion_of_enhanced_strength: 'Potion of Enhanced Strength'
-artefact_name_potion_of_enhanced_absorbtion: 'Potion of Enhanced Absorbtion'
-artefact_name_potion_of_true_invisibility: 'Potion of True Invisibility'
-artefact_name_splash_potion_of_enhanced_regeneration: 'Splash Potion of Enhanced Regeneration'
-artefact_name_splash_potion_of_enhanced_strength: 'Splash Potion of Enhanced Strength'
-artefact_name_splash_potion_of_enhanced_absorbtion: 'Splash Potion of Enhanced Absorbtion'
-artefact_name_arrow_of_enhanced_hunger: 'Arrow of Enhanced Hunger'
-artefact_name_potion_of_great_resistance: 'Potion of Great Resistance'
-artefact_name_arrow_of_knockup: 'Arrow of Knockup'
-artefact_name_super_spiky_helmet: 'Super Spiky Helmet'
-artefact_name_bountiful_pickaxe: 'Bountiful Pickaxe'
-artefact_name_sword_of_immolation: 'Sword of Immolation'
-artefact_name_axe_of_the_berserker: 'Axe of the Berserker'
-artefact_name_bow_of_displacement: 'Bow of Displacement'
-artefact_name_arrow_of_doom: 'Arrow of Doom'
-artefact_name_vorpal_sword: 'Vorpal Sword'
-artefact_name_chicago_typewriter: 'Chicago Typewriter'
-artefact_name_trident_of_zeus: 'Trident of Zeus'
-artefact_name_trident_of_poseidon: 'Trident of Poseidon'
-artefact_name_chestplate_of_mars: 'Chestplate of Mars'
-artefact_custom_effect_lore_lightning_strike_on_hit: '&7Lightning Strike on Hit'
-
-#Added in 0.47
-artefact_name_antimatter_potion: 'Antimatter Potion'
-artefact_custom_effect_lore_delayed_massive_self_explosion_on_consume: '&7Drinker Explodes in 7 seconds'
-artefact_name_splash_potion_of_true_invisibility: 'Splash Potion of True Invisibility'
-artefact_name_poison_blade: 'Poison Blade'
-artefact_custom_effect_lore_poison_on_hit: '&7Poison on Hit'
-artefact_name_blade_of_the_viper: 'Blade of the Viper'
-artefact_custom_effect_lore_strong_poison_on_hit: '&7Strong Poison on Hit'
-artefact_custom_effect_lore_slow_on_hit: '&7Slowness on Hit'
-
 #Added in 0.48
 
 #Shown when an admin adds hours using /swa siegeduration addhours

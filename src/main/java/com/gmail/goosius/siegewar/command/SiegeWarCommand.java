@@ -36,7 +36,7 @@ import java.util.*;
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
 	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "guide", "preference", "version", "nextsession");
-	
+
 	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "claimrefund");
 
 	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("beacons", "bossbars");
