@@ -75,7 +75,8 @@ public class AbandonAttack {
 		if (timeUntilAbandonConfirmation > 0) {
 			message += Translation.of("msg_pending_defender_victory", TimeMgmt.getFormattedTimeValue(timeUntilAbandonConfirmation));
 		} else {
-			message += Translation.of("msg_immediate_defender_victory");
+			String key2 = String.format("msg_%s_siege_defender_win_result", siege.getSiegeType().toString().toLowerCase());
+			message += Translation.of(key2);
 		}
 
 		return message;

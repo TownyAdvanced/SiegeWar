@@ -3,7 +3,7 @@ package com.gmail.goosius.siegewar.timeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
 
 /**
  * This class is responsible for processing timed defender wins
@@ -18,23 +18,26 @@ public class DefenderTimedWin {
         DefenderWin.defenderWin(siege, SiegeStatus.DEFENDER_WIN);
     }
 
-    private static Translatable[] getTimedDefenderWinMessage(Siege siege) {
+    private static String getTimedDefenderWinMessage(Siege siege) {
         String key = String.format("msg_%s_siege_timed_defender_win", siege.getSiegeType().toString().toLowerCase());
-        Translatable[] message =  new Translatable[2];
+        String message = "";
         switch (siege.getSiegeType()) {
             case CONQUEST:
-                message[0] = Translatable.of(key,
+                message = Translation.of(key,
                         siege.getTown().getName(),
                         siege.getDefender().getName(),
                         siege.getAttacker().getName());
                 break;
             case REVOLT:
-                message[0] = Translatable.of(key,
+                message = Translation.of(key,
                         siege.getTown().getName(),
                         siege.getDefender().getName());
                 break;
         }
-        message[1] = Translatable.of("msg_immediate_defender_victory");
+
+        String key2 = String.format("msg_%s_siege_defender_win_result", siege.getSiegeType().toString().toLowerCase());
+        message += Translation.of(key2);
+
         return message;
     }
 
