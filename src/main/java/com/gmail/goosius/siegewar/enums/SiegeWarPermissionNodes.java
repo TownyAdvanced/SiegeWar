@@ -59,7 +59,6 @@ public enum SiegeWarPermissionNodes {
 	SIEGEWAR_COMMAND_SIEGEWARADMIN("siegewar.command.siegewaradmin.*"),
 		SIEGEWAR_COMMAND_SIEGEWARADMIN_SIEGEIMMUNITY("siegewar.command.siegewaradmin.siegeimmunity"),
 		SIEGEWAR_COMMAND_SIEGEWARADMIN_REVOLTIMMUNITY("siegewar.command.siegewaradmin.revoltimmunity"),
-		SIEGEWAR_COMMAND_SIEGEWARADMIN_DOMINATIONAWARDS("siegewar.command.siegewaradmin.dominationawards"),
 		SIEGEWAR_COMMAND_SIEGEWARADMIN_DURATION("siegewar.command.siegewaradmin.siegeduration"),
 		SIEGEWAR_COMMAND_SIEGEWARADMIN_RELOAD("siegewar.command.siegewaradmin.reload"),
 		SIEGEWAR_COMMAND_SIEGEWARADMIN_SIEGE("siegewar.command.siegewaradmin.siege"),

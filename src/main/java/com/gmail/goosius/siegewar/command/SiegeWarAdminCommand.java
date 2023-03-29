@@ -13,7 +13,6 @@ import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDominationAwardsUtil;
 import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -39,7 +38,7 @@ import java.util.List;
 
 public class SiegeWarAdminCommand implements TabExecutor {
 
-	private static final List<String> siegewaradminTabCompletes = Arrays.asList("dominationawards","battlesession","install","nation","reload","revoltimmunity","siege","siegeimmunity","town","siegeduration");
+	private static final List<String> siegewaradminTabCompletes = Arrays.asList("battlesession","install","nation","reload","revoltimmunity","siege","siegeimmunity","town","siegeduration");
 	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
@@ -183,9 +182,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				break;
 			case "battlesession":
 				parseSiegeWarBattleSessionCommand(sender, StringMgmt.remFirstArg(args));
-				break;
-			case "dominationawards":
-				parseSiegeWarGlobalDominationAwardsCommand(sender, StringMgmt.remFirstArg(args));
 				break;
 
 			/*
@@ -404,18 +400,12 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownsgained [amount]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] settownslost [amount]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "battlesession [start/end]", ""));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "dominationawards giveglobal", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siegeduration addhours [1,2,3,4,5...]", "Add a number of hours to every siege."));
 	}
 
 	private void showBattleSessionHelp(CommandSender sender) {
 		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/swa battlesession"));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "battlesession [start/end]", ""));
-	}
-
-	private void showGlobalDominationAwardsHelp(CommandSender sender) {
-		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/swa dominationawards"));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "dominationawards giveglobal", ""));
 	}
 	
 	private void showSiegeImmunityHelp(CommandSender sender) {
@@ -487,19 +477,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			Messaging.sendMsg(sender, Translatable.of("msg_battle_session_force_end"));
 		} else {
 			showBattleSessionHelp(sender);
-		}
-	}
-
-	private void parseSiegeWarGlobalDominationAwardsCommand(CommandSender sender, String[] args) {
-		if (args.length == 0) {
-			showGlobalDominationAwardsHelp(sender);
-		} else if (args[0].equalsIgnoreCase("giveglobal")) {
-			//Add one domination record to each nation (otherwise the grant will crash if there are none)
-			SiegeWarDominationAwardsUtil.addDominationRecords();
-			//Grant awards
-			SiegeWarDominationAwardsUtil.grantGlobalDominationAwardsNow(new ArrayList<>(TownyUniverse.getInstance().getNations()));
-		} else {
-			showGlobalDominationAwardsHelp(sender);
 		}
 	}
 
