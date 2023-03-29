@@ -20,24 +20,24 @@ public class DefenderTimedWin {
         DefenderWin.defenderWin(siege, SiegeStatus.DEFENDER_WIN);
     }
 
-    private static Translatable[] getTimedDefenderWinMessage(Siege siege) {
+    private static Translatable getTimedDefenderWinMessage(Siege siege) {
         String key = String.format("msg_%s_siege_timed_defender_win", siege.getSiegeType().toString().toLowerCase(Locale.ROOT));
-        Translatable[] message =  new Translatable[2];
+        Translatable message = null;
         switch (siege.getSiegeType()) {
             case CONQUEST:
-                message[0] = Translatable.of(key,
+                message = Translatable.of(key,
                         siege.getTown().getName(),
                         siege.getDefender().getName(),
                         siege.getAttacker().getName());
                 break;
             case REVOLT:
-                message[0] = Translatable.of(key,
+                message = Translatable.of(key,
                         siege.getTown().getName(),
                         siege.getDefender().getName());
                 break;
         }
         String key2 = String.format("msg_%s_siege_defender_win_result", siege.getSiegeType().toString().toLowerCase(Locale.ROOT));
-        message[1] = Translatable.of(key2);
+        message.append(Translatable.of(key2));
         return message;
     }
 
