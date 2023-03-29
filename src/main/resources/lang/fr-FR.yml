@@ -507,7 +507,7 @@ msg_plunder_debt_payed_bankrupt: "Your town paid the daily plunder debt of %s by
 #Shown when a town cannot pay their daily plunder debt.
 msg_plunder_debt_cannot_be_payed: "The Town %s could not pay their daily plunder debt and has been removed!"
 #Shown in the town status screen when a town has plunder debt.
-status_town_plunder_debt: "Plunder Debt Owing: %s, %s daily payments of %s remain."
+status_town_plunder_debt: "&2Plunder Debt Owing: %s, %s daily payments of %s remain."
 #Shown when the nation sets their peacefuloccupationtax
 msg_peaceful_occupation_tax_set: "Your nation has set a daily peaceful occupation tax of %s."
 #Shown when a town pays their nation peaceful occupation tax.
@@ -522,3 +522,8 @@ status_nation_peaceful_occupation_tax: "Peaceful Occupation Tax: %s"
 msg_err_peaceful_occupation_tax_cannot_be_more_than: "Nations cannot set a peaceful occupation tax greater than %s."
 #Shown to nation when they are paid their peaceful occupation taxes.
 msg_peaceful_occupation_taxes_paid_totaling: "Your nation received a peaceful occupation taxes totalling: %s."
+#Nation Refund
+nation_help_refund: "Claim any nation refund which is available to you."
+msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw nation claimrefund'"
+msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
+msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
