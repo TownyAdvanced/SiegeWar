@@ -141,8 +141,6 @@ public class SiegeWarBattleSessionUtil {
 				siege.clearBannerControlSessions();
 				siege.setAttackerBattlePoints(0);
 				siege.setDefenderBattlePoints(0);
-				siege.setWallBreachPoints(0);
-				siege.getWallBreachBonusAwardees().clear();
 				siege.setNumberOfBannerControlReversals(0);
 				siege.clearPlayersWhoWereInTheSiegeZone();
 				siege.clearPlayersWhoWereInTheBesiegedTown();

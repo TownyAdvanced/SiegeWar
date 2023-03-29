@@ -39,8 +39,6 @@ public class CannonsListener implements Listener {
 			&& SiegeWar.isCannonsPluginInstalled()			
 			&& SiegeWarSettings.getWarSiegeEnabled()
 			&& TownyAPI.getInstance().getTownyWorld(event.getCannon().getLocation().getWorld()).isWarAllowed()
-			&& SiegeWarSettings.isWallBreachingEnabled()
-			&& SiegeWarSettings.isWallBreachingCannonsIntegrationEnabled() 
 			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getCannon().getLocation())) {
 
 			//Ensure a battle session is active
@@ -69,8 +67,6 @@ public class CannonsListener implements Listener {
 			} else if(CannonsIntegration.canPlayerGenerateBreachPointsByCannon(gunnerPlayer, siege)) {
 				//If the player has not already fired this tick, breach points are generated.
 				if(!siege.getRecentTownFriendlyCannonFirers().contains(gunnerPlayer)) {
-					double wallBreachPointsIncrease = SiegeWarSettings.getWallBreachingCannonFirePointGenerationRate() * siege.getTown().getTownBlocks().size();				
-        			siege.increaseWallBreachPointsToCap(wallBreachPointsIncrease);
 					siege.addRecentTownFriendlyCannonFirer(gunnerPlayer);
 				}
 				return;	//Player can fire cannon
@@ -95,8 +91,6 @@ public class CannonsListener implements Listener {
 			&& SiegeWar.isCannonsPluginInstalled()	
 			&& SiegeWarSettings.getWarSiegeEnabled()
 			&& TownyAPI.getInstance().getTownyWorld(event.getCannon().getLocation().getWorld()).isWarAllowed()
-			&& SiegeWarSettings.isWallBreachingEnabled()
-			&& SiegeWarSettings.isWallBreachingCannonsIntegrationEnabled()
 			&& BattleSession.getBattleSession().isActive()
 			&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getCannon().getLocation())) {
 				event.setCancelled(true);
