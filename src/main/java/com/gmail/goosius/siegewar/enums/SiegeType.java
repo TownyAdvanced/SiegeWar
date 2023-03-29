@@ -1,5 +1,7 @@
 package com.gmail.goosius.siegewar.enums;
 
+import java.util.Locale;
+
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 
@@ -32,5 +34,9 @@ public enum SiegeType {
             default:
                 throw new RuntimeException("Unrecognized enum name");
         }
+    }
+    
+    public String toLowerCase() {
+    	return this.toString().toLowerCase(Locale.ROOT);
     }
 }

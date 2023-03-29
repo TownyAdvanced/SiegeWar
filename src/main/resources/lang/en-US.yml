@@ -265,20 +265,8 @@ siege_status_pending_defender_surrender: 'Pending Defender Surrender'
 status_nation_offensive_sieges: '&2Offensive Sieges &a[%s]&2: &f'
 status_nation_defensive_sieges: '&2Defensive Sieges &a[%s]&2: &f'
 
-# Surrendering defences
-msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has surrendered to the army of %s.'
-
-# Abandoning attacks
-msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > The army of %s has abandoned its attack on the town.'
-msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The rebel army has abandoned its revolt against %s.'
 msg_err_town_cannot_end_siege_as_no_siege: '&cThe nearby town has no siege. Abandon/Surrender not possible.'
 msg_err_town_cannot_end_siege_as_finished: '&cThe siege is finished or scheduled to finish. Abandon/Surrender not possible.'
-
-# Timed wins
-msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has defeated the defending army of %s. The town now stands open for invasion and/or plunder.'
-msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking rebel army has driven away the former army of occupation, belonging to %s.'
-msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has defeated the army of %s, and driven the attackers off.'
-msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The occupying army of %s has successfully crushed the rebellion. The town now stands open for invasion and/or plunder.'
 
 # Generic Victory messages
 msg_immediate_attacker_victory: " The attackers are victorious!"
@@ -528,10 +516,6 @@ msg_nation_town_invaded: '&b%s, belonging to %s, has been captured by %s!'
 msg_peaceful_town_subverted: "&b%s has been peacefully subverted and captured by %s."
 msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already owns and occupies it."
 
-#Surrendering Defence
-
-msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The former occupying army, belonging to %s, has admitted defeat and retreated from the town.'
-
 #Revolting
 
 msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying nation of %s, and declared themselves free to choose their own destiny. A REVOLT SIEGE has begun!'
@@ -564,7 +548,31 @@ msg_err_nation_peacefulness_not_supported: '&cSiegeWar does not support nation p
 
 msg_swa_set_invade_success: '&bSet captured to %s for %s.'
 msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation status of %s to %s.'
-msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended"
+msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended."
+
+#Timed wins
+
+msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has defeated the defending army of %s!.'
+msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded!. The attacking rebels have successfully driven off the defending army of %s, which previously occupied the town.'
+msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has defeated the attacking army of %s!.'
+msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The defending army of %s, which previously occupied the town, has successfully crushed the rebellion!.'
+
+#Abandoning Attacks
+
+msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > The attacking army of %s has abandoned its attack on the town!.'
+msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The attacking rebel army has abandoned its revolt against %s!.'
+
+#Surrendering Defence
+
+msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has surrendered to the attacking army of %s!.'
+msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The defending army of %s, which previously occupied the town, has admitted defeat and retreated!.'
+
+#Siege Results
+
+msg_conquest_siege_attacker_win_result: ' The town now stands open for invasion and/or plunder.'
+msg_conquest_siege_defender_win_result: ' The town has been saved!'
+msg_revolt_siege_attacker_win_result: ' The town has won its freedom!'
+msg_revolt_siege_defender_win_result: ' The town now stands open for invasion and/or plunder.'
 
 #Town Screen
 
