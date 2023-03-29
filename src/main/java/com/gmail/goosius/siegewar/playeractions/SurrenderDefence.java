@@ -13,8 +13,6 @@ import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeMgmt;
 
-import java.util.Locale;
-
 import org.bukkit.entity.Player;
 
 /**
@@ -52,7 +50,7 @@ public class SurrenderDefence {
 	}
 
 	private static Translatable getSurrenderMessage(Siege siege, long timeUntilSurrenderConfirmation) {
-		String key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toString().toLowerCase(Locale.ROOT));
+		String key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toLowerCase());
 		Translatable message = null;
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
@@ -70,7 +68,7 @@ public class SurrenderDefence {
 		if(timeUntilSurrenderConfirmation > 0) {
 			message.append(Translatable.of("msg_pending_attacker_victory", TimeMgmt.getFormattedTimeValue(timeUntilSurrenderConfirmation)));
 		} else {
-			String key2 = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toString().toLowerCase());
+			String key2 = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toLowerCase());
 			message.append(Translatable.of(key2));
 		}
 

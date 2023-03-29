@@ -1,7 +1,5 @@
 package com.gmail.goosius.siegewar.timeractions;
 
-import java.util.Locale;
-
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -21,7 +19,7 @@ public class AttackerTimedWin {
     }
 
     private static Translatable getTimedAttackerWinMessage(Siege siege) {
-        String key = String.format("msg_%s_siege_timed_attacker_win", siege.getSiegeType().toString().toLowerCase(Locale.ROOT));
+        String key = String.format("msg_%s_siege_timed_attacker_win", siege.getSiegeType().toLowerCase());
         Translatable message = null;
         switch (siege.getSiegeType()) {
             case CONQUEST:
@@ -36,7 +34,7 @@ public class AttackerTimedWin {
                         siege.getDefender().getName());
                 break;
         }
-        String key2 = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toString().toLowerCase(Locale.ROOT));
+        String key2 = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toLowerCase());
         message.append(Translatable.of(key2));
         return message;
     }
