@@ -104,7 +104,6 @@ public class SiegeController {
 
 	public static boolean loadAll() {
 		try {
-
 			SiegeWar.info("Loading Siege Data...");
 			clearSieges();
 			SiegeWar.info("Loading Siege List Data...");
@@ -126,7 +125,6 @@ public class SiegeController {
 		for (Town town : TownyUniverse.getInstance().getTowns())
 			if (SiegeMetaDataController.hasSiege(town)) {
 				SiegeWar.info("Siege List Data: Found siege in Town " + town.getName());
-
 				newSiege(town);
 
 				setSiege(town, true);
