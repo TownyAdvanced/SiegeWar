@@ -19,7 +19,6 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
 import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
 
-
 public class SiegeWarSafeModeListener implements Listener {
 
 	private final SiegeWar plugin;

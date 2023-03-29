@@ -77,7 +77,7 @@ public class PeacefullySubvertTown {
 		Nation nationOfSubvertedTown = targetTown.getNationOrNull();
 		if(nationOfSubvertedTown != null && nationOfSubvertedTown.getNumTowns() == 1) {
 			Messaging.sendGlobalMessage(
-					Translatable.of("msg_siege_war_nation_defeated",nationOfSubvertedTown.getName()));
+					Translatable.of("msg_siege_war_nation_defeated", nationOfSubvertedTown.getName()));
 		}
 
 		//Occupy town (also saves data)

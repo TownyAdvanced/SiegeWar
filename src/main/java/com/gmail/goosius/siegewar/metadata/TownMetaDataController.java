@@ -27,7 +27,7 @@ public class TownMetaDataController {
 	private static StringDataField failedCampList = new StringDataField("siegewar_failedCampList", "");
 	private static IntegerDataField plunderDebtDays = new IntegerDataField("siegewar_plunderDays", 0);
 	private static DecimalDataField dailyPlunderCost = new DecimalDataField("siegewar_dailyPlunderCost", 0.0);
-
+	
 	//Legacy Metadata
 	private static StringDataField legacyDataOccupyingNationUUID = new StringDataField("siegewar_occupyingNationUUID", "");
 	private static StringDataField legacyDataPrePeacefulOccupierUUID = new StringDataField("siegewar_prePeacefulOccupierUUID", "");
