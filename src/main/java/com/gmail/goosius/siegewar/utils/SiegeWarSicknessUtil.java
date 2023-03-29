@@ -60,7 +60,7 @@ public class SiegeWarSicknessUtil {
                     //Full war sickness
                     int warningDurationInSeconds = SiegeWarSettings.getNonResidentSicknessWarningTimeSeconds();
                     givePlayerFullWarSicknessWithWarning(
-                        player, 
+                        player,
                         resident,
                         siege,
                         warningDurationInSeconds,
@@ -148,6 +148,7 @@ public class SiegeWarSicknessUtil {
             return false;
 
         SiegeSide siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, TownyAPI.getInstance().getResidentTownOrNull(resident), siege);
+
         return siegeSide != SiegeSide.NOBODY;
     }
 
