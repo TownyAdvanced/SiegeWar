@@ -34,7 +34,7 @@ public class SiegeWarSicknessUtil {
      */
     public static void evaluateWarSickness() {
         boolean nonOfficialLimiterEnabled = SiegeWarSettings.getPunishingNonSiegeParticipantsInSiegeZone();
-
+        
         for (Player player : Bukkit.getOnlinePlayers()) {
             Location location = player.getLocation();
 
@@ -60,12 +60,12 @@ public class SiegeWarSicknessUtil {
                     //Full war sickness
                     int warningDurationInSeconds = SiegeWarSettings.getNonResidentSicknessWarningTimeSeconds();
                     givePlayerFullWarSicknessWithWarning(
-                            player,
-                            resident,
-                            siege,
-                            warningDurationInSeconds,
-                            Translatable.of("msg_you_will_get_sickness", warningDurationInSeconds),
-                            Translatable.of("msg_you_received_war_sickness"));
+                        player, 
+                        resident,
+                        siege,
+                        warningDurationInSeconds,
+                        Translatable.of("msg_you_will_get_sickness", warningDurationInSeconds),
+                        Translatable.of("msg_you_received_war_sickness"));
                 }
             }
         }
