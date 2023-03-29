@@ -93,9 +93,6 @@ public class SiegeWarBattleSessionUtil {
 	public static void endBattleSessionForSiege(Siege siege) {
 		try {
 			if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
-				//Record primary government of besieged town
-				if(SiegeWarSettings.isNationSiegeImmunityEnabled())
-					siege.recordPrimaryTownGovernment();
 
 				//If any battle points were gained, calculate a result
 				if(siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0) {

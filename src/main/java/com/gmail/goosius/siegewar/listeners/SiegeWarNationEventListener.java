@@ -148,19 +148,6 @@ public class SiegeWarNationEventListener implements Listener {
 		}
 	}
 
-	/*
-	 * If nation is fighting a home-defence war it cannot add new towns
-	 */
-	@EventHandler
-	public void on(NationPreAddTownEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWarSettings.isNationSiegeImmunityEnabled()
-				&& SiegeController.isNationFightingAHomeDefenceWar(event.getNation())) {
-			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_cannot_recruit"));
-		}
-	}
-
 	/**
 	 * Prevents nations using /n toggle neutral
 	 * - Because in SW this has no effect

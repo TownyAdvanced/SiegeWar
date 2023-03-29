@@ -337,18 +337,6 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_LOWER_HEIGHT_LIMIT);
 	}
 
-	public static boolean isNationSiegeImmunityEnabled() {
-		return Settings.getBoolean(ConfigNodes.NATION_SIEGE_IMMUNITY_ENABLED);
-	}
-
-	public static double getNationSiegeImmunityDurationModifier() {
-		return Settings.getDouble(ConfigNodes.NATION_SIEGE_IMMUNITY_DURATION_MODIFIER);
-	}
-
-	public static double getNationSiegeImmunityHomeTownContributionToAttackCost() {
-		return Settings.getDouble(ConfigNodes.NATION_SIEGE_IMMUNITY_HOME_TOWN_CONTRIBUTION_TO_ATTACK_COST);
-	}
-
 	public static String getBannerControlCaptureMessageColor() {
 		return Settings.getString(ConfigNodes.BANNER_CONTROL_CAPTURE_MESSAGE_COLOR);
 	}
