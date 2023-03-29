@@ -15,8 +15,6 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
-import com.palmergames.util.MathUtil;
-
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -85,11 +83,4 @@ public class StartConquestSiege {
 			throw new TownyException(String.format(translator.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
 	}
 
-	private static boolean townsAreTooFarApart(Nation residentsNation, Town targetTown) throws TownyException {
-		return MathUtil.distance(residentsNation.getCapital().getHomeBlock().getCoord(), targetTown.getHomeBlock().getCoord()) > TownySettings.getNationRequiresProximity();
-	}
-
-	private static boolean townsAreNotInTheSameWorld(Nation nation, Town targetTown) throws TownyException {
-		return !nation.getCapital().getHomeBlock().getWorld().getName().equals(targetTown.getHomeBlock().getWorld().getName());
-	}
 }

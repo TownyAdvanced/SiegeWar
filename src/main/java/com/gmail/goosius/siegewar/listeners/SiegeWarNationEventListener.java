@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -9,7 +8,6 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.event.DeleteNationEvent;
 import com.palmergames.bukkit.towny.event.NationPreAddTownEvent;
 import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
