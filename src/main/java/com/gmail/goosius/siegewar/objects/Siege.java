@@ -413,10 +413,26 @@ public class Siege {
 		return siegeType == SiegeType.CONQUEST;
 	}
 
+	/**
+	 * @deprecated since 2.0.0, Suppression Sieges no longer exist.
+	 */
+	@Deprecated
+	public boolean isSuppressionSiege() {
+		return false;
+	}
+	
 	public boolean isRevoltSiege() {
 		return siegeType == SiegeType.REVOLT;
 	}
-
+	
+	/**
+	 * @deprecated since 2.0.0, Liberation Sieges no longer exist.
+	 */
+	@Deprecated
+	public boolean isLiberationSiege() {
+		return false;
+	}
+	
 	/**
 	 * Record who is the primary government of the town
 	 * If the town has a nation, nation uuid will be recorded,
