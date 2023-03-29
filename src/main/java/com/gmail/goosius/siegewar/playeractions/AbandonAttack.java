@@ -15,6 +15,8 @@ import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
 
+import java.util.Locale;
+
 /**
  * This class is responsible for processing requests to Abandon siege attacks
  *
@@ -75,7 +77,7 @@ public class AbandonAttack {
 		if (timeUntilAbandonConfirmation > 0) {
 			message += Translation.of("msg_pending_defender_victory", TimeMgmt.getFormattedTimeValue(timeUntilAbandonConfirmation));
 		} else {
-			String key2 = String.format("msg_%s_siege_defender_win_result", siege.getSiegeType().toString().toLowerCase());
+			String key2 = String.format("msg_%s_siege_defender_win_result", siege.getSiegeType().toString().toLowerCase(Locale.ROOT));
 			message += Translation.of(key2);
 		}
 
