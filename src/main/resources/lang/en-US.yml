@@ -564,3 +564,7 @@ msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The former occupyin
 msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying nation of %s, and declared themselves free to choose their own destiny. A REVOLT SIEGE has begun!'
 msg_err_neutral_towns_cannot_revolt: '&cPeaceful towns cannot revolt'
 msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation status of %s to %s.'
+
+#swa
+
+msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended"
