@@ -569,6 +569,7 @@ msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has su
 msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The defending army of %s, which previously occupied the town, has admitted defeat and retreated!.'
 
 #Siege Results
+
 msg_conquest_siege_attacker_win_result: ' The town now stands open for invasion and/or plunder.'
 msg_conquest_siege_defender_win_result: ' The town has been saved!'
 msg_revolt_siege_attacker_win_result: ' The town has won its freedom!'
