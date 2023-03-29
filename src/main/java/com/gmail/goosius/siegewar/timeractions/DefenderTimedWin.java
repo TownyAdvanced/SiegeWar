@@ -1,9 +1,11 @@
 package com.gmail.goosius.siegewar.timeractions;
 
+import java.util.Locale;
+
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.Translatable;
 
 /**
  * This class is responsible for processing timed defender wins
@@ -18,26 +20,24 @@ public class DefenderTimedWin {
         DefenderWin.defenderWin(siege, SiegeStatus.DEFENDER_WIN);
     }
 
-    private static String getTimedDefenderWinMessage(Siege siege) {
-        String key = String.format("msg_%s_siege_timed_defender_win", siege.getSiegeType().toString().toLowerCase());
-        String message = "";
+    private static Translatable[] getTimedDefenderWinMessage(Siege siege) {
+        String key = String.format("msg_%s_siege_timed_defender_win", siege.getSiegeType().toString().toLowerCase(Locale.ROOT));
+        Translatable[] message =  new Translatable[2];
         switch (siege.getSiegeType()) {
             case CONQUEST:
-                message = Translation.of(key,
+                message[0] = Translatable.of(key,
                         siege.getTown().getName(),
                         siege.getDefender().getName(),
                         siege.getAttacker().getName());
                 break;
             case REVOLT:
-                message = Translation.of(key,
+                message[0] = Translatable.of(key,
                         siege.getTown().getName(),
                         siege.getDefender().getName());
                 break;
         }
-
-        String key2 = String.format("msg_%s_siege_defender_win_result", siege.getSiegeType().toString().toLowerCase());
-        message += Translation.of(key2);
-
+        String key2 = String.format("msg_%s_siege_defender_win_result", siege.getSiegeType().toString().toLowerCase(Locale.ROOT));
+        message[1] = Translatable.of(key2);
         return message;
     }
 
