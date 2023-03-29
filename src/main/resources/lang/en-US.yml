@@ -540,9 +540,9 @@ msg_err_neutral_towns_cannot_revolt: '&cPeaceful towns cannot revolt'
 
 #swa
 
-msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended."
 msg_swa_set_invade_success: '&bSet captured to %s for %s.'
 msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation status of %s to %s.'
+msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended."
 
 #Timed wins
 
