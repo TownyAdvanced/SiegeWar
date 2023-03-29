@@ -9,7 +9,6 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
-import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -104,14 +103,11 @@ public class PeacefullySubvertTown {
 		if(TownOccupationController.isTownOccupiedByNation(residentsNation, targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_subvert_town_already_occupied"));
 
-		if(SiegeWarDistanceUtil.isTownTooFarFromNationCapitalByWorld(residentsNation, targetTown))
-			throw new TownyException(translator.of("msg_err_nation_homeblock_in_another_world"));
+		SiegeWarDistanceUtil.throwIfTownIsTooFarFromNationCapitalByWorld(residentsNation, targetTown);
 
-		if(SiegeWarDistanceUtil.isTownTooFarFromNationCapitalByDistance(residentsNation, targetTown))
-			throw new TownyException(String.format(translator.of("msg_err_town_not_close_enough_to_nation"), targetTown.getName()));
+		SiegeWarDistanceUtil.throwIfTownIsTooFarFromNationCapitalByDistance(residentsNation, targetTown);
 
-		if(SiegeWarNationUtil.doesNationHaveTooManyTowns(residentsNation))
-			throw new TownyException(String.format(translator.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
+		SiegeWarNationUtil.throwIfNationHasTooManyTowns(residentsNation);
 		
 		verifyThatNationHasEnoughTownyInfluenceToSubvertTown(residentsNation, targetTown);
 	}
