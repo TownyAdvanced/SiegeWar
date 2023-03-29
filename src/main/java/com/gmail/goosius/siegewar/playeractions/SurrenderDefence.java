@@ -68,7 +68,8 @@ public class SurrenderDefence {
 		if(timeUntilSurrenderConfirmation > 0) {
 			message += Translation.of("msg_pending_attacker_victory", TimeMgmt.getFormattedTimeValue(timeUntilSurrenderConfirmation));
 		} else {
-			message += Translation.of("msg_immediate_attacker_victory");
+			String key2 = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toString().toLowerCase());
+			message += Translation.of(key2);
 		}
 
 		return message;

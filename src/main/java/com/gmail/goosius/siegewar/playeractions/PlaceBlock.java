@@ -256,8 +256,8 @@ public class PlaceBlock {
 				if (residentsNation != null && residentsNation == siege.getAttacker()) {
 					//Attacker
 					AbandonAttack.processAbandonAttackRequest(player, siege);
-				} else if (residentsTown == nearbyTown) {
-					//Resident of town
+				} else if (residentsNation != null && siege.getDefender() == residentsNation) {
+					//Defending former occupier
 					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 				} else {
 					throw new TownyException(translator.of("msg_err_action_disable"));
