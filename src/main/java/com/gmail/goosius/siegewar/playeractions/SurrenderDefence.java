@@ -11,7 +11,6 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.confirmations.Confirmation;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
 
@@ -49,26 +48,27 @@ public class SurrenderDefence {
 		}
 	}
 
-	private static String getSurrenderMessage(Siege siege, long timeUntilSurrenderConfirmation) {
-		String key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toString().toLowerCase());
-		String message = "";
+	private static Translatable getSurrenderMessage(Siege siege, long timeUntilSurrenderConfirmation) {
+		String key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toLowerCase());
+		Translatable message = null;
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
-				message = Translation.of(key,
+				message = Translatable.of(key,
 						siege.getTown().getName(),
 						siege.getAttacker().getName());
 				break;
 			case REVOLT:
-				message = Translation.of(key,
+				message = Translatable.of(key,
 						siege.getTown().getName(),
 						siege.getDefender().getName());
 				break;
 		}
 
 		if(timeUntilSurrenderConfirmation > 0) {
-			message += Translation.of("msg_pending_attacker_victory", TimeMgmt.getFormattedTimeValue(timeUntilSurrenderConfirmation));
+			message.append(Translatable.of("msg_pending_attacker_victory", TimeMgmt.getFormattedTimeValue(timeUntilSurrenderConfirmation)));
 		} else {
-			message += Translation.of("msg_immediate_attacker_victory");
+			String key2 = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toLowerCase());
+			message.append(Translatable.of(key2));
 		}
 
 		return message;
