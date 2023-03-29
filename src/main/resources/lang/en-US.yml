@@ -538,6 +538,7 @@ msg_err_peaceful_occupation_tax_cannot_be_more_than: "Nations cannot set a peace
 msg_peaceful_occupation_taxes_paid_totaling: "Your nation received a peaceful occupation taxes totalling: %s."
 
 #Added/Updated in 0.51
+
 #Invasion
 
 msg_err_cannot_invade_town_already_invaded: '&cYour nation has already captured the town.'
