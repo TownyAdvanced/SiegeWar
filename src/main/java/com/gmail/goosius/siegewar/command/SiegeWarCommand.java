@@ -284,8 +284,8 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 						return;
 					}
 					SiegeWarMoneyUtil.claimNationRefund(player);
-				} catch (Exception e) {
-					player.sendMessage(e.getMessage());
+				} catch (TownyException te) {
+					Messaging.sendErrorMsg(player, te.getMessage());
 				}
 				break;
 
