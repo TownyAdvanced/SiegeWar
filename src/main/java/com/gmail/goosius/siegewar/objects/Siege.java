@@ -64,9 +64,6 @@ public class Siege {
 	private int attackerBattlePoints;
 	private int defenderBattlePoints;
 	private Map<UUID, Integer> primaryTownGovernments; //UUID:numBattleSessions map of governments who led the town during the siege. If town was is a nation, nation UUID will be used, otherwise town UUID will be used
-	private double wallBreachPoints;	//Wall Breach points for the current battle session
-	private Set<Resident> wallBreachBonusAwardees;  //Residents who have been awarded the wall-breach bonus for the current battle session
-	private Set<Player> recentTownFriendlyCannonFirers;
 	private int numberOfBannerControlReversals;
 	private Set<Player> playersWhoWereInTheSiegeZone;
 	private Set<Player> playersWhoWereInTheBesiegedTown;
@@ -88,9 +85,6 @@ public class Siege {
 		attackerBattlePoints = 0;
 		defenderBattlePoints = 0;
 		primaryTownGovernments = new HashMap<>();
-		wallBreachPoints = 0;
-		wallBreachBonusAwardees = new HashSet<>();
-		recentTownFriendlyCannonFirers = new HashSet<>();
 		numberOfBannerControlReversals = 0;
 		playersWhoWereInTheSiegeZone = new HashSet<>();
 		playersWhoWereInTheBesiegedTown = new HashSet<>();
@@ -509,19 +503,7 @@ public class Siege {
 	public void setDefenderName(String defenderName) {
 		this.defenderName = defenderName;
 	}
-
-	public Set<Player> getRecentTownFriendlyCannonFirers() {
-		return recentTownFriendlyCannonFirers;
-	}
-
-	public void addRecentTownFriendlyCannonFirer(Player gunnerPlayer) {
-		recentTownFriendlyCannonFirers.add(gunnerPlayer);
-	}
-
-	public void clearRecentTownFriendlycannonFirers() {
-		recentTownFriendlyCannonFirers.clear();
-	}
-
+	
 	public int getNumberOfBannerControlReversals() {
 		return numberOfBannerControlReversals;
 	}

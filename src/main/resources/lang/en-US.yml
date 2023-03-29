@@ -375,36 +375,11 @@ msg.battle.session.cleanup.starting: "The previous Battle Session did not comple
 msg.battle.session.cleanup.complete: "Battle Session Cleanup complete. %d battles were resolved."
 msg_err_cannot_start_sieges_today: "&cYour server has limited the days-of-the-week when sieges can be started. Sieges cannot be started today."
 
-#Added in 0.35
-#Wall-Breach-Actions
-hud_breach_points: "Breach Points: "
-msg_wall_breach_successful: 'Wall Breach Successful!'
-status_town_siege_breach_points: '&2 > Breach Points: &a%s'
-msg_err_not_enough_breach_points_for_action: '&cThere are not enough breach points for this action. Required: %d, Actual: %s.'
-msg_err_cannot_breach_without_battle_session: '&cYou cannot do a Wall-Breach action unless a battle session is in progress.'
-msg_err_cannot_breach_at_this_height: '&cYou cannot do a Wall-Breach action at this height. Height limits apply when close to the homeblock. Compared to Siege-Banner Height, MIN = %d, MAX = %d.'
-msg_err_breaching_cannot_place_this_material: '&cYou cannot place this type of block.'
-msg_err_breaching_cannot_destroy_this_material: '&cYou cannot destroy this type of block.'
-#Wall-Breach-Bonus
-msg_wall_breach_bonus_awarded_to_attackers: "&bSiege on %s > %d attackers have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
-msg_wall_breach_bonus_awarded_to_defenders: "&bSiege on %s > %d defenders have reached the homeblock. Wall Breach Bonus: +%d Battle Points."
-msg_wall_breach_bonus_awarded: "&bYou have been awarded a Wall Breach Bonus!"
-msg_err_already_received_wall_breach_bonus: '&cYou already received a Wall Breach Bonus for this Battle Session.'
-#Wall-Breach Cannons Integration
-msg_err_cannot_fire_cannon_without_battle_session: '&cYou cannot fire a cannon in a siegezone unless there is a Battle Session in progress.'
-msg_err_cannot_fire_cannon_without_perms: '&cYou cannot fire this cannon. Check that you are an official participant in the local siege, and that you have a rank which allows cannon-firing.'
-#configuration-errors
-msg_error_misconfigured_place_blocks_whitelist: '&cMisconfigured Material on Wall-Breaching-Place-Blocks-Whitelist. Problem Entry: %s.'
-msg_error_misconfigured_destroy_blocks_blacklist: '&cMisconfigured Material on Wall-Breaching-Destroy-Blocks-Blacklist. Problem Entry: %s.'
-
 #Added in 0.36
 msg_err_nation_neutrality_not_supported: '&cSiegeWar does not support nation neutrality.'
 msg.townyperms.installation.complete: "Towny perms file adjusted for recommended SW setup."
 msg.townyconfig.installation.complete: "Towny config file adjusted for recommended SW setup."
 msg.installation.complete: "Installation Complete."
-
-#Added in 0.37
-msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cWithin SiegeZones, cannons can only be fired if they are in the wilderness or the besieged town."
 
 #Added in 0.41
 msg_capping_limiter_limit_exceeded_warning: "&cYou have exceeded your daily Capping Limit of %d Battle Sessions. You can cap again in %s."
