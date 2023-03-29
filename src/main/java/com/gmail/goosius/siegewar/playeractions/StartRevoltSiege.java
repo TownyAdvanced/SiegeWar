@@ -60,6 +60,9 @@ public class StartRevoltSiege {
         || !TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToStartSiege(SiegeType.REVOLT)))
             throw new TownyException(translator.of("msg_err_action_disable"));
 
+        if(targetTown.isNeutral())
+            throw new TownyException(translator.of("msg_err_peaceful_towns_cannot_revolt"));
+
         if(!TownOccupationController.isTownOccupied(targetTown))
             throw new TownyException(translator.of("msg_err_cannot_start_revolt_siege_as_town_is_unoccupied"));
 

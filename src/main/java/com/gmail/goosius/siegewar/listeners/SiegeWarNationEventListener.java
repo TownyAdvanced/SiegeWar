@@ -174,7 +174,7 @@ public class SiegeWarNationEventListener implements Listener {
 
 		if (event.getFutureState()) {
 			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("msg_err_nation_neutrality_not_supported"));
+			event.setCancelMessage(Translation.of("msg_err_nation_peacefulness_not_supported"));
 		}
 	}
 
