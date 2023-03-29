@@ -599,7 +599,7 @@ public class SiegeWarSettings {
 				} else {
 					startTime = LocalDateTime.of(day, LocalTime.of(Integer.parseInt(startTimeAsString), 0));
 				}
-				startTimesAsList.add(startTime);
+				startTimesAsList.add(startTime);	
 			}
 		}
 		return startTimesAsList;
