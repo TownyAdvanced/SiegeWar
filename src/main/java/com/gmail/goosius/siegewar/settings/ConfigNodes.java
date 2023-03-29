@@ -991,9 +991,7 @@ public enum ConfigNodes {
     BATTLE_SESSION_SCHEDULER_START_TIMES(
 			"battle_session_scheduler.start_times",
 			"",
-			"",
-			"# TIP: Do not rely only on the Battle Session Scheduler to prevent no-life-sieging.",
-			"# Try to also make use of the capping limiter for that purpose"),
+			""),
 	BATTLE_SESSION_SCHEDULER_START_TIMES_WEEKDAYS(
 			"battle_session_scheduler.start_times.weekdays",
 			"00:10,01:10,02:10,03:10,04:10,05:10,06:10,07:10,08:10,09:10,10:10,11:10,12:10,13:10,14:10,15:10,16:10,17:10,18:10,19:10,20:10,21:10,22:10,23:10",
@@ -1021,31 +1019,6 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# Should sessions be cancelled when there are no active sieges?"),
-	CAPPING_LIMITER(
-			"capping_limiter",
-			"",
-			"",
-			"",
-			"############################################################",
-			"# +------------------------------------------------------+ #",
-			"# |                    Capping Limiter                     #",
-			"# +------------------------------------------------------+ #",
-			"############################################################",
-			""),
-	CAPPING_LIMITER_WEEKDAY_BATTLE_SESSIONS(
-			"capping_limiter.weekday_battle_sessions",
-			"3",
-			"",
-			"# This value determines the maximum number of week-day battle sessions which each player can cap at.",
-			"# To disable the feature, set the value to -1.",
-			"# TIP: This feature helps to prevent teams trying to win by fight-avoidance with capping."),
-	CAPPING_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS(
-			"capping_limiter.weekend_day_battle_sessions",
-			"6",
-			"",
-			"# This value determines the maximum number of weekend-day battle sessions which each player can at.",
-			"# To disable the feature, set the value to -1.",
-			"# TIP: This feature helps to prevent teams trying to win by fight-avoidance with capping."),
 	PVP_PROTECTION_OVERRIDES(
 			"pvp_protection_overrides",
 			"",

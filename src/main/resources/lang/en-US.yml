@@ -407,7 +407,6 @@ msg.installation.complete: "Installation Complete."
 msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cWithin SiegeZones, cannons can only be fired if they are in the wilderness or the besieged town."
 
 #Added in 0.41
-msg_capping_limiter_limit_exceeded_warning: "&cYou have exceeded your daily Capping Limit of %d Battle Sessions. You can cap again in %s."
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To avoid War Sickness, leave the Siege-Zone immediately.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To remove the War Sickness, leave the Siege-Zone immediately.'
 

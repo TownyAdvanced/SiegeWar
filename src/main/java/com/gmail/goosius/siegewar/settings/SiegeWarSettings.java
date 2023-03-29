@@ -373,25 +373,6 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_SIEGECAMPS_DURATION_IN_MINUTES);
 	}
 
-	public static int getCappingLimiterBattleSessions() {
-		DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
-		boolean weekend = dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
-
-		if(weekend) {
-			return getCappingLimiterWeekendDayBattleSessions();
-		} else {
-			return getCappingLimiterWeekdayBattleSessions();
-		}
-	}
-
-	private static int getCappingLimiterWeekdayBattleSessions() {
-		return Settings.getInt(ConfigNodes.CAPPING_LIMITER_WEEKDAY_BATTLE_SESSIONS);
-	}
-
-	private static int getCappingLimiterWeekendDayBattleSessions() {
-		return Settings.getInt(ConfigNodes.CAPPING_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS);
-	}
-
 	public static List<DayOfWeek> getSiegeStartDayLimiterAllowedDays() {
 		List<DayOfWeek> allowedDaysList = new ArrayList<>();
 		String[] allowedDaysStringArray = Settings.getString(ConfigNodes.SIEGE_START_DAY_LIMITER_ALLOWED_DAYS).toUpperCase(Locale.ROOT).replaceAll(" ", "").split(",");
