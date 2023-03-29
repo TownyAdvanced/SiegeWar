@@ -12,7 +12,6 @@ import com.palmergames.bukkit.towny.confirmations.Confirmation;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeMgmt;
-
 import org.bukkit.entity.Player;
 
 /**
