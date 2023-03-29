@@ -19,6 +19,7 @@ import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translation;
+
 public class BossBarUtil {
 
 	private static Map<Player, BossBar> bossBarBannerCapMap = new HashMap<>(); 
