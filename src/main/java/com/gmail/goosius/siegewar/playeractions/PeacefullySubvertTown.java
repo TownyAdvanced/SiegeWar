@@ -7,8 +7,8 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.events.PreSubvertTownEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
-import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -16,7 +16,6 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
-import com.palmergames.util.MathUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -63,23 +62,25 @@ public class PeacefullySubvertTown {
 	 * @param targetTown the target town
 	 */
 	private static void subvertTown(Nation subvertingNation, Town targetTown) {
-		//Set town to occupied
-		TownOccupationController.setTownOccupation(targetTown, subvertingNation);
-		
-		//Save to db
-		targetTown.save();
-		
 		/*
 		 * Messaging
-		 *
-		 * Note that we do not publicly mention the nation (if any) of the subverted town.
-		 * Because the logic is simpler, and because subverting is generally less 'aggressive' than invasion.
+		 * This section is here rather than the customary bottom of the method
+		 * because we want to send the siegewar messages (town invaded, nation defeated etc.)
+		 * before we send the standard towny messages (town has left nation, nation has been deleted etc.)
 		 */
 		Messaging.sendGlobalMessage(
 			Translatable.of("msg_peaceful_town_subverted",
 					targetTown.getName(),
 					subvertingNation.getName()
 		));
+		Nation nationOfSubvertedTown = targetTown.getNationOrNull();
+		if(nationOfSubvertedTown != null && nationOfSubvertedTown.getNumTowns() == 1) {
+			Messaging.sendGlobalMessage(
+					Translatable.of("msg_siege_war_nation_defeated", nationOfSubvertedTown.getName()));
+		}
+
+		//Occupy town (also saves data)
+		TownOccupationController.setTownOccupation(targetTown, subvertingNation);
 	}
 
 	private static void allowSubversionOrThrow(Player player, Nation residentsNation, Town targetTown) throws TownyException {
@@ -99,39 +100,18 @@ public class PeacefullySubvertTown {
 		if(targetTown.hasNation() && targetTown.getNationOrNull() == residentsNation)
 			throw new TownyException(translator.of("msg_err_cannot_subvert_towns_in_own_nation"));
 
-		if(townIsAlreadyOccupiedByNation(residentsNation, targetTown))
+		if(TownOccupationController.isTownOccupiedByNation(residentsNation, targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_subvert_town_already_occupied"));
 
-		if (TownySettings.getNationRequiresProximity() > 0) {
-			if (townsAreNotInTheSameWorld(residentsNation, targetTown))
-				throw new TownyException(translator.of("msg_err_nation_homeblock_in_another_world"));
+		SiegeWarDistanceUtil.throwIfTownIsTooFarFromNationCapitalByWorld(residentsNation, targetTown);
 
-			if (townsAreTooFarApart(residentsNation, targetTown))
-				throw new TownyException(String.format(translator.of("msg_err_town_not_close_enough_to_nation"), targetTown.getName()));
-		}
+		SiegeWarDistanceUtil.throwIfTownIsTooFarFromNationCapitalByDistance(residentsNation, targetTown);
 
-		if (nationHasTooManyTownsAlready(residentsNation))
-			throw new TownyException(String.format(translator.of("msg_err_nation_over_town_limit"), TownySettings.getMaxTownsPerNation()));
+		SiegeWarNationUtil.throwIfNationHasTooManyTowns(residentsNation);
 		
 		verifyThatNationHasEnoughTownyInfluenceToSubvertTown(residentsNation, targetTown);
 	}
 
-	private static boolean townIsAlreadyOccupiedByNation(Nation residentsNation, Town targetTown) {
-		return TownOccupationController.isTownOccupied(targetTown) && TownOccupationController.getTownOccupier(targetTown) == residentsNation;
-	}
-
-	private static boolean nationHasTooManyTownsAlready(Nation residentsNation) {
-		return TownySettings.getMaxTownsPerNation() > 0 && SiegeWarNationUtil.getEffectiveNation(residentsNation).getNumTowns() >= TownySettings.getMaxTownsPerNation();
-	}
-
-	private static boolean townsAreTooFarApart(Nation residentsNation, Town nearbyTown) throws TownyException {
-		return MathUtil.distance(residentsNation.getCapital().getHomeBlock().getCoord(), nearbyTown.getHomeBlock().getCoord()) > TownySettings.getNationRequiresProximity();
-	}
-
-	private static boolean townsAreNotInTheSameWorld(Nation residentsNation, Town nearbyTown) throws TownyException {
-		return !residentsNation.getCapital().getHomeBlock().getWorld().getName().equals(nearbyTown.getHomeBlock().getWorld().getName());
-	}
-	
 	/**
 	 * Verify if the given nation has enough Towny-Influence to subvert the given town
 	 *

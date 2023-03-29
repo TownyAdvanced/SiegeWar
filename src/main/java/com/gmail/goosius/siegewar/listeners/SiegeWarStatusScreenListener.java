@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
@@ -70,29 +69,6 @@ public class SiegeWarStatusScreenListener implements Listener {
 			}
 
 			List<String> out = new ArrayList<>();
-			// Occupied Home Towns[3]: Town1, Town2, Town3
-			List<Town> occupiedHomeTowns = TownOccupationController.getOccupiedHomeTowns(nation);
-			if (occupiedHomeTowns.size() > 0) {
-				Component comp = Component.empty()
-						.append(Component.newline())
-						.append(Component.text(translator.of("status_nation_occupied_home_towns", occupiedHomeTowns.size())
-							+ getFormattedTownList(occupiedHomeTowns))
-						.clickEvent(ClickEvent.runCommand("/nation siegewar occupiedhometowns " + nation.getName()))
-						.hoverEvent(HoverEvent.showText(Component.text(translator.of("status_hover_click_for_more")))));
-				event.getStatusScreen().addComponentOf("siegeWarNationOccupiedHomeTowns", comp);
-			}
-
-			// Occupied Foreign Towns[3]: Town4, Town5, Town6
-			List<Town> occupiedForeignTowns = TownOccupationController.getOccupiedForeignTowns(nation);
-			if (occupiedForeignTowns.size() > 0) {
-				Component comp = Component.empty()
-						.append(Component.newline())
-						.append(Component.text(translator.of("status_nation_occupied_foreign_towns", occupiedForeignTowns.size())
-							+ getFormattedTownList(occupiedForeignTowns))
-						.clickEvent(ClickEvent.runCommand("/nation siegewar occupiedforeigntowns " + nation.getName()))
-						.hoverEvent(HoverEvent.showText(Component.text(translator.of("status_hover_click_for_more")))));
-				event.getStatusScreen().addComponentOf("siegeWarNationOccupiedForeignTowns", comp);
-			}
 
 			// Offensive Sieges [3]: TownA, TownB, TownC
 	        List<Town> siegeAttacks = new ArrayList<>(SiegeController.getActiveOffensiveSieges(nation).values());
@@ -134,12 +110,6 @@ public class SiegeWarStatusScreenListener implements Listener {
 				event.getStatusScreen().addComponentOf("siegeWar_plunderDebt", Component.text(translator.of("status_town_plunder_debt", getMoney(days * amount), days, getMoney(amount))));
 			}
 
-			//Occupying Nation: Empire of the Fluffy Bunnies
-			if(SiegeWarSettings.getWarSiegeInvadeEnabled() && TownOccupationController.isTownOccupied(town)) {
-				Nation townOccupier = TownOccupationController.getTownOccupier(town);
-				event.getStatusScreen().addComponentOf("siegeWar_townOccupier", translator.of("status_town_occupying_nation", townOccupier.getFormattedName()));
-			}
-			
 	        //Revolt Immunity Timer: 71.8 hours
 	        long immunity = TownMetaDataController.getRevoltImmunityEndTime(town);
 	        if (SiegeWarSettings.getRevoltSiegesEnabled() && immunity == -1l || System.currentTimeMillis() < immunity) {
@@ -300,7 +270,6 @@ public class SiegeWarStatusScreenListener implements Listener {
     private static String getInvadedPlunderedStatusLine(Siege siege, Translator translator) {
 		switch(siege.getSiegeType()) {
 			case CONQUEST:
-			case LIBERATION:
 				switch (siege.getStatus()) {
 					case ATTACKER_WIN:
 					case DEFENDER_SURRENDER:
@@ -309,20 +278,11 @@ public class SiegeWarStatusScreenListener implements Listener {
 						break;
 				}
 				break;
-			case SUPPRESSION:
-				switch (siege.getStatus()) {
-					case ATTACKER_WIN:
-					case DEFENDER_SURRENDER:
-						return getPlunderStatusLine(siege, translator);
-					default:
-						break;
-				}
-				break;
 			case REVOLT:
 				switch (siege.getStatus()) {
 					case DEFENDER_WIN:
 					case ATTACKER_ABANDON:
-						return getPlunderStatusLine(siege, translator);
+						return getPlunderStatusLine(siege, translator) + getInvadeStatusLine(siege, translator);
 					default:
 						break;
 				}
@@ -337,12 +297,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 	}
 
 	private static String getInvadeStatusLine(Siege siege, Translator translator) {
-		if(siege.isRevoltSiege() || siege.isSuppressionSiege()) {
-			return "";
-		} else {
-			String invadedYesNo = siege.isTownInvaded() ? translator.of("status_yes") : translator.of("status_no_green");
-			return translator.of("status_town_siege_status_invaded", invadedYesNo);
-		}
+		String invadedYesNo = siege.isTownInvaded() ? translator.of("status_yes") : translator.of("status_no_green");
+		return translator.of("status_town_siege_status_invaded", invadedYesNo);
 	}
 
 	private String hoverFormat(String hover) {

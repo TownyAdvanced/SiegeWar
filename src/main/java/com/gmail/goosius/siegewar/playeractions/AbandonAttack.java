@@ -61,16 +61,9 @@ public class AbandonAttack {
 		String message = "";
 		switch (siege.getSiegeType()) {
 			case CONQUEST:
-			case SUPPRESSION:
 				message = Translation.of(key,
 						siege.getTown().getName(),
 						siege.getAttacker().getName());
-				break;
-			case LIBERATION:
-				message = Translation.of(key,
-						siege.getTown().getName(),
-						siege.getAttacker().getName(),
-						siege.getDefender().getName());
 				break;
 			case REVOLT:
 				message = Translation.of(key,

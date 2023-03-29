@@ -157,8 +157,6 @@ public class SiegeController {
 		//Load Attacker
 		switch (siege.getSiegeType()) {
 			case CONQUEST:
-			case LIBERATION:
-			case SUPPRESSION:
 				String uuid = SiegeMetaDataController.getAttackerUUID(town);
 				if (uuid == null)
 					return false;
@@ -175,10 +173,8 @@ public class SiegeController {
 		//Load defender
 		switch (siege.getSiegeType()) {
 			case CONQUEST:
-			case SUPPRESSION:
 				siege.setDefender(town);
 				break;
-			case LIBERATION:
 			case REVOLT:
 				String uuid = SiegeMetaDataController.getDefenderUUID(town);
 				if (uuid == null)
@@ -534,54 +530,13 @@ public class SiegeController {
 					));
 				}
 				break;
-			case LIBERATION:
-				if (siege.getTown().hasNation()) {
-					Messaging.sendGlobalMessage(
-							Translatable.of("msg_liberation_siege_started_nation_town",
-							siege.getAttacker().getName(),
-							siege.getDefender().getName(),
-							siege.getTown().getName()
-					));
-				} else {
-					Messaging.sendGlobalMessage(
-							Translatable.of("msg_liberation_siege_started_neutral_town",
-							siege.getAttacker().getName(),
-							siege.getDefender().getName(),
-							siege.getTown().getName()
-					));
-				}
-				break;
+
 			case REVOLT:
-				if (siege.getTown().hasNation()) {
-					Messaging.sendGlobalMessage(
-							Translatable.of("msg_revolt_siege_started_nation_town",
-							siege.getTown().getName(),
-							TownyAPI.getInstance().getTownNationOrNull(siege.getTown()).getName(),
-							TownOccupationController.getTownOccupier(siege.getTown()).getName()
-					));
-				} else {
-					Messaging.sendGlobalMessage(
-							Translatable.of("msg_revolt_siege_started_neutral_town",
-							siege.getTown().getName(),
-							TownOccupationController.getTownOccupier(siege.getTown()).getName()
-					));
-				}
-				break;
-			case SUPPRESSION:
-				if (siege.getTown().hasNation()) {
-					Messaging.sendGlobalMessage(
-							Translatable.of("msg_suppression_siege_started_nation_town",
-							siege.getAttacker().getName(),
-							TownyAPI.getInstance().getTownNationOrNull(siege.getTown()).getName(),
-							siege.getTown().getName()
-					));
-				} else {
-					Messaging.sendGlobalMessage(
-							Translatable.of("msg_suppression_siege_started_neutral_town",
-							siege.getAttacker().getName(),
-							siege.getTown().getName()
-					));
-				}
+				Messaging.sendGlobalMessage(
+						Translatable.of("msg_revolt_siege_started",
+						siege.getTown().getName(),
+						siege.getDefender().getName()
+				));
 				break;
 		}
 	}

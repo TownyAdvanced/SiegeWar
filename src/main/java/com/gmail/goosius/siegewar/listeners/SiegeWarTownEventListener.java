@@ -19,7 +19,6 @@ import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
-import com.palmergames.bukkit.towny.event.town.TownUnconquerEvent;
 import com.palmergames.bukkit.towny.event.town.TownMapColourNationalCalculationEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
@@ -246,7 +245,7 @@ public class SiegeWarTownEventListener implements Listener {
 	/*
 	 * If town is peaceful, sieged, or occupied, it can't move homeblock.
 	 * otherwise the move homeblock command could be / definitely would be
-	 * used by players an an easy and hard-to-moderate exploit to escape occupation.
+	 * used by players as an easy and hard-to-moderate exploit to escape occupation.
 	 */
 	@EventHandler
 	public void on(TownPreSetHomeBlockEvent event) {
@@ -277,12 +276,6 @@ public class SiegeWarTownEventListener implements Listener {
 		if (SiegeController.hasSiege(event.getTownUUID()))
 			SiegeController.removeSiege(SiegeController.getSiegeByTownUUID(event.getTownUUID()), SiegeSide.ATTACKERS);
 	}
-
-    @EventHandler
-    public void onTownUnconquer(TownUnconquerEvent event) {
-    	if (SiegeWarSettings.getWarSiegeEnabled())
-    		event.setCancelled(true);
-    }
 
 	@EventHandler
 	public void onTownMerge(TownPreMergeEvent event) {

@@ -45,21 +45,11 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If true, then nations can start conquest sieges."),
-	WAR_SIEGE_LIBERATION_SIEGES_ENABLED(
-			"war.siege.switches.liberation_sieges_enabled",
-			"true",
-			"",
-			"# If true, then nations can start liberation sieges."),
 	WAR_SIEGE_REVOLT_SIEGES_ENABLED(
 			"war.siege.switches.revolt_sieges_enabled",
 			"true",
 			"",
 			"# If true, then towns can start revolt sieges."),
-	WAR_SIEGE_SUPPRESSION_SIEGES_ENABLED(
-			"war.siege.switches.suppression_sieges_enabled",
-			"true",
-			"",
-			"# If true, then nations can start suppression sieges."),
 	WAR_SIEGE_ABANDON_ENABLED(
 			"war.siege.switches.abandon_enabled",
 			"true",
@@ -750,10 +740,10 @@ public enum ConfigNodes {
 			"#   (see user guide for full details)",
 			"#"),
 	PEACEFUL_CAPITALS_ENABLED(
-			"neutral_towns.capitals_allowed_neutrality",
-			"true",
+			"neutral_towns.nation_capital_can_be_neutral",
+			"false",
 			"",
-			"# If this is true, a nation capital can be a peaceful town. If false, any capital will not be able to turn peaceful."),
+			"# If this is true, a nation capital can be a neutral town. If false, any capital will not be able to turn peaceful."),
 	PEACEFUL_TOWNS_CONFIRMATION_REQUIREMENT_DAYS(
 			"neutral_towns.confirmation_requirement_days",
 			"5",
@@ -771,11 +761,6 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If this setting is true, then peaceful subversion (instant occupation) of neutral towns is enabled."),
-	PEACEFUL_TOWNS_PEACEFUL_REVOLT_ENABLED(
-			"neutral_towns.revolt_enabled",
-			"true",
-			"",
-			"# If this setting is true, then peaceful revolt (instant de-occupation) by neutral towns is enabled."),
 	PEACEFUL_TOWNS_TOWNY_INFLUENCE_RADIUS(
 			"neutral_towns.towny_influence_radius",
 			"1200",

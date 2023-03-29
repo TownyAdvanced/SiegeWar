@@ -8,9 +8,11 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Coord;
+import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyWorld;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.MathUtil;
 
 import org.bukkit.Bukkit;
@@ -282,5 +284,54 @@ public class SiegeWarDistanceUtil {
 		} else {
 			return false;  //Target location is not protected
 		}
+	}
+
+	/**
+	 * Throws a TownyException with Translatable error message if a town is too far
+	 * from a nation's capital.
+	 * 
+	 * @param nation Nation
+	 * @param town   Town
+	 * @throws TownyException thrown if the town is too far away.
+	 */
+	public static void throwIfTownIsTooFarFromNationCapitalByDistance(Nation nation, Town town) throws TownyException {
+		if (isTownTooFarFromNationCapitalByDistance(nation, town))
+			throw new TownyException(Translatable.of("msg_err_town_not_close_enough_to_nation", town.getName()));
+	}
+	
+	/**
+	 * Return true if a town is too far from the nation capital by distance
+	 *
+	 * @param nation nation to check
+	 * @param town town to check
+	 * @return true if the town is too far by distance
+	 * @throws TownyException thrown if the town or nation capital has no Homeblock set.
+	 */
+	private static boolean isTownTooFarFromNationCapitalByDistance(Nation nation, Town town) throws TownyException {
+		return TownySettings.getNationRequiresProximity() > 0 && MathUtil.distance(nation.getCapital().getHomeBlock().getCoord(), town.getHomeBlock().getCoord()) > TownySettings.getNationRequiresProximity();
+	}
+
+	/**
+	 * Throws a TownyException with Translatable error message if a town is too far
+	 * from a nation's capital because they are in separate worlds.
+	 * 
+	 * @param nation Nation
+	 * @param town Town 
+	 * @throws TownyException thrown if the town is too far away.
+	 */
+	public static void throwIfTownIsTooFarFromNationCapitalByWorld(Nation nation, Town town) throws TownyException {
+		if (isTownTooFarFromNationCapitalByWorld(nation, town))
+			throw new TownyException(Translatable.of("msg_err_nation_homeblock_in_another_world"));
+	}
+	/**
+	 * Return true if a town is too far from the nation capital owing to being in different worlds
+	 *
+	 * @param nation nation to check
+	 * @param town town to check
+	 * @return true if the town is too far because capital & town are in different worlds
+	 * @throws TownyException thrown if the town or nation capital has no Homeblock set.
+	 */
+	private static boolean isTownTooFarFromNationCapitalByWorld(Nation nation, Town town) throws TownyException {
+		return TownySettings.getNationRequiresProximity() > 0 && !nation.getCapital().getHomeBlock().getWorld().getName().equals(town.getHomeBlock().getWorld().getName());
 	}
 }

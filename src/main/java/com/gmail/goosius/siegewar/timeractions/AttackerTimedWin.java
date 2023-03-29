@@ -28,21 +28,10 @@ public class AttackerTimedWin {
                         siege.getAttacker().getName(),
                         siege.getDefendingNationIfPossibleElseTown().getName());
                 break;
-            case LIBERATION:
-                message[0] = Translatable.of(key,
-                        siege.getTown().getName(),
-                        siege.getAttacker().getName(),
-                        siege.getDefender().getName());
-                break;
             case REVOLT:
                 message[0] = Translatable.of(key,
                         siege.getTown().getName(),
                         siege.getDefender().getName());
-                break;
-            case SUPPRESSION:
-                message[0] = Translatable.of(key,
-                        siege.getTown().getName(),
-                        siege.getAttacker().getName());
                 break;
         }
         message[1] = Translatable.of("msg_immediate_attacker_victory");

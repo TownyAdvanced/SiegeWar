@@ -78,16 +78,8 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_CONQUEST_SIEGES_ENABLED);
 	}
 
-	public static boolean getLiberationSiegesEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_LIBERATION_SIEGES_ENABLED);
-	}
-
 	public static boolean getRevoltSiegesEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_REVOLT_SIEGES_ENABLED);
-	}
-
-	public static boolean getSuppressionSiegesEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_SUPPRESSION_SIEGES_ENABLED);
 	}
 
 	public static boolean getWarSiegeClaimingDisabledNearSiegeZones() {
@@ -259,10 +251,6 @@ public class SiegeWarSettings {
 
 	public static boolean isPeacefulTownsSubvertEnabled() {
 		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_SUBVERT_ENABLED);
-	}
-
-	public static boolean isPeacefulTownsRevoltEnabled() {
-		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_PEACEFUL_REVOLT_ENABLED);
 	}
 
 	public static int getPeacefulTownsTownyInfluenceRadius() {

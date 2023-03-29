@@ -57,11 +57,11 @@ public class SiegeWarWallBreachUtil {
             case NOBODY:
                 return;
             case ATTACKERS:
-                if(siege.isConquestSiege() || siege.isSuppressionSiege()) 
+                if(siege.isConquestSiege())
                     return;
                 break;
             case DEFENDERS:
-                if(siege.isRevoltSiege() || siege.isLiberationSiege()) 
+                if(siege.isRevoltSiege())
                     return;
                 break;
         }
@@ -121,7 +121,7 @@ public class SiegeWarWallBreachUtil {
         if(newAwardees.size() > 0) {         
             //Adjust Battle Points
             int battlePointsBonus = SiegeWarSettings.getWallBreachBonusBattlePoints() * newAwardees.size();
-            if(siege.isConquestSiege() || siege.isSuppressionSiege()) {
+            if(siege.isConquestSiege()) {
                 siege.adjustAttackerBattlePoints(battlePointsBonus);                
             } else {
                 siege.adjustDefenderBattlePoints(battlePointsBonus);

@@ -413,16 +413,24 @@ public class Siege {
 		return siegeType == SiegeType.CONQUEST;
 	}
 
+	/**
+	 * @deprecated since 2.0.0, Suppression Sieges no longer exist.
+	 */
+	@Deprecated
 	public boolean isSuppressionSiege() {
-		return siegeType == SiegeType.SUPPRESSION;
+		return false;
 	}
 	
 	public boolean isRevoltSiege() {
 		return siegeType == SiegeType.REVOLT;
 	}
 	
+	/**
+	 * @deprecated since 2.0.0, Liberation Sieges no longer exist.
+	 */
+	@Deprecated
 	public boolean isLiberationSiege() {
-		return siegeType == SiegeType.LIBERATION;
+		return false;
 	}
 	
 	/**

@@ -19,8 +19,6 @@ public class SiegeWarAllegianceUtil {
         Government defendingGovernment = candidateSiege.getDefender();
         switch (candidateSiege.getSiegeType()) {
             case CONQUEST:
-            case SUPPRESSION:
-            case LIBERATION:
                 //In the above sieges, defenders can be town guards
                 if (isTownGuard(deadPlayer, deadResidentTown, defendingGovernment))
                     return SiegeSide.DEFENDERS;
@@ -38,8 +36,6 @@ public class SiegeWarAllegianceUtil {
                 if (isTownGuard(deadPlayer, deadResidentTown, attackingGovernment))
                     return SiegeSide.ATTACKERS;
             case CONQUEST:
-            case SUPPRESSION:
-            case LIBERATION:
                 //In the above sieges, attackers can be nation/allied soldiers
                 if (isNationSoldierOrAlliedSoldier(deadPlayer, deadResidentTown, attackingGovernment))
                     return SiegeSide.ATTACKERS;
@@ -77,9 +73,9 @@ public class SiegeWarAllegianceUtil {
     public static boolean isSideHostileToTown(SiegeSide gunnerSiegeSide, Siege siege) {
         switch (gunnerSiegeSide) {
             case ATTACKERS:
-                return siege.isConquestSiege() || siege.isSuppressionSiege();
+                return siege.isConquestSiege();
             case DEFENDERS:
-                return siege.isLiberationSiege() || siege.isRevoltSiege();
+                return siege.isRevoltSiege();
             default:
                 return false;
         }
@@ -93,9 +89,9 @@ public class SiegeWarAllegianceUtil {
         SiegeSide playerSiegeSide = calculateCandidateSiegePlayerSide(player, gunnerResidentTown, siege);
         switch(playerSiegeSide) {
             case DEFENDERS:
-                return siege.isConquestSiege() || siege.isSuppressionSiege();
+                return siege.isConquestSiege();
             case ATTACKERS:
-                return siege.isLiberationSiege() || siege.isRevoltSiege();
+                return siege.isRevoltSiege();
             default:
                 return false;
         }
@@ -109,9 +105,9 @@ public class SiegeWarAllegianceUtil {
         SiegeSide playerSiegeSide = calculateCandidateSiegePlayerSide(player, gunnerResidentTown, siege);
         switch(playerSiegeSide) {
             case ATTACKERS:
-                return siege.isConquestSiege() || siege.isSuppressionSiege(); 
+                return siege.isConquestSiege();
             case DEFENDERS:
-                return siege.isLiberationSiege() || siege.isRevoltSiege();
+                return siege.isRevoltSiege();
             default:
                 return false;
         }
