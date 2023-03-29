@@ -41,10 +41,12 @@ public class SiegeWarSicknessUtil {
             // Players immune to war nausea won't be punished
             if (player.isOp() || player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
                 continue;
+
             // check if in a siege zone
             Siege siege = SiegeController.getActiveSiegeAtLocation(location);
             if (siege == null)
                 continue;
+
             Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
             if (resident == null)
                 continue;
@@ -68,6 +70,7 @@ public class SiegeWarSicknessUtil {
             }
         }
     }
+
     /**
      * Give player full war sickness, with a warning beforehand
      *
@@ -85,6 +88,7 @@ public class SiegeWarSicknessUtil {
             int warningDurationInSeconds,
             Translatable warningTranslatable,
             Translatable punishmentTranslatable) {
+
         if(!playersWithFullWarSickness.contains(player)) {
             //Send warning
             if (warningDurationInSeconds >= 1)
@@ -109,6 +113,7 @@ public class SiegeWarSicknessUtil {
             }
         }, warningDurationInSeconds * 20);
     }
+
     /**
      * Give player full war sickness effects now
      * @param player the player
@@ -124,6 +129,7 @@ public class SiegeWarSicknessUtil {
         player.addPotionEffects(potionEffects);
         player.setHealth(1);
     }
+
     /**
      * Give player special war sickness effects now
      * @param player the player
