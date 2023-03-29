@@ -27,9 +27,6 @@ public class AttackerWin {
 			case CONQUEST:
 				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
 				break;
-			case REVOLT:
-				TownOccupationController.removeTownOccupation(siege.getTown());
-				break;
 		}
     }
 
