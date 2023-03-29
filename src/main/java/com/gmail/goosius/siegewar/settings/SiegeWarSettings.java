@@ -588,9 +588,9 @@ public class SiegeWarSettings {
 		}
 
 		//Transform the config file strings into a list of LocalDateTime objects
-		List<LocalDateTime> startTimesAsList = new ArrayList<>();
-		if(startTimesAsString.length() > 0) {
-			String[] startTimeAsHourMinutePair;
+		List<LocalDateTime> startTimesAsList = new ArrayList<>();		
+		if(startTimesAsString.length() > 0) {		
+			String[] startTimeAsHourMinutePair;		
 			LocalDateTime startTime;
 			for(String startTimeAsString: startTimesAsString.split(",")) {
 				if (startTimeAsString.contains(":")) {
