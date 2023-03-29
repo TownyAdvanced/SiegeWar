@@ -26,9 +26,6 @@ public class DefenderWin
 			case CONQUEST:
 				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefendingNationIfPossibleElseTown());
 				break;
-			case REVOLT:
-				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefender());
-				break;
 		}
     }
 
