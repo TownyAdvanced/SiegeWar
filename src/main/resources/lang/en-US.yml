@@ -567,4 +567,4 @@ msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation s
 
 #swa
 
-msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended"
+msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended."

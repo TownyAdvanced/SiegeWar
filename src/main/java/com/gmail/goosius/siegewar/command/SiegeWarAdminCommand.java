@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class SiegeWarAdminCommand implements TabExecutor {
 
@@ -640,7 +641,8 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				return;
 			}
 			List<String> commandsNotAllowedOnActiveSieges = Arrays.asList("setplundered","setinvaded");
-			if (SiegeController.hasActiveSiege(town) && commandsNotAllowedOnActiveSieges.contains(args[1].toLowerCase())) {
+
+			if (SiegeController.hasActiveSiege(town) && commandsNotAllowedOnActiveSieges.contains(args[1].toLowerCase(Locale.ROOT))) {
 				Messaging.sendErrorMsg(sender, Translatable.of("msg_err_command_not_allowed_on_active_siege", town.getName()));
 				return;
 			}
@@ -657,11 +659,13 @@ public class SiegeWarAdminCommand implements TabExecutor {
 						Messaging.sendErrorMsg(sender, Translatable.of("msg_error_must_be_num"));
 						return;
 					}
+
 					int newPoints = Integer.parseInt(args[2]);
 					siege.setSiegeBalance(newPoints);
 					SiegeController.saveSiege(siege);
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_set_siege_balance_success", newPoints, town.getName()));
 					return;
+
 				case "end":
 					if (siege.getSiegeBalance() < 1)
 						DefenderTimedWin.defenderTimedWin(siege);
@@ -691,6 +695,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_remove_siege_success"));
 					return;
 			}
+
 		} else
 			showSiegeHelp(sender);
 	}
