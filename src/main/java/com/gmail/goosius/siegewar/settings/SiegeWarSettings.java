@@ -561,13 +561,31 @@ public class SiegeWarSettings {
 	}
 
 	private static List<LocalDateTime> getAllBattleSessionStartTimesForDay(LocalDate day) {
-		//Determine if the given day is on the weekend
-		boolean isWeekend = day.getDayOfWeek() == DayOfWeek.SATURDAY || day.getDayOfWeek() == DayOfWeek.SUNDAY;
-
-		//Get the start times from the config file, in the form of a single string.
-		String startTimesAsString = isWeekend ? 
-			getWarSiegeBattleSessionWeekendStartTimes() :
-			getWarSiegeBattleSessionWeekdayStartTimes();
+		//Get Start times for the given day
+		String startTimesAsString = "";
+		switch (day.getDayOfWeek()) {
+			case MONDAY:
+				startTimesAsString = getBattleSessionStartTimesMonday();
+				break;
+			case TUESDAY:
+				startTimesAsString = getBattleSessionStartTimesTuesday();
+				break;
+			case WEDNESDAY:
+				startTimesAsString = getBattleSessionStartTimesWednesday();
+				break;
+			case THURSDAY:
+				startTimesAsString = getBattleSessionStartTimesThursday();
+				break;
+			case FRIDAY:
+				startTimesAsString = getBattleSessionStartTimesFriday();
+				break;
+			case SATURDAY:
+				startTimesAsString = getBattleSessionStartTimesSaturday();
+				break;
+			case SUNDAY:
+				startTimesAsString = getBattleSessionStartTimesSunday();
+				break;
+		}
 
 		//Transform the config file strings into a list of LocalDateTime objects
 		List<LocalDateTime> startTimesAsList = new ArrayList<>();	
@@ -587,12 +605,32 @@ public class SiegeWarSettings {
 		return startTimesAsList;
 	}
 
-	public static String getWarSiegeBattleSessionWeekdayStartTimes() {
-		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_WEEKDAYS);
+	private static String getBattleSessionStartTimesMonday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_MONDAY);
 	}
 
-	public static String getWarSiegeBattleSessionWeekendStartTimes() {
-		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_WEEKEND_DAYS);
+	private static String getBattleSessionStartTimesTuesday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_TUESDAY);
+	}
+
+	private static String getBattleSessionStartTimesWednesday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_WEDNESDAY);
+	}
+
+	private static String getBattleSessionStartTimesThursday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_THURSDAY);
+	}
+
+	private static String getBattleSessionStartTimesFriday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_FRIDAY);
+	}
+
+	private static String getBattleSessionStartTimesSaturday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_SATURDAY);
+	}
+
+	private static String getBattleSessionStartTimesSunday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_SUNDAY);
 	}
 
 	public static int getWarSiegeBattleSessionsDurationMinutes() {

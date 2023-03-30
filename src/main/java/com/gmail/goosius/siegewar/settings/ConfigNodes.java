@@ -256,8 +256,8 @@ public enum ConfigNodes {
             "############################################################",
             ""),
 	WAR_SIEGE_SIEGECAMPS_ENABLED(
-			"war.siege.siege_assemblies.enabled",
-			"true",
+			"war.siege.siege_assemblies.assemblies_enabled",
+			"false",
 			"",
 			"# When true, SiegeWar will begin each attempted Siege with a Siege-Assembly."),
 	WAR_SIEGE_SIEGECAMPS_COOLDOWN(
@@ -899,19 +899,17 @@ public enum ConfigNodes {
 			"#                                                          #",
 			"# The feature allows a server to limit the days when       #",
 			"# players can start sieges.                                #",
-			"# 						                                    #",
-			"# Example: If you wanted fighting mostly on the weekends   #",
-			"# you could limit siege-starts to just Friday.             #",
 			"############################################################",
 			""),
 	SIEGE_START_DAY_LIMITER_ALLOWED_DAYS(
-			"siege_start_day_limiter.allowed_days",
-			"monday, tuesday, wednesday, thursday, friday, saturday, sunday",
+			"siege_start_day_limiter.allowed_siege_start_days",
+			"thursday",
 			"",
 			"# This setting determines the days (in server timezone) when players can start sieges.",
 			"# Multiple entries should be separated by a comma.",
-			"# Permitted values: monday, tuesday, wednesday, thursday, friday, saturday, sunday."),
-    BATTLE_SESSION_SCHEDULER(
+			"# Permitted values: monday, tuesday, wednesday, thursday, friday, saturday, sunday.",
+			"# By default, sieges are started only on Thursday"),
+	BATTLE_SESSION_SCHEDULER(
 			"battle_session_scheduler",
 			"",
 			"",
@@ -925,29 +923,39 @@ public enum ConfigNodes {
     BATTLE_SESSION_SCHEDULER_START_TIMES(
 			"battle_session_scheduler.start_times",
 			"",
+			"",
+			"# The entries in this section determine the start times (in server timezone), of battle sessions.",
+			"# By default, battle sessions start only on Saturday and Sunday, except for one early morning Monday entry to accommodate Sunday evening in later timezones.",
+			"# Each entry is in the format HOUR:MINUTE.",
+			"# TIP 1: Less battles is bigger battles --> A handful of well placed battle session times will generate bigger battles, by allowing multiple players to synchronize their online fight times.",
+			"# TIP 2: Less fight-time is less-toxic players --> With default settings, an individual player can fight in sieges for a total of 7 hours a week. Be wary of making more fight time available, as it can increase toxicity."),
+	BATTLE_SESSION_SCHEDULER_START_TIMES_SATURDAY(
+			"battle_session_scheduler.start_times.saturday",
+			"03:00,11:00,19:00"),
+	BATTLE_SESSION_SCHEDULER_START_TIMES_SUNDAY(
+			"battle_session_scheduler.start_times.sunday",
+			"03:00,11:00,19:00"),
+	BATTLE_SESSION_SCHEDULER_START_TIMES_MONDAY(
+			"battle_session_scheduler.start_times.monday",
+			"03:00"),
+	BATTLE_SESSION_SCHEDULER_START_TIMES_TUESDAY(
+			"battle_session_scheduler.start_times.tuesday",
 			""),
-	BATTLE_SESSION_SCHEDULER_START_TIMES_WEEKDAYS(
-			"battle_session_scheduler.start_times.weekdays",
-			"00:10,01:10,02:10,03:10,04:10,05:10,06:10,07:10,08:10,09:10,10:10,11:10,12:10,13:10,14:10,15:10,16:10,17:10,18:10,19:10,20:10,21:10,22:10,23:10",
-			"",
-			"# This value determines the weekday times (in Server timezone) when each battle session will start.",
-			"# This setting applies to Monday, Tuesday, Wednesday, Thursday, and Friday.",
-			"# The format is HOUR:MINUTE.",
-			"# The default values are all at ten past the hour, so that the critical point of the battle (the final minutes), will fall on the hour."),
-	BATTLE_SESSION_SCHEDULER_START_TIMES_WEEKEND_DAYS(
-			"battle_session_scheduler.start_times.weekend_days",
-			"00:10,01:10,02:10,03:10,04:10,05:10,06:10,07:10,08:10,09:10,10:10,11:10,12:10,13:10,14:10,15:10,16:10,17:10,18:10,19:10,20:10,21:10,22:10,23:10",
-			"",
-			"# This value determines the weekend times (in Server timezone) when each battle session will start.",
-			"# This setting applies to Saturday and Sunday.",
-			"# The format is HOUR:MINUTE.",
-			"# The default values are all at ten past the hour, so that the critical point of the battle (the final minutes), will fall on the hour."),
+	BATTLE_SESSION_SCHEDULER_START_TIMES_WEDNESDAY(
+			"battle_session_scheduler.start_times.wednesday",
+			""),
+	BATTLE_SESSION_SCHEDULER_START_TIMES_THURSDAY(
+			"battle_session_scheduler.start_times.thursday",
+			""),
+	BATTLE_SESSION_SCHEDULER_START_TIMES_FRIDAY(
+			"battle_session_scheduler.start_times.friday",
+			""),
 	BATTLE_SESSION_SCHEDULER_DURATION_MINUTES(
-			"battle_session_scheduler.duration_minutes",
-			"50",
+			"battle_session_scheduler.session_duration_minutes",
+			"60",
 			"",
-			"# This value determines the duration of each battle session.",
-			"# TIP: The default value of 50 is deliberately designed to give players a 10 minute break after each battle session, for reasons of health and safety."),
+			"# This value determines the duration in minutes of each battle session.",
+			"# The default value is 60"),
 	BATTLE_SESSION_SCHEDULER_CANCEL_SESSION_WHEN_NO_SIEGES(
 			"battle_session_scheduler.cancel_session_when_no_active_sieges",
 			"true",
