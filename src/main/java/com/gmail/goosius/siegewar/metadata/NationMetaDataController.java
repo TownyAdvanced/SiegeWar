@@ -8,10 +8,6 @@ import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class NationMetaDataController {
     @SuppressWarnings("unused")
     private SiegeWar plugin;
@@ -110,20 +106,6 @@ public class NationMetaDataController {
 
     public static void setTotalTownsLost(Nation nation, int num) {
         setIdf(nation, townsLost, num);
-    }
-
-	public static List<String> getDominationRecord(Nation nation) {
-        String recordString = getSdf(nation, dominationRecordKey).replaceAll(" ", "");
-        if(recordString.length() > 0) {
-            return new ArrayList<>(Arrays.asList(recordString.split(",")));
-        } else {
-            return new ArrayList<>();
-        }
-	}
-
-	public static void setDominationRecord(Nation nation, List<String> dominationRecord) {
-        String string = dominationRecord.size() > 0 ? dominationRecord.toString().replace("[", "").replace("]","") : "";
-        setSdf(nation, dominationRecordKey, string);
     }
 
 	public static void setNationPeacefulOccupationTax(Nation nation, int tax) {

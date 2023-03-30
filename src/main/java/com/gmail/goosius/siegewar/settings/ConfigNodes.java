@@ -784,12 +784,6 @@ public enum ConfigNodes {
 			"",
 			"# If this value is true, then a town under occupation cannot unclaim.",
 			"#  This setting is recommended, to avoid occupation escape exploits."),
-	OCCUPIED_TOWN_CORRECT_CONQUERED_STATUS(
-			"occupied_towns.automatically_remove_conquered_status_when_unable_to_load_nation",
-			"true",
-			"",
-			"# Leave this setting to true. Only used under very specific circumstances for which you will be given instructions personally."),
-	
 	PUNISH_NON_SIEGE_PARTICIPANTS_IN_SIEGE_ZONE(
 			"punish_non_siege_participants_in_siege_zones",
 			"",
