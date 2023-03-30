@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar;
 
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class TownOccupationController {
 
 	public static boolean isTownOccupied(Town town) {
-		return town.isConquered();
+		return town.isConquered() && town.hasNation();
 	}
 
 	public static Nation getTownOccupier(Town town) {
@@ -76,13 +77,30 @@ public class TownOccupationController {
 		}
     }
 
+	public static double getNationOccupationTax(Town town) {
+		if(!isTownOccupied(town))
+			return 0;
+
+		Nation nation = town.getNationOrNull();
+		double occupationTaxPerPlot = NationMetaDataController.getNationOccupationTaxPerPlot(nation);
+		if(occupationTaxPerPlot == -1) {
+			occupationTaxPerPlot = SiegeWarSettings.getMaxOccupationTaxPerPlot();
+		}
+
+		return occupationTaxPerPlot * town.getNumTownBlocks();
+	}
+	
 	public static void collectNationOccupationTax() {
 		if (!TownyEconomyHandler.isActive())
 			return;
 		for (Nation nation : new ArrayList<>(TownyAPI.getInstance().getNations())) {
 			double taxPerPlot = NationMetaDataController.getNationOccupationTaxPerPlot(nation); 
+
+			if(taxPerPlot == -1) 
+				taxPerPlot = SiegeWarSettings.getMaxOccupationTaxPerPlot();
+
 			if (taxPerPlot > 0)
-				collectNationOccupationTax(nation, taxPerPlot);
+					collectNationOccupationTax(nation, taxPerPlot);
 		}
 	}
 

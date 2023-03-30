@@ -463,7 +463,10 @@ msg_occupation_tax_cannot_be_paid: "&cThe Town %s could not pay their nation occ
 
 #Shown in the nation status screen when a nation has nation occupation tax.
 status_nation_occupation_tax_per_plot: "&2Occupation Tax: &a%s per plot"
-
+    
+#Shown in the town status screen when a town has occupation tax to pay.
+status_town_occupation_tax: "&2Occupation Tax: &a%s"
+    
 #Shown when the nation tries to set a nation occupation tax over the maximum.
 msg_err_occupation_tax_cannot_be_more_than: "&cNations cannot set an occupation tax greater than %s."
 

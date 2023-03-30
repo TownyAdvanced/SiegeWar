@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.listeners;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.goosius.siegewar.TownOccupationController;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
@@ -110,6 +111,15 @@ public class SiegeWarStatusScreenListener implements Listener {
 			final Translator translator = Translator.locale(Translation.getLocale(event.getCommandSender()));
 			
 			Town town = event.getTown();
+
+			if(TownyEconomyHandler.isActive() && TownOccupationController.isTownOccupied(town)) {
+				double occupationTax = TownOccupationController.getNationOccupationTax(town);
+				if (occupationTax > 0) {
+					String taxForDisplay = TownyEconomyHandler.getFormattedBalance(occupationTax);
+					Component comp = Component.text(translator.of("status_town_occupation_tax", taxForDisplay));
+					event.getStatusScreen().addComponentOf("siegeWarOccupationTax", comp);
+				}
+			}
 			
 			if (TownMetaDataController.hasPlunderDebt(town)) {
 				int days = TownMetaDataController.getPlunderDebtDays(town);
