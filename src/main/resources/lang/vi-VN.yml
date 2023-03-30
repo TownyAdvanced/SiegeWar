@@ -233,11 +233,6 @@ status_nation_town_stats: '&2Lịch sử xâm lược thị trấn - Nước ngo
 status_nation_plunder_stats: '&2Lịch sử cướp bóc thị trấn - Lãi/Lỗ: &a%d&2/&a%d'
 #Siege effects
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cChỉ những cư dân của thị trấn mới có thể xuất hiện trong một thị trấn bị tấn công hoặc khu vực bị tấn công.'
-#Nation Siege Immunity
-msg_err_siege_affected_home_nation_cannot_recruit: "&cQuốc gia không thể thêm thị trấn mới, vì một trong những thị trấn của quốc gia đó đang bị tấn công."
-msg_err_siege_affected_home_nation_town_cannot_recruit: "&cThị trấn không thể thêm cư dân mới, vì một trong những thành phố của quốc gia này đang bị tấn công."
-msg_err_siege_affected_home_nation_town_cannot_claim: "&cKhông thể mua thêm đất, vì một trong những thành phố của quốc gia bạn đang bị tấn công."
-msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cKhông thể hủy đất đai, vì một trong những thành phố của quốc gia bạn đang bị tấn công."
 #Added in 0.18
 #Homeblock move restrictions
 msg_err_besieged_town_cannot_move_homeblock: "&cCác thị trấn bị bao vây không thể di chuyển homeblocks của họ."
