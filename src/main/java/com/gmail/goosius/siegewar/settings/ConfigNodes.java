@@ -124,13 +124,6 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If this setting is true, then Siegewar statistics will be shown on nation status screens."),
-	WAR_SIEGE_KILL_PLAYERS_WHO_LOG_OUT_IN_SIEGE_ZONES(
-			"war.siege.switches.kill_players_who_log_out_in_siege_zones",
-			"true",
-			"",
-			"# If this value is true then players who log out in Siege-Zones will be killed.",
-			"# TIP 1: This setting is important to prevent reinforcements/ambushers appearing unnaturally in SiegeZones.",
-			"# TIP 2: The setting is essential when using the Wall Breaching feature, to stop players logging in/out at the homeblock"),
 	WAR_SIEGE_UNJAIL_RESIDENTS_WHEN_ATTACKERS_WIN_SESSION(
 			"war.siege.switches.unjail_residents_when_attackers_win_battle_session",
 			"false",
