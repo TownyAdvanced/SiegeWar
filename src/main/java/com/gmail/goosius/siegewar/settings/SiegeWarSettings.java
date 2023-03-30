@@ -187,10 +187,6 @@ public class SiegeWarSettings {
 	public static boolean getWarCommonOccupiedTownUnClaimingDisabled() {
 		return Settings.getBoolean(ConfigNodes.OCCUPIED_TOWN_UNCLAIMING_DISABLED);
 	}
-	
-	public static boolean getWarCommonOccupiedTownCorrectConquerStatus() {
-		return Settings.getBoolean(ConfigNodes.OCCUPIED_TOWN_CORRECT_CONQUERED_STATUS);
-	}
 
 	public static boolean isWarSiegeCounterattackBoosterEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_COUNTERATTACK_BOOSTER_ENABLED);
@@ -327,18 +323,6 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_LOWER_HEIGHT_LIMIT);
 	}
 
-	public static boolean isNationSiegeImmunityEnabled() {
-		return Settings.getBoolean(ConfigNodes.NATION_SIEGE_IMMUNITY_ENABLED);
-	}
-
-	public static double getNationSiegeImmunityDurationModifier() {
-		return Settings.getDouble(ConfigNodes.NATION_SIEGE_IMMUNITY_DURATION_MODIFIER);
-	}
-
-	public static double getNationSiegeImmunityHomeTownContributionToAttackCost() {
-		return Settings.getDouble(ConfigNodes.NATION_SIEGE_IMMUNITY_HOME_TOWN_CONTRIBUTION_TO_ATTACK_COST);
-	}
-
 	public static String getBannerControlCaptureMessageColor() {
 		return Settings.getString(ConfigNodes.BANNER_CONTROL_CAPTURE_MESSAGE_COLOR);
 	}
@@ -363,25 +347,6 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_SIEGECAMPS_DURATION_IN_MINUTES);
 	}
 
-	public static int getCappingLimiterBattleSessions() {
-		DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
-		boolean weekend = dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
-
-		if(weekend) {
-			return getCappingLimiterWeekendDayBattleSessions();
-		} else {
-			return getCappingLimiterWeekdayBattleSessions();
-		}
-	}
-
-	private static int getCappingLimiterWeekdayBattleSessions() {
-		return Settings.getInt(ConfigNodes.CAPPING_LIMITER_WEEKDAY_BATTLE_SESSIONS);
-	}
-
-	private static int getCappingLimiterWeekendDayBattleSessions() {
-		return Settings.getInt(ConfigNodes.CAPPING_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS);
-	}
-
 	public static List<DayOfWeek> getSiegeStartDayLimiterAllowedDays() {
 		List<DayOfWeek> allowedDaysList = new ArrayList<>();
 		String[] allowedDaysStringArray = Settings.getString(ConfigNodes.SIEGE_START_DAY_LIMITER_ALLOWED_DAYS).toUpperCase(Locale.ROOT).replaceAll(" ", "").split(",");
@@ -403,10 +368,6 @@ public class SiegeWarSettings {
 
 	public static int getSiegeBalanceCapValue() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_SIEGE_BALANCE_CAP_VALUE);
-	}
-
-	public static boolean getKillPlayersWhoLogoutInSiegeZones() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_KILL_PLAYERS_WHO_LOG_OUT_IN_SIEGE_ZONES);
 	}
 
 	public static boolean isStopTownyPlotPvpProtection() {
@@ -437,13 +398,31 @@ public class SiegeWarSettings {
 	}
 
 	private static List<LocalDateTime> getAllBattleSessionStartTimesForDay(LocalDate day) {
-		//Determine if the given day is on the weekend
-		boolean isWeekend = day.getDayOfWeek() == DayOfWeek.SATURDAY || day.getDayOfWeek() == DayOfWeek.SUNDAY;
-
-		//Get the start times from the config file, in the form of a single string.
-		String startTimesAsString = isWeekend ? 
-			getWarSiegeBattleSessionWeekendStartTimes() :
-			getWarSiegeBattleSessionWeekdayStartTimes();
+		//Get Start times for the given day
+		String startTimesAsString = "";
+		switch (day.getDayOfWeek()) {
+			case MONDAY:
+				startTimesAsString = getBattleSessionStartTimesMonday();
+				break;
+			case TUESDAY:
+				startTimesAsString = getBattleSessionStartTimesTuesday();
+				break;
+			case WEDNESDAY:
+				startTimesAsString = getBattleSessionStartTimesWednesday();
+				break;
+			case THURSDAY:
+				startTimesAsString = getBattleSessionStartTimesThursday();
+				break;
+			case FRIDAY:
+				startTimesAsString = getBattleSessionStartTimesFriday();
+				break;
+			case SATURDAY:
+				startTimesAsString = getBattleSessionStartTimesSaturday();
+				break;
+			case SUNDAY:
+				startTimesAsString = getBattleSessionStartTimesSunday();
+				break;
+		}
 
 		//Transform the config file strings into a list of LocalDateTime objects
 		List<LocalDateTime> startTimesAsList = new ArrayList<>();	
@@ -463,12 +442,32 @@ public class SiegeWarSettings {
 		return startTimesAsList;
 	}
 
-	public static String getWarSiegeBattleSessionWeekdayStartTimes() {
-		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_WEEKDAYS);
+	private static String getBattleSessionStartTimesMonday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_MONDAY);
 	}
 
-	public static String getWarSiegeBattleSessionWeekendStartTimes() {
-		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_WEEKEND_DAYS);
+	private static String getBattleSessionStartTimesTuesday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_TUESDAY);
+	}
+
+	private static String getBattleSessionStartTimesWednesday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_WEDNESDAY);
+	}
+
+	private static String getBattleSessionStartTimesThursday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_THURSDAY);
+	}
+
+	private static String getBattleSessionStartTimesFriday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_FRIDAY);
+	}
+
+	private static String getBattleSessionStartTimesSaturday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_SATURDAY);
+	}
+
+	private static String getBattleSessionStartTimesSunday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_SUNDAY);
 	}
 
 	public static int getWarSiegeBattleSessionsDurationMinutes() {

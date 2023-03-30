@@ -68,14 +68,6 @@ public class SiegeWarTownEventListener implements Listener {
 				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_recruit"));
 				return;
 			}
-
-			//Cannot recruit if nation is fighting a home-defence war
-			if (SiegeWarSettings.isNationSiegeImmunityEnabled()
-					&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
-				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_recruit"));
-				return;
-			}
 		}
 	}
 
@@ -177,14 +169,6 @@ public class SiegeWarTownEventListener implements Listener {
 					event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_claim"));
 					return;
 				}
-
-				//If the town is fighting a home-defence war, they cannot claim any land
-				if (SiegeWarSettings.isNationSiegeImmunityEnabled()
-						&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
-					event.setCancelled(true);
-					event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_claim"));
-					return;
-				}
 			}
 
 			//If the land is too near any active siege zone, it cannot be claimed.
@@ -229,14 +213,6 @@ public class SiegeWarTownEventListener implements Listener {
 			if(SiegeController.hasActiveSiege(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_unclaim"));
-				return;
-			}
-
-			//Town fighting a home-defence war
-			if (SiegeWarSettings.isNationSiegeImmunityEnabled()
-					&& SiegeController.isTownsNationFightingAHomeDefenceWar(event.getTown())) {
-				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_affected_home_nation_town_cannot_unclaim"));
 				return;
 			}
 		}

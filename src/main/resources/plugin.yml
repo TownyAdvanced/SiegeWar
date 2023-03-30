@@ -31,7 +31,6 @@ permissions:
             siegewar.command.siegewaradmin.siegeimmunity: true
             siegewar.command.siegewaradmin.revoltimmunity: true
             siegewar.command.siegewaradmin.siegeduration: true
-            siegewar.command.siegewaradmin.dominationawards: true
             siegewar.command.siegewaradmin.reload: true
             siegewar.command.siegewaradmin.siege: true
             siegewar.command.siegewaradmin.town: true
@@ -44,9 +43,7 @@ permissions:
         default: false
         children:
             siegewar.command.siegewar.hud.*: true
-            siegewar.command.siegewar.town.*: true
             siegewar.command.siegewar.nation.*: true
-            siegewar.command.siegewar.guide: true
             siegewar.command.siegewar.collect: true
 
     siegewar.command.siegewar.preference:
@@ -56,10 +53,6 @@ permissions:
     siegewar.command.siegewar.nextsession:
         description: User is able to use /sw nextsession.
         default: true
-        
-    siegewar.command.siegewar.guide:
-        description: User is able to use /sw guide.
-        default: true
 
     siegewar.command.siegewar.hud.*:
         description: User is able to do all /siegewar hud commands.
@@ -67,19 +60,11 @@ permissions:
         children:
             siegewar.command.siegewar.hud: true
 
-    siegewar.command.siegewar.town.*:
-        description: User is able to do all /siegewar town commands.
-        default: false
-        children:
-            siegewar.command.siegewar.town.inviteoccupation: true
-
     siegewar.command.siegewar.nation.*:
         description: User is able to do all /siegewar nation commands.
         default: false
         children:
             siegewar.command.siegewar.nation.paysoldiers: true
-            siegewar.command.siegewar.nation.removeoccupation: true
-            siegewar.command.siegewar.nation.transferoccupation: true
 
     siegewar.nation.siege.*:
         description: User holds all of the siegewar nation nodes.
@@ -92,11 +77,7 @@ permissions:
             siegewar.nation.siege.plunder: true
             siegewar.nation.siege.conquest.siege.start: true
             siegewar.nation.siege.conquest.siege.abandon: true
-            siegewar.nation.siege.liberation.siege.start: true
-            siegewar.nation.siege.liberation.siege.abandon: true
             siegewar.nation.siege.revolt.siege.surrender: true
-            siegewar.nation.siege.suppression.siege.start: true
-            siegewar.nation.siege.suppression.siege.abandon: true
             siegewar.nation.siege.subvertpeacefultown: true
 
     siegewar.town.siege.*:
@@ -107,8 +88,6 @@ permissions:
             siegewar.town.siege.conquest.siege.surrender: true
             siegewar.town.siege.revolt.siege.start: true
             siegewar.town.siege.revolt.siege.abandon: true
-            siegewar.town.siege.suppression.siege.surrender: true
-            siegewar.town.siege.revoltpeacefully: true
             
     siegewar.command.siegewar.collect:
         description: User is able to do the /siegewar collect command.

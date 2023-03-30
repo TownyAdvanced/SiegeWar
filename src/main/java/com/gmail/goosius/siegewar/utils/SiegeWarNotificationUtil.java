@@ -4,7 +4,6 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
@@ -110,11 +109,7 @@ public class SiegeWarNotificationUtil {
 	 */
 	public static void warnPlayerOfActiveSiegeDanger(Player player, Siege siege) {
 		if(!siege.getPlayersWhoWereInTheSiegeZone().contains(player)) {
-			if(SiegeWarSettings.getKillPlayersWhoLogoutInSiegeZones()) {
-				Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning_with_logout_risk"));
-			} else {
-				Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning"));
-			}
+			Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning"));
 			siege.addPlayerWhoWasInTheSiegeZone(player);
 		}
 	}

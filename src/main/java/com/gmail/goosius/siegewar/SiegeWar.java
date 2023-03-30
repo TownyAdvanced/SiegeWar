@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar;
 
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -89,7 +90,7 @@ public class SiegeWar extends JavaPlugin {
 		registerPlayerCommands();
 		registerListeners();
 		checkIntegrations();
-		cleanupLegacyMetaData();
+		deleteLegacyMetaData();
 		migrateTownOccupationData();
 
 		if(siegeWarPluginError) {
@@ -239,11 +240,14 @@ public class SiegeWar extends JavaPlugin {
 	}
 
 	/**
-	 * Cleanup metadata which is non longer in use
+	 * Delete legacy metadata which is non longer in use
 	 */
-	private void cleanupLegacyMetaData() {
+	private void deleteLegacyMetaData() {
 		for(Resident resident: TownyUniverse.getInstance().getResidents()) {
-			ResidentMetaDataController.clearPlunder(resident);
+			ResidentMetaDataController.deleteLegacyMetadata(resident);
+		}
+		for(Nation nation: TownyUniverse.getInstance().getNations()) {
+			NationMetaDataController.deleteLegacyMetadata(nation);
 		}
 	}
 

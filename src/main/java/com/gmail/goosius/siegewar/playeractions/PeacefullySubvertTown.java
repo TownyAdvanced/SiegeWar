@@ -97,9 +97,6 @@ public class PeacefullySubvertTown {
 		if(SiegeController.hasActiveSiege(targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_change_occupation_of_besieged_town"));
 
-		if(targetTown.hasNation() && targetTown.getNationOrNull() == residentsNation)
-			throw new TownyException(translator.of("msg_err_cannot_subvert_towns_in_own_nation"));
-
 		if(TownOccupationController.isTownOccupiedByNation(residentsNation, targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_subvert_town_already_occupied"));
 

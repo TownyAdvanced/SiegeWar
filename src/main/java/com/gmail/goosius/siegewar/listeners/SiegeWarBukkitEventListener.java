@@ -216,14 +216,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 		  && event.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), () -> event.getPlayer().removePotionEffect(PotionEffectType.GLOWING));
 		}
-
-		//Kill players in Siege-Zones
-		if(event.getPlayer().getHealth() > 0
-				&& SiegeWarSettings.getKillPlayersWhoLogoutInSiegeZones()
-				&& SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getPlayer().getLocation())) {
-			event.setQuitMessage(Translatable.of("msg_player_killed_for_logging_out_in_siege_zone", event.getPlayer().getName()).translate());
-			event.getPlayer().setHealth(0);
-		}
 	}
 
 	//Stops TNT/Minecarts from destroying blocks in the siegezone wilderness

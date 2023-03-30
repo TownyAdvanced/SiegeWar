@@ -5,7 +5,6 @@ import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -137,18 +136,6 @@ public class SiegeWarMoneyUtil {
 		//Calculate base cost
 		double cost = SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
 						* town.getTownBlocks().size();
-
-		//Increase cost due to nation size
-		if(SiegeWarSettings.isNationSiegeImmunityEnabled()
-			&& SiegeWarSettings.getNationSiegeImmunityHomeTownContributionToAttackCost() > 0
-			&& town.hasNation()) {
-			Nation nation = TownyAPI.getInstance().getTownNationOrNull(town);
-			for (Town nationHomeTown : nation.getTowns()) {
-				cost += SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
-						* nationHomeTown.getTownBlocks().size()
-						* SiegeWarSettings.getNationSiegeImmunityHomeTownContributionToAttackCost();
-			}
-		}
 
 		//Increase cost if town is capitol
 		if(SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage() > 0

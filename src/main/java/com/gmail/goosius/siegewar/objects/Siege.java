@@ -503,7 +503,7 @@ public class Siege {
 	public void setDefenderName(String defenderName) {
 		this.defenderName = defenderName;
 	}
-	
+
 	public int getNumberOfBannerControlReversals() {
 		return numberOfBannerControlReversals;
 	}

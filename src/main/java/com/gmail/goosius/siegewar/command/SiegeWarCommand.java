@@ -7,7 +7,6 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.BookUtil;
 import com.gmail.goosius.siegewar.utils.BossBarUtil;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
@@ -36,7 +35,7 @@ import java.util.*;
 
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
-	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "guide", "preference", "version", "nextsession");
+	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "preference", "version", "nextsession");
 	
 	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "claimrefund");
 
@@ -70,7 +69,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void showSiegeWarHelp(CommandSender sender) {
 		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewar"));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw guide", "", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw collect", "", Translatable.of("nation_help_11").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "claimrefund [amount]", Translatable.of("nation_help_refund").forLocale(sender)));
@@ -118,9 +116,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		case "hud":
 			parseSiegeWarHudCommand(player, StringMgmt.remFirstArg(args));
 			break;
-		case "guide":
-			parseSiegeWarGuideCommand(player);
-			break;
 		case "nation":
 			parseSiegeWarNationCommand(player, StringMgmt.remFirstArg(args));
 			break;
@@ -151,11 +146,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			}
 			Messaging.sendMsg(player, message);
 		}
-		
-	}
-
-	private void parseSiegeWarGuideCommand(Player player) {
-		BookUtil.buildBook(player);
 		
 	}
 
