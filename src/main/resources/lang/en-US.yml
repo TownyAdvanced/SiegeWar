@@ -444,7 +444,10 @@ status_town_plunder_debt: "&2Plunder Debt Owing: %s, %s daily payments of %s rem
 ##################### Occupation Tax #############################
 
 #Shown when the nation sets their occupation tax
-msg_occupation_tax_set: "&bYour nation has set a daily occupation tax of %s."
+msg_occupation_tax_set: "&bYour nation has set a daily occupation tax of %s per plot."
+    
+#Shown when the nation sets their occupation tax
+msg_occupation_tax_set_max: "&bYour nation has set a daily occupation tax of maximum (%s per plot). The nation occupation tax will now automatically track the server-configured maximum."
 
 #Shown when a town pays their nation occupation tax.
 msg_occupation_tax_paid: "&bYour town paid the nation occupation tax of %s."
