@@ -26,7 +26,7 @@ import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
-import com.gmail.goosius.siegewar.command.SiegeWarNationSetPeacefulOccupationTaxAddonCommand;
+import com.gmail.goosius.siegewar.command.SiegeWarNationSetOccupationTaxAddonCommand;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.integration.dynmap.DynmapIntegration;
 import com.gmail.goosius.siegewar.listeners.SiegeWarActionListener;
@@ -180,7 +180,7 @@ public class SiegeWar extends JavaPlugin {
 			severe("SiegeWar is in safe mode. SiegeWar player commands not registered");
 		} else {
 			getCommand("siegewar").setExecutor(new SiegeWarCommand());
-			new SiegeWarNationSetPeacefulOccupationTaxAddonCommand();
+			new SiegeWarNationSetOccupationTaxAddonCommand();
 		}
 	}
 

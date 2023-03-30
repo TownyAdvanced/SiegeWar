@@ -19,8 +19,11 @@ public class NationMetaDataController {
         townsLost = "siegewar_totaltownslost";
 
     private static final LongDataField legacyFieldPendingSiegeImmunityMillis = new LongDataField("siegewar_pendingSiegeImmunityMillis");
-    private static final IntegerDataField nationPeacefulOccupationTax = new IntegerDataField("siegeWar_nationPeacefulOccupationTax", 0);
-
+    private static final IntegerDataField legacyFieldNationPeacefulOccupationTax = new IntegerDataField("siegeWar_nationPeacefulOccupationTax", 0);
+    
+    //Occupation tax per plot. A value of -1 causes the applied value to be the "max" set in the config file.
+    private static final IntegerDataField nationOccupationTaxPerPlot = new IntegerDataField("siegeWar_nationOccupationTaxPerPlot", -1);
+ 
     public NationMetaDataController(SiegeWar plugin) {
         this.plugin = plugin;
     }
@@ -91,18 +94,24 @@ public class NationMetaDataController {
         setIdf(nation, townsLost, num);
     }
 
-	public static void setNationPeacefulOccupationTax(Nation nation, int tax) {
-		MetaDataUtil.setInt(nation, nationPeacefulOccupationTax, tax, true);
+	public static void setNationOccupationTaxPerPlot(Nation nation, int tax) {
+		MetaDataUtil.setInt(nation, nationOccupationTaxPerPlot, tax, true);
 	}
 
-	public static int getNationPeacefulOccupationTax(Nation nation) {
-		return MetaDataUtil.getInt(nation, nationPeacefulOccupationTax);
+	public static int getNationOccupationTaxPerPlot(Nation nation) {
+        if (!MetaDataUtil.hasMeta(nation, nationOccupationTaxPerPlot))
+            return -1;
+        return MetaDataUtil.getInt(nation, nationOccupationTaxPerPlot);
 	}
 
     public static void deleteLegacyMetadata(Nation nation) {
         LongDataField ldf = (LongDataField) legacyFieldPendingSiegeImmunityMillis.clone();
         if (nation.hasMeta(ldf.getKey())) {
             nation.removeMetaData(ldf);
+        }
+        IntegerDataField idf = (IntegerDataField) legacyFieldNationPeacefulOccupationTax.clone();
+        if (nation.hasMeta(idf.getKey())) {
+            nation.removeMetaData(idf);
         }
     }
 

@@ -205,12 +205,13 @@ public enum ConfigNodes {
 			"# Level 4 (12 residents), 80 plots. Cost = (20 * 80) + 150% = 4000",
 			"# ",
 			"# If the value is 0, then money amounts are not modified."),
-	WAR_SIEGE_MAX_PEACEFUL_OCCUPATION_TAX(
-			"war.siege.money.max_nation_peaceful_occupation_tax",
-			"0",
+	WAR_SIEGE_MAX_OCCUPATION_TAX_PER_PLOT(
+			"war.siege.money.max_occupation_tax_per_plot",
+			"5",
 			"",
-			"# The maximum that a nation can set for an peacefuloccupationtax using /n set peacefuloccupationtax.",
-			"# This tax is applied to the nation's occupied towns which are peaceful."),
+			"# The maximum that a nation can set for its occupation-tax, using /n set occupationtax.",
+			"# Each nation's occupation tax will always track the above value, unless they use the above command.",
+			"# This tax is applied to all the nation's occupied towns."),
 	WAR_SIEGE_NATION_COST_REFUND_PERCENTAGE_ON_DELETE(
 			"war.siege.money.nation_cost_refund_percentage_on_delete",
 			"80.0",
