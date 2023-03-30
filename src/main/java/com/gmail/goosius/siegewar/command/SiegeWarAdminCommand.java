@@ -44,7 +44,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
-	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setpeaceful, setoccupied");
+	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setpeaceful", "setoccupied");
 	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost");
 	private static final List<String> siegewaradminBattleSessionTabCompletes = Arrays.asList("end","start");
 	private static final List<String> siegeDurationTabCompletes = Arrays.asList("addhours");

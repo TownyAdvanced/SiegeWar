@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -10,8 +11,11 @@ import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.util.TimeMgmt;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,5 +191,66 @@ public class TownPeacefulnessUtil {
 		}
 
 		return result;
+	}
+
+	public static void toggleTownPeacefulness(Player player) {
+		if (!SiegeWarSettings.getWarSiegeEnabled()) {
+			player.sendMessage(Translation.of("msg_err_command_disable"));
+			return;
+		}
+
+		if(!SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
+			player.sendMessage(Translation.of("msg_err_command_disable"));
+			return;
+		}
+
+		Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
+		if(resident == null || !resident.hasTown()) {
+			player.sendMessage(Translation.of("msg_err_command_disable"));
+			return;
+		}
+
+		//Capital towns cannot go peaceful.
+		Town town = resident.getTownOrNull();
+		if (town.isCapital() && !SiegeWarSettings.capitalsAllowedTownPeacefulness()) {
+			player.sendMessage(Translation.of("msg_err_capital_towns_cannot_go_peaceful"));
+			return;
+		}
+
+		//Get the days required for a status change
+		int daysRequiredForStatusChange;
+		if(System.currentTimeMillis() < (town.getRegistered() + (TimeMgmt.ONE_DAY_IN_MILLIS * 7))) {
+			daysRequiredForStatusChange = SiegeWarSettings.getWarCommonPeacefulTownsNewTownConfirmationRequirementDays();
+		} else {
+			daysRequiredForStatusChange = SiegeWarSettings.getWarCommonPeacefulTownsConfirmationRequirementDays();
+		}
+
+		//Check if there is a countdown in progress
+		if (TownMetaDataController.getPeacefulnessChangeConfirmationCounterDays(town) == 0) {
+			//No countdown in progress
+			TownMetaDataController.setDesiredPeacefulnessSetting(town, !TownPeacefulnessUtil.isTownPeaceful(town));
+			TownMetaDataController.setPeacefulnessChangeDays(town, daysRequiredForStatusChange);
+
+			//Send message to town
+			if (TownMetaDataController.getDesiredPeacefulnessSetting(town))
+				TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_declared_peaceful"), daysRequiredForStatusChange));
+			else
+				TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_declared_non_peaceful"), daysRequiredForStatusChange));
+
+			//Remove any military nation ranks of residents
+			for(Resident peacefulTownResident: town.getResidents()) {
+				for (String nationRank : new ArrayList<>(peacefulTownResident.getNationRanks())) {
+					if (PermissionUtil.doesNationRankAllowPermissionNode(nationRank, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS)) {
+						peacefulTownResident.removeNationRank(nationRank);
+					}
+				}
+			}
+		} else {
+			//Countdown in progress. Cancel the countdown
+			TownMetaDataController.setDesiredPeacefulnessSetting(town, TownPeacefulnessUtil.isTownPeaceful(town));
+			TownMetaDataController.setPeacefulnessChangeDays(town, 0);
+			//Send message to town
+			TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_peacefulness_countdown_cancelled")));
+		}
 	}
 }
