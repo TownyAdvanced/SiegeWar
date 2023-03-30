@@ -16,8 +16,7 @@ public class NationMetaDataController {
         plunderGained = "siegewar_totalplundergained",
         plunderLost = "siegewar_totalplunderlost",
         townsGained = "siegewar_totaltownsgained",
-        townsLost = "siegewar_totaltownslost",
-        dominationRecordKey = "siegewar_dominationrecord";
+        townsLost = "siegewar_totaltownslost";
 
     private static final LongDataField legacyFieldPendingSiegeImmunityMillis = new LongDataField("siegewar_pendingSiegeImmunityMillis");
     private static final IntegerDataField nationPeacefulOccupationTax = new IntegerDataField("siegeWar_nationPeacefulOccupationTax", 0);
@@ -58,22 +57,6 @@ public class NationMetaDataController {
             }
         } else if (num != 0)
             nation.addMetaData(new IntegerDataField(key, num));
-    }
-
-    private static void setSdf(Nation nation, String key, String value) {
-        if (nation.hasMeta(key)) {
-            if (value == null || value.length() == 0) {
-                nation.removeMetaData(nation.getMetadata(key));
-            } else {
-                CustomDataField<?> cdf = nation.getMetadata(key);
-                if (cdf instanceof StringDataField) {
-                    ((StringDataField) cdf).setValue(value);
-                }
-            }
-        } else if (value != null && value.length() > 0) {
-            nation.addMetaData(new StringDataField(key, value));
-        }
-        nation.save();
     }
 
     public static int getTotalPlunderGained(Nation nation) {
