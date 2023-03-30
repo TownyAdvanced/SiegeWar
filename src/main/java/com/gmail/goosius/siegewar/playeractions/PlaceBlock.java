@@ -197,9 +197,6 @@ public class PlaceBlock {
 		Town residentsTown = resident.getTownOrNull();
 		Nation residentsNation = resident.getNationOrNull();
 		
-		if (!residentsTown.isAllowedToWar())
-			throw new TownyException(translator.of("msg_err_your_town_is_not_allowed_to_start_a_siege"));
-
 		//Ensure there is at least 1 adjacent town
 		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
 		List<TownBlock> adjacentNonCardinalTownBlocks = SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block);
@@ -298,9 +295,6 @@ public class PlaceBlock {
 														   TownBlock nearbyTownBlock,
 														   Town nearbyTown,
 														   Block bannerBlock) throws TownyException {
-		if(!nearbyTown.isAllowedToWar())
-			throw new TownyException(Translatable.of("msg_err_this_town_is_not_allowed_to_be_sieged"));
-
 		if(nearbyTown.isNeutral()) {
 			//Town is peaceful, so this action is a subversion or peaceful-revolt attempt
 			if(residentsTown == nearbyTown) {
