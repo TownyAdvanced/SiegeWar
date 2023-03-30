@@ -295,6 +295,9 @@ public class PlaceBlock {
 														   TownBlock nearbyTownBlock,
 														   Town nearbyTown,
 														   Block bannerBlock) throws TownyException {
+		if(!nearbyTown.isAllowedToWar())
+			throw new TownyException(Translatable.of("msg_err_this_town_is_not_allowed_to_be_attacked"));
+
 		if(nearbyTown.isNeutral()) {
 			//Town is peaceful, so this action is a subversion or peaceful-revolt attempt
 			if(residentsTown == nearbyTown) {
