@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.UUID;
 
 import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
 
@@ -63,10 +62,8 @@ public class Siege {
 	private Map<Player, BannerControlSession> bannerControlSessions;
 	private int attackerBattlePoints;
 	private int defenderBattlePoints;
-	private Map<UUID, Integer> primaryTownGovernments; //UUID:numBattleSessions map of governments who led the town during the siege. If town was is a nation, nation UUID will be used, otherwise town UUID will be used
 	private int numberOfBannerControlReversals;
 	private Set<Player> playersWhoWereInTheSiegeZone;
-	private Set<Player> playersWhoWereInTheBesiegedTown;
 	
 	public Siege(Town town) {
 		this.town = town;
@@ -84,10 +81,8 @@ public class Siege {
 		bannerControlSessions = new HashMap<>();
 		attackerBattlePoints = 0;
 		defenderBattlePoints = 0;
-		primaryTownGovernments = new HashMap<>();
 		numberOfBannerControlReversals = 0;
 		playersWhoWereInTheSiegeZone = new HashSet<>();
-		playersWhoWereInTheBesiegedTown = new HashSet<>();
     }
 
     public Town getTown() {
@@ -426,46 +421,6 @@ public class Siege {
 	public boolean isLiberationSiege() {
 		return false;
 	}
-	
-	/**
-	 * Record who is the primary government of the town
-	 * If the town has a nation, nation uuid will be recorded,
-	 * otherwise town uuid will be recorded.
-	 */
-	public void recordPrimaryTownGovernment() {
-		//Identify key
-		UUID governmentUUID;
-		if(town.hasNation())
-			governmentUUID = TownyAPI.getInstance().getTownNationOrNull(town).getUUID();
-		else
-			governmentUUID = town.getUUID();
-
-		//Record battle session contribution
-		if(primaryTownGovernments.containsKey(governmentUUID)) {
-			int numBattleSessions = primaryTownGovernments.get(governmentUUID);
-			numBattleSessions++;
-			primaryTownGovernments.put(governmentUUID, numBattleSessions);
-		} else {
-			primaryTownGovernments.put(governmentUUID, 1);
-		}
-	}
-
-	public Map<UUID, Integer> getPrimaryTownGovernments() {
-		return primaryTownGovernments;
-	}
-
-	public void setPrimaryTownGovernments(Map<UUID, Integer> primaryTownGovernments) {
-		this.primaryTownGovernments = primaryTownGovernments;
-	}
-
-
-	public int getTotalBattleSessions() {
-		int result = 0;
-		for(int homeNationContribution: primaryTownGovernments.values()) {
-			result += homeNationContribution;
-		}
-		return result;
-	}
 
 	public SiegeSide getSiegeWinner() {
 		return siegeWinner;
@@ -474,7 +429,7 @@ public class Siege {
 	public void setSiegeWinner(SiegeSide siegeWinner) {
 		this.siegeWinner = siegeWinner;
 	}
-
+	
 	public boolean isDefenderWinning() {
 		return siegeWinner == SiegeSide.DEFENDERS;
 	}
@@ -484,10 +439,10 @@ public class Siege {
 	}
 
 	public String getSiegeWinnerFormatted() {
-		return getSiegeWinner() == SiegeSide.NOBODY ? Translation.of("msg_nobody") : 
+		return getSiegeWinner() == SiegeSide.NOBODY ? Translation.of("msg_nobody") :
 				isDefenderWinning() ? Translation.of("msg_defenders") : Translation.of("msg_attackers");
 	}
-
+	
 	public String getAttackerName() {
 		return attackerName;
 	}
@@ -516,10 +471,6 @@ public class Siege {
 		playersWhoWereInTheSiegeZone.clear();
 	}
 
-	public void clearPlayersWhoWereInTheBesiegedTown() {
-		playersWhoWereInTheBesiegedTown.clear();
-	}
-
 	public Set<Player> getPlayersWhoWereInTheSiegeZone() {
 		return playersWhoWereInTheSiegeZone;
 	}
@@ -528,11 +479,4 @@ public class Siege {
 		playersWhoWereInTheSiegeZone.add(player);
 	}
 
-	public Set<Player> getPlayersWhoWereInTheBesiegedTown() {
-		return playersWhoWereInTheBesiegedTown;
-	}
-
-	public void addPlayersWhoWereInTheBesiegedTown(Player player) {
-		playersWhoWereInTheBesiegedTown.add(player);
-	}
 }

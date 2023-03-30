@@ -31,6 +31,8 @@ public class TownMetaDataController {
 	//Legacy Metadata
 	private static StringDataField legacyDataOccupyingNationUUID = new StringDataField("siegewar_occupyingNationUUID", "");
 	private static StringDataField legacyDataPrePeacefulOccupierUUID = new StringDataField("siegewar_prePeacefulOccupierUUID", "");
+	private static StringDataField legacyAttackerSiegeContributors = new StringDataField("siegewar_attackerSiegeContributors", "");
+	private static StringDataField legacyPrimaryTownGovernments = new StringDataField("siegewar_primaryTownGovernments", "");
 
 	public TownMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
@@ -167,21 +169,26 @@ public class TownMetaDataController {
 		return MetaDataUtil.hasMeta(town, legacyDataOccupyingNationUUID);
 	}
 
-	public static boolean hasLegacyPrePeacefulOccupierUUID(Town town) {
-		return MetaDataUtil.hasMeta(town, legacyDataPrePeacefulOccupierUUID);
-	}
-
 	public static String getLegacyOccupierUUID(Town town) {
 		return MetaDataUtil.getString(town, legacyDataOccupyingNationUUID);
 	}
 
-	public static void removeLegacyOccupierUUID(Town town) {
-		town.removeMetaData(legacyDataOccupyingNationUUID.getKey());
-		town.save();
-	}
-
-	public static void removeLegacyPrePeacefulOccupierUUID(Town town) {
-		town.removeMetaData(legacyDataPrePeacefulOccupierUUID.getKey());
-		town.save();
+	public static void deleteLegacyMetadata(Town town) {
+		StringDataField sdf = (StringDataField) legacyDataOccupyingNationUUID.clone();
+		if (town.hasMeta(sdf.getKey())) {
+			town.removeMetaData(sdf);
+		}
+		sdf = (StringDataField) legacyDataPrePeacefulOccupierUUID.clone();
+		if (town.hasMeta(sdf.getKey())) {
+			town.removeMetaData(sdf);
+		}
+		sdf = (StringDataField) legacyAttackerSiegeContributors.clone();
+		if (town.hasMeta(sdf.getKey())) {
+			town.removeMetaData(sdf);
+		}
+		sdf = (StringDataField) legacyPrimaryTownGovernments.clone();
+		if (town.hasMeta(sdf.getKey())) {
+			town.removeMetaData(sdf);
+		}
 	}
 }

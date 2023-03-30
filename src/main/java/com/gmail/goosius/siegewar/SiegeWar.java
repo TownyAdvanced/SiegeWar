@@ -90,8 +90,9 @@ public class SiegeWar extends JavaPlugin {
 		registerPlayerCommands();
 		registerListeners();
 		checkIntegrations();
-		deleteLegacyMetaData();
 		migrateTownOccupationData();
+		deleteLegacyMetaData();
+
 
 		if(siegeWarPluginError) {
 			severe("SiegeWar did not load successfully, and is now in safe mode!");
@@ -249,6 +250,10 @@ public class SiegeWar extends JavaPlugin {
 		for(Nation nation: TownyUniverse.getInstance().getNations()) {
 			NationMetaDataController.deleteLegacyMetadata(nation);
 		}
+		for(Town town: TownyUniverse.getInstance().getTowns()) {
+			TownMetaDataController.deleteLegacyMetadata(town);
+		}
+
 	}
 
 	/**
@@ -259,6 +264,8 @@ public class SiegeWar extends JavaPlugin {
 	 * so that if the older data schema is detected,
 	 * and a town has an occupying nation,
 	 * that town will be transferred to that occupying nation.
+	 * - 
+	 * FYI the metadata is deleted later, in deleteLegacyMetaData()
 	 */
 	public static void migrateTownOccupationData() {
 		boolean success = false;
@@ -269,10 +276,6 @@ public class SiegeWar extends JavaPlugin {
 					TownOccupationController.setTownOccupation(town, occupyingNation);
 					success = true;
 				}
-				TownMetaDataController.removeLegacyOccupierUUID(town);
-			}
-			if(TownMetaDataController.hasLegacyPrePeacefulOccupierUUID(town)) {
-				TownMetaDataController.removeLegacyPrePeacefulOccupierUUID(town);
 			}
 		}
 		if (success)

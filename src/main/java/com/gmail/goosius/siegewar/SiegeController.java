@@ -98,7 +98,6 @@ public class SiegeController {
 		SiegeMetaDataController.setStartTime(town, siege.getStartTime());
 		SiegeMetaDataController.setEndTime(town, siege.getScheduledEndTime());
 		SiegeMetaDataController.setActualEndTime(town, siege.getActualEndTime());
-		SiegeMetaDataController.setPrimaryTownGovernments(town, siege.getPrimaryTownGovernments());
 		town.save();
 	}
 
@@ -234,8 +233,6 @@ public class SiegeController {
 		siege.setScheduledEndTime(SiegeMetaDataController.getEndTime(town));
 
 		siege.setActualEndTime(SiegeMetaDataController.getActualEndTime(town));
-
-		siege.setPrimaryTownGovernments(SiegeMetaDataController.getPrimaryTownGovernments(town));
 
 		return true;
 	}
@@ -539,16 +536,6 @@ public class SiegeController {
 				));
 				break;
 		}
-	}
-
-	public static boolean doesNationHaveAnyHomeDefenceContributionsInActiveSieges(Nation nation) {
-		for(Siege siege: townSiegeMap.values()) {
-			if(siege.getStatus().isActive()
-				&& siege.getPrimaryTownGovernments().containsKey(nation.getUUID())) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	/**
