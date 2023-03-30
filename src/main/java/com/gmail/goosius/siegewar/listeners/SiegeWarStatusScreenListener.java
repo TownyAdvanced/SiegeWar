@@ -61,11 +61,18 @@ public class SiegeWarStatusScreenListener implements Listener {
 			final Translator translator = Translator.locale(Translation.getLocale(event.getCommandSender()));
 			Nation nation = event.getNation();
 
-			double occupationTax = NationMetaDataController.getNationPeacefulOccupationTax(nation); 
-			if (occupationTax > 0 && TownyEconomyHandler.isActive()) {
-				String tax = TownyEconomyHandler.getFormattedBalance(occupationTax);
-				Component comp = Component.text(translator.of("status_nation_peaceful_occupation_tax", tax));
-				event.getStatusScreen().addComponentOf("siegeWarPeacefulOccupationTax", comp);
+			if(TownyEconomyHandler.isActive()) {
+				double occupationTaxPerPlot = NationMetaDataController.getNationOccupationTaxPerPlot(nation);
+
+				if(occupationTaxPerPlot == -1) {
+					occupationTaxPerPlot = SiegeWarSettings.getMaxOccupationTaxPerPlot();
+				}
+				
+				if (occupationTaxPerPlot > 0) {
+					String tax = TownyEconomyHandler.getFormattedBalance(occupationTaxPerPlot);
+					Component comp = Component.text(translator.of("status_nation_occupation_tax_per_plot", tax));
+					event.getStatusScreen().addComponentOf("siegeWarOccupationTax", comp);
+				} 
 			}
 
 			List<String> out = new ArrayList<>();

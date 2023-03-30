@@ -1,8 +1,6 @@
 package com.gmail.goosius.siegewar.settings;
 
 import java.util.List;
-import java.util.Set;
-import java.util.EnumSet;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -12,7 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import org.bukkit.Material;
 
@@ -176,8 +173,8 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_EXTRA_MONEY_PERCENTAGE_PER_TOWN_LEVEL);
 	}
 
-	public static int maxNationPeacefulOccupationTax() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_MAX_PEACEFUL_OCCUPATION_TAX);
+	public static int getMaxOccupationTaxPerPlot() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_MAX_OCCUPATION_TAX_PER_PLOT);
 	}
 
 	public static int getWarSiegeBannerControlSessionDurationMinutes() {
