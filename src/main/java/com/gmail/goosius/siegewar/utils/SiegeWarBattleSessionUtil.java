@@ -63,7 +63,6 @@ public class SiegeWarBattleSessionUtil {
 		//Recalculate recent battle sessions of players
 		try { Thread.sleep(5000); //Sleep to ensure recalculation is good
 		} catch (InterruptedException e) { e.printStackTrace();}
-		SiegeWarBattleSessionUtil.recalculateRecentBattleSessionsLists();
 		//Send global message to let the server know that the battle session started
 		Messaging.sendGlobalMessage(Translatable.of("msg_war_siege_battle_session_started"));
 		//Start the bossbar for the Battle Session
@@ -93,9 +92,6 @@ public class SiegeWarBattleSessionUtil {
 	public static void endBattleSessionForSiege(Siege siege) {
 		try {
 			if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
-				//Record primary government of besieged town
-				if(SiegeWarSettings.isNationSiegeImmunityEnabled())
-					siege.recordPrimaryTownGovernment();
 
 				//If any battle points were gained, calculate a result
 				if(siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0) {
@@ -295,105 +291,6 @@ public class SiegeWarBattleSessionUtil {
 				return "0";
 			}		
 		}	
-	}
-
-	/**
-	 * Checks if the given resident has exceeded their siege attendance limit
-	 * 
-	 * @return true if resident has exceeded their siege attendance limit
-	 */
-	public static boolean hasResidentExceededTheirSiegeAttendanceLimit(Resident resident)  {
-		//Return false if the Siege Attendance Limit is -1 (disabled).
-		int maxDailyPlayerBattleSessions = SiegeWarSettings.getCappingLimiterBattleSessions();
-		if(maxDailyPlayerBattleSessions == -1)
-			return false;
-
-		//If current session is on players's recent-sessions-list, that means they can attend it, so return false.
-		List<String> recentBattleSessionsList = ResidentMetaDataController.getRecentBattleSessionsAsList(resident);
-		String startTimeOfCurrentBattleSessionAsString = BattleSession.getBattleSession().getStartTime().toString();
-		if(recentBattleSessionsList.contains(startTimeOfCurrentBattleSessionAsString)) 
-			return false;			
-
-		//Check if player is at their daily limit
-		if(recentBattleSessionsList.size() >= maxDailyPlayerBattleSessions) {
-			//Player at or over the limit. Return true
-			return true;
-		} else {
-			//Player is not at the limit
-			return false;
-		}
-	}
-
-	/**
-	 * Recalculate the recent battle sessions list of each player
-	 *
-	 * After this method runs, some players may be able to attend sieges again.
-	 */
-	public static void recalculateRecentBattleSessionsLists() {
-		//Return if the Siege Attendance Limit is -1 (disabled).
-		if(SiegeWarSettings.getCappingLimiterBattleSessions() == -1)
-			return;
-
-		List<String> recentBattleSessionsList;
-		List<String> recalculatedRecentBattleSessionsList;
-		for(Resident resident: TownyAPI.getInstance().getResidents()) {
-			//Recalculate recent-sessions list, keeping only entries which are newer then 24 hours old
-			recentBattleSessionsList = ResidentMetaDataController.getRecentBattleSessionsAsList(resident);
-			recalculatedRecentBattleSessionsList = new ArrayList<>();
-			for(String battleSessionStartTime: recentBattleSessionsList) {
-				if(System.currentTimeMillis() - Long.parseLong(battleSessionStartTime) < ONE_DAY_IN_MILLIS) {
-					recalculatedRecentBattleSessionsList.add(battleSessionStartTime);
-				}
-			}
-
-			//Save recent-session list if it has changed (will happen if one or more entries have dropped off)
-			if(recentBattleSessionsList.size() != recalculatedRecentBattleSessionsList.size()) {
-				ResidentMetaDataController.setRecentBattleSessions(resident, recalculatedRecentBattleSessionsList);
-				resident.save();
-			}
-		}
-	}
-
-	/**
-	 * Gets the formatted time until a player is no longer limited by the Capping Limiter feature
-	 *
-	 * @param resident the resident
-	 * @return formatted time e.g.  11.2 minutes, 12.8 hours,
-	 */
-	public static String getFormattedTimeUntilPlayerCappingLimitExpires(Resident resident) {
-		/*
-		 * The 1st entry on the player's list will be the oldest session.
-		 * Find out when it will drop off the list
-		 */
-		List<String> recentBattleSessions = ResidentMetaDataController.getRecentBattleSessionsAsList(resident);
-		if(recentBattleSessions.size()== 0)
-			return "?";
-		String stringStartTimeOfOldestSession = recentBattleSessions.get(0);
-		long longStartTimeOfOldestSession = Long.parseLong(stringStartTimeOfOldestSession);
-		long millisSinceOldestSessionStarted = System.currentTimeMillis() - longStartTimeOfOldestSession; //will be less than 24 hrs
-		long millisUntilOldestSessionDropsOffList = ONE_DAY_IN_MILLIS - millisSinceOldestSessionStarted;
-		return TimeMgmt.getFormattedTimeValue(millisUntilOldestSessionDropsOffList);
-	}
-
-	/**
-	 * Mark the player as having capped at the current battle session
-	 * @param resident the resident
-	 */
-	public static void markResidentAsHavingCappedAtCurrentBattleSession(Resident resident) {
-		//Return false if the Capping Limiter is -1 (disabled)
-		if(SiegeWarSettings.getCappingLimiterBattleSessions() == -1)
-			return;
-
-		//If current session is already on players's recent-sessions-list, return.
-		List<String> recentBattleSessionsList = ResidentMetaDataController.getRecentBattleSessionsAsList(resident);
-		String startTimeOfCurrentBattleSessionAsString = BattleSession.getBattleSession().getStartTime().toString();
-		if(recentBattleSessionsList.contains(startTimeOfCurrentBattleSessionAsString)) 
-			return;
-
-		//Add the current battle session to the player's list
-		recentBattleSessionsList.add(BattleSession.getBattleSession().getStartTime().toString());
-		ResidentMetaDataController.setRecentBattleSessions(resident, recentBattleSessionsList);
-		resident.save();
 	}
 
 	/**

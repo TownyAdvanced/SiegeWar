@@ -43,10 +43,10 @@ public class ResidentMetaDataController {
 	 * This method is used to clean up legacy metadata
 	 * @param resident a resident
 	 */
-	public static void clearPlunder(Resident resident) {
+	public static void deleteLegacyMetadata(Resident resident) {
 		IntegerDataField idf = (IntegerDataField) legacy_plunder.clone();
 		if (resident.hasMeta(idf.getKey())) {
-		   resident.removeMetaData(idf);
+		   	resident.removeMetaData(idf);
 		}
 	}
 

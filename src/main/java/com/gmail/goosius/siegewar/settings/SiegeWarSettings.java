@@ -333,18 +333,6 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_LOWER_HEIGHT_LIMIT);
 	}
 
-	public static boolean isNationSiegeImmunityEnabled() {
-		return Settings.getBoolean(ConfigNodes.NATION_SIEGE_IMMUNITY_ENABLED);
-	}
-
-	public static double getNationSiegeImmunityDurationModifier() {
-		return Settings.getDouble(ConfigNodes.NATION_SIEGE_IMMUNITY_DURATION_MODIFIER);
-	}
-
-	public static double getNationSiegeImmunityHomeTownContributionToAttackCost() {
-		return Settings.getDouble(ConfigNodes.NATION_SIEGE_IMMUNITY_HOME_TOWN_CONTRIBUTION_TO_ATTACK_COST);
-	}
-
 	public static String getBannerControlCaptureMessageColor() {
 		return Settings.getString(ConfigNodes.BANNER_CONTROL_CAPTURE_MESSAGE_COLOR);
 	}
@@ -367,25 +355,6 @@ public class SiegeWarSettings {
 	
 	public static int getSiegeCampDurationInMinutes() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_SIEGECAMPS_DURATION_IN_MINUTES);
-	}
-
-	public static int getCappingLimiterBattleSessions() {
-		DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
-		boolean weekend = dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
-
-		if(weekend) {
-			return getCappingLimiterWeekendDayBattleSessions();
-		} else {
-			return getCappingLimiterWeekdayBattleSessions();
-		}
-	}
-
-	private static int getCappingLimiterWeekdayBattleSessions() {
-		return Settings.getInt(ConfigNodes.CAPPING_LIMITER_WEEKDAY_BATTLE_SESSIONS);
-	}
-
-	private static int getCappingLimiterWeekendDayBattleSessions() {
-		return Settings.getInt(ConfigNodes.CAPPING_LIMITER_WEEKEND_DAY_BATTLE_SESSIONS);
 	}
 
 	public static List<DayOfWeek> getSiegeStartDayLimiterAllowedDays() {
@@ -562,10 +531,6 @@ public class SiegeWarSettings {
 
 	public static int getSiegeBalanceCapValue() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_SIEGE_BALANCE_CAP_VALUE);
-	}
-
-	public static boolean getKillPlayersWhoLogoutInSiegeZones() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_KILL_PLAYERS_WHO_LOG_OUT_IN_SIEGE_ZONES);
 	}
 
 	public static boolean isStopTownyPlotPvpProtection() {

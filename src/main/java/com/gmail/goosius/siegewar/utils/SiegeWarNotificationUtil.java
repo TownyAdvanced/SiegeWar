@@ -110,11 +110,7 @@ public class SiegeWarNotificationUtil {
 	 */
 	public static void warnPlayerOfActiveSiegeDanger(Player player, Siege siege) {
 		if(!siege.getPlayersWhoWereInTheSiegeZone().contains(player)) {
-			if(SiegeWarSettings.getKillPlayersWhoLogoutInSiegeZones()) {
-				Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning_with_logout_risk"));
-			} else {
-				Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning"));
-			}
+			Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning"));
 			siege.addPlayerWhoWasInTheSiegeZone(player);
 		}
 	}
