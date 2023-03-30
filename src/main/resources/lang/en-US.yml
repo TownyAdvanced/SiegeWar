@@ -524,6 +524,7 @@ msg_err_nation_peacefulness_not_supported: '&cSiegeWar does not support nation p
 #swa
 
 msg_swa_set_invade_success: '&bSet captured to %s for %s.'
+msg_swa_town_peacefulness_change_success: '&bSuccessfully changed the peacefulness status of %s to %s.'
 msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation status of %s to %s.'
 msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended."
 
@@ -554,6 +555,7 @@ msg_revolt_siege_defender_win_result: ' The town now stands open for invasion an
 #Town Screen
 
 status_town_siege_status_invaded: '   &2Town Captured: %s'
+status_town_peacefulness_flag: '&b(Peaceful)'
 
 #Capture
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
@@ -112,6 +113,11 @@ public class SiegeWarStatusScreenListener implements Listener {
 			
 			Town town = event.getTown();
 
+			if(TownPeacefulnessUtil.isTownPeaceful(town)) {
+				Component peacefulnessFlag = Component.text(translator.of("status_town_peacefulness_flag"));
+				event.getStatusScreen().addComponentOf("subtitle", peacefulnessFlag);
+			}
+
 			if(TownyEconomyHandler.isActive() && TownOccupationController.isTownOccupied(town)) {
 				double occupationTax = TownOccupationController.getNationOccupationTax(town);
 				if (occupationTax > 0) {
@@ -121,6 +127,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 				}
 			}
 			
+
 			if (TownMetaDataController.hasPlunderDebt(town)) {
 				int days = TownMetaDataController.getPlunderDebtDays(town);
 				double amount = TownMetaDataController.getDailyPlunderDebt(town);

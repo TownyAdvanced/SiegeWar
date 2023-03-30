@@ -10,6 +10,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.event.DeleteTownEvent;
@@ -123,7 +124,7 @@ public class SiegeWarTownEventListener implements Listener {
 			if (TownMetaDataController.getPeacefulnessChangeConfirmationCounterDays(town) == 0) {
 				
 				//Here, no countdown is in progress, and the town wishes to change peacefulness status
-				TownMetaDataController.setDesiredPeacefulnessSetting(town, !town.isNeutral());
+				TownMetaDataController.setDesiredPeacefulnessSetting(town, !TownPeacefulnessUtil.isTownPeaceful(town));
 				TownMetaDataController.setPeacefulnessChangeDays(town, days);
 				
 				//Send message to town
@@ -145,7 +146,7 @@ public class SiegeWarTownEventListener implements Listener {
 				
 			} else {
 				//Here, a countdown is in progress, and the town wishes to cancel the countdown,
-				TownMetaDataController.setDesiredPeacefulnessSetting(town, town.isNeutral());
+				TownMetaDataController.setDesiredPeacefulnessSetting(town, TownPeacefulnessUtil.isTownPeaceful(town));
 				TownMetaDataController.setPeacefulnessChangeDays(town, 0);
 				//Send message to town
 				TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_peacefulness_countdown_cancelled")));				
@@ -227,7 +228,7 @@ public class SiegeWarTownEventListener implements Listener {
 	public void on(TownPreSetHomeBlockEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
-				&& event.getTown().isNeutral()) {
+				&& TownPeacefulnessUtil.isTownPeaceful(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_peaceful_town_cannot_move_homeblock"));
 			}

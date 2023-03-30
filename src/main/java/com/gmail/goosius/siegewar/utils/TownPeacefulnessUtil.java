@@ -23,6 +23,15 @@ import java.util.LinkedHashMap;
 
 public class TownPeacefulnessUtil {
 
+	public static boolean isTownPeaceful(Town town) {
+		return TownMetaDataController.getPeacefulness(town);
+	}
+
+	public static void setPeacefulness(Town town, boolean peacefulness) {
+		TownMetaDataController.setPeacefulness(town, peacefulness);
+		town.save();
+	}
+	
 	/**
 	 * This method adjusts the peacefulness counters of all towns, where required
 	 */
@@ -40,7 +49,7 @@ public class TownPeacefulnessUtil {
 			 */
 			if (TownyUniverse.getInstance().hasTown(town.getName()) 
 				&& !town.isRuined()
-				&& town.isNeutral() != TownMetaDataController.getDesiredPeacefulnessSetting(town))
+				&& isTownPeaceful(town) != TownMetaDataController.getDesiredPeacefulnessSetting(town))
 				updateTownPeacefulnessCounters(town);
 		}
 	}
@@ -57,16 +66,18 @@ public class TownPeacefulnessUtil {
 			return;
 		}
 		TownMetaDataController.setPeacefulnessChangeDays(town, 0);
-		town.setNeutral(!town.isNeutral());
+		
+		//Reverse the town peacefulness setting
+		setPeacefulness(town, !isTownPeaceful(town));
 
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			if (town.isNeutral()) {
+			if (isTownPeaceful(town)) {
 				message = Translation.of("msg_town_became_peaceful", town.getFormattedName());
 			} else {
 				message = Translation.of("msg_town_became_non_peaceful", town.getFormattedName());
 			}
 		} else {
-			if (town.isNeutral()) {
+			if (isTownPeaceful(town)) {
 				message = Translation.of("msg_town_became_peaceful", town.getFormattedName());
 			} else {
 				message = Translation.of("msg_town_became_non_peaceful", town.getFormattedName());
@@ -101,7 +112,7 @@ public class TownPeacefulnessUtil {
 					continue;
 
 				//Skip if town is peaceful
-				if(town.isNeutral())
+				if(isTownPeaceful(town))
 					continue;
 
 				//Skip if town has no natural or occupying nation
