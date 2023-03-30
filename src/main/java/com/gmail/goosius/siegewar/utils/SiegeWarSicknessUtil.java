@@ -28,8 +28,6 @@ public class SiegeWarSicknessUtil {
 
     /**
      * Evaluate all war sickness:
-     * - Peaceful town effects
-     * - Siege Attendance Limiter effects
      * - Unofficial Siege-Participant effects
      */
     public static void evaluateWarSickness() {
