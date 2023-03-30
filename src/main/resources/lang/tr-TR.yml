@@ -233,11 +233,6 @@ status_nation_town_stats: '&cKasaba İşgal Geçmişi - Yabancı/Vatan: &a%d&c/&
 status_nation_plunder_stats: '&cYağma Geçnişi - Zafer/Mağlubiyet: &a%d&c/&a%d'
 #Siege effects
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cSadece şehir sakinleri kuşatılmış bir kasabaya ya da kuşatma bölgesine yayılabilir.'
-#Nation Siege Immunity
-msg_err_siege_affected_home_nation_cannot_recruit: "&cMillet, yeni şehirler ekleyemiyor, çünkü ana kasabalarından biri kuşatma saldırısı altında."
-msg_err_siege_affected_home_nation_town_cannot_recruit: "&cKasaba yeni sakinleri ekleyemiyor, çünkü ulusunun ana kasabalarından biri kuşatma saldırısı altında."
-msg_err_siege_affected_home_nation_town_cannot_claim: "&cToprak iddia edemez, çünkü ulusunuzun ana kasabalarından biri kuşatma saldırısı altında."
-msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cToprak kabul edemez, çünkü ulusunuzun ana kasabalarından biri kuşatma saldırısı altındadır."
 #Added in 0.18
 #Homeblock move restrictions
 msg_err_besieged_town_cannot_move_homeblock: "&cKuşatılmış kasabalar ana bloklarını hareket ettiremezler."
