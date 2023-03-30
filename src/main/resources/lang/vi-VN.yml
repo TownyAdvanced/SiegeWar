@@ -330,11 +330,9 @@ msg.installation.complete: "Việc cài đặt đã hoàn tất."
 #Added in 0.37
 msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cTrong Vùng bao vây, chỉ có thể bắn đại bác nếu chúng ở vùng hoang dã hoặc thị trấn bị bao vây."
 #Added in 0.41
-msg_capping_limiter_limit_exceeded_warning: "&cBạn đã vượt quá Giới hạn hàng ngày là %d Phiên chiến đấu. Bạn có thể giới hạn lại bằng %s."
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cLà một cư dân của thị trấn yên bình, bạn không thể dễ dàng vượt qua các Khu vực bị bao vây. Để tránh Bệnh Chiến tranh, hãy rời khỏi Khu vực chiến sự ngay lập tức.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cLà một cư dân của thị trấn yên bình, bạn không thể dễ dàng vượt qua các Khu vực bị bao vây. Để tránh Bệnh Chiến tranh, hãy rời khỏi Khu vực chiến sự ngay lập tức.'
 #Added in 0.42
-msg_siege_zone_proximity_warning: "&cCẢNH BÁO: Bạn đang ở trong Khu vực bị bao vây!. PVP luôn được kích hoạt ở đây."
 msg_siege_zone_proximity_warning_with_logout_risk: "&cCẢNH BÁO: Bạn đang ở trong Khu vực bị bao vây!. PVP luôn được kích hoạt ở đây. Bạn sẽ bị giết nếu đăng xuất khi đang ở trong Khu vực chiến sự."
 msg_player_killed_for_logging_out_in_siege_zone: "%s đã bị giết vì họ đã đăng xuất khi đang ở trong Khu vực bị bao vây."
 #Added in 0.43
@@ -452,3 +450,5 @@ status_town_siege_status_invaded: '   &2Town Captured: %s'
 msg_err_cannot_invade_without_victory: "&cYou cannot capture this town unless your nation is victorious in the siege."
 msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot capture this town while the siege is still in progress.'
 msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this town, because your nation already owns and occupies it.'
+#Siegezone proximity warning
+msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!."
