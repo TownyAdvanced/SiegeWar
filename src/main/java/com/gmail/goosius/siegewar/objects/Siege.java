@@ -510,33 +510,6 @@ public class Siege {
 		this.defenderName = defenderName;
 	}
 
-	public double getWallBreachPoints() {
-		return wallBreachPoints;
-	}
-
-	public void setWallBreachPoints(double wallBreachPoints) {
-		this.wallBreachPoints = wallBreachPoints;
-	}
-
-	public void increaseWallBreachPointsToCap(double wallBreachPointsIncrease) {
-		setWallBreachPoints(            
-			Math.min(
-				wallBreachPoints + wallBreachPointsIncrease,
-				SiegeWarSettings.getWallBreachingMaxPoolSize()));	
-	}
-
-	public Set<Resident> getWallBreachBonusAwardees() {
-		return wallBreachBonusAwardees;
-	}
-
-	public void setWallBreachBonusAwardees(Set<Resident> wallBreachBonusAwardees) {
-		this.wallBreachBonusAwardees = wallBreachBonusAwardees;
-	}
-	
-	public String getFormattedBreachPoints() {
-		return Integer.toString((int)(getWallBreachPoints()));
-	}
-
 	public Set<Player> getRecentTownFriendlyCannonFirers() {
 		return recentTownFriendlyCannonFirers;
 	}

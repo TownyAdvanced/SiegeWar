@@ -39,9 +39,6 @@ public class SiegeWarHud {
         board.getTeam("btAttackerPoints").setSuffix(siege.getFormattedAttackerBattlePoints());
         board.getTeam("btDefenderPoints").setSuffix(siege.getFormattedDefenderBattlePoints());
         board.getTeam("btTimeRemaining").setSuffix(siege.getFormattedBattleTimeRemaining(translator));
-        boolean displayBreachPoints = SiegeWarSettings.isWallBreachingEnabled() && SiegeWarSettings.getWallBreachBonusBattlePoints() != 0;
-        if(displayBreachPoints)       
-            board.getTeam("breachPoints").setSuffix(siege.getFormattedBreachPoints());        
     }
 
     public static void toggleOn(Player p, Siege siege) {
@@ -83,12 +80,7 @@ public class SiegeWarHud {
         battleAttackerScore.addEntry(battleAttackerScore_entry);
         battleTimeRemaining.addEntry(battleTimeRemaining_entry);
         
-        int topScore;
-        boolean displayBreachPoints = SiegeWarSettings.isWallBreachingEnabled() && SiegeWarSettings.getWallBreachBonusBattlePoints() != 0;
-        if(displayBreachPoints)
-            topScore = 11;
-        else
-            topScore = 10;
+        int topScore = 10;
         
         objective.getScore(siegeType_entry).setScore(topScore--);
         objective.getScore(attackers_entry).setScore(topScore--);
@@ -100,13 +92,6 @@ public class SiegeWarHud {
         objective.getScore(battleAttackerScore_entry).setScore(topScore--);
         objective.getScore(battleDefenderScore_entry).setScore(topScore--);
         objective.getScore(battleTimeRemaining_entry).setScore(topScore--);
-
-        if(displayBreachPoints) {
-            Team breachPoints = board.registerNewTeam("breachPoints");
-            String breachPoints_entry = ChatColor.GRAY + translator.of("hud_breach_points");
-            breachPoints.addEntry(breachPoints_entry);
-            objective.getScore(breachPoints_entry).setScore(topScore--);
-        }
 
         p.setScoreboard(board);
         updateInfo(p, siege);

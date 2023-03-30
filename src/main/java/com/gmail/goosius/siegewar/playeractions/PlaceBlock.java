@@ -4,16 +4,12 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
-import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
 import com.palmergames.adventure.text.Component;
 import com.palmergames.adventure.text.format.NamedTextColor;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -119,63 +115,6 @@ public class PlaceBlock {
 		return nearbySiege != null
 			&& SiegeWarSettings.getSiegeZoneWildernessForbiddenBlockMaterials().contains(mat)
 			&& TownyAPI.getInstance().isWilderness(block);
-	}
-	
-	/**
-	 * Evaluate a possible wall breach
-	 *
-	 * @return true if a wall breach has occurred
-	 * @throws TownyException 
-	 */
-	@SuppressWarnings("unused")
-    private static boolean evaluateWallBreach(Translator translator, Block block, TownyBuildEvent event) throws TownyException {
-		if(TownyAPI.getInstance().isWilderness(block))
-			return false; //Wall breaching only applies in towns
-
-		Town town = TownyAPI.getInstance().getTown(block.getLocation());
-		if(!SiegeController.hasActiveSiege(town))
-			return false; //No wall breach in unsieged towns
-		//Ensure player has permission
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(event.getPlayer(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_USE_BREACH_POINTS.getNode())) {
-			event.setCancelMessage(translator.of("msg_err_action_disable"));
-			return false;
-		}
-		//No wall breaching outside battle sessions
-		if(!BattleSession.getBattleSession().isActive()) {
-			event.setCancelMessage(translator.of("msg_err_cannot_breach_without_battle_session"));
-			return false;
-		}
-		//Ensure player is on the town-hostile siege side
-		Resident resident = TownyAPI.getInstance().getResident(event.getPlayer());
-		if(resident == null)
-			return false;
-		Siege siege = SiegeController.getSiege(town);
-		if(!SiegeWarAllegianceUtil.isPlayerOnTownHostileSide(event.getPlayer(), resident, siege))
-			return false;
-		//Ensure there are enough breach points
-		if(siege.getWallBreachPoints() < SiegeWarSettings.getWallBreachingBlockPlacementCost()) {
-			event.setCancelMessage(translator.of("msg_err_not_enough_breach_points_for_action", SiegeWarSettings.getWallBreachingBlockPlacementCost(), siege.getFormattedBreachPoints()));
-			return false;
-		}
-		//Ensure height is ok
-		if(!SiegeWarWallBreachUtil.validateBreachHeight(block, town, siege)) {
-			event.setCancelMessage(translator.of("msg_err_cannot_breach_at_this_height", SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMin(), SiegeWarSettings.getWallBreachingHomeblockBreachHeightLimitMax()));
-			return false;
-		}
-		//Ensure the material is ok to place
-		if(!SiegeWarSettings.getWallBreachingPlaceBlocksWhitelist()
-			.contains(block.getType())) {
-			event.setCancelMessage(translator.of("msg_err_breaching_cannot_place_this_material"));
-			return false;
-		}
-		//IF we get here, it is a wall breach!!
-		//Reduce breach points
-		siege.setWallBreachPoints(siege.getWallBreachPoints() - SiegeWarSettings.getWallBreachingBlockPlacementCost());
-		//Un-cancel the event
-		event.setCancelled(false);
-		//Send message to player
-		event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.RED +  translator.of("msg_wall_breach_successful")));
-		return true;
 	}
 
 	/**

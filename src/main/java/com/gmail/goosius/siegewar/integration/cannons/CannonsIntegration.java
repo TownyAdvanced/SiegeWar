@@ -7,7 +7,6 @@ import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
@@ -95,8 +94,6 @@ public class CannonsIntegration {
      */
     public static List<Block> filterExplodeListByCannonEffects(List<Block> givenExplodeList, TownyExplodingBlocksEvent event) throws TownyException {       
         if(SiegeWar.isCannonsPluginInstalled()
-            && SiegeWarSettings.isWallBreachingEnabled()
-            && SiegeWarSettings.isWallBreachingCannonsIntegrationEnabled()        
             && BattleSession.getBattleSession().isActive()
             && event.getEntity() != null
             && event.getEntity() instanceof Projectile
@@ -132,23 +129,14 @@ public class CannonsIntegration {
                 if(!canPlayerUseBreachPointsByCannon(player, siege))
                     continue;
                 cachedUnprotectedTowns.add(town);  //Player can breach at the siege. Town is unsafe
-                if(!SiegeWarWallBreachUtil.payBreachPoints(SiegeWarSettings.getWallBreachingCannonExplosionCostPerBlock(), siege))
-                    continue;   //Insufficient breach points to explode this block
-				//Ensure height is ok
-                if(!SiegeWarWallBreachUtil.validateBreachHeight(block, town, siege))
-                    continue;
                 //Ensure material is ok
                 if(cachedProtectedMaterials.contains(block.getType())) {
                 //In cache, protected
                     continue; 
                 } else if(!cachedUnprotectedMaterials.contains(block.getType())) {
                     //Not in cache
-                    if(SiegeWarWallBreachUtil.validateDestroyMaterial(block, block.getLocation())) {
-                        cachedUnprotectedMaterials.add(block.getType());
-                    } else {
-                        cachedProtectedMaterials.add(block.getType());
-                        continue;
-                    }    
+                    cachedProtectedMaterials.add(block.getType());
+                    continue;
                 }
 
                 /*
