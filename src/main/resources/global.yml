@@ -4,4 +4,3 @@
 
 # Messages can be added like so: (hint: remove the # to uncomment it)
 #siegewar_plugin_prefix: '&f[&6SiegeWar&f] '          # SiegeWar prefix seen in front of most messages.
-status_town_title_peaceful: '&b(Peaceful)'
