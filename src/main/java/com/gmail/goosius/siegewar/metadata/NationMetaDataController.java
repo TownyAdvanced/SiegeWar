@@ -23,7 +23,7 @@ public class NationMetaDataController {
         townsLost = "siegewar_totaltownslost",
         dominationRecordKey = "siegewar_dominationrecord";
 
-    private static final LongDataField pendingSiegeImmunityMillis = new LongDataField("siegewar_pendingSiegeImmunityMillis");
+    private static final LongDataField legacyFieldPendingSiegeImmunityMillis = new LongDataField("siegewar_pendingSiegeImmunityMillis");
     private static final IntegerDataField nationPeacefulOccupationTax = new IntegerDataField("siegeWar_nationPeacefulOccupationTax", 0);
 
     public NationMetaDataController(SiegeWar plugin) {
@@ -112,27 +112,6 @@ public class NationMetaDataController {
         setIdf(nation, townsLost, num);
     }
 
-    public static long getPendingSiegeImmunityMillis(Nation nation) {
-        LongDataField ldf = (LongDataField) pendingSiegeImmunityMillis.clone();
-        if (nation.hasMeta(ldf.getKey()))
-            return MetaDataUtil.getLong(nation, ldf);
-        return 0L;
-    }
-
-    public static void setPendingSiegeImmunityMillis(Nation nation, long num) {
-        LongDataField ldf = (LongDataField) pendingSiegeImmunityMillis.clone();
-        if (nation.hasMeta(ldf.getKey()))
-            MetaDataUtil.setLong(nation, ldf, num, true);
-        else
-            nation.addMetaData(new LongDataField(pendingSiegeImmunityMillis.getKey(), num));
-    }
-
-    public static void removePendingSiegeImmunityMillis(Nation nation) {
-        LongDataField ldf = (LongDataField) pendingSiegeImmunityMillis.clone();
-        if (nation.hasMeta(ldf.getKey()))
-            nation.removeMetaData(ldf);
-    }
-
 	public static List<String> getDominationRecord(Nation nation) {
         String recordString = getSdf(nation, dominationRecordKey).replaceAll(" ", "");
         if(recordString.length() > 0) {
@@ -154,4 +133,12 @@ public class NationMetaDataController {
 	public static int getNationPeacefulOccupationTax(Nation nation) {
 		return MetaDataUtil.getInt(nation, nationPeacefulOccupationTax);
 	}
+
+    public static void deleteLegacyMetadata(Nation nation) {
+        LongDataField ldf = (LongDataField) legacyFieldPendingSiegeImmunityMillis.clone();
+        if (nation.hasMeta(ldf.getKey())) {
+            nation.removeMetaData(ldf);
+        }
+    }
+
 }

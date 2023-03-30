@@ -138,18 +138,6 @@ public class SiegeWarMoneyUtil {
 		double cost = SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
 						* town.getTownBlocks().size();
 
-		//Increase cost due to nation size
-		if(SiegeWarSettings.isNationSiegeImmunityEnabled()
-			&& SiegeWarSettings.getNationSiegeImmunityHomeTownContributionToAttackCost() > 0
-			&& town.hasNation()) {
-			Nation nation = TownyAPI.getInstance().getTownNationOrNull(town);
-			for (Town nationHomeTown : nation.getTowns()) {
-				cost += SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
-						* nationHomeTown.getTownBlocks().size()
-						* SiegeWarSettings.getNationSiegeImmunityHomeTownContributionToAttackCost();
-			}
-		}
-
 		//Increase cost if town is capitol
 		if(SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage() > 0
 			&& town.isCapital()) {
