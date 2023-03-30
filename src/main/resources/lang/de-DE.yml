@@ -233,11 +233,6 @@ status_nation_town_stats: '&2Stadt Invasionshistorie - Ausland/Heimat: &a%d&2/&a
 status_nation_plunder_stats: '&2Stadt Plünderungshistorie - Gewinne/Verluste: &a%d&2/&a%d'
 #Siege effects
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cNur Stadteinwohner können in einer belagerten Stadt oder einer Belagerungszone spawnen.'
-#Nation Siege Immunity
-msg_err_siege_affected_home_nation_cannot_recruit: "&cDeine Nation kann keine neuen Städte hinzufügen, weil eine ihrer Heimatstädte gerade belagert wird."
-msg_err_siege_affected_home_nation_town_cannot_recruit: "&cDeine Nation kann keine neuen Einwohner hinzufügen, weil eine ihrer Heimatstädte gerade belagert wird."
-msg_err_siege_affected_home_nation_town_cannot_claim: "&cDeine Nation kann kein neues Land besetzen, weil eine ihrer Heimatstädte gerade belagert wird."
-msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cDeine Nation kann kein altes Land aufgeben, weil eine ihrer Heimatstädte gerade belagert wird."
 #Added in 0.18
 #Homeblock move restrictions
 msg_err_besieged_town_cannot_move_homeblock: "&cBelagerte Städte können ihre Heimatblöcke nicht bewegen."
