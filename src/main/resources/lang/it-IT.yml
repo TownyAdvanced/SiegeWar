@@ -295,34 +295,11 @@ msg_err_siege_war_collect_unavailable: "Non c'è nulla per te da raccogliere."
 msg.battle.session.cleanup.starting: "La precedente Sessione di Battaglia non è stata completata. Iniziando Pulizia Sessione di Battaglia. Ogni battaglia sara terminata con un pareggio, con sia i Punti Battaglia della offensiva e dei difensori applicati al saldo dell'assedio."
 msg.battle.session.cleanup.complete: "Pulizia Sessione di Battaglia completata. %d sono state terminate."
 msg_err_cannot_start_sieges_today: "&cIl tuo server ha limitato i giorni-della-settimana in cui gli assedi possono iniziare. Gli assedi non possono essere iniziati oggi."
-#Added in 0.35
-#Wall-Breach-Actions
-hud_breach_points: "Punti Spaccatura: "
-msg_wall_breach_successful: 'Spaccatura Del Muro Riuscita!'
-status_town_siege_breach_points: '&2 > Punti Spaccatura: &a%s'
-msg_err_not_enough_breach_points_for_action: '&cNon ci sono abbasta punzi Spaccatura per questa azione. Richiesto: %d, Attualmente: %s.'
-msg_err_cannot_breach_without_battle_session: '&cNon puoi realizzare un''azione Spacca Muro a meno che non ci sia una Sessione di Battaglia in corso.'
-msg_err_cannot_breach_at_this_height: '&cNon puoi realizzare un''azione Spacca Muro a questa altitudine. I limiti di altitudine vengono applicati se vicini al homeblock. Paragonato all''altitudine Assedio-Bandiera, MIN = %d, MAX = %d.'
-msg_err_breaching_cannot_place_this_material: '&cNon puoi piazzare questo tipo di blocco.'
-msg_err_breaching_cannot_destroy_this_material: '&cNon puoi distruggere questo tipo di blocco.'
-#Wall-Breach-Bonus
-msg_wall_breach_bonus_awarded_to_attackers: "&bAssedio su %s > %d l'offensiva ha raggiunto il homeblock. Bonus Spacca Muro: +%d Battle Points."
-msg_wall_breach_bonus_awarded_to_defenders: "&bAssedio a %s > %d I difensori hanno raggiunto il homeblock. Bonus Spacca Muro: +%d Punti Battaglia."
-msg_wall_breach_bonus_awarded: "&bHai ricevuto un Bonus Spacca Muro!"
-msg_err_already_received_wall_breach_bonus: '&cHai già ricevuto un Bonus Spacca Muro per questa Sessione di Battaglia.'
-#Wall-Breach Cannons Integration
-msg_err_cannot_fire_cannon_without_battle_session: '&cNon puoi sparare un cannone in una zona assedio a meno che non ci sia una Sessione di Battaglia in corso.'
-msg_err_cannot_fire_cannon_without_perms: '&cNon puoi sparare con questo cannone. Controlla di essere un partecipante ufficiale nell''assedio locale, e di avere un rango che ti permette di sparare con un cannone.'
-#configuration-errors
-msg_error_misconfigured_place_blocks_whitelist: '&cMateriale non configurato su Wall-Breaching-Place-Blocks-Whitelist. Voce del problema: %s.'
-msg_error_misconfigured_destroy_blocks_blacklist: '&cMateriale non configurato su Wall-Breaching-Destroy-Blocks-Blacklist. Voce del Problema: %s.'
 #Added in 0.36
 msg_err_nation_neutrality_not_supported: '&cGuerraAssedio non supporta la neutralità della nazione.'
 msg.townyperms.installation.complete: "File di permessi Città regolato secondo le impostazioni SW raccomandate."
 msg.townyconfig.installation.complete: "File di configurazione Città regolato secondo le impostazioni SW raccomandate."
 msg.installation.complete: "Installazione Completata."
-#Added in 0.37
-msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cAll'interno delle ZoneAssedio, possono essere solo sparati se si trovano nella natura o una città assediata."
 #Added in 0.41
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cCome cittadino pacifico, non puoi passare facilmente attraverso le Zone-Assedio. Per evitare la Nausea da Guerra, abbandonare la Zona-Assedio immediatamente.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cCome cittadino pacifico, non puoi passare facilmente attraverse le Zone-Assedio. Per rimuovere la Nausea da Guerra, abbandonare la Zona-Assedio immediatamente.'
@@ -372,20 +349,28 @@ msg_plunder_debt_payed_bankrupt: "Your town paid the daily plunder debt of %s by
 msg_plunder_debt_cannot_be_payed: "The Town %s could not pay their daily plunder debt and has been removed!"
 #Shown in the town status screen when a town has plunder debt.
 status_town_plunder_debt: "&2Plunder Debt Owing: %s, %s daily payments of %s remain."
-#Shown when the nation sets their peacefuloccupationtax
-msg_peaceful_occupation_tax_set: "Your nation has set a daily peaceful occupation tax of %s."
-#Shown when a town pays their nation peaceful occupation tax.
-msg_peaceful_occupation_tax_payed: "Your town paid the nationpeaceful occupation tax of %s."
-#Shown when a town pays their nation peaceful occupation tax with bankruptcy.
-msg_peaceful_occupation_tax_payed_bankrupt: "Your town paid the nation peaceful occupation tax of %s by going bankrupt."
-#Shown when a town cannot pay their nation peaceful occupation tax.
-msg_peaceful_occupation_tax_cannot_be_payed: "The Town %s could not pay their nation peaceful occupation tax and has been removed!"
-#Shown in the nation status screen when a nation has nation peaceful occupation tax.
-status_nation_peaceful_occupation_tax: "Peaceful Occupation Tax: %s"
-#Shown when the nation tries to set a nation peaceful occupation tax over the maximum.
-msg_err_peaceful_occupation_tax_cannot_be_more_than: "Nations cannot set a peaceful occupation tax greater than %s."
-#Shown to nation when they are paid their peaceful occupation taxes.
-msg_peaceful_occupation_taxes_paid_totaling: "Your nation received a peaceful occupation taxes totalling: %s."
+##################### Occupation Tax #############################
+#Shown when the nation sets their occupation tax
+msg_occupation_tax_set: "&bYour nation has set a daily occupation tax of %s per plot."
+#Shown when the nation sets their occupation tax
+msg_occupation_tax_set_max: "&bYour nation has set a daily occupation tax of maximum (%s per plot). The nation occupation tax will now automatically track the server-configured maximum."
+#Shown when a town pays their nation occupation tax.
+msg_occupation_tax_paid: "&bYour town paid the nation occupation tax of %s."
+#Shown when a town pays their nation occupation tax with bankruptcy.
+msg_occupation_tax_paid_bankrupt: "&bYour town paid the nation occupation tax of %s by going bankrupt."
+#Shown when a bankrupt town cannot pay their nation occupation tax.
+msg_occupation_tax_paid_with_debt: "&cYour town paid the nation occupation tax of %s with debt."
+#Shown when a town cannot pay their nation occupation tax.
+msg_occupation_tax_cannot_be_paid: "&cThe Town %s could not pay their nation occupation tax and has been removed!"
+#Shown in the nation status screen when a nation has nation occupation tax.
+status_nation_occupation_tax_per_plot: "&2Occupation Tax: &a%s per plot"
+#Shown in the town status screen when a town has occupation tax to pay.
+status_town_occupation_tax: "&2Occupation Tax: &a%s"
+#Shown when the nation tries to set a nation occupation tax over the maximum.
+msg_err_occupation_tax_cannot_be_more_than: "&cNations cannot set an occupation tax greater than %s."
+#Shown to nation when they collect their occupation taxes.
+msg_occupation_taxes_collected_totaling: "&bYour nation collected occupation taxes totalling %s."
+#####################################################################
 #Nation Refund
 nation_help_refund: "Claim any nation refund which is available to you."
 msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw nation claimrefund'"
