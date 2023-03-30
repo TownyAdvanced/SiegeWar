@@ -263,8 +263,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.sheriff");
 			if (!groupNodes.contains(townpoints))
 				groupNodes.add(townpoints);
-			if (!groupNodes.contains("siegewar.town.siege.fire.cannon.in.siegezone"))
-				groupNodes.add("siegewar.town.siege.fire.cannon.in.siegezone");
 			if (!groupNodes.contains("towny.command.town.rank.guard"))
 				groupNodes.add("towny.command.town.rank.guard");
 			file.set("towns.ranks.sheriff", groupNodes);
@@ -279,13 +277,10 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		file.createSection("nations.ranks.major");
 		file.createSection("nations.ranks.colonel");
 		file.createSection("nations.ranks.general");
-		file.createSection("nations.ranks.engineer");
-		file.createSection("nations.ranks.gunner");
 
 		// Populate town guard rank.
 		groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.guard");
-		groupNodes.add(townpoints);		
-		groupNodes.add("siegewar.town.siege.fire.cannon.in.siegezone");
+		groupNodes.add(townpoints);
 		file.set("towns.ranks.guard", groupNodes);
 		
 		// Populate nation ranks.
@@ -331,19 +326,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		groupNodes.add("towny.command.nation.rank.gunner");
 		groupNodes.add("towny.nation.siege.pay.grade.500");
 		file.set("nations.ranks.general", groupNodes);
-		
-		groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.engineer");
-		groupNodes.add(nationpoints);
-		groupNodes.add("siegewar.nation.siege.use.breach.points");
-		groupNodes.add("towny.nation.siege.pay.grade.250");
-		file.set("nations.ranks.engineer", groupNodes);
-		
-		groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.gunner");
-		groupNodes.add(nationpoints);
-		groupNodes.add("siegewar.nation.siege.fire.cannon.in.siegezone");
-		groupNodes.add("towny.nation.siege.pay.grade.250");
-		file.set("nations.ranks.gunner", groupNodes);
-				
+	
 		// Add nodes to king rank.
 		groupNodes = TownyPerms.getPermsOfGroup("nations.king");
 		if (!groupNodes.contains("siegewar.nation.siege.*"))
