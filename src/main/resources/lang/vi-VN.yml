@@ -295,34 +295,11 @@ msg_err_siege_war_collect_unavailable: "Không có gì để bạn thu thập."
 msg.battle.session.cleanup.starting: "Phiên chiến đấu trước đó chưa hoàn thành. Bắt đầu dọn dẹp phiên chiến đấu. Mỗi trận chiến sẽ được giải quyết như một trận hòa, với điểm chiến đấu của cả kẻ tấn công và người phòng thủ bằng nhau."
 msg.battle.session.cleanup.complete: "Hoàn tất dọn dẹp phiên chiến đấu. %d trận chiến đã được giải quyết."
 msg_err_cannot_start_sieges_today: "&cMáy chủ của bạn đã giới hạn số ngày trong tuần có thể bắt đầu công thành. Cuộc bao vây không thể được bắt đầu ngày hôm nay."
-#Added in 0.35
-#Wall-Breach-Actions
-hud_breach_points: "Điểm phá hoại: "
-msg_wall_breach_successful: 'Phá tường thành công!'
-status_town_siege_breach_points: '&2 > Điểm phá hoại: &a%s'
-msg_err_not_enough_breach_points_for_action: '&cKhông có đủ điểm phá hoại cho hành động này. Bắt buộc: %d, Hiện có: %s.'
-msg_err_cannot_breach_without_battle_session: '&cBạn không thể thực hiện hành động Phá tường, hãy đợi đến phiên chiến đấu tiếp theo.'
-msg_err_cannot_breach_at_this_height: '&cBạn không thể thực hiện hành động Phá tường ở độ cao này. Giới hạn chiều cao được áp dụng khi ở gần homeblock. So với Chiều cao biểu ngữ công thành, MIN = %d, MAX = %d.'
-msg_err_breaching_cannot_place_this_material: '&cBạn không thể đặt loại khối này.'
-msg_err_breaching_cannot_destroy_this_material: '&cBạn không thể phá hủy loại khối này.'
-#Wall-Breach-Bonus
-msg_wall_breach_bonus_awarded_to_attackers: "&bChiến sự %s > %d kẻ tấn công đã đến được homeblock. Thưởng Phá Tường: +%d Điểm Chiến đấu."
-msg_wall_breach_bonus_awarded_to_defenders: "&bChiến sự %s > %d quân phòng thủ đã đến được homeblock. Thưởng Phá Tường: +%d Điểm Chiến đấu."
-msg_wall_breach_bonus_awarded: "&bBạn đã được thưởng Phần thưởng Phá Tường!"
-msg_err_already_received_wall_breach_bonus: '&cBạn đã nhận được Phần thưởng Phá Tường cho Phiên Chiến đấu này.'
-#Wall-Breach Cannons Integration
-msg_err_cannot_fire_cannon_without_battle_session: '&cBạn không thể bắn đại bác trong khu vực bị bao vây cho đến khi diễn ra Phiên Chiến đấu tiếp theo.'
-msg_err_cannot_fire_cannon_without_perms: '&cBạn không thể bắn khẩu pháo này. Kiểm tra xem bạn có phải là người tham gia chính thức trong cuộc bao vây hay không và bạn có cấp bậc cho phép bắn đại bác hay không.'
-#configuration-errors
-msg_error_misconfigured_place_blocks_whitelist: '&cMisconfigured Material on Wall-Breaching-Place-Blocks-Whitelist. Problem Entry: %s.'
-msg_error_misconfigured_destroy_blocks_blacklist: '&cMisconfigured Material on Wall-Breaching-Destroy-Blocks-Blacklist. Problem Entry: %s.'
 #Added in 0.36
 msg_err_nation_neutrality_not_supported: '&cSiegeWar không ủng hộ tính trung lập của quốc gia.'
 msg.townyperms.installation.complete: "Towny perms file adjusted for recommended SW setup."
 msg.townyconfig.installation.complete: "Towny config file adjusted for recommended SW setup."
 msg.installation.complete: "Việc cài đặt đã hoàn tất."
-#Added in 0.37
-msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cTrong Vùng bao vây, chỉ có thể bắn đại bác nếu chúng ở vùng hoang dã hoặc thị trấn bị bao vây."
 #Added in 0.41
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cLà một cư dân của thị trấn yên bình, bạn không thể dễ dàng vượt qua các Khu vực bị bao vây. Để tránh Bệnh Chiến tranh, hãy rời khỏi Khu vực chiến sự ngay lập tức.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cLà một cư dân của thị trấn yên bình, bạn không thể dễ dàng vượt qua các Khu vực bị bao vây. Để tránh Bệnh Chiến tranh, hãy rời khỏi Khu vực chiến sự ngay lập tức.'
@@ -372,20 +349,28 @@ msg_plunder_debt_payed_bankrupt: "Thị trấn của bạn đã trả khoản n�
 msg_plunder_debt_cannot_be_payed: "Thị trấn %s không thể trả khoản nợ cướp bóc hàng ngày của họ và đã bị xóa!"
 #Shown in the town status screen when a town has plunder debt.
 status_town_plunder_debt: "&2Plunder Debt Owing: %s, %s daily payments of %s remain."
-#Shown when the nation sets their peacefuloccupationtax
-msg_peaceful_occupation_tax_set: "Quốc gia của bạn đã quy định mức thuế chiếm đóng hòa bình hàng ngày là %s."
-#Shown when a town pays their nation peaceful occupation tax.
-msg_peaceful_occupation_tax_payed: "Quốc gia của bạn đã quy định mức thuế hòa bình phải đóng hàng ngày là %s."
-#Shown when a town pays their nation peaceful occupation tax with bankruptcy.
-msg_peaceful_occupation_tax_payed_bankrupt: "Thị trấn của bạn đã trả %s thuế chiếm đóng hòa bình cho quốc gia bằng cách phá sản."
-#Shown when a town cannot pay their nation peaceful occupation tax.
-msg_peaceful_occupation_tax_cannot_be_payed: "Thị trấn của bạn đã trả %s thuế chiếm đóng hòa bình cho quốc gia bằng cách phá sản!"
-#Shown in the nation status screen when a nation has nation peaceful occupation tax.
-status_nation_peaceful_occupation_tax: "Thuế chiếm đóng hòa bình: %s"
-#Shown when the nation tries to set a nation peaceful occupation tax over the maximum.
-msg_err_peaceful_occupation_tax_cannot_be_more_than: "Các quốc gia không thể thiết lập thuế chiếm đóng hòa bình lớn hơn %s."
-#Shown to nation when they are paid their peaceful occupation taxes.
-msg_peaceful_occupation_taxes_paid_totaling: "Quốc gia của bạn đã nhận được thuế chiếm đóng hòa bình với tổng số: %s."
+##################### Occupation Tax #############################
+#Shown when the nation sets their occupation tax
+msg_occupation_tax_set: "&bYour nation has set a daily occupation tax of %s per plot."
+#Shown when the nation sets their occupation tax
+msg_occupation_tax_set_max: "&bYour nation has set a daily occupation tax of maximum (%s per plot). The nation occupation tax will now automatically track the server-configured maximum."
+#Shown when a town pays their nation occupation tax.
+msg_occupation_tax_paid: "&bYour town paid the nation occupation tax of %s."
+#Shown when a town pays their nation occupation tax with bankruptcy.
+msg_occupation_tax_paid_bankrupt: "&bYour town paid the nation occupation tax of %s by going bankrupt."
+#Shown when a bankrupt town cannot pay their nation occupation tax.
+msg_occupation_tax_paid_with_debt: "&cYour town paid the nation occupation tax of %s with debt."
+#Shown when a town cannot pay their nation occupation tax.
+msg_occupation_tax_cannot_be_paid: "&cThe Town %s could not pay their nation occupation tax and has been removed!"
+#Shown in the nation status screen when a nation has nation occupation tax.
+status_nation_occupation_tax_per_plot: "&2Occupation Tax: &a%s per plot"
+#Shown in the town status screen when a town has occupation tax to pay.
+status_town_occupation_tax: "&2Occupation Tax: &a%s"
+#Shown when the nation tries to set a nation occupation tax over the maximum.
+msg_err_occupation_tax_cannot_be_more_than: "&cNations cannot set an occupation tax greater than %s."
+#Shown to nation when they collect their occupation taxes.
+msg_occupation_taxes_collected_totaling: "&bYour nation collected occupation taxes totalling %s."
+#####################################################################
 #Nation Refund
 nation_help_refund: "Claim any nation refund which is available to you."
 msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw nation claimrefund'"
