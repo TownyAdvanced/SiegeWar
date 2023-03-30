@@ -99,7 +99,9 @@ public class NationMetaDataController {
 	}
 
 	public static int getNationOccupationTaxPerPlot(Nation nation) {
-		return MetaDataUtil.getInt(nation, nationOccupationTaxPerPlot);
+        if (!MetaDataUtil.hasMeta(nation, nationOccupationTaxPerPlot))
+            return -1;
+        return MetaDataUtil.getInt(nation, nationOccupationTaxPerPlot);
 	}
 
     public static void deleteLegacyMetadata(Nation nation) {
