@@ -243,10 +243,6 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_TOWNY_INFLUENCE_RADIUS);
 	}
 
-	public static int getPeacefulTownsSicknessWarningDurationSeconds() {
-		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_SICKNESS_WARNING_DURATION_SECONDS);
-	}
-
 	public static int getWarCommonPeacefulTownsNewTownConfirmationRequirementDays() {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_NEW_TOWN_CONFIRMATION_REQUIREMENT_DAYS);
 	}

@@ -175,5 +175,45 @@
         "path": "domination_awards.artefact_offers.default_14_5_2022.tier5"
       }
     ]
+  },
+  {
+    "version": "2.0.0",
+    "changes": [
+      {
+        "type": "MOVE",
+        "path": "neutral_towns",
+        "value": "peaceful_towns"
+      },
+      {
+        "type": "MOVE",
+        "path": "neutral_towns.enabled",
+        "value": "peaceful_towns.enabled"
+      },
+      {
+        "type": "MOVE",
+        "path": "neutral_towns.nation_capital_can_be_peaceful",
+        "value": "peaceful_towns.nation_capital_can_be_peaceful"
+      },
+      {
+        "type": "MOVE",
+        "path": "neutral_towns.confirmation_requirement_days",
+        "value": "peaceful_towns.confirmation_requirement_days"
+      },
+      {
+        "type": "MOVE",
+        "path": "neutral_towns.new_town_confirmation_requirement_days",
+        "value": "peaceful_towns.new_town_confirmation_requirement_days"
+      },
+      {
+        "type": "MOVE",
+        "path": "neutral_towns.subvert_enabled",
+        "value": "peaceful_towns.subvert_enabled"
+      },
+      {
+        "type": "REMOVE",
+        "path": "neutral_towns.towny_influence_radius",
+        "value": "peaceful_towns.towny_influence_radius"
+      }
+    ]
   }
 ]
