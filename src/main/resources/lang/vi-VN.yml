@@ -112,7 +112,6 @@ dynmap_siege_time_left: 'Thời gian còn lại: %s'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4CẢNH BÁO: &cMột số thiết bị của bạn sắp hỏng trong hàng tồn kho.'
 msg_swa_remove_siege_success: '&bĐã loại bỏ vòng vây thành công.'
-msg_you_will_get_sickness: '&cBạn không phải là người tham gia cuộc chiến này và không thể ở trong Khu vực bị tấn công. Vui lòng rời đi nếu không bạn sẽ bị bệnh chiến tranh sau %s giây.'
 #Added in 0.08:
 msg_swa_set_towns_gained_success: '&bĐã đặt số thị trấn chiếm được %d cho %s.'
 msg_swa_set_towns_lost_success: '&bĐã đặt số thị trấn bị mất %d cho %s.'
@@ -355,10 +354,8 @@ msg_err_besieged_capital_cannot_change_king: "&cQuốc gia của bạn không đ
 #Added in 0.50
 #Shown when a siege assembly is started in a town which already has a siege assembly.
 msg_err_town_already_has_a_siege_assembly: '&cThị trấn này đã có một Hội bao vây đang hoạt động.'
-#Shown when a town cannot start a siege because of their isAllowedToWar setting.
-msg_err_your_town_is_not_allowed_to_start_a_siege: 'Thị trấn của bạn không được phép bao vây vì họ không được phép tham chiến.'
-#Shown when a town cannot start a siege because of the target town's isAllowedToWar setting.
-msg_err_this_town_is_not_allowed_to_be_sieged: 'Bạn không thể bao vây Thị trấn này vì họ không được phép tham chiến.'
+#Shown when a town cannot be sieged or subverted because of the target town's isAllowedToWar setting.
+msg_err_this_town_is_not_allowed_to_be_attacked: 'You cannot siege or subvert this town, because they are not allowed to war.'
 #Shown when a nation cannot afford to start a siege.
 msg_err_you_cannot_afford_to_siege_for_x: "Quốc gia của bạn không đủ khả năng để bắt đầu Cuộc vây hãm này, nó sẽ tiêu tốn %s."
 #Show when a nation tries to start a siege when the economy is not active.
@@ -404,18 +401,19 @@ msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert thi
 #Revolting
 msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying nation of %s, and declared themselves free to choose their own destiny. A REVOLT SIEGE has begun!'
 #war sickness
-msg_you_received_war_sickness: '&cYou are not a participant of this siege and cannot be in the Siege Zone. Please leave to remove the war sickness. Common causes of war sickness: being in a peaceful town, not having a military rank or not being allied to either side.'
+msg_you_will_get_sickness: '&cYou are not an official participant of this siege and cannot be in the Siege Zone. Please leave or you will receive war sickness in %s seconds.'
+msg_you_received_war_sickness: '&cYou are not an official participant of this siege and cannot be in the Siege Zone. Please leave to remove the war sickness. Common causes of war sickness: Not having a military rank or not being allied to either side.'
 #Town Status Screen
 status_town_days_to_peacefulness_status_change: 'Days To Peacefulness Status Change'
 status_town_peacefulness_status_change_timer: '&2Countdown To Peaceful Status Change: &a%d days'
 #Town Peacefulness
 msg_war_common_town_declared_peaceful: '&bNPeacefulness Declared! The town will be confirmed as Peaceful in %d day(s).'
 msg_war_common_town_declared_non_peaceful: '&bNon-Peacefulness Declared! The town will be confirmed as Non-Peaceful in %d day(s).'
-msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot enter siege-zones or gain nation-military ranks.'
-msg_town_became_non_peaceful: '&b%s has been confirmed as Non-Peaceful. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can enter siege-zones and gain nation-military ranks.'
+msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot gain nation-military ranks.'
+msg_town_became_non_peaceful: '&b%s has been confirmed as Non-Peaceful. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can now gain nation-military ranks.'
 msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Peaceful status change countdown was cancelled.'
-msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they are in a Peaceful town.'
-msg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
+msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cUnable to add nation military rank to resident, because they belong to a Peaceful town.'
+sg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
 msg_err_peaceful_towns_cannot_revolt: '&cPeaceful towns cannot revolt'
 #Nation Peacefulness
 msg_err_nation_peacefulness_not_supported: '&cSiegeWar does not support nation peacefulness.'
