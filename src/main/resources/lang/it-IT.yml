@@ -233,11 +233,6 @@ status_nation_town_stats: '&2Note Invasioni Città - Straniera/Casa: &a%d&2/&a%d
 status_nation_plunder_stats: '&2Note Saccheggio Città - Guadagni/Perdite: &a%d&2/&a%d'
 #Siege effects
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cSoltanto I cittadini possono spawnare all''interno di una città assediata o una zona assedio.'
-#Nation Siege Immunity
-msg_err_siege_affected_home_nation_cannot_recruit: "&cLa nazione non può aggiungere nuove città, perchè una delle sue città principali è sotto assedio."
-msg_err_siege_affected_home_nation_town_cannot_recruit: "&cLa città non può aggiungere nuovi cittadini, perchè una delle città principali della sua nazione è sotto assedio."
-msg_err_siege_affected_home_nation_town_cannot_claim: "&cImpossibile reclamare il terreno, perchè una delle città principali della tua nazione è sotto assedio."
-msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cImpossibile annullare il reclamo del terreno, perchè una delle città principali della tua nazione è sotto assedio."
 #Added in 0.18
 #Homeblock move restrictions
 msg_err_besieged_town_cannot_move_homeblock: "&cLe città assediate non possono spostare i loro homeblocks."
