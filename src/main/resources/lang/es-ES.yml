@@ -330,11 +330,9 @@ msg.installation.complete: "Instalación completada."
 #Added in 0.37
 msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cDentro de Zonas de Asedio, los cañones sólo pueden ser lanzados si están en valdíos o en la ciudad asediada."
 #Added in 0.41
-msg_capping_limiter_limit_exceeded_warning: "&cHas excedido tu límite diario de %d sesiones de combate. Puedes volver a participar en %s."
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cComo un ciudadano pacifico, no puedes pasar fácilmente por zonas de asedio. Para evitar la Enfermedad de Guerra, abandona la zona de asedio inmediatamente.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cComo un ciudadano pacifico, no puedes pasar fácilmente por zonas de asedio. Para eliminar la Enfermedad de Guerra, abandona la zona de asedio inmediatamente.'
 #Added in 0.42
-msg_siege_zone_proximity_warning: "&cATENCIÓN: ¡Estás en una zona de asedio!. Las protecciones PVP están desactivadas aquí."
 msg_siege_zone_proximity_warning_with_logout_risk: "&cATENCIÓN: ¡Estás en una zona de asedio!. Las protecciones PVP están desactivadas aquí. Morirás si te desconectas en la zona de asedio."
 msg_player_killed_for_logging_out_in_siege_zone: "%s fue asesinado porque se desconectó mientras estaba en una zona de asedio."
 #Added in 0.43
@@ -452,3 +450,5 @@ status_town_siege_status_invaded: '   &2Town Captured: %s'
 msg_err_cannot_invade_without_victory: "&cYou cannot capture this town unless your nation is victorious in the siege."
 msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot capture this town while the siege is still in progress.'
 msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this town, because your nation already owns and occupies it.'
+#Siegezone proximity warning
+msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!."
