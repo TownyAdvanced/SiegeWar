@@ -113,11 +113,11 @@ public class ResidentMetaDataController {
 	public static void setBeaconsDisabled(Resident resident, boolean disabled) {
 		setBoolean(resident, beaconsDisabled, disabled);
 	}
-	
+
 	public static boolean getBeaconsDisabled(Resident resident) {
 		return getBoolean(resident, beaconsDisabled);
 	}
-
+	
 	public static void setBossBarsDisabled(Resident resident, boolean disabled) {
 		setBoolean(resident, bossBarsDisabled, disabled);
 	}
