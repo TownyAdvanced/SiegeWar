@@ -195,7 +195,7 @@ public class SiegeWarTownEventListener implements Listener {
 	}
 
 	/**
-	 * Prevents towns using /n toggle neutral
+	 * Prevents towns using /t toggle neutral
 	 * - Because in SW this is not supported
 	 *
 	 * @param event the event
