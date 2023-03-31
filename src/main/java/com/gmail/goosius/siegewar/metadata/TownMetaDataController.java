@@ -20,7 +20,6 @@ public class TownMetaDataController {
 
 	@SuppressWarnings("unused")
 	private SiegeWar plugin;
-	
 	private static IntegerDataField peacefulnessChangeConfirmationCounterDays = new IntegerDataField("siegewar_peacefuldays", 0, Translation.of("status_town_days_to_peacefulness_status_change"));
 	private static BooleanDataField desiredPeacefulness = new BooleanDataField("siegewar_desiredPeaceSetting", false);
 	private static BooleanDataField peacefulness = new BooleanDataField("siegewar_peaceSetting", false);
