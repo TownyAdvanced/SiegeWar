@@ -53,7 +53,12 @@ public class SiegeWarTownPeacefulnessUtil {
 		TownMetaDataController.setPeacefulnessChangeCountdownDays(town, days);
 		town.save();
 	}
-
+	
+	public static void setPeacefulness(Town town, boolean peacefulness) {
+		TownMetaDataController.setPeacefulness(town, peacefulness);
+		town.save();
+	}
+	
 	/**
 	 * This method adjusts the peacefulness counters of all towns, where required
 	 */
