@@ -6,7 +6,7 @@ import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -301,7 +301,7 @@ public class SiegeWar extends JavaPlugin {
 		boolean success = false;
 		for(Town town: new ArrayList<>(TownyAPI.getInstance().getTowns())) {
 			if(town.isNeutral()) {
-				TownPeacefulnessUtil.setPeacefulness(town, true);
+				SiegeWarTownPeacefulnessUtil.setTownPeacefulness(town, true);
 				town.setNeutral(false);
 				success = true;
 			}

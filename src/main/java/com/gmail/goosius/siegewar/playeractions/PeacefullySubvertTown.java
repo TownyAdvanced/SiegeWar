@@ -8,7 +8,7 @@ import com.gmail.goosius.siegewar.events.PreSubvertTownEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -118,7 +118,7 @@ public class PeacefullySubvertTown {
 	 * @throws TownyException if the nation does not have enough Towny-Influence
 	 */
 	private static void verifyThatNationHasEnoughTownyInfluenceToSubvertTown(Nation nation, Town targetTown) throws TownyException {
-		Map<Nation, Integer> townyInfluenceMap = TownPeacefulnessUtil.calculateTownyInfluenceMap(targetTown);
+		Map<Nation, Integer> townyInfluenceMap = SiegeWarTownPeacefulnessUtil.calculateTownyInfluenceMap(targetTown);
 		if(townyInfluenceMap.size() == 0)
 			//No nation has towny-influence in the local area
 			throw new TownyException(Translation.of("msg_err_cannot_subvert_town_zero_influence"));

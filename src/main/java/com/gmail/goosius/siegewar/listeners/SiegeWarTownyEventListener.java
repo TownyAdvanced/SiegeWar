@@ -13,7 +13,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.NationRemoveAllyEvent;
@@ -102,7 +102,7 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onPreNewDay(PreNewDayEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled()) {
             if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
-                TownPeacefulnessUtil.updateTownPeacefulnessCounters();
+                SiegeWarTownPeacefulnessUtil.updateTownPeacefulnessCounters();
             }
         }
     }

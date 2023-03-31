@@ -13,7 +13,7 @@ import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -700,9 +700,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				case "setpeaceful":
 					//set peaceful flag
 					boolean peaceful = Boolean.parseBoolean(args[2]);
-					TownPeacefulnessUtil.setPeacefulness(town, peaceful);
-					//Save data
-					town.save();
+					SiegeWarTownPeacefulnessUtil.setTownPeacefulness(town, peaceful);
 					//Send message
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_town_peacefulness_change_success", town.getName(), Boolean.toString(peaceful)));
 					break;

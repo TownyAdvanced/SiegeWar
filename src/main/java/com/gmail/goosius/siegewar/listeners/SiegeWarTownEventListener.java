@@ -4,34 +4,27 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
-import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
-import com.palmergames.bukkit.towny.TownyMessaging;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.event.DeleteTownEvent;
 import com.palmergames.bukkit.towny.event.NewTownEvent;
 import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
-import com.palmergames.bukkit.towny.event.nation.toggle.NationToggleNeutralEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
 import com.palmergames.bukkit.towny.event.town.TownMapColourNationalCalculationEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
-import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-
-import java.util.ArrayList;
 
 /**
  * 
@@ -81,7 +74,7 @@ public class SiegeWarTownEventListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			Town town = event.getTown();
 			TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + (long)(SiegeWarSettings.getWarSiegeSiegeImmunityTimeNewTownsHours() * TimeMgmt.ONE_HOUR_IN_MILLIS));
-			TownMetaDataController.setDesiredPeacefulnessSetting(town, TownySettings.getTownDefaultNeutral());
+			SiegeWarTownPeacefulnessUtil.setDesiredTownPeacefulness(town, TownySettings.getTownDefaultNeutral());
 			town.save();
 		}
 	}
@@ -158,7 +151,7 @@ public class SiegeWarTownEventListener implements Listener {
 	public void on(TownPreSetHomeBlockEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
-				&& TownPeacefulnessUtil.isTownPeaceful(event.getTown())) {
+				&& SiegeWarTownPeacefulnessUtil.isTownPeaceful(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_peaceful_town_cannot_move_homeblock"));
 			}
