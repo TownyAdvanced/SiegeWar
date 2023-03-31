@@ -67,7 +67,7 @@ public class TownMetaDataController {
 		}
 		return 0;
 	}
-	
+
 	public static void setPeacefulnessChangeCountdownDays(Town town, int days) {
 		IntegerDataField idf = (IntegerDataField) peacefulnessChangeConfirmationCounterDays.clone();
 		if (town.hasMeta(idf.getKey())) {
