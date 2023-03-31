@@ -99,8 +99,8 @@ public class SiegeWar extends JavaPlugin {
 			info("SiegeWar loaded successfully.");
 		}
     }
-	
-	private void handleLegacyConfigs() {
+    
+    private void handleLegacyConfigs() {
 		Path configPath = getDataFolder().toPath().resolve("config.yml");
 		if (!Files.exists(configPath))
 			return;
