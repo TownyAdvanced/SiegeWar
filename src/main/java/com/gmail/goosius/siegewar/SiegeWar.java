@@ -1,19 +1,7 @@
 package com.gmail.goosius.siegewar;
 
-import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
-import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
-import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
-import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
-import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.Translation;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
