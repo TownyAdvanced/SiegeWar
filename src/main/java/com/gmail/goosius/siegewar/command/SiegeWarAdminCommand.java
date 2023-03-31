@@ -701,6 +701,8 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					//set peaceful flag
 					boolean peaceful = Boolean.parseBoolean(args[2]);
 					SiegeWarTownPeacefulnessUtil.setTownPeacefulness(town, peaceful);
+					SiegeWarTownPeacefulnessUtil.setDesiredTownPeacefulness(town, peaceful);
+					SiegeWarTownPeacefulnessUtil.setTownPeacefulnessChangeCountdownDays(town, 0);
 					//Send message
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_town_peacefulness_change_success", town.getName(), Boolean.toString(peaceful)));
 					break;
