@@ -2,7 +2,6 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -143,7 +142,7 @@ public class SiegeWarTownPeacefulnessUtil {
 					continue;
 
 				//Skip if town has no natural or occupying nation
-				if(!town.hasNation() && !TownOccupationController.isTownOccupied(town))
+				if(!town.hasNation() && !SiegeWarTownOccupationUtil.isTownOccupied(town))
 					continue;
 
 				//Skip if town is besieged
@@ -156,7 +155,7 @@ public class SiegeWarTownPeacefulnessUtil {
 					continue;
 
 				//Update towny-influence map
-				nation = TownOccupationController.isTownOccupied(town) ? TownOccupationController.getTownOccupier(town) : town.getNation();
+				nation = SiegeWarTownOccupationUtil.isTownOccupied(town) ? SiegeWarTownOccupationUtil.getTownOccupier(town) : town.getNation();
 				if(result.containsKey(nation)) {
 					result.put(nation, result.get(nation) + town.getTownBlocks().size());
 				} else {

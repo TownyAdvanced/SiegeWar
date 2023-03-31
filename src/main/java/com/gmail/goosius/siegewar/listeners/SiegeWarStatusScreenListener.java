@@ -3,7 +3,7 @@ package com.gmail.goosius.siegewar.listeners;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.TownyWorld;
@@ -138,8 +138,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 				}
 			}
 
-			if(TownyEconomyHandler.isActive() && TownOccupationController.isTownOccupied(town)) {
-				double occupationTax = TownOccupationController.getNationOccupationTax(town);
+			if(TownyEconomyHandler.isActive() && SiegeWarTownOccupationUtil.isTownOccupied(town)) {
+				double occupationTax = SiegeWarTownOccupationUtil.getNationOccupationTax(town);
 				if (occupationTax > 0) {
 					String taxForDisplay = TownyEconomyHandler.getFormattedBalance(occupationTax);
 					Component comp = Component.text(translator.of("status_town_occupation_tax", taxForDisplay));

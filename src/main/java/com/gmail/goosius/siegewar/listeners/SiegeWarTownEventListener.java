@@ -2,7 +2,7 @@ package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -47,8 +47,8 @@ public class SiegeWarTownEventListener implements Listener {
 		if (SiegeController.hasSiege(event.getTown()))
 			SiegeController.removeSiege(SiegeController.getSiege(event.getTown()), SiegeSide.ATTACKERS);
 		//Remove occupier if town has one
-		if (TownOccupationController.isTownOccupied(event.getTown()))
-			TownOccupationController.removeTownOccupation(event.getTown());
+		if (SiegeWarTownOccupationUtil.isTownOccupied(event.getTown()))
+			SiegeWarTownOccupationUtil.removeTownOccupation(event.getTown());
 	}
 	
 	/*
@@ -124,7 +124,7 @@ public class SiegeWarTownEventListener implements Listener {
 	 */
 	@EventHandler
 	public void onTownUnclaim(TownPreUnclaimCmdEvent event) {
-		if (SiegeWarSettings.getWarCommonOccupiedTownUnClaimingDisabled() && TownOccupationController.isTownOccupied(event.getTown())) {
+		if (SiegeWarSettings.getWarCommonOccupiedTownUnClaimingDisabled() && SiegeWarTownOccupationUtil.isTownOccupied(event.getTown())) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_war_common_occupied_town_cannot_unclaim"));
 			return;
@@ -161,7 +161,7 @@ public class SiegeWarTownEventListener implements Listener {
 				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_besieged_town_cannot_move_homeblock"));
 			}
 
-			if(TownOccupationController.isTownOccupied(event.getTown())) {
+			if(SiegeWarTownOccupationUtil.isTownOccupied(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_occupied_town_cannot_move_homeblock"));
 			}
@@ -187,8 +187,8 @@ public class SiegeWarTownEventListener implements Listener {
 
 	@EventHandler
 	public void on(TownMapColourNationalCalculationEvent event) {
-		if(TownOccupationController.isTownOccupied(event.getTown())) {
-			String mapColorHexCode = TownOccupationController.getTownOccupier(event.getTown()).getMapColorHexCode();
+		if(SiegeWarTownOccupationUtil.isTownOccupied(event.getTown())) {
+			String mapColorHexCode = SiegeWarTownOccupationUtil.getTownOccupier(event.getTown()).getMapColorHexCode();
 			event.setMapColorHexCode(mapColorHexCode);
 		}
 	}

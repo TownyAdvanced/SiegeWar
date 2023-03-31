@@ -2,7 +2,7 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.events.PreInvadeEvent;
@@ -97,7 +97,7 @@ public class InvadeTown {
 		SiegeController.saveSiege(siege);
 
 		//Occupy town
-		TownOccupationController.setTownOccupation(targetTown, invadingNation);
+		SiegeWarTownOccupationUtil.setTownOccupation(targetTown, invadingNation);
 	}
 
 	private static void allowInvasionOrThrow(Player player, Nation residentsNation, Town targetTown, Siege siege) throws TownyException {
@@ -114,7 +114,7 @@ public class InvadeTown {
 		if(siege.getStatus().isActive())
 			throw new TownyException(translator.of("msg_err_cannot_invade_siege_still_in_progress"));
 
-		if(TownOccupationController.isTownOccupiedByNation(residentsNation, targetTown))
+		if(SiegeWarTownOccupationUtil.isTownOccupiedByNation(residentsNation, targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_invade_town_already_occupied"));
 
 		switch(siege.getSiegeType()) {

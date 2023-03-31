@@ -32,8 +32,6 @@ import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SiegeWar extends JavaPlugin {
 	
