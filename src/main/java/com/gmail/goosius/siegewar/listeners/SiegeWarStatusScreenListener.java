@@ -147,7 +147,6 @@ public class SiegeWarStatusScreenListener implements Listener {
 				}
 			}
 			
-
 			if (TownMetaDataController.hasPlunderDebt(town)) {
 				int days = TownMetaDataController.getPlunderDebtDays(town);
 				double amount = TownMetaDataController.getDailyPlunderDebt(town);
