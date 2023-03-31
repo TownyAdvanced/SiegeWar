@@ -114,7 +114,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 			final Translator translator = Translator.locale(Translation.getLocale(event.getCommandSender()));
 			
 			Town town = event.getTown();
-			
+
 			if(SiegeWarTownPeacefulnessUtil.isTownPeaceful(town)) {
 				//Generate the correct subtitle line:
 				//1. Get the list of existing subtitle entries
