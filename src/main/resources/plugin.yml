@@ -43,6 +43,7 @@ permissions:
         default: false
         children:
             siegewar.command.siegewar.hud.*: true
+            siegewar.command.siegewar.town.*: true
             siegewar.command.siegewar.nation.*: true
             siegewar.command.siegewar.collect: true
 
@@ -60,6 +61,12 @@ permissions:
         children:
             siegewar.command.siegewar.hud: true
 
+    siegewar.command.siegewar.town.*:
+        description: User is able to do all /siegewar town commands.
+        default: false
+        children:
+            siegewar.command.siegewar.town.togglepeaceful: true
+    
     siegewar.command.siegewar.nation.*:
         description: User is able to do all /siegewar nation commands.
         default: false
