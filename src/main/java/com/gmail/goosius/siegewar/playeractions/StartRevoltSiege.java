@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -60,7 +61,7 @@ public class StartRevoltSiege {
         || !TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToStartSiege(SiegeType.REVOLT)))
             throw new TownyException(translator.of("msg_err_action_disable"));
 
-        if(targetTown.isNeutral())
+        if(SiegeWarTownPeacefulnessUtil.isTownPeaceful(targetTown))
             throw new TownyException(translator.of("msg_err_peaceful_towns_cannot_revolt"));
 
         if(!TownOccupationController.isTownOccupied(targetTown))

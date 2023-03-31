@@ -10,6 +10,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.adventure.text.Component;
 import com.palmergames.adventure.text.format.NamedTextColor;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -26,9 +27,6 @@ import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Banner;
@@ -237,7 +235,7 @@ public class PlaceBlock {
 		if(!nearbyTown.isAllowedToWar())
 			throw new TownyException(Translatable.of("msg_err_this_town_is_not_allowed_to_be_attacked"));
 
-		if(nearbyTown.isNeutral()) {
+		if(SiegeWarTownPeacefulnessUtil.isTownPeaceful(nearbyTown)) {
 			//Town is peaceful, so this action is a subversion or peaceful-revolt attempt
 			if(residentsTown == nearbyTown) {
 				if(TownOccupationController.isTownOccupied(residentsTown)) {

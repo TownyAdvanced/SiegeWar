@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -90,8 +91,9 @@ public class SiegeWar extends JavaPlugin {
 		registerPlayerCommands();
 		registerListeners();
 		checkIntegrations();
-		migrateTownOccupationData();
+		migrateTownOccupationData(); //Keep this line before deleteLegacyMetadata
 		deleteLegacyMetaData();
+		migrateTownNeutralityData();
 
 
 		if(siegeWarPluginError) {
@@ -280,5 +282,31 @@ public class SiegeWar extends JavaPlugin {
 		}
 		if (success)
 			SiegeWar.info("Old Town Occupation Data migrated...");
+	}
+
+	/**
+	 * In some previous SW versions,
+	 * the towny "neutral" flag was being re-used/hijacked to indicate peacefulness
+	 * -
+	 * However this was not suitable for either SW or Towny, because:
+	 * 1. The indicated Towny flag comes with an extra monetary cost which interfered with SW's system balance.
+	 * 2. The hijacking forced towny to support duplicate commands like /t toggle neutral, and /t toggle peaceful
+	 * -
+	 * This method migrates the old data,
+	 * so that if a town is found with neutral=true,
+	 * that town will be set to neutral=false, and the appropriate SW peaceful metadata flag will be set.
+	 * -
+	 */
+	public static void migrateTownNeutralityData() {
+		boolean success = false;
+		for(Town town: new ArrayList<>(TownyAPI.getInstance().getTowns())) {
+			if(town.isNeutral()) {
+				SiegeWarTownPeacefulnessUtil.setTownPeacefulness(town, true);
+				town.setNeutral(false);
+				success = true;
+			}
+		}
+		if (success)
+			SiegeWar.info("Old Town Neutrality Data migrated...");
 	}
 }

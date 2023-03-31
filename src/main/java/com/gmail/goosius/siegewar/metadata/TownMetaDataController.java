@@ -22,6 +22,7 @@ public class TownMetaDataController {
 	private SiegeWar plugin;
 	private static IntegerDataField peacefulnessChangeConfirmationCounterDays = new IntegerDataField("siegewar_peacefuldays", 0, Translation.of("status_town_days_to_peacefulness_status_change"));
 	private static BooleanDataField desiredPeacefulness = new BooleanDataField("siegewar_desiredPeaceSetting", false);
+	private static BooleanDataField peacefulness = new BooleanDataField("siegewar_peaceSetting", false);
 	private static LongDataField revoltImmunityEndTime = new LongDataField("siegewar_revoltImmunityEndTime", 0l);
 	private static LongDataField siegeImmunityEndTime = new LongDataField("siegewar_siegeImmunityEndTime", 0l);
 	private static StringDataField failedCampList = new StringDataField("siegewar_failedCampList", "");
@@ -59,15 +60,15 @@ public class TownMetaDataController {
 		town.removeMetaData((StringDataField) failedCampList.clone());
 	}
 	
-	public static int getPeacefulnessChangeConfirmationCounterDays(Town town) {
+	public static int getPeacefulnessChangeCountdownDays(Town town) {
 		IntegerDataField idf = (IntegerDataField) peacefulnessChangeConfirmationCounterDays.clone();
 		if (town.hasMeta(idf.getKey())) {
 			return MetaDataUtil.getInt(town, idf);
 		}
 		return 0;
 	}
-
-	public static void setPeacefulnessChangeDays(Town town, int days) {
+	
+	public static void setPeacefulnessChangeCountdownDays(Town town, int days) {
 		IntegerDataField idf = (IntegerDataField) peacefulnessChangeConfirmationCounterDays.clone();
 		if (town.hasMeta(idf.getKey())) {
 			if (days == 0) {
@@ -80,7 +81,7 @@ public class TownMetaDataController {
 		}
 	}
 	
-	public static boolean getDesiredPeacefulnessSetting(Town town) {
+	public static boolean getDesiredPeacefulness(Town town) {
 		BooleanDataField bdf = (BooleanDataField) desiredPeacefulness.clone();
 		if (town.hasMeta(bdf.getKey())) {
 			return MetaDataUtil.getBoolean(town, bdf);
@@ -88,12 +89,29 @@ public class TownMetaDataController {
 		return false;
 	}
 	
-	public static void setDesiredPeacefulnessSetting(Town town, boolean bool) {
+	public static void setDesiredPeacefulness(Town town, boolean bool) {
 		BooleanDataField bdf = (BooleanDataField) desiredPeacefulness.clone();
 		if (town.hasMeta(bdf.getKey())) {
 			MetaDataUtil.setBoolean(town, bdf, bool, true);
 		} else {
 			town.addMetaData(new BooleanDataField("siegewar_desiredPeaceSetting", bool));
+		}
+	}
+	
+	public static boolean getPeacefulness(Town town) {
+		BooleanDataField bdf = (BooleanDataField) peacefulness.clone();
+		if (town.hasMeta(bdf.getKey())) {
+			return MetaDataUtil.getBoolean(town, bdf);
+		}
+		return false;
+	}
+
+	public static void setPeacefulness(Town town, boolean bool) {
+		BooleanDataField bdf = (BooleanDataField) peacefulness.clone();
+		if (town.hasMeta(bdf.getKey())) {
+			MetaDataUtil.setBoolean(town, bdf, bool, true);
+		} else {
+			town.addMetaData(new BooleanDataField("siegewar_peaceSetting", bool));
 		}
 	}
 	
