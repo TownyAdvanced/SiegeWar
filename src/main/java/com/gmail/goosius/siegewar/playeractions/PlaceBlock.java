@@ -2,7 +2,7 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -238,7 +238,7 @@ public class PlaceBlock {
 		if(SiegeWarTownPeacefulnessUtil.isTownPeaceful(nearbyTown)) {
 			//Town is peaceful, so this action is a subversion or peaceful-revolt attempt
 			if(residentsTown == nearbyTown) {
-				if(TownOccupationController.isTownOccupied(residentsTown)) {
+				if(SiegeWarTownOccupationUtil.isTownOccupied(residentsTown)) {
 					throw new TownyException(Translatable.of("neutral_towns_cannot_revolt"));
 				}
 			} else {
@@ -282,7 +282,7 @@ public class PlaceBlock {
 			//Start Revolt siege
 			StartRevoltSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 			//Immediately remove occupation
-			TownOccupationController.removeTownOccupation(nearbyTown);
+			SiegeWarTownOccupationUtil.removeTownOccupation(nearbyTown);
 		} else {
 			if (residentsNation == null)
 				throw new TownyException(translator.of("msg_err_dont_belong_nation"));

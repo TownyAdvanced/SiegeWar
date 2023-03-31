@@ -2,7 +2,7 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.events.PreSubvertTownEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -80,7 +80,7 @@ public class PeacefullySubvertTown {
 		}
 
 		//Occupy town (also saves data)
-		TownOccupationController.setTownOccupation(targetTown, subvertingNation);
+		SiegeWarTownOccupationUtil.setTownOccupation(targetTown, subvertingNation);
 	}
 
 	private static void allowSubversionOrThrow(Player player, Nation residentsNation, Town targetTown) throws TownyException {
@@ -97,7 +97,7 @@ public class PeacefullySubvertTown {
 		if(SiegeController.hasActiveSiege(targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_change_occupation_of_besieged_town"));
 
-		if(TownOccupationController.isTownOccupiedByNation(residentsNation, targetTown))
+		if(SiegeWarTownOccupationUtil.isTownOccupiedByNation(residentsNation, targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_subvert_town_already_occupied"));
 
 		SiegeWarDistanceUtil.throwIfTownIsTooFarFromNationCapitalByWorld(residentsNation, targetTown);

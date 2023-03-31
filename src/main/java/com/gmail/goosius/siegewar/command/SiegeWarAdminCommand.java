@@ -2,7 +2,7 @@ package com.gmail.goosius.siegewar.command;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
@@ -671,10 +671,10 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					boolean invaded = Boolean.parseBoolean(args[2]);
 					if(invaded) {
 						siege.setTownInvaded(true);
-						TownOccupationController.setTownOccupation(town, (Nation)siege.getAttacker());
+						SiegeWarTownOccupationUtil.setTownOccupation(town, (Nation)siege.getAttacker());
 					} else {
 						siege.setTownInvaded(false);
-						TownOccupationController.removeTownOccupation(town);
+						SiegeWarTownOccupationUtil.removeTownOccupation(town);
 					}
 					SiegeController.saveSiege(siege);
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_set_invade_success", Boolean.toString(invaded).toUpperCase(), town.getName()));

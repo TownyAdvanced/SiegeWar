@@ -2,7 +2,7 @@ package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -113,7 +113,7 @@ public class SiegeWarTownyEventListener implements Listener {
 			if (SiegeWarSettings.isPlunderPaidOutOverDays()) {
 				SiegeWarMoneyUtil.payDailyPlunderDebt();
 			}
-			TownOccupationController.collectNationOccupationTax();
+			SiegeWarTownOccupationUtil.collectNationOccupationTax();
 		}
 	}
     

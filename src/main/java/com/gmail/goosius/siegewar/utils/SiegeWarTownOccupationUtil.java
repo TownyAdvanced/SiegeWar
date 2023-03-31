@@ -1,5 +1,6 @@
-package com.gmail.goosius.siegewar;
+package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -17,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class TownOccupationController {
+public class SiegeWarTownOccupationUtil {
 
 	public static boolean isTownOccupied(Town town) {
 		return town.isConquered() && town.hasNation();
@@ -107,7 +108,7 @@ public class TownOccupationController {
 	private static void collectNationOccupationTax(Nation nation, double taxPerPlot) {
 		double taxesPaid = 0;
 		for (Town town : new ArrayList<>(nation.getTowns()))
-			if (TownOccupationController.isTownOccupied(town))
+			if (SiegeWarTownOccupationUtil.isTownOccupied(town))
 				taxesPaid += collectNationOccupationTax(nation, taxPerPlot, town);
 		
 		TownyMessaging.sendPrefixedNationMessage(nation, Translatable.of("msg_occupation_taxes_collected_totaling", getMoney(taxesPaid)));
