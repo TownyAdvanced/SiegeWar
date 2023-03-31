@@ -11,7 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
@@ -82,13 +82,13 @@ public class SiegeWarStatusScreenListener implements Listener {
 			List<String> out = new ArrayList<>();
 
 			// Offensive Sieges [3]: TownA, TownB, TownC
-	        List<Town> siegeAttacks = new ArrayList<>(SiegeController.getActiveOffensiveSieges(nation).values());
+	        List<Town> siegeAttacks = new ArrayList<>(SiegeWarSiegeUtil.getActiveOffensiveSieges(nation).values());
 			if (siegeAttacks.size() > 0)
 				out.add(translator.of("status_nation_offensive_sieges", siegeAttacks.size())
 					+ getFormattedTownList(siegeAttacks));
 
 	        // Defensive Sieges [3]: TownX, TownY, TownZ
-	        List<Town> siegeDefences = new ArrayList<>(SiegeController.getActiveDefensiveSieges(nation).values());
+	        List<Town> siegeDefences = new ArrayList<>(SiegeWarSiegeUtil.getActiveDefensiveSieges(nation).values());
 			if (siegeDefences.size() > 0)
 				out.add(translator.of("status_nation_defensive_sieges", siegeDefences.size())
 					+ getFormattedTownList(siegeDefences));
@@ -161,9 +161,9 @@ public class SiegeWarStatusScreenListener implements Listener {
 	        }
 
 	        immunity = TownMetaDataController.getSiegeImmunityEndTime(town);
-	        if (SiegeController.hasSiege(town)) {
+	        if (SiegeWarSiegeUtil.hasSiege(town)) {
 	        	List<String> out = new ArrayList<>();
-				Siege siege = SiegeController.getSiege(town);
+				Siege siege = SiegeWarSiegeUtil.getSiege(town);
 				SiegeStatus siegeStatus= siege.getStatus();
 				String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis()); 
 
@@ -263,7 +263,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 							.hoverEvent(HoverEvent.showText(hoverText))));
 
 	        } else {
-	            if(!SiegeController.hasActiveSiege(town)
+	            if(!SiegeWarSiegeUtil.hasActiveSiege(town)
 	            	&& (System.currentTimeMillis() < immunity)
 					|| immunity == -1l) {
 	                //Siege:

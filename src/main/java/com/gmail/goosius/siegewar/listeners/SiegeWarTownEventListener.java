@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.listeners;
 
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
@@ -44,8 +44,8 @@ public class SiegeWarTownEventListener implements Listener {
 	@EventHandler
 	public void onTownGoesToRuin(TownRuinedEvent event) {
 		//Remove siege if town has one
-		if (SiegeController.hasSiege(event.getTown()))
-			SiegeController.removeSiege(SiegeController.getSiege(event.getTown()), SiegeSide.ATTACKERS);
+		if (SiegeWarSiegeUtil.hasSiege(event.getTown()))
+			SiegeWarSiegeUtil.removeSiege(SiegeWarSiegeUtil.getSiege(event.getTown()), SiegeSide.ATTACKERS);
 		//Remove occupier if town has one
 		if (SiegeWarTownOccupationUtil.isTownOccupied(event.getTown()))
 			SiegeWarTownOccupationUtil.removeTownOccupation(event.getTown());
@@ -58,7 +58,7 @@ public class SiegeWarTownEventListener implements Listener {
 	public void onTownAddResident(TownPreAddResidentEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeBesiegedTownRecruitmentDisabled()) {
 
-			if (SiegeController.hasActiveSiege(event.getTown())) {
+			if (SiegeWarSiegeUtil.hasActiveSiege(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_recruit"));
 				return;
@@ -88,7 +88,7 @@ public class SiegeWarTownEventListener implements Listener {
 			if (SiegeWarSettings.getWarSiegeBesiegedTownClaimingDisabled()) {
 
 				//If the claimer's town is under siege, they cannot claim any land
-				if (SiegeController.hasActiveSiege(event.getTown())) {
+				if (SiegeWarSiegeUtil.hasActiveSiege(event.getTown())) {
 					event.setCancelled(true);
 					event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_claim"));
 					return;
@@ -97,7 +97,7 @@ public class SiegeWarTownEventListener implements Listener {
 
 			//If the land is too near any active siege zone, it cannot be claimed.
 			if(SiegeWarSettings.getWarSiegeClaimingDisabledNearSiegeZones()) {
-				for(Siege siege: SiegeController.getSieges()) {
+				for(Siege siege: SiegeWarSiegeUtil.getSieges()) {
 					try {
 						if (siege.getStatus().isActive()
 							&& SiegeWarDistanceUtil.isInSiegeZone(event.getPlayer(), siege)) {
@@ -134,7 +134,7 @@ public class SiegeWarTownEventListener implements Listener {
 			&& SiegeWarSettings.getWarSiegeBesiegedTownUnClaimingDisabled()) {
 
 			//Town besieged
-			if(SiegeController.hasActiveSiege(event.getTown())) {
+			if(SiegeWarSiegeUtil.hasActiveSiege(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_unclaim"));
 				return;
@@ -156,7 +156,7 @@ public class SiegeWarTownEventListener implements Listener {
 				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_peaceful_town_cannot_move_homeblock"));
 			}
 
-			if(SiegeController.hasActiveSiege(event.getTown())) {
+			if(SiegeWarSiegeUtil.hasActiveSiege(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_besieged_town_cannot_move_homeblock"));
 			}
@@ -173,13 +173,13 @@ public class SiegeWarTownEventListener implements Listener {
 	 */
 	@EventHandler
 	public void onDeleteTown(DeleteTownEvent event) {
-		if (SiegeController.hasSiege(event.getTownUUID()))
-			SiegeController.removeSiege(SiegeController.getSiegeByTownUUID(event.getTownUUID()), SiegeSide.ATTACKERS);
+		if (SiegeWarSiegeUtil.hasSiege(event.getTownUUID()))
+			SiegeWarSiegeUtil.removeSiege(SiegeWarSiegeUtil.getSiegeByTownUUID(event.getTownUUID()), SiegeSide.ATTACKERS);
 	}
 
 	@EventHandler
 	public void onTownMerge(TownPreMergeEvent event) {
-		if (SiegeController.hasSiege(event.getSuccumbingTown())) {
+		if (SiegeWarSiegeUtil.hasSiege(event.getSuccumbingTown())) {
 			event.setCancelMessage(Translation.of("msg_err_cannot_merge_towns"));
 			event.setCancelled(true);
 		}

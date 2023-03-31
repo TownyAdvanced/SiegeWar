@@ -1,7 +1,7 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
@@ -94,7 +94,7 @@ public class InvadeTown {
 
 		//Update siege flags & save siege data
 		siege.setTownInvaded(true);
-		SiegeController.saveSiege(siege);
+		SiegeWarSiegeUtil.saveSiege(siege);
 
 		//Occupy town
 		SiegeWarTownOccupationUtil.setTownOccupation(targetTown, invadingNation);

@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.utils;
 
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.events.SiegeEndEvent;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -42,7 +41,7 @@ public class SiegeWarSiegeCompletionUtil {
 		siege.setDefenderName(siege.getDefendingNationIfPossibleElseTown().getName());
 
 		//Save to db
-		SiegeController.saveSiege(siege);
+		SiegeWarSiegeUtil.saveSiege(siege);
 
 		//Fire SiegeEnded event
 		Bukkit.getPluginManager().callEvent(new SiegeEndEvent(siege));

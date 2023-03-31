@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -41,7 +40,7 @@ public class SiegeWarSicknessUtil {
                 continue;
 
             // check if in a siege zone
-            Siege siege = SiegeController.getActiveSiegeAtLocation(location);
+            Siege siege = SiegeWarSiegeUtil.getActiveSiegeAtLocation(location);
             if (siege == null)
                 continue;
 

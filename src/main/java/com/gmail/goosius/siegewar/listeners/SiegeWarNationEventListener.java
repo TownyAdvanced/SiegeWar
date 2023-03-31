@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.listeners;
 
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -49,7 +49,7 @@ public class SiegeWarNationEventListener implements Listener {
 	@EventHandler
 	public void onNationZoneStatus(NationZoneTownBlockStatusEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled() 
-			&& SiegeController.hasActiveSiege(event.getTown()))	{
+			&& SiegeWarSiegeUtil.hasActiveSiege(event.getTown()))	{
 			event.setCancelled(true);
 		}
 	}
@@ -66,14 +66,14 @@ public class SiegeWarNationEventListener implements Listener {
 		/*
 		 * Adjust sieges if needed
 		 */
-		for (Siege siege : SiegeController.getSieges()) {
+		for (Siege siege : SiegeWarSiegeUtil.getSieges()) {
 			switch(siege.getSiegeType()) {
 				case CONQUEST:
 					/*
 					 * If attacker (which is a nation) disappears, we must delete the siege
 					 */
 					if(event.getNationUUID() == siege.getAttacker().getUUID()) {
-						SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
+						SiegeWarSiegeUtil.removeSiege(siege, SiegeSide.DEFENDERS);
 					}
 					break;
 				case REVOLT:
@@ -82,7 +82,7 @@ public class SiegeWarNationEventListener implements Listener {
 					 * If defender (which is a nation) disappears, we must delete the siege
 					 */
 					if (event.getNationUUID() == siege.getDefender().getUUID()) {
-						SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
+						SiegeWarSiegeUtil.removeSiege(siege, SiegeSide.DEFENDERS);
 					}
 				break;
 			}
@@ -105,7 +105,7 @@ public class SiegeWarNationEventListener implements Listener {
 		Nation nation = event.getNation();
 		Nation enemyNation = event.getEnemy();
 
-		for(Siege siege: SiegeController.getSieges()) {
+		for(Siege siege: SiegeWarSiegeUtil.getSieges()) {
 			if (!siege.getStatus().isActive())
 				continue;
 
@@ -174,7 +174,7 @@ public class SiegeWarNationEventListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled()
 			&& SiegeWarSettings.getWarSiegeBesiegedCapitalsCannotChangeKing()
 			&& event.isCapitalChange()
-			&& (SiegeController.hasSiege(oldCapital) || SiegeController.hasSiege(newCapital))) {
+			&& (SiegeWarSiegeUtil.hasSiege(oldCapital) || SiegeWarSiegeUtil.hasSiege(newCapital))) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_besieged_capital_cannot_change_king"));
 		}

@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.tasks;
 
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -27,7 +27,7 @@ public class SiegeWarTimerTaskController {
 	 * e.g. who wins if siege victory timer runs out ?
 	 */
 	public static void evaluateTimedSiegeOutcomes() {
-		for (Siege siege : SiegeController.getSieges()) {
+		for (Siege siege : SiegeWarSiegeUtil.getSieges()) {
 			evaluateTimedSiegeOutcome(siege);
 		}
 	}
@@ -64,7 +64,7 @@ public class SiegeWarTimerTaskController {
 				//Siege is inactive i.e. in the 'aftermath' phase
 				//Wait for siege immunity timer to end then delete siege
 				if (System.currentTimeMillis() > TownMetaDataController.getSiegeImmunityEndTime(siege.getTown())) {
-					SiegeController.removeSiege(siege, SiegeSide.NOBODY);
+					SiegeWarSiegeUtil.removeSiege(siege, SiegeSide.NOBODY);
 				}
 		}
 	}
@@ -73,7 +73,7 @@ public class SiegeWarTimerTaskController {
 	 * Evaluate banner control for all sieges
 	 */
 	public static void evaluateBannerControl() {
-		for (Siege siege : SiegeController.getSieges()) {
+		for (Siege siege : SiegeWarSiegeUtil.getSieges()) {
 			SiegeWarBannerControlUtil.evaluateBannerControl(siege);
 		}
 	}

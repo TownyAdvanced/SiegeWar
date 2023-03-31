@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.playeractions;
 
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
@@ -39,7 +39,7 @@ public class DestroyBlock {
 		final Translator translator = Translator.locale(Translation.getLocale(event.getPlayer()));
 
 		//Get nearby siege
-		Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
+		Siege nearbySiege = SiegeWarSiegeUtil.getActiveSiegeAtLocation(event.getLocation());
 		if(nearbySiege == null) {
 			// Prevent destruction of siege camp banner or support block
 			if (qualifiesAsSiegeCamp(event)) {

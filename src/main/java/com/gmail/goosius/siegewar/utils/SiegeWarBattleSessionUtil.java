@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
@@ -73,7 +72,7 @@ public class SiegeWarBattleSessionUtil {
 		 * Gather the results of all battles
 		 * End any active battles
 		 */
-		for (Siege siege : SiegeController.getSieges())
+		for (Siege siege : SiegeWarSiegeUtil.getSieges())
 			endBattleSessionForSiege(siege);
 		
 		Bukkit.getPluginManager().callEvent(new BattleSessionEndedEvent());
@@ -137,7 +136,7 @@ public class SiegeWarBattleSessionUtil {
 				siege.clearPlayersWhoWereInTheSiegeZone();
 
 				//Save siege to database
-				SiegeController.saveSiege(siege);
+				SiegeWarSiegeUtil.saveSiege(siege);
 			}
 		} catch (Throwable t) {
 			try {

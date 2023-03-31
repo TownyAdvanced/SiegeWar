@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.utils;
 
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -63,7 +62,7 @@ public class SiegeWarDistanceUtil {
 	public static void recalculatePlayersRegisteredToActiveSiegeZones() {
 		playersRegisteredToActiveSiegeZones.clear();
 		for(Player player: Bukkit.getOnlinePlayers()) {
-			Siege siege = SiegeController.getActiveSiegeAtLocation(player.getLocation());
+			Siege siege = SiegeWarSiegeUtil.getActiveSiegeAtLocation(player.getLocation());
 			if(siege != null)
 				playersRegisteredToActiveSiegeZones.put(player, siege);
 		}
@@ -84,7 +83,7 @@ public class SiegeWarDistanceUtil {
 	 * @return true is location is in an active siegezone
 	 */
 	public static boolean isLocationInActiveSiegeZone(Location location) {
-		for(Siege siege: SiegeController.getSieges()) {
+		for(Siege siege: SiegeWarSiegeUtil.getSieges()) {
 			if(siege.getStatus().isActive()
 				&& SiegeWarDistanceUtil.isInSiegeZone(location, siege)) {
 				return true;
@@ -101,7 +100,7 @@ public class SiegeWarDistanceUtil {
 	 * @return true is location is in an active SiegeAssembly
 	 */
 	public static boolean isLocationInActiveSiegeAssembly(Location location) {
-		for(SiegeCamp siegeCamp: SiegeController.getSiegeCamps()) {
+		for(SiegeCamp siegeCamp: SiegeWarSiegeUtil.getSiegeCamps()) {
 			if(SiegeWarDistanceUtil.isInSiegeCampZone(location, siegeCamp)) {
 				return true;
 			}
@@ -119,7 +118,7 @@ public class SiegeWarDistanceUtil {
 
 		//There is a good chance the townblock will belong to the under-siege town and be in the siegezone
 		//Check this quickly before going through the full list of sieges
-		Siege siege = SiegeController.getSiege(townBlock.getTownOrNull());
+		Siege siege = SiegeWarSiegeUtil.getSiege(townBlock.getTownOrNull());
 		if(siege != null && siege.getStatus().isActive() && isInSiegeZone(locationOfTownBlock, siege)) {
 			//Townblock is in an under siege town, and in the siegezone
 			return true;
@@ -216,7 +215,7 @@ public class SiegeWarDistanceUtil {
 	 * @param location {@link Location} to check against.
 	 */
 	public static boolean campTooClose(Location location) {
-		for (SiegeCamp camp : SiegeController.getSiegeCamps())
+		for (SiegeCamp camp : SiegeWarSiegeUtil.getSiegeCamps())
 			if (isInSiegeCampZone(location, camp))
 				return true;
 		return false;
@@ -337,7 +336,7 @@ public class SiegeWarDistanceUtil {
 
 	public static boolean isInANonBesiegedTown(Location location) {
 		Town town = TownyAPI.getInstance().getTown(location);
-		if(town != null & !SiegeController.hasActiveSiege(town)) {
+		if(town != null & !SiegeWarSiegeUtil.hasActiveSiege(town)) {
 			return true;
 		} else {
 			return false;

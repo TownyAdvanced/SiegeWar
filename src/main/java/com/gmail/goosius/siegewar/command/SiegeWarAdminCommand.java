@@ -1,7 +1,7 @@
 package com.gmail.goosius.siegewar.command;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
@@ -97,7 +97,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			}
 		case "siege":
 			if (args.length == 2)
-				return NameUtil.filterByStart(new ArrayList<>(SiegeController.getNamesOfSiegedTowns()), args[1]);
+				return NameUtil.filterByStart(new ArrayList<>(SiegeWarSiegeUtil.getNamesOfSiegedTowns()), args[1]);
 
 			if (args.length == 3)
 				return NameUtil.filterByStart(siegewaradminSiegeTabCompletes, args[2]);
@@ -220,7 +220,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		}
 
 		final int finalHours = hours;
-		SiegeController.getSieges().stream().forEach(siege -> modifySiegeEndTime(siege, finalHours));
+		SiegeWarSiegeUtil.getSieges().stream().forEach(siege -> modifySiegeEndTime(siege, finalHours));
 		Messaging.sendMsg(sender, Translatable.of("hours_added_to_sieges", hours));
 	}
 
@@ -229,7 +229,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		if (newEndTime < System.currentTimeMillis())
 			return;
 		siege.setScheduledEndTime(newEndTime);
-		SiegeController.saveSiege(siege);
+		SiegeWarSiegeUtil.saveSiege(siege);
 	}
 
 	private void parseInstallCommand(CommandSender sender) {
@@ -625,17 +625,17 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				Messaging.sendErrorMsg(sender, Translatable.of("msg_err_town_not_registered", args[0]));
 				return;
 			}
-			if (!SiegeController.hasSiege(town)) {
+			if (!SiegeWarSiegeUtil.hasSiege(town)) {
 				Messaging.sendErrorMsg(sender, Translatable.of("msg_err_siege_war_no_siege_on_target_town", town.getName()));
 				return;
 			}
 			List<String> commandsNotAllowedOnActiveSieges = Arrays.asList("setplundered","setinvaded");
 
-			if (SiegeController.hasActiveSiege(town) && commandsNotAllowedOnActiveSieges.contains(args[1].toLowerCase(Locale.ROOT))) {
+			if (SiegeWarSiegeUtil.hasActiveSiege(town) && commandsNotAllowedOnActiveSieges.contains(args[1].toLowerCase(Locale.ROOT))) {
 				Messaging.sendErrorMsg(sender, Translatable.of("msg_err_command_not_allowed_on_active_siege", town.getName()));
 				return;
 			}
-			Siege siege = SiegeController.getSiege(town);
+			Siege siege = SiegeWarSiegeUtil.getSiege(town);
 
 			switch(args[1].toLowerCase()) {
 				case "setbalance":
@@ -651,7 +651,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 
 					int newPoints = Integer.parseInt(args[2]);
 					siege.setSiegeBalance(newPoints);
-					SiegeController.saveSiege(siege);
+					SiegeWarSiegeUtil.saveSiege(siege);
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_set_siege_balance_success", newPoints, town.getName()));
 					return;
 
@@ -664,7 +664,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				case "setplundered":
 					boolean plundered = Boolean.parseBoolean(args[2]);
 					siege.setTownPlundered(plundered);
-					SiegeController.saveSiege(siege);
+					SiegeWarSiegeUtil.saveSiege(siege);
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_set_plunder_success", Boolean.toString(plundered).toUpperCase(), town.getName()));
 					return;
 				case "setinvaded":
@@ -676,11 +676,11 @@ public class SiegeWarAdminCommand implements TabExecutor {
 						siege.setTownInvaded(false);
 						SiegeWarTownOccupationUtil.removeTownOccupation(town);
 					}
-					SiegeController.saveSiege(siege);
+					SiegeWarSiegeUtil.saveSiege(siege);
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_set_invade_success", Boolean.toString(invaded).toUpperCase(), town.getName()));
 					return;
 				case "remove":
-					SiegeController.removeSiege(siege, SiegeSide.ATTACKERS);
+					SiegeWarSiegeUtil.removeSiege(siege, SiegeSide.ATTACKERS);
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_remove_siege_success"));
 					return;
 			}

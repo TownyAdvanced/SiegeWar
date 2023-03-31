@@ -8,7 +8,6 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
@@ -33,7 +32,7 @@ public class SiegeCampUtil {
 	public static void evaluateCamp(SiegeCamp camp, boolean firstRun) {
 		if (SiegeWarDistanceUtil.isLocationInActiveSiegeZone(camp.getBannerBlock().getLocation())) {
 			// Stop if a Siege has begun in the area, shouldn't happen but you never know.
-			SiegeController.removeSiegeCamp(camp);
+			SiegeWarSiegeUtil.removeSiegeCamp(camp);
 		} else if (camp.getEndTime() < System.currentTimeMillis()) {
 			// If the time duration of a SiegeCamp has passed, finish the SiegeCamp by evaluating the attacker's points.
 			finishSiegeCamp(camp);
@@ -114,7 +113,7 @@ public class SiegeCampUtil {
 			// Set the metadata on the target town.
 			TownMetaDataController.setFailedCampSiegeList(camp.getTargetTown(), failedCamps);
 			// Remove the SiegeCamp.
-			SiegeController.removeSiegeCamp(camp);
+			SiegeWarSiegeUtil.removeSiegeCamp(camp);
 		}
 	}
 	

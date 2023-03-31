@@ -25,7 +25,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.playeractions.PlayerDeath;
@@ -57,7 +57,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 			try {
 				//Prevent milk bucket usage while attempting to gain banner control
 				if(event.getItem().getType() == Material.MILK_BUCKET) {
-					for(Siege siege: SiegeController.getSieges()) {
+					for(Siege siege: SiegeWarSiegeUtil.getSieges()) {
 						if(siege.getBannerControlSessions().containsKey(event.getPlayer())) {
 							event.setCancelled(true);
 							Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control"));
@@ -176,7 +176,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 
 		// Stop anyone else teleporting into a town with an active siege.
-		if(SiegeController.hasActiveSiege(destinationTown)) {
+		if(SiegeWarSiegeUtil.hasActiveSiege(destinationTown)) {
 			Messaging.sendErrorMsg(event.getPlayer(), Translatable.of("msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town"));
 			event.setCancelled(true);
 			return;
@@ -198,7 +198,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 	@EventHandler
 	public void on(PlayerJoinEvent event) {
 		if(isSWEnabledAndIsThisAWarAllowedWorld(event.getPlayer().getWorld())) {
-		    Siege siegeAtPlayerLocation = SiegeController.getActiveSiegeAtLocation(event.getPlayer().getLocation());
+		    Siege siegeAtPlayerLocation = SiegeWarSiegeUtil.getActiveSiegeAtLocation(event.getPlayer().getLocation());
 		    if(siegeAtPlayerLocation != null) {
 		    	SiegeWarDistanceUtil.registerPlayerToActiveSiegeZone(event.getPlayer(), siegeAtPlayerLocation);
 		    	SiegeWarNotificationUtil.warnPlayerOfActiveSiegeDanger(event.getPlayer(), siegeAtPlayerLocation);
@@ -212,7 +212,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 
 		//Remove banner-control related glowing
-		if(SiegeController.getPlayersInBannerControlSessions().contains(event.getPlayer()) 
+		if(SiegeWarSiegeUtil.getPlayersInBannerControlSessions().contains(event.getPlayer()) 
 		  && event.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), () -> event.getPlayer().removePotionEffect(PotionEffectType.GLOWING));
 		}

@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.playeractions;
 
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
@@ -52,7 +52,7 @@ public class StartRevoltSiege {
 		allowSiegeOrThrow(player, targetTown);
 
 		// Start a SiegeCamp that will kick off the Siege (or if SiegeAssemblies are disabled, start the Siege immediately.)
-		SiegeController.startSiegeCampProcess(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, targetTown.getNationOrNull(), townOfSiegeStarter, townBlock);
+		SiegeWarSiegeUtil.startSiegeCampProcess(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, targetTown.getNationOrNull(), townOfSiegeStarter, townBlock);
 	}
 
 	private static void allowSiegeOrThrow(Player player, Town targetTown) throws TownyException {

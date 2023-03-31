@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.integration.dynmap;
 
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
@@ -107,7 +107,7 @@ public class DynmapIntegration {
                     townUUID = null;
                     townUUID = mapEntry.getKey();
                     marker = mapEntry.getValue();
-                    Siege siege = SiegeController.getSiegeByTownUUID(townUUID);
+                    Siege siege = SiegeWarSiegeUtil.getSiegeByTownUUID(townUUID);
 
                     if (siege == null || siege.getStatus() != SiegeStatus.IN_PROGRESS) {
                         //Delete marker if siege is not in progress
@@ -137,7 +137,7 @@ public class DynmapIntegration {
 
         {
             //Add siege marker if required
-            for (Siege siege : SiegeController.getSieges()) {
+            for (Siege siege : SiegeWarSiegeUtil.getSieges()) {
 
                 String name = Translation.of("dynmap_siege_title", siege.getAttackerNameForDisplay(), siege.getDefenderNameForDisplay());
                 try {

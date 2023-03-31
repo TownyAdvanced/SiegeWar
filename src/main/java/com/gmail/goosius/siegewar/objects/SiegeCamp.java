@@ -5,7 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.events.PreSiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -140,7 +140,7 @@ public class SiegeCamp {
 
 		// Setup attack
 		if (!preSiegeWarStartEvent.isCancelled()) {
-			SiegeController.startSiege(
+			SiegeWarSiegeUtil.startSiege(
 					bannerBlock, 
 					siegeType, 
 					targetTown, 

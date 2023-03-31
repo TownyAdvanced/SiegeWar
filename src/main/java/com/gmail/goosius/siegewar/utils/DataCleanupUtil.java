@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.utils;
 
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
@@ -48,7 +47,7 @@ public class DataCleanupUtil {
     private static void cleanupBattleSession() {
         //Find any sieges with unresolved battles
         List<Siege> siegesWithUnresolvedBattles = new ArrayList<>();
-        for(Siege siege: SiegeController.getSieges()) {
+        for(Siege siege: SiegeWarSiegeUtil.getSieges()) {
             if(siege.getStatus() == SiegeStatus.IN_PROGRESS
                     && (siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0)) {
                 siegesWithUnresolvedBattles.add(siege);
@@ -62,7 +61,7 @@ public class DataCleanupUtil {
                 siege.adjustSiegeBalance(siege.getAttackerBattlePoints() - siege.getDefenderBattlePoints());
                 siege.setAttackerBattlePoints(0);
                 siege.setDefenderBattlePoints(0);
-                SiegeController.saveSiege(siege);
+                SiegeWarSiegeUtil.saveSiege(siege);
                 numBattlesUpdated++;
             }
 

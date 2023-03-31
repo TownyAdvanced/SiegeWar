@@ -1,7 +1,7 @@
 package com.gmail.goosius.siegewar.command;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
@@ -57,7 +57,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				break;
 			case "hud":
 				if (args.length == 2)
-					return NameUtil.filterByStart(new ArrayList<>(SiegeController.getNamesOfActivelySiegedTowns()), args[1]);
+					return NameUtil.filterByStart(new ArrayList<>(SiegeWarSiegeUtil.getNamesOfActivelySiegedTowns()), args[1]);
 				break;
 			case "preference":
 				if (args.length == 2)
@@ -195,10 +195,10 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				if (town == null) 
 					throw new Exception(Translatable.of("msg_err_town_not_registered", args[0]).forLocale(player));
 
-				if (!SiegeController.getSiegedTowns().contains(town))
+				if (!SiegeWarSiegeUtil.getSiegedTowns().contains(town))
 					throw new Exception(Translatable.of("msg_err_not_being_sieged", town.getName()).forLocale(player));
 
-				SiegeWar.getSiegeHUDManager().toggleWarHud(player, SiegeController.getSiege(town));
+				SiegeWar.getSiegeHUDManager().toggleWarHud(player, SiegeWarSiegeUtil.getSiege(town));
 			}
 		} catch (Exception e) {
 			Messaging.sendErrorMsg(player, e.getMessage());

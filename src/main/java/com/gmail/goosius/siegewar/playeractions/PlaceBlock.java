@@ -1,7 +1,7 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -86,7 +86,7 @@ public class PlaceBlock {
 			}
 
 			//Trap warfare block protection
-			Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
+			Siege nearbySiege = SiegeWarSiegeUtil.getActiveSiegeAtLocation(event.getLocation());
 			if(qualifiesAsTrapWarfareMitigation(event, nearbySiege)) {
 				event.setCancelled(true);
 				TownyMessaging.sendActionBarMessageToPlayer(player, Component.text(translator.of("msg_err_cannot_alter_blocks_near_siege_banner", NamedTextColor.DARK_RED)));
@@ -173,11 +173,11 @@ public class PlaceBlock {
 														 Town nearbyTown) throws TownyException {
 		final Translator translator = Translator.locale(Translation.getLocale(player));
 		//Ensure that there is a siege
-		if (!SiegeController.hasSiege(nearbyTown))
+		if (!SiegeWarSiegeUtil.hasSiege(nearbyTown))
 			throw new TownyException(translator.of("msg_err_town_cannot_end_siege_as_no_siege"));
 
 		//Get siege
-		Siege siege = SiegeController.getSiege(nearbyTown);
+		Siege siege = SiegeWarSiegeUtil.getSiege(nearbyTown);
 		if(siege.getStatus() != SiegeStatus.IN_PROGRESS)
 			throw new TownyException(translator.of("msg_err_town_cannot_end_siege_as_finished"));
 
@@ -246,9 +246,9 @@ public class PlaceBlock {
 			}
 		} else {
 			//Town is not peaceful, so this action is a start-siege or invade-town request
-			if (SiegeController.hasSiege(nearbyTown)) {
+			if (SiegeWarSiegeUtil.hasSiege(nearbyTown)) {
 				//If there is a siege, it is an attempt to invade the town
-				InvadeTown.processInvadeTownRequest(player, residentsNation, nearbyTown, SiegeController.getSiege(nearbyTown));
+				InvadeTown.processInvadeTownRequest(player, residentsNation, nearbyTown, SiegeWarSiegeUtil.getSiege(nearbyTown));
 			} else {
 				//If there is no siege, it is an attempt to start a new siege
 				evaluateStartNewSiegeAttempt(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);

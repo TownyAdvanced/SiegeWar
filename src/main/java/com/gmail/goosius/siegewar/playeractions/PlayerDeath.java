@@ -1,7 +1,7 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
@@ -101,7 +101,7 @@ public class PlayerDeath {
 		double smallestDistanceToSiege = 0;
 
 		//Find nearest eligible siege
-		for (Siege candidateSiege : SiegeController.getSieges()) {
+		for (Siege candidateSiege : SiegeWarSiegeUtil.getSieges()) {
 
 			//Skip if siege is not active
 			if (!candidateSiege.getStatus().isActive())

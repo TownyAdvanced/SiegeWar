@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.utils;
 
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.palmergames.bukkit.towny.object.TownBlock;
@@ -46,8 +45,8 @@ public class SiegeWarBlockUtil {
 	 */
 	public static Set<Siege> getAllAdjacentSieges(Block block) {
 		return getAllAdjacentTownBlocks(block).stream()
-			.filter(tb -> tb.hasTown() && SiegeController.hasSiege(tb.getTownOrNull()))
-			.map(tb -> SiegeController.getSiege(tb.getTownOrNull()))
+			.filter(tb -> tb.hasTown() && SiegeWarSiegeUtil.hasSiege(tb.getTownOrNull()))
+			.map(tb -> SiegeWarSiegeUtil.getSiege(tb.getTownOrNull()))
 			.collect(Collectors.toSet());
 	}
 
@@ -114,7 +113,7 @@ public class SiegeWarBlockUtil {
 			Location locationOfBlock = block.getLocation();
 			Location locationOfBlockAbove = block.getRelative(BlockFace.UP).getLocation();
 			Location locationOfSiegeBanner;
-			for (Siege siege : SiegeController.getSieges()) {
+			for (Siege siege : SiegeWarSiegeUtil.getSieges()) {
 
 				if (!siege.getStatus().isActive()) {
 					continue;
@@ -154,7 +153,7 @@ public class SiegeWarBlockUtil {
 			Location locationOfBlock = block.getLocation();
 			Location locationOfBlockAbove = block.getRelative(BlockFace.UP).getLocation();
 			Location locationOfSiegeBanner;
-			for (SiegeCamp siegeCamp : SiegeController.getSiegeCamps()) {
+			for (SiegeCamp siegeCamp : SiegeWarSiegeUtil.getSiegeCamps()) {
 
 				locationOfSiegeBanner = siegeCamp.getBannerBlock().getLocation();
 				if (locationOfBlock.equals(locationOfSiegeBanner) || locationOfBlockAbove.equals(locationOfSiegeBanner)) {

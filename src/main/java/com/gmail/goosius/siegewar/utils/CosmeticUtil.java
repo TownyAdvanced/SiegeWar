@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.utils;
 
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.GlassColor;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
@@ -28,7 +27,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 public class CosmeticUtil {
 	public static void evaluateBeacons() {
 		for (Player player : Bukkit.getOnlinePlayers()) {
-            for (Siege siege : SiegeController.getSieges()) {
+            for (Siege siege : SiegeWarSiegeUtil.getSieges()) {
 				if (!siege.getStatus().isActive())
 					continue;
 				
@@ -46,7 +45,7 @@ public class CosmeticUtil {
 	}
 
 	public static void removeFakeBeacons(Player player) {
-		for (Siege siege : SiegeController.getSieges()) {
+		for (Siege siege : SiegeWarSiegeUtil.getSieges()) {
 			if (SiegeWarDistanceUtil.isInSiegeZone((Entity) player, siege))
 				removeFakeBeacon(player, siege.getFlagLocation());
 		}

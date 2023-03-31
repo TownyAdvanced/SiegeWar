@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.listeners;
 
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
@@ -79,7 +79,7 @@ public class SiegeWarTownyEventListener implements Listener {
     @EventHandler
     public void onTownyDatabaseLoad(TownyLoadedDatabaseEvent event) {
     	SiegeWar.info("Towny database reload detected, reloading sieges...");
-        SiegeController.loadAll();
+        SiegeWarSiegeUtil.loadAll();
     }
     
 	/*
@@ -191,7 +191,7 @@ public class SiegeWarTownyEventListener implements Listener {
         //For performance, just get the siege at the 1st block
         Siege siege;
         if(givenExplodeList.size() > 0) {
-            siege = SiegeController.getActiveSiegeAtLocation(givenExplodeList.get(0).getLocation());
+            siege = SiegeWarSiegeUtil.getActiveSiegeAtLocation(givenExplodeList.get(0).getLocation());
             if(siege == null)
                return givenExplodeList;
         } else {
@@ -239,7 +239,7 @@ public class SiegeWarTownyEventListener implements Listener {
             return;
         if(event.getTown() == null)
             return;
-        if(SiegeController.hasActiveSiege(event.getTown()))
+        if(SiegeWarSiegeUtil.hasActiveSiege(event.getTown()))
             event.setCancelled(false);
     }
     
@@ -253,7 +253,7 @@ public class SiegeWarTownyEventListener implements Listener {
                 && event.getOutlawLocation() != null
                 && event.getOutlawLocation().getWorld() != null
                 && TownyAPI.getInstance().getTownyWorld(event.getOutlawLocation().getWorld()).isWarAllowed()
-                && SiegeController.hasActiveSiege(event.getTown())) {
+                && SiegeWarSiegeUtil.hasActiveSiege(event.getTown())) {
     		event.setCancelled(true);
             }
     }
@@ -372,7 +372,7 @@ public class SiegeWarTownyEventListener implements Listener {
     private Map<Siege, List<String>> getSiegesAndPlayerNames(List<Player> playersOnlineInGovernment) {
         Map<Siege, List<String>> siegePlayerMap = new HashMap<>();
         for (Player player : playersOnlineInGovernment) {
-            Siege siege = SiegeController.getActiveSiegeAtLocation(player.getLocation());
+            Siege siege = SiegeWarSiegeUtil.getActiveSiegeAtLocation(player.getLocation());
             // Only put players into the map if they are an attacker or defender.
             if (siege != null && getPlayerSiegeSide(player, siege).equals(SiegeSide.NOBODY)) {
                 if (siegePlayerMap.containsKey(siege)) {
@@ -442,7 +442,7 @@ public class SiegeWarTownyEventListener implements Listener {
     @Nullable
     private Siege siegeAtPlayerLocation(Resident resident) {
         if (resident.isOnline())
-            return SiegeController.getActiveSiegeAtLocation(resident.getPlayer().getLocation());
+            return SiegeWarSiegeUtil.getActiveSiegeAtLocation(resident.getPlayer().getLocation());
         return null;
     }
 }

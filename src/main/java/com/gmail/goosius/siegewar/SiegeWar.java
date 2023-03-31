@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -108,7 +109,7 @@ public class SiegeWar extends JavaPlugin {
     private boolean loadAll() {
     	return !Towny.getPlugin().isError()
 				&& Settings.loadSettingsAndLang()
-				&& SiegeController.loadAll();
+				&& SiegeWarSiegeUtil.loadAll();
     }
 
 	public String getVersion() {

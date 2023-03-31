@@ -1,7 +1,7 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
@@ -172,7 +172,7 @@ public class PlunderTown {
 		if(townDestroyed) {
 			TownyUniverse.getInstance().getDataSource().removeTown(town);
 		} else {
-			SiegeController.saveSiege(siege);
+			SiegeWarSiegeUtil.saveSiege(siege);
 		}
 
 		//Send plunder success messages

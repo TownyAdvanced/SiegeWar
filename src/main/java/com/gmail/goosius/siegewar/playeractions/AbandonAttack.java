@@ -1,7 +1,7 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -49,7 +49,7 @@ public class AbandonAttack {
 		if(timeUntilOfficialAbandon > 0) {
 			//Pending abandon
 			siege.setStatus(SiegeStatus.PENDING_ATTACKER_ABANDON);
-			SiegeController.saveSiege(siege);
+			SiegeWarSiegeUtil.saveSiege(siege);
 		} else {
 			//Immediate abandon
 			DefenderWin.defenderWin(siege, SiegeStatus.ATTACKER_ABANDON);

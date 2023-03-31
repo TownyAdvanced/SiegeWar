@@ -1,7 +1,7 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -41,7 +41,7 @@ public class SurrenderDefence {
 		if(timeUntilSurrenderConfirmation > 0) {
 			//Pending surrender
 			siege.setStatus(SiegeStatus.PENDING_DEFENDER_SURRENDER);
-			SiegeController.saveSiege(siege);
+			SiegeWarSiegeUtil.saveSiege(siege);
 		} else {
 			//Immediate surrender
 			AttackerWin.attackerWin(siege, SiegeStatus.DEFENDER_SURRENDER);

@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.utils;
 
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -60,7 +59,7 @@ public class SiegeWarScoringUtil {
 		}
 
 		//Save siege to db
-		SiegeController.saveSiege(siege);
+		SiegeWarSiegeUtil.saveSiege(siege);
 
 		//Generate message
 		String langKey;

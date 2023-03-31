@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.utils;
 
-import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -146,7 +145,7 @@ public class SiegeWarTownPeacefulnessUtil {
 					continue;
 
 				//Skip if town is besieged
-				if(SiegeController.hasActiveSiege(town))
+				if(SiegeWarSiegeUtil.hasActiveSiege(town))
 					continue;
 
 				//Skip if town is too far from target town

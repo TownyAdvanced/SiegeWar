@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.palmergames.bukkit.towny.object.Nation;
 import org.bukkit.Material;
 
@@ -138,7 +138,7 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean doesThisNationHaveTooManyActiveSieges(Nation nation) {
-		return SiegeController.getActiveOffensiveSieges(nation).size() >= getWarSiegeMaxActiveSiegeAttacksPerNation();
+		return SiegeWarSiegeUtil.getActiveOffensiveSieges(nation).size() >= getWarSiegeMaxActiveSiegeAttacksPerNation();
 	}
 
 	public static boolean getWarCommonPeacefulTownsEnabled() {

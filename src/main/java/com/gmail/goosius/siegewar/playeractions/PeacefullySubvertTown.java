@@ -1,7 +1,7 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.events.PreSubvertTownEvent;
@@ -94,7 +94,7 @@ public class PeacefullySubvertTown {
 		if(residentsNation == null)
 			throw new TownyException(translator.of("msg_err_action_disable"));  //Can't subvert if nationless
 
-		if(SiegeController.hasActiveSiege(targetTown))
+		if(SiegeWarSiegeUtil.hasActiveSiege(targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_change_occupation_of_besieged_town"));
 
 		if(SiegeWarTownOccupationUtil.isTownOccupiedByNation(residentsNation, targetTown))
