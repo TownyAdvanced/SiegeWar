@@ -74,19 +74,19 @@ public class SiegeWarStatusScreenListener implements Listener {
 				
 				if (occupationTaxPerPlot > 0) {
 					String occupationTaxString = TownyEconomyHandler.getFormattedBalance(occupationTaxPerPlot);
-					Component occupationTaxComponent = Component.text(translator.of("status_nation_occupation_tax_per_plot", occupationTaxString));
+					Component occupationTaxComponent = Component.text(translator.of("status_splitter")).append(Component.text(translator.of("status_nation_occupation_tax_per_plot", occupationTaxString)));
 					Component existingComponent;
 					Component updatedComponent;
 					
-					//If nation tax is there, replace nationtax with "{nation_tax}{space}{occ_tax}
-					//If nation tax is not there, replace bankString with "{bank}{space}{occ_tax}
+					//If nation tax is there, replace nationtax with "{nation_tax}{occ_tax}
+					//If nation tax is not there, replace bankString with "{bank}{occ_tax}
 					if(event.getStatusScreen().hasComponent("nationtax")) {
 						existingComponent = event.getStatusScreen().getComponentOrNull("nationtax");
-						updatedComponent = existingComponent.appendSpace().append(occupationTaxComponent);
+						updatedComponent = existingComponent.append(occupationTaxComponent);
 						event.getStatusScreen().addComponentOf("nationtax", updatedComponent);
 					} else {
 						existingComponent = event.getStatusScreen().getComponentOrNull("bankString");
-						updatedComponent = existingComponent.appendSpace().append(occupationTaxComponent);
+						updatedComponent = existingComponent.append(occupationTaxComponent);
 						event.getStatusScreen().addComponentOf("bankString", updatedComponent);
 					}
 				} 
@@ -151,12 +151,27 @@ public class SiegeWarStatusScreenListener implements Listener {
 				}
 			}
 
+			//Display occupation tax
 			if(TownyEconomyHandler.isActive() && SiegeWarTownOccupationUtil.isTownOccupied(town)) {
 				double occupationTax = SiegeWarTownOccupationUtil.getNationOccupationTax(town);
+
 				if (occupationTax > 0) {
-					String taxForDisplay = TownyEconomyHandler.getFormattedBalance(occupationTax);
-					Component comp = Component.text(translator.of("status_town_occupation_tax", taxForDisplay));
-					event.getStatusScreen().addComponentOf("siegeWarOccupationTax", comp);
+					String occupationTaxString = TownyEconomyHandler.getFormattedBalance(occupationTax);
+					Component occupationTaxComponent = Component.text(translator.of("status_splitter")).append(Component.text(translator.of("status_nation_occupation_tax_per_plot", occupationTaxString)));
+					Component existingComponent;
+					Component updatedComponent;
+
+					//If towntax is there, replace towntax with "{occ_tax}{towntax}
+					//If towntax is not there, replace bankString with "{bankString}{occ_tax}
+					if(event.getStatusScreen().hasComponent("towntax")) {
+						existingComponent = event.getStatusScreen().getComponentOrNull("towntax");
+						updatedComponent = occupationTaxComponent.append(existingComponent);
+						event.getStatusScreen().addComponentOf("towntax", updatedComponent);
+					} else {
+						existingComponent = event.getStatusScreen().getComponentOrNull("bankString");
+						updatedComponent = existingComponent.append(occupationTaxComponent);
+						event.getStatusScreen().addComponentOf("bankString", updatedComponent);
+					}
 				}
 			}
 			

@@ -453,7 +453,7 @@ msg_occupation_tax_set_max: "&bYour nation has set a daily occupation tax of max
 msg_occupation_tax_paid: "&bYour town paid the nation occupation tax of %s."
 
 #Shown when a town pays their nation occupation tax with bankruptcy.
-msg_occupation_tax_paid_bankrupt: "&bYour town paid the nation occupation tax of %s by going bankrupt."
+msg_occupation_tax_paid_bankrupt: "&cYour town paid the nation occupation tax of %s by going bankrupt."
 
 #Shown when a bankrupt town cannot pay their nation occupation tax.
 msg_occupation_tax_paid_with_debt: "&cYour town paid the nation occupation tax of %s with debt."
@@ -462,10 +462,10 @@ msg_occupation_tax_paid_with_debt: "&cYour town paid the nation occupation tax o
 msg_occupation_tax_cannot_be_paid: "&cThe Town %s could not pay their nation occupation tax and has been removed!"
 
 #Shown in the nation status screen when a nation has nation occupation tax.
-status_nation_occupation_tax_per_plot: "&2Nation Occupation Tax: &a%s per plot"
+status_nation_occupation_tax_per_plot: "&2Nation Occupation Tax: &c%s per plot"
     
 #Shown in the town status screen when a town has nation occupation tax to pay.
-status_town_occupation_tax: "&2Nation Occupation Tax: &a%s"
+status_town_occupation_tax: "&2Nation Occupation Tax: &c%s"
     
 #Shown when the nation tries to set a nation occupation tax over the maximum.
 msg_err_occupation_tax_cannot_be_more_than: "&cNations cannot set an occupation tax greater than %s."
