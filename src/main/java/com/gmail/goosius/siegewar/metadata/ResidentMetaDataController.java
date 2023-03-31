@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.metadata;
 
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
@@ -40,7 +41,7 @@ public class ResidentMetaDataController {
 	public static void deleteLegacyMetadata(Resident resident) {
 		IntegerDataField idf = (IntegerDataField) legacy_plunder.clone();
 		if (resident.hasMeta(idf.getKey())) {
-		   	resident.removeMetaData(idf);
+			resident.removeMetaData(idf);
 		}
 		StringDataField sdf = (StringDataField) legacyRecentBattleSessions.clone();
 		if (resident.hasMeta(sdf.getKey())) {

@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -87,14 +88,10 @@ public class SiegeWar extends JavaPlugin {
 	        siegeWarPluginError = true;
         }
 
-		cleanupBattleSession();
+		DataCleanupUtil.cleanupData(siegeWarPluginError);
 		registerPlayerCommands();
 		registerListeners();
 		checkIntegrations();
-		migrateTownOccupationData(); //Keep this line before deleteLegacyMetadata
-		deleteLegacyMetaData();
-		migrateTownNeutralityData();
-
 
 		if(siegeWarPluginError) {
 			severe("SiegeWar did not load successfully, and is now in safe mode!");
@@ -102,8 +99,8 @@ public class SiegeWar extends JavaPlugin {
 			info("SiegeWar loaded successfully.");
 		}
     }
-    
-    private void handleLegacyConfigs() {
+
+	private void handleLegacyConfigs() {
 		Path configPath = getDataFolder().toPath().resolve("config.yml");
 		if (!Files.exists(configPath))
 			return;
@@ -208,105 +205,5 @@ public class SiegeWar extends JavaPlugin {
 	
 	public static void severe(String msg) {
 		plugin.getLogger().severe(msg);
-	}
-
-	/**
-	 * Cleans up the battle session, if it did not exit properly when the plugin shut down.
- 	 */	
-	private void cleanupBattleSession() {
-		if(siegeWarPluginError) {
-			severe("SiegeWar is in safe mode. Battle Session Cleanup not attempted.");
-		} else {
-			//Find any sieges with unresolved battles
-			List<Siege> siegesWithUnresolvedBattles = new ArrayList<>();
-			for(Siege siege: SiegeController.getSieges()) {
-				if(siege.getStatus() == SiegeStatus.IN_PROGRESS
-					&& (siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0)) {
-					siegesWithUnresolvedBattles.add(siege);					
-				}
-			}
-			//Resolve battles
-			if(siegesWithUnresolvedBattles.size() > 0) {
-				info(Translation.of("msg.battle.session.cleanup.starting"));
-				int numBattlesUpdated = 0;
-				for(Siege siege: siegesWithUnresolvedBattles) {
-					siege.adjustSiegeBalance(siege.getAttackerBattlePoints() - siege.getDefenderBattlePoints());
-					siege.setAttackerBattlePoints(0);
-					siege.setDefenderBattlePoints(0);
-					SiegeController.saveSiege(siege);
-					numBattlesUpdated++;
-				}
-				
-				info(Translation.of("msg.battle.session.cleanup.complete", numBattlesUpdated));
-			}
-		}
-	}
-
-	/**
-	 * Delete legacy metadata which is non longer in use
-	 */
-	private void deleteLegacyMetaData() {
-		for(Resident resident: TownyUniverse.getInstance().getResidents()) {
-			ResidentMetaDataController.deleteLegacyMetadata(resident);
-		}
-		for(Nation nation: TownyUniverse.getInstance().getNations()) {
-			NationMetaDataController.deleteLegacyMetadata(nation);
-		}
-		for(Town town: TownyUniverse.getInstance().getTowns()) {
-			TownMetaDataController.deleteLegacyMetadata(town);
-		}
-
-	}
-
-	/**
-	 * In some previous SW versions,
-	 * a town could have both a regular nation, and a different occupying nation.
-	 * -
-	 * This method migrates the old data,
-	 * so that if the older data schema is detected,
-	 * and a town has an occupying nation,
-	 * that town will be transferred to that occupying nation.
-	 * - 
-	 * FYI the metadata is deleted later, in deleteLegacyMetaData()
-	 */
-	public static void migrateTownOccupationData() {
-		boolean success = false;
-		for(Town town: new ArrayList<>(TownyAPI.getInstance().getTowns())) {
-			if(TownMetaDataController.hasLegacyOccupierUUID(town)) {
-				Nation occupyingNation = TownyAPI.getInstance().getNation(TownMetaDataController.getLegacyOccupierUUID(town));
-				if(occupyingNation != null) {
-					TownOccupationController.setTownOccupation(town, occupyingNation);
-					success = true;
-				}
-			}
-		}
-		if (success)
-			SiegeWar.info("Old Town Occupation Data migrated...");
-	}
-
-	/**
-	 * In some previous SW versions,
-	 * the towny "neutral" flag was being re-used/hijacked to indicate peacefulness
-	 * -
-	 * However this was not suitable for either SW or Towny, because:
-	 * 1. The indicated Towny flag comes with an extra monetary cost which interfered with SW's system balance.
-	 * 2. The hijacking forced towny to support duplicate commands like /t toggle neutral, and /t toggle peaceful
-	 * -
-	 * This method migrates the old data,
-	 * so that if a town is found with neutral=true,
-	 * that town will be set to neutral=false, and the appropriate SW peaceful metadata flag will be set.
-	 * -
-	 */
-	public static void migrateTownNeutralityData() {
-		boolean success = false;
-		for(Town town: new ArrayList<>(TownyAPI.getInstance().getTowns())) {
-			if(town.isNeutral()) {
-				SiegeWarTownPeacefulnessUtil.setTownPeacefulness(town, true);
-				town.setNeutral(false);
-				success = true;
-			}
-		}
-		if (success)
-			SiegeWar.info("Old Town Neutrality Data migrated...");
 	}
 }
