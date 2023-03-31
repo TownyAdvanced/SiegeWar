@@ -206,4 +206,5 @@ public class SiegeWar extends JavaPlugin {
 	public static void severe(String msg) {
 		plugin.getLogger().severe(msg);
 	}
+
 }

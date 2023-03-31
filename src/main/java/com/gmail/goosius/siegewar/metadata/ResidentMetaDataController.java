@@ -47,6 +47,10 @@ public class ResidentMetaDataController {
 		if (resident.hasMeta(sdf.getKey())) {
 			resident.removeMetaData(sdf);
 		}
+		sdf = (StringDataField) legacyRecentBattleSessions.clone();
+		if (resident.hasMeta(sdf.getKey())) {
+			resident.removeMetaData(sdf);
+		}
 	}
 
 	public static int getMilitarySalaryAmount(Resident resident) {
