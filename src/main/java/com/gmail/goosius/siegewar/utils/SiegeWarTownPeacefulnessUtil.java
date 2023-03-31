@@ -40,7 +40,7 @@ public class SiegeWarTownPeacefulnessUtil {
 	}
 
 	public static void setDesiredTownPeacefulness(Town town, boolean bool) {
-		SiegeWarTownPeacefulnessUtil.setDesiredTownPeacefulness(town, bool);
+		TownMetaDataController.setDesiredPeacefulness(town, bool);
 		town.save();
 	}
 
@@ -50,11 +50,6 @@ public class SiegeWarTownPeacefulnessUtil {
 
 	public static void setTownPeacefulnessChangeCountdownDays(Town town, int days) {
 		TownMetaDataController.setPeacefulnessChangeCountdownDays(town, days);
-		town.save();
-	}
-	
-	public static void setPeacefulness(Town town, boolean peacefulness) {
-		TownMetaDataController.setPeacefulness(town, peacefulness);
 		town.save();
 	}
 	
