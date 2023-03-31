@@ -34,14 +34,15 @@ public enum SiegeWarPermissionNodes {
 	
 	// ----- Player Command Nodes -----
 	SIEGEWAR_COMMAND_SIEGEWAR("siegewar.command.siegewar.*"),
-		SIEGEWAR_COMMAND_SIEGEWAR_TOWN("siegewar.command.siegewar.town.*"),
-		SIEGEWAR_COMMAND_SIEGEWAR_NATION("siegewar.command.siegewar.nation.*"),
-			SIEGEWAR_COMMAND_SIEGEWAR_NATION_PAYSOLDIERS("siegewar.command.siegewar.nation.paysoldiers"),
-			SIEGEWAR_COMMAND_SIEGEWAR_NATION_CLAIMREFUND("siegewar.command.siegewar.nation.claimrefund"),
-		SIEGEWAR_COMMAND_SIEGEWAR_COLLECT("siegewar.command.siegewar.collect"),
-		SIEGEWAR_COMMAND_SIEGEWAR_HUD("siegewar.command.siegewar.hud"),
-		SIEGEWAR_COMMAND_SIEGEWAR_PREFERENCE("siegewar.command.siegewar.preference"),
-		SIEGEWAR_COMMAND_SIEGEWAR_NEXTSESSION("siegewar.command.siegewar.nextsession"),
+	SIEGEWAR_COMMAND_SIEGEWAR_TOWN("siegewar.command.siegewar.town.*"),
+		SIEGEWAR_COMMAND_SIEGEWAR_TOWN_TOGGLEPEACEFUL("siegewar.command.siegewar.town.togglepeaceful"),
+	SIEGEWAR_COMMAND_SIEGEWAR_NATION("siegewar.command.siegewar.nation.*"),
+		SIEGEWAR_COMMAND_SIEGEWAR_NATION_PAYSOLDIERS("siegewar.command.siegewar.nation.paysoldiers"),
+		SIEGEWAR_COMMAND_SIEGEWAR_NATION_CLAIMREFUND("siegewar.command.siegewar.nation.claimrefund"),
+	SIEGEWAR_COMMAND_SIEGEWAR_COLLECT("siegewar.command.siegewar.collect"),
+	SIEGEWAR_COMMAND_SIEGEWAR_HUD("siegewar.command.siegewar.hud"),
+	SIEGEWAR_COMMAND_SIEGEWAR_PREFERENCE("siegewar.command.siegewar.preference"),
+	SIEGEWAR_COMMAND_SIEGEWAR_NEXTSESSION("siegewar.command.siegewar.nextsession"),
 
 	// ----- Admin Command Nodes -----
 	SIEGEWAR_COMMAND_SIEGEWARADMIN("siegewar.command.siegewaradmin.*"),
