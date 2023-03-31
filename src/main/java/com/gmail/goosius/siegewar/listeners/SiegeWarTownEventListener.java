@@ -14,6 +14,7 @@ import com.palmergames.bukkit.towny.event.DeleteTownEvent;
 import com.palmergames.bukkit.towny.event.NewTownEvent;
 import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
+import com.palmergames.bukkit.towny.event.time.dailytaxes.PreTownPaysNationTaxEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
@@ -194,8 +195,8 @@ public class SiegeWarTownEventListener implements Listener {
 	}
 
 	/**
-	 * Prevents nations using /n toggle neutral
-	 * - Because in SW this has no effect
+	 * Prevents towns using /t toggle neutral
+	 * - Because in SW this is not supported
 	 *
 	 * @param event the event
 	 */
@@ -207,6 +208,22 @@ public class SiegeWarTownEventListener implements Listener {
 		if (event.getFutureState()) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("msg_err_town_neutrality_not_supported"));
+		}
+	}
+
+	/**
+	 * In SiegeWar, occupied towns do not pay their nation's regular tax
+	 * (Instead they pay the separate nation's occupation tax)
+	 *
+	 * @param event the pre-tax event
+	 */
+	@EventHandler
+	public void onTownIsAboutToPayRegularTaxToNation(PreTownPaysNationTaxEvent event) {
+		if(!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+
+		if(SiegeWarTownOccupationUtil.isTownOccupied(event.getTown())) {
+			event.setCancelled(true);
 		}
 	}
 
