@@ -27,7 +27,7 @@ import java.util.LinkedHashMap;
 public class SiegeWarTownPeacefulnessUtil {
 
 	public static boolean isTownPeaceful(Town town) {
-		return TownMetaDataController.getPeacefulness(town);
+		return SiegeWarSettings.getWarCommonPeacefulTownsEnabled() && TownMetaDataController.getPeacefulness(town);
 	}
 	
 	public static void setTownPeacefulness(Town town, boolean bool) {

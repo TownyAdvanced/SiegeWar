@@ -261,17 +261,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				groupNodes.add("siegewar.command.siegewar.town.*");
 			file.set("towns.ranks.assistant", groupNodes);
 		}
-		
-		// Add nodes to the sheriff rank.
-		if (TownyPerms.mapHasGroup("towns.ranks.sheriff")) {
-			groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.sheriff");
-			if (!groupNodes.contains(townpoints))
-				groupNodes.add(townpoints);
-			if (!groupNodes.contains("towny.command.town.rank.guard"))
-				groupNodes.add("towny.command.town.rank.guard");
-			file.set("towns.ranks.sheriff", groupNodes);
-		}
-		
+
 		// Create new ranks
 		file.createSection("towns.ranks.guard");
 		file.createSection("nations.ranks.private");
@@ -326,8 +316,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		groupNodes.add("towny.command.nation.rank.captain");
 		groupNodes.add("towny.command.nation.rank.major");
 		groupNodes.add("towny.command.nation.rank.colonel");
-		groupNodes.add("towny.command.nation.rank.engineer");
-		groupNodes.add("towny.command.nation.rank.gunner");
 		groupNodes.add("towny.nation.siege.pay.grade.500");
 		file.set("nations.ranks.general", groupNodes);
 	
@@ -354,8 +342,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 
 	private void setupTownyConfigFile(CommandSender sender) {
 		CommentedConfiguration file = TownySettings.getConfig();
-		file.set("economy.price_town_neutrality", "0");
-		file.set("economy.price_nation_neutrality", "0");
 		file.set("economy.bankruptcy.enabled", "true");
 		file.set("town_ruining.town_ruins.enabled", "true");
 		file.set("town_ruining.town_ruins.min_duration_hours", "24");
