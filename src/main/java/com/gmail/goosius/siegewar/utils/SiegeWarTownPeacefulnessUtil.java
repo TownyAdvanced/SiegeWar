@@ -254,14 +254,8 @@ public class SiegeWarTownPeacefulnessUtil {
 			else
 				TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_declared_non_peaceful"), daysRequiredForStatusChange));
 
-			//Remove any military nation ranks of residents
-			for(Resident peacefulTownResident: town.getResidents()) {
-				for (String nationRank : new ArrayList<>(peacefulTownResident.getNationRanks())) {
-					if (PermissionUtil.doesNationRankAllowPermissionNode(nationRank, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS)) {
-						peacefulTownResident.removeNationRank(nationRank);
-					}
-				}
-			}
+			//Remove military ranks
+			SiegeWarMilitaryRanksUtil.removeMilitaryRanksFromTownResidents(town);
 		} else {
 			//Countdown in progress. Cancel the countdown
 			TownMetaDataController.setDesiredPeacefulness(town, SiegeWarTownPeacefulnessUtil.isTownPeaceful(town));

@@ -70,6 +70,9 @@ public class SiegeWarTownOccupationUtil {
 		//Set town occupied flag
 		targetTown.setConquered(true);
 
+		//Remove military ranks
+		SiegeWarMilitaryRanksUtil.removeMilitaryRanksFromTownResidents(targetTown);
+		
 		//Save data
 		targetTown.save();
 		occupyingNation.save();
