@@ -22,18 +22,12 @@ public class ResidentMetaDataController {
 
 	@SuppressWarnings("unused")
 	private SiegeWar plugin;
-	private static IntegerDataField legacy_plunder = new IntegerDataField("siegewar_plunder", 0); //Field no longer in use
 	private static IntegerDataField militarySalary = new IntegerDataField("siegewar_militarysalary", 0, "Military Salary");
 	private static IntegerDataField nationRefund = new IntegerDataField("siegewar_nationrefund", 0, "Nation Refund");
-	/*
-	 * A list of battle sessions the player was recently involved in
-	 * Sessions are identified by their start times (in millis)
-	 */
-	private static StringDataField recentBattleSessions = new StringDataField("siegewar_recentbattlesessions", "");
-
 	static String beaconsDisabled = "siegewar_beaconsdisabled";
 	static String bossBarsDisabled = "siegewar_bossBarsdisabled";
-
+	private static IntegerDataField legacy_plunder = new IntegerDataField("siegewar_plunder", 0); //Field no longer in use
+	private static StringDataField legacyRecentBattleSessions = new StringDataField("siegewar_recentbattlesessions", "");
 
 	public ResidentMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
@@ -47,6 +41,10 @@ public class ResidentMetaDataController {
 		IntegerDataField idf = (IntegerDataField) legacy_plunder.clone();
 		if (resident.hasMeta(idf.getKey())) {
 		   	resident.removeMetaData(idf);
+		}
+		StringDataField sdf = (StringDataField) legacyRecentBattleSessions.clone();
+		if (resident.hasMeta(sdf.getKey())) {
+			resident.removeMetaData(sdf);
 		}
 	}
 
@@ -121,37 +119,6 @@ public class ResidentMetaDataController {
 
 	public static boolean getBossBarsDisabled(Resident resident) {
 		return getBoolean(resident, bossBarsDisabled);
-	}
-
-	public static List<String> getRecentBattleSessionsAsList(Resident resident) {
-		String recentBattleSessionsString = getRecentBattleSessions(resident);
-		if(recentBattleSessionsString == null || recentBattleSessionsString.length() == 0) {
-			return new ArrayList<>();
-		} else {
-			String[] recentBattleSessionsArray = recentBattleSessionsString.replaceAll(" ","").split(",");
-			return new ArrayList<>(Arrays.asList(recentBattleSessionsArray));
-		}
-	}
-
-	@Nullable
-	private static String getRecentBattleSessions(Resident resident) {
-		StringDataField sdf = (StringDataField) recentBattleSessions.clone();
-		if (resident.hasMeta(sdf.getKey()))
-			return MetaDataUtil.getString(resident, sdf);
-		return null;
-	}
-
-	public static void setRecentBattleSessions(Resident resident, List<String> listOfStrings) {
-		String valueAsString = listOfStrings.toString().replaceAll("\\[","").replaceAll("]","");
-		setRecentBattleSessions(resident,valueAsString);
-	}
-
-	public static void setRecentBattleSessions(Resident resident, String value) {
-		StringDataField sdf = (StringDataField) recentBattleSessions.clone();
-		if (resident.hasMeta(sdf.getKey()))
-			MetaDataUtil.setString(resident, sdf, value, true);
-		else
-			resident.addMetaData(new StringDataField("siegewar_recentbattlesessions", value));
 	}
 
 	public static int getNationRefundAmount(Resident resident) {
