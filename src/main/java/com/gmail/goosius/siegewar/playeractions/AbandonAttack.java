@@ -11,7 +11,6 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.confirmations.Confirmation;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
 
@@ -31,10 +30,10 @@ public class AbandonAttack {
 	 */
 	public static void processAbandonAttackRequest(Player player, Siege siege) throws TownyException {
 		if(!SiegeWarSettings.getWarSiegeAbandonEnabled())
-			throw new TownyException(Translation.of("msg_err_action_disable"));
+			throw new TownyException(Translatable.of("msg_err_action_disable"));
 
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToAbandonAttack(siege.getSiegeType())))
-			throw new TownyException(Translation.of("msg_err_action_disable"));
+			throw new TownyException(Translatable.of("msg_err_action_disable"));
 
 		Confirmation
 			.runOnAccept(()-> abandonAttack(siege, siege.getTimeUntilAbandonConfirmationMillis()))

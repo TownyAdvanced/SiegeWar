@@ -12,7 +12,6 @@ import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
-import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -56,7 +55,7 @@ public class StartConquestSiege {
 	}
 
 	private static void allowSiegeOrThrow(Player player, Nation nationOfSiegeStarter, Town targetTown) throws TownyException {
-		final Translator translator = Translator.locale(Translation.getLocale(player));
+		final Translator translator = Translator.locale(player);
 
 		if (!SiegeWarSettings.getConquestSiegesEnabled()
 		|| !TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToStartSiege(SiegeType.CONQUEST)))

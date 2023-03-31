@@ -16,7 +16,6 @@ import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 
 import org.bukkit.Bukkit;
@@ -101,7 +100,7 @@ public class InvadeTown {
 	}
 
 	private static void allowInvasionOrThrow(Player player, Nation residentsNation, Town targetTown, Siege siege) throws TownyException {
-		final Translator translator = Translator.locale(Translation.getLocale(player));
+		final Translator translator = Translator.locale(player);
 		if(!SiegeWarSettings.getWarSiegeInvadeEnabled())
 			throw new TownyException(translator.of("msg_err_action_disable"));
 

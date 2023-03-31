@@ -15,7 +15,6 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.utils.MoneyUtil;
 
 import org.bukkit.entity.Player;
@@ -28,8 +27,8 @@ public class SiegeWarMoneyUtil {
 	public static void giveWarChestTo(Siege siege, Government government) {
 		if(TownyEconomyHandler.isActive()) {
 			government.getAccount().deposit(siege.getWarChestAmount(), "War Chest Captured");
-			String message =
-					Translation.of("msg_siege_war_attack_recover_war_chest",
+			Translatable message =
+					Translatable.of("msg_siege_war_attack_recover_war_chest",
 							government.getFormattedName(),
 							TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
 
@@ -294,19 +293,19 @@ public class SiegeWarMoneyUtil {
 	public static void claimNationRefund(Player player) throws TownyException {
 		if (!TownySettings.isUsingEconomy()
 				|| SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() == 0) {
-			throw new TownyException(Translation.of("msg_err_command_disable"));
+			throw new TownyException(Translatable.of("msg_err_command_disable"));
 		}
 		Resident formerKing = TownyUniverse.getInstance().getResident(player.getUniqueId());
 		if (formerKing == null)
-			throw new TownyException(Translation.of("msg_err_not_registered_1", player.getName()));
+			throw new TownyException(Translatable.of("msg_err_not_registered_1", player.getName()));
 
 		int refundAmount = ResidentMetaDataController.getNationRefundAmount(formerKing);
 		if(refundAmount != 0) {
 			formerKing.getAccount().deposit(refundAmount, "Nation Refund");
 			ResidentMetaDataController.setNationRefundAmount(formerKing, 0);
-			Messaging.sendMsg(player, Translation.of("msg_siege_war_nation_refund_claimed", TownyEconomyHandler.getFormattedBalance(refundAmount)));
+			Messaging.sendMsg(player, Translatable.of("msg_siege_war_nation_refund_claimed", TownyEconomyHandler.getFormattedBalance(refundAmount)));
 		} else {
-			throw new TownyException(Translation.of("msg_err_siege_war_nation_refund_unavailable"));
+			throw new TownyException(Translatable.of("msg_err_siege_war_nation_refund_unavailable"));
 		}
 	}
 

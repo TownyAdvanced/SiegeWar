@@ -14,7 +14,6 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.jail.UnJailReason;
 import com.palmergames.bukkit.towny.utils.JailUtil;
 import com.palmergames.util.StringMgmt;
@@ -239,30 +238,30 @@ public class SiegeWarBattleSessionUtil {
 	 * with a brief summary of who won any battles which were fought
 	 */
 	private static void sendBattleSessionEndedMessage(Map<Siege, Integer> battleResults) {
-		String header;
-		List<String> lines = new ArrayList<>();
+		Translatable header;
+		List<Translatable> lines = new ArrayList<>();
 
 		//Compile message
 		if(battleResults.size() == 0) {
-			header = Translation.of("msg_war_siege_battle_session_ended_without_battles");
+			header = Translatable.of("msg_war_siege_battle_session_ended_without_battles");
 		} else {
-			header = Translation.of("msg_war_siege_battle_session_ended_with_battles");
+			header = Translatable.of("msg_war_siege_battle_session_ended_with_battles");
 
-			String resultLine;
+			Translatable resultLine;
 			for (Map.Entry<Siege, Integer> battleResultEntry : battleResults.entrySet()) {
 				if (battleResultEntry.getValue() > 0) {
 					resultLine =
-							Translation.of("msg_war_siege_battle_session_ended_attacker_result",
+							Translatable.of("msg_war_siege_battle_session_ended_attacker_result",
 									battleResultEntry.getKey().getTown().getName(),
 									"+" + battleResultEntry.getValue());
 				} else if (battleResultEntry.getValue() < 0) {
 					resultLine =
-							Translation.of("msg_war_siege_battle_session_ended_defender_result",
+							Translatable.of("msg_war_siege_battle_session_ended_defender_result",
 									battleResultEntry.getKey().getTown().getName(),
 									"-" + Math.abs(battleResultEntry.getValue()));
 				} else {
 					resultLine =
-							Translation.of("msg_war_siege_battle_session_ended_draw_result",
+							Translatable.of("msg_war_siege_battle_session_ended_draw_result",
 									battleResultEntry.getKey().getTown().getName());
 				}
 				lines.add(resultLine);
