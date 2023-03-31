@@ -504,7 +504,7 @@ msg_you_received_war_sickness: '&cYou are not an official participant of this si
 #Town Status Screen
 
 status_town_days_to_peacefulness_status_change: 'Days To Peacefulness Status Change'
-status_town_peacefulness_status_change_timer: '&2Countdown To Peaceful Status Change: &a%d days'
+status_town_peacefulness_status_change_timer: '&2Countdown To Peaceful Status Change: &b%d days'
 
 #Town Peacefulness
     

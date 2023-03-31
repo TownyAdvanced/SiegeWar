@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.listeners;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -65,31 +66,34 @@ public class SiegeWarStatusScreenListener implements Listener {
 			final Translator translator = Translator.locale(Translation.getLocale(event.getCommandSender()));
 			Nation nation = event.getNation();
 
-			if(TownyEconomyHandler.isActive()) {
+			/*
+			 * Display occupation tax rate
+			 * As long as the configured max is >0, display the tax rate.
+			 * Because for nations with a custom 0 value, this will be clearer than a missing field.
+			 */
+			if(TownyEconomyHandler.isActive() && SiegeWarSettings.getMaxOccupationTaxPerPlot() > 0) {
 				double occupationTaxPerPlot = NationMetaDataController.getNationOccupationTaxPerPlot(nation);
 
 				if(occupationTaxPerPlot == -1) {
 					occupationTaxPerPlot = SiegeWarSettings.getMaxOccupationTaxPerPlot();
 				}
 				
-				if (occupationTaxPerPlot > 0) {
-					String occupationTaxString = TownyEconomyHandler.getFormattedBalance(occupationTaxPerPlot);
-					Component occupationTaxComponent = Component.text(translator.of("status_splitter")).append(Component.text(translator.of("status_nation_occupation_tax_per_plot", occupationTaxString)));
-					Component existingComponent;
-					Component updatedComponent;
-					
-					//If nation tax is there, replace nationtax with "{nation_tax}{occ_tax}
-					//If nation tax is not there, replace bankString with "{bank}{occ_tax}
-					if(event.getStatusScreen().hasComponent("nationtax")) {
-						existingComponent = event.getStatusScreen().getComponentOrNull("nationtax");
-						updatedComponent = existingComponent.append(occupationTaxComponent);
-						event.getStatusScreen().addComponentOf("nationtax", updatedComponent);
-					} else {
-						existingComponent = event.getStatusScreen().getComponentOrNull("bankString");
-						updatedComponent = existingComponent.append(occupationTaxComponent);
-						event.getStatusScreen().addComponentOf("bankString", updatedComponent);
-					}
-				} 
+				String occupationTaxString = TownyEconomyHandler.getFormattedBalance(occupationTaxPerPlot);
+				Component occupationTaxComponent = Component.text(translator.of("status_splitter")).append(Component.text(translator.of("status_nation_occupation_tax_per_plot", occupationTaxString)));
+				Component existingComponent;
+				Component updatedComponent;
+
+				//If nation tax is there, replace nationtax with "{nation_tax}{occ_tax}
+				//If nation tax is not there, replace bankString with "{bank}{occ_tax}
+				if(event.getStatusScreen().hasComponent("nationtax")) {
+					existingComponent = event.getStatusScreen().getComponentOrNull("nationtax");
+					updatedComponent = existingComponent.append(occupationTaxComponent);
+					event.getStatusScreen().addComponentOf("nationtax", updatedComponent);
+				} else {
+					existingComponent = event.getStatusScreen().getComponentOrNull("bankString");
+					updatedComponent = existingComponent.append(occupationTaxComponent);
+					event.getStatusScreen().addComponentOf("bankString", updatedComponent);
+				}
 			}
 
 			List<String> out = new ArrayList<>();
@@ -151,27 +155,31 @@ public class SiegeWarStatusScreenListener implements Listener {
 				}
 			}
 
-			//Display occupation tax
-			if(TownyEconomyHandler.isActive() && SiegeWarTownOccupationUtil.isTownOccupied(town)) {
+			/*
+			 * Display occupation tax
+			 * As long as the configured max is >0, display the tax.
+			 * Because for nations with a custom 0 value, this will be clearer than a missing field.
+			 */
+			if(TownyEconomyHandler.isActive()
+					&& SiegeWarTownOccupationUtil.isTownOccupied(town)
+					&& SiegeWarSettings.getMaxOccupationTaxPerPlot() > 0) {
+
 				double occupationTax = SiegeWarTownOccupationUtil.getNationOccupationTax(town);
+				String occupationTaxString = TownyEconomyHandler.getFormattedBalance(occupationTax);
+				Component occupationTaxComponent = Component.text(translator.of("status_splitter")).append(Component.text(translator.of("status_town_occupation_tax", occupationTaxString)));
+				Component existingComponent;
+				Component updatedComponent;
 
-				if (occupationTax > 0) {
-					String occupationTaxString = TownyEconomyHandler.getFormattedBalance(occupationTax);
-					Component occupationTaxComponent = Component.text(translator.of("status_splitter")).append(Component.text(translator.of("status_nation_occupation_tax_per_plot", occupationTaxString)));
-					Component existingComponent;
-					Component updatedComponent;
-
-					//If towntax is there, replace towntax with "{occ_tax}{towntax}
-					//If towntax is not there, replace bankString with "{bankString}{occ_tax}
-					if(event.getStatusScreen().hasComponent("towntax")) {
-						existingComponent = event.getStatusScreen().getComponentOrNull("towntax");
-						updatedComponent = occupationTaxComponent.append(existingComponent);
-						event.getStatusScreen().addComponentOf("towntax", updatedComponent);
-					} else {
-						existingComponent = event.getStatusScreen().getComponentOrNull("bankString");
-						updatedComponent = existingComponent.append(occupationTaxComponent);
-						event.getStatusScreen().addComponentOf("bankString", updatedComponent);
-					}
+				//If towntax is there, replace towntax with "{occ_tax}{towntax}
+				//If towntax is not there, replace bankString with "{bankString}{occ_tax}
+				if(event.getStatusScreen().hasComponent("towntax")) {
+					existingComponent = event.getStatusScreen().getComponentOrNull("towntax");
+					updatedComponent = occupationTaxComponent.append(existingComponent);
+					event.getStatusScreen().addComponentOf("towntax", updatedComponent);
+				} else {
+					existingComponent = event.getStatusScreen().getComponentOrNull("bankString");
+					updatedComponent = existingComponent.append(occupationTaxComponent);
+					event.getStatusScreen().addComponentOf("bankString", updatedComponent);
 				}
 			}
 			
