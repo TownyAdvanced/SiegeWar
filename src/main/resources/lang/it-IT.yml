@@ -357,15 +357,15 @@ msg_occupation_tax_set_max: "&bYour nation has set a daily occupation tax of max
 #Shown when a town pays their nation occupation tax.
 msg_occupation_tax_paid: "&bYour town paid the nation occupation tax of %s."
 #Shown when a town pays their nation occupation tax with bankruptcy.
-msg_occupation_tax_paid_bankrupt: "&bYour town paid the nation occupation tax of %s by going bankrupt."
+msg_occupation_tax_paid_bankrupt: "&cYour town paid the nation occupation tax of %s by going bankrupt."
 #Shown when a bankrupt town cannot pay their nation occupation tax.
 msg_occupation_tax_paid_with_debt: "&cYour town paid the nation occupation tax of %s with debt."
 #Shown when a town cannot pay their nation occupation tax.
 msg_occupation_tax_cannot_be_paid: "&cThe Town %s could not pay their nation occupation tax and has been removed!"
 #Shown in the nation status screen when a nation has nation occupation tax.
-status_nation_occupation_tax_per_plot: "&2Occupation Tax: &a%s per plot"
-#Shown in the town status screen when a town has occupation tax to pay.
-status_town_occupation_tax: "&2Occupation Tax: &a%s"
+status_nation_occupation_tax_per_plot: "&2Nation Occupation Tax: &c%s per plot"
+#Shown in the town status screen when a town has nation occupation tax to pay.
+status_town_occupation_tax: "&2Nation Occupation Tax: &c%s"
 #Shown when the nation tries to set a nation occupation tax over the maximum.
 msg_err_occupation_tax_cannot_be_more_than: "&cNations cannot set an occupation tax greater than %s."
 #Shown to nation when they collect their occupation taxes.
@@ -389,8 +389,7 @@ msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occ
 msg_you_will_get_sickness: '&cYou are not an official participant of this siege and cannot be in the Siege Zone. Please leave or you will receive war sickness in %s seconds.'
 msg_you_received_war_sickness: '&cYou are not an official participant of this siege and cannot be in the Siege Zone. Please leave to remove the war sickness. Common causes of war sickness: Not having a military rank or not being allied to either side.'
 #Town Status Screen
-status_town_days_to_peacefulness_status_change: 'Days To Peacefulness Status Change'
-status_town_peacefulness_status_change_timer: '&2Countdown To Peaceful Status Change: &a%d days'
+status_town_days_to_peacefulness_status_change: '&2Days To Peacefulness Status Change: &b%d'
 #Town Peacefulness
 town_help_toggle_peaceful: 'Change your town peacefulness status'
 msg_war_common_town_declared_peaceful: '&bPeacefulness Declared! The town will be confirmed as Peaceful in %d day(s).'
