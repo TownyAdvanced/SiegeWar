@@ -147,7 +147,6 @@ public class SiegeWarStatusScreenListener implements Listener {
 					event.getStatusScreen().addComponentOf("siegeWarOccupationTax", comp);
 				}
 			}
-			
 
 			if (TownMetaDataController.hasPlunderDebt(town)) {
 				int days = TownMetaDataController.getPlunderDebtDays(town);
