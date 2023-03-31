@@ -6,12 +6,6 @@ import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
-import com.palmergames.bukkit.towny.utils.MetaDataUtil;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * 
@@ -43,6 +37,10 @@ public class ResidentMetaDataController {
 		   	resident.removeMetaData(idf);
 		}
 		StringDataField sdf = (StringDataField) legacyRecentBattleSessions.clone();
+		if (resident.hasMeta(sdf.getKey())) {
+			resident.removeMetaData(sdf);
+		}
+		sdf = (StringDataField) legacyRecentBattleSessions.clone();
 		if (resident.hasMeta(sdf.getKey())) {
 			resident.removeMetaData(sdf);
 		}
