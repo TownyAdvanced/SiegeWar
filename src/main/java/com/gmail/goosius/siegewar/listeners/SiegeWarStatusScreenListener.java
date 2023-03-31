@@ -189,6 +189,12 @@ public class SiegeWarStatusScreenListener implements Listener {
 				event.getStatusScreen().addComponentOf("siegeWar_plunderDebt", Component.text(translator.of("status_town_plunder_debt", getMoney(days * amount), days, getMoney(amount))));
 			}
 
+			//Days to Peacefulness Status Change: 2
+			if(SiegeWarTownPeacefulnessUtil.getTownPeacefulnessChangeCountdownDays(town) > 0) {
+				Component peacefulnessCountdownDays = Component.text(Translation.of("status_town_days_to_peacefulness_status_change", SiegeWarTownPeacefulnessUtil.getTownPeacefulnessChangeCountdownDays(town)));
+				event.getStatusScreen().addComponentOf("siegeWar_peacefulnessCountdownDays", peacefulnessCountdownDays);
+			}
+
 	        //Revolt Immunity Timer: 71.8 hours
 	        long immunity = TownMetaDataController.getRevoltImmunityEndTime(town);
 	        if (SiegeWarSettings.getRevoltSiegesEnabled() && immunity == -1l || System.currentTimeMillis() < immunity) {
