@@ -1,10 +1,13 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
+import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.object.TownyWorld;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
@@ -114,8 +117,26 @@ public class SiegeWarStatusScreenListener implements Listener {
 			Town town = event.getTown();
 
 			if(TownPeacefulnessUtil.isTownPeaceful(town)) {
-				Component peacefulnessFlag = Component.text(translator.of("status_town_peacefulness_flag"));
-				event.getStatusScreen().addComponentOf("subtitle", peacefulnessFlag);
+				//Generate the correct subtitle line:
+				//1. Get the list of existing subtitle entries
+				List<String> existingSubtitleEntries = getTownSubtitle(event.getTown(), TownyAPI.getInstance().getTownyWorld(town.getWorld()), translator);
+				//2. Add the peacefulness flag to the start of the list
+				String peacefulnessFlag = translator.of("status_town_peacefulness_flag");
+				existingSubtitleEntries.add(0, peacefulnessFlag);
+				//3. Generate the subtitle component
+				String townSubtitle = com.palmergames.bukkit.util.ChatTools.formatSubTitle(StringMgmt.join(existingSubtitleEntries, " "));
+				Component subtitleComponent = Component.text(townSubtitle);
+
+				//Put the subtitle line on the screen
+				if(event.getStatusScreen().hasComponent("subtitle")) {
+					//Replace subtitle line
+					event.getStatusScreen().replaceComponent("subtitle", subtitleComponent);
+				} else {
+					//Replace title line with combined title + subtitle lines
+					Component titleComponent = event.getStatusScreen().getComponentOrNull("title");
+					Component titleAndSubtitleComponent = titleComponent.appendNewline().append(subtitleComponent);
+					event.getStatusScreen().replaceComponent("title", titleAndSubtitleComponent);
+				}
 			}
 
 			if(TownyEconomyHandler.isActive() && TownOccupationController.isTownOccupied(town)) {
@@ -348,5 +369,31 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 	private String formatMoney(int refund) {
 		return TownyEconomyHandler.getFormattedBalance(refund);
+	}
+
+	/**
+	 * This method was copy-pasted verbatim from Towny.
+	 * Once the method is made public in Towny,
+	 * this method can be deleted
+	 *
+	 * Returns the 2nd line of the Town StatusScreen.
+	 * @param town Town for which to get the StatusScreen.
+	 * @param world TownyWorld in which the town considers home.
+	 * @param translator Translator used in language selection.
+	 * @return Formatted 2nd line of the Town StatusScreen.
+	 */
+	private static List<String> getTownSubtitle(Town town, TownyWorld world, Translator translator) {
+		List<String> sub = new ArrayList<>();
+		if (!town.isAdminDisabledPVP() && (town.isPVP() || world.isForcePVP()))
+			sub.add(translator.of("status_title_pvp"));
+		if (town.isOpen())
+			sub.add(translator.of("status_title_open"));
+		if (town.isPublic())
+			sub.add(translator.of("status_public"));
+		if (town.isNeutral())
+			sub.add(translator.of("status_town_title_peaceful"));
+		if (town.isConquered())
+			sub.add(translator.of("msg_conquered"));
+		return sub;
 	}
 }

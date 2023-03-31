@@ -121,6 +121,9 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				if (args[2].equalsIgnoreCase("setoccupied")) {
 					return Arrays.asList("true","false");
 				}
+				if (args[2].equalsIgnoreCase("setpeaceful")) {
+					return Arrays.asList("true","false");
+				}
 			}
 		case "nation":
 			if (args.length == 2)

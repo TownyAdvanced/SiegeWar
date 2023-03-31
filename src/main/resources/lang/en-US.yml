@@ -521,7 +521,7 @@ msg_err_capital_towns_cannot_go_peaceful: '&cCapital towns cannot go peaceful.'
 
 # Town neutrality
 
-msg_err_town_neutrality_not_supported: '&cSiegeWar does not support town neutrality. To protect your town from sieges, change your town to Peaceful, using /sw town togglepeaceful.'
+msg_err_town_neutrality_not_supported: "&cSiegeWar does not support town neutrality. To protect your town from sieges, change your town to Peaceful, using '/sw town togglepeaceful'."
 
 #swa
 
