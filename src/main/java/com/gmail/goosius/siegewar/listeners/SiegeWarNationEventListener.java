@@ -7,6 +7,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
+import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
 import com.palmergames.bukkit.towny.event.DeleteNationEvent;
@@ -35,7 +36,7 @@ public class SiegeWarNationEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 			&& SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
 			&& PermissionUtil.doesNationRankAllowPermissionNode(event.getRank(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS)
-			&& TownyAPI.getInstance().getResidentTownOrNull(event.getResident()).isNeutral()) { // We know that the resident's town will not be null based on the tests already done.
+			&& TownPeacefulnessUtil.isTownPeaceful(TownyAPI.getInstance().getResidentTownOrNull(event.getResident()))) { // We know that the resident's town will not be null based on the tests already done.
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident"));
 		}
@@ -160,7 +161,7 @@ public class SiegeWarNationEventListener implements Listener {
 
 		if (event.getFutureState()) {
 			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("msg_err_nation_peacefulness_not_supported"));
+			event.setCancelMessage(Translation.of("msg_err_nation_neutrality_not_supported"));
 		}
 	}
 

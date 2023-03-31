@@ -13,6 +13,7 @@ import com.gmail.goosius.siegewar.settings.Settings;
 import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
+import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -43,7 +44,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
-	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setoccupied");
+	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setpeaceful", "setoccupied");
 	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost");
 	private static final List<String> siegewaradminBattleSessionTabCompletes = Arrays.asList("end","start");
 	private static final List<String> siegeDurationTabCompletes = Arrays.asList("addhours");
@@ -118,6 +119,9 @@ public class SiegeWarAdminCommand implements TabExecutor {
 
 			if (args.length == 4) {
 				if (args[2].equalsIgnoreCase("setoccupied")) {
+					return Arrays.asList("true","false");
+				}
+				if (args[2].equalsIgnoreCase("setpeaceful")) {
 					return Arrays.asList("true","false");
 				}
 			}
@@ -373,6 +377,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] end", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] setplundered [true/false]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "siege [town_name] remove", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] setpeaceful [true/false]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupied [true/false]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplundergained [amount]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "nation [nation_name] setplunderlost [amount]", ""));
@@ -411,6 +416,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 
 	private void showTownHelp(CommandSender sender) {
 		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/swa town"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] setpeaceful [true/false]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/swa", "town [town_name] setoccupied [true/false]", ""));
 	}
 
@@ -690,17 +696,29 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				Messaging.sendErrorMsg(sender, Translatable.of("msg_err_town_not_registered", args[0]));
 				return;
 			}
-			if(!args[1].equalsIgnoreCase("setoccupied")) {
-				showSiegeHelp(sender);
-				return;
+			switch(args[1].toLowerCase()) {
+				case "setpeaceful":
+					//set peaceful flag
+					boolean peaceful = Boolean.parseBoolean(args[2]);
+					TownPeacefulnessUtil.setPeacefulness(town, peaceful);
+					//Save data
+					town.save();
+					//Send message
+					Messaging.sendMsg(sender, Translatable.of("msg_swa_town_peacefulness_change_success", town.getName(), Boolean.toString(peaceful)));
+					break;
+				case "setoccupied":
+					//set occupied flag
+					boolean occupied = Boolean.parseBoolean(args[2]);
+					town.setConquered(occupied);
+					//Save data
+					town.save();
+					//Send message
+					Messaging.sendMsg(sender, Translatable.of("msg_swa_town_occupation_change_success", town.getName(), Boolean.toString(occupied)));
+					break;
+				default:
+					showSiegeHelp(sender);
+					return;
 			}
-			//set occupied flag
-			boolean occupied = Boolean.parseBoolean(args[2]);
-			town.setConquered(occupied);
-			//Save data
-			town.save();
-			//Send message
-			Messaging.sendMsg(sender, Translatable.of("msg_swa_town_occupation_change_success", town.getName(), Boolean.toString(occupied)));
 		} else
 			showTownHelp(sender);
 	}

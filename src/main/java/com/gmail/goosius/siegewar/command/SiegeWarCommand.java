@@ -10,6 +10,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.BossBarUtil;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
+import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -36,6 +37,8 @@ import java.util.*;
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
 	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "preference", "version", "nextsession");
+
+	private static final List<String> siegewarTownTabCompletes = Arrays.asList("togglepeaceful");
 	
 	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "claimrefund");
 
@@ -47,6 +50,10 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			case "nation":
 				if (args.length == 2)
 					return NameUtil.filterByStart(siegewarNationTabCompletes, args[1]);
+				break;
+			case "town":
+				if (args.length == 2)
+					return NameUtil.filterByStart(siegewarTownTabCompletes, args[1]);
 				break;
 			case "hud":
 				if (args.length == 2)
@@ -72,6 +79,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw collect", "", Translatable.of("nation_help_11").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "claimrefund [amount]", Translatable.of("nation_help_refund").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw town", "togglepeaceful", Translatable.of("town_help_toggle_peaceful").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nextsession", "", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw version", "", ""));
@@ -81,6 +89,11 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewar nation"));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "claimrefund [amount]", Translatable.of("nation_help_refund").forLocale(sender)));
+	}
+
+	private void showTownHelp(CommandSender sender) {
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewar town"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw town", "togglepeaceful", Translatable.of("town_help_toggle_peaceful").forLocale(sender)));
 	}
 
 	private void showPreferenceHelp(CommandSender sender) {
@@ -115,6 +128,9 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		case "focus":
 		case "hud":
 			parseSiegeWarHudCommand(player, StringMgmt.remFirstArg(args));
+			break;
+		case "town":
+			parseSiegeWarTownCommand(player, StringMgmt.remFirstArg(args));
 			break;
 		case "nation":
 			parseSiegeWarNationCommand(player, StringMgmt.remFirstArg(args));
@@ -282,6 +298,27 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 			default:
 				showNationHelp(player);
+		}
+	}
+
+	private void parseSiegeWarTownCommand(Player player, String[] args) {
+		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_TOWN.getNode(args[0]))) {
+			player.sendMessage(Translatable.of("msg_err_command_disable").forLocale(player));
+			return;
+		}
+
+		switch (args[0]) {
+
+			case "togglepeaceful":
+				if (args.length != 1) {
+					showTownHelp(player);
+					return;
+				}
+				TownPeacefulnessUtil.toggleTownPeacefulness(player);
+				break;
+
+			default:
+				showTownHelp(player);
 		}
 	}
 
