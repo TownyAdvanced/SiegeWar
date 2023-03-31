@@ -73,9 +73,22 @@ public class SiegeWarStatusScreenListener implements Listener {
 				}
 				
 				if (occupationTaxPerPlot > 0) {
-					String tax = TownyEconomyHandler.getFormattedBalance(occupationTaxPerPlot);
-					Component comp = Component.text(translator.of("status_nation_occupation_tax_per_plot", tax));
-					event.getStatusScreen().addComponentOf("siegeWarOccupationTax", comp);
+					String occupationTaxString = TownyEconomyHandler.getFormattedBalance(occupationTaxPerPlot);
+					Component occupationTaxComponent = Component.text(translator.of("status_nation_occupation_tax_per_plot", occupationTaxString));
+					Component existingComponent;
+					Component updatedComponent;
+					
+					//If nation tax is there, replace nationtax with "{nation_tax}{space}{occ_tax}
+					//If nation tax is not there, replace bankString with "{bank}{space}{occ_tax}
+					if(event.getStatusScreen().hasComponent("nationtax")) {
+						existingComponent = event.getStatusScreen().getComponentOrNull("nationtax");
+						updatedComponent = existingComponent.appendSpace().append(occupationTaxComponent);
+						event.getStatusScreen().addComponentOf("nationtax", updatedComponent);
+					} else {
+						existingComponent = event.getStatusScreen().getComponentOrNull("bankString");
+						updatedComponent = existingComponent.appendSpace().append(occupationTaxComponent);
+						event.getStatusScreen().addComponentOf("bankString", updatedComponent);
+					}
 				} 
 			}
 
