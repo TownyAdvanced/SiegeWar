@@ -8,13 +8,10 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.events.BattleSessionEndedEvent;
 import com.gmail.goosius.siegewar.events.BattleSessionPreStartEvent;
 import com.gmail.goosius.siegewar.events.BattleSessionStartedEvent;
-import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
@@ -35,7 +32,6 @@ import java.util.Map;
 public class SiegeWarBattleSessionUtil {
 	
 	private static Map<Siege, Integer> battleResults = new HashMap<>();
-	private static final int ONE_DAY_IN_MILLIS = 86400000;
 
 	/**
 	 * Attempt to schedule the next battle session
@@ -137,11 +133,8 @@ public class SiegeWarBattleSessionUtil {
 				siege.clearBannerControlSessions();
 				siege.setAttackerBattlePoints(0);
 				siege.setDefenderBattlePoints(0);
-				siege.setWallBreachPoints(0);
-				siege.getWallBreachBonusAwardees().clear();
 				siege.setNumberOfBannerControlReversals(0);
 				siege.clearPlayersWhoWereInTheSiegeZone();
-				siege.clearPlayersWhoWereInTheBesiegedTown();
 
 				//Save siege to database
 				SiegeController.saveSiege(siege);

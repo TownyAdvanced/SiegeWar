@@ -27,12 +27,6 @@ public class SiegeMetaDataController {
 	private SiegeWar plugin;
 	private static BooleanDataField hasSiege = new BooleanDataField("siegewar_hasSiege", false);
 
-	/*
-	 * The following 2 fields are no longer used in game
-	 * However they are used to clear up old metadata
-	 * Eventually they can be deleted,
-	 * because sieges containing the old metadata will not be present on servers
-	 */
 	private static StringDataField siegeName = new StringDataField("siegewar_name", "");
 	private static StringDataField siegeNationUUID = new StringDataField("siegewar_nationUUID", "");
 
@@ -56,9 +50,7 @@ public class SiegeMetaDataController {
 	private static LongDataField startTime = new LongDataField("siegewar_startTime", 0l);
 	private static LongDataField endTime = new LongDataField("siegewar_endTime", 0l);
 	private static LongDataField actualEndTime = new LongDataField("siegewar_actualEndTime", 0l);
-	private static StringDataField attackerSiegeContributors = new StringDataField("siegewar_attackerSiegeContributors", "");
-	private static StringDataField primaryTownGovernments = new StringDataField("siegewar_primaryTownGovernments", "");
-
+	
 	public SiegeMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
 	}
@@ -77,14 +69,6 @@ public class SiegeMetaDataController {
 			MetaDataUtil.setBoolean(town, bdf, bool, true);
 		else
 			town.addMetaData(new BooleanDataField("siegewar_hasSiege", bool));
-	}
-
-	@Nullable
-	public static String getNationUUID(Town town) {
-		StringDataField sdf = (StringDataField) siegeNationUUID.clone();
-		if (town.hasMeta(sdf.getKey()))
-			return MetaDataUtil.getString(town, sdf);
-		return null;
 	}
 
 	@Nullable
@@ -149,14 +133,6 @@ public class SiegeMetaDataController {
 			MetaDataUtil.setString(town, sdf, name, true);
 		else
 			town.addMetaData(new StringDataField("siegewar_defenderName", name));
-	}
-
-	@Nullable
-	public static String getTownUUID(Town town) {
-		StringDataField sdf = (StringDataField) siegeTownUUID.clone();
-		if (town.hasMeta(sdf.getKey()))
-			return MetaDataUtil.getString(town, sdf);
-		return null;
 	}
 	
 	public static void setTownUUID(Town town, String uuid) {
@@ -383,12 +359,6 @@ public class SiegeMetaDataController {
 		sdf = (StringDataField) siegeStatus.clone();
 		if (town.hasMeta(sdf.getKey()))
 			town.removeMetaData(sdf);
-		sdf = (StringDataField) attackerSiegeContributors.clone();
-		if (town.hasMeta(sdf.getKey()))
-			town.removeMetaData(sdf);
-		sdf = (StringDataField) primaryTownGovernments.clone();
-		if (town.hasMeta(sdf.getKey()))
-			town.removeMetaData(sdf);
 
 		IntegerDataField idf = (IntegerDataField) siegeBalance.clone();
 		if (town.hasMeta(idf.getKey()))
@@ -424,84 +394,5 @@ public class SiegeMetaDataController {
 		if (town.hasMeta(ldf.getKey()))
 			town.removeMetaData(ldf);
 	}
-
-	public static Map<String, Integer> getResidentTimedPointContributors(Town town) {
-		StringDataField sdf = (StringDataField) attackerSiegeContributors.clone();
-
-		String dataAsString = null;
-		if (town.hasMeta(sdf.getKey()))
-			dataAsString = MetaDataUtil.getString(town, sdf);
-
-		if(dataAsString == null || dataAsString.length() == 0) {
-			return new HashMap<>();
-		} else {
-			Map<String, Integer> residentContributionsMap = new HashMap<>();
-			String[] residentContributionDataEntries = dataAsString.split(",");
-			String[] residentContributionDataPair;
-			for(String residentContributionDataEntry: residentContributionDataEntries) {
-				residentContributionDataPair = residentContributionDataEntry.split(":");
-				residentContributionsMap.put(residentContributionDataPair[0], Integer.parseInt(residentContributionDataPair[1]));
-			}
-			return residentContributionsMap;
-		}
-	}
-
-	public static Map<UUID, Integer> getPrimaryTownGovernments(Town town) {
-		StringDataField sdf = (StringDataField) primaryTownGovernments.clone();
-
-		String dataAsString = null;
-		if (town.hasMeta(sdf.getKey()))
-			dataAsString = MetaDataUtil.getString(town, sdf);
-
-		if(dataAsString == null || dataAsString.length() == 0) {
-			return new HashMap<>();
-		} else {
-			Map<UUID, Integer> governmentsMap = new HashMap<>();
-			String[] contributionDataEntries = dataAsString.split(",");
-			String[] contributionDataPair;
-			for(String contributionDataEntry: contributionDataEntries) {
-				contributionDataPair = contributionDataEntry.split(":");
-				governmentsMap.put(UUID.fromString(contributionDataPair[0]), Integer.parseInt(contributionDataPair[1]));
-			}
-			return governmentsMap;
-		}
-	}
-
-	public static void setResidentTimedPointContributors(Town town, Map<String,Integer> contributorsMap) {
-		StringBuilder mapAsStringBuilder = new StringBuilder();
-		boolean firstEntry = true;
-		for(Map.Entry<String,Integer> contributorEntry: contributorsMap.entrySet()) {
-			if(firstEntry) {
-				firstEntry = false;
-			} else {
-				mapAsStringBuilder.append(",");
-			}
-			mapAsStringBuilder.append(contributorEntry.getKey()).append(":").append(contributorEntry.getValue());
-		}
-
-		StringDataField sdf = (StringDataField) attackerSiegeContributors.clone();
-		if (town.hasMeta(sdf.getKey()))
-			MetaDataUtil.setString(town, sdf, mapAsStringBuilder.toString(), true);
-		else
-			town.addMetaData(new StringDataField("siegewar_attackerSiegeContributors", mapAsStringBuilder.toString()));
-	}
-
-	public static void setPrimaryTownGovernments(Town town, Map<UUID,Integer> governmentsMap) {
-		StringBuilder mapAsStringBuilder = new StringBuilder();
-		boolean firstEntry = true;
-		for(Map.Entry<UUID,Integer> governmentEntry: governmentsMap.entrySet()) {
-			if(firstEntry) {
-				firstEntry = false;
-			} else {
-				mapAsStringBuilder.append(",");
-			}
-			mapAsStringBuilder.append(governmentEntry.getKey()).append(":").append(governmentEntry.getValue());
-		}
-
-		StringDataField sdf = (StringDataField) primaryTownGovernments.clone();
-		if (town.hasMeta(sdf.getKey()))
-			MetaDataUtil.setString(town, sdf, mapAsStringBuilder.toString(), true);
-		else
-			town.addMetaData(new StringDataField(primaryTownGovernments.getKey(), mapAsStringBuilder.toString()));
-	}
+	
 }

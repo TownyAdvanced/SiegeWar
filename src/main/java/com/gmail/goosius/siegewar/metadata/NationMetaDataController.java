@@ -16,12 +16,14 @@ public class NationMetaDataController {
         plunderGained = "siegewar_totalplundergained",
         plunderLost = "siegewar_totalplunderlost",
         townsGained = "siegewar_totaltownsgained",
-        townsLost = "siegewar_totaltownslost",
-        dominationRecordKey = "siegewar_dominationrecord";
+        townsLost = "siegewar_totaltownslost";
 
     private static final LongDataField legacyFieldPendingSiegeImmunityMillis = new LongDataField("siegewar_pendingSiegeImmunityMillis");
-    private static final IntegerDataField nationPeacefulOccupationTax = new IntegerDataField("siegeWar_nationPeacefulOccupationTax", 0);
-
+    private static final IntegerDataField legacyFieldNationPeacefulOccupationTax = new IntegerDataField("siegeWar_nationPeacefulOccupationTax", 0);
+    
+    //Occupation tax per plot. A value of -1 causes the applied value to be the "max" set in the config file.
+    private static final IntegerDataField nationOccupationTaxPerPlot = new IntegerDataField("siegeWar_nationOccupationTaxPerPlot", -1);
+ 
     public NationMetaDataController(SiegeWar plugin) {
         this.plugin = plugin;
     }
@@ -60,22 +62,6 @@ public class NationMetaDataController {
             nation.addMetaData(new IntegerDataField(key, num));
     }
 
-    private static void setSdf(Nation nation, String key, String value) {
-        if (nation.hasMeta(key)) {
-            if (value == null || value.length() == 0) {
-                nation.removeMetaData(nation.getMetadata(key));
-            } else {
-                CustomDataField<?> cdf = nation.getMetadata(key);
-                if (cdf instanceof StringDataField) {
-                    ((StringDataField) cdf).setValue(value);
-                }
-            }
-        } else if (value != null && value.length() > 0) {
-            nation.addMetaData(new StringDataField(key, value));
-        }
-        nation.save();
-    }
-
     public static int getTotalPlunderGained(Nation nation) {
         return getIdf(nation, plunderGained);
     }
@@ -108,18 +94,24 @@ public class NationMetaDataController {
         setIdf(nation, townsLost, num);
     }
 
-	public static void setNationPeacefulOccupationTax(Nation nation, int tax) {
-		MetaDataUtil.setInt(nation, nationPeacefulOccupationTax, tax, true);
+	public static void setNationOccupationTaxPerPlot(Nation nation, int tax) {
+		MetaDataUtil.setInt(nation, nationOccupationTaxPerPlot, tax, true);
 	}
 
-	public static int getNationPeacefulOccupationTax(Nation nation) {
-		return MetaDataUtil.getInt(nation, nationPeacefulOccupationTax);
+	public static int getNationOccupationTaxPerPlot(Nation nation) {
+        if (!MetaDataUtil.hasMeta(nation, nationOccupationTaxPerPlot))
+            return -1;
+        return MetaDataUtil.getInt(nation, nationOccupationTaxPerPlot);
 	}
 
     public static void deleteLegacyMetadata(Nation nation) {
         LongDataField ldf = (LongDataField) legacyFieldPendingSiegeImmunityMillis.clone();
         if (nation.hasMeta(ldf.getKey())) {
             nation.removeMetaData(ldf);
+        }
+        IntegerDataField idf = (IntegerDataField) legacyFieldNationPeacefulOccupationTax.clone();
+        if (nation.hasMeta(idf.getKey())) {
+            nation.removeMetaData(idf);
         }
     }
 

@@ -1,8 +1,6 @@
 package com.gmail.goosius.siegewar.settings;
 
 import java.util.List;
-import java.util.Set;
-import java.util.EnumSet;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -12,7 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import org.bukkit.Material;
 
@@ -25,21 +22,11 @@ public class SiegeWarSettings {
 	private static List<Material> siegeZoneWildernessForbiddenBlockMaterials = null;
 	private static List<Material> siegeZoneWildernessForbiddenBucketMaterials = null;
 	private static List<EntityType> siegeZoneWildernessForbiddenExplodeEntityTypes = null;
-	@SuppressWarnings("unused")
-    private static EnumSet<Material> cachedWallBreachingPlaceBlocksWhitelist = null;
-	@SuppressWarnings("unused")
-    private static EnumSet<Material> cachedWallBreachingDestroyBlocksBlacklist = null;
-	@SuppressWarnings("unused")
-    private static Boolean cachedWallBreachingDestroyEntityBlacklist = null;
-
 	protected static void resetCachedSettings() {
 		allowedDaysList = null;
 		siegeZoneWildernessForbiddenBlockMaterials = null;
 		siegeZoneWildernessForbiddenBucketMaterials = null;
 		siegeZoneWildernessForbiddenExplodeEntityTypes = null;
-		cachedWallBreachingPlaceBlocksWhitelist = null;
-		cachedWallBreachingDestroyBlocksBlacklist = null;
-		cachedWallBreachingDestroyEntityBlacklist = null;
 	}
 
 	public static boolean getWarSiegeEnabled() {
@@ -186,8 +173,8 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_EXTRA_MONEY_PERCENTAGE_PER_TOWN_LEVEL);
 	}
 
-	public static int maxNationPeacefulOccupationTax() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_MAX_PEACEFUL_OCCUPATION_TAX);
+	public static int getMaxOccupationTaxPerPlot() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_MAX_OCCUPATION_TAX_PER_PLOT);
 	}
 
 	public static int getWarSiegeBannerControlSessionDurationMinutes() {
@@ -251,10 +238,6 @@ public class SiegeWarSettings {
 
 	public static int getPeacefulTownsTownyInfluenceRadius() {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_TOWNY_INFLUENCE_RADIUS);
-	}
-
-	public static int getPeacefulTownsSicknessWarningDurationSeconds() {
-		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_SICKNESS_WARNING_DURATION_SECONDS);
 	}
 
 	public static int getWarCommonPeacefulTownsNewTownConfirmationRequirementDays() {
@@ -376,159 +359,6 @@ public class SiegeWarSettings {
 		return allowedDaysList.contains(LocalDate.now().getDayOfWeek());
 	}
 
-	public static boolean isWallBreachingEnabled() {
-		return false;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_WALL_BREACHING_ENABLED);
-		 */
-	}
-	
-	public static double getWallBreachingPointGenerationRate() {
-		return 0;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_RATE);
-		 */
-	}
-
-	public static int getWallBreachingMaxPoolSize() {
-		return 0;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_BREACH_POINT_GENERATION_MAX_POOL_SIZE);
-		 */
-	}
-
-	public static int getWallBreachBonusBattlePoints() {
-		return 0;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_WALL_BREACH_BONUS_BATTLE_POINTS);
-		 */
-	}
-
-	public static int getWallBreachingBlockPlacementCost() {
-		return 0;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_COST_PER_BLOCK);
-		 */
-	}
-
-	public static int getWallBreachingBlockDestructionCost() {
-		return 0;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_COST_PER_BLOCK);
-		 */
-	}
-
-	public static Set<Material> getWallBreachingPlaceBlocksWhitelist() throws TownyException
-	{
-		return null;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-		if(cachedWallBreachingPlaceBlocksWhitelist == null) {			
-    		cachedWallBreachingPlaceBlocksWhitelist = EnumSet.noneOf(Material.class);
-			String configuredListUppercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_PLACING_BLOCKS_WHITELIST).toUpperCase(Locale.ROOT);
-			for(String configuredItemUppercase: configuredListUppercase.replaceAll(" ","").split(",")) {
-				if(configuredItemUppercase.startsWith("ENDSWITH=")) {
-					String partialName = configuredItemUppercase.replace("ENDSWITH=","");
-					for(Material material: Material.values()) {
-						if(material.name().toUpperCase().endsWith(partialName))
-							cachedWallBreachingPlaceBlocksWhitelist.add(material);
-					}
-				} else {
-					Material material = Material.matchMaterial(configuredItemUppercase);
-					if(material == null) {
-						throw new TownyException(Translation.of("msg_error_misconfigured_place_blocks_whitelist", configuredItemUppercase));
-					} else {
-						cachedWallBreachingPlaceBlocksWhitelist.add(material);
-					}
-				}
-			}
-		}
-		return cachedWallBreachingPlaceBlocksWhitelist;
-		 */
-	}
-
-    public static boolean isWallBreachingDestroyEntityBlacklist() {
-		return false;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-
-    	if(cachedWallBreachingDestroyEntityBlacklist == null) {
-    		String configuredListLowercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toLowerCase(Locale.ROOT);
-			cachedWallBreachingDestroyEntityBlacklist = configuredListLowercase.contains("is=entity"); 				
-		}
-		return cachedWallBreachingDestroyEntityBlacklist;
-		 */
-	}
-
-	public static Set<Material> getWallBreachingDestroyBlocksBlacklist() throws TownyException {
-		return null;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-		if(cachedWallBreachingDestroyBlocksBlacklist == null) {			
-    		cachedWallBreachingDestroyBlocksBlacklist = EnumSet.noneOf(Material.class);
-			String configuredListUppercase = Settings.getString(ConfigNodes.WAR_SIEGE_WALL_BREACHING_DESTROYING_BLOCKS_BLACKLIST).toUpperCase(Locale.ROOT);
-			for(String configuredItemUppercase: configuredListUppercase.replaceAll(" ","").split(",")) {
-				if(!configuredItemUppercase.equals("IS=ENTITY")
-					&& !configuredItemUppercase.equals("IS=CONTAINER")) {
-					Material material = Material.matchMaterial(configuredItemUppercase);
-					if(material == null) {
-						throw new TownyException(Translation.of("msg_error_misconfigured_destroy_blocks_blacklist", configuredItemUppercase));
-					} else {
-						cachedWallBreachingDestroyBlocksBlacklist.add(material);
-					}
-				}							
-			}
-		}
-		return cachedWallBreachingDestroyBlocksBlacklist;
-		 */
-	}
-
-	public static int getWallBreachingHomeblockBreachHeightLimitMin() {
-		return 0;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_HOMEBLOCK_BREACH_HEIGHT_LIMITS_MIN);
-		 */
-	}
-	
-	public static int getWallBreachingHomeblockBreachHeightLimitMax() {
-		return 0;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_HOMEBLOCK_BREACH_HEIGHT_LIMITS_MAX);
-		 */
-	}
-
-	public static boolean isWallBreachingCannonsIntegrationEnabled() {
-		return false;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_ENABLED);
-		 */
-	}
-
-	public static double getWallBreachingCannonFirePointGenerationRate() {
-		return 0;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_BREACH_POINT_GENERATION_RATE_FROM_CANNON_FIRE);
-		 */
-	}
-
-	public static int getWallBreachingCannonExplosionCostPerBlock() {
-		return 0;
-		/*
-		TODO - Re-enable when end-of-session rollbacks are implemented.
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_WALL_BREACHING_CANNONS_INTEGRATION_EXPLODING_BLOCKS_COST_PER_BLOCK);
-		 */
-	}
-
 	public static int getSiegeBalanceCapValue() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_POINTS_SIEGE_BALANCE_CAP_VALUE);
 	}
@@ -561,13 +391,31 @@ public class SiegeWarSettings {
 	}
 
 	private static List<LocalDateTime> getAllBattleSessionStartTimesForDay(LocalDate day) {
-		//Determine if the given day is on the weekend
-		boolean isWeekend = day.getDayOfWeek() == DayOfWeek.SATURDAY || day.getDayOfWeek() == DayOfWeek.SUNDAY;
-
-		//Get the start times from the config file, in the form of a single string.
-		String startTimesAsString = isWeekend ? 
-			getWarSiegeBattleSessionWeekendStartTimes() :
-			getWarSiegeBattleSessionWeekdayStartTimes();
+		//Get Start times for the given day
+		String startTimesAsString = "";
+		switch (day.getDayOfWeek()) {
+			case MONDAY:
+				startTimesAsString = getBattleSessionStartTimesMonday();
+				break;
+			case TUESDAY:
+				startTimesAsString = getBattleSessionStartTimesTuesday();
+				break;
+			case WEDNESDAY:
+				startTimesAsString = getBattleSessionStartTimesWednesday();
+				break;
+			case THURSDAY:
+				startTimesAsString = getBattleSessionStartTimesThursday();
+				break;
+			case FRIDAY:
+				startTimesAsString = getBattleSessionStartTimesFriday();
+				break;
+			case SATURDAY:
+				startTimesAsString = getBattleSessionStartTimesSaturday();
+				break;
+			case SUNDAY:
+				startTimesAsString = getBattleSessionStartTimesSunday();
+				break;
+		}
 
 		//Transform the config file strings into a list of LocalDateTime objects
 		List<LocalDateTime> startTimesAsList = new ArrayList<>();	
@@ -587,12 +435,32 @@ public class SiegeWarSettings {
 		return startTimesAsList;
 	}
 
-	public static String getWarSiegeBattleSessionWeekdayStartTimes() {
-		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_WEEKDAYS);
+	private static String getBattleSessionStartTimesMonday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_MONDAY);
 	}
 
-	public static String getWarSiegeBattleSessionWeekendStartTimes() {
-		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_WEEKEND_DAYS);
+	private static String getBattleSessionStartTimesTuesday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_TUESDAY);
+	}
+
+	private static String getBattleSessionStartTimesWednesday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_WEDNESDAY);
+	}
+
+	private static String getBattleSessionStartTimesThursday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_THURSDAY);
+	}
+
+	private static String getBattleSessionStartTimesFriday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_FRIDAY);
+	}
+
+	private static String getBattleSessionStartTimesSaturday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_SATURDAY);
+	}
+
+	private static String getBattleSessionStartTimesSunday() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_START_TIMES_SUNDAY);
 	}
 
 	public static int getWarSiegeBattleSessionsDurationMinutes() {

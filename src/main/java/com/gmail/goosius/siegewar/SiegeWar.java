@@ -26,9 +26,8 @@ import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
-import com.gmail.goosius.siegewar.command.SiegeWarNationSetPeacefulOccupationTaxAddonCommand;
+import com.gmail.goosius.siegewar.command.SiegeWarNationSetOccupationTaxAddonCommand;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
-import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
 import com.gmail.goosius.siegewar.integration.dynmap.DynmapIntegration;
 import com.gmail.goosius.siegewar.listeners.SiegeWarActionListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarBukkitEventListener;
@@ -53,7 +52,6 @@ public class SiegeWar extends JavaPlugin {
 	private static final SiegeHUDManager siegeHUDManager = new SiegeHUDManager();
 
 	private static boolean siegeWarPluginError = false;
-	private CannonsIntegration cannonsIntegration;
 
 	public static SiegeWar getSiegeWar() {
 		return plugin;
@@ -92,8 +90,9 @@ public class SiegeWar extends JavaPlugin {
 		registerPlayerCommands();
 		registerListeners();
 		checkIntegrations();
-		deleteLegacyMetaData();
 		migrateTownOccupationData();
+		deleteLegacyMetaData();
+
 
 		if(siegeWarPluginError) {
 			severe("SiegeWar did not load successfully, and is now in safe mode!");
@@ -145,10 +144,6 @@ public class SiegeWar extends JavaPlugin {
 		} else if (!SiegeWarSettings.getWarSiegeEnabled()) {
 			info("SiegeWar is disabled in config. Plugin integrations disabled.");
 		} else {
-			if (getServer().getPluginManager().isPluginEnabled("Cannons")) {
-				info("SiegeWar found Cannons plugin, enabling Cannons support.");
-				cannonsIntegration = new CannonsIntegration(this);
-			} 
 			if (getServer().getPluginManager().isPluginEnabled("dynmap")) {
 				info("SiegeWar found Dynmap plugin, enabling Dynmap support.");
 				new DynmapIntegration(this);
@@ -186,7 +181,7 @@ public class SiegeWar extends JavaPlugin {
 			severe("SiegeWar is in safe mode. SiegeWar player commands not registered");
 		} else {
 			getCommand("siegewar").setExecutor(new SiegeWarCommand());
-			new SiegeWarNationSetPeacefulOccupationTaxAddonCommand();
+			new SiegeWarNationSetOccupationTaxAddonCommand();
 		}
 	}
 
@@ -200,11 +195,7 @@ public class SiegeWar extends JavaPlugin {
 					 System.lineSeparator() + "#791E94                                By Goosius & LlmDl" + System.lineSeparator(); 
 		Bukkit.getConsoleSender().sendMessage(Colors.translateColorCodes(art));
 	}
-	
-	public static boolean isCannonsPluginInstalled() {
-		return plugin.cannonsIntegration != null;
-	}
-	
+
 	public boolean isError() {
 		return siegeWarPluginError;
 	}
@@ -259,6 +250,10 @@ public class SiegeWar extends JavaPlugin {
 		for(Nation nation: TownyUniverse.getInstance().getNations()) {
 			NationMetaDataController.deleteLegacyMetadata(nation);
 		}
+		for(Town town: TownyUniverse.getInstance().getTowns()) {
+			TownMetaDataController.deleteLegacyMetadata(town);
+		}
+
 	}
 
 	/**
@@ -269,6 +264,8 @@ public class SiegeWar extends JavaPlugin {
 	 * so that if the older data schema is detected,
 	 * and a town has an occupying nation,
 	 * that town will be transferred to that occupying nation.
+	 * - 
+	 * FYI the metadata is deleted later, in deleteLegacyMetaData()
 	 */
 	public static void migrateTownOccupationData() {
 		boolean success = false;
@@ -279,10 +276,6 @@ public class SiegeWar extends JavaPlugin {
 					TownOccupationController.setTownOccupation(town, occupyingNation);
 					success = true;
 				}
-				TownMetaDataController.removeLegacyOccupierUUID(town);
-			}
-			if(TownMetaDataController.hasLegacyPrePeacefulOccupierUUID(town)) {
-				TownMetaDataController.removeLegacyPrePeacefulOccupierUUID(town);
 			}
 		}
 		if (success)

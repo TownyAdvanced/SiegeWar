@@ -5,7 +5,6 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
-import com.gmail.goosius.siegewar.integration.cannons.CannonsIntegration;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
@@ -114,7 +113,7 @@ public class SiegeWarTownyEventListener implements Listener {
 			if (SiegeWarSettings.isPlunderPaidOutOverDays()) {
 				SiegeWarMoneyUtil.payDailyPlunderDebt();
 			}
-			TownOccupationController.chargeNationPeacefulOccupationTax();
+			TownOccupationController.collectNationOccupationTax();
 		}
 	}
     
@@ -138,7 +137,6 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeWarDistanceUtil.recalculatePlayersRegisteredToActiveSiegeZones();
             SiegeWarTimerTaskController.evaluateWarSickness();
             SiegeWarTimerTaskController.evaluateBannerControl();
-            SiegeWarTimerTaskController.evaluateWallBreaching();         
             SiegeWarTimerTaskController.evaluateTimedSiegeOutcomes();
             SiegeHUDManager.updateHUDs();
             SiegeWarTimerTaskController.evaluateBeacons();
@@ -159,7 +157,6 @@ public class SiegeWarTownyEventListener implements Listener {
         if (event.getEntity() != null && !TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld()).isWarAllowed())
             return;    
         List<Block> filteredExplodeList = event.getTownyFilteredBlockList();
-        filteredExplodeList = CannonsIntegration.filterExplodeListByCannonEffects(filteredExplodeList, event);
         filteredExplodeList = filterExplodeListBySiegeBannerProtection(filteredExplodeList);
         filteredExplodeList = filterExplodeListByTrapWarfareMitigation(filteredExplodeList);
         event.setBlockList(filteredExplodeList);

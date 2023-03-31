@@ -334,4 +334,13 @@ public class SiegeWarDistanceUtil {
 	private static boolean isTownTooFarFromNationCapitalByWorld(Nation nation, Town town) throws TownyException {
 		return TownySettings.getNationRequiresProximity() > 0 && !nation.getCapital().getHomeBlock().getWorld().getName().equals(town.getHomeBlock().getWorld().getName());
 	}
+
+	public static boolean isInANonBesiegedTown(Location location) {
+		Town town = TownyAPI.getInstance().getTown(location);
+		if(town != null & !SiegeController.hasActiveSiege(town)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

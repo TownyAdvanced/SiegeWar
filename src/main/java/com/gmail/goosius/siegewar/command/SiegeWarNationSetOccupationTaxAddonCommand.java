@@ -23,10 +23,10 @@ import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.MathUtil;
 
-public class SiegeWarNationSetPeacefulOccupationTaxAddonCommand extends BaseCommand implements TabExecutor {
+public class SiegeWarNationSetOccupationTaxAddonCommand extends BaseCommand implements TabExecutor {
 
-	public SiegeWarNationSetPeacefulOccupationTaxAddonCommand() {
-		AddonCommand nationSetSiegeWarCommand = new AddonCommand(CommandType.NATION_SET, "peacefuloccupationtax", this);
+	public SiegeWarNationSetOccupationTaxAddonCommand() {
+		AddonCommand nationSetSiegeWarCommand = new AddonCommand(CommandType.NATION_SET, "occupationtax", this);
 		TownyCommandAddonAPI.addSubCommand(nationSetSiegeWarCommand);
 	}
 	
@@ -56,14 +56,21 @@ public class SiegeWarNationSetPeacefulOccupationTaxAddonCommand extends BaseComm
 
 		Player player = catchConsole(sender);
 		Nation nation = getNationFromPlayerOrThrow(player);
-		int tax = MathUtil.getPositiveIntOrThrow(args[0]);
-		
-		int maxNationOccupationTax = SiegeWarSettings.maxNationPeacefulOccupationTax();
-		if (tax > maxNationOccupationTax)
-			Messaging.sendMsg(player, Translatable.of("msg_err_peaceful_occupation_tax_cannot_be_more_than", maxNationOccupationTax));
-		tax = Math.min(maxNationOccupationTax, tax);
-		NationMetaDataController.setNationPeacefulOccupationTax(nation, tax);
-		TownyMessaging.sendMsg(player, Translatable.of("msg_peaceful_occupation_tax_set", getMoney(tax)));
+
+		int maxTaxPerPlot = SiegeWarSettings.getMaxOccupationTaxPerPlot();
+		int taxPerPlot;
+		if (args[0].equalsIgnoreCase("max")) {
+			NationMetaDataController.setNationOccupationTaxPerPlot(nation, -1);
+			taxPerPlot = maxTaxPerPlot;
+			TownyMessaging.sendMsg(player, Translatable.of("msg_occupation_tax_set_max", getMoney(taxPerPlot)));
+		} else {
+			taxPerPlot = MathUtil.getPositiveIntOrThrow(args[0]);
+			if (taxPerPlot > maxTaxPerPlot)
+				Messaging.sendMsg(player, Translatable.of("msg_err_occupation_tax_cannot_be_more_than", maxTaxPerPlot));
+			taxPerPlot = Math.min(maxTaxPerPlot, taxPerPlot);
+			NationMetaDataController.setNationOccupationTaxPerPlot(nation, taxPerPlot);
+			TownyMessaging.sendMsg(player, Translatable.of("msg_occupation_tax_set", getMoney(taxPerPlot)));
+		}
 	}
 
 	private String getMoney(int tax) {
@@ -71,8 +78,8 @@ public class SiegeWarNationSetPeacefulOccupationTaxAddonCommand extends BaseComm
 	}
 
 	private void showHelp() {
-		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/nation set peacefuloccupationtax"));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("/nation set peacefuloccupationtax", "[amount]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/nation set occupationtax"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("/nation set occupationtax", "[amount]", "Set the amount to 'max' to automatically track the server-configured maximum."));
 	}
 
 }

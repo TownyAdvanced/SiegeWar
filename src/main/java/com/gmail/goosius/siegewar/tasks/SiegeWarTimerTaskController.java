@@ -11,7 +11,6 @@ import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.SiegeWarBannerControlUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarWallBreachUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSicknessUtil;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 
@@ -76,12 +75,6 @@ public class SiegeWarTimerTaskController {
 	public static void evaluateBannerControl() {
 		for (Siege siege : SiegeController.getSieges()) {
 			SiegeWarBannerControlUtil.evaluateBannerControl(siege);
-		}
-	}
-	
-	public static void evaluateWallBreaching() {
-		if(SiegeWarSettings.isWallBreachingEnabled()) {
-			SiegeWarWallBreachUtil.evaluateWallBreaching();
 		}
 	}
 
