@@ -150,7 +150,7 @@ public class SiegeWarNationEventListener implements Listener {
 
 	/**
 	 * Prevents nations using /n toggle neutral
-	 * - Because in SW this has no effect
+	 * - Because in SW this is not supported
 	 * 
 	 * @param event the event
 	 */
