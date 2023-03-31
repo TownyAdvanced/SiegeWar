@@ -25,17 +25,35 @@ import java.util.Comparator;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 
-public class TownPeacefulnessUtil {
+public class SiegeWarTownPeacefulnessUtil {
 
 	public static boolean isTownPeaceful(Town town) {
 		return TownMetaDataController.getPeacefulness(town);
 	}
-
-	public static void setPeacefulness(Town town, boolean peacefulness) {
-		TownMetaDataController.setPeacefulness(town, peacefulness);
+	
+	public static void setTownPeacefulness(Town town, boolean bool) {
+		TownMetaDataController.setPeacefulness(town, bool);
 		town.save();
 	}
-	
+
+	public static boolean getDesiredTownPeacefulness(Town town) {
+		return TownMetaDataController.getDesiredPeacefulness(town);
+	}
+
+	public static void setDesiredTownPeacefulness(Town town, boolean bool) {
+		SiegeWarTownPeacefulnessUtil.setDesiredTownPeacefulness(town, bool);
+		town.save();
+	}
+
+	public static int getTownPeacefulnessChangeCountdownDays(Town town) {
+		return TownMetaDataController.getPeacefulnessChangeCountdownDays(town);
+	}
+
+	public static void setTownPeacefulnessChangeCountdownDays(Town town, int days) {
+		TownMetaDataController.setPeacefulnessChangeCountdownDays(town, days);
+		town.save();
+	}
+
 	/**
 	 * This method adjusts the peacefulness counters of all towns, where required
 	 */
@@ -53,7 +71,7 @@ public class TownPeacefulnessUtil {
 			 */
 			if (TownyUniverse.getInstance().hasTown(town.getName()) 
 				&& !town.isRuined()
-				&& isTownPeaceful(town) != TownMetaDataController.getDesiredPeacefulnessSetting(town))
+				&& SiegeWarTownPeacefulnessUtil.isTownPeaceful(town) != TownMetaDataController.getDesiredPeacefulness(town))
 				updateTownPeacefulnessCounters(town);
 		}
 	}
@@ -64,24 +82,24 @@ public class TownPeacefulnessUtil {
 	public static void updateTownPeacefulnessCounters(Town town) {
 		String message;
 
-		int days = TownMetaDataController.getPeacefulnessChangeConfirmationCounterDays(town); 
+		int days = TownMetaDataController.getPeacefulnessChangeCountdownDays(town); 
 		if (days > 1) {
-			TownMetaDataController.setPeacefulnessChangeDays(town, --days);
+			SiegeWarTownPeacefulnessUtil.setTownPeacefulnessChangeCountdownDays(town, --days);
 			return;
 		}
-		TownMetaDataController.setPeacefulnessChangeDays(town, 0);
+		TownMetaDataController.setPeacefulnessChangeCountdownDays(town, 0);
 		
 		//Reverse the town peacefulness setting
-		setPeacefulness(town, !isTownPeaceful(town));
+		TownMetaDataController.setPeacefulness(town, !TownMetaDataController.getPeacefulness(town));
 
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			if (isTownPeaceful(town)) {
+			if (TownMetaDataController.getPeacefulness(town)) {
 				message = Translation.of("msg_town_became_peaceful", town.getFormattedName());
 			} else {
 				message = Translation.of("msg_town_became_non_peaceful", town.getFormattedName());
 			}
 		} else {
-			if (isTownPeaceful(town)) {
+			if (TownMetaDataController.getPeacefulness(town)) {
 				message = Translation.of("msg_town_became_peaceful", town.getFormattedName());
 			} else {
 				message = Translation.of("msg_town_became_non_peaceful", town.getFormattedName());
@@ -116,7 +134,7 @@ public class TownPeacefulnessUtil {
 					continue;
 
 				//Skip if town is peaceful
-				if(isTownPeaceful(town))
+				if(TownMetaDataController.getPeacefulness(town))
 					continue;
 
 				//Skip if town has no natural or occupying nation
@@ -226,13 +244,13 @@ public class TownPeacefulnessUtil {
 		}
 
 		//Check if there is a countdown in progress
-		if (TownMetaDataController.getPeacefulnessChangeConfirmationCounterDays(town) == 0) {
+		if (TownMetaDataController.getPeacefulnessChangeCountdownDays(town) == 0) {
 			//No countdown in progress
-			TownMetaDataController.setDesiredPeacefulnessSetting(town, !TownPeacefulnessUtil.isTownPeaceful(town));
-			TownMetaDataController.setPeacefulnessChangeDays(town, daysRequiredForStatusChange);
+			TownMetaDataController.setDesiredPeacefulness(town, !SiegeWarTownPeacefulnessUtil.isTownPeaceful(town));
+			TownMetaDataController.setPeacefulnessChangeCountdownDays(town, daysRequiredForStatusChange);
 
 			//Send message to town
-			if (TownMetaDataController.getDesiredPeacefulnessSetting(town))
+			if (TownMetaDataController.getDesiredPeacefulness(town))
 				TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_declared_peaceful"), daysRequiredForStatusChange));
 			else
 				TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_declared_non_peaceful"), daysRequiredForStatusChange));
@@ -247,10 +265,12 @@ public class TownPeacefulnessUtil {
 			}
 		} else {
 			//Countdown in progress. Cancel the countdown
-			TownMetaDataController.setDesiredPeacefulnessSetting(town, TownPeacefulnessUtil.isTownPeaceful(town));
-			TownMetaDataController.setPeacefulnessChangeDays(town, 0);
+			TownMetaDataController.setDesiredPeacefulness(town, SiegeWarTownPeacefulnessUtil.isTownPeaceful(town));
+			TownMetaDataController.setPeacefulnessChangeCountdownDays(town, 0);
 			//Send message to town
 			TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_peacefulness_countdown_cancelled")));
 		}
+		//Save data
+		town.save();
 	}
 }

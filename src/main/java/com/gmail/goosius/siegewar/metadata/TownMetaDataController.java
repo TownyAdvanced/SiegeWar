@@ -60,15 +60,15 @@ public class TownMetaDataController {
 		town.removeMetaData((StringDataField) failedCampList.clone());
 	}
 	
-	public static int getPeacefulnessChangeConfirmationCounterDays(Town town) {
+	public static int getPeacefulnessChangeCountdownDays(Town town) {
 		IntegerDataField idf = (IntegerDataField) peacefulnessChangeConfirmationCounterDays.clone();
 		if (town.hasMeta(idf.getKey())) {
 			return MetaDataUtil.getInt(town, idf);
 		}
 		return 0;
 	}
-
-	public static void setPeacefulnessChangeDays(Town town, int days) {
+	
+	public static void setPeacefulnessChangeCountdownDays(Town town, int days) {
 		IntegerDataField idf = (IntegerDataField) peacefulnessChangeConfirmationCounterDays.clone();
 		if (town.hasMeta(idf.getKey())) {
 			if (days == 0) {
@@ -81,7 +81,7 @@ public class TownMetaDataController {
 		}
 	}
 	
-	public static boolean getDesiredPeacefulnessSetting(Town town) {
+	public static boolean getDesiredPeacefulness(Town town) {
 		BooleanDataField bdf = (BooleanDataField) desiredPeacefulness.clone();
 		if (town.hasMeta(bdf.getKey())) {
 			return MetaDataUtil.getBoolean(town, bdf);
@@ -89,7 +89,7 @@ public class TownMetaDataController {
 		return false;
 	}
 	
-	public static void setDesiredPeacefulnessSetting(Town town, boolean bool) {
+	public static void setDesiredPeacefulness(Town town, boolean bool) {
 		BooleanDataField bdf = (BooleanDataField) desiredPeacefulness.clone();
 		if (town.hasMeta(bdf.getKey())) {
 			MetaDataUtil.setBoolean(town, bdf, bool, true);

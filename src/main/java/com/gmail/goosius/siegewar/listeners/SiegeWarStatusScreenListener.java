@@ -1,11 +1,10 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import com.gmail.goosius.siegewar.TownOccupationController;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.TownyWorld;
 import org.bukkit.event.EventHandler;
@@ -116,7 +115,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 			
 			Town town = event.getTown();
 
-			if(TownPeacefulnessUtil.isTownPeaceful(town)) {
+			if(SiegeWarTownPeacefulnessUtil.isTownPeaceful(town)) {
 				//Generate the correct subtitle line:
 				//1. Get the list of existing subtitle entries
 				List<String> existingSubtitleEntries = getTownSubtitle(event.getTown(), TownyAPI.getInstance().getTownyWorld(town.getWorld()), translator);

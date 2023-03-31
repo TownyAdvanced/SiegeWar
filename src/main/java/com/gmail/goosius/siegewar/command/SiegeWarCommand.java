@@ -10,7 +10,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.BossBarUtil;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.TownPeacefulnessUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -314,7 +314,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					showTownHelp(player);
 					return;
 				}
-				TownPeacefulnessUtil.toggleTownPeacefulness(player);
+				SiegeWarTownPeacefulnessUtil.toggleTownPeacefulness(player);
 				break;
 
 			default:
