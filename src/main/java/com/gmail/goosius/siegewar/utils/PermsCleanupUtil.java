@@ -16,6 +16,7 @@ public class PermsCleanupUtil {
         CommentedConfiguration townyPermsFile = TownyPerms.getTownyPermsFile();
         boolean success = false;
         success = deleteMilitaryPermsFromSheriffRank(townyPermsFile, success);
+        success = deleteMilitaryPermsFromAssistantRanks(townyPermsFile, success);
         success = deleteFireCannonPermFromGuardRank(townyPermsFile, success);
         success = deleteGunnerAndEngineerRanks(townyPermsFile, success);
 
@@ -25,6 +26,9 @@ public class PermsCleanupUtil {
         }
     }
     
+    /**
+     * Delete military perms from sheriff rank. So that peaceful and occupied towns can still have sheriffs
+     */
     private static boolean deleteMilitaryPermsFromSheriffRank(CommentedConfiguration townyPermsFile, boolean success) {
         List<String> groupNodes;
         // Deleted nodes from the sheriff rank.
@@ -45,7 +49,30 @@ public class PermsCleanupUtil {
         }
         return success;
     }
-
+    
+    /**
+     * Delete military perms from assistant rank. So that peaceful and occupied towns can still have assistants
+     */
+    private static boolean deleteMilitaryPermsFromAssistantRanks(CommentedConfiguration townyPermsFile, boolean success) {
+        List<String> groupNodes = null;
+        if (TownyPerms.mapHasGroup("towns.ranks.assistant")) {
+            groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.assistant");
+            if (groupNodes.contains("siegewar.town.siege.*")) {
+                success = groupNodes.remove("siegewar.town.siege.*");
+            }
+        }
+        if (TownyPerms.mapHasGroup("nations.ranks.assistant")) {
+            groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.assistant");
+            if (groupNodes.contains("siegewar.nation.siege.*")) {
+                success = groupNodes.remove("siegewar.nation.siege.*");
+            }
+        }
+        if(success) {
+            townyPermsFile.set("towns.ranks.sheriff", groupNodes);
+        }
+        return success;
+    }
+    
     private static boolean deleteFireCannonPermFromGuardRank(CommentedConfiguration townyPermsFile, boolean success) {
         List<String> groupNodes;
         // Delete nodes from the guard rank.
