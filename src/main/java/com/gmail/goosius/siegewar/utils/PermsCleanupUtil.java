@@ -72,10 +72,15 @@ public class PermsCleanupUtil {
         }
         if (TownyPerms.mapHasGroup("nations.ranks.general")) {
             List<String> groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.general");
-            groupNodes.remove("towny.command.nation.rank.engineer");
-            groupNodes.remove("towny.command.nation.rank.gunner");
-            townyPermsFile.set("nations.ranks.general", groupNodes);
-            success = true;
+            if (groupNodes.contains("towny.command.nation.rank.engineer")) {
+                success = groupNodes.remove("towny.command.nation.rank.engineer");
+            }
+            if (groupNodes.contains("towny.command.nation.rank.gunner")) {
+                success = groupNodes.remove("towny.command.nation.rank.gunner");
+            }
+            if(success) {
+                townyPermsFile.set("nations.ranks.general", groupNodes);      
+            }
         }
         return success;
     }
