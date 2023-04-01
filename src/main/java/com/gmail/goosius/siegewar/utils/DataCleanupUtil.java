@@ -139,4 +139,5 @@ public class DataCleanupUtil {
             NationMetaDataController.deleteLegacyMetadata(nation);
         }
     }
+
 }
