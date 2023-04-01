@@ -19,7 +19,6 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.bukkit.towny.utils.MoneyUtil;
 
@@ -48,7 +47,7 @@ public class PlunderTown {
 	private static Nation getPlunderingNationOrThrow(Player player, Siege siege) throws TownyException {
 		Town townToBePlundered = siege.getTown();
 		TownyUniverse townyUniverse = TownyUniverse.getInstance();
-		final Translator translator = Translator.locale(Translation.getLocale(player));
+		final Translator translator = Translator.locale(player);
 
 		if (!townyUniverse.getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_PLUNDER.getNode()))
 			throw new TownyException(translator.of("msg_err_command_disable"));

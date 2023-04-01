@@ -11,10 +11,8 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
 import org.bukkit.Bukkit;
@@ -64,7 +62,7 @@ public class SiegeWarBannerControlUtil {
 
 				resident = universe.getResident(player.getUniqueId());
 	            if (resident == null)
-	            	throw new TownyException(Translation.of("msg_err_not_registered_1", player.getName()));
+	            	continue;
 
 				if(!doesPlayerMeetBasicSessionRequirements(siege, player, resident))
 					continue;

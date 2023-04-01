@@ -22,7 +22,9 @@ import com.palmergames.bukkit.towny.event.town.TownMapColourNationalCalculationE
 import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -125,19 +127,20 @@ public class SiegeWarTownEventListener implements Listener {
 	 */
 	@EventHandler
 	public void onTownUnclaim(TownPreUnclaimCmdEvent event) {
+		Translator translator = Translator.locale(event.getResident().getPlayer());
 		if (SiegeWarSettings.getWarCommonOccupiedTownUnClaimingDisabled() && SiegeWarTownOccupationUtil.isTownOccupied(event.getTown())) {
 			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_war_common_occupied_town_cannot_unclaim"));
+			event.setCancelMessage(translator.of("siegewar_plugin_prefix") + translator.of("msg_err_war_common_occupied_town_cannot_unclaim"));
 			return;
 		}
-			
+
 		if(SiegeWarSettings.getWarSiegeEnabled()
 			&& SiegeWarSettings.getWarSiegeBesiegedTownUnClaimingDisabled()) {
 
 			//Town besieged
 			if(SiegeController.hasActiveSiege(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_siege_besieged_town_cannot_unclaim"));
+				event.setCancelMessage(translator.of("siegewar_plugin_prefix") + translator.of("msg_err_siege_besieged_town_cannot_unclaim"));
 				return;
 			}
 		}
@@ -151,20 +154,21 @@ public class SiegeWarTownEventListener implements Listener {
 	@EventHandler
 	public void on(TownPreSetHomeBlockEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
+			Translator translator = Translator.locale(event.getPlayer());
 			if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
 				&& SiegeWarTownPeacefulnessUtil.isTownPeaceful(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_peaceful_town_cannot_move_homeblock"));
+				event.setCancelMessage(translator.of("siegewar_plugin_prefix") + translator.of("msg_err_peaceful_town_cannot_move_homeblock"));
 			}
 
 			if(SiegeController.hasActiveSiege(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_besieged_town_cannot_move_homeblock"));
+				event.setCancelMessage(translator.of("siegewar_plugin_prefix") + translator.of("msg_err_besieged_town_cannot_move_homeblock"));
 			}
 
 			if(SiegeWarTownOccupationUtil.isTownOccupied(event.getTown())) {
 				event.setCancelled(true);
-				event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_err_occupied_town_cannot_move_homeblock"));
+				event.setCancelMessage(translator.of("siegewar_plugin_prefix") + translator.of("msg_err_occupied_town_cannot_move_homeblock"));
 			}
 		}
 	}
@@ -207,7 +211,7 @@ public class SiegeWarTownEventListener implements Listener {
 
 		if (event.getFutureState()) {
 			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("msg_err_town_neutrality_not_supported"));
+			event.setCancelMessage(Translatable.of("msg_err_town_neutrality_not_supported").forLocale(event.getPlayer()));
 		}
 	}
 

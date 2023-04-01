@@ -44,7 +44,6 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.Translation;
 
 /**
  * 
@@ -485,8 +484,8 @@ public class SiegeController {
 			if (TownyEconomyHandler.isActive()) {
 				//Pay upfront cost into warchest now
 				attacker.getAccount().withdraw(siege.getWarChestAmount(), "Cost of starting a siege.");
-				String moneyMessage =
-						Translation.of("msg_siege_war_attack_pay_war_chest",
+				Translatable moneyMessage =
+						Translatable.of("msg_siege_war_attack_pay_war_chest",
 								attacker.getName(),
 								TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
 
@@ -619,12 +618,12 @@ public class SiegeController {
 	public static void beginSiegeCamp(SiegeCamp camp) throws TownyException {
 		// Another SiegeCamp is already present.
 		if (SiegeWarDistanceUtil.campTooClose(camp.getBannerBlock().getLocation()))
-			throw new TownyException(Translation.of("msg_err_siegecamp_too_close_to_another_siegecamp"));
+			throw new TownyException(Translatable.of("msg_err_siegecamp_too_close_to_another_siegecamp"));
 		
 		// Town initiating the SiegeCamp has a failed SiegeCamp on this 
 		// town and not enough time has passed. 
 		if (SiegeCampUtil.hasFailedCamp(camp.getTargetTown(), camp.getTownOfSiegeStarter()))
-			throw new TownyException(Translation.of("msg_err_too_soon_since_your_last_siegecamp"));
+			throw new TownyException(Translatable.of("msg_err_too_soon_since_your_last_siegecamp"));
 
 		// Broadcast a message
 		Messaging.sendGlobalMessage(Translatable.of("attacker_has_begun_a_siegecamp_session", camp.getTownOfSiegeStarter(), camp.getTargetTown(), SiegeWarSettings.getSiegeCampPointsForSuccess(), SiegeWarSettings.getSiegeCampDurationInMinutes()));

@@ -3,7 +3,6 @@ package com.gmail.goosius.siegewar.listeners;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -49,7 +48,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 	public void onResidentStatusScreen(ResidentStatusScreenEvent event) {
 		int salary = ResidentMetaDataController.getMilitarySalaryAmount(event.getResident());
 		if (salary > 0) {
-			final Translator translator = Translator.locale(Translation.getLocale(event.getCommandSender()));
+			final Translator translator = Translator.locale(event.getCommandSender());
 			event.getStatusScreen().addComponentOf("siegeWarNationSalary",
 					formatKeyValue(translator.of("status_military_salary"), formatMoney(salary)),
 					HoverEvent.showText(Component.text(translator.of("hover_message_click_to_claim"))),
@@ -63,7 +62,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 	@EventHandler
 	public void onNationStatusScreen(NationStatusScreenEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			final Translator translator = Translator.locale(Translation.getLocale(event.getCommandSender()));
+			final Translator translator = Translator.locale(event.getCommandSender());
 			Nation nation = event.getNation();
 
 			/*
@@ -128,7 +127,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 	@EventHandler
 	public void onTownStatusScreen(TownStatusScreenEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			final Translator translator = Translator.locale(Translation.getLocale(event.getCommandSender()));
+			final Translator translator = Translator.locale(event.getCommandSender());
 			
 			Town town = event.getTown();
 
@@ -191,7 +190,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 			//Days to Peacefulness Status Change: 2
 			if(SiegeWarTownPeacefulnessUtil.getTownPeacefulnessChangeCountdownDays(town) > 0) {
-				Component peacefulnessCountdownDays = Component.text(Translation.of("status_town_days_to_peacefulness_status_change", SiegeWarTownPeacefulnessUtil.getTownPeacefulnessChangeCountdownDays(town)));
+				Component peacefulnessCountdownDays = Component.text(translator.of("status_town_days_to_peacefulness_status_change", SiegeWarTownPeacefulnessUtil.getTownPeacefulnessChangeCountdownDays(town)));
 				event.getStatusScreen().addComponentOf("siegeWar_peacefulnessCountdownDays", peacefulnessCountdownDays);
 			}
 
@@ -310,12 +309,12 @@ public class SiegeWarStatusScreenListener implements Listener {
 					|| immunity == -1l) {
 	                //Siege:
 	                // > Immunity Timer: 40.8 hours
-					String time = immunity == -1l ? Translation.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
+					String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
 					Component immunityComp = Component.empty()
 							.append(Component.newline())
-							.append(Component.text(Translation.of("status_town_siege")))
+							.append(Component.text(translator.of("status_town_siege")))
 							.append(Component.newline())
-							.append(Component.text(Translation.of("status_town_siege_immunity_timer", time))); 
+							.append(Component.text(translator.of("status_town_siege_immunity_timer", time))); 
 					event.getStatusScreen().addComponentOf("siegeWar_siegeImmunity", immunityComp);
 	            }
 	        }
