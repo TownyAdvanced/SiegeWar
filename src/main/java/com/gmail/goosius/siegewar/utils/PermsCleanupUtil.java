@@ -13,15 +13,16 @@ public class PermsCleanupUtil {
             SiegeWar.severe("SiegeWar is in safe mode. Data cleanup not attempted.");
         }
         CommentedConfiguration townyPermsFile = TownyPerms.getTownyPermsFile();
-        boolean success = deleteMilitaryPermsFromSheriffRank(townyPermsFile);
+        boolean success = false;
+        success = deleteMilitaryPermsFromSheriffRank(townyPermsFile, success);
+        success = deleteGunnerAndEngineerRanks(townyPermsFile, success);
         if(success) {
             townyPermsFile.save();
             SiegeWar.info("Perms Cleanup Complete");
         }
     }
     
-    private static boolean deleteMilitaryPermsFromSheriffRank(CommentedConfiguration townyPermsFile) {
-        boolean success = false;
+    private static boolean deleteMilitaryPermsFromSheriffRank(CommentedConfiguration townyPermsFile, boolean success) {
         List<String> groupNodes;
         String townpoints = "siegewar.town.siege.battle.points";
         // Add nodes to the sheriff rank.
@@ -38,6 +39,18 @@ public class PermsCleanupUtil {
             if(success) {
                 townyPermsFile.set("towns.ranks.sheriff", groupNodes);
             }
+        }
+        return success;
+    }
+
+    private static boolean deleteGunnerAndEngineerRanks(CommentedConfiguration townyPermsFile, boolean success) {
+        if (TownyPerms.mapHasGroup("nation.ranks.gunner")) {
+            townyPermsFile.set("nation.ranks.gunner", null);
+            success = true;
+        }
+        if (TownyPerms.mapHasGroup("nation.ranks.engineer")) {
+            townyPermsFile.set("nation.ranks.engineer", null);
+            success = true;
         }
         return success;
     }
