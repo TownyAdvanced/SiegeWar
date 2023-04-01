@@ -10,7 +10,8 @@ public class PermsCleanupUtil {
 
     public static void cleanupPerms(boolean siegeWarPluginError) {
         if(siegeWarPluginError) {
-            SiegeWar.severe("SiegeWar is in safe mode. Data cleanup not attempted.");
+            SiegeWar.severe("SiegeWar is in safe mode. Perms cleanup not attempted.");
+            return;
         }
         CommentedConfiguration townyPermsFile = TownyPerms.getTownyPermsFile();
         boolean success = false;
@@ -26,20 +27,17 @@ public class PermsCleanupUtil {
     
     private static boolean deleteMilitaryPermsFromSheriffRank(CommentedConfiguration townyPermsFile, boolean success) {
         List<String> groupNodes;
-        // Add nodes to the sheriff rank.
+        // Deleted nodes from the sheriff rank.
         if (TownyPerms.mapHasGroup("towns.ranks.sheriff")) {
             groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.sheriff");
             if (groupNodes.contains("siegewar.town.siege.battle.points")) {
-                groupNodes.remove("siegewar.town.siege.battle.points");
-                success = true;
+                success = groupNodes.remove("siegewar.town.siege.battle.points");
             }
             if (groupNodes.contains("siegewar.town.siege.fire.cannon.in.siegezone")) {
-                groupNodes.remove("siegewar.town.siege.fire.cannon.in.siegezone");
-                success = true;
+                success = groupNodes.remove("siegewar.town.siege.fire.cannon.in.siegezone");
             }
             if (groupNodes.contains("towny.command.town.rank.guard")) {
-                groupNodes.remove("towny.command.town.rank.guard");
-                success = true;
+                success = groupNodes.remove("towny.command.town.rank.guard");
             }
             if(success) {
                 townyPermsFile.set("towns.ranks.sheriff", groupNodes);
@@ -50,13 +48,14 @@ public class PermsCleanupUtil {
 
     private static boolean deleteFireCannonPermFromGuardRank(CommentedConfiguration townyPermsFile, boolean success) {
         List<String> groupNodes;
-        // Add nodes to the sheriff rank.
+        // Delete nodes from the guard rank.
         if (TownyPerms.mapHasGroup("towns.ranks.guard")) {
             groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.guard");
             if (groupNodes.contains("siegewar.town.siege.fire.cannon.in.siegezone")) {
-                groupNodes.remove("siegewar.town.siege.fire.cannon.in.siegezone");
+                success = groupNodes.remove("siegewar.town.siege.fire.cannon.in.siegezone");
+            }
+            if (success) {
                 townyPermsFile.set("towns.ranks.guard", groupNodes);
-                success = true;
             }
         }
         return success;
