@@ -255,8 +255,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		// Add nodes to the town assistant rank.
 		if (TownyPerms.mapHasGroup("towns.ranks.assistant")) {
 			groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.assistant");
-			if (!groupNodes.contains("siegewar.town.siege.*"))
-				groupNodes.add("siegewar.town.siege.*");
 			if (!groupNodes.contains("siegewar.command.siegewar.town.*"))
 				groupNodes.add("siegewar.command.siegewar.town.*");
 			file.set("towns.ranks.assistant", groupNodes);
@@ -330,8 +328,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		// Add nodes to the nation assistant rank.
 		if (TownyPerms.mapHasGroup("nations.ranks.assistant")) {
 			groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.assistant");
-			if (!groupNodes.contains("siegewar.nation.siege.*"))
-				groupNodes.add("siegewar.nation.siege.*");
 			if (!groupNodes.contains("siegewar.command.siegewar.nation.*"))
 				groupNodes.add("siegewar.command.siegewar.nation.*");
 			file.set("nations.ranks.assistant", groupNodes);
