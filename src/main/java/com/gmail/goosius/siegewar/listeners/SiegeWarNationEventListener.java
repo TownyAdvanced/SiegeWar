@@ -35,7 +35,7 @@ public class SiegeWarNationEventListener implements Listener {
 	public void onNationRankGivenToPlayer(NationRankAddEvent event) {
 		//In Siegewar, if target town is peaceful or occupied, can't add military rank
 		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& PermissionUtil.doesTownRankAllowPermissionNode(event.getRank(), SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS)) {
+				&& PermissionUtil.doesNationRankAllowPermissionNode(event.getRank(), SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_BATTLE_POINTS)) {
 
 			//Get residents town
 			Town town = TownyAPI.getInstance().getResidentTownOrNull(event.getResident());
