@@ -99,24 +99,20 @@ public class SiegeWarTownyEventListener implements Listener {
 	}
 
     @EventHandler
-    public void onPreNewDay(PreNewDayEvent event) {
+    public void onNewDay(NewDayEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled()) {
+            if (SiegeWarSettings.isPlunderPaidOutOverDays()) {
+                SiegeWarMoneyUtil.payDailyPlunderDebt();
+            }
             if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
                 SiegeWarTownPeacefulnessUtil.updateTownPeacefulnessCounters();
+            }
+            if(SiegeWarSettings.getMaxOccupationTaxPerPlot() > 0) {
+                SiegeWarTownOccupationUtil.collectNationOccupationTax();
             }
         }
     }
 
-	@EventHandler
-	public void onNewDay(NewDayEvent event) {
-		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			if (SiegeWarSettings.isPlunderPaidOutOverDays()) {
-				SiegeWarMoneyUtil.payDailyPlunderDebt();
-			}
-			SiegeWarTownOccupationUtil.collectNationOccupationTax();
-		}
-	}
-    
     /*
      * On NewHours SW makes some calculations.
      */
