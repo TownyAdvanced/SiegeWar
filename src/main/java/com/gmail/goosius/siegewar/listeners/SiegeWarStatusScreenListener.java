@@ -209,9 +209,6 @@ public class SiegeWarStatusScreenListener implements Listener {
 				SiegeStatus siegeStatus= siege.getStatus();
 				String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis()); 
 
-				//Siege
-				out.add(translator.of("status_town_siege"));
-
 				// > Type: Conquest
 				out.add(translator.of("status_town_siege_type", siege.getSiegeType().getTranslatedName()));
 
@@ -294,8 +291,9 @@ public class SiegeWarStatusScreenListener implements Listener {
 	            }
 
 				Component hoverText = Component.empty();
+				hoverText = hoverText.append(Component.text(translator.of("status_town_siege")));
 				for (String line : out) {
-					hoverText = hoverText.append(Component.text(line));
+					hoverText = hoverText.append(Component.newline().append(Component.text(line)));
 				}
 				event.getStatusScreen().addComponentOf("siegeWar_siegeHover", 
 						Component.empty()
