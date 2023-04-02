@@ -11,6 +11,7 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.confirmations.Confirmation;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.permissions.PermissionNodes;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
 
@@ -25,7 +26,7 @@ public class SurrenderDefence {
 		if(!SiegeWarSettings.getWarSiegeSurrenderEnabled())
 			throw new TownyException(Translatable.of("msg_err_action_disable").forLocale(player));
 
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToSurrenderDefence(siege.getSiegeType())))
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER.getNode()))
 			throw new TownyException(Translatable.of("msg_err_action_disable").forLocale(player));
 		
 		Confirmation
@@ -50,19 +51,9 @@ public class SurrenderDefence {
 
 	private static Translatable getSurrenderMessage(Siege siege, long timeUntilSurrenderConfirmation) {
 		String key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toLowerCase());
-		Translatable message = null;
-		switch(siege.getSiegeType()) {
-			case CONQUEST:
-				message = Translatable.of(key,
+		Translatable message = Translatable.of(key,
 						siege.getTown().getName(),
 						siege.getAttacker().getName());
-				break;
-			case REVOLT:
-				message = Translatable.of(key,
-						siege.getTown().getName(),
-						siege.getDefender().getName());
-				break;
-		}
 
 		if(timeUntilSurrenderConfirmation > 0) {
 			message.append(Translatable.of("msg_pending_attacker_victory", TimeMgmt.getFormattedTimeValue(timeUntilSurrenderConfirmation)));

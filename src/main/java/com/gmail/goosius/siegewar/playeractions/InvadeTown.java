@@ -116,22 +116,11 @@ public class InvadeTown {
 		if(SiegeWarTownOccupationUtil.isTownOccupiedByNation(residentsNation, targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_invade_town_already_occupied"));
 
-		switch(siege.getSiegeType()) {
-			case CONQUEST:
-				//In a conquest siege, only the attacker can invade
-				if(residentsNation != siege.getAttacker())
-					throw new TownyException(translator.of("msg_err_action_disable"));
-				if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
-					throw new TownyException(translator.of("msg_err_cannot_invade_without_victory"));
-			break;
-			case REVOLT:
-				//In a revolt siege, only the defender can invade
-				if(residentsNation != siege.getDefender())
-					throw new TownyException(translator.of("msg_err_action_disable"));
-				if (siege.getStatus() != SiegeStatus.DEFENDER_WIN && siege.getStatus() != SiegeStatus.ATTACKER_ABANDON)
-					throw new TownyException(translator.of("msg_err_cannot_invade_without_victory"));
-				break;
-		}
+		if(residentsNation != siege.getAttacker())
+			throw new TownyException(translator.of("msg_err_action_disable"));
+
+		if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
+			throw new TownyException(translator.of("msg_err_cannot_invade_without_victory"));
 
 		if (siege.isTownInvaded())
 			throw new TownyException(translator.of("msg_err_town_already_invaded"));

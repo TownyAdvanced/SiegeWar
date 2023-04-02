@@ -58,7 +58,7 @@ public class StartConquestSiege {
 		final Translator translator = Translator.locale(player);
 
 		if (!SiegeWarSettings.getConquestSiegesEnabled()
-		|| !TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToStartSiege(SiegeType.CONQUEST)))
+		|| !TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_STARTCONQUESTSIEGE.getNode()))
 			throw new TownyException(translator.of("msg_err_action_disable"));
 
 		if (targetTown.hasNation()) {

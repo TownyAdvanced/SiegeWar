@@ -278,23 +278,19 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 						// > Time Remaining: 22 minutes
 						out.add(translator.of("status_town_siege_battle_time_remaining", siege.getFormattedBattleTimeRemaining(translator)));
+						break;
 
 	                case ATTACKER_WIN:
 	                case DEFENDER_SURRENDER:
-					case DEFENDER_WIN:
+
+						out.add(getPlunderStatusLine(siege, translator));
+						out.add(getInvadeStatusLine(siege, translator));
+
 					case ATTACKER_ABANDON:
-	                    String invadedPlunderedStatus = getInvadedPlunderedStatusLine(siege, translator);
-						if(!invadedPlunderedStatus.isEmpty())
-							out.add(invadedPlunderedStatus);
+					case DEFENDER_WIN:
 
-	                    String siegeImmunityTimer = translator.of("status_town_siege_immunity_timer", time);
-	                    out.add(siegeImmunityTimer);
-	                    break;
-
-	                case PENDING_DEFENDER_SURRENDER:
-	                case PENDING_ATTACKER_ABANDON:
-					case UNKNOWN:
-						break;
+						String siegeImmunityTimer = translator.of("status_town_siege_immunity_timer", time);
+						out.add(siegeImmunityTimer);
 	            }
 
 				Component hoverText = Component.empty();
@@ -349,30 +345,6 @@ public class SiegeWarStatusScreenListener implements Listener {
                 return "???";
         }
     }
-
-    private static String getInvadedPlunderedStatusLine(Siege siege, Translator translator) {
-		switch(siege.getSiegeType()) {
-			case CONQUEST:
-				switch (siege.getStatus()) {
-					case ATTACKER_WIN:
-					case DEFENDER_SURRENDER:
-						return getPlunderStatusLine(siege, translator) + getInvadeStatusLine(siege, translator);
-					default:
-						break;
-				}
-				break;
-			case REVOLT:
-				switch (siege.getStatus()) {
-					case DEFENDER_WIN:
-					case ATTACKER_ABANDON:
-						return getPlunderStatusLine(siege, translator) + getInvadeStatusLine(siege, translator);
-					default:
-						break;
-				}
-				break;
-		}
-		return "";
-	}
 
 	private static String getPlunderStatusLine(Siege siege, Translator translator) {
 		String plunderedYesNo = siege.isTownPlundered() ? translator.of("status_yes") : translator.of("status_no_green");

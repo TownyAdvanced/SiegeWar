@@ -11,9 +11,8 @@ public enum SiegeWarPermissionNodes {
 	//Battle points
 	SIEGEWAR_NATION_SIEGE_BATTLE_POINTS("siegewar.nation.siege.battle.points"),
 	//Actions
-	SIEGEWAR_NATION_SIEGE_CONQUEST_SIEGE_START("siegewar.nation.siege.conquest.siege.start"),
-	SIEGEWAR_NATION_SIEGE_CONQUEST_SIEGE_ABANDON("siegewar.nation.siege.conquest.siege.abandon"),
-	SIEGEWAR_NATION_SIEGE_REVOLT_SIEGE_SURRENDER("siegewar.nation.siege.revolt.siege.surrender"),
+	SIEGEWAR_NATION_SIEGE_STARTCONQUESTSIEGE("siegewar.nation.siege.startconquestsiege"),
+	SIEGEWAR_NATION_SIEGE_ABANDON("siegewar.nation.siege.abandon"),
 	SIEGEWAR_NATION_SIEGE_INVADE("siegewar.nation.siege.invade"),
 	SIEGEWAR_NATION_SIEGE_PLUNDER("siegewar.nation.siege.plunder"),
 	SIEGEWAR_NATION_SIEGE_SUBVERTPEACEFULTOWN("siegewar.nation.siege.subvertpeacefultown"),
@@ -22,9 +21,8 @@ public enum SiegeWarPermissionNodes {
 	//Battle points
 	SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS("siegewar.town.siege.battle.points"),
 	//Actions
-	SIEGEWAR_TOWN_SIEGE_CONQUEST_SIEGE_SURRENDER("siegewar.town.siege.conquest.siege.surrender"),
-	SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_START("siegewar.town.siege.revolt.siege.start"),
-	SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_ABANDON("siegewar.town.siege.revolt.siege.abandon"),
+	SIEGEWAR_TOWN_SIEGE_SURRENDER("siegewar.town.siege.surrender"),
+	SIEGEWAR_TOWN_SIEGE_STARTREVOLTSIEGE("siegewar.town.siege.startrevoltsiege"),
 
 	// Siegewar related war sickness immunities
 	SIEGEWAR_IMMUNE_TO_WAR_NAUSEA("siegewar.immune.to.war.nausea"),
@@ -94,36 +92,4 @@ public enum SiegeWarPermissionNodes {
 		return value.replace("*", replace + "");
 	}
 
-	public static String getPermissionNodeToStartSiege(SiegeType siegeType) {
-		switch (siegeType) {
-			case CONQUEST:
-				return SIEGEWAR_NATION_SIEGE_CONQUEST_SIEGE_START.getNode();
-			case REVOLT:
-				return SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_START.getNode();
-			default:
-				throw new RuntimeException("Unknown siege type");
-		}
-	}
-
-	public static String getPermissionNodeToAbandonAttack(SiegeType siegeType) {
-		switch (siegeType) {
-			case CONQUEST:
-				return SIEGEWAR_NATION_SIEGE_CONQUEST_SIEGE_ABANDON.getNode();
-			case REVOLT:
-				return SIEGEWAR_TOWN_SIEGE_REVOLT_SIEGE_ABANDON.getNode();
-			default:
-				throw new RuntimeException("Uknown siege type");
-		}
-	}
-
-	public static String getPermissionNodeToSurrenderDefence(SiegeType siegeType) {
-		switch (siegeType) {
-			case CONQUEST:
-				return SIEGEWAR_TOWN_SIEGE_CONQUEST_SIEGE_SURRENDER.getNode();
-			case REVOLT:
-				return SIEGEWAR_NATION_SIEGE_REVOLT_SIEGE_SURRENDER.getNode();
-			default:
-				throw new RuntimeException("Unknown siege type.");
-		}
-	}
 }

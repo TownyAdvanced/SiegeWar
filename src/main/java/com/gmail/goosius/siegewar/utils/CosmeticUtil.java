@@ -109,7 +109,7 @@ public class CosmeticUtil {
 
 		SiegeSide siegeSide = SiegeSide.NOBODY;
 		if(resident.hasTown())
-			siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, TownyAPI.getInstance().getResidentTownOrNull(resident), siege);
+			siegeSide = SiegeWarAllegianceUtil.calculateSiegePlayerSide(player, TownyAPI.getInstance().getResidentTownOrNull(resident), siege);
 
 
 		if (siegeSide == SiegeSide.NOBODY || siege.getBannerControllingSide() == SiegeSide.NOBODY)

@@ -184,29 +184,14 @@ public class PlaceBlock {
 		 * Check what type of action this qualifies as.
 		 * Depending on the scenario, it may be 'abandonAttack' or 'surrenderDefence'
 		 */
-		switch (siege.getSiegeType()) {
-			case CONQUEST:
-				if (residentsNation != null && residentsNation == siege.getAttacker()) {
-					//Attacking nation
-					AbandonAttack.processAbandonAttackRequest(player, siege);
-				} else if (residentsTown == nearbyTown) {
-					//Resident of town
-					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
-				} else {
-					throw new TownyException(translator.of("msg_err_action_disable"));
-				}
-				break;
-			case REVOLT:
-				if (residentsTown == nearbyTown) {
-					//Resident of town
-					AbandonAttack.processAbandonAttackRequest(player, siege);
-				} else if (residentsNation != null && residentsNation == siege.getDefender()) {
-					//Defending former occupying nation
-					SurrenderDefence.processSurrenderDefenceRequest(player, siege);
-				} else {
-					throw new TownyException(translator.of("msg_err_action_disable"));
-				}
-				break;
+		if (residentsNation != null && residentsNation == siege.getAttacker()) {
+			//Member of attacking nation
+			AbandonAttack.processAbandonAttackRequest(player, siege);
+		} else if (residentsTown == nearbyTown) {
+			//Member of defending town
+			SurrenderDefence.processSurrenderDefenceRequest(player, siege);
+		} else {
+			throw new TownyException(translator.of("msg_err_action_disable"));
 		}
 	}
 

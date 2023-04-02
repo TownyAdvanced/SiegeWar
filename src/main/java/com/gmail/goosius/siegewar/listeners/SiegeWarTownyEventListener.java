@@ -393,7 +393,7 @@ public class SiegeWarTownyEventListener implements Listener {
      * @return SiegeSide of the player.
      */
     private SiegeSide getPlayerSiegeSide(Player player, Siege siege) {
-        return SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, TownyAPI.getInstance().getResident(player).getTownOrNull(), siege);
+        return SiegeWarAllegianceUtil.calculateSiegePlayerSide(player, TownyAPI.getInstance().getResident(player).getTownOrNull(), siege);
     }
 
     /**
