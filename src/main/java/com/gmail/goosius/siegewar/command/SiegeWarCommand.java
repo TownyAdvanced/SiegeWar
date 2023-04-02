@@ -290,18 +290,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 				}
 				break;
 
-			case "claimrefund":
-				try {
-					if (args.length != 1) {
-						showNationHelp(player);
-						return;
-					}
-					SiegeWarMoneyUtil.claimNationRefund(player);
-				} catch (TownyException te) {
-					Messaging.sendErrorMsg(player, te.getMessage(player));
-				}
-				break;
-
 			default:
 				showNationHelp(player);
 		}
