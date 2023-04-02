@@ -32,7 +32,7 @@ public class AbandonAttack {
 		if(!SiegeWarSettings.getWarSiegeAbandonEnabled())
 			throw new TownyException(Translatable.of("msg_err_action_disable"));
 
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToAbandonAttack(siege.getSiegeType())))
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ABANDON.getNode()))
 			throw new TownyException(Translatable.of("msg_err_action_disable"));
 
 		Confirmation

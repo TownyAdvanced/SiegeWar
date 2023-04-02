@@ -92,34 +92,4 @@ public enum SiegeWarPermissionNodes {
 		return value.replace("*", replace + "");
 	}
 
-	public static String getPermissionNodeToStartSiege(SiegeType siegeType) {
-		switch (siegeType) {
-			case CONQUEST:
-				return SIEGEWAR_NATION_SIEGE_STARTCONQUESTSIEGE.getNode();
-			case REVOLT:
-				return SIEGEWAR_TOWN_SIEGE_STARTREVOLTSIEGE.getNode();
-			default:
-				throw new RuntimeException("Unknown siege type");
-		}
-	}
-
-	public static String getPermissionNodeToAbandonAttack(SiegeType siegeType) {
-		switch (siegeType) {
-			case CONQUEST:
-			case REVOLT:
-				return SIEGEWAR_NATION_SIEGE_ABANDON.getNode();
-			default:
-				throw new RuntimeException("Uknown siege type");
-		}
-	}
-
-	public static String getPermissionNodeToSurrenderDefence(SiegeType siegeType) {
-		switch (siegeType) {
-			case CONQUEST:
-			case REVOLT:
-				return SIEGEWAR_TOWN_SIEGE_SURRENDER.getNode();
-			default:
-				throw new RuntimeException("Unknown siege type.");
-		}
-	}
 }
