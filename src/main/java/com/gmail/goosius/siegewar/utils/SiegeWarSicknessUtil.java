@@ -145,7 +145,7 @@ public class SiegeWarSicknessUtil {
         if (!resident.hasTown())
             return false;
 
-        SiegeSide siegeSide = SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(player, TownyAPI.getInstance().getResidentTownOrNull(resident), siege);
+        SiegeSide siegeSide = SiegeWarAllegianceUtil.calculateSiegePlayerSide(player, TownyAPI.getInstance().getResidentTownOrNull(resident), siege);
 
         return siegeSide != SiegeSide.NOBODY;
     }

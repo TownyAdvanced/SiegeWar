@@ -152,37 +152,17 @@ public class SiegeController {
 		else
 			siege.setSiegeType(SiegeType.parseString(siegeTypeString));
 
-		//Load Attacker
-		switch (siege.getSiegeType()) {
-			case CONQUEST:
-				String uuid = SiegeMetaDataController.getAttackerUUID(town);
-				if (uuid == null)
-					return false;
-				Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(uuid));
-				if (nation == null)
-					return false;
-				siege.setAttacker(nation);
-				break;
-			case REVOLT:
-				siege.setAttacker(town);
-				break;
-		}
+		//Get nation
+		String nationUUID = SiegeMetaDataController.getAttackerUUID(town);
+		if (nationUUID == null)
+			return false;
+		Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(nationUUID));
+		if (nation == null)
+			return false;
 
-		//Load defender
-		switch (siege.getSiegeType()) {
-			case CONQUEST:
-				siege.setDefender(town);
-				break;
-			case REVOLT:
-				String uuid = SiegeMetaDataController.getDefenderUUID(town);
-				if (uuid == null)
-					return false;
-				Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(uuid));
-				if (nation == null)
-					return false;
-				siege.setDefender(nation);
-				break;
-		}
+		//Set attacker and defender
+		siege.setAttacker(nation);
+		siege.setDefender(town);
 
 		//Load Status
 		if (SiegeMetaDataController.getSiegeStatus(town).isEmpty())
@@ -237,17 +217,17 @@ public class SiegeController {
 	}
 
 	//Remove a particular siege, and all associated data
-	public static void removeSiege(Siege siege, SiegeSide refundSideIfSiegeIsActive) {
-		//If siege is active, initiate siege immunity for town, and return war chest
+	public static void removeSiege(Siege siege, SiegeSide siegeSideToAwardWarchestTo) {
+		//If siege is active, initiate siege immunity for town, and award war chest
 		if(siege.getStatus().isActive()) {
 			siege.setActualEndTime(System.currentTimeMillis());
 			SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown(), siege);
 
-			//Return warchest only if siege is not revolt
+			//Award warchest if siege is not revolt
 			if(!siege.isRevoltSiege()) {
-				if (refundSideIfSiegeIsActive == SiegeSide.ATTACKERS)
+				if (siegeSideToAwardWarchestTo == SiegeSide.ATTACKERS)
 					SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
-				else if (refundSideIfSiegeIsActive == SiegeSide.DEFENDERS)
+				else if (siegeSideToAwardWarchestTo == SiegeSide.DEFENDERS)
 					SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefender());
 			}
 		}
