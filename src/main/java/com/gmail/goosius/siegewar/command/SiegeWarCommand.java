@@ -40,7 +40,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 	private static final List<String> siegewarTownTabCompletes = Arrays.asList("togglepeaceful");
 	
-	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers", "claimrefund");
+	private static final List<String> siegewarNationTabCompletes = Arrays.asList("paysoldiers");
 
 	private static final List<String> siegewarPreferenceTabCompletes = Arrays.asList("beacons", "bossbars");
 	
@@ -78,7 +78,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw collect", "", Translatable.of("nation_help_11").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "claimrefund [amount]", Translatable.of("nation_help_refund").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw town", "togglepeaceful", Translatable.of("town_help_toggle_peaceful").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nextsession", "", ""));
@@ -88,7 +87,6 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void showNationHelp(CommandSender sender) {
 		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewar nation"));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "claimrefund [amount]", Translatable.of("nation_help_refund").forLocale(sender)));
 	}
 
 	private void showTownHelp(CommandSender sender) {
@@ -174,6 +172,14 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 		try {
 			if(SiegeWarMoneyUtil.collectMilitarySalary(player))
+				incomeTypesCollected++;
+		} catch (Exception e) {
+			error = true;
+			player.sendMessage(e.getMessage());
+		}
+
+		try {
+			if(SiegeWarMoneyUtil.claimNationRefund(player))
 				incomeTypesCollected++;
 		} catch (Exception e) {
 			error = true;
