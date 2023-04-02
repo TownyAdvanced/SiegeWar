@@ -636,7 +636,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				case "end":
 					SiegeController.endSiegeWithTimedWin(siege);
 					return;
-
 				case "setplundered":
 					boolean plundered = Boolean.parseBoolean(args[2]);
 					siege.setTownPlundered(plundered);
