@@ -172,12 +172,13 @@ public class SiegeWarBannerControlUtil {
 			return false; //player is not in the timed point zone
 
 		if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
-				&& player.getLocation().getY() < siege.getFlagLocation().getY() - 1) {
+				&& player.getLocation().getY() < siege.getFlagLocation().getY() - 0.5) {
 			/*
 			 * Player is below the siege banner block
-			 * We look at the support-block-altitude rather than the banner altitude,
-			 * Because otherwise, dirt path's can cause confusion,
-			 * because their altitude is very slightly lower than a regular dirt block.
+			 * We allow 0.5 blocks of leniency here,
+			 * Because otherwise, half-blocks and dirt paths can cause confusion,
+			 * because although players might think they are at the banner altitude,
+			 * they are actually below it.
 			 */
 			return false;
 		}
