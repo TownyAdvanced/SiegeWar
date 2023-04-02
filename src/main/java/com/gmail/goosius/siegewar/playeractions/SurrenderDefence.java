@@ -50,19 +50,9 @@ public class SurrenderDefence {
 
 	private static Translatable getSurrenderMessage(Siege siege, long timeUntilSurrenderConfirmation) {
 		String key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toLowerCase());
-		Translatable message = null;
-		switch(siege.getSiegeType()) {
-			case CONQUEST:
-				message = Translatable.of(key,
+		Translatable message = Translatable.of(key,
 						siege.getTown().getName(),
 						siege.getAttacker().getName());
-				break;
-			case REVOLT:
-				message = Translatable.of(key,
-						siege.getTown().getName(),
-						siege.getDefender().getName());
-				break;
-		}
 
 		if(timeUntilSurrenderConfirmation > 0) {
 			message.append(Translatable.of("msg_pending_attacker_victory", TimeMgmt.getFormattedTimeValue(timeUntilSurrenderConfirmation)));

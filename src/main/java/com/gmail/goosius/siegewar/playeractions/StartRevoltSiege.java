@@ -51,7 +51,7 @@ public class StartRevoltSiege {
 		allowSiegeOrThrow(player, targetTown);
 
 		// Start a SiegeCamp that will kick off the Siege (or if SiegeAssemblies are disabled, start the Siege immediately.)
-		SiegeController.startSiegeCampProcess(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown, targetTown.getNationOrNull(), townOfSiegeStarter, townBlock);
+		SiegeController.startSiegeCampProcess(player, bannerBlock, SiegeType.REVOLT, targetTown, targetTown.getNationOrNull(), targetTown, townOfSiegeStarter, townBlock);
 	}
 
 	private static void allowSiegeOrThrow(Player player, Town targetTown) throws TownyException {

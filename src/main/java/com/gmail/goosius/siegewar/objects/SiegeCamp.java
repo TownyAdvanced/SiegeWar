@@ -131,11 +131,9 @@ public class SiegeCamp {
 			TownyMessaging.sendPrefixedNationMessage((Nation)attacker, Translatable.of("msg_err_no_money"));
 			return;
 		}
-			
-		
-		Nation eventNation = siegeType.equals(SiegeType.REVOLT) ? (Nation) defender : (Nation) attacker;  
+
 		// Call event
-		PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(siegeType, targetTown, eventNation, townOfSiegeStarter, bannerBlock, townBlock);
+		PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(siegeType, targetTown, (Nation)attacker, townOfSiegeStarter, bannerBlock, townBlock);
 		Bukkit.getPluginManager().callEvent(preSiegeWarStartEvent);
 
 		// Setup attack

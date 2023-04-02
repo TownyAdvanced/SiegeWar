@@ -43,8 +43,8 @@ import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
 public class Siege {
 	private SiegeType siegeType;
 	private Town town;
-	private Government attacker;
-	private Government defender;
+	private Government attacker; //Always the attacking nation
+	private Government defender; //Always the besieged town
 	private String attackerName; //Only used in the siege-aftermath
 	private String defenderName; //Only used in the siege-aftermath
     private SiegeStatus status;

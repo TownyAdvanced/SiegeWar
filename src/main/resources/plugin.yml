@@ -78,13 +78,10 @@ permissions:
         default: false
         children:
             siegewar.nation.siege.battle.points: true
-            siegewar.nation.siege.attack: true
+            siegewar.nation.siege.startconquestsiege: true
             siegewar.nation.siege.abandon: true
             siegewar.nation.siege.invade: true
             siegewar.nation.siege.plunder: true
-            siegewar.nation.siege.conquest.siege.start: true
-            siegewar.nation.siege.conquest.siege.abandon: true
-            siegewar.nation.siege.revolt.siege.surrender: true
             siegewar.nation.siege.subvertpeacefultown: true
 
     siegewar.town.siege.*:
@@ -92,10 +89,9 @@ permissions:
         default: false
         children:
             siegewar.town.siege.battle.points: true
-            siegewar.town.siege.conquest.siege.surrender: true
-            siegewar.town.siege.revolt.siege.start: true
-            siegewar.town.siege.revolt.siege.abandon: true
-            
+            siegewar.town.siege.startrevoltsiege: true
+            siegewar.town.siege.surrender: true
+    
     siegewar.command.siegewar.collect:
         description: User is able to do the /siegewar collect command.
         default: true
