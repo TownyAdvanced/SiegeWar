@@ -277,16 +277,16 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 	                case ATTACKER_WIN:
 	                case DEFENDER_SURRENDER:
-					case DEFENDER_WIN:
-					case ATTACKER_ABANDON:
+
 	                    String invadedPlunderedStatus = getPlunderStatusLine(siege, translator) + getInvadeStatusLine(siege, translator);
-						if(!invadedPlunderedStatus.isEmpty())
-							out.add(invadedPlunderedStatus);
+						out.add(invadedPlunderedStatus);
 
 	                    String siegeImmunityTimer = translator.of("status_town_siege_immunity_timer", time);
 	                    out.add(siegeImmunityTimer);
 	                    break;
 
+					case DEFENDER_WIN:
+					case ATTACKER_ABANDON:
 	                case PENDING_DEFENDER_SURRENDER:
 	                case PENDING_ATTACKER_ABANDON:
 					case UNKNOWN:
