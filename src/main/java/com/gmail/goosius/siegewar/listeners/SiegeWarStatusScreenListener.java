@@ -274,23 +274,19 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 						// > Time Remaining: 22 minutes
 						out.add(translator.of("status_town_siege_battle_time_remaining", siege.getFormattedBattleTimeRemaining(translator)));
+						break;
 
 	                case ATTACKER_WIN:
 	                case DEFENDER_SURRENDER:
 
-	                    String invadedPlunderedStatus = getPlunderStatusLine(siege, translator) + getInvadeStatusLine(siege, translator);
-						out.add(invadedPlunderedStatus);
+						out.add(getPlunderStatusLine(siege, translator));
+						out.add(getInvadeStatusLine(siege, translator));
 
-	                    String siegeImmunityTimer = translator.of("status_town_siege_immunity_timer", time);
-	                    out.add(siegeImmunityTimer);
-	                    break;
-
-					case DEFENDER_WIN:
 					case ATTACKER_ABANDON:
-	                case PENDING_DEFENDER_SURRENDER:
-	                case PENDING_ATTACKER_ABANDON:
-					case UNKNOWN:
-						break;
+					case DEFENDER_WIN:
+
+						String siegeImmunityTimer = translator.of("status_town_siege_immunity_timer", time);
+						out.add(siegeImmunityTimer);
 	            }
 
 				Component hoverText = Component.empty();
