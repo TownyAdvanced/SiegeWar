@@ -407,36 +407,6 @@ public class SiegeController {
 	}
 
 	/**
-	 * @param town the town to check
-	 * @return true if the town has a nation & that nation is fighting a home-defence war
-	 *
-	 * Note: A home defence war is when one or more of the nation's natural towns (ie not occupied foreign towns) is under siege.
-	 */
-	public static boolean isTownsNationFightingAHomeDefenceWar(Town town) {
-		if(town.hasNation()) {
-			return isNationFightingAHomeDefenceWar(TownyAPI.getInstance().getTownNationOrNull(town));
-		}
-		return false;
-	}
-
-	/**
-	 * @param nation the nation to check
-	 * @return true if the given nation is fighting a home-defence war
-	 *
-	 * Note: A home defence war is when one or more of the nation's natural towns (ie not occupied foreign towns) is under siege.
-	 */
-	public static boolean isNationFightingAHomeDefenceWar(Nation nation) {
-		for(Siege siege: SiegeController.getSieges()) {
-			if(siege.getStatus().isActive()
-				&& siege.getTown().hasNation()
-				&& TownyAPI.getInstance().getTownNationOrNull(siege.getTown()) == nation) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * Start a siege
 	 *
 	 * @param bannerBlock banner block
