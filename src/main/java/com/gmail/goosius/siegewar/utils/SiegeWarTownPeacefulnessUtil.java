@@ -90,19 +90,14 @@ public class SiegeWarTownPeacefulnessUtil {
 		//Reverse the town peacefulness setting
 		TownMetaDataController.setPeacefulness(town, !TownMetaDataController.getPeacefulness(town));
 
-		if (SiegeWarSettings.getWarSiegeEnabled()) {
-			if (TownMetaDataController.getPeacefulness(town)) {
-				message = Translation.of("msg_town_became_peaceful", town.getFormattedName());
-			} else {
-				message = Translation.of("msg_town_became_non_peaceful", town.getFormattedName());
-			}
+		if (TownMetaDataController.getPeacefulness(town)) {
+			//Remove military ranks
+			SiegeWarMilitaryRanksUtil.removeMilitaryRanksFromTownResidents(town);
+			message = Translation.of("msg_town_became_peaceful", town.getFormattedName());
 		} else {
-			if (TownMetaDataController.getPeacefulness(town)) {
-				message = Translation.of("msg_town_became_peaceful", town.getFormattedName());
-			} else {
-				message = Translation.of("msg_town_became_non_peaceful", town.getFormattedName());
-			}
+			message = Translation.of("msg_town_became_non_peaceful", town.getFormattedName());
 		}
+
 		TownyMessaging.sendPrefixedTownMessage(town, message);
 		town.save();
 	}
@@ -252,9 +247,6 @@ public class SiegeWarTownPeacefulnessUtil {
 				TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_declared_peaceful"), daysRequiredForStatusChange));
 			else
 				TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_declared_non_peaceful"), daysRequiredForStatusChange));
-
-			//Remove military ranks
-			SiegeWarMilitaryRanksUtil.removeMilitaryRanksFromTownResidents(town);
 		} else {
 			//Countdown in progress. Cancel the countdown
 			TownMetaDataController.setDesiredPeacefulness(town, SiegeWarTownPeacefulnessUtil.isTownPeaceful(town));

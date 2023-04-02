@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.palmergames.bukkit.towny.permissions.TownyPerms;
+import org.bukkit.Bukkit;
+import org.bukkit.permissions.Permission;
 
 public class PermissionUtil {
 
@@ -38,10 +40,27 @@ public class PermissionUtil {
 	 */
 	private static boolean doesRankAllowPermissionNode(List<String> nodesAllowedByRank, SiegeWarPermissionNodes node) {
 		String permissionNodeString = node.getNode();
-		String permissionNodeWildCardString = permissionNodeString.replaceFirst("[\\w]*$", "*");
-		return (nodesAllowedByRank.contains(permissionNodeString) 
-			|| nodesAllowedByRank.contains(permissionNodeWildCardString));
 
+		// Quickly succeed.
+		if (nodesAllowedByRank.contains(permissionNodeString))
+			return true;
+
+		// Test replacing the last word in the permission node string with *, ie
+		// siegewar.nation.SOMETHING will check if the player has siegewar.nation.*
+		String permissionNodeWildCardString = permissionNodeString.replaceFirst("[\\w]*$", "*");
+		if (nodesAllowedByRank.contains(permissionNodeWildCardString))
+			return true;
+
+		// Query bukkit to see if the node is a child node of a Permission given by the rank.
+		for (String nodeAllowedByRank : nodesAllowedByRank) {
+			Permission permissionNode = Bukkit.getPluginManager().getPermission(nodeAllowedByRank);
+			if (permissionNode != null
+					&& permissionNode.getChildren().containsKey(permissionNodeString)
+					&& permissionNode.getChildren().get(permissionNodeString).booleanValue())
+				return true;
+		}
+
+		return false;
 	}
 }
 
