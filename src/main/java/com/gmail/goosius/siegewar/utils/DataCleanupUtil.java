@@ -122,7 +122,7 @@ public class DataCleanupUtil {
             SiegeWar.info("Old Town Neutrality Data migrated...");
     }
 
-    public static void deleteLegacyResidentMetadata() {
+    private static void deleteLegacyResidentMetadata() {
         for(Resident resident: TownyUniverse.getInstance().getResidents()) {
             ResidentMetaDataController.deleteLegacyMetadata(resident);
         }

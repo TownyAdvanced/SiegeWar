@@ -254,23 +254,11 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		// Add nodes to the town assistant rank.
 		if (TownyPerms.mapHasGroup("towns.ranks.assistant")) {
 			groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.assistant");
-			if (!groupNodes.contains("siegewar.town.siege.*"))
-				groupNodes.add("siegewar.town.siege.*");
 			if (!groupNodes.contains("siegewar.command.siegewar.town.*"))
 				groupNodes.add("siegewar.command.siegewar.town.*");
 			file.set("towns.ranks.assistant", groupNodes);
 		}
-		
-		// Add nodes to the sheriff rank.
-		if (TownyPerms.mapHasGroup("towns.ranks.sheriff")) {
-			groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.sheriff");
-			if (!groupNodes.contains(townpoints))
-				groupNodes.add(townpoints);
-			if (!groupNodes.contains("towny.command.town.rank.guard"))
-				groupNodes.add("towny.command.town.rank.guard");
-			file.set("towns.ranks.sheriff", groupNodes);
-		}
-		
+
 		// Create new ranks
 		file.createSection("towns.ranks.guard");
 		file.createSection("nations.ranks.private");
@@ -325,8 +313,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		groupNodes.add("towny.command.nation.rank.captain");
 		groupNodes.add("towny.command.nation.rank.major");
 		groupNodes.add("towny.command.nation.rank.colonel");
-		groupNodes.add("towny.command.nation.rank.engineer");
-		groupNodes.add("towny.command.nation.rank.gunner");
 		groupNodes.add("towny.nation.siege.pay.grade.500");
 		file.set("nations.ranks.general", groupNodes);
 	
@@ -341,8 +327,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 		// Add nodes to the nation assistant rank.
 		if (TownyPerms.mapHasGroup("nations.ranks.assistant")) {
 			groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.assistant");
-			if (!groupNodes.contains("siegewar.nation.siege.*"))
-				groupNodes.add("siegewar.nation.siege.*");
 			if (!groupNodes.contains("siegewar.command.siegewar.nation.*"))
 				groupNodes.add("siegewar.command.siegewar.nation.*");
 			file.set("nations.ranks.assistant", groupNodes);
@@ -353,8 +337,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 
 	private void setupTownyConfigFile(CommandSender sender) {
 		CommentedConfiguration file = TownySettings.getConfig();
-		file.set("economy.price_town_neutrality", "0");
-		file.set("economy.price_nation_neutrality", "0");
 		file.set("economy.bankruptcy.enabled", "true");
 		file.set("town_ruining.town_ruins.enabled", "true");
 		file.set("town_ruining.town_ruins.min_duration_hours", "24");
@@ -706,17 +688,23 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_town_peacefulness_change_success", town.getName(), Boolean.toString(peaceful)));
 					break;
 				case "setoccupied":
-					//set occupied flag
 					boolean occupied = Boolean.parseBoolean(args[2]);
-					town.setConquered(occupied);
-					//Save data
-					town.save();
-					//Send message
-					Messaging.sendMsg(sender, Translatable.of("msg_swa_town_occupation_change_success", town.getName(), Boolean.toString(occupied)));
-					break;
+					if(occupied) {
+						if(town.hasNation()) {
+							SiegeWarTownOccupationUtil.setTownOccupation(town, town.getNationOrNull());
+							Messaging.sendMsg(sender, Translatable.of("msg_swa_town_occupation_change_success", town.getName(), occupied));
+							break;
+						} else {
+							Messaging.sendErrorMsg(sender, Translatable.of("msg_err_cannot_set_occupation_without_nation", town.getName()));
+							break;
+						}
+					} else {
+						SiegeWarTownOccupationUtil.removeTownOccupation(town);
+						Messaging.sendMsg(sender, Translatable.of("msg_swa_town_occupation_change_success", town.getName(), occupied));
+						break;
+					}
 				default:
 					showSiegeHelp(sender);
-					return;
 			}
 		} else
 			showTownHelp(sender);
