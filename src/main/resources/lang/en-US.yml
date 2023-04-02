@@ -556,7 +556,7 @@ msg_revolt_siege_defender_win_result: ' The town has won its freedom!'
 
 #Town Screen
 
-status_town_siege_status_invaded: '   &2Town Captured: %s'
+status_town_siege_status_invaded: '&2 > Town Captured: %s'
 status_town_peacefulness_flag: '&b(Peaceful)'
 
 #Town Capture & Occupation

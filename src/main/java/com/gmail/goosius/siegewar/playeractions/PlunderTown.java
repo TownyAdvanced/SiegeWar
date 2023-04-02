@@ -67,37 +67,21 @@ public class PlunderTown {
 			throw new TownyException(translator.of("msg_err_siege_war_town_already_plundered", townToBePlundered.getName()));
 
 		if(siege.isRevoltSiege()) {
-			// A revolt siege means a town was rebelling against their Occupying nation.
-			
-			// Rebels do not plunder when they win or the occupying nation surrenders.
-			if(siege.getStatus() == SiegeStatus.ATTACKER_WIN || siege.getStatus() == SiegeStatus.DEFENDER_SURRENDER)
+			// If the rebels won, plunder is not possible
+			if (siege.getStatus() == SiegeStatus.DEFENDER_WIN || siege.getStatus() == SiegeStatus.ATTACKER_ABANDON)
 				throw new TownyException(translator.of("msg_err_siege_war_plunder_not_possible_rebels_won"));
-
-			// The Siege hasn't been won.
-			if(siege.getStatus() != SiegeStatus.DEFENDER_WIN && siege.getStatus() != SiegeStatus.ATTACKER_ABANDON)
-				throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_victory"));
-
-			// It is not the occupying nation trying to plunder this siege.
-			if(plunderingNation != siege.getDefender())
-				throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_victory"));
-
-			// Return the occupying nation of the sieged town, which has defeated the revolting town.
-			return (Nation)siege.getDefender();
-
-		} else {
-			// Any other type of Siege aside from Revolt.
-			
-			// The Siege hasn't been won.
-			if(siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
-				throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_victory"));
-
-			// It is not the attacking Nation which is trying to plunder.
-			if(plunderingNation != siege.getAttacker())
-				throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_victory"));
-
-			// Return the Nation which started the Siege against the town.
-			return (Nation)siege.getAttacker();
 		}
+
+		// Ensure the attacking nation has completed the win
+		if(siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
+			throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_victory"));
+
+		// Ensure tha attempted plunderer is from the victorious nation
+		if(plunderingNation != siege.getAttacker())
+			throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_victory"));
+
+		// Return the victorious nation, which has defeated the revolting town.
+		return (Nation)siege.getAttacker();
 	}
 
 	private static void plunderTown(Siege siege, Nation nation) {
