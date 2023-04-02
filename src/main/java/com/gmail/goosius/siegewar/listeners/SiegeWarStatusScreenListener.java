@@ -198,7 +198,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 	        long immunity = TownMetaDataController.getRevoltImmunityEndTime(town);
 	        if (SiegeWarSettings.getRevoltSiegesEnabled() && immunity == -1l || System.currentTimeMillis() < immunity) {
 	            String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
-	            event.getStatusScreen().addComponentOf("siegeWar_revoltImmunityTimer", translator.of("status_town_revolt_immunity_timer", time));
+				Component revoltImmunityTimer = Component.text(translator.of("status_town_revolt_immunity_timer", time));
+				event.getStatusScreen().addComponentOf("siegeWar_revoltImmunityTimer", revoltImmunityTimer);
 	        }
 
 	        immunity = TownMetaDataController.getSiegeImmunityEndTime(town);
@@ -207,6 +208,9 @@ public class SiegeWarStatusScreenListener implements Listener {
 				Siege siege = SiegeController.getSiege(town);
 				SiegeStatus siegeStatus= siege.getStatus();
 				String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis()); 
+
+				//Siege
+				out.add(translator.of("status_town_siege"));
 
 				// > Type: Conquest
 				out.add(translator.of("status_town_siege_type", siege.getSiegeType().getTranslatedName()));
@@ -295,7 +299,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 				Component hoverText = Component.empty();
 				for (String line : out) {
-					hoverText = hoverText.append(Component.text(line).append(Component.newline()));
+					hoverText = hoverText.append(Component.text(line));
 				}
 				event.getStatusScreen().addComponentOf("siegeWar_siegeHover", 
 						Component.empty()
