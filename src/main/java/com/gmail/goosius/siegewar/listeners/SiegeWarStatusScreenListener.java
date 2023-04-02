@@ -302,9 +302,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 							.hoverEvent(HoverEvent.showText(hoverText))));
 
 	        } else {
-	            if(!SiegeController.hasActiveSiege(town)
-	            	&& (System.currentTimeMillis() < immunity)
-					|| immunity == -1l) {
+	            if(System.currentTimeMillis() < immunity || immunity == -1l) {
 	                //Siege:
 	                // > Immunity Timer: 40.8 hours
 					String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
