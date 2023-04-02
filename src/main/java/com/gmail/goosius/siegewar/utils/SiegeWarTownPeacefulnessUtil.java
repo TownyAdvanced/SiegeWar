@@ -11,7 +11,8 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
 
@@ -78,7 +79,7 @@ public class SiegeWarTownPeacefulnessUtil {
 	 * This method adjusts the peacefulness counter of a single town
 	 */
 	public static void updateTownPeacefulnessCounters(Town town) {
-		String message;
+		Translatable message;
 
 		int days = TownMetaDataController.getPeacefulnessChangeCountdownDays(town); 
 		if (days > 1) {
@@ -89,13 +90,13 @@ public class SiegeWarTownPeacefulnessUtil {
 		
 		//Reverse the town peacefulness setting
 		TownMetaDataController.setPeacefulness(town, !TownMetaDataController.getPeacefulness(town));
-
+		
 		if (TownMetaDataController.getPeacefulness(town)) {
 			//Remove military ranks
 			SiegeWarMilitaryRanksUtil.removeMilitaryRanksFromTownResidents(town);
-			message = Translation.of("msg_town_became_peaceful", town.getFormattedName());
+			message = Translatable.of("msg_town_became_peaceful", town.getFormattedName());
 		} else {
-			message = Translation.of("msg_town_became_non_peaceful", town.getFormattedName());
+			message = Translatable.of("msg_town_became_non_peaceful", town.getFormattedName());
 		}
 
 		TownyMessaging.sendPrefixedTownMessage(town, message);
@@ -205,26 +206,27 @@ public class SiegeWarTownPeacefulnessUtil {
 	}
 
 	public static void toggleTownPeacefulness(Player player) {
+		Translator translator = Translator.locale(player);
 		if (!SiegeWarSettings.getWarSiegeEnabled()) {
-			player.sendMessage(Translation.of("msg_err_command_disable"));
+			player.sendMessage(translator.of("msg_err_command_disable"));
 			return;
 		}
 
 		if(!SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
-			player.sendMessage(Translation.of("msg_err_command_disable"));
+			player.sendMessage(translator.of("msg_err_command_disable"));
 			return;
 		}
 
 		Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
 		if(resident == null || !resident.hasTown()) {
-			player.sendMessage(Translation.of("msg_err_command_disable"));
+			player.sendMessage(translator.of("msg_err_command_disable"));
 			return;
 		}
 
 		//Capital towns cannot go peaceful.
 		Town town = resident.getTownOrNull();
 		if (town.isCapital() && !SiegeWarSettings.capitalsAllowedTownPeacefulness()) {
-			player.sendMessage(Translation.of("msg_err_capital_towns_cannot_go_peaceful"));
+			player.sendMessage(translator.of("msg_err_capital_towns_cannot_go_peaceful"));
 			return;
 		}
 
@@ -244,15 +246,15 @@ public class SiegeWarTownPeacefulnessUtil {
 
 			//Send message to town
 			if (TownMetaDataController.getDesiredPeacefulness(town))
-				TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_declared_peaceful"), daysRequiredForStatusChange));
+				TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_war_common_town_declared_peaceful", daysRequiredForStatusChange));
 			else
-				TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_declared_non_peaceful"), daysRequiredForStatusChange));
+				TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_war_common_town_declared_non_peaceful", daysRequiredForStatusChange));
 		} else {
 			//Countdown in progress. Cancel the countdown
 			TownMetaDataController.setDesiredPeacefulness(town, SiegeWarTownPeacefulnessUtil.isTownPeaceful(town));
 			TownMetaDataController.setPeacefulnessChangeCountdownDays(town, 0);
 			//Send message to town
-			TownyMessaging.sendPrefixedTownMessage(town, String.format(Translation.of("msg_war_common_town_peacefulness_countdown_cancelled")));
+			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_war_common_town_peacefulness_countdown_cancelled"));
 		}
 		//Save data
 		town.save();

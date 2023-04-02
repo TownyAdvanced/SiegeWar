@@ -193,15 +193,15 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			} else {
 				Town town = TownyUniverse.getInstance().getTown(args[0]);
 				if (town == null) 
-					throw new Exception(Translatable.of("msg_err_town_not_registered", args[0]).forLocale(player));
+					throw new TownyException(Translatable.of("msg_err_town_not_registered", args[0]));
 
 				if (!SiegeController.getSiegedTowns().contains(town))
-					throw new Exception(Translatable.of("msg_err_not_being_sieged", town.getName()).forLocale(player));
+					throw new TownyException(Translatable.of("msg_err_not_being_sieged", town.getName()));
 
 				SiegeWar.getSiegeHUDManager().toggleWarHud(player, SiegeController.getSiege(town));
 			}
-		} catch (Exception e) {
-			Messaging.sendErrorMsg(player, e.getMessage());
+		} catch (TownyException e) {
+			Messaging.sendErrorMsg(player, e.getMessage(player));
 		}
 	}
 
@@ -280,7 +280,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 						throw new TownyException(Translatable.of("msg_err_siege_war_no_soldiers_to_pay").forLocale(player));
 
 				} catch (TownyException te) {
-					Messaging.sendErrorMsg(player, te.getMessage());
+					Messaging.sendErrorMsg(player, te.getMessage(player));
 				}
 				break;
 
@@ -292,7 +292,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					}
 					SiegeWarMoneyUtil.claimNationRefund(player);
 				} catch (TownyException te) {
-					Messaging.sendErrorMsg(player, te.getMessage());
+					Messaging.sendErrorMsg(player, te.getMessage(player));
 				}
 				break;
 

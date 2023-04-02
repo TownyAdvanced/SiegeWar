@@ -14,7 +14,6 @@ import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 
 import org.bukkit.Bukkit;
@@ -84,7 +83,7 @@ public class PeacefullySubvertTown {
 	}
 
 	private static void allowSubversionOrThrow(Player player, Nation residentsNation, Town targetTown) throws TownyException {
-		final Translator translator =  Translator.locale(Translation.getLocale(player));
+		final Translator translator =  Translator.locale(player);
 		if(!SiegeWarSettings.isPeacefulTownsSubvertEnabled())
 			throw new TownyException(translator.of("msg_err_action_disable"));
 
@@ -121,12 +120,12 @@ public class PeacefullySubvertTown {
 		Map<Nation, Integer> townyInfluenceMap = SiegeWarTownPeacefulnessUtil.calculateTownyInfluenceMap(targetTown);
 		if(townyInfluenceMap.size() == 0)
 			//No nation has towny-influence in the local area
-			throw new TownyException(Translation.of("msg_err_cannot_subvert_town_zero_influence"));
+			throw new TownyException(Translatable.of("msg_err_cannot_subvert_town_zero_influence"));
 
 		Nation topNation = townyInfluenceMap.keySet().iterator().next();
 		if(topNation != nation)
 			//A different nation is top of the towny-influence map
-			throw new TownyException(Translation.of("msg_err_cannot_subvert_town_insufficient_influence", topNation.getName(),
+			throw new TownyException(Translatable.of("msg_err_cannot_subvert_town_insufficient_influence", topNation.getName(),
 					townyInfluenceMap.get(topNation),            // Top scorer. 
 					townyInfluenceMap.getOrDefault(nation, 0))); // The nation's score.
 	}

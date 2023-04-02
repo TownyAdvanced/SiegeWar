@@ -11,7 +11,6 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 
 import org.bukkit.block.Block;
@@ -36,7 +35,7 @@ public class DestroyBlock {
 		if (!TownyAPI.getInstance().getTownyWorld(block.getWorld()).isWarAllowed())
 			return;
 
-		final Translator translator = Translator.locale(Translation.getLocale(event.getPlayer()));
+		final Translator translator = Translator.locale(event.getPlayer());
 
 		//Get nearby siege
 		Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());

@@ -2,9 +2,7 @@ package com.gmail.goosius.siegewar.hud;
 
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
-import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,7 +19,7 @@ public class SiegeWarHud {
             toggleOn(p, siege);
             return;
         }
-        final Translator translator = Translator.locale(Translation.getLocale(p));
+        final Translator translator = Translator.locale(p);
         board.getObjective("WAR_HUD_OBJ").setDisplayName(SiegeHUDManager.checkLength(ChatColor.GOLD + "§l" + siege.getTown().getName()) + " " + translator.of("hud_title"));
         board.getTeam("siegeType").setSuffix(SiegeHUDManager.checkLength(siege.getSiegeType().getTranslatedName().forLocale(p)));
         board.getTeam("attackers").setSuffix(SiegeHUDManager.checkLength(siege.getAttackerNameForDisplay()));
@@ -42,7 +40,7 @@ public class SiegeWarHud {
     }
 
     public static void toggleOn(Player p, Siege siege) {
-    	final Translator translator = Translator.locale(Translation.getLocale(p));
+    	final Translator translator = Translator.locale(p);
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective objective = board.registerNewObjective("WAR_HUD_OBJ", "", translator.of("hud_title"));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);

@@ -19,6 +19,7 @@ import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockSta
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -170,7 +171,7 @@ public class SiegeWarNationEventListener implements Listener {
 
 		if (event.getFutureState()) {
 			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("msg_err_nation_neutrality_not_supported"));
+			event.setCancelMessage(Translatable.of("msg_err_nation_neutrality_not_supported").forLocale(event.getSender()));
 		}
 	}
 
