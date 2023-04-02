@@ -31,23 +31,24 @@ public class PermsCleanupUtil {
      */
     private static boolean deleteMilitaryPermsFromSheriffRank(CommentedConfiguration townyPermsFile, boolean success) {
         List<String> groupNodes;
+        boolean localSuccess = false;
         // Deleted nodes from the sheriff rank.
         if (TownyPerms.mapHasGroup("towns.ranks.sheriff")) {
             groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.sheriff");
             if (groupNodes.contains("siegewar.town.siege.battle.points")) {
-                success = groupNodes.remove("siegewar.town.siege.battle.points");
+                localSuccess = groupNodes.remove("siegewar.town.siege.battle.points");
             }
             if (groupNodes.contains("siegewar.town.siege.fire.cannon.in.siegezone")) {
-                success = groupNodes.remove("siegewar.town.siege.fire.cannon.in.siegezone");
+                localSuccess = groupNodes.remove("siegewar.town.siege.fire.cannon.in.siegezone");
             }
             if (groupNodes.contains("towny.command.town.rank.guard")) {
-                success = groupNodes.remove("towny.command.town.rank.guard");
+                localSuccess = groupNodes.remove("towny.command.town.rank.guard");
             }
-            if(success) {
+            if(localSuccess) {
                 townyPermsFile.set("towns.ranks.sheriff", groupNodes);
             }
         }
-        return success;
+        return success || localSuccess;
     }
     
     /**
@@ -55,60 +56,63 @@ public class PermsCleanupUtil {
      */
     private static boolean deleteMilitaryPermsFromAssistantRanks(CommentedConfiguration townyPermsFile, boolean success) {
         List<String> groupNodes = null;
+        boolean localSuccess = false;
         if (TownyPerms.mapHasGroup("towns.ranks.assistant")) {
             groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.assistant");
             if (groupNodes.contains("siegewar.town.siege.*")) {
-                success = groupNodes.remove("siegewar.town.siege.*");
+                localSuccess = groupNodes.remove("siegewar.town.siege.*");
             }
         }
         if (TownyPerms.mapHasGroup("nations.ranks.assistant")) {
             groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.assistant");
             if (groupNodes.contains("siegewar.nation.siege.*")) {
-                success = groupNodes.remove("siegewar.nation.siege.*");
+                localSuccess = groupNodes.remove("siegewar.nation.siege.*");
             }
         }
-        if(success) {
+        if(localSuccess) {
             townyPermsFile.set("towns.ranks.sheriff", groupNodes);
         }
-        return success;
+        return success || localSuccess;
     }
     
     private static boolean deleteFireCannonPermFromGuardRank(CommentedConfiguration townyPermsFile, boolean success) {
         List<String> groupNodes;
+        boolean localSuccess = false;
         // Delete nodes from the guard rank.
         if (TownyPerms.mapHasGroup("towns.ranks.guard")) {
             groupNodes = TownyPerms.getPermsOfGroup("towns.ranks.guard");
             if (groupNodes.contains("siegewar.town.siege.fire.cannon.in.siegezone")) {
-                success = groupNodes.remove("siegewar.town.siege.fire.cannon.in.siegezone");
+                localSuccess = groupNodes.remove("siegewar.town.siege.fire.cannon.in.siegezone");
             }
-            if (success) {
+            if (localSuccess) {
                 townyPermsFile.set("towns.ranks.guard", groupNodes);
             }
         }
-        return success;
+        return success || localSuccess;
     }
     
     private static boolean deleteGunnerAndEngineerRanks(CommentedConfiguration townyPermsFile, boolean success) {
+        boolean localSuccess = false;
         if (TownyPerms.mapHasGroup("nations.ranks.gunner")) {
             townyPermsFile.set("nations.ranks.gunner", null);
-            success = true;
+            localSuccess = true;
         }
         if (TownyPerms.mapHasGroup("nations.ranks.engineer")) {
             townyPermsFile.set("nations.ranks.engineer", null);
-            success = true;
+            localSuccess = true;
         }
         if (TownyPerms.mapHasGroup("nations.ranks.general")) {
             List<String> groupNodes = TownyPerms.getPermsOfGroup("nations.ranks.general");
             if (groupNodes.contains("towny.command.nation.rank.engineer")) {
-                success = groupNodes.remove("towny.command.nation.rank.engineer");
+                localSuccess = groupNodes.remove("towny.command.nation.rank.engineer");
             }
             if (groupNodes.contains("towny.command.nation.rank.gunner")) {
-                success = groupNodes.remove("towny.command.nation.rank.gunner");
+                localSuccess = groupNodes.remove("towny.command.nation.rank.gunner");
             }
-            if(success) {
-                townyPermsFile.set("nations.ranks.general", groupNodes);      
+            if(localSuccess) {
+                townyPermsFile.set("nations.ranks.general", groupNodes);
             }
         }
-        return success;
+        return success || localSuccess;
     }
 }
