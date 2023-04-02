@@ -3,15 +3,12 @@ package com.gmail.goosius.siegewar.command;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
-import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.Settings;
-import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
-import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.config.CommentedConfiguration;
@@ -637,11 +634,9 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					return;
 
 				case "end":
-					if (siege.getSiegeBalance() < 1)
-						DefenderTimedWin.defenderTimedWin(siege);
-					else
-						AttackerTimedWin.attackerTimedWin(siege);
+					SiegeController.endSiegeWithTimedWin(siege);
 					return;
+
 				case "setplundered":
 					boolean plundered = Boolean.parseBoolean(args[2]);
 					siege.setTownPlundered(plundered);
@@ -661,7 +656,17 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_set_invade_success", Boolean.toString(invaded).toUpperCase(), town.getName()));
 					return;
 				case "remove":
-					SiegeController.removeSiege(siege, SiegeSide.ATTACKERS);
+					//End siege if it is active
+					if(siege.getStatus().isActive()) {
+						try {
+							SiegeController.endSiegeWithTimedWin(siege);
+						} catch (Exception e) {
+							Messaging.sendMsg(sender, "Problem Ending Siege. Proceeding to Remove."); //Very unlikely. But we catch so that we can proceed to remove
+							e.printStackTrace();
+						}
+					}
+					//Remove siege from system
+					SiegeController.removeSiege(siege);
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_remove_siege_success"));
 					return;
 			}

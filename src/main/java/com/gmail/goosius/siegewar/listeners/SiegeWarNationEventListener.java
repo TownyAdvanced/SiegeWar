@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -81,7 +80,7 @@ public class SiegeWarNationEventListener implements Listener {
 			 * If attacker (which is always a nation) disappears, we must delete the siege
 			 */
 			if (event.getNationUUID() == siege.getAttacker().getUUID()) {
-				SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
+				SiegeController.removeSiege(siege);
 			}
 		}
 

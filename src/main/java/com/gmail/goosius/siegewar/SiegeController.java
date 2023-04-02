@@ -17,7 +17,8 @@ import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.CosmeticUtil;
+import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
+import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.SiegeCampUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
@@ -31,12 +32,10 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
-import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -216,32 +215,37 @@ public class SiegeController {
 		return true;
 	}
 
-	//Remove a particular siege, and all associated data
-	public static void removeSiege(Siege siege, SiegeSide siegeSideToAwardWarchestTo) {
-		//If siege is active, initiate siege immunity for town, and award war chest
-		if(siege.getStatus().isActive()) {
-			siege.setActualEndTime(System.currentTimeMillis());
-			SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown(), siege);
+	/**
+	 * End the given siege
+	 * 
+	 * This method will:
+	 * - End the siege, giving a timed win to whoever the balance currently favours
+	 * - Award the warchest if there is one
+	 * - Generate siege immunity 
+	 * 
+	 * @param siege the siege to end
+	 */
+	public static void endSiegeWithTimedWin(Siege siege) {
+		if (siege.getSiegeBalance() < 1)
+			DefenderTimedWin.defenderTimedWin(siege);
+		else
+			AttackerTimedWin.attackerTimedWin(siege);
+	}
 
-			//Award warchest if siege is not revolt
-			if(!siege.isRevoltSiege()) {
-				if (siegeSideToAwardWarchestTo == SiegeSide.ATTACKERS)
-					SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
-				else if (siegeSideToAwardWarchestTo == SiegeSide.DEFENDERS)
-					SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getDefender());
-			}
-		}
 
-		Town town = siege.getTown();
+	/**
+	 * Remove the given siege from the system, and all associate data
+	 * 
+	 * @param siege the siege
+	 */
+	public static void removeSiege(Siege siege) {
 		//Remove siege from town
+		Town town = siege.getTown();
 		setSiege(town, false);
 		SiegeMetaDataController.removeSiegeMeta(town);
 		//Remove siege from collections
 		townSiegeMap.remove(town.getUUID());
 		siegedTowns.remove(siege.getTown());
-
-		CosmeticUtil.removeFakeBeacons(siege);
-
 		//Save town
 		town.save();
 	}

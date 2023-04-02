@@ -1,14 +1,11 @@
 package com.gmail.goosius.siegewar.tasks;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.playeractions.AbandonAttack;
 import com.gmail.goosius.siegewar.playeractions.SurrenderDefence;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
-import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.SiegeWarBannerControlUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSicknessUtil;
@@ -40,13 +37,9 @@ public class SiegeWarTimerTaskController {
 	private static void evaluateTimedSiegeOutcome(Siege siege) {
 		switch(siege.getStatus()) {
 			case IN_PROGRESS:
-				//If scheduled end time has arrived, choose winner
+				//If scheduled end time has arrived, end siege and choose winner
 				if (System.currentTimeMillis() > siege.getScheduledEndTime()) {
-					if (siege.getSiegeBalance() > 0) {
-						AttackerTimedWin.attackerTimedWin(siege);
-					} else {
-						DefenderTimedWin.defenderTimedWin(siege);
-					}
+					SiegeController.endSiegeWithTimedWin(siege);
 				}
 				break;
 
@@ -64,7 +57,7 @@ public class SiegeWarTimerTaskController {
 				//Siege is inactive i.e. in the 'aftermath' phase
 				//Wait for siege immunity timer to end then delete siege
 				if (System.currentTimeMillis() > TownMetaDataController.getSiegeImmunityEndTime(siege.getTown())) {
-					SiegeController.removeSiege(siege, SiegeSide.NOBODY);
+					SiegeController.removeSiege(siege);
 				}
 		}
 	}

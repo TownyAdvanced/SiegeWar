@@ -5,7 +5,6 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
-import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -18,7 +17,6 @@ import com.palmergames.bukkit.towny.event.NewTownEvent;
 import com.palmergames.bukkit.towny.event.TownAddResidentRankEvent;
 import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
-import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
 import com.palmergames.bukkit.towny.event.time.dailytaxes.PreTownPaysNationTaxEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
@@ -53,7 +51,7 @@ public class SiegeWarTownEventListener implements Listener {
 	public void onTownGoesToRuin(TownRuinedEvent event) {
 		//Remove siege if town has one
 		if (SiegeController.hasSiege(event.getTown()))
-			SiegeController.removeSiege(SiegeController.getSiege(event.getTown()), SiegeSide.ATTACKERS);
+			SiegeController.removeSiege(SiegeController.getSiege(event.getTown()));
 		//Remove occupier if town has one
 		if (SiegeWarTownOccupationUtil.isTownOccupied(event.getTown()))
 			SiegeWarTownOccupationUtil.removeTownOccupation(event.getTown());
@@ -184,7 +182,7 @@ public class SiegeWarTownEventListener implements Listener {
 	@EventHandler
 	public void onDeleteTown(DeleteTownEvent event) {
 		if (SiegeController.hasSiege(event.getTownUUID()))
-			SiegeController.removeSiege(SiegeController.getSiegeByTownUUID(event.getTownUUID()), SiegeSide.ATTACKERS);
+			SiegeController.removeSiege(SiegeController.getSiegeByTownUUID(event.getTownUUID()));
 	}
 
 	@EventHandler
