@@ -290,7 +290,7 @@ public class SiegeWarMoneyUtil {
 	 * @param player claiming the nation refund.
 	 * @throws TownyException when payment cannot be made for various reasons.
 	 */
-	public static void claimNationRefund(Player player) throws TownyException {
+	public static boolean claimNationRefund(Player player) throws TownyException {
 		if (!TownySettings.isUsingEconomy()
 				|| SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() == 0) {
 			throw new TownyException(Translatable.of("msg_err_command_disable"));
@@ -304,6 +304,7 @@ public class SiegeWarMoneyUtil {
 			formerKing.getAccount().deposit(refundAmount, "Nation Refund");
 			ResidentMetaDataController.setNationRefundAmount(formerKing, 0);
 			Messaging.sendMsg(player, Translatable.of("msg_siege_war_nation_refund_claimed", TownyEconomyHandler.getFormattedBalance(refundAmount)));
+			return true;
 		} else {
 			throw new TownyException(Translatable.of("msg_err_siege_war_nation_refund_unavailable"));
 		}
