@@ -689,16 +689,22 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_town_peacefulness_change_success", town.getName(), Boolean.toString(peaceful)));
 					break;
 				case "setoccupied":
-					if(town.hasNation()) {
-						SiegeWarTownOccupationUtil.setTownOccupation(town, town.getNationOrNull());
-						Messaging.sendMsg(sender, Translatable.of("msg_swa_town_occupation_change_success", town.getName()));
+					boolean occupied = Boolean.parseBoolean(args[2]);
+					if(occupied) {
+						if(town.hasNation()) {
+							SiegeWarTownOccupationUtil.setTownOccupation(town, town.getNationOrNull());
+							Messaging.sendMsg(sender, Translatable.of("msg_swa_town_occupation_change_success", town.getName(), occupied));
+							break;
+						} else {
+							Messaging.sendErrorMsg(sender, Translatable.of("msg_err_cannot_set_occupation_without_nation", town.getName()));
+							break;
+						}
 					} else {
-						Messaging.sendErrorMsg(sender, Translatable.of("msg_err_cannot_set_occupation_without_nation", town.getName()));
+						SiegeWarTownOccupationUtil.removeTownOccupation(town);
+						Messaging.sendMsg(sender, Translatable.of("msg_swa_town_occupation_change_success", town.getName(), occupied));
 					}
-					break;
 				default:
 					showSiegeHelp(sender);
-					return;
 			}
 		} else
 			showTownHelp(sender);
