@@ -12,32 +12,19 @@ import org.bukkit.entity.Player;
 
 public class SiegeWarAllegianceUtil {
 
-    public static SiegeSide calculateCandidateSiegePlayerSide(Player deadPlayer, Town deadResidentTown, Siege candidateSiege) {
+    public static SiegeSide calculateSiegePlayerSide(Player player, Town playerTown, Siege siege) {
 
         //Look for defender
-        Government defendingGovernment = candidateSiege.getDefender();
-        switch (candidateSiege.getSiegeType()) {
-            case CONQUEST:
-                //In the above sieges, defenders can be town guards
-                if (isTownGuard(deadPlayer, deadResidentTown, defendingGovernment))
-                    return SiegeSide.DEFENDERS;
-            case REVOLT:
-                //In the above sieges, defenders can be nation/allied soldiers
-                if (isNationSoldierOrAlliedSoldier(deadPlayer, deadResidentTown, defendingGovernment))
-                    return SiegeSide.DEFENDERS;
+        Government besiegedTown = siege.getDefender();
+        if (isTownGuard(player, playerTown, besiegedTown)
+            || isNationSoldierOrAlliedSoldier(player, playerTown, besiegedTown)) {
+            return SiegeSide.DEFENDERS;
         }
 
         //Look for attacker
-        Government attackingGovernment = candidateSiege.getAttacker();
-        switch (candidateSiege.getSiegeType()) {
-            case REVOLT:
-                //In the above sieges, attackers can be town guards
-                if (isTownGuard(deadPlayer, deadResidentTown, attackingGovernment))
-                    return SiegeSide.ATTACKERS;
-            case CONQUEST:
-                //In the above sieges, attackers can be nation/allied soldiers
-                if (isNationSoldierOrAlliedSoldier(deadPlayer, deadResidentTown, attackingGovernment))
-                    return SiegeSide.ATTACKERS;
+        Government attackingNation = siege.getAttacker();
+        if (isNationSoldierOrAlliedSoldier(player, playerTown, attackingNation)) {
+            return SiegeSide.ATTACKERS;
         }
         return SiegeSide.NOBODY;
     }

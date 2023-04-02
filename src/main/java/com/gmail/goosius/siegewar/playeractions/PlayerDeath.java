@@ -112,7 +112,7 @@ public class PlayerDeath {
 				continue;
 
 			//Is player an attacker or defender in this siege?
-			if(SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(deadPlayer, deadResidentTown, candidateSiege) == SiegeSide.NOBODY)
+			if(SiegeWarAllegianceUtil.calculateSiegePlayerSide(deadPlayer, deadResidentTown, candidateSiege) == SiegeSide.NOBODY)
 				continue;
 
 			//Set nearestSiege if it is 1st viable one OR closer than smallestDistanceToSiege.
@@ -149,7 +149,7 @@ public class PlayerDeath {
 		//No penalty points without an active battle session
 		if (BattleSession.getBattleSession().isActive()) {
 			SiegeWarScoringUtil.awardPenaltyPoints(
-					SiegeWarAllegianceUtil.calculateCandidateSiegePlayerSide(deadPlayer, deadResidentTown, siege) == SiegeSide.ATTACKERS,
+					SiegeWarAllegianceUtil.calculateSiegePlayerSide(deadPlayer, deadResidentTown, siege) == SiegeSide.ATTACKERS,
 					deadPlayer,
 					siege);
 		}

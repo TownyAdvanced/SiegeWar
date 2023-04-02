@@ -32,7 +32,7 @@ public class AbandonAttack {
 		if(!SiegeWarSettings.getWarSiegeAbandonEnabled())
 			throw new TownyException(Translatable.of("msg_err_action_disable"));
 
-		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.getPermissionNodeToAbandonAttack(siege.getSiegeType())))
+		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ABANDON.getNode()))
 			throw new TownyException(Translatable.of("msg_err_action_disable"));
 
 		Confirmation
@@ -57,19 +57,9 @@ public class AbandonAttack {
 
 	private static Translatable getAbandonMessage(Siege siege, long timeUntilAbandonConfirmation) {
 		String key = String.format("msg_%s_siege_attacker_abandon", siege.getSiegeType().toLowerCase());
-		Translatable message = null;
-		switch (siege.getSiegeType()) {
-			case CONQUEST:
-				message = Translatable.of(key,
-						siege.getTown().getName(),
-						siege.getAttacker().getName());
-				break;
-			case REVOLT:
-				message = Translatable.of(key,
-						siege.getTown().getName(),
-						siege.getDefender().getName());
-				break;
-		}
+		Translatable message = Translatable.of(key,
+				siege.getTown().getName(),
+				siege.getAttacker().getName());
 
 		if (timeUntilAbandonConfirmation > 0) {
 			message.append(Translatable.of("msg_pending_defender_victory", TimeMgmt.getFormattedTimeValue(timeUntilAbandonConfirmation)));

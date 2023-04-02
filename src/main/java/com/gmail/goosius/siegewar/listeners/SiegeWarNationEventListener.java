@@ -77,24 +77,11 @@ public class SiegeWarNationEventListener implements Listener {
 		 * Adjust sieges if needed
 		 */
 		for (Siege siege : SiegeController.getSieges()) {
-			switch(siege.getSiegeType()) {
-				case CONQUEST:
-					/*
-					 * If attacker (which is a nation) disappears, we must delete the siege
-					 */
-					if(event.getNationUUID() == siege.getAttacker().getUUID()) {
-						SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
-					}
-					break;
-				case REVOLT:
-					/*
-					 * Revolt
-					 * If defender (which is a nation) disappears, we must delete the siege
-					 */
-					if (event.getNationUUID() == siege.getDefender().getUUID()) {
-						SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
-					}
-				break;
+			/*
+			 * If attacker (which is always a nation) disappears, we must delete the siege
+			 */
+			if (event.getNationUUID() == siege.getAttacker().getUUID()) {
+				SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
 			}
 		}
 
