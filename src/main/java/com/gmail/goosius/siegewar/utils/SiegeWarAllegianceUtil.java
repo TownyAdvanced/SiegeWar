@@ -27,7 +27,6 @@ public class SiegeWarAllegianceUtil {
         if (isNationSoldierOrAlliedSoldier(player, playerTown, attackingNation)) {
             return SiegeSide.ATTACKERS;
         }
-
         return SiegeSide.NOBODY;
     }
 

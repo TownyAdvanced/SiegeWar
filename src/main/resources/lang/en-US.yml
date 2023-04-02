@@ -498,7 +498,6 @@ msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert thi
 msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying nation of %s, and declared themselves free to choose their own destiny. A REVOLT SIEGE has begun!'
 
 #war sickness
-
 msg_you_will_get_sickness: '&cYou are not an official participant of this siege and cannot be in the Siege Zone. Please leave or you will receive war sickness in %s seconds.'
 msg_you_received_war_sickness: '&cYou are not an official participant of this siege and cannot be in the Siege Zone. Please leave to remove the war sickness. Common causes of war sickness: Not having a military rank or not being allied to either side.'
 
