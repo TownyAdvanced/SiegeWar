@@ -51,10 +51,9 @@ public class SiegeWarTownOccupationUtil {
     }
 
     public static void setTownOccupation(Town targetTown, @NotNull Nation occupyingNation) {
-        //Remove the town from its existing nation, if it has one
-		Nation existingNation = null;
-		if(targetTown.hasNation()) {
-			existingNation = targetTown.getNationOrNull();
+        //If the town has a nation which is different than the incoming one, remove town from nation
+		Nation existingNation = targetTown.getNationOrNull();
+		if(existingNation != null && existingNation != occupyingNation) {
 			targetTown.removeNation();
 		}
 
@@ -76,7 +75,7 @@ public class SiegeWarTownOccupationUtil {
 		//Save data
 		targetTown.save();
 		occupyingNation.save();
-		if(existingNation != null) {
+		if(existingNation != null && existingNation != occupyingNation) {
 			existingNation.save();
 		}
     }

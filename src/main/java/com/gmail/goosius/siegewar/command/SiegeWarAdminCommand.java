@@ -702,6 +702,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					} else {
 						SiegeWarTownOccupationUtil.removeTownOccupation(town);
 						Messaging.sendMsg(sender, Translatable.of("msg_swa_town_occupation_change_success", town.getName(), occupied));
+						break;
 					}
 				default:
 					showSiegeHelp(sender);
