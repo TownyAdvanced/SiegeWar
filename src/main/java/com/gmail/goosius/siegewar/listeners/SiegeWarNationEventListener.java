@@ -84,6 +84,7 @@ public class SiegeWarNationEventListener implements Listener {
 				SiegeController.removeSiege(siege, SiegeSide.DEFENDERS);
 			}
 		}
+		
 		//Award nation refund
 		event.getNationUUID();
 		Resident king = event.getLeader();

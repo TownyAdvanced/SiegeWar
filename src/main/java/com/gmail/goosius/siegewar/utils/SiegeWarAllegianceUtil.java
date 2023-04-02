@@ -21,13 +21,13 @@ public class SiegeWarAllegianceUtil {
             || isNationSoldierOrAlliedSoldier(player, playerTown, besiegedTown)) {
             return SiegeSide.DEFENDERS;
         }
-        
+
         //Look for attacker
         Government attackingNation = siege.getAttacker();
         if (isNationSoldierOrAlliedSoldier(player, playerTown, attackingNation)) {
             return SiegeSide.ATTACKERS;
         }
-        
+
         return SiegeSide.NOBODY;
     }
 

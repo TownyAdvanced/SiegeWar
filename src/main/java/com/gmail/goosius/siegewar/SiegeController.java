@@ -163,7 +163,7 @@ public class SiegeController {
 		//Set attacker and defender
 		siege.setAttacker(nation);
 		siege.setDefender(town);
-		
+
 		//Load Status
 		if (SiegeMetaDataController.getSiegeStatus(town).isEmpty())
 			return false;

@@ -30,7 +30,7 @@ public class AttackerTimedWin {
                 break;
             case REVOLT:
                 message = Translatable.of(key,
-                        siege.getTown().getName(),           
+                        siege.getTown().getName(),
                         siege.getAttacker().getName());
                 break;
         }

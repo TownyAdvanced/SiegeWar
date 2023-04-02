@@ -91,7 +91,7 @@ permissions:
             siegewar.town.siege.battle.points: true
             siegewar.town.siege.startrevoltsiege: true
             siegewar.town.siege.surrender: true
-    
+
     siegewar.command.siegewar.collect:
         description: User is able to do the /siegewar collect command.
         default: true
