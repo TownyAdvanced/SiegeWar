@@ -18,6 +18,7 @@ import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
+import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 import com.gmail.goosius.siegewar.utils.SiegeCampUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
@@ -120,14 +121,17 @@ public class SiegeController {
 	}
 
 	public static void loadSiegeList() {
-		for (Town town : TownyUniverse.getInstance().getTowns())
+		for (Town town : TownyUniverse.getInstance().getTowns()) {
 			if (SiegeMetaDataController.hasSiege(town)) {
 				SiegeWar.info("Siege List Data: Found siege in Town " + town.getName());
-				newSiege(town);
 
-				setSiege(town, true);
-
+				//Migration support. Only if this method returns true, do we load.
+				if (!DataCleanupUtil.handleLegacySiegeAndCheckForLoad(town)) {
+					newSiege(town);
+					setSiege(town, true);
+				}
 			}
+		}
 	}
 
 	public static boolean loadSieges() {

@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.metadata;
 
+import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
@@ -207,5 +208,7 @@ public class TownMetaDataController {
 		if (town.hasMeta(sdf.getKey())) {
 			town.removeMetaData(sdf);
 		}
+		//Completely delete sieges of types suppression, liberation, and revolt
+		SiegeMetaDataController.removeSiegeMeta(town);
 	}
 }
