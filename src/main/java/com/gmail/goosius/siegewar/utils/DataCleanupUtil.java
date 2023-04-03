@@ -148,7 +148,7 @@ public class DataCleanupUtil {
      *             
      * @return true if we should load the given siege
      */
-    public static boolean handleLegacySiegeAndCheckForLoad(Town town) {
+    public static boolean handleLegacySiegeDataAndCheckForLoad(Town town) {
         try {
             String siegeType = SiegeMetaDataController.getSiegeType(town);
             switch (siegeType.toLowerCase()) {
