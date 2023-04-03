@@ -135,7 +135,7 @@ msg_na: 'N/A'
 status_town_siege_status_siege_balance: '&2 > Số tiền: &a%d'
 status_town_siege_status_warchest: '&2 > Rương chiến tranh: &a%s'
 #Battle sessions
-status_town_siege_battle: '&2Trận đánh'
+status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&2 > Thời gian còn lại: &a%s'
 msg_war_siege_battle_session_started: "&bMột phiên chiến đấu mới đã bắt đầu."
 msg_war_siege_battle_session_ended_with_battles: "&bTrận đấu hiện tại đã kết thúc. Các đội sau đây đã giành chiến thắng trong trận chiến của họ:"
