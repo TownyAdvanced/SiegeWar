@@ -303,9 +303,6 @@ msg.installation.complete: "Installation Complete."
 #Added in 0.41
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To avoid War Sickness, leave the Siege-Zone immediately.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cKriegsallergie aktiv. Um diesen Effekt zu entfernen, verlasse die Belagerungszone umgehend.'
-#Added in 0.42
-msg_siege_zone_proximity_warning_with_logout_risk: "&cWARNING: You are in a Siege-Zone!. PVP protections are disabled here. You will be killed if you logout while in the Siege-Zone."
-msg_player_killed_for_logging_out_in_siege_zone: "%s was killed because they logged out while in a Siege-Zone."
 #Added in 0.43
 msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cWhile the siege assembly is in progress you cannot destroy the siege banner or the block it is attached to."
 msg_err_cannot_alter_blocks_near_siege_banner: 'You cannot place/destroy blocks at this location near the Siege Banner.'
