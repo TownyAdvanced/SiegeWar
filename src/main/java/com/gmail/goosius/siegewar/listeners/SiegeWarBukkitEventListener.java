@@ -197,12 +197,10 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 	@EventHandler
 	public void on(PlayerJoinEvent event) {
-		if(isSWEnabledAndIsThisAWarAllowedWorld(event.getPlayer().getWorld())) {
-		    Siege siegeAtPlayerLocation = SiegeController.getActiveSiegeAtLocation(event.getPlayer().getLocation());
-		    if(siegeAtPlayerLocation != null) {
-		    	SiegeWarDistanceUtil.registerPlayerToActiveSiegeZone(event.getPlayer(), siegeAtPlayerLocation);
-		    	SiegeWarNotificationUtil.warnPlayerOfActiveSiegeDanger(event.getPlayer(), siegeAtPlayerLocation);
-			}
+		if (isSWEnabledAndIsThisAWarAllowedWorld(event.getPlayer().getWorld())) {
+			Siege activeSiegeAtPlayerLocation = SiegeController.getActiveSiegeAtLocation(event.getPlayer().getLocation());
+			SiegeWarDistanceUtil.registerPlayerToActiveSiegeZone(event.getPlayer(), activeSiegeAtPlayerLocation);
+			SiegeWarNotificationUtil.sendSiegeZoneProximityWarning(event.getPlayer(), activeSiegeAtPlayerLocation);
 		}
 	}
 

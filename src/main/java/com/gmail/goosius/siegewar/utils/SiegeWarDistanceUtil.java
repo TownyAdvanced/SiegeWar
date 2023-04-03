@@ -21,7 +21,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -34,21 +33,23 @@ import java.util.HashMap;
 public class SiegeWarDistanceUtil {
 
 	/**
-	 * List of players registered to active siege zones
+	 * This is a cached record of players in active siege zones
 	 *
-	 * - Every short tick (20 secs), players are registered/de-registered as appropriate.
+	 * We cache these records to save processor power
+	 *   - Example:
+	 *     - For frequent events like PVP events, 
+	 *     - we can avoid having to frequently calculate the distance to siege banners.
+	 * 
+	 * Every short tick (20 secs), players are registered/de-registered as appropriate.
 	 *   - In an active SiegeZone = registered
 	 *   - Not in an active SiegeZone = de-registered
 	 *
-	 * - Also when a player logs in they are registered/re-registered if appropriate.
+	 * When a player logs in they are registered/re-registered if appropriate.
 	 *
-	 * - This list & associated methods are good for PVP events, which occur frequently and rapidly
-	 * - For infrequent events (like deaths), it is appropriate to use more precise methods.
+	 * if a player enters or leaves a Siege-Zone, this map is not immediately updated.
+	 * This can very occasionally cause players to be pvp protected/unprotected in inappropriate locations
 	 * 
-	 * Besides login, if a player enters or leaves a Siege-Zone, this map is not immediately updated.
-	 * This can occasionally cause players to be pvp protected/unprotected in inappropriate locations
-	 * But the really critical mechanism of keep-inventory will still function as expected,
-	 * because it precisely calculates player-location at the moment of death (all in the TownyCombat plugin code).
+	 * Note that for player deaths, this cache is NOT used, and a full distance check is done.
 	 */
 	private static Map<Player, Siege> playersRegisteredToActiveSiegeZones = new HashMap<>();
 
@@ -68,20 +69,12 @@ public class SiegeWarDistanceUtil {
 				playersRegisteredToActiveSiegeZones.put(player, siege);
 		}
 	}
-	
-	/**
-	 * Returns null if player is not in an active Siege-Zone
-	 */
-	@Nullable
-	public static Siege getActiveSiegeZoneWherePlayerIsRegistered(Player player) {
-		return playersRegisteredToActiveSiegeZones.get(player);
-	}
 
 	/**
 	 * This method returns true if the given location is in an active siegezone
 	 *
 	 * @param location the target location
-	 * @return true is location is in an active siegezone
+	 * @return true if player is in an active siegezone
 	 */
 	public static boolean isLocationInActiveSiegeZone(Location location) {
 		for(Siege siege: SiegeController.getSieges()) {

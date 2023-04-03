@@ -63,7 +63,6 @@ public class Siege {
 	private int attackerBattlePoints;
 	private int defenderBattlePoints;
 	private int numberOfBannerControlReversals;
-	private Set<Player> playersWhoWereInTheSiegeZone;
 	
 	public Siege(Town town) {
 		this.town = town;
@@ -82,7 +81,6 @@ public class Siege {
 		attackerBattlePoints = 0;
 		defenderBattlePoints = 0;
 		numberOfBannerControlReversals = 0;
-		playersWhoWereInTheSiegeZone = new HashSet<>();
     }
 
     public Town getTown() {
@@ -465,18 +463,6 @@ public class Siege {
 
 	public void setNumberOfBannerControlReversals(int numberOfBannerControlReversals) {
 		this.numberOfBannerControlReversals = numberOfBannerControlReversals;
-	}
-
-	public void clearPlayersWhoWereInTheSiegeZone() {
-		playersWhoWereInTheSiegeZone.clear();
-	}
-
-	public Set<Player> getPlayersWhoWereInTheSiegeZone() {
-		return playersWhoWereInTheSiegeZone;
-	}
-
-	public void addPlayerWhoWasInTheSiegeZone(Player player) {
-		playersWhoWereInTheSiegeZone.add(player);
 	}
 
 }
