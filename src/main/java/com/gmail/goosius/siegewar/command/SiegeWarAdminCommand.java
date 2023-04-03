@@ -655,15 +655,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_set_invade_success", Boolean.toString(invaded).toUpperCase(), town.getName()));
 					return;
 				case "remove":
-					//End siege if it is active
-					if(siege.getStatus().isActive()) {
-						try {
-							SiegeController.endSiegeWithTimedWin(siege);
-						} catch (Exception e) {
-							Messaging.sendMsg(sender, "Problem Ending Siege. Proceeding to Remove."); //Very unlikely. But we catch so that we can proceed to remove
-							e.printStackTrace();
-						}
-					}
 					//Remove siege from system
 					SiegeController.removeSiege(siege);
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_remove_siege_success"));

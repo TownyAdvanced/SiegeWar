@@ -12,6 +12,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
@@ -21,6 +22,7 @@ import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.SiegeCampUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Government;
@@ -232,13 +234,36 @@ public class SiegeController {
 			AttackerTimedWin.attackerTimedWin(siege);
 	}
 
+	/**
+	 * End the given siege with no winner
+	 * This is useful for drastic situations such as "swa siege remove", or town/nation deletion 
+	 * 
+	 * @param siege
+	 */
+	private static void endSiegeWithNoWinner(Siege siege) {
+		siege.setSiegeWinner(SiegeSide.NOBODY);
+		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege, SiegeStatus.UNKNOWN);
+		if(siege.getSiegeType() == SiegeType.CONQUEST) {
+			SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
+		}
+	}
 
 	/**
 	 * Remove the given siege from the system, and all associate data
+	 * Ensure that the siege is ended before calling this method
 	 * 
 	 * @param siege the siege
 	 */
 	public static void removeSiege(Siege siege) {
+		//End siege if it is not already ended
+		if(siege.getStatus().isActive()) {
+			try {
+				endSiegeWithNoWinner(siege);
+			} catch (Exception e) {
+				SiegeWar.severe("Problem Ending Siege. Proceeding to Remove."); //Very unlikely. But we catch so that we can proceed to remove
+				e.printStackTrace();
+			}
+		}
 		//Remove siege from town
 		Town town = siege.getTown();
 		setSiege(town, false);
