@@ -158,10 +158,10 @@ public class SiegeController {
 			siege.setSiegeType(SiegeType.parseString(siegeTypeString));
 
 		//Get nation
-		String nationUUID = SiegeMetaDataController.getAttackerUUID(town);
+		UUID nationUUID = SiegeMetaDataController.getAttackerUUID(town);
 		if (nationUUID == null)
 			return false;
-		Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(nationUUID));
+		Nation nation = TownyAPI.getInstance().getNation(nationUUID);
 		if (nation == null)
 			return false;
 

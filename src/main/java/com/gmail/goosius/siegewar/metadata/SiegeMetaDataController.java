@@ -11,6 +11,8 @@ import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
 
+import java.util.UUID;
+
 /**
  * 
  * 
@@ -68,10 +70,10 @@ public class SiegeMetaDataController {
 	}
 
 	@Nullable
-	public static String getAttackerUUID(Town town) {
+	public static UUID getAttackerUUID(Town town) {
 		StringDataField sdf = (StringDataField) siegeAttackerUUID.clone();
 		if (town.hasMeta(sdf.getKey()))
-			return MetaDataUtil.getString(town, sdf);
+			return UUID.fromString(MetaDataUtil.getString(town, sdf));
 		return null;
 	}
 

@@ -18,6 +18,7 @@ import com.palmergames.bukkit.towny.object.Translation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * This class deals with everything related to data cleanup, including:
@@ -165,9 +166,9 @@ public class DataCleanupUtil {
                     SiegeWar.info("Data Migration: Not loading siege on " + town.getName() + ", because its type was legacy: " + siegeType + ".");
                     return false;
                 case "revolt":
-                    String attackerUUID = SiegeMetaDataController.getAttackerUUID(town);
-                    String townUUID = town.getUUID().toString();
-                    if(attackerUUID.equalsIgnoreCase(townUUID)) {
+                    UUID attackerUUID = SiegeMetaDataController.getAttackerUUID(town);
+                    UUID townUUID = town.getUUID();
+                    if(attackerUUID.equals(townUUID)) {
                         SiegeWar.info("Data Migration: Not loading siege on " + town.getName() + ", because its format was a legacy revolt siege.");
                         return false;
                     } else {

@@ -11,6 +11,8 @@ import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
+
 /**
  * 
  * @author LlmDl
@@ -187,8 +189,8 @@ public class TownMetaDataController {
 		return MetaDataUtil.hasMeta(town, legacyDataOccupyingNationUUID);
 	}
 
-	public static String getLegacyOccupierUUID(Town town) {
-		return MetaDataUtil.getString(town, legacyDataOccupyingNationUUID);
+	public static UUID getLegacyOccupierUUID(Town town) {
+		return UUID.fromString(MetaDataUtil.getString(town, legacyDataOccupyingNationUUID));
 	}
 
 	public static void deleteLegacyMetadata(Town town) {
