@@ -135,7 +135,7 @@ msg_na: 'N/A'
 status_town_siege_status_siege_balance: '&2 > Kontostand: &a%d'
 status_town_siege_status_warchest: '&2 > Kriegskiste: &a%s'
 #Battle sessions
-status_town_siege_battle: '&2Kampf'
+status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&2 > Zeit verbleibend: &a%s'
 msg_war_siege_battle_session_started: "&bA neue Kampfrunde hat angefangen."
 msg_war_siege_battle_session_ended_with_battles: "&bDie Kampfrunde ist nun zuende. Folgende Teams haben ihre Kämpfe gewonnen:"
