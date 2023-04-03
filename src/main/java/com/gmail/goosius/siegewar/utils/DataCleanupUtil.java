@@ -177,10 +177,9 @@ public class DataCleanupUtil {
                     return false; //Unknown siege type
             }
         } catch (Exception e) {
-            SiegeWar.severe("Problem Migrating Siege on " + town.getName());
-            SiegeWar.severe("Now deleting Siege on " + town.getName());
+            SiegeWar.info("Problem Migrating Siege on " + town.getName());
+            SiegeWar.info("Now deleting Siege on " + town.getName());
             SiegeMetaDataController.removeSiegeMeta(town);
-            e.printStackTrace();
             return false;
         }
     }
