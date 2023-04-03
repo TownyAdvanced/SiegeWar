@@ -135,7 +135,7 @@ msg_na: 'N/A'
 status_town_siege_status_siege_balance: '&2 > Saldo: &a%d'
 status_town_siege_status_warchest: '&2 > Cofre de Guerra: &a%s'
 #Battle sessions
-status_town_siege_battle: '&2Batalla'
+status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&2 > Tiempo Restante: &a%s'
 msg_war_siege_battle_session_started: "&bUna nueva sesión de batalla ha comenzado."
 msg_war_siege_battle_session_ended_with_battles: "&bLa sesión de batalla actual ha terminado. Los siguientes bandos ganaron sus batallas:"
