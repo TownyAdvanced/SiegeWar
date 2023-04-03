@@ -135,7 +135,7 @@ msg_na: 'BİLİNMİYOR'
 status_town_siege_status_siege_balance: '&8-&7 Kasaba Bankası: &a%d'
 status_town_siege_status_warchest: '&8-&7 Ganimet Sandığı: &a%s'
 #Battle sessions
-status_town_siege_battle: '&cSavaş'
+status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&8-&7 Kalan Süre: &a%s'
 msg_war_siege_battle_session_started: "&7Yeni bir savaş aşaması başladı."
 msg_war_siege_battle_session_ended_with_battles: "&7Az önceki savaş aşamassı bitti. Şu taraflar kazandı:"
