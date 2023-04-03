@@ -82,15 +82,8 @@ public class SiegeWarBannerControlUtil {
 
 				SiegeSide siegeSide = SiegeWarAllegianceUtil.calculateSiegePlayerSide(player, resident.getTown(), siege);
 
-				switch(siegeSide) {
-					case ATTACKERS:
-						addNewBannerControlSession(siege, player, resident, SiegeSide.ATTACKERS);
-						break;
-					case DEFENDERS:
-						addNewBannerControlSession(siege, player, resident, SiegeSide.DEFENDERS);
-						break;
-					case NOBODY:
-						continue;
+				if(siegeSide != SiegeSide.NOBODY) {
+					addNewBannerControlSession(siege, player, resident, siegeSide);
 				}
 			}
 		} catch (Exception e) {
@@ -174,7 +167,7 @@ public class SiegeWarBannerControlUtil {
 		if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
 				&& player.getLocation().getY() < siege.getFlagLocation().getY() - 0.5) {
 			/*
-			 * Player is below the siege banner block
+			 * Player is at, or above, the height of the siege banner block
 			 * We allow 0.5 blocks of leniency here,
 			 * Because otherwise, half-blocks and dirt paths can cause confusion,
 			 * because although players might think they are at the banner altitude,
@@ -351,7 +344,10 @@ public class SiegeWarBannerControlUtil {
 
 	/**
 	 * Given a list of sessions, grant glowing to the session with the lowest timer.
-	 * Ensure all others do NOT glow.
+	 * Ensure all others do NOT glow. 
+	 * 
+	 * This is mainly to help with performance, 
+	 * but it also has an interesting effect that the opposition sees a primary target.
 	 *
 	 * @param sessions given list of sessions.
 	 */
