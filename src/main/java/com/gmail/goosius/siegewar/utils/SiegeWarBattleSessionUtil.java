@@ -133,7 +133,6 @@ public class SiegeWarBattleSessionUtil {
 				siege.setAttackerBattlePoints(0);
 				siege.setDefenderBattlePoints(0);
 				siege.setNumberOfBannerControlReversals(0);
-				siege.clearPlayersWhoWereInTheSiegeZone();
 
 				//Save siege to database
 				SiegeController.saveSiege(siege);

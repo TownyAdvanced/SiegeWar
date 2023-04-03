@@ -197,11 +197,17 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 	@EventHandler
 	public void on(PlayerJoinEvent event) {
-		if(isSWEnabledAndIsThisAWarAllowedWorld(event.getPlayer().getWorld())) {
-		    Siege siegeAtPlayerLocation = SiegeController.getActiveSiegeAtLocation(event.getPlayer().getLocation());
-		    if(siegeAtPlayerLocation != null) {
-		    	SiegeWarDistanceUtil.registerPlayerToActiveSiegeZone(event.getPlayer(), siegeAtPlayerLocation);
-		    	SiegeWarNotificationUtil.warnPlayerOfActiveSiegeDanger(event.getPlayer(), siegeAtPlayerLocation);
+		if (isSWEnabledAndIsThisAWarAllowedWorld(event.getPlayer().getWorld())) {
+			Siege activeSiegeAtPlayerLocation = SiegeController.getActiveSiegeAtLocation(event.getPlayer().getLocation());
+			if(activeSiegeAtPlayerLocation != null) {
+				//Register in active siege zone, for PVP calculations etc.
+				SiegeWarDistanceUtil.registerPlayerToActiveSiegeZone(event.getPlayer(), activeSiegeAtPlayerLocation);
+				/* 
+				 * Send active siege warning.
+				 * Note: The player object will be new, even if the player logged in recently.
+				 * Thus, this line will always trigger a warning message.
+				 */
+				SiegeWarNotificationUtil.sendSiegeZoneProximityWarning(event.getPlayer(), activeSiegeAtPlayerLocation);
 			}
 		}
 	}

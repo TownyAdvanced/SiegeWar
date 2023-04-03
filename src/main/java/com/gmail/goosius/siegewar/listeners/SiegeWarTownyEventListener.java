@@ -120,6 +120,7 @@ public class SiegeWarTownyEventListener implements Listener {
     public void onNewHour(NewHourEvent event) {
         if(SiegeWarSettings.getWarSiegeEnabled()) {
             SiegeWarImmunityUtil.evaluateExpiredImmunities();
+            SiegeWarNotificationUtil.clearSiegeZoneProximityWarningsReceived();
         }
     }
 
@@ -129,6 +130,7 @@ public class SiegeWarTownyEventListener implements Listener {
     @EventHandler
     public void onShortTime(NewShortTimeEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled()) {
+            SiegeWarNotificationUtil.sendSiegeZoneProximityWarnings();
             SiegeWarTimerTaskController.evaluateBattleSessions();
             SiegeWarDistanceUtil.recalculatePlayersRegisteredToActiveSiegeZones();
             SiegeWarTimerTaskController.evaluateWarSickness();
@@ -136,7 +138,6 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeWarTimerTaskController.evaluateTimedSiegeOutcomes();
             SiegeHUDManager.updateHUDs();
             SiegeWarTimerTaskController.evaluateBeacons();
-            SiegeWarNotificationUtil.warnAllPlayersOfSiegeDanger();
         }
     }
 
