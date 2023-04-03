@@ -74,7 +74,7 @@ public class SiegeWarDistanceUtil {
 	 * This method returns true if the given location is in an active siegezone
 	 *
 	 * @param location the target location
-	 * @return true if player is in an active siegezone
+	 * @return true if location is in an active siegezone
 	 */
 	public static boolean isLocationInActiveSiegeZone(Location location) {
 		for(Siege siege: SiegeController.getSieges()) {
