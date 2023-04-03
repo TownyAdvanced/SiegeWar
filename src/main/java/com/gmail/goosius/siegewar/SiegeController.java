@@ -298,6 +298,19 @@ public class SiegeController {
 	}
 
 	/**
+	 * Get the active siege at the given player's location
+	 * If more than one active siege is found, return the closest one
+	 * If no active sieges are found, return null
+	 *
+	 * @param player Given player
+	 * @return active siege at player's location
+	 */
+	@Nullable
+	public static Siege getActiveSiegeAtLocation(Player player) {
+		return getActiveSiegeAtLocation(player.getLocation());
+	}
+
+	/**
 	 * Get the active siege at the given location
 	 * If more than one active siege is found, return the closest one
 	 * If no active sieges are found, return null

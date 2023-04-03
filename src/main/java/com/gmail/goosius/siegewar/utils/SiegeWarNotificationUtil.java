@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -11,11 +12,64 @@ import com.palmergames.bukkit.towny.object.Translatable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class SiegeWarNotificationUtil {
+
+	/**
+	 * This is a record of which players have received proximity siege zone warnings
+	 */
+	private static Map<Player, Set<Siege>> siegeZoneProximityWarningsReceivedMap = new HashMap<>();
+
+	/**
+	 * Send all siegezone proximity warnings
+	 * 
+	 * Each player in an active siegezone gets a warning
+	 * 
+	 * A player is not warned if they are already on the warningsReceived map
+	 * The warningsReceived map is cleared every hour
+	 * 
+	 */
+	public static void sendSiegeZoneProximityWarnings() {
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			sendSiegeZoneProximityWarning(player);
+		}
+	}
+
+	public static void sendSiegeZoneProximityWarning(Player player) {
+		Siege activeSiegeAtPlayerLocation = SiegeController.getActiveSiegeAtLocation(player);
+		if (activeSiegeAtPlayerLocation != null) {
+			sendSiegeZoneProximityWarning(player, activeSiegeAtPlayerLocation);
+		}
+	}
+
+	public static void sendSiegeZoneProximityWarning(Player player, @NotNull Siege activeSiegeAtPlayerLocation) {
+		//Check if player is on warnings-received map
+		if (!siegeZoneProximityWarningsReceivedMap.containsKey(player)) {
+			//Player is not on the warnings-received map
+			Set<Siege> warningsReceivedSet = new HashSet<>();
+			warningsReceivedSet.add(activeSiegeAtPlayerLocation);
+			siegeZoneProximityWarningsReceivedMap.put(player, warningsReceivedSet);
+			Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning"));
+		} else {
+			//Player is already on the warnings-receieved map
+			Set<Siege> warningsReceivedSet = siegeZoneProximityWarningsReceivedMap.get(player);
+			if (!warningsReceivedSet.contains(activeSiegeAtPlayerLocation)) {
+				//Player has not received a warning for this siege
+				warningsReceivedSet.add(activeSiegeAtPlayerLocation);
+				Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning"));
+			}
+		}
+	}
+
+	public static void clearSiegeZoneProximityWarningsReceived() {
+		siegeZoneProximityWarningsReceivedMap.clear();
+	}
 
 	public static void informSiegeParticipants(Siege siege, Translatable... message) {
 
@@ -101,24 +155,4 @@ public class SiegeWarNotificationUtil {
 		return false;
 	}
 
-
-	/**
-	 * Warn player who we know is in an active siege zones
-	 * @param player player
-	 * @param siege siege
-	 */
-	public static void warnPlayerOfActiveSiegeDanger(Player player, Siege siege) {
-		if(!siege.getPlayersWhoWereInTheSiegeZone().contains(player)) {
-			Messaging.sendErrorMsg(player, Translatable.of("msg_siege_zone_proximity_warning"));
-			siege.addPlayerWhoWasInTheSiegeZone(player);
-		}
-	}
-
-	public static void warnAllPlayersOfSiegeDanger() {
-		for(Player player: Bukkit.getOnlinePlayers()) {
-			Siege siege = SiegeWarDistanceUtil.getActiveSiegeZoneWherePlayerIsRegistered(player);
-			if(siege != null)
-				warnPlayerOfActiveSiegeDanger(player, siege); 
-		}
-	}
 }
