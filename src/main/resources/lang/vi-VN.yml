@@ -303,9 +303,6 @@ msg.installation.complete: "Việc cài đặt đã hoàn tất."
 #Added in 0.41
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cLà một cư dân của thị trấn yên bình, bạn không thể dễ dàng vượt qua các Khu vực bị bao vây. Để tránh Bệnh Chiến tranh, hãy rời khỏi Khu vực chiến sự ngay lập tức.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cLà một cư dân của thị trấn yên bình, bạn không thể dễ dàng vượt qua các Khu vực bị bao vây. Để tránh Bệnh Chiến tranh, hãy rời khỏi Khu vực chiến sự ngay lập tức.'
-#Added in 0.42
-msg_siege_zone_proximity_warning_with_logout_risk: "&cCẢNH BÁO: Bạn đang ở trong Khu vực bị bao vây!. PVP luôn được kích hoạt ở đây. Bạn sẽ bị giết nếu đăng xuất khi đang ở trong Khu vực chiến sự."
-msg_player_killed_for_logging_out_in_siege_zone: "%s đã bị giết vì họ đã đăng xuất khi đang ở trong Khu vực bị bao vây."
 #Added in 0.43
 msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cTrong khi quá trình tập hợp quân đội đang diễn ra, bạn không thể phá hủy biểu ngữ bao vây hoặc khối được gắn vào."
 msg_err_cannot_alter_blocks_near_siege_banner: 'Bạn không thể đặt/phá hủy các khối ở vị trí này vì chúng nằm gần Biểu ngữ bao vây.'
