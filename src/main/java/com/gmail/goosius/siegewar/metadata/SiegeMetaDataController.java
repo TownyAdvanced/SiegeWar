@@ -70,10 +70,10 @@ public class SiegeMetaDataController {
 	}
 
 	@Nullable
-	public static UUID getAttackerUUID(Town town) {
+	public static String getAttackerUUID(Town town) {
 		StringDataField sdf = (StringDataField) siegeAttackerUUID.clone();
 		if (town.hasMeta(sdf.getKey()))
-			return UUID.fromString(MetaDataUtil.getString(town, sdf));
+			return MetaDataUtil.getString(town, sdf);
 		return null;
 	}
 

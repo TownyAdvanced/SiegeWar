@@ -158,7 +158,8 @@ public class DataCleanupUtil {
                 case "liberation":
                 case "suppression":
                     if (TownyEconomyHandler.isActive()) {
-                        Nation attacker = TownyAPI.getInstance().getNation(SiegeMetaDataController.getAttackerUUID(town));
+                        UUID attackerUUID = UUID.fromString(SiegeMetaDataController.getAttackerUUID(town));
+                        Nation attacker = TownyAPI.getInstance().getNation(attackerUUID);
                         double warChestAmount = SiegeMetaDataController.getWarChestAmount(town);
                         attacker.getAccount().deposit(warChestAmount, "Warchest Returned by data migration");
                         SiegeWar.info("Data Migration: Siege on " + town.getName() + " had warchest returned to attacker, because the siege will not be loaded.");
@@ -166,7 +167,7 @@ public class DataCleanupUtil {
                     SiegeWar.info("Data Migration: Not loading siege on " + town.getName() + ", because its type was legacy: " + siegeType + ".");
                     return false;
                 case "revolt":
-                    UUID attackerUUID = SiegeMetaDataController.getAttackerUUID(town);
+                    UUID attackerUUID = UUID.fromString(SiegeMetaDataController.getAttackerUUID(town));
                     UUID townUUID = town.getUUID();
                     if(attackerUUID.equals(townUUID)) {
                         SiegeWar.info("Data Migration: Not loading siege on " + town.getName() + ", because its format was a legacy revolt siege.");
