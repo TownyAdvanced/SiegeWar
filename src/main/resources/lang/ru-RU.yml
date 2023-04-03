@@ -135,7 +135,7 @@ msg_na: 'Н/А'
 status_town_siege_status_siege_balance: '&2 > Баланс: &a%d'
 status_town_siege_status_warchest: '&2 > Сундук Войны: &%s'
 #Battle sessions
-status_town_siege_battle: '&2Битва'
+status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&2 > Оставшееся время до захвата: %s'
 msg_war_siege_battle_session_started: "&bНачалась новая боевая сессия."
 msg_war_siege_battle_session_ended_with_battles: "&bТекущая боевая сессия завершена. Следующие команды выиграли свои сражения:"
