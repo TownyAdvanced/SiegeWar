@@ -127,7 +127,7 @@ public class SiegeController {
 				SiegeWar.info("Siege List Data: Found siege in Town " + town.getName());
 
 				//Migration support. Only if this method returns true, do we load.
-				if (!DataCleanupUtil.handleLegacySiegeDataAndCheckForLoad(town)) {
+				if (DataCleanupUtil.handleLegacySiegeDataAndCheckForLoad(town)) {
 					newSiege(town);
 					setSiege(town, true);
 				}
