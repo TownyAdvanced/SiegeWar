@@ -303,9 +303,6 @@ msg.installation.complete: "Instalación completada."
 #Added in 0.41
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cComo un ciudadano pacifico, no puedes pasar fácilmente por zonas de asedio. Para evitar la Enfermedad de Guerra, abandona la zona de asedio inmediatamente.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cComo un ciudadano pacifico, no puedes pasar fácilmente por zonas de asedio. Para eliminar la Enfermedad de Guerra, abandona la zona de asedio inmediatamente.'
-#Added in 0.42
-msg_siege_zone_proximity_warning_with_logout_risk: "&cATENCIÓN: ¡Estás en una zona de asedio!. Las protecciones PVP están desactivadas aquí. Morirás si te desconectas en la zona de asedio."
-msg_player_killed_for_logging_out_in_siege_zone: "%s fue asesinado porque se desconectó mientras estaba en una zona de asedio."
 #Added in 0.43
 msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cMientras el despliegue de asedio está en progreso no puedes destruir el estandarte de asedio o el bloque adyacente."
 msg_err_cannot_alter_blocks_near_siege_banner: 'No puedes colocar/destruir bloques en esta ubicación cerca del Estandarte de Asedio.'
