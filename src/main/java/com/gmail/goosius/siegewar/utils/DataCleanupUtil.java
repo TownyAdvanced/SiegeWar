@@ -87,7 +87,7 @@ public class DataCleanupUtil {
         boolean success = false;
         for(Town town: new ArrayList<>(TownyAPI.getInstance().getTowns())) {
             if(TownMetaDataController.hasLegacyOccupierUUID(town)) {
-                Nation occupyingNation = TownyAPI.getInstance().getNation(TownMetaDataController.getLegacyOccupierUUID(town));
+                Nation occupyingNation = TownyAPI.getInstance().getNation(UUID.fromString(TownMetaDataController.getLegacyOccupierUUID(town)));
                 if(occupyingNation != null) {
                     SiegeWarTownOccupationUtil.setTownOccupation(town, occupyingNation);
                     success = true;
