@@ -41,6 +41,7 @@ public class SiegeWar extends JavaPlugin {
 	private static final SiegeHUDManager siegeHUDManager = new SiegeHUDManager();
 
 	private static boolean siegeWarPluginError = false;
+	private static boolean listenersRegistered = false;
 
 	public static SiegeWar getSiegeWar() {
 		return plugin;
@@ -70,16 +71,12 @@ public class SiegeWar extends JavaPlugin {
         
         registerAdminCommands();
         handleLegacyConfigs();
-        
-        if (!loadAll()) {
-	        siegeWarPluginError = true;
-        }
-
-		registerListeners(); //Ensure listeners are registered before data cleanup, to listen for nation disband
+		siegeWarPluginError = loadData();
+		siegeWarPluginError = loadSettingsAndLang();
+		listenersRegistered = registerListeners();
 		registerPlayerCommands();
 		checkIntegrations();
-
-		DataCleanupUtil.cleanupData(siegeWarPluginError);
+		DataCleanupUtil.cleanupData(siegeWarPluginError, listenersRegistered);
 		PermsCleanupUtil.cleanupPerms(siegeWarPluginError);
 
 		if(siegeWarPluginError) {
@@ -90,6 +87,11 @@ public class SiegeWar extends JavaPlugin {
     }
     
     private void handleLegacyConfigs() {
+		if(siegeWarPluginError) {
+			severe("SiegeWar is in safe mode. Legacy configs not handled");
+			return;
+		}
+
 		Path configPath = getDataFolder().toPath().resolve("config.yml");
 		if (!Files.exists(configPath))
 			return;
@@ -108,11 +110,25 @@ public class SiegeWar extends JavaPlugin {
     	info("Shutting down...");
     }
     
-    private boolean loadAll() {
-    	return !Towny.getPlugin().isError()
-				&& Settings.loadSettingsAndLang()
-				&& SiegeController.loadAll();
+    private boolean loadData() {
+		if(Towny.getPlugin().isError()) {
+			SiegeWar.severe("Towny is in safe mode. SiegeWar data load not attempted.");
+			return true;
+		}
+		if(siegeWarPluginError) {
+			SiegeWar.severe("SiegeWar is in safe mode. SiegeWar data load not attempted.");
+			return true;
+		}
+		return SiegeController.loadAll();
     }
+
+	public boolean loadSettingsAndLang() {
+		if(siegeWarPluginError) {
+			SiegeWar.severe("SiegeWar is in safe mode. SiegeWar settings-and-lang-load not attempted.");
+			return true;
+		}
+		return Settings.loadSettingsAndLang();
+	}
 
 	public String getVersion() {
 		return getDescription().getVersion();
@@ -139,12 +155,13 @@ public class SiegeWar extends JavaPlugin {
 		}
 	}
 	
-	private void registerListeners() {
+	private boolean registerListeners() {
 		PluginManager pm = getServer().getPluginManager();
-		
-		if (siegeWarPluginError)
+
+		if (siegeWarPluginError) {
 			pm.registerEvents(new SiegeWarSafeModeListener(this), this);
-		else {
+			return false;
+		} else {
 			pm.registerEvents(new SiegeWarActionListener(this), this);
 			pm.registerEvents(new SiegeWarBukkitEventListener(), this);		
 			pm.registerEvents(new SiegeWarTownyEventListener(this), this);
@@ -153,6 +170,7 @@ public class SiegeWar extends JavaPlugin {
 			pm.registerEvents(new SiegeWarPlotEventListener(this), this);
 			pm.registerEvents(new SiegeWarStatusScreenListener(), this);
 			pm.registerEvents(new SiegeWarSelfListener(), this);
+			return true;
 		}
 	}
 

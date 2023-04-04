@@ -27,9 +27,14 @@ import java.util.UUID;
  */
 public class DataCleanupUtil {
 
-    public static void cleanupData(boolean siegeWarPluginError) {
+    public static void cleanupData(boolean siegeWarPluginError, boolean listenersRegistered) {
         if(siegeWarPluginError) {
             SiegeWar.severe("SiegeWar is in safe mode. Data cleanup not attempted.");
+            return;
+        }
+        if(!listenersRegistered) {
+            SiegeWar.severe("Listeners are not registered. Ensure listeners are registered before cleanup up data (e.g. to ensure enation refunds).");
+            return;
         }
         //Cleanup battle session data
         cleanupBattleSession();
