@@ -144,7 +144,9 @@ public class DataCleanupUtil {
     }
 
     /**
-     * Migrate siege data
+     * Handle legacy siege data
+     * This method keeps legacy conquest siege data, and deletes any other legacy siege data
+     * 
      * @param town the town which we know has a siege
      *             
      * @return true if we should load the given siege
@@ -152,31 +154,34 @@ public class DataCleanupUtil {
     public static boolean handleLegacySiegeDataAndCheckForLoad(Town town) {
         try {
             String siegeType = SiegeMetaDataController.getSiegeType(town);
+            UUID attackerUUID;
             switch (siegeType.toLowerCase()) {
-                case "conquest":
+                case "conquest": 
                     return true;
-                case "liberation":
-                case "suppression":
+
+                case "revolt":
+                    attackerUUID = UUID.fromString(SiegeMetaDataController.getAttackerUUID(town));
+                    if(attackerUUID.equals(town.getUUID())) {
+                        SiegeWar.info("Data Migration: Deleting siege on " + town.getName() + ", because its format was a legacy revolt siege.");
+                        SiegeMetaDataController.removeSiegeMeta(town);
+                        town.save();
+                        return false;
+                    } else {
+                        return true;
+                    }
+                
+                default:    
                     if (TownyEconomyHandler.isActive()) {
-                        UUID attackerUUID = UUID.fromString(SiegeMetaDataController.getAttackerUUID(town));
+                        attackerUUID = UUID.fromString(SiegeMetaDataController.getAttackerUUID(town));
                         Nation attacker = TownyAPI.getInstance().getNation(attackerUUID);
                         double warChestAmount = SiegeMetaDataController.getWarChestAmount(town);
                         attacker.getAccount().deposit(warChestAmount, "Warchest Returned by data migration");
                         SiegeWar.info("Data Migration: Siege on " + town.getName() + " had warchest returned to attacker, because the siege will not be loaded.");
                     }
-                    SiegeWar.info("Data Migration: Not loading siege on " + town.getName() + ", because its type was legacy: " + siegeType + ".");
+                    SiegeWar.info("Data Migration: Deleting siege on " + town.getName() + ", because its type was legacy: " + siegeType + ".");
+                    SiegeMetaDataController.removeSiegeMeta(town);
+                    town.save();
                     return false;
-                case "revolt":
-                    UUID attackerUUID = UUID.fromString(SiegeMetaDataController.getAttackerUUID(town));
-                    UUID townUUID = town.getUUID();
-                    if(attackerUUID.equals(townUUID)) {
-                        SiegeWar.info("Data Migration: Not loading siege on " + town.getName() + ", because its format was a legacy revolt siege.");
-                        return false;
-                    } else {
-                        return true;
-                    }
-                default:
-                    return false; //Unknown siege type
             }
         } catch (Exception e) {
             SiegeWar.info("Problem Migrating Siege on " + town.getName());
