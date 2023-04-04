@@ -222,24 +222,6 @@ public class SiegeWarTownEventListener implements Listener {
 	}
 
 	/**
-	 * In SiegeWar, occupied towns cannot leave their nation in the normal way.
-	 * Intead they must be either kicked, or win a revolt siege.
-	 * 
-	 * @param event the nation town pre leave event
-	 */
-	@EventHandler
-	public void onTownLeaveNation(NationPreTownLeaveEvent event) {
-		if(!SiegeWarSettings.getWarSiegeEnabled())
-			return;
-
-		if(SiegeWarTownOccupationUtil.isTownOccupied(event.getTown())) {
-			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("msg_err_town_neutrality_not_supported"));
-		}
-	}
-	
-	
-	/**
 	 * In SiegeWar, occupied towns do not pay their nation's regular tax
 	 * (Instead they pay the separate nation's occupation tax)
 	 *
