@@ -75,11 +75,12 @@ public class SiegeWar extends JavaPlugin {
 	        siegeWarPluginError = true;
         }
 
+		registerListeners(); //Ensure listeners are registered before data cleanup, to listen for nation disband
+		registerPlayerCommands();
+		checkIntegrations();
+
 		DataCleanupUtil.cleanupData(siegeWarPluginError);
 		PermsCleanupUtil.cleanupPerms(siegeWarPluginError);
-		registerPlayerCommands();
-		registerListeners();
-		checkIntegrations();
 
 		if(siegeWarPluginError) {
 			severe("SiegeWar did not load successfully, and is now in safe mode!");
