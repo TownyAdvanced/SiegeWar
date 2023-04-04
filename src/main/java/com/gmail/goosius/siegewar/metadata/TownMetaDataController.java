@@ -208,7 +208,6 @@ public class TownMetaDataController {
 		if (town.hasMeta(sdf.getKey())) {
 			town.removeMetaData(sdf);
 		}
-		//Completely delete sieges of types suppression, liberation, and revolt
-		SiegeMetaDataController.removeSiegeMeta(town);
+		//Note that legacy sieges will already have been removed by SiegeController.loadSiegeList()
 	}
 }
