@@ -495,8 +495,8 @@ msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occ
 
 #war sickness
 
-msg_you_will_get_sickness: '&cYou are not an official participant of this siege and cannot be in the Siege Zone wilderness. Please enter a town or leave the Siege Zone, otherwise you will get War Sickness in %s seconds. Common Causes: Not having a military rank and/or not being allied to either side.'
-msg_you_received_war_sickness: '&cYou are not an official participant of this siege and cannot be in the Siege Zone wilderness. To remove the War Sickness, enter a town or leave the Siege Zone wilderness. '
+msg_you_will_get_sickness: '&cYou are in the wilderness area of a Siege Zone, but are not an official participant of this siege. Please enter a town or leave the Siege Zone, otherwise you will get War Sickness in %s seconds.'
+msg_you_received_war_sickness: '&cYou are in the wilderness area of a Siege Zone, but are not an official participant of this siege. To remove the War Sickness, enter a town or leave the Siege Zone.'
 
 #Town Status Screen
 
