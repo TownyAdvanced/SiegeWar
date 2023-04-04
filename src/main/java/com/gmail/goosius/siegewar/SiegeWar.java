@@ -112,7 +112,7 @@ public class SiegeWar extends JavaPlugin {
     public void onDisable() {
     	info("Shutting down...");
     }
-    	
+
 	private boolean loadAll() {
 		return !Towny.getPlugin().isError()
 				&& Settings.loadSettingsAndLang()
