@@ -114,9 +114,9 @@ public class SiegeWar extends JavaPlugin {
     }
 
     private boolean loadAll() {
-	    return !Towny.getPlugin().isError()
-		    	&& Settings.loadSettingsAndLang()
-			    && SiegeController.loadAll();
+    	return !Towny.getPlugin().isError()
+				&& Settings.loadSettingsAndLang()
+				&& SiegeController.loadAll();
     }
 
 	public String getVersion() {
