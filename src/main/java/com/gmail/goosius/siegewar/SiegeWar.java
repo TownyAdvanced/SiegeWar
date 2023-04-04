@@ -113,11 +113,11 @@ public class SiegeWar extends JavaPlugin {
     	info("Shutting down...");
     }
 
-	private boolean loadAll() {
-		return !Towny.getPlugin().isError()
-				&& Settings.loadSettingsAndLang()
-				&& SiegeController.loadAll();
-	}
+    private boolean loadAll() {
+	    return !Towny.getPlugin().isError()
+		    	&& Settings.loadSettingsAndLang()
+			    && SiegeController.loadAll();
+    }
 
 	public String getVersion() {
 		return getDescription().getVersion();
