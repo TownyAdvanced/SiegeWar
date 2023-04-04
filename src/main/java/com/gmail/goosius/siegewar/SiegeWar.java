@@ -112,8 +112,8 @@ public class SiegeWar extends JavaPlugin {
     public void onDisable() {
     	info("Shutting down...");
     }
-
- 	private boolean loadAll() {
+    	
+	private boolean loadAll() {
 		return !Towny.getPlugin().isError()
 				&& Settings.loadSettingsAndLang()
 				&& SiegeController.loadAll();
@@ -146,7 +146,6 @@ public class SiegeWar extends JavaPlugin {
 	
 	private boolean registerListeners() {
 		PluginManager pm = getServer().getPluginManager();
-
 		if (siegeWarPluginError) {
 			pm.registerEvents(new SiegeWarSafeModeListener(this), this);
 			return false;
