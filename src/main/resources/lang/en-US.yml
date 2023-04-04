@@ -55,7 +55,6 @@ msg_err_siege_war_revolt_immunity_active: "&cYour town has revolt immunity. It c
 #Attack
 msg_err_siege_war_banner_must_be_placed_above_ground: '&cThe siege banner must be placed above ground.'
 msg_err_siege_war_action_not_a_town_member: '&cYou must be a member of a town to do this action.'
-NUKE ???? msg_err_siege_war_action_not_a_nation_member: '&cYou must be a member of a nation to do this action.'
 msg_err_siege_war_cannot_attack_own_town: '&cYou cannot attack your own town.'
 msg_err_siege_war_cannot_attack_town_in_own_nation: '&cYou cannot attack a town in your own nation.'
 msg_err_siege_war_cannot_attack_non_enemy_nation: '&cYou cannot attack a town unless the nation of that town is an enemy of your nation.'
@@ -561,7 +560,12 @@ msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot capture this town w
 msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this town, because your nation already owns and occupies it.'
 msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&cUnable to add military rank to resident, because they belong to an Occupied town.'
 msg_err_cannot_set_occupation_without_nation: '&cTown %s has no nation. You must set the nation first before you can set the town to Occupied.'
+msg_err_cannot_invade_not_enough_permissions: "&cYou do not have enough permissions to capture the town."
 
 #Siegezone proximity warning
 
 msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!."
+
+#Plunder
+
+msg_err_cannot_plunder_not_enough_permissions: "&cYou do not have enough permissions to plunder the town."

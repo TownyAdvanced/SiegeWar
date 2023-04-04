@@ -105,10 +105,10 @@ public class InvadeTown {
 			throw new TownyException(translator.of("msg_err_action_disable"));
 
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_INVADE.getNode()))
-			throw new TownyException(translator.of("msg_err_action_disable"));
+			throw new TownyException(translator.of("msg_err_cannot_invade_not_enough_permissions"));
 
 		if(residentsNation == null)
-			throw new TownyException(translator.of("msg_err_action_disable"));  //Can't invade if nationless
+			throw new TownyException(translator.of("msg_err_cannot_invade_not_enough_permissions"));  //Can't invade if nationless
 
 		if(siege.getStatus().isActive())
 			throw new TownyException(translator.of("msg_err_cannot_invade_siege_still_in_progress"));
