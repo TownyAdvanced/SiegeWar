@@ -71,8 +71,11 @@ public class SiegeWar extends JavaPlugin {
         
         registerAdminCommands();
         handleLegacyConfigs();
-		siegeWarPluginError = loadData();
-		siegeWarPluginError = loadSettingsAndLang();
+
+		if (!loadAll()) {
+			siegeWarPluginError = true;
+		}
+
 		listenersRegistered = registerListeners();
 		registerPlayerCommands();
 		checkIntegrations();
@@ -109,25 +112,11 @@ public class SiegeWar extends JavaPlugin {
     public void onDisable() {
     	info("Shutting down...");
     }
-    
-    private boolean loadData() {
-		if(Towny.getPlugin().isError()) {
-			SiegeWar.severe("Towny is in safe mode. SiegeWar data load not attempted.");
-			return true;
-		}
-		if(siegeWarPluginError) {
-			SiegeWar.severe("SiegeWar is in safe mode. SiegeWar data load not attempted.");
-			return true;
-		}
-		return SiegeController.loadAll();
-    }
 
-	public boolean loadSettingsAndLang() {
-		if(siegeWarPluginError) {
-			SiegeWar.severe("SiegeWar is in safe mode. SiegeWar settings-and-lang-load not attempted.");
-			return true;
-		}
-		return Settings.loadSettingsAndLang();
+ 	private boolean loadAll() {
+		return !Towny.getPlugin().isError()
+				&& Settings.loadSettingsAndLang()
+				&& SiegeController.loadAll();
 	}
 
 	public String getVersion() {
