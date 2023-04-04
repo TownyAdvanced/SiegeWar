@@ -330,7 +330,7 @@ public class SiegeWarDistanceUtil {
 
 	public static boolean isInANonBesiegedTown(Location location) {
 		Town town = TownyAPI.getInstance().getTown(location);
-		if(town != null & !SiegeController.hasActiveSiege(town)) {
+		if(town != null && !SiegeController.hasActiveSiege(town)) {
 			return true;
 		} else {
 			return false;
