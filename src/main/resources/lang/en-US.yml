@@ -512,6 +512,7 @@ msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cUnable to add mi
 sg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
 msg_err_peaceful_towns_cannot_revolt: '&cPeaceful towns cannot revolt.'
 msg_err_capital_towns_cannot_go_peaceful: '&cCapital towns cannot go peaceful.'
+msg_err_cannot_subvert_not_enough_permissions: "&cYou do not have enough permissions to subvert the town."
 
 # Town neutrality
 

@@ -88,10 +88,10 @@ public class PeacefullySubvertTown {
 			throw new TownyException(translator.of("msg_err_action_disable"));
 
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_SUBVERTPEACEFULTOWN.getNode()))
-			throw new TownyException(translator.of("msg_err_action_disable"));
+			throw new TownyException(translator.of("msg_err_cannot_subvert_not_enough_permissions"));
 
 		if(residentsNation == null)
-			throw new TownyException(translator.of("msg_err_action_disable"));  //Can't subvert if nationless
+			throw new TownyException(translator.of("msg_err_cannot_subvert_not_enough_permissions"));  //Can't subvert if nationless
 
 		if(SiegeController.hasActiveSiege(targetTown))
 			throw new TownyException(translator.of("msg_err_cannot_change_occupation_of_besieged_town"));
