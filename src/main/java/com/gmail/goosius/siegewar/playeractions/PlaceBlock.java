@@ -269,7 +269,7 @@ public class PlaceBlock {
 			SiegeWarTownOccupationUtil.removeTownOccupation(nearbyTown);
 		} else {
 			if (residentsNation == null)
-				throw new TownyException(translator.of("msg_err_dont_belong_nation"));
+				throw new TownyException(translator.of("msg_err_siege_war_action_not_a_nation_member"));
 
 			if (SiegeWarImmunityUtil.isTownSiegeImmune(nearbyTown))
 				throw new TownyException(translator.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
