@@ -57,11 +57,11 @@ public class PlunderTown {
 			throw new TownyException(translator.of("msg_err_not_registered_1", player.getName()));
 
 		if(!resident.hasTown())
-			throw new TownyException(translator.of("msg_err_cannot_plunder_not_enough_permissions"));
+			throw new TownyException(translator.of("msg_err_siege_war_action_not_a_town_member"));
 
 		Nation plunderingNation = resident.getNationOrNull();
 		if(plunderingNation == null)
-			throw new TownyException(translator.of("msg_err_cannot_plunder_not_enough_permissions"));
+			throw new TownyException(translator.of("msg_err_siege_war_action_not_a_nation_member"));
 
 		if(siege.isTownPlundered())
 			throw new TownyException(translator.of("msg_err_siege_war_town_already_plundered", townToBePlundered.getName()));

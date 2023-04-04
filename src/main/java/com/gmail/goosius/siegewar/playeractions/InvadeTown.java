@@ -108,7 +108,7 @@ public class InvadeTown {
 			throw new TownyException(translator.of("msg_err_cannot_invade_not_enough_permissions"));
 
 		if(residentsNation == null)
-			throw new TownyException(translator.of("msg_err_cannot_invade_not_enough_permissions"));  //Can't invade if nationless
+			throw new TownyException(translator.of("msg_err_siege_war_action_not_a_nation_member"));  //Can't invade if nationless
 
 		if(siege.getStatus().isActive())
 			throw new TownyException(translator.of("msg_err_cannot_invade_siege_still_in_progress"));
