@@ -17,7 +17,10 @@ import com.palmergames.bukkit.towny.event.NewTownEvent;
 import com.palmergames.bukkit.towny.event.TownAddResidentRankEvent;
 import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
+import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
+import com.palmergames.bukkit.towny.event.nation.NationTownLeaveEvent;
 import com.palmergames.bukkit.towny.event.time.dailytaxes.PreTownPaysNationTaxEvent;
+import com.palmergames.bukkit.towny.event.town.TownLeaveEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
@@ -218,6 +221,24 @@ public class SiegeWarTownEventListener implements Listener {
 		}
 	}
 
+	/**
+	 * In SiegeWar, occupied towns cannot leave their nation in the normal way.
+	 * Intead they must be either kicked, or win a revolt siege.
+	 * 
+	 * @param event the nation town pre leave event
+	 */
+	@EventHandler
+	public void onTownLeaveNation(NationPreTownLeaveEvent event) {
+		if(!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+
+		if(SiegeWarTownOccupationUtil.isTownOccupied(event.getTown())) {
+			event.setCancelled(true);
+			event.setCancelMessage(Translation.of("msg_err_town_neutrality_not_supported"));
+		}
+	}
+	
+	
 	/**
 	 * In SiegeWar, occupied towns do not pay their nation's regular tax
 	 * (Instead they pay the separate nation's occupation tax)
