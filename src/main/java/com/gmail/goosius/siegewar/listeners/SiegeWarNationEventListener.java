@@ -11,6 +11,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
 import com.palmergames.bukkit.towny.event.DeleteNationEvent;
+import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
 import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
 import com.palmergames.bukkit.towny.event.nation.NationKingChangeEvent;
 import com.palmergames.bukkit.towny.event.nation.toggle.NationToggleNeutralEvent;
@@ -175,4 +176,22 @@ public class SiegeWarNationEventListener implements Listener {
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_besieged_capital_cannot_change_king"));
 		}
 	}
+
+	/**
+	 * In SiegeWar, occupied towns cannot leave their nation in the normal way.
+	 * Intead they must be either kicked, or win a revolt siege.
+	 *
+	 * @param event the nation town pre leave event
+	 */
+	@EventHandler
+	public void onTownAttemptsToLeaveNation(NationPreTownLeaveEvent event) {
+		if(!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+
+		if(SiegeWarTownOccupationUtil.isTownOccupied(event.getTown())) {
+			event.setCancelled(true);
+			event.setCancelMessage(Translation.of("msg_err_occupied_towns_cannot_leave_their_nations"));
+		}
+	}
+
 }
