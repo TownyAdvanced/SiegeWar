@@ -239,7 +239,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 	/**
 	 * - Stop in-siegezone pvp events from being cancelled (e.g. by other plugins)
 	 * - Stop TNT/Minecarts from injuring players in the siegezone wilderness
-	 * - Stop battlefield observers from hitting players in siegezones
 	 */
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void on(EntityDamageByEntityEvent event) {	
