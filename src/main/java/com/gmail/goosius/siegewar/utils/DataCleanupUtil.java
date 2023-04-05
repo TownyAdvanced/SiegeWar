@@ -33,7 +33,7 @@ public class DataCleanupUtil {
             return;
         }
         if(!listenersRegistered) {
-            SiegeWar.severe("Listeners are not registered. Ensure listeners are registered before cleanup up data (e.g. to ensure enation refunds).");
+            SiegeWar.severe("Listeners are not registered. Ensure listeners are registered before cleanup up data (e.g. to ensure nation refunds).");
             return;
         }
         //Cleanup battle session data
@@ -43,7 +43,7 @@ public class DataCleanupUtil {
         migrateTownNeutralityData();
         migrateTownOccupationData();
         
-        //Only after all migration is complete, delete legacy data;
+        //Only after all migration is complete, delete legacy data.
         deleteLegacyResidentMetadata();
         deleteLegacyTownMetadata();
         deleteLegacyNationMetadata();

@@ -99,6 +99,14 @@ public class SiegeMetaDataController {
 			town.addMetaData(new StringDataField("siegewar_attackerName", name));
 	}
 
+	@Nullable
+	public static String getDefenderUUID(Town town) {
+		StringDataField sdf = (StringDataField) siegeDefenderUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			return MetaDataUtil.getString(town, sdf);
+		return null;
+	}
+
 	public static void setDefenderUUID(Town town, String uuid) {
 		StringDataField sdf = (StringDataField) siegeDefenderUUID.clone();
 		if (town.hasMeta(sdf.getKey()))
