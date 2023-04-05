@@ -27,9 +27,6 @@ public enum SiegeWarPermissionNodes {
 	// Siegewar related war sickness immunities
 	SIEGEWAR_IMMUNE_TO_WAR_NAUSEA("siegewar.immune.to.war.nausea"),
 
-	//Notifications
-	SIEGEWAR_NOTIFICATIONS_ALL("siegewar.notifications.all"),
-	
 	// ----- Player Command Nodes -----
 	SIEGEWAR_COMMAND_SIEGEWAR("siegewar.command.siegewar.*"),
 	SIEGEWAR_COMMAND_SIEGEWAR_TOWN("siegewar.command.siegewar.town.*"),

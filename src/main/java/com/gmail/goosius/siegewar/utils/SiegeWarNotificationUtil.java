@@ -123,36 +123,11 @@ public class SiegeWarNotificationUtil {
 						TownyMessaging.sendPrefixedTownMessage(townToInform, line);
 			}
 
-			//Inform battlefield observers
-			for(Player player: Bukkit.getOnlinePlayers()) {
-				if(player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_NOTIFICATIONS_ALL.getNode())
-				&& !nationHasPlayer(nationsToInform, player)
-				&& !townHasPlayer(townsToInform, player)) {
-					for (Translatable line : message)
-						if (line != null)
-							Messaging.sendMsg(player, line);
-				}
-			}
-
 		} catch (Exception e) {
 			SiegeWar.severe("Problem informing siege participants");
 			SiegeWar.severe("Message : " + message);
 			e.printStackTrace();
 		}
-	}
-
-	private static boolean townHasPlayer(Set<Town> towns, Player player) {
-		for (Town town : towns)
-			if (town.hasResident(player.getName()))
-				return true;
-		return false;
-	}
-
-	private static boolean nationHasPlayer(Set<Nation> nations, Player player) {
-		for (Nation nation : nations)
-			if (nation.hasResident(player.getName()))
-				return true;
-		return false;
 	}
 
 }
