@@ -65,14 +65,6 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If true, then invasions are enabled."),
-	WAR_SIEGE_PLUNDER_ENABLED(
-			"war.siege.switches.plunder_enabled",
-			"true",
-			"",
-			"# If true, then plunder is enabled.",
-			"# This action will steal money from the town, and transfer it to the victorious nation.",
-			"# The below setting of war.siege.money.attacker_plunder_distribution_ratio determines the nation-bank/soldiers distribution",
-			"# If the town does not have sufficient funds, it will be bankrupted/ruined/destroyed."),
 	WAR_SIEGE_MILITARY_SALARY_ENABLED(
 			"war.siege.switches.military_salary_enabled",
 			"true",
@@ -147,22 +139,31 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	WAR_SIEGE_ATTACKER_COST_UPFRONT_PER_PLOT(
-			"war.siege.money.attacker_cost_upfront_per_plot",
+	WAR_SIEGE_UPFRONT_COST_PER_PLOT(
+			"war.siege.money.upfront_cost_per_plot",
+			"0.0",
+			"",
+			"# This value determines the money amount of the 'upfront' siege cost.",
+			"# Any nation/town which wants to initiate a siege, must pay this money.",
+			"# This money is paid to the server.",
+			"# TIP 1: A value of 10 is suggested for servers which wish to activate this cost.",
+			"# TIP 2: This cost helps deter fake sieges.",
+			"# TIP 3: Be aware that the money is removed from the in-game economy."),
+	WAR_SIEGE_WARCHEST_COST_PER_PLOT(
+			"war.siege.money.warchest_cost_per_plot",
 			"20.0",
 			"",
-			"# This value represents the siege deposit paid by the attacker",
-			"# This is the 'warchest' (a money-account, not an actual chest object).",
+			"# This value determines the money amount of the siege 'warchest'.",
+			"# In Conquest sieges, this money is a 'deposit' paid by the attacking nation.",
 			"# If the attacking nation wins the siege, the warchest is returned to the nation bank.",
-			"# If the defending town wins the siege, the warchest is recovered by the defenders.",
-			"# See below for more details on how the warchest is distributed among the defenders."),
-	WAR_SIEGE_ATTACKER_PLUNDER_AMOUNT_PER_PLOT(
-			"war.siege.money.attacker_plunder_amount_per_plot",
+			"# If the defending town wins the siege, the warchest is recovered by the defenders."),
+	WAR_SIEGE_PLUNDER(
+			"war.siege.money.plunder","","",""),
+	WAR_SIEGE_PLUNDER_AMOUNT_PER_PLOT(
+			"war.siege.money.plunder.amount_per_plot",
 			"40.0",
 			"",
 			"# This is the amount which an attacking nation will plunder if they choose to do so after a siege victory."),
-	WAR_SIEGE_PLUNDER(
-			"war.siege.money.plunder","","",""),
 	WAR_SIEGE_PLUNDER_PAID_OVER_TIME(
 			"war.siege.money.plunder.plunder_paid_over_time",
 			"false",

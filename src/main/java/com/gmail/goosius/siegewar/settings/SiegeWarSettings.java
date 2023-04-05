@@ -46,7 +46,7 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean getWarSiegePlunderEnabled() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_PLUNDER_ENABLED);
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_PLUNDER_AMOUNT_PER_PLOT) > 0;
 	}
 
 	public static boolean isPlunderPaidOutOverDays() {
@@ -73,8 +73,12 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_CLAIMING_DISABLED_NEAR_SIEGE_ZONES);
 	}
 
-	public static double getWarSiegeAttackerCostUpFrontPerPlot() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_ATTACKER_COST_UPFRONT_PER_PLOT);
+	public static double getWarSiegeUpfrontCostPerPlot() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_UPFRONT_COST_PER_PLOT);
+	}
+
+	public static double getWarSiegeWarchestCostPerPlot() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WARCHEST_COST_PER_PLOT);
 	}
 
 	public static double getWarSiegeSiegeImmunityTimeNewTownsHours() {
@@ -89,8 +93,8 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_REVOLT_IMMUNITY_TIME_MODIFIER);
 	}
 
-	public static double getWarSiegeAttackerPlunderAmountPerPlot() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_ATTACKER_PLUNDER_AMOUNT_PER_PLOT);
+	public static double getWarSiegePlunderAmountPerPlot() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_PLUNDER_AMOUNT_PER_PLOT);
 	}
 
 	public static double getWarSiegeMaxHoldoutTimeHours() {

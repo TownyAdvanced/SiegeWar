@@ -127,7 +127,7 @@ public class SiegeCamp {
 	public void startSiege() {
 		
 		// Retest that the nation can still pay the warchest.
-		if (!siegeType.equals(SiegeType.REVOLT) && TownyEconomyHandler.isActive() && !attacker.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.calculateSiegeCost(targetTown))) {
+		if (!siegeType.equals(SiegeType.REVOLT) && TownyEconomyHandler.isActive() && !attacker.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.calculateTotalSiegeStartCost(targetTown))) {
 			TownyMessaging.sendPrefixedNationMessage((Nation)attacker, Translatable.of("msg_err_no_money"));
 			return;
 		}
