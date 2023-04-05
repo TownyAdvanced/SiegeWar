@@ -18,6 +18,7 @@ import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.SiegeCampUtil;
@@ -121,14 +122,17 @@ public class SiegeController {
 	}
 
 	public static void loadSiegeList() {
-		for (Town town : TownyUniverse.getInstance().getTowns())
+		for (Town town : TownyUniverse.getInstance().getTowns()) {
 			if (SiegeMetaDataController.hasSiege(town)) {
 				SiegeWar.info("Siege List Data: Found siege in Town " + town.getName());
-				newSiege(town);
 
-				setSiege(town, true);
-
+				//Migration support. Only if this method returns true, do we load.
+				if (DataCleanupUtil.handleLegacySiegeDataAndCheckForLoad(town)) {
+					newSiege(town);
+					setSiege(town, true);
+				}
 			}
+		}
 	}
 
 	public static boolean loadSieges() {
@@ -154,10 +158,10 @@ public class SiegeController {
 			siege.setSiegeType(SiegeType.parseString(siegeTypeString));
 
 		//Get nation
-		String nationUUID = SiegeMetaDataController.getAttackerUUID(town);
+		UUID nationUUID = UUID.fromString(SiegeMetaDataController.getAttackerUUID(town));
 		if (nationUUID == null)
 			return false;
-		Nation nation = TownyAPI.getInstance().getNation(UUID.fromString(nationUUID));
+		Nation nation = TownyAPI.getInstance().getNation(nationUUID);
 		if (nation == null)
 			return false;
 

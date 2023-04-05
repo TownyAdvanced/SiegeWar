@@ -207,5 +207,6 @@ public class TownMetaDataController {
 		if (town.hasMeta(sdf.getKey())) {
 			town.removeMetaData(sdf);
 		}
+		//Note that legacy sieges will already have been removed by SiegeController.loadSiegeList()
 	}
 }

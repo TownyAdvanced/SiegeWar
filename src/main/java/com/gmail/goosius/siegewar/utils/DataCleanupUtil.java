@@ -5,9 +5,11 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
+import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -16,6 +18,7 @@ import com.palmergames.bukkit.towny.object.Translation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * This class deals with everything related to data cleanup, including:
@@ -24,9 +27,14 @@ import java.util.List;
  */
 public class DataCleanupUtil {
 
-    public static void cleanupData(boolean siegeWarPluginError) {
+    public static void cleanupData(boolean siegeWarPluginError, boolean listenersRegistered) {
         if(siegeWarPluginError) {
             SiegeWar.severe("SiegeWar is in safe mode. Data cleanup not attempted.");
+            return;
+        }
+        if(!listenersRegistered) {
+            SiegeWar.severe("Listeners are not registered. Ensure listeners are registered before cleanup up data (e.g. to ensure nation refunds).");
+            return;
         }
         //Cleanup battle session data
         cleanupBattleSession();
@@ -35,7 +43,7 @@ public class DataCleanupUtil {
         migrateTownNeutralityData();
         migrateTownOccupationData();
         
-        //Only after all migration is complete, delete legacy data
+        //Only after all migration is complete, delete legacy data.
         deleteLegacyResidentMetadata();
         deleteLegacyTownMetadata();
         deleteLegacyNationMetadata();
@@ -84,7 +92,7 @@ public class DataCleanupUtil {
         boolean success = false;
         for(Town town: new ArrayList<>(TownyAPI.getInstance().getTowns())) {
             if(TownMetaDataController.hasLegacyOccupierUUID(town)) {
-                Nation occupyingNation = TownyAPI.getInstance().getNation(TownMetaDataController.getLegacyOccupierUUID(town));
+                Nation occupyingNation = TownyAPI.getInstance().getNation(UUID.fromString(TownMetaDataController.getLegacyOccupierUUID(town)));
                 if(occupyingNation != null) {
                     SiegeWarTownOccupationUtil.setTownOccupation(town, occupyingNation);
                     success = true;
@@ -140,4 +148,51 @@ public class DataCleanupUtil {
         }
     }
 
+    /**
+     * Handle legacy siege data
+     * This method keeps legacy conquest siege data, and deletes any other legacy siege data
+     * 
+     * @param town the town which we know has a siege
+     *             
+     * @return true if we should load the given siege
+     */
+    public static boolean handleLegacySiegeDataAndCheckForLoad(Town town) {
+        try {
+            String siegeType = SiegeMetaDataController.getSiegeType(town);
+            UUID attackerUUID;
+            switch (siegeType.toLowerCase()) {
+                case "conquest": 
+                    return true;
+
+                case "revolt":
+                    attackerUUID = UUID.fromString(SiegeMetaDataController.getAttackerUUID(town));
+                    if(attackerUUID.equals(town.getUUID())) {
+                        SiegeWar.info("Data Migration: Deleting siege on " + town.getName() + ", because its format was a legacy revolt siege.");
+                        SiegeMetaDataController.removeSiegeMeta(town);
+                        town.save();
+                        return false;
+                    } else {
+                        return true;
+                    }
+                
+                default:    
+                    if (TownyEconomyHandler.isActive()) {
+                        attackerUUID = UUID.fromString(SiegeMetaDataController.getAttackerUUID(town));
+                        Nation attacker = TownyAPI.getInstance().getNation(attackerUUID);
+                        double warChestAmount = SiegeMetaDataController.getWarChestAmount(town);
+                        attacker.getAccount().deposit(warChestAmount, "Warchest Returned by data migration");
+                        SiegeWar.info("Data Migration: Siege on " + town.getName() + " had warchest returned to attacker, because the siege will not be loaded.");
+                    }
+                    SiegeWar.info("Data Migration: Deleting siege on " + town.getName() + ", because its type was legacy: " + siegeType + ".");
+                    SiegeMetaDataController.removeSiegeMeta(town);
+                    town.save();
+                    return false;
+            }
+        } catch (Exception e) {
+            SiegeWar.info("Problem Migrating Siege on " + town.getName());
+            SiegeWar.info("Now deleting Siege on " + town.getName());
+            SiegeMetaDataController.removeSiegeMeta(town);
+            return false;
+        }
+    }
 }

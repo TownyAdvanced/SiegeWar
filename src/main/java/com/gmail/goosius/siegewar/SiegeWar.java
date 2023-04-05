@@ -41,6 +41,7 @@ public class SiegeWar extends JavaPlugin {
 	private static final SiegeHUDManager siegeHUDManager = new SiegeHUDManager();
 
 	private static boolean siegeWarPluginError = false;
+	private static boolean listenersRegistered = false;
 
 	public static SiegeWar getSiegeWar() {
 		return plugin;
@@ -70,16 +71,16 @@ public class SiegeWar extends JavaPlugin {
         
         registerAdminCommands();
         handleLegacyConfigs();
-        
-        if (!loadAll()) {
-	        siegeWarPluginError = true;
-        }
 
-		DataCleanupUtil.cleanupData(siegeWarPluginError);
-		PermsCleanupUtil.cleanupPerms(siegeWarPluginError);
+		if (!loadAll()) {
+			siegeWarPluginError = true;
+		}
+
+		listenersRegistered = registerListeners();
 		registerPlayerCommands();
-		registerListeners();
 		checkIntegrations();
+		DataCleanupUtil.cleanupData(siegeWarPluginError, listenersRegistered);
+		PermsCleanupUtil.cleanupPerms(siegeWarPluginError);
 
 		if(siegeWarPluginError) {
 			severe("SiegeWar did not load successfully, and is now in safe mode!");
@@ -89,6 +90,11 @@ public class SiegeWar extends JavaPlugin {
     }
     
     private void handleLegacyConfigs() {
+		if(siegeWarPluginError) {
+			severe("SiegeWar is in safe mode. Legacy configs not handled");
+			return;
+		}
+
 		Path configPath = getDataFolder().toPath().resolve("config.yml");
 		if (!Files.exists(configPath))
 			return;
@@ -138,12 +144,12 @@ public class SiegeWar extends JavaPlugin {
 		}
 	}
 	
-	private void registerListeners() {
+	private boolean registerListeners() {
 		PluginManager pm = getServer().getPluginManager();
-		
-		if (siegeWarPluginError)
+		if (siegeWarPluginError) {
 			pm.registerEvents(new SiegeWarSafeModeListener(this), this);
-		else {
+			return false;
+		} else {
 			pm.registerEvents(new SiegeWarActionListener(this), this);
 			pm.registerEvents(new SiegeWarBukkitEventListener(), this);		
 			pm.registerEvents(new SiegeWarTownyEventListener(this), this);
@@ -152,6 +158,7 @@ public class SiegeWar extends JavaPlugin {
 			pm.registerEvents(new SiegeWarPlotEventListener(this), this);
 			pm.registerEvents(new SiegeWarStatusScreenListener(), this);
 			pm.registerEvents(new SiegeWarSelfListener(), this);
+			return true;
 		}
 	}
 
