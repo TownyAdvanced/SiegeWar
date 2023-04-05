@@ -54,8 +54,6 @@ msg_err_siege_war_town_voluntary_leave_impossible: "&cTowns cannot leave nations
 msg_err_siege_war_revolt_immunity_active: "&cYour town has revolt immunity. It cannot revolt until the revolt immunity expires."
 #Attack
 msg_err_siege_war_banner_must_be_placed_above_ground: '&cThe siege banner must be placed above ground.'
-msg_err_siege_war_action_not_a_town_member: '&cYou must be a member of a town to do this action.'
-NUKE ???? msg_err_siege_war_action_not_a_nation_member: '&cYou must be a member of a nation to do this action.'
 msg_err_siege_war_cannot_attack_own_town: '&cYou cannot attack your own town.'
 msg_err_siege_war_cannot_attack_town_in_own_nation: '&cYou cannot attack a town in your own nation.'
 msg_err_siege_war_cannot_attack_non_enemy_nation: '&cYou cannot attack a town unless the nation of that town is an enemy of your nation.'
@@ -494,8 +492,9 @@ msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert thi
 msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying nation of %s, and declared themselves free to choose their own destiny. A REVOLT SIEGE has begun!'
 
 #war sickness
-msg_you_will_get_sickness: '&cYou are not an official participant of this siege and cannot be in the Siege Zone. Please leave or you will receive war sickness in %s seconds.'
-msg_you_received_war_sickness: '&cYou are not an official participant of this siege and cannot be in the Siege Zone. Please leave to remove the war sickness. Common causes of war sickness: Not having a military rank or not being allied to either side.'
+
+msg_you_will_get_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. Please enter a town or leave the Siege Zone, otherwise you will get War Sickness in %s seconds.'
+msg_you_received_war_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. To remove the War Sickness, enter a town or leave the Siege Zone.'
 
 #Town Status Screen
 
@@ -513,6 +512,7 @@ msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cUnable to add mi
 sg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
 msg_err_peaceful_towns_cannot_revolt: '&cPeaceful towns cannot revolt.'
 msg_err_capital_towns_cannot_go_peaceful: '&cCapital towns cannot go peaceful.'
+msg_err_cannot_subvert_not_enough_permissions: "&cYou do not have enough permissions to subvert the town."
 
 # Town neutrality
 
@@ -541,6 +541,7 @@ msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The attacking army of
 
 msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has surrendered to the attacking army of %s!.'
 msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The rebels have admitted defeat and surrendered to the attacking army of %s!.'
+msg_err_siege_occupied_towns_cannot_surrender_in_conquest_sieges: '&cIn CONQUEST sieges, occupied towns cannot surrender.'
 
 #Siege Results
 
@@ -561,7 +562,18 @@ msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot capture this town w
 msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this town, because your nation already owns and occupies it.'
 msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&cUnable to add military rank to resident, because they belong to an Occupied town.'
 msg_err_cannot_set_occupation_without_nation: '&cTown %s has no nation. You must set the nation first before you can set the town to Occupied.'
+msg_err_cannot_invade_not_enough_permissions: "&cYou do not have enough permissions to capture the town."
+msg_err_occupied_towns_cannot_leave_their_nations: "&cOccupied towns cannot leave their nations in the usual way. To leave the nation, start a revolt siege."
 
 #Siegezone proximity warning
 
 msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!."
+
+#Plunder
+
+msg_err_cannot_plunder_not_enough_permissions: "&cYou do not have enough permissions to plunder the town."
+
+#Not a town/nation member
+
+msg_err_siege_war_action_not_a_nation_member: '&cYou must be a member of a nation to do this action.'
+msg_err_siege_war_action_not_a_town_member: '&cYou must be a member of a town to do this action.'
