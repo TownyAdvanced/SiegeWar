@@ -66,10 +66,10 @@ msg_err_siege_war_banner_support_block_not_stable: "&cBạn không thể đặt 
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'Bạn không thể sử dụng mục này khi đang điều khiển biểu ngữ.'
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2Hẹn giờ miễn trừ chiến tranh: &a%s'
-status_town_siege_status_in_progress: 'Đang tiến hành'
+status_town_siege_status_in_progress: 'Contested'
 status_town_siege_status_banner_xyz: '&2 > Vị trí biểu ngữ XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 >Thời gian miễn trừ chiến tranh: &a%s'
-status_town_siege_victory_timer: '&2 > Thời gian chiến thắng: &a%s'
+status_town_siege_progress: '&2 > Progress: &a%d/%d'
 status_town_banner_control: '&2 > Kiểm soát Biểu ngữ: %s &a[%s]&2: &f'
 status_town_banner_control_nobody: '&2 > Kiểm soát Biểu ngữ: %s'
 #General
@@ -97,7 +97,7 @@ hud_siegestatus: 'Thông tin chiến sự'
 hud_attackers: 'Bên tấn công: '
 hud_defenders: 'Bên phòng thủ: '
 hud_banner_control: "Kiểm soát biểu ngữ: "
-hud_time_remaining: 'Thời gian còn lại: '
+hud_siege_progress: 'Siege Progress: '
 msg_swa_resident_already_has_control: '&cCư dân %s đã có quyền kiểm soát.'
 msg_swa_resident_doesnt_have_control: "&cCư dân %s đã mất quyền kiểm soát."
 msg_swa_set_plunder_success: '&bĐặt cướp bóc thành %s cho %s.'
@@ -106,7 +106,7 @@ siege_status_attacker_win: 'Kẻ tấn công giành chiến thắng'
 siege_status_defender_win: 'Bên phòng thủ công giành chiến thắng'
 siege_status_unknown: 'Không xác định'
 dynmap_siege_banner_control: 'Kiểm soát Biểu ngữ: %s'
-dynmap_siege_time_left: 'Thời gian còn lại: %s'
+dynmap_siege_progress: 'Siege Progress: %d/%d'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4CẢNH BÁO: &cMột số thiết bị của bạn sắp hỏng trong hàng tồn kho.'
 msg_swa_remove_siege_success: '&bĐã loại bỏ vòng vây thành công.'
@@ -203,9 +203,9 @@ status_town_siege_battle_points: '&2 > Điểm: &a%s &2/ &a%s'
 status_town_siege_status_attacker_win: 'Kẻ tấn công giành chiến thắng'
 status_town_siege_status_defender_win: 'Đội phòng thủ thành công'
 status_town_siege_status_attacker_abandon: 'Kẻ tấn công từ bỏ'
-status_town_siege_status_pending_attacker_abandon: 'Kẻ tấn công đang chờ xử lý từ bỏ, trong %s'
+status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending'
 status_town_siege_status_defender_surrender: 'Đội phòng thủ đầu hàng'
-status_town_siege_status_pending_defender_surrender: 'Thời gian xử lý đầu hàng, trong %s'
+status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending'
 status_town_siege_status_plundered: '&2 > Thị trấn bị cướp bóc: %s'
 #Siege statuses
 siege_status_attacker_abandon: 'Kẻ tấn công từ bỏ'
@@ -219,9 +219,9 @@ msg_err_town_cannot_end_siege_as_no_siege: '&cThị trấn gần đó không b�
 msg_err_town_cannot_end_siege_as_finished: '&cCuộc bao vây đã kết thúc hoặc dự kiến kết thúc. Từ bỏ/Đầu hàng là không thể.'
 #Generic Victory messages
 msg_immediate_attacker_victory: " Những kẻ tấn công đã chiến thắng!"
-msg_pending_attacker_victory: " Bên tấn công sẽ được coi là chiến thắng sau %s."
+msg_pending_attacker_victory: " Attacker victory will be confirmed when siege progress is complete."
 msg_immediate_defender_victory: " Đội phòng thủ đã chiến thắng!"
-msg_pending_defender_victory: " Bên phòng thủ sẽ được coi là chiến thắng sau %s."
+msg_pending_defender_victory: " Defender victory will be confirmed when siege progress is complete."
 #Plunder
 msg_err_siege_war_plunder_not_possible_rebels_won: '&cKhông thể cướp bóc vì phiến quân thị trấn đã chiến thắng.'
 #Added in 0.16
