@@ -474,12 +474,13 @@ public class SiegeController {
 
 		sendGlobalSiegeStartMessage(siege);
 
+		SiegeWarMoneyUtil.payUpfrontSiegeStartCost(siege);
+
 		//Pay into warchest
 		if (useWarchest) {
-			siege.setWarChestAmount(SiegeWarMoneyUtil.calculateSiegeCost(targetTown));
+			siege.setWarChestAmount(SiegeWarMoneyUtil.calculateWarchestCost(targetTown));
 			if (TownyEconomyHandler.isActive()) {
-				//Pay upfront cost into warchest now
-				attacker.getAccount().withdraw(siege.getWarChestAmount(), "Cost of starting a siege.");
+				attacker.getAccount().withdraw(siege.getWarChestAmount(), "Siege Warchest Cost.");
 				Translatable moneyMessage =
 						Translatable.of("msg_siege_war_attack_pay_war_chest",
 								attacker.getName(),

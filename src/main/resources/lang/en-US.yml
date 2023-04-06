@@ -412,10 +412,10 @@ msg_err_town_already_has_a_siege_assembly: '&cThis town already has an active Si
 msg_err_this_town_is_not_allowed_to_be_attacked: 'You cannot siege or subvert this town, because they are not allowed to war.'
 
 #Shown when a nation cannot afford to start a siege.
-msg_err_you_cannot_afford_to_siege_for_x: "Your nation cannot afford to begin this Siege, it would cost %s."
+msg_err_your_nation_cannot_afford_to_siege_for_x: "Your nation cannot afford to begin this Siege, it would cost %s."
 
-#Show when a nation tries to start a siege when the economy is not active.
-msg_err_no_siege_economy_not_active: "You cannot start a siege while the Economy is disabled in Towny."
+#Shown when a town cannot afford to start a siege.
+msg_err_your_town_cannot_afford_to_siege_for_x: "Your town cannot afford to begin this Siege, it would cost %s."
 
 #Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
 msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the battle session, resulting in a prison break, freeing %s."
@@ -577,3 +577,7 @@ msg_err_cannot_plunder_not_enough_permissions: "&cYou do not have enough permiss
 
 msg_err_siege_war_action_not_a_nation_member: '&cYou must be a member of a nation to do this action.'
 msg_err_siege_war_action_not_a_town_member: '&cYou must be a member of a town to do this action.'
+
+#Upfront Cost
+msg_town_pay_upfront_siege_cost: '&bYour town paid an upfront siege cost of %s.'
+msg_nation_pay_upfront_siege_cost: '&bYour nation paid an upfront siege cost of %s.'

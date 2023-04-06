@@ -263,6 +263,8 @@ public class PlaceBlock {
 			throw new TownyException(translator.of("msg_err_cannot_start_sieges_today"));
 
 		if (residentsTown == nearbyTown) {
+			// Throws exception if town cannot pay.
+			SiegeWarMoneyUtil.throwIfTownCannotAffordToStartSiege(nearbyTown);
 			//Start Revolt siege
 			StartRevoltSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
 			//Immediately remove occupation
@@ -275,7 +277,7 @@ public class PlaceBlock {
 				throw new TownyException(translator.of("msg_err_cannot_start_siege_due_to_siege_immunity"));
 
 			// Throws exception if nation cannot pay.
-			SiegeWarMoneyUtil.canNationPayCostToSiegeTown(residentsNation, nearbyTown);
+			SiegeWarMoneyUtil.throwIfNationCannotAffordToStartSiege(residentsNation, nearbyTown);
 
 			if (SiegeWarSettings.doesThisNationHaveTooManyActiveSieges(residentsNation))
 				throw new TownyException(translator.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));
