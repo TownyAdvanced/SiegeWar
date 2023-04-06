@@ -1,12 +1,12 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
-import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.util.TimeMgmt;
 
 import java.util.ArrayList;
 
@@ -18,45 +18,29 @@ import java.util.ArrayList;
 public class SiegeWarImmunityUtil {
 
 	/**
-	 * Activate the revolt immunity timer for a town
+	 * Grant revolt immunity to the town which was besieged.
 	 *
-	 * While this timer is active, the town cannot start a revolt siege.
-     * When this timer hits 0, the town can start a revolt siege.
-	 *
-	 * Note:
-	 * Siege immunity does not block revolts;
-	 * only revolt immunity blocks revolts.
-	 *
-	 * @param town the town
+	 * @param town the town which was besieged
 	 */
-	public static void activateRevoltImmunityTimer(Town town) {
-		long siegeImmunityDurationMillis = TownMetaDataController.getSiegeImmunityEndTime(town) - System.currentTimeMillis();
-		long revoltImmunityDurationMillis = (long)(siegeImmunityDurationMillis * SiegeWarSettings.getWarSiegeRevoltImmunityTimeModifier());
-		long revoltImmunityEndTime = System.currentTimeMillis() + revoltImmunityDurationMillis;
-		TownMetaDataController.setRevoltImmunityEndTime(town, revoltImmunityEndTime);
+	public static void grantRevoltImmunityAfterEndedSiege(Town town) {
+		long revoltImmunityDurationMillis = (long)(SiegeWarSettings.getRevoltImmunityPostSiegeHours() * 3600000) ;
+		TownMetaDataController.setRevoltImmunityEndTime(town, System.currentTimeMillis() + revoltImmunityDurationMillis);
 		town.save();
-    }
+	}
 
     /**
-     * The siege ended.
-     *
-     * 1. Grant siege immunity to the town which was besieged.
-     * 2. If the town was the defender,
-     *    grant siege immunity to any nations who were the home nation of the town during the siege
+     * Grant siege immunity to the town which was besieged.
      *
      * @param town the town which was besieged
-     * @param siege the siege
      */
-    public static void grantSiegeImmunityAfterEndedSiege(Town town, Siege siege) {
-        //Grant siege immunity to town
-		//Todo - This is just a hack to simplify the PR. Will be fixed in next PR
-        long immunityDurationMillis = (long)SiegeWarSettings.getWarSiegeSiegeImmunityTimeNewTownsHours();
-        TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + immunityDurationMillis);
+    public static void grantSiegeImmunityAfterEndedSiege(Town town) {
+        long siegeImmunityDurationMillis = (long)(SiegeWarSettings.getSiegeImmunityPostSiegeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS) ;
+        TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + siegeImmunityDurationMillis);
         town.save();
     }
 
 	public static void evaluateExpiredImmunities() {
-		final long olderThanAnHour = System.currentTimeMillis() - 3600000;
+		final long olderThanAnHour = (long)(System.currentTimeMillis() - TimeMgmt.ONE_HOUR_IN_MILLIS);
 		for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns())) {
 			long expirationTime = TownMetaDataController.getSiegeImmunityEndTime(town);
 			// Expiration happened longer than an hour ago or MetaData returned 0l.

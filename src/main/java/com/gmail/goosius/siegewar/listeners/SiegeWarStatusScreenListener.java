@@ -207,16 +207,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 	        	List<String> out = new ArrayList<>();
 				Siege siege = SiegeController.getSiege(town);
 				SiegeStatus siegeStatus= siege.getStatus();
-				String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis()); 
-
-				// > Type: Conquest
-				out.add(translator.of("status_town_siege_type", siege.getSiegeType().getTranslatedName()));
-
-				// > Status: Contested
-				out.add(translator.of("status_town_siege_status", getStatusTownSiegeSummary(siege, translator)));
-
-				// >  Progress: 5/7
-				out.add(translator.of("status_town_siege_progress", siege.getNumBattleSessionsCompleted(), SiegeWarSettings.getSiegeDurationBattleSessions()));
+				String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
 
 				// > Attacker: Darkness
 				out.add(translator.of("status_town_siege_attacker", siege.getAttackerNameForDisplay()));
@@ -224,30 +215,43 @@ public class SiegeWarStatusScreenListener implements Listener {
 				// > Defender: Light
 				out.add(translator.of("status_town_siege_defender", siege.getDefenderNameForDisplay()));
 
+				// > Type: Conquest
+				out.add(translator.of("status_town_siege_type", siege.getSiegeType().getTranslatedName()));
+
 				switch (siegeStatus) {
 					case IN_PROGRESS:
-						// > Balance: 530
-						String balanceLine = translator.of("status_town_siege_status_siege_balance", siege.getSiegeBalance());
+					case PENDING_ATTACKER_ABANDON:
+					case PENDING_DEFENDER_SURRENDER:
+						// >  War Chest: $12,800
+						if(TownyEconomyHandler.isActive()) {
+							String warChest = TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount());
+							out.add(translator.of("status_town_siege_status_warchest", warChest));
+						}
+
+						// >  Progress: 5/7
+						out.add(translator.of("status_town_siege_progress", siege.getNumBattleSessionsCompleted(), SiegeWarSettings.getSiegeDurationBattleSessions()));
+				}
+
+				// > Status: Contested
+				out.add(translator.of("status_town_siege_status", getStatusTownSiegeSummary(siege, translator)));
+
+				switch (siegeStatus) {
+					case IN_PROGRESS:
 						// > Balance: 530 | Pending: +130
+						String balanceLine = translator.of("status_town_siege_status_siege_balance", siege.getSiegeBalance());
 						int pending = SiegeWarBattleSessionUtil.calculateSiegeBalanceAdjustment(siege);
 						if(pending != 0)
 							balanceLine += translator.of("status_town_siege_pending_balance_adjustment", ((pending > 0 ? "+" : "") + pending));
-						out.add(balanceLine); 
+						out.add(balanceLine);
 
+						// > Banner XYZ: {2223,82,9877}
 						if(SiegeWarSettings.isBannerXYZTextEnabled()) {
-							// > Banner XYZ: {2223,82,9877}
 							out.add(
 									translator.of("status_town_siege_status_banner_xyz",
 											siege.getFlagLocation().getBlockX(),
 											siege.getFlagLocation().getBlockY(),
 											siege.getFlagLocation().getBlockZ())
 							);
-						}
-
-						// >  War Chest: $12,800
-						if(TownyEconomyHandler.isActive()) {
-							String warChest = TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount());
-							out.add(translator.of("status_town_siege_status_warchest", warChest));
 						}
 
 						//Battle:
@@ -276,15 +280,18 @@ public class SiegeWarStatusScreenListener implements Listener {
 						out.add(translator.of("status_town_siege_battle_time_remaining", siege.getFormattedBattleTimeRemaining(translator)));
 						break;
 
-	                case ATTACKER_WIN:
+					case ATTACKER_WIN:
+					case DEFENDER_WIN:
 	                case DEFENDER_SURRENDER:
+					case ATTACKER_ABANDON:
 
-						out.add(getPlunderStatusLine(siege, translator));
+						// > Captured: No
 						out.add(getInvadeStatusLine(siege, translator));
 
-					case ATTACKER_ABANDON:
-					case DEFENDER_WIN:
+						// > Plundered: No
+						out.add(getPlunderStatusLine(siege, translator));
 
+						// > Immunity: 7 days
 						String siegeImmunityTimer = translator.of("status_town_siege_immunity_timer", time);
 						out.add(siegeImmunityTimer);
 	            }

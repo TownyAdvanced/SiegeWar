@@ -23,10 +23,9 @@ public class SiegeWarSiegeCompletionUtil {
 	public static void setCommonSiegeCompletionValues(Siege siege,
 													  SiegeStatus siegeStatus) {
 		//Update values
-		SiegeWarBattleSessionUtil.endBattleSessionForSiege(siege);
 		siege.setStatus(siegeStatus);
-		SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown(), siege);
-		SiegeWarImmunityUtil.activateRevoltImmunityTimer(siege.getTown());
+		SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown());
+		SiegeWarImmunityUtil.grantRevoltImmunityAfterEndedSiege(siege.getTown());
 		CosmeticUtil.removeFakeBeacons(siege);
 		/*
 		 * The siege is now historical rather than active.

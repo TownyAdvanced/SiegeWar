@@ -26,7 +26,8 @@ public class SiegeWarHud {
         board.getTeam("attackers").setSuffix(SiegeHUDManager.checkLength(siege.getAttackerNameForDisplay()));
         board.getTeam("defenders").setSuffix(SiegeHUDManager.checkLength(siege.getDefenderNameForDisplay()));
         board.getTeam("balance").setSuffix(siege.getSiegeBalance().toString());
-        board.getTeam("siegeProgress").setSuffix(siege.getNumBattleSessionsCompleted() + " / " + SiegeWarSettings.getSiegeDurationBattleSessions());
+        board.getTeam("siegeProgress").setSuffix(siege.getNumBattleSessionsCompleted() + "/" + SiegeWarSettings.getSiegeDurationBattleSessions());
+        board.getTeam("siegeStatus").setSuffix(siege.getStatus().getName());
         if(TownyEconomyHandler.isActive()) {
             board.getTeam("warchest").setSuffix(TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
         } else {
@@ -51,6 +52,7 @@ public class SiegeWarHud {
             defenders = board.registerNewTeam("defenders"),
             balance = board.registerNewTeam("balance"),
             siegeProgress = board.registerNewTeam("siegeProgress"),
+            siegeStatus = board.registerNewTeam("siegeStatus"),
             warchest = board.registerNewTeam("warchest"),
             bannerControl = board.registerNewTeam("bannerControl"),
             battleAttackerScore = board.registerNewTeam("btAttackerPoints"),
@@ -62,6 +64,7 @@ public class SiegeWarHud {
             defenders_entry = ChatColor.GRAY + translator.of("hud_defenders"),
             balance_entry = ChatColor.GRAY + translator.of("hud_siege_balance"),
             siegeProgress_entry = ChatColor.GRAY + translator.of("hud_siege_progress"),
+            siegeStatus_entry = ChatColor.GRAY + translator.of("hud_siege_status"),
             warchest_entry = ChatColor.GRAY + translator.of("hud_warchest"),
             bannerControl_entry = ChatColor.GRAY + translator.of("hud_banner_control"),
             battleAttackerScore_entry = ChatColor.GRAY + translator.of("hud_battle_attacker_points"),
@@ -74,6 +77,7 @@ public class SiegeWarHud {
         balance.addEntry(balance_entry);
         bannerControl.addEntry(bannerControl_entry);
         siegeProgress.addEntry(siegeProgress_entry);
+        siegeStatus.addEntry(siegeStatus_entry);
         warchest.addEntry(warchest_entry);
         battleDefenderScore.addEntry(battleDefenderScore_entry);
         battleAttackerScore.addEntry(battleAttackerScore_entry);
@@ -81,12 +85,13 @@ public class SiegeWarHud {
         
         int topScore = 10;
         
-        objective.getScore(siegeType_entry).setScore(topScore--);
         objective.getScore(attackers_entry).setScore(topScore--);
         objective.getScore(defenders_entry).setScore(topScore--);
-        objective.getScore(balance_entry).setScore(topScore--);
-        objective.getScore(siegeProgress_entry).setScore(topScore--);
+        objective.getScore(siegeType_entry).setScore(topScore--);
         objective.getScore(warchest_entry).setScore(topScore--);
+        objective.getScore(siegeProgress_entry).setScore(topScore--);
+        objective.getScore(siegeStatus_entry).setScore(topScore--);
+        objective.getScore(balance_entry).setScore(topScore--);
         objective.getScore(bannerControl_entry).setScore(topScore--);
         objective.getScore(battleAttackerScore_entry).setScore(topScore--);
         objective.getScore(battleDefenderScore_entry).setScore(topScore--);

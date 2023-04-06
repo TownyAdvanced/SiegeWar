@@ -81,16 +81,16 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_WARCHEST_COST_PER_PLOT);
 	}
 
-	public static double getWarSiegeSiegeImmunityTimeNewTownsHours() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_SIEGE_IMMUNITY_TIME_NEW_TOWN_HOURS);
+	public static double getSiegeImmunityNewTownsHours() {
+		return Settings.getDouble(ConfigNodes.SIEGE_IMMUNITY_TIME_NEW_TOWN_HOURS);
 	}
 
-	public static double getWarSiegeSiegeImmunityTimeModifier() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_SIEGE_IMMUNITY_TIME_MODIFIER);
+	public static double getSiegeImmunityPostSiegeHours() {
+		return Settings.getDouble(ConfigNodes.SIEGE_IMMUNITY_POST_SIEGE_HOURS);
 	}
 
-	public static double getWarSiegeRevoltImmunityTimeModifier() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_REVOLT_IMMUNITY_TIME_MODIFIER);
+	public static double getRevoltImmunityPostSiegeHours() {
+		return Settings.getDouble(ConfigNodes.REVOLT_IMMUNITY_POST_SIEGE_HOURS);
 	}
 
 	public static double getWarSiegePlunderAmountPerPlot() {

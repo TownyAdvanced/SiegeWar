@@ -172,6 +172,9 @@ public class SiegeController {
 			return false;
 		siege.setStatus(SiegeStatus.parseString(SiegeMetaDataController.getSiegeStatus(town)));
 
+		//Load siege progress
+		siege.setNumBattleSessionsCompleted(SiegeMetaDataController.getNumBattleSessionsCompleted(town));
+
 		//Load attacker & defender name
 		if(!siege.getStatus().isActive() && SiegeMetaDataController.getAttackerName(town) == null) {
 			/* 
@@ -205,7 +208,6 @@ public class SiegeController {
 		siege.setWarChestAmount(SiegeMetaDataController.getWarChestAmount(town));
 		siege.setTownPlundered(SiegeMetaDataController.townPlundered(town));
 		siege.setTownInvaded(SiegeMetaDataController.townInvaded(town));
-		siege.setNumBattleSessionsCompleted(0);
 
 		return true;
 	}
