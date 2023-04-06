@@ -23,7 +23,6 @@ public class SiegeWarSiegeCompletionUtil {
 	public static void setCommonSiegeCompletionValues(Siege siege,
 													  SiegeStatus siegeStatus) {
 		//Update values
-		SiegeWarBattleSessionUtil.endBattleSessionForSiege(siege);
 		siege.setStatus(siegeStatus);
 		SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown());
 		SiegeWarImmunityUtil.grantRevoltImmunityAfterEndedSiege(siege.getTown());
