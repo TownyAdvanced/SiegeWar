@@ -66,10 +66,10 @@ msg_err_siege_war_banner_support_block_not_stable: "&cNo puedes colocar el estan
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'No puedes usar este item mientras estás en una sesión de control de estandarte.'
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2Temporizador de Inmunidad de Rebelión: &a%s'
-status_town_siege_status_in_progress: 'En Curso'
+status_town_siege_status_in_progress: 'Contested'
 status_town_siege_status_banner_xyz: '&2 > Estandarte XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > Temporizador de Inmunidad: &a%s'
-status_town_siege_victory_timer: '&2 > Temporizador de Victoria: &a%s'
+status_town_siege_progress: '&2 > Progress: &a%d/%d'
 status_town_banner_control: '&2 > Control de Estandarte: %s &a[%s]&2: &f'
 status_town_banner_control_nobody: '&2 > Control de Estandarte: %s'
 #General
@@ -97,7 +97,7 @@ hud_siegestatus: 'Estado de Asedio'
 hud_attackers: 'ATK: '
 hud_defenders: 'DEF: '
 hud_banner_control: "Control del estandarte: "
-hud_time_remaining: 'Tiempo restante: '
+hud_siege_progress: 'Siege Progress: '
 msg_swa_resident_already_has_control: '&cResidente %s ya tiene control.'
 msg_swa_resident_doesnt_have_control: "&cEl residente %s no tiene control."
 msg_swa_set_plunder_success: '&bEstablecido el saqueo a %s por %s.'
@@ -106,7 +106,7 @@ siege_status_attacker_win: 'El Atacante Gana'
 siege_status_defender_win: 'El defensor gana'
 siege_status_unknown: 'Desconocido'
 dynmap_siege_banner_control: 'Control del estandarte: %s'
-dynmap_siege_time_left: 'Tiempo restante: %s'
+dynmap_siege_progress: 'Siege Progress: %d/%d'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4ADVERTENCIA: &cAlgo de tu equipamiento está cerca de romperse debido al desgaste de inventario.'
 msg_swa_remove_siege_success: '&bAsedio removido existosamente.'
@@ -203,9 +203,9 @@ status_town_siege_battle_points: '&2 > Puntos: &a%s &2/ &a%s'
 status_town_siege_status_attacker_win: 'Victoria del Atacante'
 status_town_siege_status_defender_win: 'Victoria del Defensor'
 status_town_siege_status_attacker_abandon: 'Abandono del Atacante'
-status_town_siege_status_pending_attacker_abandon: 'Abandono del Atacante Pendiente, en %s'
+status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending'
 status_town_siege_status_defender_surrender: 'Rendición del Defensor'
-status_town_siege_status_pending_defender_surrender: 'Rendición del Defensor Pendiente, en %s'
+status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending'
 status_town_siege_status_plundered: '&2 > Ciudad Saqueada: %s'
 #Siege statuses
 siege_status_attacker_abandon: 'Abandono del Atacante'
@@ -219,9 +219,9 @@ msg_err_town_cannot_end_siege_as_no_siege: '&cLa ciudad cercana no tiene un ased
 msg_err_town_cannot_end_siege_as_finished: '&cEl asedio ha finalizado o está programado para terminar. Abandonar/Rendirse no es posible.'
 #Generic Victory messages
 msg_immediate_attacker_victory: " ¡Los atacantes han ganado!"
-msg_pending_attacker_victory: " La victoria del atacante será confirmada en %s."
+msg_pending_attacker_victory: " Attacker victory will be confirmed when siege progress is complete."
 msg_immediate_defender_victory: " ¡Los defensores han ganado!"
-msg_pending_defender_victory: " La victoria del defensor será confirmada en %s."
+msg_pending_defender_victory: " Defender victory will be confirmed when siege progress is complete."
 #Plunder
 msg_err_siege_war_plunder_not_possible_rebels_won: '&cEl saqueo no es posible porque los rebeldes de la ciudad ganaron el asedio.'
 #Added in 0.16
