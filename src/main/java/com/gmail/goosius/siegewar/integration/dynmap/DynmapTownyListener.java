@@ -12,7 +12,10 @@ public class DynmapTownyListener implements Listener {
      *
      * 1. It looks for the %occupier% tag in the popup
      * 2. If the %occupier% tag exists, it replaces it with the occupier name (or blank if there is no occupier)
+     * 
+     * As of SW2.0.0, this method is depreciated, because the town's occupier will always be the same as the town's normal nation
      */
+    @Deprecated
     @EventHandler
     public void on(BuildTownMarkerDescriptionEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled() && event.getDescription().contains("%occupier%")) {
