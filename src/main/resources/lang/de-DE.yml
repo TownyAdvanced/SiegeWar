@@ -66,10 +66,10 @@ msg_err_siege_war_banner_support_block_not_stable: "&cDu kannst den Banner nicht
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'Du kannst dieses Item nicht während einer Banner Kontrollrunde verwenden.'
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2Rebellionsimmunität Timer: &a%s'
-status_town_siege_status_in_progress: 'Im Gange'
+status_town_siege_status_in_progress: 'Contested'
 status_town_siege_status_banner_xyz: '&2 > Banner XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > Immunitätstimer: &a%s'
-status_town_siege_victory_timer: '&2 > Siegestimer: &a%s'
+status_town_siege_progress: '&2 > Progress: &a%d/%d'
 status_town_banner_control: '&2 > Bannerkontrolle: %s &a[%s]&2: &f'
 status_town_banner_control_nobody: '&2 > Bannerkontrolle: %s'
 #General
@@ -97,7 +97,7 @@ hud_siegestatus: 'Belagerungsstatus'
 hud_attackers: 'ANG: '
 hud_defenders: 'VER: '
 hud_banner_control: "Bannerkontrolle: "
-hud_time_remaining: 'Verbleibende Zeit: '
+hud_siege_progress: 'Siege Progress: '
 msg_swa_resident_already_has_control: '&cDer Einwohner %s hat schon Kontrolle.'
 msg_swa_resident_doesnt_have_control: "&cDer Einwohner %s hat keine Kontrolle."
 msg_swa_set_plunder_success: '&bPlünderung auf %s gesetzt für %s.'
@@ -106,7 +106,7 @@ siege_status_attacker_win: 'Die Angreifer gewinnen'
 siege_status_defender_win: 'Die Verteidiger gewinnen'
 siege_status_unknown: 'Unbekannt'
 dynmap_siege_banner_control: 'Bannerkontrolle: %s'
-dynmap_siege_time_left: 'Zeit übrig: %s'
+dynmap_siege_progress: 'Siege Progress: %d/%d'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4WARNUNG: &cDeine Ausrüstung geht fast kaputt wegen Inventarabbau.'
 msg_swa_remove_siege_success: '&bDie Belagerung erfolgreich behoben.'
@@ -203,9 +203,9 @@ status_town_siege_battle_points: '&2 > Punkte: &a%s &2/ &a%s'
 status_town_siege_status_attacker_win: 'Die Angreifer haben gewonnen'
 status_town_siege_status_defender_win: 'Die Verteidiger haben gewonnen'
 status_town_siege_status_attacker_abandon: 'Die Angreifer haben aufgegeben'
-status_town_siege_status_pending_attacker_abandon: 'Die Angreifer geben auf in %s'
+status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending'
 status_town_siege_status_defender_surrender: 'Die Verteidiger haben aufgegeben'
-status_town_siege_status_pending_defender_surrender: 'Die Verteidiger geben auf in %s'
+status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending'
 status_town_siege_status_plundered: '&2 > Stadt geplündert: %s'
 #Siege statuses
 siege_status_attacker_abandon: 'Die Angreifer haben ihre Waffen fallen gelassen'
@@ -219,9 +219,9 @@ msg_err_town_cannot_end_siege_as_no_siege: '&cDie Stadt in der nähe wird nicht 
 msg_err_town_cannot_end_siege_as_finished: '&cDie Belagerung ist zuende oder kurz vorm Ende. Du kannst nichtmehr aufgeben oder die Waffen fallen lassen.'
 #Generic Victory messages
 msg_immediate_attacker_victory: " Die Angreifer haben gewonnen!"
-msg_pending_attacker_victory: " Der Sieg der Angreifer wird in %s bestätigt."
+msg_pending_attacker_victory: " Attacker victory will be confirmed when siege progress is complete."
 msg_immediate_defender_victory: " Die Verteidiger haben gewonnen!"
-msg_pending_defender_victory: " Der Sieg der Verteidiger wird in %s bestätigt."
+msg_pending_defender_victory: " Defender victory will be confirmed when siege progress is complete."
 #Plunder
 msg_err_siege_war_plunder_not_possible_rebels_won: '&cPlünderung nicht möglich, weil die lokalen Rebellen die Belagerung gewonnen haben.'
 #Added in 0.16
