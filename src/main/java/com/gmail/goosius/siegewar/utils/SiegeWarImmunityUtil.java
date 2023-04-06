@@ -6,6 +6,7 @@ import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.util.TimeMgmt;
 
 import java.util.ArrayList;
 
@@ -33,13 +34,13 @@ public class SiegeWarImmunityUtil {
      * @param town the town which was besieged
      */
     public static void grantSiegeImmunityAfterEndedSiege(Town town) {
-        long siegeImmunityDurationMillis = (long)(SiegeWarSettings.getSiegeImmunityPostSiegeHours() * 3600000) ;
+        long siegeImmunityDurationMillis = (long)(SiegeWarSettings.getSiegeImmunityPostSiegeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS) ;
         TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + siegeImmunityDurationMillis);
         town.save();
     }
 
 	public static void evaluateExpiredImmunities() {
-		final long olderThanAnHour = System.currentTimeMillis() - 3600000;
+		final long olderThanAnHour = (long)(System.currentTimeMillis() - TimeMgmt.ONE_HOUR_IN_MILLIS);
 		for (Town town : new ArrayList<>(TownyUniverse.getInstance().getTowns())) {
 			long expirationTime = TownMetaDataController.getSiegeImmunityEndTime(town);
 			// Expiration happened longer than an hour ago or MetaData returned 0l.
