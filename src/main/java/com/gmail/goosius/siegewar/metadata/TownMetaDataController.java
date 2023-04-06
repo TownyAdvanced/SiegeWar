@@ -189,6 +189,10 @@ public class TownMetaDataController {
 		return MetaDataUtil.hasMeta(town, legacyDataOccupyingNationUUID);
 	}
 
+	public static boolean hasLegacySiegeStartTime(Town town) {
+		return MetaDataUtil.hasMeta(town, legacySiegeStartTime);
+	}
+
 	public static String getLegacyOccupierUUID(Town town) {
 		return MetaDataUtil.getString(town, legacyDataOccupyingNationUUID);
 	}
