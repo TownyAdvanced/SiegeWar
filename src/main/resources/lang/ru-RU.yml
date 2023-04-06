@@ -66,10 +66,10 @@ msg_err_siege_war_banner_support_block_not_stable: "&cВы не можете п�
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'Вы не можете использовать этот предмет в режиме контроля флаг.'
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2Таймер иммунитета к восстанию: &a%s'
-status_town_siege_status_in_progress: 'В процессе'
+status_town_siege_status_in_progress: 'Contested'
 status_town_siege_status_banner_xyz: '&2 > Флаг XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > Таймер иммунитета: &%s'
-status_town_siege_victory_timer: '&2 > Таймер победы: &%s'
+status_town_siege_progress: '&2 > Progress: &a%d/%d'
 status_town_banner_control: '&2 > Контроль флага: %s &a[%s]&2: &f'
 status_town_banner_control_nobody: '&2 > Контроль флага: %s'
 #General
@@ -97,7 +97,7 @@ hud_siegestatus: 'Статус осады'
 hud_attackers: 'АТК: '
 hud_defenders: 'ЗАЩ: '
 hud_banner_control: "Контроль флага: "
-hud_time_remaining: 'Оставшееся время: '
+hud_siege_progress: 'Siege Progress: '
 msg_swa_resident_already_has_control: '&cЖитель %s уже имеет контроль.'
 msg_swa_resident_doesnt_have_control: "&cЖитель %s не имеет контроля."
 msg_swa_set_plunder_success: '&bВторгся в %s для %s.'
@@ -106,7 +106,7 @@ siege_status_attacker_win: 'Победа атакующих'
 siege_status_defender_win: 'Защитники победили'
 siege_status_unknown: 'Неизвестен'
 dynmap_siege_banner_control: 'Контроль флага: %s'
-dynmap_siege_time_left: 'Осталось времени: %s'
+dynmap_siege_progress: 'Siege Progress: %d/%d'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4ВНИМАНИЕ: &cЧто-то из вашего снаряжения близко к поломке из-за деградации снаряжения после смерти.'
 msg_swa_remove_siege_success: '&bОсада успешно снята.'
@@ -203,9 +203,9 @@ status_town_siege_battle_points: '&2 > Очки: &a%s &2/ &a%s'
 status_town_siege_status_attacker_win: 'Победа атакующих'
 status_town_siege_status_defender_win: 'Защитники победили'
 status_town_siege_status_attacker_abandon: 'Атакующие отступили'
-status_town_siege_status_pending_attacker_abandon: 'Атакующие отступят через %s'
+status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending'
 status_town_siege_status_defender_surrender: 'Защитники сдались'
-status_town_siege_status_pending_defender_surrender: 'Защитники сдадутся через %s'
+status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending'
 status_town_siege_status_plundered: '&2 > Город разграблен: %s'
 #Siege statuses
 siege_status_attacker_abandon: 'Атакующие отступили'
@@ -219,9 +219,9 @@ msg_err_town_cannot_end_siege_as_no_siege: '&cВ близлежащем горо
 msg_err_town_cannot_end_siege_as_finished: '&cОсада закончена или запланирована к завершению. Отступление невозможно.'
 #Generic Victory messages
 msg_immediate_attacker_victory: " Атакующие победили!"
-msg_pending_attacker_victory: " Победа атакующих будет подтверждена через %s."
+msg_pending_attacker_victory: " Attacker victory will be confirmed when siege progress is complete."
 msg_immediate_defender_victory: " Защитники победили!"
-msg_pending_defender_victory: " Победа защитников будет подтверждена через %s."
+msg_pending_defender_victory: " Defender victory will be confirmed when siege progress is complete."
 #Plunder
 msg_err_siege_war_plunder_not_possible_rebels_won: '&cРазграбление невозможно, потому что городские повстанцы выиграли осаду.'
 #Added in 0.16
