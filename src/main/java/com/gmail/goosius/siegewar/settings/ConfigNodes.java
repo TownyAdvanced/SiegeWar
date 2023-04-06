@@ -146,7 +146,7 @@ public enum ConfigNodes {
 			"# This value determines the money amount of the 'upfront' siege cost.",
 			"# Any nation/town which wants to initiate a siege, must pay this money.",
 			"# This money is paid to the server.",
-			"# TIP 1: A value of 10 is suggested for servers which wish to activate this cost.",
+			"# TIP 1: A value of 10.0 is suggested for servers which wish to activate this cost.",
 			"# TIP 2: This cost helps deter fake sieges.",
 			"# TIP 3: Be aware that the money is removed from the in-game economy."),
 	WAR_SIEGE_WARCHEST_COST_PER_PLOT(

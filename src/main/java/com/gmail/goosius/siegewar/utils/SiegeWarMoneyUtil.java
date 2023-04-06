@@ -333,7 +333,7 @@ public class SiegeWarMoneyUtil {
 	 */
 	public static void payUpfrontSiegeStartCost(Siege siege) {
 		double cost = SiegeWarMoneyUtil.calculateUpfrontSiegeStartCost(siege.getTown());
-		if(TownyEconomyHandler.isActive()) {
+		if(TownyEconomyHandler.isActive() && SiegeWarSettings.getWarSiegeUpfrontCostPerPlot() > 0) {
 			if(siege.getSiegeType() == SiegeType.CONQUEST) {
 				siege.getAttacker().getAccount().withdraw(cost, "Upfront cost of starting siege.");
 				Translatable moneyMessage =
