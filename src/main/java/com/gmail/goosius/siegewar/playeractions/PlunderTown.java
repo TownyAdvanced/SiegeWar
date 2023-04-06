@@ -92,7 +92,7 @@ public class PlunderTown {
 		String townName = town.getName();
 
 		double totalPlunderAmount =
-				SiegeWarSettings.getWarSiegeAttackerPlunderAmountPerPlot()
+				SiegeWarSettings.getWarSiegePlunderAmountPerPlot()
 				* town.getTownBlocks().size()
 				* SiegeWarMoneyUtil.getMoneyMultiplier(town);
 		

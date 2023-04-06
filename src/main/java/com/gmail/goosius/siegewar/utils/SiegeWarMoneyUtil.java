@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -131,11 +132,25 @@ public class SiegeWarMoneyUtil {
 				Translatable.of("msg_siege_war_military_salary_available", TownyEconomyHandler.getFormattedBalance(militarySalaryAmount)));
 	}
 
-	public static double calculateSiegeCost(Town town) {
-		//Calculate base cost
-		double cost = SiegeWarSettings.getWarSiegeAttackerCostUpFrontPerPlot()
-						* town.getTownBlocks().size();
+	public static double calculateUpfrontSiegeStartCost(Town town) {
+		double cost = SiegeWarSettings.getWarSiegeUpfrontCostPerPlot()
+				* town.getNumTownBlocks();
+		cost = applyMoneyModifiers(cost, town);
+		return cost;
+	}
 
+	public static double calculateWarchestCost(Town town) {
+		double cost = SiegeWarSettings.getWarSiegeWarchestCostPerPlot()
+				* town.getTownBlocks().size();
+		cost = applyMoneyModifiers(cost, town);
+		return  cost;
+	}
+
+	public static double calculateTotalSiegeStartCost(Town town) {
+		return calculateUpfrontSiegeStartCost(town) + calculateWarchestCost(town);
+	}
+
+	private static double applyMoneyModifiers(double cost, Town town) {
 		//Increase cost if town is capitol
 		if(SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage() > 0
 			&& town.isCapital()) {
@@ -201,14 +216,28 @@ public class SiegeWarMoneyUtil {
 	 * 
 	 * @param nation Nation starting a siege.
 	 * @param town Town being sieged.
-	 * @throws TownyException thrown if the economy is off, or the nation cannot pay.
+	 * @throws TownyException thrown nation cannot pay.
 	 */
-	public static void canNationPayCostToSiegeTown(Nation nation, Town town) throws TownyException {
-		double cost = calculateSiegeCost(town);
+	public static void throwIfNationCannotAffordToStartSiege(Nation nation, Town town) throws TownyException {
+		double cost = calculateTotalSiegeStartCost(town);
 		if (!TownyEconomyHandler.isActive())
-			throw new TownyException(Translatable.of("msg_err_no_siege_economy_not_active"));
+			return; //Siege cost does not apply
 		if (!nation.getAccount().canPayFromHoldings(cost))
-			throw new TownyException(Translatable.of("msg_err_you_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(cost)));
+			throw new TownyException(Translatable.of("msg_err_your_nation_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(cost)));
+	}
+
+	/**
+	 * Can the town afford to start their (revolt) siege?
+	 *
+	 * @param town Town starting a (revolt) siege.
+	 * @throws TownyException thrown if town cannot pay.
+	 */
+	public static void throwIfTownCannotAffordToStartSiege(Town town) throws TownyException {
+		double cost = calculateUpfrontSiegeStartCost(town);
+		if (!TownyEconomyHandler.isActive())
+			return; //Siege cost does not apply
+		if (!town.getAccount().canPayFromHoldings(cost))
+			throw new TownyException(Translatable.of("msg_err_your_town_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(cost)));
 	}
 
 	public static void payDailyPlunderDebt() {
@@ -307,6 +336,31 @@ public class SiegeWarMoneyUtil {
 			return true;
 		} else {
 			throw new TownyException(Translatable.of("msg_err_siege_war_nation_refund_unavailable"));
+		}
+	}
+
+
+	/**
+	 * Pay the upfront cost of starting the siege
+	 * 
+	 * @param siege the siege
+	 */
+	public static void payUpfrontSiegeStartCost(Siege siege) {
+		double cost = SiegeWarMoneyUtil.calculateUpfrontSiegeStartCost(siege.getTown());
+		if(TownyEconomyHandler.isActive() && SiegeWarSettings.getWarSiegeUpfrontCostPerPlot() > 0) {
+			if(siege.getSiegeType() == SiegeType.CONQUEST) {
+				siege.getAttacker().getAccount().withdraw(cost, "Upfront cost of starting siege.");
+				Translatable moneyMessage =
+						Translatable.of("msg_nation_pay_upfront_siege_cost",
+								TownyEconomyHandler.getFormattedBalance(cost));
+				TownyMessaging.sendPrefixedNationMessage((Nation)siege.getAttacker(), moneyMessage);
+			} else if(siege.getSiegeType() == SiegeType.REVOLT) {
+				siege.getTown().getAccount().withdraw(cost, "Upfront cost of starting siege.");
+				Translatable moneyMessage =
+						Translatable.of("msg_town_pay_upfront_siege_cost",
+								TownyEconomyHandler.getFormattedBalance(cost));
+				TownyMessaging.sendPrefixedTownMessage(siege.getTown(), moneyMessage);
+			}
 		}
 	}
 

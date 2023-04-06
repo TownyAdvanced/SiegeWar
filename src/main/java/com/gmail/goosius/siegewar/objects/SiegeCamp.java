@@ -125,11 +125,16 @@ public class SiegeCamp {
 	 * Starts the Siege after the success of the SiegeCamp.
 	 */
 	public void startSiege() {
-		
-		// Retest that the nation can still pay the warchest.
-		if (!siegeType.equals(SiegeType.REVOLT) && TownyEconomyHandler.isActive() && !attacker.getAccount().canPayFromHoldings(SiegeWarMoneyUtil.calculateSiegeCost(targetTown))) {
-			TownyMessaging.sendPrefixedNationMessage((Nation)attacker, Translatable.of("msg_err_no_money"));
-			return;
+		//Test that the siege starter can pay the siege start cost
+		if (TownyEconomyHandler.isActive()) {
+			double siegeStartCost = SiegeWarMoneyUtil.calculateTotalSiegeStartCost(targetTown);
+			if (siegeType.equals(SiegeType.CONQUEST) && !attacker.getAccount().canPayFromHoldings(siegeStartCost)) {
+				TownyMessaging.sendPrefixedNationMessage((Nation)attacker, Translatable.of("msg_err_your_nation_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(siegeStartCost)));
+				return;
+			} else if (siegeType.equals(SiegeType.REVOLT) && !targetTown.getAccount().canPayFromHoldings(siegeStartCost)) {
+				TownyMessaging.sendPrefixedTownMessage(targetTown, Translatable.of("msg_err_your_town_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(siegeStartCost)));
+				return;
+			}
 		}
 
 		// Call event
