@@ -212,8 +212,11 @@ public class SiegeWarStatusScreenListener implements Listener {
 				// > Type: Conquest
 				out.add(translator.of("status_town_siege_type", siege.getSiegeType().getTranslatedName()));
 
-				// > Status: In Progress
+				// > Status: Contested
 				out.add(translator.of("status_town_siege_status", getStatusTownSiegeSummary(siege, translator)));
+
+				// >  Progress: 5/7
+				out.add(translator.of("status_town_siege_progress", siege.getNumBattleSessionsCompleted(), SiegeWarSettings.getSiegeDurationBattleSessions()));
 
 				// > Attacker: Darkness
 				out.add(translator.of("status_town_siege_attacker", siege.getAttackerNameForDisplay()));
@@ -240,10 +243,6 @@ public class SiegeWarStatusScreenListener implements Listener {
 											siege.getFlagLocation().getBlockZ())
 							);
 						}
-
-						// >  Victory Timer: 5.3 hours
-						String victoryTimer = translator.of("status_town_siege_victory_timer", siege.getFormattedHoursUntilScheduledCompletion());
-						out.add(victoryTimer);
 
 						// >  War Chest: $12,800
 						if(TownyEconomyHandler.isActive()) {
@@ -334,9 +333,9 @@ public class SiegeWarStatusScreenListener implements Listener {
             case ATTACKER_ABANDON:
                 return translator.of("status_town_siege_status_attacker_abandon");
             case PENDING_DEFENDER_SURRENDER:
-                return translator.of("status_town_siege_status_pending_defender_surrender", siege.getTimeRemaining());
+                return translator.of("status_town_siege_status_pending_defender_surrender");
             case PENDING_ATTACKER_ABANDON:
-                return translator.of("status_town_siege_status_pending_attacker_abandon", siege.getTimeRemaining());
+                return translator.of("status_town_siege_status_pending_attacker_abandon");
             default:
                 return "???";
         }

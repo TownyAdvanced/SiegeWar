@@ -7,6 +7,7 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.Settings;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.util.StringMgmt;
@@ -153,7 +154,7 @@ public class DynmapIntegration {
                         lines.add(Translation.of("dynmap_siege_town", siege.getTown().getName()));
                         lines.add(Translation.of("dynmap_siege_type", siege.getSiegeType().getName()));
                         lines.add(Translation.of("dynmap_siege_balance", siege.getSiegeBalance()));
-                        lines.add(Translation.of("dynmap_siege_time_left", siege.getTimeRemaining()));
+                        lines.add(Translation.of("dynmap_siege_progress", siege.getNumBattleSessionsCompleted(), SiegeWarSettings.getSiegeDurationBattleSessions()));
                         if(TownyEconomyHandler.isActive()) {
                             lines.add(Translation.of("dynmap_siege_war_chest", TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount())));
                         }

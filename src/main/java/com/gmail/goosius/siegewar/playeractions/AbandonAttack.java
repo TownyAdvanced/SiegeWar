@@ -36,16 +36,16 @@ public class AbandonAttack {
 			throw new TownyException(Translatable.of("msg_err_action_disable"));
 
 		Confirmation
-			.runOnAccept(()-> abandonAttack(siege, siege.getTimeUntilAbandonConfirmationMillis()))
+			.runOnAccept(()-> abandonAttack(siege))
 			.runOnCancel(()-> Messaging.sendMsg(player, Translatable.of("msg_abandon_action_cancelled")))
 			.sendTo(player);
 	}
 
-    public static void abandonAttack(Siege siege, long timeUntilOfficialAbandon) {
+    public static void abandonAttack(Siege siege) {
 		//Send global message
-		Messaging.sendGlobalMessage(getAbandonMessage(siege, timeUntilOfficialAbandon));
+		Messaging.sendGlobalMessage(getAbandonMessage(siege));
 		//Do abandon
-		if(timeUntilOfficialAbandon > 0) {
+		if(siege.getNumBattleSessionsCompleted() < SiegeWarSettings.getSiegeDurationBattleSessions()) {
 			//Pending abandon
 			siege.setStatus(SiegeStatus.PENDING_ATTACKER_ABANDON);
 			SiegeController.saveSiege(siege);
@@ -55,14 +55,14 @@ public class AbandonAttack {
 		}
 	}
 
-	private static Translatable getAbandonMessage(Siege siege, long timeUntilAbandonConfirmation) {
+	private static Translatable getAbandonMessage(Siege siege) {
 		String key = String.format("msg_%s_siege_attacker_abandon", siege.getSiegeType().toLowerCase());
 		Translatable message = Translatable.of(key,
 				siege.getTown().getName(),
 				siege.getAttacker().getName());
 
-		if (timeUntilAbandonConfirmation > 0) {
-			message.append(Translatable.of("msg_pending_defender_victory", TimeMgmt.getFormattedTimeValue(timeUntilAbandonConfirmation)));
+		if (siege.getNumBattleSessionsCompleted() < SiegeWarSettings.getSiegeDurationBattleSessions()) {
+			message.append(Translatable.of("msg_pending_defender_victory"));
 		} else {
 			String key2 = String.format("msg_%s_siege_defender_win_result", siege.getSiegeType().toLowerCase());
 			message.append(Translatable.of(key2));

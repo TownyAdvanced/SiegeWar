@@ -36,23 +36,17 @@ import java.util.Locale;
 
 public class SiegeWarAdminCommand implements TabExecutor {
 
-	private static final List<String> siegewaradminTabCompletes = Arrays.asList("battlesession","install","nation","reload","revoltimmunity","siege","siegeimmunity","town","siegeduration");
+	private static final List<String> siegewaradminTabCompletes = Arrays.asList("battlesession","install","nation","reload","revoltimmunity","siege","siegeimmunity","town");
 	private static final List<String> siegewaradminSiegeImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminRevoltImmunityTabCompletes = Arrays.asList("town","nation","alltowns");
 	private static final List<String> siegewaradminSiegeTabCompletes = Arrays.asList("setbalance","end","setplundered","setinvaded","remove");
 	private static final List<String> siegewaradminTownTabCompletes = Arrays.asList("setpeaceful", "setoccupied");
 	private static final List<String> siegewaradminNationTabCompletes = Arrays.asList("setplundergained","setplunderlost","settownsgained","settownslost");
 	private static final List<String> siegewaradminBattleSessionTabCompletes = Arrays.asList("end","start");
-	private static final List<String> siegeDurationTabCompletes = Arrays.asList("addhours");
 
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
 		switch (args[0].toLowerCase()) {
-		case "siegeduration":
-			if (args.length == 2)
-				return NameUtil.filterByStart(siegeDurationTabCompletes, args[1]);
-			if (args.length == 3)
-				return Arrays.asList("1","2","3","4","5","6");
 		case "siegeimmunity":
 			if (args.length == 2)
 				return NameUtil.filterByStart(siegewaradminSiegeImmunityTabCompletes, args[1]);
@@ -156,9 +150,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			case "reload":
 				parseSiegeWarReloadCommand(sender);
 				break;
-			case "siegeduration":
-				parseSiegeWarSiegeDurationCommand(sender, StringMgmt.remFirstArg(args));
-				break;
 			case "siegeimmunity":
 				parseSiegeWarSiegeImmunityCommand(sender, StringMgmt.remFirstArg(args));
 				break;
@@ -195,37 +186,6 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			}
 			showHelp(sender);
 		}
-	}
-	
-	private void parseSiegeWarSiegeDurationCommand(CommandSender sender, String[] args) {
-		if (args.length != 2 || (!args[0].equalsIgnoreCase("addhours"))) {
-			showHelp(sender);
-			return;
-		}
-		int hours = 1;
-		try {
-			hours = Integer.parseInt(args[1]);
-		} catch (NumberFormatException e) {
-			Messaging.sendErrorMsg(sender, Translatable.of("msg_error_must_be_num"));
-			showHelp(sender);
-			return;
-		}
-		if (hours < 1) {
-			Messaging.sendErrorMsg(sender, Translatable.of("msg_err_negative"));
-			return;
-		}
-
-		final int finalHours = hours;
-		SiegeController.getSieges().stream().forEach(siege -> modifySiegeEndTime(siege, finalHours));
-		Messaging.sendMsg(sender, Translatable.of("hours_added_to_sieges", hours));
-	}
-
-	private void modifySiegeEndTime(Siege siege, int hours) {
-		long newEndTime = (long) (siege.getScheduledEndTime() + (hours * TimeMgmt.ONE_HOUR_IN_MILLIS));
-		if (newEndTime < System.currentTimeMillis())
-			return;
-		siege.setScheduledEndTime(newEndTime);
-		SiegeController.saveSiege(siege);
 	}
 
 	private void parseInstallCommand(CommandSender sender) {

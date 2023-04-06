@@ -87,6 +87,8 @@ public class SiegeWarBattleSessionUtil {
 	public static void endBattleSessionForSiege(Siege siege) {
 		try {
 			if (siege.getStatus() == SiegeStatus.IN_PROGRESS) {
+				//Adjust numBattleSessionsCompleted
+				siege.setNumBattleSessionsCompleted(siege.getNumBattleSessionsCompleted()+1);
 
 				//If any battle points were gained, calculate a result
 				if(siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0) {

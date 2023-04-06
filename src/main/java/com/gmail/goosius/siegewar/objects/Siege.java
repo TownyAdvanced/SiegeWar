@@ -10,7 +10,6 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
-import com.palmergames.util.TimeMgmt;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -20,10 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
-
-import static com.palmergames.util.TimeMgmt.ONE_HOUR_IN_MILLIS;
 
 /**
  * This class represents a "Siege".
@@ -50,9 +45,7 @@ public class Siege {
     private SiegeStatus status;
     private boolean townPlundered;
     private boolean townInvaded;
-    private long startTime;           //Start of siege
-    private long scheduledEndTime;    //Scheduled end of siege
-    private long actualEndTime;       //Actual end time of siege
+	private int numBattleSessionsCompleted;   //When this value hits the server specified max, the siege ends
 	private Location siegeBannerLocation;
 	private int siegeBalance;
 	private double warChestAmount;
@@ -72,6 +65,7 @@ public class Siege {
         attackerName = "";
         defenderName = "";
         status = null;
+		numBattleSessionsCompleted = 0;
 		siegeBalance = 0;
 		siegeBannerLocation = null;
 		warChestAmount = 0;
@@ -85,30 +79,6 @@ public class Siege {
 
     public Town getTown() {
         return town;
-    }
-
-	public long getScheduledEndTime() {
-        return scheduledEndTime;
-    }
-
-    public long getActualEndTime() {
-        return actualEndTime;
-    }
-
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setScheduledEndTime(long scheduledEndTime) {
-        this.scheduledEndTime = scheduledEndTime;
-    }
-
-    public void setActualEndTime(long actualEndTime) {
-        this.actualEndTime = actualEndTime;
-    }
-
-    public long getStartTime() {
-        return startTime;
     }
 	
 	public void setStatus(SiegeStatus status) {
@@ -135,19 +105,6 @@ public class Siege {
         return townInvaded;
     }
 
-    public double getTimeUntilCompletionMillis() {
-        return scheduledEndTime - System.currentTimeMillis();
-    }
-
-    public String getFormattedHoursUntilScheduledCompletion() {
-        if(status == SiegeStatus.IN_PROGRESS) {
-            double timeUntilCompletionMillis = getTimeUntilCompletionMillis();
-            return TimeMgmt.getFormattedTimeValue(timeUntilCompletionMillis);
-        } else {
-            return "0";
-        }
-    }
-
     public boolean getTownPlundered() {
         return townPlundered;
     }
@@ -156,18 +113,13 @@ public class Siege {
         return townInvaded;
     }
 
-	public long getDurationMillis() {
-		return System.currentTimeMillis() - startTime;
+	public int getNumBattleSessionsCompleted() {
+		return numBattleSessionsCompleted;
 	}
 
-	public long getTimeUntilSurrenderConfirmationMillis() {
-		return (long)((SiegeWarSettings.getWarSiegeMinSiegeDurationBeforeSurrenderHours() * ONE_HOUR_IN_MILLIS) - getDurationMillis());
+	public void setNumBattleSessionsCompleted(int num) {
+		numBattleSessionsCompleted = num;
 	}
-
-	public long getTimeUntilAbandonConfirmationMillis() {
-		return (long)((SiegeWarSettings.getWarSiegeMinSiegeDurationBeforeAbandonHours() * ONE_HOUR_IN_MILLIS) - getDurationMillis());
-	}
-
 	public Government getAttacker() {
 		return attacker;
 	}
@@ -310,27 +262,6 @@ public class Siege {
 
 	public void addBannerControlSession(Player player, BannerControlSession bannerControlSession) {
 		bannerControlSessions.put(player, bannerControlSession);
-	}
-
-	/**
-	 * @return amount of time left as a String.
-	 */
-	public String getTimeRemaining() {
-		double timeLeft;
-		switch (this.getStatus()) {
-			case IN_PROGRESS:
-				timeLeft = getTimeUntilCompletionMillis();
-				break;
-			case PENDING_ATTACKER_ABANDON:
-				timeLeft = (SiegeWarSettings.getWarSiegeMinSiegeDurationBeforeAbandonHours() * ONE_HOUR_IN_MILLIS) - getDurationMillis();
-				break;
-			case PENDING_DEFENDER_SURRENDER:
-				timeLeft = (SiegeWarSettings.getWarSiegeMinSiegeDurationBeforeSurrenderHours() * ONE_HOUR_IN_MILLIS) - getDurationMillis();
-				break;
-			default:
-				timeLeft = 0;
-		}
-		return TimeMgmt.getFormattedTimeValue(timeLeft);
 	}
 
 	public int getAttackerBattlePoints() {

@@ -37,20 +37,19 @@ public class SiegeWarTimerTaskController {
 	private static void evaluateTimedSiegeOutcome(Siege siege) {
 		switch(siege.getStatus()) {
 			case IN_PROGRESS:
-				//If scheduled end time has arrived, end siege and choose winner
-				if (System.currentTimeMillis() > siege.getScheduledEndTime()) {
+				//If last battle session has been completed, end siege and choose winner
+				if (siege.getNumBattleSessionsCompleted() >= SiegeWarSettings.getSiegeDurationBattleSessions())
 					SiegeController.endSiegeWithTimedWin(siege);
-				}
 				break;
 
 			case PENDING_DEFENDER_SURRENDER:
-				if(siege.getTimeUntilSurrenderConfirmationMillis() < 0)
-					SurrenderDefence.surrenderDefence(siege, 0);
+				if (siege.getNumBattleSessionsCompleted() >= SiegeWarSettings.getSiegeDurationBattleSessions())
+					SurrenderDefence.surrenderDefence(siege);
 				break;
 
 			case PENDING_ATTACKER_ABANDON:
-				if(siege.getTimeUntilAbandonConfirmationMillis() < 0)
-					AbandonAttack.abandonAttack(siege, 0);
+				if (siege.getNumBattleSessionsCompleted() >= SiegeWarSettings.getSiegeDurationBattleSessions())
+					AbandonAttack.abandonAttack(siege);
 				break;
 
 			default:

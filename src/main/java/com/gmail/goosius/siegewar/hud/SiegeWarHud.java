@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.hud;
 
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.object.Translator;
 import org.bukkit.Bukkit;
@@ -25,7 +26,7 @@ public class SiegeWarHud {
         board.getTeam("attackers").setSuffix(SiegeHUDManager.checkLength(siege.getAttackerNameForDisplay()));
         board.getTeam("defenders").setSuffix(SiegeHUDManager.checkLength(siege.getDefenderNameForDisplay()));
         board.getTeam("balance").setSuffix(siege.getSiegeBalance().toString());
-        board.getTeam("timeRemaining").setSuffix(siege.getTimeRemaining());
+        board.getTeam("siegeProgress").setSuffix(siege.getNumBattleSessionsCompleted() + " / " + SiegeWarSettings.getSiegeDurationBattleSessions());
         if(TownyEconomyHandler.isActive()) {
             board.getTeam("warchest").setSuffix(TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
         } else {
@@ -49,7 +50,7 @@ public class SiegeWarHud {
             attackers = board.registerNewTeam("attackers"),
             defenders = board.registerNewTeam("defenders"),
             balance = board.registerNewTeam("balance"),
-            timeRemaining = board.registerNewTeam("timeRemaining"),
+            siegeProgress = board.registerNewTeam("siegeProgress"),
             warchest = board.registerNewTeam("warchest"),
             bannerControl = board.registerNewTeam("bannerControl"),
             battleAttackerScore = board.registerNewTeam("btAttackerPoints"),
@@ -60,7 +61,7 @@ public class SiegeWarHud {
             attackers_entry = ChatColor.GRAY + translator.of("hud_attackers"),
             defenders_entry = ChatColor.GRAY + translator.of("hud_defenders"),
             balance_entry = ChatColor.GRAY + translator.of("hud_siege_balance"),
-            timeRemaining_entry = ChatColor.GRAY + translator.of("hud_time_remaining"),
+            siegeProgress_entry = ChatColor.GRAY + translator.of("hud_siege_progress"),
             warchest_entry = ChatColor.GRAY + translator.of("hud_warchest"),
             bannerControl_entry = ChatColor.GRAY + translator.of("hud_banner_control"),
             battleAttackerScore_entry = ChatColor.GRAY + translator.of("hud_battle_attacker_points"),
@@ -72,7 +73,7 @@ public class SiegeWarHud {
         defenders.addEntry(defenders_entry);
         balance.addEntry(balance_entry);
         bannerControl.addEntry(bannerControl_entry);
-        timeRemaining.addEntry(timeRemaining_entry);
+        siegeProgress.addEntry(siegeProgress_entry);
         warchest.addEntry(warchest_entry);
         battleDefenderScore.addEntry(battleDefenderScore_entry);
         battleAttackerScore.addEntry(battleAttackerScore_entry);
@@ -84,7 +85,7 @@ public class SiegeWarHud {
         objective.getScore(attackers_entry).setScore(topScore--);
         objective.getScore(defenders_entry).setScore(topScore--);
         objective.getScore(balance_entry).setScore(topScore--);
-        objective.getScore(timeRemaining_entry).setScore(topScore--);
+        objective.getScore(siegeProgress_entry).setScore(topScore--);
         objective.getScore(warchest_entry).setScore(topScore--);
         objective.getScore(bannerControl_entry).setScore(topScore--);
         objective.getScore(battleAttackerScore_entry).setScore(topScore--);
