@@ -208,7 +208,6 @@ public class SiegeController {
 		siege.setWarChestAmount(SiegeMetaDataController.getWarChestAmount(town));
 		siege.setTownPlundered(SiegeMetaDataController.townPlundered(town));
 		siege.setTownInvaded(SiegeMetaDataController.townInvaded(town));
-		siege.setNumBattleSessionsCompleted(0);
 
 		return true;
 	}
