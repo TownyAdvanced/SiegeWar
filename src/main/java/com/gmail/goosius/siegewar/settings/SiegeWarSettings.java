@@ -173,8 +173,8 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_EXTRA_MONEY_PERCENTAGE_PER_TOWN_LEVEL);
 	}
 
-	public static int getMaxOccupationTaxPerPlot() {
-		return Settings.getInt(ConfigNodes.WAR_SIEGE_MAX_OCCUPATION_TAX_PER_PLOT);
+	public static double getMaxOccupationTaxPerPlot() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_MAX_OCCUPATION_TAX_PER_PLOT);
 	}
 
 	public static int getWarSiegeBannerControlSessionDurationMinutes() {
