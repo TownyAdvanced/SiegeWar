@@ -290,7 +290,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 						// > Plundered: No
 						out.add(getPlunderStatusLine(siege, translator));
-	
+
 						// > Immunity: 7 days
 						String siegeImmunityTimer = translator.of("status_town_siege_immunity_timer", time);
 						out.add(siegeImmunityTimer);
