@@ -230,10 +230,10 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 						// >  Progress: 5/7
 						out.add(translator.of("status_town_siege_progress", siege.getNumBattleSessionsCompleted(), SiegeWarSettings.getSiegeDurationBattleSessions()));
-
-						// > Status: Contested
-						out.add(translator.of("status_town_siege_status", getStatusTownSiegeSummary(siege, translator)));
 				}
+
+				// > Status: Contested
+				out.add(translator.of("status_town_siege_status", getStatusTownSiegeSummary(siege, translator)));
 
 				switch (siegeStatus) {
 					case IN_PROGRESS:
@@ -285,9 +285,13 @@ public class SiegeWarStatusScreenListener implements Listener {
 	                case DEFENDER_SURRENDER:
 					case ATTACKER_ABANDON:
 
-						out.add(getPlunderStatusLine(siege, translator));
+						// > Captured: No
 						out.add(getInvadeStatusLine(siege, translator));
 
+						// > Plundered: No
+						out.add(getPlunderStatusLine(siege, translator));
+	
+						// > Immunity: 7 days
 						String siegeImmunityTimer = translator.of("status_town_siege_immunity_timer", time);
 						out.add(siegeImmunityTimer);
 	            }

@@ -172,6 +172,9 @@ public class SiegeController {
 			return false;
 		siege.setStatus(SiegeStatus.parseString(SiegeMetaDataController.getSiegeStatus(town)));
 
+		//Load siege progress
+		siege.setNumBattleSessionsCompleted(SiegeMetaDataController.getNumBattleSessionsCompleted(town));
+
 		//Load attacker & defender name
 		if(!siege.getStatus().isActive() && SiegeMetaDataController.getAttackerName(town) == null) {
 			/* 
