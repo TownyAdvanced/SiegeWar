@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.metadata;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
+import com.palmergames.bukkit.towny.object.metadata.DecimalDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
 import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
@@ -22,7 +23,7 @@ public class NationMetaDataController {
     private static final IntegerDataField legacyFieldNationPeacefulOccupationTax = new IntegerDataField("siegeWar_nationPeacefulOccupationTax", 0);
     
     //Occupation tax per plot. A value of -1 causes the applied value to be the "max" set in the config file.
-    private static final IntegerDataField nationOccupationTaxPerPlot = new IntegerDataField("siegeWar_nationOccupationTaxPerPlot", -1);
+    private static final DecimalDataField nationOccupationTaxPerPlot = new DecimalDataField("siegeWar_nationOccupationTaxPerPlot", -1.0);
  
     public NationMetaDataController(SiegeWar plugin) {
         this.plugin = plugin;
@@ -94,14 +95,14 @@ public class NationMetaDataController {
         setIdf(nation, townsLost, num);
     }
 
-	public static void setNationOccupationTaxPerPlot(Nation nation, int tax) {
-		MetaDataUtil.setInt(nation, nationOccupationTaxPerPlot, tax, true);
+	public static void setNationOccupationTaxPerPlot(Nation nation, double tax) {
+		MetaDataUtil.setDouble(nation, nationOccupationTaxPerPlot, tax, true);
 	}
 
-	public static int getNationOccupationTaxPerPlot(Nation nation) {
+	public static double getNationOccupationTaxPerPlot(Nation nation) {
         if (!MetaDataUtil.hasMeta(nation, nationOccupationTaxPerPlot))
             return -1;
-        return MetaDataUtil.getInt(nation, nationOccupationTaxPerPlot);
+        return MetaDataUtil.getDouble(nation, nationOccupationTaxPerPlot);
 	}
 
     public static void deleteLegacyMetadata(Nation nation) {

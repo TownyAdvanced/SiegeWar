@@ -57,14 +57,14 @@ public class SiegeWarNationSetOccupationTaxAddonCommand extends BaseCommand impl
 		Player player = catchConsole(sender);
 		Nation nation = getNationFromPlayerOrThrow(player);
 
-		int maxTaxPerPlot = SiegeWarSettings.getMaxOccupationTaxPerPlot();
-		int taxPerPlot;
+		double maxTaxPerPlot = SiegeWarSettings.getMaxOccupationTaxPerPlot();
+		double taxPerPlot;
 		if (args[0].equalsIgnoreCase("max")) {
 			NationMetaDataController.setNationOccupationTaxPerPlot(nation, -1);
 			taxPerPlot = maxTaxPerPlot;
 			TownyMessaging.sendMsg(player, Translatable.of("msg_occupation_tax_set_max", getMoney(taxPerPlot)));
 		} else {
-			taxPerPlot = MathUtil.getPositiveIntOrThrow(args[0]);
+			taxPerPlot = getPositiveDoubleOrThrow(args[0]);
 			if (taxPerPlot > maxTaxPerPlot)
 				Messaging.sendMsg(player, Translatable.of("msg_err_occupation_tax_cannot_be_more_than", maxTaxPerPlot));
 			taxPerPlot = Math.min(maxTaxPerPlot, taxPerPlot);
@@ -73,7 +73,19 @@ public class SiegeWarNationSetOccupationTaxAddonCommand extends BaseCommand impl
 		}
 	}
 
-	private String getMoney(int tax) {
+	private double getPositiveDoubleOrThrow(String input) throws TownyException {
+		try {
+			double d = Double.parseDouble(input);
+			if(d < 0) {
+				throw new TownyException(Translatable.of("msg_err_negative"));
+			}
+			return d;
+		} catch (NumberFormatException var3) {
+			throw new TownyException(Translatable.of("msg_error_must_be_num"));
+		}
+	}
+
+	private String getMoney(double tax) {
 		return TownyEconomyHandler.isActive() ? TownyEconomyHandler.getFormattedBalance(tax) : String.valueOf(tax);
 	}
 
