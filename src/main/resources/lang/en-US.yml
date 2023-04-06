@@ -302,9 +302,9 @@ msg_err_town_and_capital_too_far_apart: "&cThe homeblock of %s is too far away f
 # Added in 0.22
 
 #Revolt immunities
-msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s hours.'
-msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s hours.'
-msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s hours.'
+msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s.'
+msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s.'
+msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s.'
 
 # Added in 0.23
 msg_siege_war_banner_control_remaining_session_time: 'Banner Cap Timer: %s'
