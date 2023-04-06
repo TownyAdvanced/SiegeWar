@@ -223,7 +223,7 @@ public class SiegeWarMoneyUtil {
 		if (!TownyEconomyHandler.isActive())
 			return; //Siege cost does not apply
 		if (!nation.getAccount().canPayFromHoldings(cost))
-			throw new TownyException(Translatable.of("msg_err_your_town_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(cost)));
+			throw new TownyException(Translatable.of("msg_err_your_nation_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(cost)));
 	}
 
 	/**
@@ -233,11 +233,11 @@ public class SiegeWarMoneyUtil {
 	 * @throws TownyException thrown if town cannot pay.
 	 */
 	public static void throwIfTownCannotAffordToStartSiege(Town town) throws TownyException {
-		double cost = calculateTotalSiegeStartCost(town);
+		double cost = calculateUpfrontSiegeStartCost(town);
 		if (!TownyEconomyHandler.isActive())
 			return; //Siege cost does not apply
 		if (!town.getAccount().canPayFromHoldings(cost))
-			throw new TownyException(Translatable.of("msg_err_your_nation_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(cost)));
+			throw new TownyException(Translatable.of("msg_err_your_town_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(cost)));
 	}
 
 	public static void payDailyPlunderDebt() {
