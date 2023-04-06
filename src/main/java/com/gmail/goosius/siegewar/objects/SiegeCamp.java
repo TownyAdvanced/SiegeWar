@@ -130,8 +130,10 @@ public class SiegeCamp {
 			double siegeStartCost = SiegeWarMoneyUtil.calculateTotalSiegeStartCost(targetTown);
 			if (siegeType.equals(SiegeType.CONQUEST) && !attacker.getAccount().canPayFromHoldings(siegeStartCost)) {
 				TownyMessaging.sendPrefixedNationMessage((Nation)attacker, Translatable.of("msg_err_no_money"));
+				return;
 			} else if (siegeType.equals(SiegeType.REVOLT) && !targetTown.getAccount().canPayFromHoldings(siegeStartCost)) {
 				TownyMessaging.sendPrefixedTownMessage(targetTown, Translatable.of("msg_err_no_money"));
+				return;
 			}
 		}
 

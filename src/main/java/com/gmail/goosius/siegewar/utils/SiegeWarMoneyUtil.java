@@ -216,14 +216,28 @@ public class SiegeWarMoneyUtil {
 	 * 
 	 * @param nation Nation starting a siege.
 	 * @param town Town being sieged.
-	 * @throws TownyException thrown if the economy is off, or the nation cannot pay.
+	 * @throws TownyException thrown nation cannot pay.
 	 */
-	public static void canNationPayCostToSiegeTown(Nation nation, Town town) throws TownyException {
+	public static void throwIfNationCannotAffordToStartSiege(Nation nation, Town town) throws TownyException {
 		double cost = calculateTotalSiegeStartCost(town);
 		if (!TownyEconomyHandler.isActive())
-			throw new TownyException(Translatable.of("msg_err_no_siege_economy_not_active"));
+			return; //Siege cost does not apply
 		if (!nation.getAccount().canPayFromHoldings(cost))
-			throw new TownyException(Translatable.of("msg_err_you_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(cost)));
+			throw new TownyException(Translatable.of("msg_err_your_town_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(cost)));
+	}
+
+	/**
+	 * Can the town afford to start their (revolt) siege?
+	 *
+	 * @param town Town starting a (revolt) siege.
+	 * @throws TownyException thrown if town cannot pay.
+	 */
+	public static void throwIfTownCannotAffordToStartSiege(Town town) throws TownyException {
+		double cost = calculateTotalSiegeStartCost(town);
+		if (!TownyEconomyHandler.isActive())
+			return; //Siege cost does not apply
+		if (!town.getAccount().canPayFromHoldings(cost))
+			throw new TownyException(Translatable.of("msg_err_your_nation_cannot_afford_to_siege_for_x", TownyEconomyHandler.getFormattedBalance(cost)));
 	}
 
 	public static void payDailyPlunderDebt() {
