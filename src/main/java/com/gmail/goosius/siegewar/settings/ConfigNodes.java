@@ -293,27 +293,13 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	WAR_SIEGE_MAX_HOLDOUT_TIME_HOURS(
-			"war.siege.times.max_holdout_time_hours",
-			"72",
+	SIEGE_DURATION_BATTLE_SESSIONS(
+			"war.siege.times.duration_battle_sessions",
+			"7",
 			"",
-			"# The maximum duration a town can hold out against a siege.",
-			"# If the value is too high, regular players may be unsatisfied that sieges take too long.",
-			"# If the value is too low, casual players may be unsatisfied that ",
-		    "#    they are unable to contribute to sieges, especially those involving their own town/nation"),
-	WAR_SIEGE_MIN_SIEGE_DURATION_BEFORE_SURRENDER_HOURS(
-			"war.siege.times.min_siege_duration_before_surrender_hours",
-			"24",
-			"",
-			"# The minimum duration of a siege before a town can surrender.",
-			"# This setting is important because it prevents a 'quick surrender' by the defender",
-			"# - which could leave the attacker with no 'aftermath' time in which to execute invade or plunder actions."),
-	WAR_SIEGE_MIN_SIEGE_DURATION_BEFORE_ABANDON_HOURS(
-			"war.siege.times.min_siege_duration_before_abandon_hours",
-			"24",
-			"",
-			"# The minimum duration of a siege before an attacking nation can abandon.",
-			"# This setting is important to prevent an attacker and defender colluding to establish a suitable siege immunity time."),
+			"# The duration of a siege, in battle sessions.",
+			"# TIP 1: The higher this value, the more your server will experience aggression and toxicity.",
+			"# TIP 2: The higher this value, the more your geopolitics will be dominated by ultra-hardcore gamers, who will find it easier to defeat players with normal/healthy hours-online-per-week."),
 	WAR_SIEGE_SIEGE_IMMUNITY_TIME_NEW_TOWN_HOURS(
 			"war.siege.times.siege_immunity_time_new_town_hours",
 			"120",

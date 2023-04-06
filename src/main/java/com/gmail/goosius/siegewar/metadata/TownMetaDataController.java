@@ -33,6 +33,9 @@ public class TownMetaDataController {
 	private static StringDataField legacyDataPrePeacefulOccupierUUID = new StringDataField("siegewar_prePeacefulOccupierUUID", "");
 	private static StringDataField legacyAttackerSiegeContributors = new StringDataField("siegewar_attackerSiegeContributors", "");
 	private static StringDataField legacyPrimaryTownGovernments = new StringDataField("siegewar_primaryTownGovernments", "");
+	private static LongDataField legacySiegeStartTime = new LongDataField("siegewar_startTime", 0l);
+	private static LongDataField legacySiegeEndTime = new LongDataField("siegewar_endTime", 0l);
+	private static LongDataField legacySiegeActualEndTime = new LongDataField("siegewar_actualEndTime", 0l);
 
 	public TownMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
@@ -207,6 +210,17 @@ public class TownMetaDataController {
 		if (town.hasMeta(sdf.getKey())) {
 			town.removeMetaData(sdf);
 		}
-		//Note that legacy sieges will already have been removed by SiegeController.loadSiegeList()
+		LongDataField ldf = (LongDataField) legacySiegeStartTime.clone();
+		if (town.hasMeta(ldf.getKey())) {
+			town.removeMetaData(ldf);
+		}
+		ldf = (LongDataField) legacySiegeEndTime.clone();
+		if (town.hasMeta(ldf.getKey())) {
+			town.removeMetaData(ldf);
+		}
+		ldf = (LongDataField) legacySiegeActualEndTime.clone();
+		if (town.hasMeta(ldf.getKey())) {
+			town.removeMetaData(ldf);
+		}
 	}
 }

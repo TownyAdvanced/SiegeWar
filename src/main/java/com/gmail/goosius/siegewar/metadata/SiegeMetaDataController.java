@@ -43,9 +43,7 @@ public class SiegeMetaDataController {
 	private static DecimalDataField siegeWarChestAmount = new DecimalDataField("siegewar_warChestAmount", 0.0);
 	private static BooleanDataField townPlundered = new BooleanDataField("siegewar_townPlundered", false);
 	private static BooleanDataField townInvaded = new BooleanDataField("siegewar_townInvaded", false);
-	private static LongDataField startTime = new LongDataField("siegewar_startTime", 0l);
-	private static LongDataField endTime = new LongDataField("siegewar_endTime", 0l);
-	private static LongDataField actualEndTime = new LongDataField("siegewar_actualEndTime", 0l);
+	private static IntegerDataField numBattleSessionsCompleted = new IntegerDataField("siegewar_numBattleSessionsCompleted", 0);
 	
 	public SiegeMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
@@ -276,50 +274,20 @@ public class SiegeMetaDataController {
 		else
 			town.addMetaData(new BooleanDataField("siegewar_townInvaded", bool));
 	}
-	
-	public static long getStartTime(Town town) {
-		LongDataField ldf = (LongDataField) startTime.clone();
-		if (town.hasMeta(ldf.getKey()))
-			return MetaDataUtil.getLong(town, ldf);
-		return 0l;
+
+	public static int getNumBattleSessionsCompleted(Town town) {
+		IntegerDataField idf = (IntegerDataField) numBattleSessionsCompleted.clone();
+		if (town.hasMeta(idf.getKey()))
+			return MetaDataUtil.getInt(town, idf);
+		return 0;
 	}
 
-	public static void setStartTime(Town town, long num) {
-		LongDataField ldf = (LongDataField) startTime.clone();
-		if (town.hasMeta(ldf.getKey()))
-			MetaDataUtil.setLong(town, ldf, num, true);
+	public static void setNumBattleSessionsCompleted(Town town, int num) {
+		IntegerDataField idf = (IntegerDataField) numBattleSessionsCompleted.clone();
+		if (town.hasMeta(idf.getKey()))
+			MetaDataUtil.setInt(town, idf, num, true);
 		else
-			town.addMetaData(new LongDataField("siegewar_startTime", num));
-	}
-	
-	public static long getEndTime(Town town) {
-		LongDataField ldf = (LongDataField) endTime.clone();
-		if (town.hasMeta(ldf.getKey()))
-			return MetaDataUtil.getLong(town, ldf);
-		return 0l;
-	}
-
-	public static void setEndTime(Town town, long num) {
-		LongDataField ldf = (LongDataField) endTime.clone();
-		if (town.hasMeta(ldf.getKey()))
-			MetaDataUtil.setLong(town, ldf, num, true);
-		else
-			town.addMetaData(new LongDataField("siegewar_endTime", num));
-	}
-	
-	public static long getActualEndTime(Town town) {
-		LongDataField ldf = (LongDataField) actualEndTime.clone();
-		if (town.hasMeta(ldf.getKey()))
-			return MetaDataUtil.getLong(town, ldf);
-		return 0l;
-	}
-
-	public static void setActualEndTime(Town town, long num) {
-		LongDataField ldf = (LongDataField) actualEndTime.clone();
-		if (town.hasMeta(ldf.getKey()))
-			MetaDataUtil.setLong(town, ldf, num, true);
-		else
-			town.addMetaData(new LongDataField("siegewar_actualEndTime", num));
+			town.addMetaData(new IntegerDataField("siegewar_numBattleSessionsCompleted", num));
 	}
 
 	public static void removeSiegeMeta (Town town) {
@@ -380,15 +348,9 @@ public class SiegeMetaDataController {
 		if (town.hasMeta(bdf.getKey()))
 			town.removeMetaData(bdf);
 
-		LongDataField ldf = (LongDataField) startTime.clone();
-		if (town.hasMeta(ldf.getKey()))
-			town.removeMetaData(ldf);
-		ldf = (LongDataField) endTime.clone();
-		if (town.hasMeta(ldf.getKey()))
-			town.removeMetaData(ldf);
-		ldf = (LongDataField) actualEndTime.clone();
-		if (town.hasMeta(ldf.getKey()))
-			town.removeMetaData(ldf);
+		idf = (IntegerDataField) numBattleSessionsCompleted.clone();
+		if (town.hasMeta(idf.getKey()))
+			town.removeMetaData(idf);
 	}
 	
 }

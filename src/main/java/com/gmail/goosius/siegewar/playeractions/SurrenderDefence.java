@@ -34,16 +34,16 @@ public class SurrenderDefence {
 			throw new TownyException(Translatable.of("msg_err_siege_occupied_towns_cannot_surrender_in_conquest_sieges").forLocale(player));
 
 		Confirmation
-			.runOnAccept(()-> surrenderDefence(siege, siege.getTimeUntilSurrenderConfirmationMillis()))
+			.runOnAccept(()-> surrenderDefence(siege))
 			.runOnCancel(()-> Messaging.sendMsg(player, Translatable.of("msg_surrender_action_cancelled")))
 			.sendTo(player);
 	}
 
-    public static void surrenderDefence(Siege siege, long timeUntilSurrenderConfirmation) {
+    public static void surrenderDefence(Siege siege) {
 		//Send global message
-		Messaging.sendGlobalMessage(getSurrenderMessage(siege, timeUntilSurrenderConfirmation));
+		Messaging.sendGlobalMessage(getSurrenderMessage(siege));
 		//Do surrender
-		if(timeUntilSurrenderConfirmation > 0) {
+		if(siege.getNumBattleSessionsCompleted() < SiegeWarSettings.getSiegeDurationBattleSessions()) {
 			//Pending surrender
 			siege.setStatus(SiegeStatus.PENDING_DEFENDER_SURRENDER);
 			SiegeController.saveSiege(siege);
@@ -53,14 +53,14 @@ public class SurrenderDefence {
 		}
 	}
 
-	private static Translatable getSurrenderMessage(Siege siege, long timeUntilSurrenderConfirmation) {
+	private static Translatable getSurrenderMessage(Siege siege) {
 		String key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toLowerCase());
 		Translatable message = Translatable.of(key,
 						siege.getTown().getName(),
 						siege.getAttacker().getName());
 
-		if(timeUntilSurrenderConfirmation > 0) {
-			message.append(Translatable.of("msg_pending_attacker_victory", TimeMgmt.getFormattedTimeValue(timeUntilSurrenderConfirmation)));
+		if(siege.getNumBattleSessionsCompleted() < SiegeWarSettings.getSiegeDurationBattleSessions()) {
+			message.append(Translatable.of("msg_pending_attacker_victory"));
 		} else {
 			String key2 = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toLowerCase());
 			message.append(Translatable.of(key2));

@@ -96,9 +96,7 @@ public class SiegeController {
 		SiegeMetaDataController.setWarChestAmount(town, siege.getWarChestAmount());
 		SiegeMetaDataController.setTownPlundered(town, siege.getTownPlundered());
 		SiegeMetaDataController.setTownInvaded(town, siege.getTownInvaded());
-		SiegeMetaDataController.setStartTime(town, siege.getStartTime());
-		SiegeMetaDataController.setEndTime(town, siege.getScheduledEndTime());
-		SiegeMetaDataController.setActualEndTime(town, siege.getActualEndTime());
+		SiegeMetaDataController.setNumBattleSessionsCompleted(town, siege.getNumBattleSessionsCompleted());
 		town.save();
 	}
 
@@ -207,16 +205,7 @@ public class SiegeController {
 		siege.setWarChestAmount(SiegeMetaDataController.getWarChestAmount(town));
 		siege.setTownPlundered(SiegeMetaDataController.townPlundered(town));
 		siege.setTownInvaded(SiegeMetaDataController.townInvaded(town));
-
-		if (SiegeMetaDataController.getStartTime(town) == 0l)
-			return false;
-		siege.setStartTime(SiegeMetaDataController.getStartTime(town));
-
-		if (SiegeMetaDataController.getEndTime(town) == 0l)
-			return false;
-		siege.setScheduledEndTime(SiegeMetaDataController.getEndTime(town));
-
-		siege.setActualEndTime(SiegeMetaDataController.getActualEndTime(town));
+		siege.setNumBattleSessionsCompleted(0);
 
 		return true;
 	}
@@ -462,11 +451,8 @@ public class SiegeController {
 		siege.setStatus(SiegeStatus.IN_PROGRESS);
 		siege.setTownPlundered(false);
 		siege.setTownInvaded(false);
-		siege.setStartTime(System.currentTimeMillis());
-		siege.setScheduledEndTime(
-				(System.currentTimeMillis() +
-						((long) (SiegeWarSettings.getWarSiegeMaxHoldoutTimeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS))));
-		siege.setActualEndTime(0);
+		siege.setNumberOfBannerControlReversals(0);
+		siege.setNumBattleSessionsCompleted(0);
 		siege.setFlagLocation(bannerBlock.getLocation());
 
 		SiegeController.setSiege(targetTown, true);

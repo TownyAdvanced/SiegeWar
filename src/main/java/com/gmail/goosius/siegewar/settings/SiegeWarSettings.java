@@ -97,18 +97,10 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_PLUNDER_AMOUNT_PER_PLOT);
 	}
 
-	public static double getWarSiegeMaxHoldoutTimeHours() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_MAX_HOLDOUT_TIME_HOURS);
-	}
-	
-	public static double getWarSiegeMinSiegeDurationBeforeSurrenderHours() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_MIN_SIEGE_DURATION_BEFORE_SURRENDER_HOURS);
+	public static int getSiegeDurationBattleSessions() {
+		return Settings.getInt(ConfigNodes.SIEGE_DURATION_BATTLE_SESSIONS);
 	}
 
-	public static double getWarSiegeMinSiegeDurationBeforeAbandonHours() {
-		return Settings.getDouble(ConfigNodes.WAR_SIEGE_MIN_SIEGE_DURATION_BEFORE_ABANDON_HOURS);
-	}
-	
 	public static boolean areBattlePointsWinnerTakesAll() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_POINTS_BALANCING_END_OF_BATTLE_POINTS_DISTRIBUTION_WINNER_TAKES_ALL);
 	}

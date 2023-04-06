@@ -49,9 +49,8 @@ public class SiegeWarImmunityUtil {
      */
     public static void grantSiegeImmunityAfterEndedSiege(Town town, Siege siege) {
         //Grant siege immunity to town
-        double siegeDurationMillis = siege.getActualEndTime() - siege.getStartTime();
-        double immunityDurationMillisDouble = siegeDurationMillis * SiegeWarSettings.getWarSiegeSiegeImmunityTimeModifier();
-        long immunityDurationMillis = (long)(immunityDurationMillisDouble + 0.5);
+		//Todo - This is just a hack to simplify the PR. Will be fixed in next PR
+        long immunityDurationMillis = (long)SiegeWarSettings.getWarSiegeSiegeImmunityTimeNewTownsHours();
         TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + immunityDurationMillis);
         town.save();
     }
