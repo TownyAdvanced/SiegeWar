@@ -209,9 +209,6 @@ public class SiegeWarStatusScreenListener implements Listener {
 				SiegeStatus siegeStatus= siege.getStatus();
 				String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
 
-				// >  Progress: 5/7
-				out.add(translator.of("status_town_siege_progress", siege.getNumBattleSessionsCompleted(), SiegeWarSettings.getSiegeDurationBattleSessions()));
-
 				// > Attacker: Darkness
 				out.add(translator.of("status_town_siege_attacker", siege.getAttackerNameForDisplay()));
 
