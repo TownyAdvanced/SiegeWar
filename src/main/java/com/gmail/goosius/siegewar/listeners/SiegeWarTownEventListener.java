@@ -79,7 +79,7 @@ public class SiegeWarTownEventListener implements Listener {
 	public void onCreateNewTown(NewTownEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			Town town = event.getTown();
-			TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + (long)(SiegeWarSettings.getWarSiegeSiegeImmunityTimeNewTownsHours() * TimeMgmt.ONE_HOUR_IN_MILLIS));
+			TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + (long)(SiegeWarSettings.getSiegeImmunityNewTownsHours() * TimeMgmt.ONE_HOUR_IN_MILLIS));
 			SiegeWarTownPeacefulnessUtil.setDesiredTownPeacefulness(town, TownySettings.getTownDefaultNeutral());
 			town.save();
 		}

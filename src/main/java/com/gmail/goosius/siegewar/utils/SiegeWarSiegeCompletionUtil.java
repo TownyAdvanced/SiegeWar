@@ -25,7 +25,7 @@ public class SiegeWarSiegeCompletionUtil {
 		//Update values
 		SiegeWarBattleSessionUtil.endBattleSessionForSiege(siege);
 		siege.setStatus(siegeStatus);
-		SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown(), siege);
+		SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown());
 		SiegeWarImmunityUtil.activateRevoltImmunityTimer(siege.getTown());
 		CosmeticUtil.removeFakeBeacons(siege);
 		/*

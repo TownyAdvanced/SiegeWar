@@ -9,6 +9,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class contains utility functions related to siege/revolt immunity
@@ -38,19 +39,12 @@ public class SiegeWarImmunityUtil {
     }
 
     /**
-     * The siege ended.
-     *
-     * 1. Grant siege immunity to the town which was besieged.
-     * 2. If the town was the defender,
-     *    grant siege immunity to any nations who were the home nation of the town during the siege
+     * Grant siege immunity to the town which was besieged.
      *
      * @param town the town which was besieged
-     * @param siege the siege
      */
-    public static void grantSiegeImmunityAfterEndedSiege(Town town, Siege siege) {
-        //Grant siege immunity to town
-		//Todo - This is just a hack to simplify the PR. Will be fixed in next PR
-        long immunityDurationMillis = (long)SiegeWarSettings.getWarSiegeSiegeImmunityTimeNewTownsHours();
+    public static void grantSiegeImmunityAfterEndedSiege(Town town) {
+        long immunityDurationMillis = (long)(SiegeWarSettings.getSiegeImmunityPostSiegeHours() * 3600000) ;
         TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + immunityDurationMillis);
         town.save();
     }
