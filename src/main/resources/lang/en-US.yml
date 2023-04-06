@@ -111,7 +111,7 @@ msg_err_town_not_registered: '&cTown %s is not registered.'
 
 #Scoreboard
 hud_title: 'Siege'
-hud_siegestatus: 'Siege Status'
+hud_siege_status: 'Siege Status: '
 hud_attackers: 'ATK: '
 hud_defenders: 'DEF: '
 hud_banner_control: "Banner Control: "
@@ -121,7 +121,7 @@ msg_swa_resident_already_has_control: '&cResident %s already has control.'
 msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
 msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
 
-siege_status_in_progress: 'In Progress'
+siege_status_in_progress: 'Contested'
 siege_status_attacker_win: 'Attacker Win'
 siege_status_defender_win: 'Defender Win'
 siege_status_unknown: 'Unknown'

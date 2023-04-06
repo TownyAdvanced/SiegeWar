@@ -218,26 +218,31 @@ public class SiegeWarStatusScreenListener implements Listener {
 				// > Type: Conquest
 				out.add(translator.of("status_town_siege_type", siege.getSiegeType().getTranslatedName()));
 
-				// > Status: Contested
-				out.add(translator.of("status_town_siege_status", getStatusTownSiegeSummary(siege, translator)));
-
 				switch (siegeStatus) {
 					case IN_PROGRESS:
+					case PENDING_ATTACKER_ABANDON:
+					case PENDING_DEFENDER_SURRENDER:
 						// >  War Chest: $12,800
 						if(TownyEconomyHandler.isActive()) {
 							String warChest = TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount());
 							out.add(translator.of("status_town_siege_status_warchest", warChest));
 						}
 
+						// >  Progress: 5/7
+						out.add(translator.of("status_town_siege_progress", siege.getNumBattleSessionsCompleted(), SiegeWarSettings.getSiegeDurationBattleSessions()));
+
+						// > Status: Contested
+						out.add(translator.of("status_town_siege_status", getStatusTownSiegeSummary(siege, translator)));
+				}
+
+				switch (siegeStatus) {
+					case IN_PROGRESS:
 						// > Balance: 530 | Pending: +130
 						String balanceLine = translator.of("status_town_siege_status_siege_balance", siege.getSiegeBalance());
 						int pending = SiegeWarBattleSessionUtil.calculateSiegeBalanceAdjustment(siege);
 						if(pending != 0)
 							balanceLine += translator.of("status_town_siege_pending_balance_adjustment", ((pending > 0 ? "+" : "") + pending));
 						out.add(balanceLine);
-
-						// >  Progress: 5/7
-						out.add(translator.of("status_town_siege_progress", siege.getNumBattleSessionsCompleted(), SiegeWarSettings.getSiegeDurationBattleSessions()));
 
 						// > Banner XYZ: {2223,82,9877}
 						if(SiegeWarSettings.isBannerXYZTextEnabled()) {
@@ -275,19 +280,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 						out.add(translator.of("status_town_siege_battle_time_remaining", siege.getFormattedBattleTimeRemaining(translator)));
 						break;
 
-					case PENDING_ATTACKER_ABANDON:
-					case PENDING_DEFENDER_SURRENDER:
-						// >  War Chest: $12,800
-						if(TownyEconomyHandler.isActive()) {
-							String warChest = TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount());
-							out.add(translator.of("status_town_siege_status_warchest", warChest));
-						}
-
-						// >  Progress: 5/7
-						out.add(translator.of("status_town_siege_progress", siege.getNumBattleSessionsCompleted(), SiegeWarSettings.getSiegeDurationBattleSessions()));
-						break;
-
-	                case ATTACKER_WIN:
+					case ATTACKER_WIN:
 					case DEFENDER_WIN:
 	                case DEFENDER_SURRENDER:
 					case ATTACKER_ABANDON:
