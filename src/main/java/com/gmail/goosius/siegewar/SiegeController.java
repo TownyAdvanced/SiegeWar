@@ -516,7 +516,7 @@ public class SiegeController {
 				Messaging.sendGlobalMessage(
 						Translatable.of("msg_revolt_siege_started",
 						siege.getTown().getName(),
-						siege.getDefender().getName()
+						siege.getAttacker().getName()
 				));
 				break;
 		}

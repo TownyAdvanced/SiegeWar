@@ -138,6 +138,11 @@ public class SiegeWarBattleSessionUtil {
 
 				//Save siege to database
 				SiegeController.saveSiege(siege);
+
+			} else if (siege.getStatus() == SiegeStatus.PENDING_ATTACKER_ABANDON
+				|| siege.getStatus() == SiegeStatus.PENDING_DEFENDER_SURRENDER) {
+				//Adjust numBattleSessionsCompleted
+				siege.setNumBattleSessionsCompleted(siege.getNumBattleSessionsCompleted()+1);
 			}
 		} catch (Throwable t) {
 			try {

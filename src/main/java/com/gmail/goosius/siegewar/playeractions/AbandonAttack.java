@@ -56,16 +56,16 @@ public class AbandonAttack {
 	}
 
 	private static Translatable getAbandonMessage(Siege siege) {
-		String key = String.format("msg_%s_siege_attacker_abandon", siege.getSiegeType().toLowerCase());
-		Translatable message = Translatable.of(key,
-				siege.getTown().getName(),
-				siege.getAttacker().getName());
-
+		Translatable message;
+		String key;
 		if (siege.getNumBattleSessionsCompleted() < SiegeWarSettings.getSiegeDurationBattleSessions()) {
-			message.append(Translatable.of("msg_pending_defender_victory"));
+			key = String.format("msg_%s_siege_attacker_abandon", siege.getSiegeType().toLowerCase());
+			message = Translatable.of(key, siege.getTown().getName(), siege.getAttacker().getName());
 		} else {
-			String key2 = String.format("msg_%s_siege_defender_win_result", siege.getSiegeType().toLowerCase());
-			message.append(Translatable.of(key2));
+			key = String.format("msg_%s_siege_attacker_abandon_confirmed", siege.getSiegeType().toLowerCase());
+			message = Translatable.of(key, siege.getTown().getName());
+			key= String.format("msg_%s_siege_defender_win_result", siege.getSiegeType().toLowerCase());
+			message.append(Translatable.of(key));
 		}
 
 		return message;
