@@ -136,6 +136,17 @@ public class SiegeWarBukkitEventListener implements Listener {
 		return false;
 	}
 
+	/*
+	 * SW can affect whether an inventory is dropped and also can degrade an inventory.
+	 */
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		//Check for siege-war related death effects
+		if(isSWEnabledAndIsThisAWarAllowedWorld(event.getEntity().getWorld())) {
+			PlayerDeath.evaluateSiegePlayerDeath(event.getEntity(), event);
+		}
+	}
+	
 	@EventHandler(ignoreCancelled = true)
 	public void onPlayerTeleport(PlayerTeleportEvent event) {
 		// Check if SiegeWar is set to disallow non-residents teleporting into a siege
@@ -286,15 +297,5 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(DataCleanupUtil.isLegacyArtefact(event.getResult())) {
 			event.setResult(null); //Cannot repair artefact
 		}
-	}
-
-	@EventHandler (ignoreCancelled = true)
-	public void on (PlayerDeathEvent event) {
-		if (!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.isKeepInventoryOnSiegeZoneDeathEnabled())
-			return;
-		if(!SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation()))
-			return;
-		SiegeWarInventoryUtil.degradeInventory(event);
-		SiegeWarInventoryUtil.keepInventory(event);
 	}
 }
