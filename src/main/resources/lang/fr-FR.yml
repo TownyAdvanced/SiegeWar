@@ -107,6 +107,7 @@ siege_status_defender_win: 'Victoire du Défenseur'
 siege_status_unknown: 'Inconnu'
 dynmap_siege_banner_control: 'Contrôle de la bannière: %s'
 dynmap_siege_progress: 'Siege Progress: %d/%d'
+dynmap_siege_status: 'Siege Status: %s'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to breaking due to inventory degradation.'
 msg_swa_remove_siege_success: '&bSuccessfully removed siege.'
