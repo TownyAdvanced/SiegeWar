@@ -560,6 +560,11 @@ public enum ConfigNodes {
 			"false",
 			"",
 			"# If this is true, a nation capital can be a peaceful town. If false, any capital will not be able to turn peaceful."),
+	PEACEFUL_TOWNS_NEW_TOWN_PEACEFULNESS(
+			"peaceful_towns.new_town_peacefulness",
+			"false",
+			"",
+			"# If this is true, all new towns will be peaceful when created."),
 	PEACEFUL_TOWNS_CONFIRMATION_REQUIREMENT_DAYS(
 			"peaceful_towns.confirmation_requirement_days",
 			"5",
