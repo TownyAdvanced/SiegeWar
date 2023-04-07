@@ -145,6 +145,10 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.PEACEFUL_CAPITALS_ENABLED);
 	}
 
+	public static boolean getNewTownPeacefulness() {
+		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_NEW_TOWN_PEACEFULNESS);
+	}
+
 	public static int getWarCommonPeacefulTownsConfirmationRequirementDays() {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_CONFIRMATION_REQUIREMENT_DAYS);
 	}

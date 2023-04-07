@@ -73,14 +73,20 @@ public class SiegeWarTownEventListener implements Listener {
 	}
 
 	/*
-	 * Upon creation of a town, towns can be set to neutral.
+	 * Upon creation of a town, the Towny town neutrality setting is wiped
+	 * The SW peacefulness setting may then get applied
+	 * Also the SW siege immunity time is set
 	 */
 	@EventHandler
 	public void onCreateNewTown(NewTownEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			Town town = event.getTown();
+			town.setNeutral(false);
+			if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
+				SiegeWarTownPeacefulnessUtil.setTownPeacefulness(town, SiegeWarSettings.getNewTownPeacefulness());
+				SiegeWarTownPeacefulnessUtil.setDesiredTownPeacefulness(town, SiegeWarSettings.getNewTownPeacefulness());
+			}
 			TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + (long)(SiegeWarSettings.getSiegeImmunityNewTownsHours() * TimeMgmt.ONE_HOUR_IN_MILLIS));
-			SiegeWarTownPeacefulnessUtil.setDesiredTownPeacefulness(town, TownySettings.getTownDefaultNeutral());
 			town.save();
 		}
 	}
