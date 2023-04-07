@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.listeners;
 import java.util.List;
 
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarInventoryUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -296,5 +297,15 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(DataCleanupUtil.isLegacyArtefact(event.getResult())) {
 			event.setResult(null); //Cannot repair artefact
 		}
+	}
+
+	@EventHandler (ignoreCancelled = true)
+	public void on (PlayerDeathEvent event) {
+		if (!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.isKeepInventoryOnSiegeZoneDeathEnabled())
+			return;
+		if(!SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getEntity().getLocation()))
+			return;
+		SiegeWarInventoryUtil.degradeInventory(event);
+		SiegeWarInventoryUtil.keepInventory(event);
 	}
 }
