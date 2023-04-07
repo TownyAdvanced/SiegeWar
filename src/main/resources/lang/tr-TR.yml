@@ -107,6 +107,7 @@ siege_status_defender_win: 'Savunucular Kazandı'
 siege_status_unknown: 'Bilinmiyor'
 dynmap_siege_banner_control: 'Bayrak Kontrolü: %s'
 dynmap_siege_progress: 'Siege Progress: %d/%d'
+dynmap_siege_status: 'Siege Status: %s'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4UYARI: &cAraçlarınızdan bazıları, envanter bozulması nedeniyle kırılmaya yakındır.'
 msg_swa_remove_siege_success: '&7Başarıyla kuşatma kaldırıldı.'
