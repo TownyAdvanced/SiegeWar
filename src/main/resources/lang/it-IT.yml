@@ -93,7 +93,7 @@ msg_err_not_being_sieged: '&cCittà %s non ha alcun assedio in corso.'
 msg_err_town_not_registered: '&cCittà %s non è registrata.'
 #Scoreboard
 hud_title: 'Assedio'
-hud_siegestatus: 'Stato Assedio'
+hud_siege_status: 'Siege Status: '
 hud_attackers: 'ATC: '
 hud_defenders: 'DIF: '
 hud_banner_control: "Controllo Bandiera: "
@@ -101,7 +101,7 @@ hud_siege_progress: 'Siege Progress: '
 msg_swa_resident_already_has_control: '&cCittadino %s già ha il controllo.'
 msg_swa_resident_doesnt_have_control: "&cCittadino %s non ha il controllo."
 msg_swa_set_plunder_success: '&bImpostato ''saccheggiato'' a %s per %s.'
-siege_status_in_progress: 'In Corso'
+siege_status_in_progress: 'Contested'
 siege_status_attacker_win: 'Vittoria Attaccanti'
 siege_status_defender_win: 'Vittoria Difensori'
 siege_status_unknown: 'Sconosciuto'
@@ -242,9 +242,9 @@ status_town_siege_pending_balance_adjustment: '&2 | InAttesa: &a%s'
 msg_err_town_and_capital_too_far_apart: "&cIl homeblock di %s è troppo lontano dal homeblock della capitale di %s."
 #Added in 0.22
 #Revolt immunities
-msg_set_revolt_immunities_town: 'Immunità alle ribellioni per la città %s impostata a %s ore.'
-msg_set_revolt_immunities_nation: 'Immunità alle ribellioni per tutte le città nella nazione %s impostata a %s ore.'
-msg_set_revolt_immunities_all: 'Immunità contro le ribellioni per tutte le città impostata a %s ore.'
+msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s.'
+msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s.'
+msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s.'
 #Added in 0.23
 msg_siege_war_banner_control_remaining_session_time: 'Timer Controllo Bandiera: %s'
 #Added in 0.25
