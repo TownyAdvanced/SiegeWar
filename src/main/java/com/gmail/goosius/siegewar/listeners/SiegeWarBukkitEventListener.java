@@ -136,17 +136,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 		return false;
 	}
 
-	/*
-	 * SW can affect whether an inventory is dropped and also can degrade an inventory.
-	 */
-	@EventHandler
-	public void onPlayerDeath(PlayerDeathEvent event) {
-		//Check for siege-war related death effects
-		if(isSWEnabledAndIsThisAWarAllowedWorld(event.getEntity().getWorld())) {
-			PlayerDeath.evaluateSiegePlayerDeath(event.getEntity(), event);
-		}
-	}
-	
 	@EventHandler(ignoreCancelled = true)
 	public void onPlayerTeleport(PlayerTeleportEvent event) {
 		// Check if SiegeWar is set to disallow non-residents teleporting into a siege
