@@ -1,7 +1,7 @@
 package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -63,7 +63,7 @@ public class StartRevoltSiege {
         if(SiegeWarTownPeacefulnessUtil.isTownPeaceful(targetTown))
             throw new TownyException(translator.of("msg_err_peaceful_towns_cannot_revolt"));
 
-        if(!SiegeWarTownOccupationUtil.isTownOccupied(targetTown))
+        if(!TownOccupationController.isTownOccupied(targetTown))
             throw new TownyException(translator.of("msg_err_cannot_start_revolt_siege_as_town_is_unoccupied"));
 
         long immunity = TownMetaDataController.getRevoltImmunityEndTime(targetTown);

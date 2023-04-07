@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.integration.dynmap;
 
-import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import org.dynmap.towny.events.BuildTownMarkerDescriptionEvent;
 import org.bukkit.event.EventHandler;
@@ -19,8 +19,8 @@ public class DynmapTownyListener implements Listener {
     @EventHandler
     public void on(BuildTownMarkerDescriptionEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled() && event.getDescription().contains("%occupier%")) {
-            event.setDescription(event.getDescription().replace("%occupier%", SiegeWarTownOccupationUtil.isTownOccupied(event.getTown())
-                    ? SiegeWarTownOccupationUtil.getTownOccupier(event.getTown()).getName()
+            event.setDescription(event.getDescription().replace("%occupier%", TownOccupationController.isTownOccupied(event.getTown())
+                    ? TownOccupationController.getTownOccupier(event.getTown()).getName()
                     : ""));
         }
     }

@@ -1,8 +1,8 @@
-package com.gmail.goosius.siegewar.utils;
+package com.gmail.goosius.siegewar;
 
-import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.utils.SiegeWarMilitaryRanksUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -17,13 +17,22 @@ import com.palmergames.bukkit.towny.utils.MoneyUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class SiegeWarTownOccupationUtil {
+public class TownOccupationController {
 
 	public static boolean isTownOccupied(Town town) {
 		return town.isConquered() && town.hasNation();
 	}
 
+	/**
+	 * Gets the occupier of the town
+	 * This method is depreciated, because with SW 2.0.0, this can be done simply with town.getNationOrNull().
+	 *
+	 * @param town the town
+	 * @return the occupier of the town, or null
+	 */
+	@Deprecated
 	public static Nation getTownOccupier(Town town) {
 		return town.getNationOrNull();
 	}
@@ -110,7 +119,7 @@ public class SiegeWarTownOccupationUtil {
 	private static void collectNationOccupationTax(Nation nation, double taxPerPlot) {
 		double taxesPaid = 0;
 		for (Town town : new ArrayList<>(nation.getTowns()))
-			if (SiegeWarTownOccupationUtil.isTownOccupied(town))
+			if (TownOccupationController.isTownOccupied(town))
 				taxesPaid += collectNationOccupationTax(nation, taxPerPlot, town);
 		
 		TownyMessaging.sendPrefixedNationMessage(nation, Translatable.of("msg_occupation_taxes_collected_totaling", getMoney(taxesPaid)));
@@ -159,6 +168,18 @@ public class SiegeWarTownOccupationUtil {
 
 	private static String getMoney(double amount) {
 		return TownyEconomyHandler.getFormattedBalance(amount);
+	}
+
+	/**
+	 * Get the list of occupied foreign towns.
+	 * This method is depreciated, because with SW 2.0.0, occupied foreign towns do not exist.
+	 * 
+	 * @param nation the nation
+	 * @return an empty list
+	 */
+	@Deprecated
+	public static List<String> getOccupiedForeignTowns(Nation nation) {
+		return new ArrayList<>();
 	}
 }
 
