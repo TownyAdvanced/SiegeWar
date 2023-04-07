@@ -107,6 +107,7 @@ siege_status_defender_win: 'Защитники победили'
 siege_status_unknown: 'Неизвестен'
 dynmap_siege_banner_control: 'Контроль флага: %s'
 dynmap_siege_progress: 'Siege Progress: %d/%d'
+dynmap_siege_status: 'Siege Status: %s'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4ВНИМАНИЕ: &cЧто-то из вашего снаряжения близко к поломке из-за деградации снаряжения после смерти.'
 msg_swa_remove_siege_success: '&bОсада успешно снята.'
