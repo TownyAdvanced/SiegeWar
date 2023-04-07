@@ -93,7 +93,7 @@ msg_err_not_being_sieged: '&cГород %s не имеет активных ос
 msg_err_town_not_registered: '&cГород %s не зарегистрирован.'
 #Scoreboard
 hud_title: 'Осада'
-hud_siegestatus: 'Статус осады'
+hud_siege_status: 'Siege Status: '
 hud_attackers: 'АТК: '
 hud_defenders: 'ЗАЩ: '
 hud_banner_control: "Контроль флага: "
@@ -101,7 +101,7 @@ hud_siege_progress: 'Siege Progress: '
 msg_swa_resident_already_has_control: '&cЖитель %s уже имеет контроль.'
 msg_swa_resident_doesnt_have_control: "&cЖитель %s не имеет контроля."
 msg_swa_set_plunder_success: '&bВторгся в %s для %s.'
-siege_status_in_progress: 'В процессе'
+siege_status_in_progress: 'Contested'
 siege_status_attacker_win: 'Победа атакующих'
 siege_status_defender_win: 'Защитники победили'
 siege_status_unknown: 'Неизвестен'
@@ -242,9 +242,9 @@ status_town_siege_pending_balance_adjustment: '&2 | Ожидание: &a%s'
 msg_err_town_and_capital_too_far_apart: "&cЦентральный участок города %s находится слишком далеко от центрального участка столицы %s."
 #Added in 0.22
 #Revolt immunities
-msg_set_revolt_immunities_town: 'Иммунитет к восстанию для города %s установлен на %s часов.'
-msg_set_revolt_immunities_nation: 'Иммунитет к восстанию для всех городов нации %s установлен на %s часов.'
-msg_set_revolt_immunities_all: 'Иммунитет к восстанию для всех городов установлен на %s часов.'
+msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s.'
+msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s.'
+msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s.'
 #Added in 0.23
 msg_siege_war_banner_control_remaining_session_time: 'Таймер до окончания контроля над флагом: %s'
 #Added in 0.25
