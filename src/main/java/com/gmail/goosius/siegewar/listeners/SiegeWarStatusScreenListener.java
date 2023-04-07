@@ -95,29 +95,41 @@ public class SiegeWarStatusScreenListener implements Listener {
 				}
 			}
 
-			List<String> out = new ArrayList<>();
-
+			//[Sieges]
 			// Offensive Sieges [3]: TownA, TownB, TownC
-	        List<Town> siegeAttacks = new ArrayList<>(SiegeController.getActiveOffensiveSieges(nation).values());
-			if (siegeAttacks.size() > 0)
-				out.add(translator.of("status_nation_offensive_sieges", siegeAttacks.size())
-					+ getFormattedTownList(siegeAttacks));
-
-	        // Defensive Sieges [3]: TownX, TownY, TownZ
-	        List<Town> siegeDefences = new ArrayList<>(SiegeController.getActiveDefensiveSieges(nation).values());
-			if (siegeDefences.size() > 0)
-				out.add(translator.of("status_nation_defensive_sieges", siegeDefences.size())
-					+ getFormattedTownList(siegeDefences));
-
-			if (SiegeWarSettings.getWarSiegeNationStatisticsEnabled()) {
-				out.add(translator.of("status_nation_town_stats", NationMetaDataController.getTotalTownsGained(nation), NationMetaDataController.getTotalTownsLost(nation)));
-				out.add(translator.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation)));
+			// Defensive Sieges [2]: TownX, TownY
+			List<Town> siegeAttacks = new ArrayList<>(SiegeController.getActiveOffensiveSieges(nation).values());
+			List<Town> siegeDefences = new ArrayList<>(SiegeController.getActiveDefensiveSieges(nation).values());
+			if(siegeAttacks.size() > 0 || siegeDefences.size() > 0) {
+				//Create the text inside the hover item
+				Component hoverText = Component.empty();
+				hoverText = hoverText.append(Component.text(translator.of("status_nation_offensive_sieges", siegeAttacks.size())
+						+ getFormattedTownList(siegeAttacks)));
+				hoverText = hoverText.append(Component.newline());
+				hoverText = hoverText.append(Component.text(translator.of("status_nation_defensive_sieges", siegeDefences.size())
+						+ getFormattedTownList(siegeDefences)));
+				//Add the hover item to the screen
+				event.getStatusScreen().addComponentOf("siegeWar_siegesHover",
+						Component.empty()
+							.append(Component.text(hoverFormat(translator.of("status_nation_hover_title_sieges")))
+							.hoverEvent(HoverEvent.showText(hoverText))));
 			}
-			
-			Component comp = Component.empty();
-			for (String line : out)
-				comp = comp.append(Component.newline()).append(Component.text(line));
-			event.getStatusScreen().addComponentOf("siegeWarNation", comp);
+
+			//[War History]
+			// Towny Captured ...
+			// Towns Plundered ...
+			if(siegeAttacks.size() > 0 || siegeDefences.size() > 0) {
+				//Create the text inside the hover item
+				Component hoverText = Component.empty();
+				hoverText = hoverText.append(Component.text(translator.of("status_nation_town_stats", NationMetaDataController.getTotalTownsGained(nation), NationMetaDataController.getTotalTownsLost(nation))));
+				hoverText = hoverText.append(Component.newline());
+				hoverText = hoverText.append(Component.text(translator.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation))));
+				//Add the hover item to the screen
+				event.getStatusScreen().addComponentOf("siegeWar_warHistoryHover",
+						Component.empty()
+							.append(Component.text(hoverFormat(translator.of("status_nation_hover_title_war_history")))
+							.hoverEvent(HoverEvent.showText(hoverText))));
+			}
 		}
 	}
 	

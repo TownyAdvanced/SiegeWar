@@ -272,8 +272,8 @@ msg_err_siege_war_plunder_not_possible_rebels_won: '&cPlunder not possible becau
 # Added in 0.16
 
 #Nation war history
-status_nation_town_stats: '&2Town Invasion History - Foreign/Home: &a%d&2/&a%d'
-status_nation_plunder_stats: '&2Town Plunder History - Gains/Losses: &a%d&2/&a%d'
+status_nation_town_stats: '&2Captures Foreign/Home: &a%d&2/&a%d'
+status_nation_plunder_stats: '&2Plunder Gains/Losses: &a%d&2/&a%d'
 
 #Siege effects
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cOnly town residents can spawn into a besieged town or siege zone.'
@@ -559,6 +559,11 @@ status_town_hover_title_revolt_immunity: "%s[%sRevolt-Immunity%s]"
 status_town_hover_title_siege_immunity: "%s[%sSiege-Immunity%s]"
 status_town_standalone_siege_immunity_timer: '&2Siege Immunity Timer: &a%s'
 
+#Nation Screen
+    
+status_nation_hover_title_sieges: "%s[%sSieges%s]"
+status_nation_hover_title_war_history: "%s[%sWar-History%s]"
+    
 #Town Capture & Occupation
 
 msg_err_cannot_invade_without_victory: "&cYou cannot capture this town unless your nation is victorious in the siege."
