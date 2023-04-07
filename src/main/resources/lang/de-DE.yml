@@ -107,6 +107,7 @@ siege_status_defender_win: 'Die Verteidiger gewinnen'
 siege_status_unknown: 'Unbekannt'
 dynmap_siege_banner_control: 'Bannerkontrolle: %s'
 dynmap_siege_progress: 'Siege Progress: %d/%d'
+dynmap_siege_status: 'Siege Status: %s'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4WARNUNG: &cDeine Ausrüstung geht fast kaputt wegen Inventarabbau.'
 msg_swa_remove_siege_success: '&bDie Belagerung erfolgreich behoben.'
