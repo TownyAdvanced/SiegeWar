@@ -107,6 +107,7 @@ siege_status_defender_win: 'Bên phòng thủ công giành chiến thắng'
 siege_status_unknown: 'Không xác định'
 dynmap_siege_banner_control: 'Kiểm soát Biểu ngữ: %s'
 dynmap_siege_progress: 'Siege Progress: %d/%d'
+dynmap_siege_status: 'Siege Status: %s'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4CẢNH BÁO: &cMột số thiết bị của bạn sắp hỏng trong hàng tồn kho.'
 msg_swa_remove_siege_success: '&bĐã loại bỏ vòng vây thành công.'
