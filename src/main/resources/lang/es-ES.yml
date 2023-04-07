@@ -93,7 +93,7 @@ msg_err_not_being_sieged: '&cCiudad %s no tiene ningún asedio activo.'
 msg_err_town_not_registered: '&cCiudad %s no está registrada.'
 #Scoreboard
 hud_title: 'Asedio'
-hud_siegestatus: 'Estado de Asedio'
+hud_siege_status: 'Siege Status: '
 hud_attackers: 'ATK: '
 hud_defenders: 'DEF: '
 hud_banner_control: "Control del estandarte: "
@@ -101,7 +101,7 @@ hud_siege_progress: 'Siege Progress: '
 msg_swa_resident_already_has_control: '&cResidente %s ya tiene control.'
 msg_swa_resident_doesnt_have_control: "&cEl residente %s no tiene control."
 msg_swa_set_plunder_success: '&bEstablecido el saqueo a %s por %s.'
-siege_status_in_progress: 'En curso'
+siege_status_in_progress: 'Contested'
 siege_status_attacker_win: 'El Atacante Gana'
 siege_status_defender_win: 'El defensor gana'
 siege_status_unknown: 'Desconocido'
@@ -242,9 +242,9 @@ status_town_siege_pending_balance_adjustment: '&2 | Pendiente: &a%s'
 msg_err_town_and_capital_too_far_apart: "&cEl homeblock de %s está demasiado lejos del homeblock de la capital de %s."
 #Added in 0.22
 #Revolt immunities
-msg_set_revolt_immunities_town: 'La inmunidad de rebelión para la ciudad %s se ha establecido en %s horas.'
-msg_set_revolt_immunities_nation: 'Las inmunidades de rebeliones para todas las ciudades de la nación %s se han establecido en %s horas.'
-msg_set_revolt_immunities_all: 'La inmunidad de rebelión para todas las ciudades se han establecido en %s horas.'
+msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s.'
+msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s.'
+msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s.'
 #Added in 0.23
 msg_siege_war_banner_control_remaining_session_time: 'Temporizador Control de Estandarte: %s'
 #Added in 0.25
