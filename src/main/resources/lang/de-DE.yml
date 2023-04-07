@@ -93,7 +93,7 @@ msg_err_not_being_sieged: '&cDie Stadt %s hat keine aktiven Belagerungen.'
 msg_err_town_not_registered: '&cDie Stadt %s ist nicht regestriert.'
 #Scoreboard
 hud_title: 'Belagerung'
-hud_siegestatus: 'Belagerungsstatus'
+hud_siege_status: 'Siege Status: '
 hud_attackers: 'ANG: '
 hud_defenders: 'VER: '
 hud_banner_control: "Bannerkontrolle: "
@@ -101,7 +101,7 @@ hud_siege_progress: 'Siege Progress: '
 msg_swa_resident_already_has_control: '&cDer Einwohner %s hat schon Kontrolle.'
 msg_swa_resident_doesnt_have_control: "&cDer Einwohner %s hat keine Kontrolle."
 msg_swa_set_plunder_success: '&bPlünderung auf %s gesetzt für %s.'
-siege_status_in_progress: 'Im Gange'
+siege_status_in_progress: 'Contested'
 siege_status_attacker_win: 'Die Angreifer gewinnen'
 siege_status_defender_win: 'Die Verteidiger gewinnen'
 siege_status_unknown: 'Unbekannt'
@@ -242,9 +242,9 @@ status_town_siege_pending_balance_adjustment: '&2 | Ausstehend: &a%s'
 msg_err_town_and_capital_too_far_apart: "&cDer Heimatblock bon %s ist zu weit entfernt von dem Heimatblock von %s's Hauptstadt."
 #Added in 0.22
 #Revolt immunities
-msg_set_revolt_immunities_town: 'Rebellionsimmunität für die Stadt %s auf %s Stunden gesetzt.'
-msg_set_revolt_immunities_nation: 'Rebellionsimmunität von allen Städten der Nation %s auf %s Stunden gesetzt.'
-msg_set_revolt_immunities_all: 'Rebellionsimmunität aller Städte auf %s Stunden gesetzt.'
+msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s.'
+msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s.'
+msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s.'
 #Added in 0.23
 msg_siege_war_banner_control_remaining_session_time: 'Bannerkontrollrunde Zeit verbleibend: %s'
 #Added in 0.25
