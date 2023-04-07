@@ -93,7 +93,7 @@ msg_err_not_being_sieged: '&cTown %s does not have any active sieges.'
 msg_err_town_not_registered: '&cTown %s is not registered.'
 #Scoreboard
 hud_title: 'Siege'
-hud_siegestatus: 'Siege Status'
+hud_siege_status: 'Siege Status: '
 hud_attackers: 'ATK: '
 hud_defenders: 'DEF: '
 hud_banner_control: "Banner Control: "
@@ -101,7 +101,7 @@ hud_siege_progress: 'Siege Progress: '
 msg_swa_resident_already_has_control: '&cResident %s already has control.'
 msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
 msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
-siege_status_in_progress: 'In Progress'
+siege_status_in_progress: 'Contested'
 siege_status_attacker_win: 'Attacker Win'
 siege_status_defender_win: 'Defender Win'
 siege_status_unknown: 'Unknown'
@@ -242,9 +242,9 @@ status_town_siege_pending_balance_adjustment: '&2 | Pending: &a%s'
 msg_err_town_and_capital_too_far_apart: "&cThe homeblock of %s is too far away from the homeblock of %s's capital."
 #Added in 0.22
 #Revolt immunities
-msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s hours.'
-msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s hours.'
-msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s hours.'
+msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s.'
+msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s.'
+msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s.'
 #Added in 0.23
 msg_siege_war_banner_control_remaining_session_time: 'Banner Cap Timer: %s'
 #Added in 0.25
