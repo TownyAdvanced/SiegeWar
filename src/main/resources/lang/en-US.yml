@@ -554,6 +554,10 @@ msg_revolt_siege_defender_win_result: ' The town has won its freedom!'
 
 status_town_siege_status_invaded: '&2 > Town Captured: %s'
 status_town_peacefulness_flag: '&b(Peaceful)'
+status_town_hover_title_changing_peacefulness: "%s[%sChanging-Peacefulness%s]"
+status_town_hover_title_revolt_immunity: "%s[%sRevolt-Immunity%s]"
+status_town_hover_title_siege_immunity: "%s[%sSiege-Immunity%s]"
+status_town_standalone_siege_immunity_timer: '&2Siege Immunity Timer: &a%s'
 
 #Town Capture & Occupation
 
