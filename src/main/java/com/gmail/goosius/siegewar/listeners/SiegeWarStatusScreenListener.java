@@ -188,22 +188,39 @@ public class SiegeWarStatusScreenListener implements Listener {
 				event.getStatusScreen().addComponentOf("siegeWar_plunderDebt", Component.text(translator.of("status_town_plunder_debt", getMoney(days * amount), days, getMoney(amount))));
 			}
 
+			//[Changing-Peacefulness]
 			//Days to Peacefulness Status Change: 2
 			if(SiegeWarTownPeacefulnessUtil.getTownPeacefulnessChangeCountdownDays(town) > 0) {
-				Component peacefulnessCountdownDays = Component.text(translator.of("status_town_days_to_peacefulness_status_change", SiegeWarTownPeacefulnessUtil.getTownPeacefulnessChangeCountdownDays(town)));
-				event.getStatusScreen().addComponentOf("siegeWar_peacefulnessCountdownDays", peacefulnessCountdownDays);
+				//Create the text inside the hover item
+				Component hoverText = Component.empty();
+				hoverText = hoverText.append(Component.text(translator.of("status_town_days_to_peacefulness_status_change", SiegeWarTownPeacefulnessUtil.getTownPeacefulnessChangeCountdownDays(town))));
+				//Add the hover item to the screen
+				event.getStatusScreen().addComponentOf("siegeWar_peacefulnessChangeHover",
+						Component.empty()
+							.append(Component.text(hoverFormat(translator.of("status_town_hover_title_changing_peacefulness")))
+							.hoverEvent(HoverEvent.showText(hoverText))));
 			}
 
+			//[Revolt-Immunity]
 	        //Revolt Immunity Timer: 71.8 hours
 	        long immunity = TownMetaDataController.getRevoltImmunityEndTime(town);
 	        if (SiegeWarSettings.getRevoltSiegesEnabled() && immunity == -1l || System.currentTimeMillis() < immunity) {
-	            String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
-				Component revoltImmunityTimer = Component.text(translator.of("status_town_revolt_immunity_timer", time));
-				event.getStatusScreen().addComponentOf("siegeWar_revoltImmunityTimer", revoltImmunityTimer);
+				//Create the text inside the hover item
+				String immunityText = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
+				Component hoverText = Component.empty();
+				hoverText = hoverText.append(Component.text(translator.of("status_town_revolt_immunity_timer", immunityText)));
+				//Add the hover item to the screen
+				event.getStatusScreen().addComponentOf("siegeWar_revoltImmunityHover",
+						Component.empty()
+							.append(Component.text(hoverFormat(translator.of("status_town_hover_title_revolt_immunity")))
+							.hoverEvent(HoverEvent.showText(hoverText))));
 	        }
 
+			//[Sieged]
+			//...
 	        immunity = TownMetaDataController.getSiegeImmunityEndTime(town);
 	        if (SiegeController.hasSiege(town)) {
+				//Create the text inside the hover item
 	        	List<String> out = new ArrayList<>();
 				Siege siege = SiegeController.getSiege(town);
 				SiegeStatus siegeStatus= siege.getStatus();
@@ -296,6 +313,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 						out.add(siegeImmunityTimer);
 	            }
 
+				//Add the hover item to the screen
 				Component hoverText = Component.empty();
 				hoverText = hoverText.append(Component.text(translator.of("status_town_siege")));
 				for (String line : out) {
@@ -303,22 +321,23 @@ public class SiegeWarStatusScreenListener implements Listener {
 				}
 				event.getStatusScreen().addComponentOf("siegeWar_siegeHover", 
 						Component.empty()
-							.append(Component.newline())
 							.append(Component.text(hoverFormat(translator.of("status_sieged")))
 							.hoverEvent(HoverEvent.showText(hoverText))));
 
 	        } else {
-	            if(System.currentTimeMillis() < immunity || immunity == -1l) {
-	                //Siege:
-	                // > Immunity Timer: 40.8 hours
+				//[Siege-Immunity]
+				//> Immunity Timer: 71.8 hours
+				if(System.currentTimeMillis() < immunity || immunity == -1l) {
+					//Create the text inside the hover item
 					String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
-					Component immunityComp = Component.empty()
-							.append(Component.newline())
-							.append(Component.text(translator.of("status_town_siege")))
-							.append(Component.newline())
-							.append(Component.text(translator.of("status_town_siege_immunity_timer", time))); 
-					event.getStatusScreen().addComponentOf("siegeWar_siegeImmunity", immunityComp);
-	            }
+					Component hoverText = Component.empty();
+					hoverText = hoverText.append(Component.text(translator.of("status_town_standalone_siege_immunity_timer", time)));
+					//Add the hover item to the screen
+					event.getStatusScreen().addComponentOf("siegeWar_siegeImmunityHover",
+							Component.empty()
+								.append(Component.text(hoverFormat(translator.of("status_town_hover_title_siege_immunity")))
+								.hoverEvent(HoverEvent.showText(hoverText))));
+				}
 	        }
 		}
 	}
