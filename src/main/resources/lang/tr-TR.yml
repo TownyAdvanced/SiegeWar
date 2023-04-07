@@ -93,7 +93,7 @@ msg_err_not_being_sieged: '&c%s adlı kasabanın herhangi bir aktif kuşatması 
 msg_err_town_not_registered: '&c%s kasabası kayıtlı değildir.'
 #Scoreboard
 hud_title: 'Kuşatma'
-hud_siegestatus: 'Kuşatma Durumu'
+hud_siege_status: 'Siege Status: '
 hud_attackers: 'KUŞ: '
 hud_defenders: 'SAV: '
 hud_banner_control: "Bayrak Kontrolü: "
@@ -101,7 +101,7 @@ hud_siege_progress: 'Siege Progress: '
 msg_swa_resident_already_has_control: '&c%s adlı vatandaş zaten kontrol sahibidir.'
 msg_swa_resident_doesnt_have_control: "&c%s adlı vatandaş kontrol sahibi değildir."
 msg_swa_set_plunder_success: '&7Set plundered to %s for %s.'
-siege_status_in_progress: 'Devam etmekte'
+siege_status_in_progress: 'Contested'
 siege_status_attacker_win: 'Kuşatmacılar Kazandı'
 siege_status_defender_win: 'Savunucular Kazandı'
 siege_status_unknown: 'Bilinmiyor'
@@ -242,9 +242,9 @@ status_town_siege_pending_balance_adjustment: '&7 | Askıda Olan: &a%s'
 msg_err_town_and_capital_too_far_apart: "&c%s adlı kasabanın ana bloğu, başkenti olan %s kasabasının ana bloğundan çok uzak.."
 #Added in 0.22
 #Revolt immunities
-msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s hours.'
-msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s hours.'
-msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s hours.'
+msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s.'
+msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s.'
+msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s.'
 #Added in 0.23
 msg_siege_war_banner_control_remaining_session_time: 'Bayrak Kontrolcüsü: %s'
 #Added in 0.25
