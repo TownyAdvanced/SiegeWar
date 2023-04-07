@@ -326,7 +326,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 	        } else {
 				//[Siege-Immunity]
-				//> Immunity Timer: 71.8 hours
+				//Siege Immunity Timer: 71.8 hours
 				if(System.currentTimeMillis() < immunity || immunity == -1l) {
 					//Create the text inside the hover item
 					String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
