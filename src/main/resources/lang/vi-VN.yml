@@ -93,7 +93,7 @@ msg_err_not_being_sieged: '&cTown %s không có bất kỳ cuộc tấn công n�
 msg_err_town_not_registered: '&cThị trấn %s chưa được đăng ký.'
 #Scoreboard
 hud_title: 'Chiến sự'
-hud_siegestatus: 'Thông tin chiến sự'
+hud_siege_status: 'Siege Status: '
 hud_attackers: 'Bên tấn công: '
 hud_defenders: 'Bên phòng thủ: '
 hud_banner_control: "Kiểm soát biểu ngữ: "
@@ -101,7 +101,7 @@ hud_siege_progress: 'Siege Progress: '
 msg_swa_resident_already_has_control: '&cCư dân %s đã có quyền kiểm soát.'
 msg_swa_resident_doesnt_have_control: "&cCư dân %s đã mất quyền kiểm soát."
 msg_swa_set_plunder_success: '&bĐặt cướp bóc thành %s cho %s.'
-siege_status_in_progress: 'Đang tiến hành'
+siege_status_in_progress: 'Contested'
 siege_status_attacker_win: 'Kẻ tấn công giành chiến thắng'
 siege_status_defender_win: 'Bên phòng thủ công giành chiến thắng'
 siege_status_unknown: 'Không xác định'
@@ -242,9 +242,9 @@ status_town_siege_pending_balance_adjustment: '&2 | Đang chờ xử lý: &a%s'
 msg_err_town_and_capital_too_far_apart: "&cHomeblock của %s quá xa so với homeblock của %s."
 #Added in 0.22
 #Revolt immunities
-msg_set_revolt_immunities_town: 'Miễn trừ nổi dậy cho thị trấn %s được đặt thành %s giờ.'
-msg_set_revolt_immunities_nation: 'Miễn trừ nổi dậy cho tất cả các thị trấn trong quốc gia %s được đặt thành %s giờ.'
-msg_set_revolt_immunities_all: 'Miễn trừ nổi dậy cho tất cả các thị trấn được đặt thành %s giờ.'
+msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s.'
+msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s.'
+msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s.'
 #Added in 0.23
 msg_siege_war_banner_control_remaining_session_time: 'Thời gian cắm biểu ngữ: %s'
 #Added in 0.25
