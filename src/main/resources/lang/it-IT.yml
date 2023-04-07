@@ -107,6 +107,7 @@ siege_status_defender_win: 'Vittoria Difensori'
 siege_status_unknown: 'Sconosciuto'
 dynmap_siege_banner_control: 'Controllo Bandiera: %s'
 dynmap_siege_progress: 'Siege Progress: %d/%d'
+dynmap_siege_status: 'Siege Status: %s'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4ATTENZIONE: &cUna parte della tua attrezzatura è vicino alla rottura a cause della Degradazione dell''Inventario.'
 msg_swa_remove_siege_success: '&cRimosso assedio con successo.'
