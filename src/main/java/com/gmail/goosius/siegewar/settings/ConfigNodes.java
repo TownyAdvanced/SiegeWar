@@ -872,8 +872,8 @@ public enum ConfigNodes {
 			"# If this value is true, all players who die IN ACTIVE SIEGEZONES keep inventory.",
 			"# TIP 1: This makes battles less stressful, as a death doesn't mean gifting a 'god set' to the enemy.",
 			"# TIP 2: This makes battles more welcoming to new players, as they will be the most likely to die.",
-			"# TIP 3: This help keep the server geopolitics sustainable, as powerful nations snowball less.",
-			"# TIP 4: It may seem surprising to grant this benefit to non-siege-participants, but remember that Non-Belligerent towns may have their PVP protections turned off by the the Siege-Zone."),
+			"# TIP 3: This help keep the server geopolitics sustainable, as powerful nations will snowball less.",
+			"# TIP 4: It may seem surprising to grant this benefit to non-siege-participants, but remember that non-belligerent towns may have their PVP protections turned off by the Siege-Zone."),
 	KEEP_STUFF_ON_SIEGEZONE_DEATH_TOOLS_DEGRADE_PERCENTAGE(
 			"keep_inventory_on_siegezone_death.tools_degrade_percentage",
 			"20.0",
