@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
@@ -101,7 +102,7 @@ public class DataCleanupUtil {
             if(TownMetaDataController.hasLegacyOccupierUUID(town)) {
                 Nation occupyingNation = TownyAPI.getInstance().getNation(UUID.fromString(TownMetaDataController.getLegacyOccupierUUID(town)));
                 if(occupyingNation != null) {
-                    SiegeWarTownOccupationUtil.setTownOccupation(town, occupyingNation);
+                    TownOccupationController.setTownOccupation(town, occupyingNation);
                     success = true;
                 }
             }

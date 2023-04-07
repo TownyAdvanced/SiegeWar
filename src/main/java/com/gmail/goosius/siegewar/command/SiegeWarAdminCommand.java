@@ -2,7 +2,7 @@ package com.gmail.goosius.siegewar.command;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -606,10 +606,10 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					boolean invaded = Boolean.parseBoolean(args[2]);
 					if(invaded) {
 						siege.setTownInvaded(true);
-						SiegeWarTownOccupationUtil.setTownOccupation(town, (Nation)siege.getAttacker());
+						TownOccupationController.setTownOccupation(town, (Nation)siege.getAttacker());
 					} else {
 						siege.setTownInvaded(false);
-						SiegeWarTownOccupationUtil.removeTownOccupation(town);
+						TownOccupationController.removeTownOccupation(town);
 					}
 					SiegeController.saveSiege(siege);
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_set_invade_success", Boolean.toString(invaded).toUpperCase(), town.getName()));
@@ -646,7 +646,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					boolean occupied = Boolean.parseBoolean(args[2]);
 					if(occupied) {
 						if(town.hasNation()) {
-							SiegeWarTownOccupationUtil.setTownOccupation(town, town.getNationOrNull());
+							TownOccupationController.setTownOccupation(town, town.getNationOrNull());
 							Messaging.sendMsg(sender, Translatable.of("msg_swa_town_occupation_change_success", town.getName(), occupied));
 							break;
 						} else {
@@ -654,7 +654,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 							break;
 						}
 					} else {
-						SiegeWarTownOccupationUtil.removeTownOccupation(town);
+						TownOccupationController.removeTownOccupation(town);
 						Messaging.sendMsg(sender, Translatable.of("msg_swa_town_occupation_change_success", town.getName(), occupied));
 						break;
 					}

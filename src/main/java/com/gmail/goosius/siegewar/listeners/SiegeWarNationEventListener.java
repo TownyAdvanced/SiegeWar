@@ -6,7 +6,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.NationPreRemoveEnemyEvent;
@@ -44,7 +44,7 @@ public class SiegeWarNationEventListener implements Listener {
 				if(SiegeWarTownPeacefulnessUtil.isTownPeaceful(town)) {
 					event.setCancelled(true);
 					event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_war_siege_cannot_add_military_rank_to_peaceful_resident"));
-				} else if (SiegeWarTownOccupationUtil.isTownOccupied(town)) {
+				} else if (TownOccupationController.isTownOccupied(town)) {
 					event.setCancelled(true);
 					event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_war_siege_cannot_add_military_rank_to_occupied_resident"));
 				}
@@ -188,7 +188,7 @@ public class SiegeWarNationEventListener implements Listener {
 		if(!SiegeWarSettings.getWarSiegeEnabled())
 			return;
 
-		if(SiegeWarTownOccupationUtil.isTownOccupied(event.getTown())) {
+		if(TownOccupationController.isTownOccupied(event.getTown())) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("msg_err_occupied_towns_cannot_leave_their_nations"));
 		}

@@ -3,7 +3,7 @@ package com.gmail.goosius.siegewar.listeners;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.TownyWorld;
@@ -160,10 +160,10 @@ public class SiegeWarStatusScreenListener implements Listener {
 			 * Because for nations with a custom 0 value, this will be clearer than a missing field.
 			 */
 			if(TownyEconomyHandler.isActive()
-					&& SiegeWarTownOccupationUtil.isTownOccupied(town)
+					&& TownOccupationController.isTownOccupied(town)
 					&& SiegeWarSettings.getMaxOccupationTaxPerPlot() > 0) {
 
-				double occupationTax = SiegeWarTownOccupationUtil.getNationOccupationTax(town);
+				double occupationTax = TownOccupationController.getNationOccupationTax(town);
 				String occupationTaxString = TownyEconomyHandler.getFormattedBalance(occupationTax);
 				Component occupationTaxComponent = Component.text(translator.of("status_splitter")).append(Component.text(translator.of("status_town_occupation_tax", occupationTaxString)));
 				Component existingComponent;

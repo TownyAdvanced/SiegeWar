@@ -8,12 +8,11 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.timeractions.AttackerWin;
-import com.gmail.goosius.siegewar.utils.SiegeWarTownOccupationUtil;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.confirmations.Confirmation;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
 
 /**
@@ -30,7 +29,7 @@ public class SurrenderDefence {
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER.getNode()))
 			throw new TownyException(Translatable.of("msg_err_action_disable").forLocale(player));
 
-		if (siege.getSiegeType() == SiegeType.CONQUEST && SiegeWarTownOccupationUtil.isTownOccupied(siege.getTown()))
+		if (siege.getSiegeType() == SiegeType.CONQUEST && TownOccupationController.isTownOccupied(siege.getTown()))
 			throw new TownyException(Translatable.of("msg_err_siege_occupied_towns_cannot_surrender_in_conquest_sieges").forLocale(player));
 
 		Confirmation
