@@ -107,6 +107,7 @@ siege_status_defender_win: 'El defensor gana'
 siege_status_unknown: 'Desconocido'
 dynmap_siege_banner_control: 'Control del estandarte: %s'
 dynmap_siege_progress: 'Siege Progress: %d/%d'
+dynmap_siege_status: 'Siege Status: %s'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4ADVERTENCIA: &cAlgo de tu equipamiento está cerca de romperse debido al desgaste de inventario.'
 msg_swa_remove_siege_success: '&bAsedio removido existosamente.'
