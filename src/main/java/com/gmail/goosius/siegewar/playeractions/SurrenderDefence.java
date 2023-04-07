@@ -54,18 +54,17 @@ public class SurrenderDefence {
 	}
 
 	private static Translatable getSurrenderMessage(Siege siege) {
-		String key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toLowerCase());
-		Translatable message = Translatable.of(key,
-						siege.getTown().getName(),
-						siege.getAttacker().getName());
-
-		if(siege.getNumBattleSessionsCompleted() < SiegeWarSettings.getSiegeDurationBattleSessions()) {
-			message.append(Translatable.of("msg_pending_attacker_victory"));
+		Translatable message;
+		String key;
+		if (siege.getNumBattleSessionsCompleted() < SiegeWarSettings.getSiegeDurationBattleSessions()) {
+			key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toLowerCase());
+			message = Translatable.of(key, siege.getTown().getName(), siege.getAttacker().getName());
 		} else {
-			String key2 = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toLowerCase());
-			message.append(Translatable.of(key2));
+			key = String.format("msg_%s_siege_defender_surrender_confirmed", siege.getSiegeType().toLowerCase());
+			message = Translatable.of(key, siege.getTown().getName());
+			key = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toLowerCase());
+			message.append(Translatable.of(key));
 		}
-
 		return message;
 	}
 }
