@@ -153,7 +153,7 @@ public class SiegeWarBannerControlUtil {
 			return false; //Player is a nomad
 
 		if (SiegeWarTownPeacefulnessUtil.isTownPeaceful(resident.getTownOrNull())) 
-			return false; //Player if from a neutral town
+			return false; //Player if from a peaceful town
 
 		if(player.isFlying() || player.isGliding())
 			return false;   // Player is flying

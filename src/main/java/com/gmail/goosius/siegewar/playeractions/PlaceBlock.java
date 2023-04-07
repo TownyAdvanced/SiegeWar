@@ -223,7 +223,7 @@ public class PlaceBlock {
 			//Town is peaceful, so this action is a subversion or peaceful-revolt attempt
 			if(residentsTown == nearbyTown) {
 				if(TownOccupationController.isTownOccupied(residentsTown)) {
-					throw new TownyException(Translatable.of("neutral_towns_cannot_revolt"));
+					throw new TownyException(Translatable.of("peaceful_towns_cannot_revolt"));
 				}
 			} else {
 				PeacefullySubvertTown.processActionRequest(player, residentsNation, nearbyTown);
