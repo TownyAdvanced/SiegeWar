@@ -424,6 +424,10 @@ msg_revolt_siege_defender_win_result: ' The town has won its freedom!'
 #Town Screen
 status_town_siege_status_invaded: '&2 > Town Captured: %s'
 status_town_peacefulness_flag: '&b(Peaceful)'
+status_town_hover_title_changing_peacefulness: "%s[%sChanging-Peacefulness%s]"
+status_town_hover_title_revolt_immunity: "%s[%sRevolt-Immunity%s]"
+status_town_hover_title_siege_immunity: "%s[%sSiege-Immunity%s]"
+status_town_standalone_siege_immunity_timer: '&2Siege Immunity Timer: &a%s'
 #Town Capture & Occupation
 msg_err_cannot_invade_without_victory: "&cYou cannot capture this town unless your nation is victorious in the siege."
 msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot capture this town while the siege is still in progress.'
