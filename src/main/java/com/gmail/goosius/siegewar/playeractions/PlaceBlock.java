@@ -84,7 +84,7 @@ public class PlaceBlock {
 					Messaging.sendErrorMsg(player, e.getMessage(player));
 				}
 			}
-			
+
 			//Trap warfare block protection
 			if(TownyAPI.getInstance().isWilderness(event.getLocation())) {
 				//Trap warfare wilderness block protection

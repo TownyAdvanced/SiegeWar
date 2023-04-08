@@ -195,7 +195,7 @@ public class SiegeWarTownyEventListener implements Listener {
         }
 
         //Make convenience variables
-        int protectionRadiusBlocks = SiegeWarSettings.getTrapWarfareMitigationRadius();
+        int protectionRadiusBlocks = SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks();
         int upperAlterLimit = SiegeWarSettings.getTrapWarfareMitigationUpperHeightLimit();
         int lowerAlterLimit = SiegeWarSettings.getTrapWarfareMitigationLowerHeightLimit();
         Location siegeBannerLocation = siege.getFlagLocation();

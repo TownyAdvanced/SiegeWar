@@ -243,7 +243,7 @@ public class SiegeWarDistanceUtil {
 	 * @param targetLocation target location
 	 */
 	public static boolean isTargetLocationProtectedByTrapWarfareMitigation(Location targetLocation, Siege siege) {
-        int protectionRadiusBlocks = SiegeWarSettings.getTrapWarfareMitigationRadius();
+        int protectionRadiusBlocks = SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks();
         int upperHeightLimit = SiegeWarSettings.getTrapWarfareMitigationUpperHeightLimit();
         int lowerHeightLimit = SiegeWarSettings.getTrapWarfareMitigationLowerHeightLimit();
         Location siegeBannerLocation = siege.getFlagLocation();

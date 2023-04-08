@@ -312,7 +312,7 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_ENABLED);
 	}
 
-	public static int getTrapWarfareMitigationRadius() {
+	public static int getTrapWarfareMitigationRadiusBlocks() {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_RADIUS);
 	}
 
