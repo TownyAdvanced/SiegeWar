@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.utils.SiegeWarBlockProtectionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
@@ -83,19 +84,28 @@ public class PlaceBlock {
 					Messaging.sendErrorMsg(player, e.getMessage(player));
 				}
 			}
-
+			
 			//Trap warfare block protection
-			Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
-			if(qualifiesAsTrapWarfareMitigation(event, nearbySiege)) {
-				event.setCancelled(true);
-				TownyMessaging.sendActionBarMessageToPlayer(player, Component.text(translator.of("msg_err_cannot_alter_blocks_near_siege_banner", NamedTextColor.DARK_RED)));
-				return;
+			if(TownyAPI.getInstance().isWilderness(event.getLocation())) {
+				//Trap warfare wilderness block protection
+				Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
+				if(qualifiesAsTrapWarfareMitigation(event, nearbySiege)) {
+					event.setCancelled(true);
+					TownyMessaging.sendActionBarMessageToPlayer(player, Component.text(translator.of("msg_err_cannot_alter_blocks_near_siege_banner", NamedTextColor.DARK_RED)));
+					return;
+				}
+				//Forbidden material placement prevention
+				if(qualifiesAsSiegeZoneForbiddenMaterial(block, mat, nearbySiege))
+					throw new TownyException(translator.of("msg_war_siege_zone_block_placement_forbidden"));
+
+			} else {
+				//Trap warfare besieged-town block protection
+				if (SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled()
+						&& SiegeWarBlockProtectionUtil.isTownLocationProtectedByBesiegedTownTrapWarfareMitigation(event.getLocation())) {
+					event.setCancelled(true);
+					TownyMessaging.sendActionBarMessageToPlayer(player, Component.text(translator.of("msg_err_cannot_alter_blocks_near_siege_banner", NamedTextColor.DARK_RED)));
+				}
 			}
-
-			//Forbidden material placement prevention
-			if(qualifiesAsSiegeZoneForbiddenMaterial(block, mat, nearbySiege))
-				throw new TownyException(translator.of("msg_war_siege_zone_block_placement_forbidden"));
-
 		} catch (TownyException e) {
 			event.setCancelled(true);
 			event.setCancelMessage(e.getMessage(player));

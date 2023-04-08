@@ -300,20 +300,28 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.BANNER_XYZ_TEXT_ENABLED);
 	}
 
-	public static boolean isTrapWarfareMitigationEnabled() {
-		return Settings.getBoolean(ConfigNodes.TRAP_WARFARE_MITIGATION_ENABLED);
+	public static boolean isBesiegedTownTownTrapWarfareMitigationEnabled() {
+		return Settings.getBoolean(ConfigNodes.TRAP_WARFARE_MITIGATION_BESIEGED_TOWN_ENABLED);
 	}
 
-	public static int getTrapWarfareMitigationRadiusBlocks() {
-		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_RADIUS_BLOCKS);
+	public static int getBesiegedTownTrapWarfareMitigationRadius() {
+		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_RADIUS);
+	}
+
+	public static boolean isTrapWarfareMitigationEnabled() {
+		return Settings.getBoolean(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_ENABLED);
+	}
+
+	public static int getTrapWarfareMitigationRadius() {
+		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_RADIUS);
 	}
 
 	public static int getTrapWarfareMitigationUpperHeightLimit() {
-		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_UPPER_HEIGHT_LIMIT);
+		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_UPPER_HEIGHT_LIMIT);
 	}
 
 	public static int getTrapWarfareMitigationLowerHeightLimit() {
-		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_LOWER_HEIGHT_LIMIT);
+		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_LOWER_HEIGHT_LIMIT);
 	}
 
 	public static String getBannerControlCaptureMessageColor() {
