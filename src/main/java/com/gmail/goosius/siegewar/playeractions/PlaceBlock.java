@@ -91,7 +91,7 @@ public class PlaceBlock {
 				Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
 				if(qualifiesAsTrapWarfareMitigation(event, nearbySiege)) {
 					event.setCancelled(true);
-					TownyMessaging.sendActionBarMessageToPlayer(player, Component.text(translator.of("msg_err_cannot_alter_blocks_near_siege_banner", NamedTextColor.DARK_RED)));
+					event.setCancelMessage(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"));
 					return;
 				}
 				//Forbidden material placement prevention
@@ -103,7 +103,7 @@ public class PlaceBlock {
 				if (SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled()
 						&& SiegeWarBlockProtectionUtil.isTownLocationProtectedByBesiegedTownTrapWarfareMitigation(event.getLocation())) {
 					event.setCancelled(true);
-					TownyMessaging.sendActionBarMessageToPlayer(player, Component.text(translator.of("msg_err_cannot_alter_blocks_near_siege_banner", NamedTextColor.DARK_RED)));
+					event.setCancelMessage(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"));
 				}
 			}
 		} catch (TownyException e) {
