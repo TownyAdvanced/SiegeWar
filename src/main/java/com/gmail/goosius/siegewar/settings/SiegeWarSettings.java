@@ -305,7 +305,7 @@ public class SiegeWarSettings {
 	}
 
 	public static int getBesiegedTownTrapWarfareMitigationRadius() {
-		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_RADIUS);
+		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_BESIEGED_TOWN_RADIUS);
 	}
 
 	public static boolean isTrapWarfareMitigationEnabled() {
