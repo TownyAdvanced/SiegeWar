@@ -63,7 +63,7 @@ public class PlayerDeath {
 	 */
 	public static void evaluateSiegePlayerDeath(Player deadPlayer, PlayerDeathEvent playerDeathEvent) {
 		//Keep inventory
-		if (SiegeWarSettings.isKeepInventoryOnSiegeZoneDeathEnabled() && SiegeWarDistanceUtil.isLocationInActiveSiegeZone(deadPlayer.getLocation()) {
+		if (SiegeWarSettings.isKeepInventoryOnSiegeZoneDeathEnabled() && SiegeWarDistanceUtil.isLocationInActiveSiegeZone(deadPlayer.getLocation())) {
 			SiegeWarInventoryUtil.degradeInventory(playerDeathEvent);
 			SiegeWarInventoryUtil.keepInventory(playerDeathEvent);
 		}
