@@ -482,5 +482,12 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_NATION_COST_REFUND_PERCENTAGE_ON_DELETE);
 	}
 
+	public static boolean isKeepInventoryOnSiegeZoneDeathEnabled() {
+		return Settings.getBoolean(ConfigNodes.KEEP_INVENTORY_ON_SIEGEZONE_DEATH_ENABLED);
+	}
+
+	public static double getKeepInventoryOnSiegeZoneDeathToolsDegradePercentage() {
+		return Settings.getDouble(ConfigNodes.KEEP_STUFF_ON_SIEGEZONE_DEATH_TOOLS_DEGRADE_PERCENTAGE);
+	}
 
 }
