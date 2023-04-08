@@ -201,7 +201,7 @@ public class SiegeWarDistanceUtil {
 			return false;
 
 		//Check horizontal distance
-		return MathUtil.distance(location1.getX(), location2.getX(), location1.getZ(), location2.getZ()) < radius;
+		return MathUtil.distance(location1.getX(), location2.getX(), location1.getZ(), location2.getZ()) <= radius;
 	}
 
 	/**
@@ -254,7 +254,6 @@ public class SiegeWarDistanceUtil {
 			upperHeightLimit,
 			lowerHeightLimit);
 	}
-
 
 	/**
 	 * Determine if the target location is protected by trap warfare mitigation
