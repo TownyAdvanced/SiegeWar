@@ -6,10 +6,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockProtectionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.palmergames.adventure.text.Component;
-import com.palmergames.adventure.text.format.NamedTextColor;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.event.actions.TownyDestroyEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Translator;
@@ -50,19 +47,22 @@ public class DestroyBlock {
 		}
 
 		//Trap warfare block protection
-		if(TownyAPI.getInstance().isWilderness(event.getLocation())) {
-			//Trap warfare wilderness block protection
-			if(qualifiesAsTrapWarfare(event, nearbySiege)) {
-				event.setCancelled(true);
-				event.setCancelMessage(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"));
-				return;
-			}
-		} else {
+		if(event.hasTownBlock()) {
 			//Trap warfare besieged-town block protection
 			if (SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled()
-					&& SiegeWarBlockProtectionUtil.isTownLocationProtectedByBesiegedTownTrapWarfareMitigation(event.getLocation())) {
+					&& SiegeWarBlockProtectionUtil.isTownLocationProtectedByTrapWarfareMitigation(event.getLocation(), event.getTownBlock().getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"));
+			}
+		} else {
+			//Trap warfare wilderness block protection
+			if(SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled()) {
+				//Trap warfare wilderness block protection
+				if (SiegeWarBlockProtectionUtil.isWildernessLocationProtectedByTrapWarfareMitigation(event.getLocation(), nearbySiege)) {
+					event.setCancelled(true);
+					event.setCancelMessage(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"));
+					return;
+				}
 			}
 		}
 
@@ -88,11 +88,6 @@ public class DestroyBlock {
 
 	private static boolean qualifiesAsBreakingASiegeBanner(TownyDestroyEvent event, Siege nearbySiege) {
 		return nearbySiege.isFlagBannerOrBlockBelow(event.getBlock());
-	}
-
-	private static boolean qualifiesAsTrapWarfare(TownyDestroyEvent event, Siege nearbySiege) {
-		return SiegeWarSettings.isTrapWarfareMitigationEnabled()
-			&& SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(event.getLocation(), nearbySiege);
 	}
 
 }

@@ -168,7 +168,7 @@ public class PlayerDeath {
 		//If the player that died had an ongoing session, remove it.
 		if(siege.getBannerControlSessions().containsKey(deadPlayer)) {
 			siege.removeBannerControlSession(siege.getBannerControlSessions().get(deadPlayer));
-			Messaging.sendMsg(deadPlayer, SiegeWarSettings.isTrapWarfareMitigationEnabled() 
+			Messaging.sendMsg(deadPlayer, SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled() 
 				? Translatable.of("msg_siege_war_banner_control_session_failure_with_altitude")
 				: Translatable.of("msg_siege_war_banner_control_session_failure"));
 		}

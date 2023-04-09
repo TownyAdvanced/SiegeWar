@@ -9,6 +9,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
 import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarBlockProtectionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
@@ -182,7 +183,7 @@ public class SiegeWarTownyEventListener implements Listener {
      * @return filtered list
      */
     private static List<Block> filterExplodeListByTrapWarfareMitigation(List<Block> givenExplodeList) {
-        if(!SiegeWarSettings.isTrapWarfareMitigationEnabled())
+        if(!SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled())
             return givenExplodeList;
         //For performance, just get the siege at the 1st block
         Siege siege;
@@ -195,15 +196,16 @@ public class SiegeWarTownyEventListener implements Listener {
         }
 
         //Make convenience variables
-        int protectionRadiusBlocks = SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks();
-        int upperAlterLimit = SiegeWarSettings.getTrapWarfareMitigationUpperHeightLimit();
-        int lowerAlterLimit = SiegeWarSettings.getTrapWarfareMitigationLowerHeightLimit();
+        int protectionRadiusBlocks = SiegeWarSettings.getWildernessTrapWarfareMitigationRadiusBlocks();
+        int upperAlterLimit = SiegeWarSettings.getWildernessTrapWarfareMitigationUpperHeightLimit();
+        int lowerAlterLimit = SiegeWarSettings.getWildernessTrapWarfareMitigationLowerHeightLimit();
         Location siegeBannerLocation = siege.getFlagLocation();
 
         //Filter exploding blocks
         List<Block> finalExplodeList = new ArrayList<>(givenExplodeList);
         for(Block block: givenExplodeList) {
-            if(SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(
+            if(TownyAPI.getInstance().isWilderness(block)
+                && SiegeWarBlockProtectionUtil.isWildernessLocationProtectedByTrapWarfareMitigation(
                     block.getLocation(),
                     siegeBannerLocation,
                     protectionRadiusBlocks,
