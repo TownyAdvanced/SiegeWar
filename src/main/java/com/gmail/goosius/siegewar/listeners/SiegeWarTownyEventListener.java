@@ -196,6 +196,8 @@ public class SiegeWarTownyEventListener implements Listener {
         }
 
         //Make convenience variables
+        boolean wildernessTrapWarfareMitigationEnabled = SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled();
+        boolean besiegedTownTrapWarfareMitigationEnabled = SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled();
         int protectionRadiusBlocks = SiegeWarSettings.getWildernessTrapWarfareMitigationRadiusBlocks();
         int upperAlterLimit = SiegeWarSettings.getWildernessTrapWarfareMitigationUpperHeightLimit();
         int lowerAlterLimit = SiegeWarSettings.getWildernessTrapWarfareMitigationLowerHeightLimit();
@@ -203,15 +205,26 @@ public class SiegeWarTownyEventListener implements Listener {
 
         //Filter exploding blocks
         List<Block> finalExplodeList = new ArrayList<>(givenExplodeList);
+
         for(Block block: givenExplodeList) {
-            if(TownyAPI.getInstance().isWilderness(block)
-                && SiegeWarBlockProtectionUtil.isWildernessLocationProtectedByTrapWarfareMitigation(
-                    block.getLocation(),
-                    siegeBannerLocation,
-                    protectionRadiusBlocks,
-                    upperAlterLimit,
-                    lowerAlterLimit)) {
-                finalExplodeList.remove(block);
+            if(TownyAPI.getInstance().isWilderness(block)) {
+                //Stop block exploding in wilderness
+                if (wildernessTrapWarfareMitigationEnabled && SiegeWarBlockProtectionUtil.isWildernessLocationProtectedByTrapWarfareMitigation(
+                        block.getLocation(),
+                        siegeBannerLocation,
+                        protectionRadiusBlocks,
+                        upperAlterLimit,
+                        lowerAlterLimit)) {
+                    finalExplodeList.remove(block);
+                }
+            } else {
+                //Stop block exploding in besieged town
+                if (besiegedTownTrapWarfareMitigationEnabled && SiegeWarDistanceUtil.areLocationsCloseHorizontally(
+                        block.getLocation(),
+                        siegeBannerLocation,
+                        protectionRadiusBlocks)) {
+                    finalExplodeList.remove(block);
+                }
             }
         }
 
