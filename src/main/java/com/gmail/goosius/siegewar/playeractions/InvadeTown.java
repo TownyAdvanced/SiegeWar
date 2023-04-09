@@ -119,7 +119,7 @@ public class InvadeTown {
 		if(residentsNation != siege.getAttacker())
 			throw new TownyException(translator.of("msg_err_action_disable"));
 
-		if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
+		if (siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.ATTACKER_CLOSE_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
 			throw new TownyException(translator.of("msg_err_cannot_invade_without_victory"));
 
 		if (siege.isTownInvaded())

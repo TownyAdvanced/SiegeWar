@@ -879,8 +879,43 @@ public enum ConfigNodes {
 			"20.0",
 			"",
 			"# The percentage by which a player's tools (including swords & armour) degrade when they die.",
-			"# TIP: Don't set this too low or battles could get crezzy.");
-
+			"# TIP: Don't set this too low or battles could get crezzy."),
+	SPECIAL_VICTORY_EFFECTS(
+			"special_victory_effects",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |             Special Victory Effects                  | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	SPECIAL_VICTORY_EFFECTS_DECISIVE_VICTORY_THRESHOLD(
+			"special_victory_effects.decisive_victory_threshold",
+			"5000.0",
+			"",
+			"# If the siege ends via reaching full progress, and if the siege points are at this threshold (positive or negative),",
+			"# then a decisive victory is declared, otherwise a close victory is declared"),
+	SPECIAL_VICTORY_EFFECTS_WARCHEST_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY(
+			"special_victory_effects.warchest_reduction_percentage_on_close_victory",
+			"50.0",
+			"",
+			"# After a close victory, where a warchest is applicable, the warchest will be reduced by this amount.",
+			"# The losing side will receive the remainder"),
+	SPECIAL_VICTORY_EFFECTS_PLUNDER_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY(
+			"special_victory_effects.plunder_reduction_percentage_on_close_victory",
+			"50.0",
+			"",
+			"# After a close victory, where plunder is applicable, plunder will be reduced by this amount."),
+	SPECIAL_VICTORY_EFFECTS_WEAKNESS_ON_REVOLT_SIEGE_DECISIVE_DEFENDER_VICTORY(
+			"special_victory_effects.weakness_on_revolt_siege_decisive_defender_victory",
+			"2",
+			"",
+			"# In a revolt siege, after a decisive defender victory,",
+			"# attacker damage is reduced by this amount while siege immunity lasts.",
+			"# TIP: Without this effect, revolt siege attackers who looks certain to lose, would have no motivation to keep fighting for a close victory.");
+			
 	private final String Root;
 	private final String Default;
 	private String[] comments;

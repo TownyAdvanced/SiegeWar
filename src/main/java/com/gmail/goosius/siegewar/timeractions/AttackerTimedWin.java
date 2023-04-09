@@ -14,6 +14,7 @@ import com.palmergames.bukkit.towny.object.Translatable;
 public class AttackerTimedWin {
 
     public static void attackerTimedWin(Siege siege) {
+        asdsad
         Messaging.sendGlobalMessage(getTimedAttackerWinMessage(siege));
         AttackerWin.attackerWin(siege, SiegeStatus.ATTACKER_WIN);
     }

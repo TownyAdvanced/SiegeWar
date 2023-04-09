@@ -73,7 +73,7 @@ public class PlunderTown {
 		}
 
 		// Ensure the attacking nation has completed the win
-		if(siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
+		if(siege.getStatus() != SiegeStatus.ATTACKER_WIN && siege.getStatus() != SiegeStatus.ATTACKER_CLOSE_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
 			throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_victory"));
 
 		// Ensure tha attempted plunderer is from the victorious nation

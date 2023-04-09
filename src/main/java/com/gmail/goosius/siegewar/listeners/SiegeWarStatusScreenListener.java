@@ -311,7 +311,9 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 					case ATTACKER_WIN:
 					case DEFENDER_WIN:
-	                case DEFENDER_SURRENDER:
+					case ATTACKER_CLOSE_WIN:
+					case DEFENDER_CLOSE_WIN:
+					case DEFENDER_SURRENDER:
 					case ATTACKER_ABANDON:
 
 						// > Captured: No
@@ -364,16 +366,21 @@ public class SiegeWarStatusScreenListener implements Listener {
                 return translator.of("status_town_siege_status_in_progress");
             case ATTACKER_WIN:
                 return translator.of("status_town_siege_status_attacker_win");
+			case ATTACKER_CLOSE_WIN:
+				return translator.of("status_town_siege_status_attacker_close_win");
             case DEFENDER_SURRENDER:
                 return translator.of("status_town_siege_status_defender_surrender");
             case DEFENDER_WIN:
                 return translator.of("status_town_siege_status_defender_win");
+			case DEFENDER_CLOSE_WIN:
+				return translator.of("status_town_siege_status_defender_close_win");
             case ATTACKER_ABANDON:
                 return translator.of("status_town_siege_status_attacker_abandon");
             case PENDING_DEFENDER_SURRENDER:
                 return translator.of("status_town_siege_status_pending_defender_surrender");
             case PENDING_ATTACKER_ABANDON:
                 return translator.of("status_town_siege_status_pending_attacker_abandon");
+
             default:
                 return "???";
         }

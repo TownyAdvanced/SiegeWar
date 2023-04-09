@@ -122,8 +122,6 @@ msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
 msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
 
 siege_status_in_progress: 'Contested'
-siege_status_attacker_win: 'Attacker Win'
-siege_status_defender_win: 'Defender Win'
 siege_status_unknown: 'Unknown'
 
 dynmap_siege_banner_control: 'Banner Control: %s'
@@ -245,8 +243,10 @@ status_town_siege_status: '&2 > Status: &a%s'
 status_town_siege_attacker: '&2 > Attacker: &a%s'
 status_town_siege_defender: '&2 > Defender: &a%s'
 status_town_siege_battle_points: '&2 > Points: &a%s &2/ &a%s'
-status_town_siege_status_attacker_win: 'Attacker Victory'
-status_town_siege_status_defender_win: 'Defender Victory'
+status_town_siege_status_attacker_win: 'Decisive Attacker Victory'
+status_town_siege_status_defender_win: 'Decisive Defender Victory'
+status_town_siege_status_close_attacker_win: 'Close Attacker Victory'
+status_town_siege_status_close_defender_win: 'Close Defender Victory'
 status_town_siege_status_attacker_abandon: 'Attacker Abandon'
 status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending'
 status_town_siege_status_defender_surrender: 'Defender Surrender'
@@ -588,5 +588,13 @@ msg_err_siege_war_action_not_a_nation_member: '&cYou must be a member of a natio
 msg_err_siege_war_action_not_a_town_member: '&cYou must be a member of a town to do this action.'
 
 #Upfront Cost
+
 msg_town_pay_upfront_siege_cost: '&bYour town paid an upfront siege cost of %s.'
 msg_nation_pay_upfront_siege_cost: '&bYour nation paid an upfront siege cost of %s.'
+
+#Siege Statuses
+
+siege_status_attacker_close_win: 'Close Attacker Victory'
+siege_status_defender_close_win: 'Close Defender Victory'
+siege_status_attacker_win: 'Decisive Attacker Victory'
+siege_status_defender_win: 'Decisive Defender Victory'
