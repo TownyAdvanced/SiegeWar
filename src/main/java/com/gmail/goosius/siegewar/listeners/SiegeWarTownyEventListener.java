@@ -198,7 +198,8 @@ public class SiegeWarTownyEventListener implements Listener {
         //Make convenience variables
         boolean wildernessTrapWarfareMitigationEnabled = SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled();
         boolean besiegedTownTrapWarfareMitigationEnabled = SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled();
-        int protectionRadiusBlocks = SiegeWarSettings.getWildernessTrapWarfareMitigationRadiusBlocks();
+        int wildernessProtectionRadiusBlocks = SiegeWarSettings.getWildernessTrapWarfareMitigationRadiusBlocks();
+        int townProtectionRadiusBlocks = SiegeWarSettings.getBesiegedTownTrapWarfareMitigationRadius();
         int upperAlterLimit = SiegeWarSettings.getWildernessTrapWarfareMitigationUpperHeightLimit();
         int lowerAlterLimit = SiegeWarSettings.getWildernessTrapWarfareMitigationLowerHeightLimit();
         Location siegeBannerLocation = siege.getFlagLocation();
@@ -212,7 +213,7 @@ public class SiegeWarTownyEventListener implements Listener {
                 if (wildernessTrapWarfareMitigationEnabled && SiegeWarBlockProtectionUtil.isWildernessLocationProtectedByTrapWarfareMitigation(
                         block.getLocation(),
                         siegeBannerLocation,
-                        protectionRadiusBlocks,
+                        wildernessProtectionRadiusBlocks,
                         upperAlterLimit,
                         lowerAlterLimit)) {
                     finalExplodeList.remove(block);
@@ -222,7 +223,7 @@ public class SiegeWarTownyEventListener implements Listener {
                 if (besiegedTownTrapWarfareMitigationEnabled && SiegeWarDistanceUtil.areLocationsCloseHorizontally(
                         block.getLocation(),
                         siegeBannerLocation,
-                        protectionRadiusBlocks)) {
+                        townProtectionRadiusBlocks)) {
                     finalExplodeList.remove(block);
                 }
             }
