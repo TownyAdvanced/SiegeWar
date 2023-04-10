@@ -25,26 +25,67 @@ import java.util.Map;
 
 public class SiegeWarMoneyUtil {
 
-	public static void giveWarChestTo(Siege siege, Government government) {
+	/**
+	 * Give the war chest to the winner
+	 * Used for a decisive victory
+	 *
+	 * @param siege siege
+	 * @param winningGovernment the (decisively) winning government 	 
+	 */
+	public static void giveWarChestToWinner(Siege siege, Government winningGovernment) {
 		if(TownyEconomyHandler.isActive()) {
-			government.getAccount().deposit(siege.getWarChestAmount(), "War Chest Captured");
-			Translatable message =
-					Translatable.of("msg_siege_war_attack_recover_war_chest",
-							government.getFormattedName(),
-							TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
-
-			//Send message to attacker
-			if (siege.getAttacker() instanceof Nation)
-				TownyMessaging.sendPrefixedNationMessage((Nation)siege.getAttacker(), message);
-			else
-				TownyMessaging.sendPrefixedTownMessage((Town)siege.getAttacker(), message);
-
-			//Send message to defender
-			if (siege.getDefender() instanceof Nation)
-				TownyMessaging.sendPrefixedNationMessage((Nation)siege.getDefender(), message);
-			else
-				TownyMessaging.sendPrefixedTownMessage((Town)siege.getDefender(), message);
+			giveWarChestTo(winningGovernment,
+					siege.getWarChestAmount(),
+					"War Chest Captured",
+					"msg_siege_war_attack_recover_war_chest");
 		}
+	}
+
+	/**
+	 * Split the warchest between both given governments
+	 * Used for a close victory
+	 * 
+	 * @param siege siege
+	 * @param winningGovernment the (closely) winning government
+	 * @param losingGovernment the (closely) losing government
+	 */
+	public static void giveWarChestToBoth(Siege siege, Government winningGovernment, Government losingGovernment) {
+		if(TownyEconomyHandler.isActive()) {
+			//Calculate amounts
+			double amountForLosingGovernment = siege.getWarChestAmount() / 100 * SiegeWarSettings.getSpecialVictoryEffectsWarchestReductionPercentageOnCloseVictory();
+			double amountForWinningGovernment = siege.getWarChestAmount() - amountForLosingGovernment;
+
+			//Give partial war chest to winner
+			giveWarChestTo(winningGovernment,
+					amountForWinningGovernment,
+					"War Chest Partially Recovered",
+					"msg_siege_war_attack_partially_recover_war_chest");
+
+			//Give partial war chest to loser
+			giveWarChestTo(losingGovernment,
+					amountForLosingGovernment,
+					"War Chest Partially Recovered",
+					"msg_siege_war_attack_partially_recover_war_chest");
+		}
+	}
+
+	private static void giveWarChestTo(Government governmentToAward,
+									   double amountToAward, 
+									   String depositComment,
+									   String messageTranslationKey) {
+		//Award Amount
+		governmentToAward.getAccount().deposit(amountToAward, depositComment);
+		
+		//Create message
+		Translatable message = Translatable.of(messageTranslationKey,
+				governmentToAward.getFormattedName(),
+				TownyEconomyHandler.getFormattedBalance(amountToAward));
+		
+		//Send message to government that got the money
+		if (governmentToAward instanceof Nation)
+			TownyMessaging.sendPrefixedNationMessage((Nation)governmentToAward, message);
+		else
+			TownyMessaging.sendPrefixedTownMessage((Town)governmentToAward, message);
 	}
 
 	/**

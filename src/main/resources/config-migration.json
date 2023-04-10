@@ -213,6 +213,26 @@
         "type": "REMOVE",
         "path": "neutral_towns.towny_influence_radius",
         "value": "peaceful_towns.towny_influence_radius"
+      },
+      {
+        "type": "MOVE",
+        "path": "trap_warfare_mitigation.enabled",
+        "value": "trap_warfare_mitigation.wilderness.enabled"
+      },
+      {
+        "type": "MOVE",
+        "path": "trap_warfare_mitigation.radius_blocks",
+        "value": "trap_warfare_mitigation.wilderness.radius"
+      },
+      {
+        "type": "MOVE",
+        "path": "trap_warfare_mitigation.upper_height_limit",
+        "value": "trap_warfare_mitigation.wilderness.upper_height_limit"
+      },
+      {
+        "type": "MOVE",
+        "path": "trap_warfare_mitigation.lower_height_limit",
+        "value": "trap_warfare_mitigation.wilderness.lower_height_limit"
       }
     ]
   }

@@ -48,7 +48,8 @@ public class SurrenderDefence {
 			SiegeController.saveSiege(siege);
 		} else {
 			//Immediate surrender
-			AttackerWin.attackerWin(siege, SiegeStatus.DEFENDER_SURRENDER);
+			siege.setStatus(SiegeStatus.DEFENDER_SURRENDER);
+			AttackerWin.attackerWin(siege);
 		}
 	}
 

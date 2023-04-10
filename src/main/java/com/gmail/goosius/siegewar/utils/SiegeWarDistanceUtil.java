@@ -238,47 +238,6 @@ public class SiegeWarDistanceUtil {
 	}
 
 	/**
-	 * Determine if the target location is protected by wilderness trap warfare mitigation
-	 *
-	 * @param targetLocation target location
-	 */
-	public static boolean isTargetLocationProtectedByTrapWarfareMitigation(Location targetLocation, Siege siege) {
-        int protectionRadiusBlocks = SiegeWarSettings.getTrapWarfareMitigationRadiusBlocks();
-        int upperHeightLimit = SiegeWarSettings.getTrapWarfareMitigationUpperHeightLimit();
-        int lowerHeightLimit = SiegeWarSettings.getTrapWarfareMitigationLowerHeightLimit();
-        Location siegeBannerLocation = siege.getFlagLocation();
-        return isTargetLocationProtectedByTrapWarfareMitigation(
-			targetLocation,
-			siegeBannerLocation,
-			protectionRadiusBlocks,
-			upperHeightLimit,
-			lowerHeightLimit);
-	}
-
-	/**
-	 * Determine if the target location is protected by trap warfare mitigation
-	 * We know when this method is called that it is wilderness
-	 * 
-	 * @param targetLocation target location
-	 * @param siegeBannerLocation location of nearby siege banner
-	 * @param protectionRadiusBlocks protection radius in blocks
-	 * @param upperHeightLimit cannot alter above this
-	 * @param lowerHeightLimit cannot alter below this
-	 *
-	 * @return true if the location is protected
-	 */
-	public static boolean isTargetLocationProtectedByTrapWarfareMitigation(Location targetLocation, Location siegeBannerLocation, int protectionRadiusBlocks, int upperHeightLimit, int lowerHeightLimit) {
-		if(targetLocation.getY() <= siegeBannerLocation.getY() + upperHeightLimit
-					&& targetLocation.getY() >= siegeBannerLocation.getY() + lowerHeightLimit) {
-			return false;  //Not high/low enough for protection
-		} else if(areLocationsCloseHorizontally(targetLocation, siegeBannerLocation, protectionRadiusBlocks)) {
-			return true;   //Target location is protected
-		} else {
-			return false;  //Target location is not protected
-		}
-	}
-
-	/**
 	 * Throws a TownyException with Translatable error message if a town is too far
 	 * from a nation's capital.
 	 * 

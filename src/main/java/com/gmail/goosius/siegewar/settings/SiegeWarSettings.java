@@ -308,19 +308,19 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_BESIEGED_TOWN_RADIUS);
 	}
 
-	public static boolean isTrapWarfareMitigationEnabled() {
+	public static boolean isWildernessTrapWarfareMitigationEnabled() {
 		return Settings.getBoolean(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_ENABLED);
 	}
 
-	public static int getTrapWarfareMitigationRadiusBlocks() {
+	public static int getWildernessTrapWarfareMitigationRadiusBlocks() {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_RADIUS);
 	}
 
-	public static int getTrapWarfareMitigationUpperHeightLimit() {
+	public static int getWildernessTrapWarfareMitigationUpperHeightLimit() {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_UPPER_HEIGHT_LIMIT);
 	}
 
-	public static int getTrapWarfareMitigationLowerHeightLimit() {
+	public static int getWildernessTrapWarfareMitigationLowerHeightLimit() {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_LOWER_HEIGHT_LIMIT);
 	}
 
@@ -497,5 +497,22 @@ public class SiegeWarSettings {
 	public static double getKeepInventoryOnSiegeZoneDeathToolsDegradePercentage() {
 		return Settings.getDouble(ConfigNodes.KEEP_STUFF_ON_SIEGEZONE_DEATH_TOOLS_DEGRADE_PERCENTAGE);
 	}
+
+	public static int getSpecialVictoryEffectsDecisiveVictoryThreshold() {
+		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_DECISIVE_VICTORY_THRESHOLD);
+	}
+
+	public static double getSpecialVictoryEffectsWarchestReductionPercentageOnCloseVictory() {
+		return Settings.getDouble(ConfigNodes.SPECIAL_VICTORY_EFFECTS_WARCHEST_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY);
+	}
+
+	public static double getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() {
+		return Settings.getDouble(ConfigNodes.SPECIAL_VICTORY_EFFECTS_PLUNDER_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY);
+	}
+
+	public static double getSpecialVictoryWeaknessOnRevoltSiegeDecisiveDefenderVictory() {
+		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_WEAKNESS_ON_REVOLT_SIEGE_DECISIVE_DEFENDER_VICTORY);
+	}
+
 
 }

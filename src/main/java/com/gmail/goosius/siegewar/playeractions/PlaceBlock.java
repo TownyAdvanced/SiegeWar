@@ -8,15 +8,11 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockProtectionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
-import com.palmergames.adventure.text.Component;
-import com.palmergames.adventure.text.format.NamedTextColor;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
-import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -86,36 +82,31 @@ public class PlaceBlock {
 			}
 
 			//Trap warfare block protection
-			if(TownyAPI.getInstance().isWilderness(event.getLocation())) {
-				//Trap warfare wilderness block protection
-				Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
-				if(qualifiesAsTrapWarfareMitigation(event, nearbySiege)) {
-					event.setCancelled(true);
-					event.setCancelMessage(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"));
-					return;
-				}
-				//Forbidden material placement prevention
-				if(qualifiesAsSiegeZoneForbiddenMaterial(block, mat, nearbySiege))
-					throw new TownyException(translator.of("msg_war_siege_zone_block_placement_forbidden"));
-
-			} else {
+			if(event.hasTownBlock()) {
 				//Trap warfare besieged-town block protection
 				if (SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled()
-						&& SiegeWarBlockProtectionUtil.isTownLocationProtectedByBesiegedTownTrapWarfareMitigation(event.getLocation())) {
+						&& SiegeWarBlockProtectionUtil.isTownLocationProtectedByTrapWarfareMitigation(event.getLocation(), event.getTownBlock().getTown())) {
 					event.setCancelled(true);
 					event.setCancelMessage(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"));
 				}
+			} else {
+				Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
+				if(nearbySiege != null && SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled()) {
+					//Trap warfare wilderness block protection
+					if (SiegeWarBlockProtectionUtil.isWildernessLocationProtectedByTrapWarfareMitigation(event.getLocation(), nearbySiege)) {
+						event.setCancelled(true);
+						event.setCancelMessage(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"));
+						return;
+					}
+				}
+				//Forbidden material placement prevention
+				if (qualifiesAsSiegeZoneForbiddenMaterial(block, mat, nearbySiege))
+					throw new TownyException(translator.of("msg_war_siege_zone_block_placement_forbidden"));
 			}
 		} catch (TownyException e) {
 			event.setCancelled(true);
 			event.setCancelMessage(e.getMessage(player));
 		}
-	}
-
-	private static boolean qualifiesAsTrapWarfareMitigation(TownyBuildEvent event, Siege nearbySiege) {
-		return nearbySiege != null
-			&& SiegeWarSettings.isTrapWarfareMitigationEnabled()
-			&& SiegeWarDistanceUtil.isTargetLocationProtectedByTrapWarfareMitigation(event.getLocation(), nearbySiege);
 	}
 
 	private static boolean qualifiesAsSiegeZoneForbiddenMaterial(Block block, Material mat, Siege nearbySiege) {

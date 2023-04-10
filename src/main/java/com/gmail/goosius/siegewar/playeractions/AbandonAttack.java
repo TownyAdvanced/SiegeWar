@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -11,7 +12,6 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.confirmations.Confirmation;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
 
 /**
@@ -51,7 +51,8 @@ public class AbandonAttack {
 			SiegeController.saveSiege(siege);
 		} else {
 			//Immediate abandon
-			DefenderWin.defenderWin(siege, SiegeStatus.ATTACKER_ABANDON);
+			siege.setStatus(SiegeStatus.ATTACKER_ABANDON);
+			DefenderWin.defenderWin(siege);
 		}
 	}
 
@@ -59,13 +60,21 @@ public class AbandonAttack {
 		Translatable message;
 		String key;
 		if (siege.getNumBattleSessionsCompleted() < SiegeWarSettings.getSiegeDurationBattleSessions()) {
+			//Pending
 			key = String.format("msg_%s_siege_attacker_abandon", siege.getSiegeType().toLowerCase());
 			message = Translatable.of(key, siege.getTown().getName(), siege.getAttacker().getName());
 		} else {
+			//Base message
 			key = String.format("msg_%s_siege_attacker_abandon_confirmed", siege.getSiegeType().toLowerCase());
 			message = Translatable.of(key, siege.getTown().getName());
+			//Standard effects
 			key= String.format("msg_%s_siege_defender_win_result", siege.getSiegeType().toLowerCase());
 			message.append(Translatable.of(key));
+			//Special effects
+			if(siege.getSiegeType() == SiegeType.REVOLT) {
+				message.append(Translatable.of("msg_revolt_siege_defender_decisive_win_special_effects", 
+						SiegeWarSettings.getSpecialVictoryWeaknessOnRevoltSiegeDecisiveDefenderVictory()));
+			}
 		}
 
 		return message;
