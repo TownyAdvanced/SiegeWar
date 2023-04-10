@@ -498,4 +498,21 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.KEEP_STUFF_ON_SIEGEZONE_DEATH_TOOLS_DEGRADE_PERCENTAGE);
 	}
 
+	public static int getSpecialVictoryEffectsDecisiveVictoryThreshold() {
+		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_DECISIVE_VICTORY_THRESHOLD);
+	}
+
+	public static double getSpecialVictoryEffectsWarchestReductionPercentageOnCloseVictory() {
+		return Settings.getDouble(ConfigNodes.SPECIAL_VICTORY_EFFECTS_WARCHEST_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY);
+	}
+
+	public static double getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() {
+		return Settings.getDouble(ConfigNodes.SPECIAL_VICTORY_EFFECTS_PLUNDER_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY);
+	}
+
+	public static double getSpecialVictoryWeaknessOnRevoltSiegeDecisiveDefenderVictory() {
+		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_WEAKNESS_ON_REVOLT_SIEGE_DECISIVE_DEFENDER_VICTORY);
+	}
+
+
 }

@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.enums;
 
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 
 /**
@@ -14,6 +15,8 @@ public enum SiegeStatus {
     IN_PROGRESS(true, Translation.of("siege_status_in_progress")), 
 	ATTACKER_WIN(false, Translation.of("siege_status_attacker_win")), 
 	DEFENDER_WIN(false, Translation.of("siege_status_defender_win")), 
+	ATTACKER_CLOSE_WIN(false, Translation.of("siege_status_attacker_close_win")),
+	DEFENDER_CLOSE_WIN(false, Translation.of("siege_status_defender_close_win")),
 	ATTACKER_ABANDON(false, Translation.of("siege_status_attacker_abandon")), 
 	DEFENDER_SURRENDER(false, Translation.of("siege_status_defender_surrender")), 
 	PENDING_ATTACKER_ABANDON(true, Translation.of("siege_status_pending_attacker_abandon")), 
@@ -36,6 +39,10 @@ public enum SiegeStatus {
                 return ATTACKER_WIN;
             case "DEFENDER_WIN":
                 return DEFENDER_WIN;
+			case "ATTACKER_CLOSE_WIN":
+				return ATTACKER_CLOSE_WIN;
+			case "DEFENDER_CLOSE_WIN":
+				return DEFENDER_CLOSE_WIN;
             case "ATTACKER_ABANDON":
                 return ATTACKER_ABANDON;
             case "DEFENDER_SURRENDER":
@@ -63,5 +70,23 @@ public enum SiegeStatus {
 	 */
 	public String getName() {
 		return this.name;
+	}
+
+	/**
+	 * Get text showing the type of a timed victory
+	 * 
+	 * @return either "DECISIVE" or "CLOSE"
+	 */
+	public Translatable getTimedVictoryTypeText() {
+		switch(this) {
+			case ATTACKER_WIN:
+			case DEFENDER_WIN:
+				return Translatable.of("msg_decisive");
+			case ATTACKER_CLOSE_WIN:
+			case DEFENDER_CLOSE_WIN:
+				return Translatable.of("msg_close");
+			default:
+				throw new RuntimeException("Not a timed victory type");
+		}
 	}
 }
