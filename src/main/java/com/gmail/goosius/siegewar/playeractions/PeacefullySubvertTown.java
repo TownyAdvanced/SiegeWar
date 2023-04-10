@@ -5,25 +5,18 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.events.PreSubvertTownEvent;
-import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.TownyInventory;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translator;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Map;
 
 /**
  * This class is responsible for processing requests by nations to peacefully 'subvert' towns.
@@ -119,7 +112,7 @@ public class PeacefullySubvertTown {
 	 * @param subvertingNation the nation attempting the subversion
 	 */
 	public static void throwIfGuardianTownExistsAndSubverterDoesNotOwnIt(Translator translator, Town targetPeacefulTown, Nation subvertingNation) throws TownyException {
-		Town guardianTown = calculateGuardianTown(targetPeacefulTown);
+		Town guardianTown = SiegeWarTownPeacefulnessUtil.calculateGuardianTown(targetPeacefulTown);
 		if(guardianTown == null)
 			return;  //There is no guardian town. Subversion allowed
 
@@ -128,30 +121,6 @@ public class PeacefullySubvertTown {
 
 		if(guardianTown.getNationOrNull() != subvertingNation)
 			throw new TownyException(translator.of("msg_err_cannot_subvert_dont_own_guardian_town", targetPeacefulTown.getName()));
-	}
-	
-	private static @Nullable Town calculateGuardianTown(Town peacefulTown) {
-		if(!peacefulTown.hasHomeBlock())  //The peaceful town can't have a guardian town if it has no homeblock
-			return null;
-		Town guardianTown = null;
-		int candidateDistanceInTownBlocks;
-		int winningDistanceInTownBlocks = SiegeWarSettings.getPeacefulTownsGuardianTownSearchRadius() + 1;  //A candidate guardian town must beat this distance (be less) to become the leading candidate
-		for(Town candidateGuardianTown: TownyAPI.getInstance().getTowns()) {
-			if (!candidateGuardianTown.isRuined()
-					&& candidateGuardianTown.hasHomeBlock()
-					&& candidateGuardianTown.getHomeBlockOrNull().getWorld() == peacefulTown.getHomeBlockOrNull().getWorld()
-					&& !SiegeWarTownPeacefulnessUtil.isTownPeaceful(candidateGuardianTown)
-					&& !SiegeController.hasActiveSiege(candidateGuardianTown)) {
-
-				//Check distance
-				candidateDistanceInTownBlocks = SiegeWarDistanceUtil.getDistanceInTownBlocks(peacefulTown, candidateGuardianTown);
-				if (candidateDistanceInTownBlocks < winningDistanceInTownBlocks) {
-					guardianTown = candidateGuardianTown;
-					winningDistanceInTownBlocks = candidateDistanceInTownBlocks;
-				}
-			}
-		}
-		return guardianTown;
 	}
 
 }
