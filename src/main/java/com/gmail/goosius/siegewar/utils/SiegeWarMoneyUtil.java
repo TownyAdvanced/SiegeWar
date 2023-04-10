@@ -30,13 +30,11 @@ public class SiegeWarMoneyUtil {
 	 * Used for a decisive victory
 	 *
 	 * @param siege siege
-	 * @param winningGovernment the (decisively) winning government
-	 * @param losingGovernment the (decisively) losing government                             
+	 * @param winningGovernment the (decisively) winning government 	 
 	 */
-	public static void giveWarChestToWinner(Siege siege, Government winningGovernment, Government losingGovernment) {
+	public static void giveWarChestToWinner(Siege siege, Government winningGovernment) {
 		if(TownyEconomyHandler.isActive()) {
 			giveWarChestTo(winningGovernment,
-					losingGovernment,
 					siege.getWarChestAmount(),
 					"War Chest Captured",
 					"msg_siege_war_attack_recover_war_chest");
@@ -59,22 +57,19 @@ public class SiegeWarMoneyUtil {
 
 			//Give partial war chest to winner
 			giveWarChestTo(winningGovernment,
-					losingGovernment,
 					amountForWinningGovernment,
 					"War Chest Partially Recovered",
 					"msg_siege_war_attack_partially_recover_war_chest");
 
 			//Give partial war chest to loser
 			giveWarChestTo(losingGovernment,
-					winningGovernment,
 					amountForLosingGovernment,
 					"War Chest Partially Recovered",
 					"msg_siege_war_attack_partially_recover_war_chest");
 		}
 	}
 
-	private static void giveWarChestTo(Government governmentToAward, 
-									   Government governmentToNotify, 
+	private static void giveWarChestTo(Government governmentToAward,
 									   double amountToAward, 
 									   String depositComment,
 									   String messageTranslationKey) {
@@ -91,12 +86,6 @@ public class SiegeWarMoneyUtil {
 			TownyMessaging.sendPrefixedNationMessage((Nation)governmentToAward, message);
 		else
 			TownyMessaging.sendPrefixedTownMessage((Town)governmentToAward, message);
-
-		//Notify the other government
-		if (governmentToNotify instanceof Nation)
-			TownyMessaging.sendPrefixedNationMessage((Nation)governmentToNotify, message);
-		else
-			TownyMessaging.sendPrefixedTownMessage((Town)governmentToNotify, message);
 	}
 
 	/**

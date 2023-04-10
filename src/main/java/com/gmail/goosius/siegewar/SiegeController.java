@@ -239,7 +239,7 @@ public class SiegeController {
 		siege.setStatus(SiegeStatus.UNKNOWN);
 		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege);
 		if(siege.getSiegeType() == SiegeType.CONQUEST) {
-			SiegeWarMoneyUtil.giveWarChestToWinner(siege, siege.getAttacker(), siege.getTown());
+			SiegeWarMoneyUtil.giveWarChestToWinner(siege, siege.getAttacker());
 		}
 	}
 

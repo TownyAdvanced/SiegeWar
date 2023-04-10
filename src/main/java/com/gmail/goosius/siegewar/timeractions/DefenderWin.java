@@ -25,7 +25,7 @@ public class DefenderWin
 		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege);
 		if(siege.getSiegeType() == SiegeType.CONQUEST) {
 			if(siege.getStatus() == SiegeStatus.DEFENDER_WIN) {
-				SiegeWarMoneyUtil.giveWarChestToWinner(siege, siege.getTown(), siege.getAttacker());
+				SiegeWarMoneyUtil.giveWarChestToWinner(siege, siege.getTown());
 			} else {
 				SiegeWarMoneyUtil.giveWarChestToBoth(siege, siege.getTown(), siege.getAttacker());
 			}

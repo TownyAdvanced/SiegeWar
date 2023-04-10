@@ -25,7 +25,7 @@ public class AttackerWin {
 		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege);
 		if(siege.getSiegeType() == SiegeType.CONQUEST) {
 			if(siege.getStatus() == SiegeStatus.ATTACKER_WIN) {
-				SiegeWarMoneyUtil.giveWarChestToWinner(siege, siege.getAttacker(), siege.getTown());
+				SiegeWarMoneyUtil.giveWarChestToWinner(siege, siege.getAttacker());
 			} else {
 				SiegeWarMoneyUtil.giveWarChestToBoth(siege, siege.getAttacker(), siege.getTown());
 			}
