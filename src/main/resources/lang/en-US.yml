@@ -29,6 +29,7 @@ siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
 #Siege war happy-path messages
 msg_siege_war_attack_pay_war_chest: '&bA war-chest has been prepared by %s, with a value of %s. Whoever wins the siege will get this money.'
 msg_siege_war_attack_recover_war_chest: '&bThe war chest has been recovered by %s, with a value of %s.'
+msg_siege_war_attack_partially_recover_war_chest: '&bThe war chest has been partially recovered by %s, with a value of %s.'
 msg_siege_war_neutral_town_plundered: '&b%s has been plundered of %s by %s!'
 msg_siege_war_nation_town_plundered: '&b%s has been plundered of %s by %s!'
 msg_siege_war_town_ruined_from_plunder: '&b%s has been reduced to ruins by %s!'
@@ -522,10 +523,13 @@ msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless
 
 #Timed wins
 
-msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has defeated the defending army of %s!.'
-msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has defeated the attacking army of %s!.'
-msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has successfully crushed the rebellion!.'
-msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded!. The attacking rebels have successfully driven off the attacking army of %s.'
+msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has won a %s victory against the defending army of %s!.'
+msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!.'
+msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has defeated the rebels with a %s victory!.'
+msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded!. The attacking rebels have successfully driven off the attacking army of %s!, with a %s victory!.'
+msg_decisive: 'DECISIVE'
+msg_close: 'CLOSE'
+
 
 #Abandoning Attacks
 
@@ -598,3 +602,10 @@ siege_status_attacker_close_win: 'Close Attacker Victory'
 siege_status_defender_close_win: 'Close Defender Victory'
 siege_status_attacker_win: 'Decisive Attacker Victory'
 siege_status_defender_win: 'Decisive Defender Victory'
+
+#Siege Special Victory Effects
+msg_conquest_siege_attacker_close_win_special_effects: " Because the victory was CLOSE, the defending town managed to recover %s of the War Chest, and Plunder will be reduced by %s."
+msg_revolt_siege_attacker_close_win_special_effects: " Because the victory was CLOSE, plunder will be reduced by %s."
+msg_conquest_siege_defender_close_win_special_effects: " Because the victory was CLOSE, the attacking nation managed to recover %s of the War Chest."
+msg_revolt_siege_defender_decisive_win_special_effects: " Because the victory was DECISIVE, the former occupying nation will now be afflicted with Demoralization (Damage -%d), until the siege immunity of this town expires."
+

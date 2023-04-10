@@ -893,16 +893,16 @@ public enum ConfigNodes {
 			""),
 	SPECIAL_VICTORY_EFFECTS_DECISIVE_VICTORY_THRESHOLD(
 			"special_victory_effects.decisive_victory_threshold",
-			"5000.0",
+			"5000",
 			"",
-			"# If the siege ends via reaching full progress, and if the siege points are at this threshold (positive or negative),",
-			"# then a decisive victory is declared, otherwise a close victory is declared"),
+			"# If the siege ends without surrender/abandon, and if the siege points are at this threshold (positive or negative),",
+			"# then a decisive victory is declared, otherwise a close victory is declared."),
 	SPECIAL_VICTORY_EFFECTS_WARCHEST_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY(
 			"special_victory_effects.warchest_reduction_percentage_on_close_victory",
 			"50.0",
 			"",
 			"# After a close victory, where a warchest is applicable, the warchest will be reduced by this amount.",
-			"# The losing side will receive the remainder"),
+			"# The losing side will receive the remainder."),
 	SPECIAL_VICTORY_EFFECTS_PLUNDER_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY(
 			"special_victory_effects.plunder_reduction_percentage_on_close_victory",
 			"50.0",
@@ -914,7 +914,7 @@ public enum ConfigNodes {
 			"",
 			"# In a revolt siege, after a decisive defender victory,",
 			"# attacker damage is reduced by this amount while siege immunity lasts.",
-			"# TIP: Without this effect, revolt siege attackers who looks certain to lose, would have no motivation to keep fighting for a close victory.");
+			"# TIP: Without this effect, revolt siege attackers who are certain to lose, would have no motivation to keep fighting for a close defeat.");
 			
 	private final String Root;
 	private final String Default;

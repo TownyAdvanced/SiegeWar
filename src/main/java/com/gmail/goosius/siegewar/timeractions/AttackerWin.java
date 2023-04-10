@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.timeractions;
 
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
@@ -15,17 +16,19 @@ public class AttackerWin {
 
 	/**
 	 * This method sets up the attacker as the siege winner
+	 * SiegeStatus will already have been set
 	 * 
 	 * @param siege the siege
-	 * @param siegeStatus the siege status
 	 */
-	public static void attackerWin(Siege siege, SiegeStatus siegeStatus) {
+	public static void attackerWin(Siege siege) {
 		siege.setSiegeWinner(SiegeSide.ATTACKERS);
-		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege, siegeStatus);
-		switch(siege.getSiegeType()) {
-			case CONQUEST:
-				SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
-				break;
+		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege);
+		if(siege.getSiegeType() == SiegeType.CONQUEST) {
+			if(siege.getStatus() == SiegeStatus.ATTACKER_WIN) {
+				SiegeWarMoneyUtil.giveWarChestToWinner(siege, siege.getAttacker(), siege.getTown());
+			} else {
+				SiegeWarMoneyUtil.giveWarChestToBoth(siege, siege.getAttacker(), siege.getTown());
+			}
 		}
     }
 

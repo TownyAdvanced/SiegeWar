@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.enums;
 
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 
 /**
@@ -69,5 +70,23 @@ public enum SiegeStatus {
 	 */
 	public String getName() {
 		return this.name;
+	}
+
+	/**
+	 * Get text showing the type of a timed victory
+	 * 
+	 * @return either "DECISIVE" or "CLOSE"
+	 */
+	public Translatable getTimedVictoryTypeText() {
+		switch(this) {
+			case ATTACKER_WIN:
+			case DEFENDER_WIN:
+				return Translatable.of("msg_decisive");
+			case ATTACKER_CLOSE_WIN:
+			case DEFENDER_CLOSE_WIN:
+				return Translatable.of("msg_close");
+			default:
+				throw new RuntimeException("Not a timed victory type");
+		}
 	}
 }

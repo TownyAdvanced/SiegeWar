@@ -18,12 +18,9 @@ public class SiegeWarSiegeCompletionUtil {
 	 * to reflect siege completion
 	 * 
 	 * @param siege siege
-	 * @param siegeStatus the new status of the siege
 	 */
-	public static void setCommonSiegeCompletionValues(Siege siege,
-													  SiegeStatus siegeStatus) {
+	public static void setCommonSiegeCompletionValues(Siege siege) {
 		//Update values
-		siege.setStatus(siegeStatus);
 		SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown());
 		SiegeWarImmunityUtil.grantRevoltImmunityAfterEndedSiege(siege.getTown());
 		CosmeticUtil.removeFakeBeacons(siege);

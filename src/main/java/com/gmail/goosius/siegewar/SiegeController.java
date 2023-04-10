@@ -27,7 +27,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Government;
-import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -237,9 +236,10 @@ public class SiegeController {
 	 */
 	private static void endSiegeWithNoWinner(Siege siege) {
 		siege.setSiegeWinner(SiegeSide.NOBODY);
-		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege, SiegeStatus.UNKNOWN);
+		siege.setStatus(SiegeStatus.UNKNOWN);
+		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege);
 		if(siege.getSiegeType() == SiegeType.CONQUEST) {
-			SiegeWarMoneyUtil.giveWarChestTo(siege, siege.getAttacker());
+			SiegeWarMoneyUtil.giveWarChestToWinner(siege, siege.getAttacker(), siege.getTown());
 		}
 	}
 
