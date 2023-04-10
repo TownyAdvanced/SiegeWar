@@ -20,6 +20,7 @@ siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
 #Siege war happy-path messages
 msg_siege_war_attack_pay_war_chest: '&b%s Подготовил сундук войны со стоимостью %s. Тот, кто победит в осаде, получит эти деньги.'
 msg_siege_war_attack_recover_war_chest: '&bВоенный сундук был получен %s, с %s.'
+msg_siege_war_attack_partially_recover_war_chest: '&bThe war chest has been partially recovered by %s, with a value of %s.'
 msg_siege_war_neutral_town_plundered: '&b%s был разграблен %s %s!'
 msg_siege_war_nation_town_plundered: '&b%s был разграблен %s %s!'
 msg_siege_war_town_ruined_from_plunder: '&b%s был снижен до развалин силами %s!'
@@ -102,8 +103,6 @@ msg_swa_resident_already_has_control: '&cЖитель %s уже имеет ко�
 msg_swa_resident_doesnt_have_control: "&cЖитель %s не имеет контроля."
 msg_swa_set_plunder_success: '&bВторгся в %s для %s.'
 siege_status_in_progress: 'Contested'
-siege_status_attacker_win: 'Победа атакующих'
-siege_status_defender_win: 'Защитники победили'
 siege_status_unknown: 'Неизвестен'
 dynmap_siege_banner_control: 'Контроль флага: %s'
 dynmap_siege_progress: 'Siege Progress: %d/%d'
@@ -201,8 +200,10 @@ status_town_siege_status: '&2 > Статус: &a%s'
 status_town_siege_attacker: '&2 > Атакующий: &a%s'
 status_town_siege_defender: '&2 > Защитник: &a%s'
 status_town_siege_battle_points: '&2 > Очки: &a%s &2/ &a%s'
-status_town_siege_status_attacker_win: 'Победа атакующих'
-status_town_siege_status_defender_win: 'Защитники победили'
+status_town_siege_status_attacker_win: 'Decisive Attacker Victory'
+status_town_siege_status_defender_win: 'Decisive Defender Victory'
+status_town_siege_status_close_attacker_win: 'Close Attacker Victory'
+status_town_siege_status_close_defender_win: 'Close Defender Victory'
 status_town_siege_status_attacker_abandon: 'Атакующие отступили'
 status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending'
 status_town_siege_status_defender_surrender: 'Защитники сдались'
@@ -401,10 +402,12 @@ msg_swa_town_peacefulness_change_success: '&bSuccessfully changed the peacefulne
 msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation status of %s to %s.'
 msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended."
 #Timed wins
-msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has defeated the defending army of %s!.'
-msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has defeated the attacking army of %s!.'
-msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has successfully crushed the rebellion!.'
-msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded!. The attacking rebels have successfully driven off the attacking army of %s.'
+msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has won a %s victory against the defending army of %s!.'
+msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!.'
+msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has defeated the rebels with a %s victory!.'
+msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded!. The attacking rebels have successfully driven off the attacking army of %s!, with a %s victory!.'
+msg_decisive: 'DECISIVE'
+msg_close: 'CLOSE'
 #Abandoning Attacks
 msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > The attacking army of %s has admitted defeat and retreated!. This action will be confirmed when siege progress is complete.'
 msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has admitted defeat and retreated!. This action will be confirmed when siege progress is complete.'
@@ -449,3 +452,14 @@ msg_err_siege_war_action_not_a_town_member: '&cДля этого действи�
 #Upfront Cost
 msg_town_pay_upfront_siege_cost: '&bYour town paid an upfront siege cost of %s.'
 msg_nation_pay_upfront_siege_cost: '&bYour nation paid an upfront siege cost of %s.'
+#Siege Statuses
+siege_status_attacker_close_win: 'Close Attacker Victory'
+siege_status_defender_close_win: 'Close Defender Victory'
+siege_status_attacker_win: 'Decisive Attacker Victory'
+siege_status_defender_win: 'Decisive Defender Victory'
+#Siege Special Victory Effects
+msg_conquest_siege_attacker_close_win_special_effects: "&bBecause of the brave efforts of the defenders, the besieged town managed to recover %s of the War Chest, and Plunder will be reduced by %s."
+msg_revolt_siege_attacker_close_win_special_effects: "&bBecause of the brave efforts of the rebels, plunder will be reduced by %s."
+msg_conquest_siege_defender_close_win_special_effects: "&bBecause of the brave efforts of the attackers, the besieging nation managed to recover %s of the War Chest."
+msg_revolt_siege_defender_decisive_win_special_effects: "&bBecause of the great success of the rebels, the former occupying nation will now be afflicted with Demoralization (Damage -%d), until the siege immunity of the town expires."
+
