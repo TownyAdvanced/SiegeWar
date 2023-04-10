@@ -581,14 +581,12 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If this setting is true, then subversion (instant capture and occupation) of peaceful towns is enabled."),
-	PEACEFUL_TOWNS_TOWNY_INFLUENCE_RADIUS(
-			"peaceful_towns.towny_influence_radius",
+	PEACEFUL_TOWNS_GUARDIAN_TOWN_SEARCH_RADIUS(
+			"peaceful_towns.guardian_town_search_radius",
 			"1200",
 			"",
-			"# This setting describes a circular area surrounding each peaceful town.",
-			"# The town feels the effect of all 'Towny-Influence' in that area.",
-			"# Each non-peaceful, non-sieged town, generates Towny Influence. The power of the influence is determined by num-townblocks.",
-			"# The nation with the highest Towny-Influence in the area can subvert (instantly capture and occupy) the peaceful town, if it wishes to do so."),
+			"# Given any peaceful town, the largest-by-townblock, non-peaceful, non-sieged town, in this radius around the homeblock, is considered to be the guardian town.",
+			"# If a nation owns the guardian town of a peaceful town, that nation can subvert (instantly capture and occupy) the peaceful town"),
 	OCCUPIED_TOWNS(
 			"occupied_towns",
 			"",

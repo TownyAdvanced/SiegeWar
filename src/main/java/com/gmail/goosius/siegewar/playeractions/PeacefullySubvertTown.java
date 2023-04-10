@@ -87,9 +87,6 @@ public class PeacefullySubvertTown {
 	}
 
 	private static void allowSubversionOrThrow(Player player, Nation residentsNation, Town targetPeacefulTown) throws TownyException {
-		if(!targetPeacefulTown.hasHomeBlock())
-			return;  //If you don't have a homeblock, insta-subvert, otherwise we cannot check distance to any guardian towns
-
 		final Translator translator =  Translator.locale(player);
 
 		if(!SiegeWarSettings.isPeacefulTownsSubvertEnabled())
@@ -113,9 +110,7 @@ public class PeacefullySubvertTown {
 
 		SiegeWarNationUtil.throwIfNationHasTooManyTowns(residentsNation);
 		
-		SiegeWarNationUtil.throwIfNationHasTooManyTowns(residentsNation);
-
-		throwIfGuardianTownExistsAndSubverterDoesNotOwnIt(targetPeacefulTown, residentsNation);
+		throwIfGuardianTownExistsAndSubverterDoesNotOwnIt(translator, targetPeacefulTown, residentsNation);
 	}
 
 	/**
@@ -123,98 +118,40 @@ public class PeacefullySubvertTown {
 	 * 
 	 * @param subvertingNation the nation attempting the subversion
 	 */
-	public static void throwIfGuardianTownExistsAndSubverterDoesNotOwnIt(Town targetPeacefulTown, Nation subvertingNation) throws TownyException {
+	public static void throwIfGuardianTownExistsAndSubverterDoesNotOwnIt(Translator translator, Town targetPeacefulTown, Nation subvertingNation) throws TownyException {
 		Town guardianTown = calculateGuardianTown(targetPeacefulTown);
-		
 		if(guardianTown == null)
 			return;  //There is no guardian town. Subversion allowed
-		
+
 		if(!guardianTown.hasNation())
-			throw new TownyException("Cannot subvert because your nation does not own the guardian town of this peaceful town. The guardian town is: %s.");
-	
+			throw new TownyException(translator.of("msg_err_cannot_subvert_dont_own_guardian_town", targetPeacefulTown.getName()));
+
 		if(guardianTown.getNationOrNull() != subvertingNation)
-			throw new TownyException("Cannot subvert because your nation does not own the guardian town of this peaceful town. The guardian town is: %s");
+			throw new TownyException(translator.of("msg_err_cannot_subvert_dont_own_guardian_town", targetPeacefulTown.getName()));
 	}
 	
 	private static @Nullable Town calculateGuardianTown(Town peacefulTown) {
-		int guardianTownPlotsRequirement = SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement();
-		
+		if(!peacefulTown.hasHomeBlock())  //The peaceful town can't have a guardian town if it has no homeblock
+			return null;
 		Town guardianTown = null;
-		int winningDistanceInTownBlocks = SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement() + 1;  //A candidate guardian town must beat this distance (be less) to become leading candidate
+		int candidateDistanceInTownBlocks;
+		int winningDistanceInTownBlocks = SiegeWarSettings.getPeacefulTownsGuardianTownSearchRadius() + 1;  //A candidate guardian town must beat this distance (be less) to become the leading candidate
 		for(Town candidateGuardianTown: TownyAPI.getInstance().getTowns()) {
-			if(!candidateGuardianTown.isRuined()
-				&& candidateGuardianTown.hasHomeBlock()
-				&& !SiegeWarTownPeacefulnessUtil.isTownPeaceful(candidateGuardianTown)
-				&& !SiegeController.hasActiveSiege(candidateGuardianTown) 
-				&& SiegeWarDistanceUtil.areTownsClose(peacefulTown, candidateGuardianTown, winningDistanceInTownBlocks)) {
+			if (!candidateGuardianTown.isRuined()
+					&& candidateGuardianTown.hasHomeBlock()
+					&& candidateGuardianTown.getHomeBlockOrNull().getWorld() == peacefulTown.getHomeBlockOrNull().getWorld()
+					&& !SiegeWarTownPeacefulnessUtil.isTownPeaceful(candidateGuardianTown)
+					&& !SiegeController.hasActiveSiege(candidateGuardianTown)) {
 
-				guardianTown = candidateGuardianTown;
-				winningDistanceInTownBlocks = getDistanceInTownBlocks(peacefulTown, candidateGuardianTown);
-				distanceToCandidateGuardianTownInTownBlocks = 
+				//Check distance
+				candidateDistanceInTownBlocks = SiegeWarDistanceUtil.getDistanceInTownBlocks(peacefulTown, candidateGuardianTown);
+				if (candidateDistanceInTownBlocks < winningDistanceInTownBlocks) {
+					guardianTown = candidateGuardianTown;
+					winningDistanceInTownBlocks = candidateDistanceInTownBlocks;
+				}
 			}
-			{
-				
-				distanceToCandidateGuardianTown = SiegeWarDistanceUtil.areLocationsCloseHorizontally()
-				
-			}
-					&& town.getNumTownBlocks() >= guardianTownPlotsRequirement
 		}
-		
 		return guardianTown;
 	}
 
-
-	public static Set<Town> getValidGuardianTowns(Town peacefulTown) {
-		Set<Town> validGuardianTowns = new HashSet<>();
-		TownyUniverse townyUniverse = TownyUniverse.getInstance();
-
-		try {
-			int guardianTownPlotsRequirement = SiegeWarSettings.getPeacefulTownsGuardianTownPlotsRequirement();
-			int guardianTownMaxDistanceRequirementTownblocks = SiegeWarSettings.getPeacefulTownsGuardianTownMinDistanceRequirement();
-
-			//Find valid guardian towns
-			List<Town> candidateTowns = new ArrayList<>(townyUniverse.getDataSource().getTowns());
-			for(Town candidateTown: candidateTowns) {
-				if(!candidateTown.isNeutral()
-						&& candidateTown.hasNation()
-						&& candidateTown.getNation().isOpen()
-						&& candidateTown.getTownBlocks().size() >= guardianTownPlotsRequirement
-						&& SiegeWarDistanceUtil.areTownsClose(peacefulTown, candidateTown, guardianTownMaxDistanceRequirementTownblocks)) {
-					validGuardianTowns.add(candidateTown);
-				}
-			}
-		} catch (Exception e) {
-			try {
-				System.err.println("Problem getting valid guardian towns for - " + peacefulTown.getName());
-			} catch (Exception e2) {
-				System.err.println("Problem getting valid guardian towns (could not read peaceful town name)");
-			}
-			e.printStackTrace();
-		}
-
-		//Return result
-		return validGuardianTowns;
-	}
-	
-	/**
-	 * Verify if the given nation has enough Towny-Influence to subvert the given town
-	 *
-	 * @param nation the nation attempting subversion
-	 * @param targetTown the town targeted for subversion
-	 *
-	 * @throws TownyException if the nation does not have enough Towny-Influence
-	 */
-	private static void verifyThatNationHasEnoughTownyInfluenceToSubvertTown(Nation nation, Town targetTown) throws TownyException {
-		Map<Nation, Integer> townyInfluenceMap = SiegeWarTownPeacefulnessUtil.calculateTownyInfluenceMap(targetTown);
-		if(townyInfluenceMap.size() == 0)
-			//No nation has towny-influence in the local area
-			throw new TownyException(Translatable.of("msg_err_cannot_subvert_town_zero_influence"));
-
-		Nation topNation = townyInfluenceMap.keySet().iterator().next();
-		if(topNation != nation)
-			//A different nation is top of the towny-influence map
-			throw new TownyException(Translatable.of("msg_err_cannot_subvert_town_insufficient_influence", topNation.getName(),
-					townyInfluenceMap.get(topNation),            // Top scorer. 
-					townyInfluenceMap.getOrDefault(nation, 0))); // The nation's score.
-	}
 }

@@ -335,4 +335,10 @@ public class SiegeWarDistanceUtil {
 			return false;
 		}
 	}
+
+	public static int getDistanceInTownBlocks(Town townA, Town townB) {
+		Coord coord1 = townA.getHomeBlockOrNull().getCoord();
+		Coord coord2= townB.getHomeBlockOrNull().getCoord();
+		return (int)(Math.sqrt(Math.pow(coord1.getX() - coord2.getX(), 2) + Math.pow(coord1.getZ() - coord2.getZ(), 2)));
+	}
 }
