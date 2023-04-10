@@ -878,7 +878,7 @@ public enum ConfigNodes {
 			"# Within the protection radius, players cannot build above this height.",
 			"# The height is relative to the siege banner height"),
 	TRAP_WARFARE_MITIGATION_WILDERNESS_LOWER_HEIGHT_LIMIT(
-			"trap_warfare_mitigation.lower_height_limit",
+			"trap_warfare_mitigation.wilderness.lower_height_limit",
 			"0",
 			"",
 			"# Within the protection radius, players cannot build below this height.",

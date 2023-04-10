@@ -101,7 +101,7 @@ public class SiegeWarBannerControlUtil {
 		siege.addBannerControlSession(player, bannerControlSession);
 
 		//Notify Player in console
-		String messageKey = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? "msg_siege_war_banner_control_session_started_with_altitude" : "msg_siege_war_banner_control_session_started";
+		String messageKey = SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled() ? "msg_siege_war_banner_control_session_started_with_altitude" : "msg_siege_war_banner_control_session_started";
 		String sessionDurationText = TimeMgmt.getFormattedTimeValue(sessionDurationMillis);
 		Messaging.sendMsg(player,
 			Translatable.of(messageKey,
@@ -164,7 +164,7 @@ public class SiegeWarBannerControlUtil {
 		if(!SiegeWarScoringUtil.isPlayerInTimedPointZone(player, siege))
 			return false; //player is not in the timed point zone
 
-		if(SiegeWarSettings.isTrapWarfareMitigationEnabled()
+		if(SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled()
 				&& player.getLocation().getY() < siege.getFlagLocation().getY() - 0.5) {
 			/*
 			 * Player is at, or above, the height of the siege banner block
@@ -192,7 +192,7 @@ public class SiegeWarBannerControlUtil {
 				//Check if session failed
 				if (!doesPlayerMeetBasicSessionRequirements(siege, bannerControlSession.getPlayer(), bannerControlSession.getResident())) {
 					siege.removeBannerControlSession(bannerControlSession);
-					Translatable errorMessage = SiegeWarSettings.isTrapWarfareMitigationEnabled() ? Translatable.of("msg_siege_war_banner_control_session_failure_with_altitude") : Translatable.of("msg_siege_war_banner_control_session_failure");
+					Translatable errorMessage = SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled() ? Translatable.of("msg_siege_war_banner_control_session_failure_with_altitude") : Translatable.of("msg_siege_war_banner_control_session_failure");
 					BossBarUtil.removeBannerCapBossBar(bannerControlSession.getPlayer());
 					Messaging.sendMsg(bannerControlSession.getPlayer(), errorMessage);
 					//Update beacon

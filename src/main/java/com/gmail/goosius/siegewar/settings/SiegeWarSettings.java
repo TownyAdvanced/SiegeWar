@@ -308,19 +308,19 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_BESIEGED_TOWN_RADIUS);
 	}
 
-	public static boolean isTrapWarfareMitigationEnabled() {
+	public static boolean isWildernessTrapWarfareMitigationEnabled() {
 		return Settings.getBoolean(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_ENABLED);
 	}
 
-	public static int getTrapWarfareMitigationRadiusBlocks() {
+	public static int getWildernessTrapWarfareMitigationRadiusBlocks() {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_RADIUS);
 	}
 
-	public static int getTrapWarfareMitigationUpperHeightLimit() {
+	public static int getWildernessTrapWarfareMitigationUpperHeightLimit() {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_UPPER_HEIGHT_LIMIT);
 	}
 
-	public static int getTrapWarfareMitigationLowerHeightLimit() {
+	public static int getWildernessTrapWarfareMitigationLowerHeightLimit() {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_LOWER_HEIGHT_LIMIT);
 	}
 
