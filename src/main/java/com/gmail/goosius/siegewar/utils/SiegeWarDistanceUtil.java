@@ -237,8 +237,6 @@ public class SiegeWarDistanceUtil {
 		return (int)MathUtil.distance(location1.getX(), location2.getX(), location1.getZ(), location2.getZ());
 	}
 
-
-
 	/**
 	 * Throws a TownyException with Translatable error message if a town is too far
 	 * from a nation's capital.
