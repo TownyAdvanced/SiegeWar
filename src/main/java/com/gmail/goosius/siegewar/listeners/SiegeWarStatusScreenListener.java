@@ -380,7 +380,6 @@ public class SiegeWarStatusScreenListener implements Listener {
                 return translator.of("status_town_siege_status_pending_defender_surrender");
             case PENDING_ATTACKER_ABANDON:
                 return translator.of("status_town_siege_status_pending_attacker_abandon");
-
             default:
                 return "???";
         }
