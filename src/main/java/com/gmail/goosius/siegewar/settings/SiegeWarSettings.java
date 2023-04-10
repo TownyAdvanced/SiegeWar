@@ -495,11 +495,11 @@ public class SiegeWarSettings {
 	}
 
 	public static double getSpecialVictoryEffectsWarchestReductionPercentageOnCloseVictory() {
-		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_WARCHEST_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY);
+		return Settings.getDouble(ConfigNodes.SPECIAL_VICTORY_EFFECTS_WARCHEST_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY);
 	}
 
 	public static double getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() {
-		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_PLUNDER_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY);
+		return Settings.getDouble(ConfigNodes.SPECIAL_VICTORY_EFFECTS_PLUNDER_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY);
 	}
 
 	public static double getSpecialVictoryWeaknessOnRevoltSiegeDecisiveDefenderVictory() {

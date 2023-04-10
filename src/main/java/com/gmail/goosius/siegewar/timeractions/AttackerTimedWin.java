@@ -25,7 +25,6 @@ public class AttackerTimedWin {
             if(specialEffectsMessage != null)
                 Messaging.sendGlobalMessage(specialEffectsMessage);
         }
-
         AttackerWin.attackerWin(siege);
     }
 
