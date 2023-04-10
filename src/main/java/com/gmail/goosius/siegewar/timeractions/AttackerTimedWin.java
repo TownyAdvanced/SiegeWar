@@ -17,14 +17,19 @@ public class AttackerTimedWin {
     public static void attackerTimedWin(Siege siege) {
         if(Math.abs(siege.getSiegeBalance()) >= SiegeWarSettings.getSpecialVictoryEffectsDecisiveVictoryThreshold()) {
             siege.setStatus(SiegeStatus.ATTACKER_WIN);
+            Messaging.sendGlobalMessage(getStandardAttackerWinMessage(siege));
         } else {
             siege.setStatus(SiegeStatus.ATTACKER_CLOSE_WIN);
+            Messaging.sendGlobalMessage(getStandardAttackerWinMessage(siege));
+            Translatable specialEffectsMessage = getSpecialTimedAttackerWinMessage(siege);
+            if(specialEffectsMessage != null)
+                Messaging.sendGlobalMessage(specialEffectsMessage);
         }
-        Messaging.sendGlobalMessage(getTimedAttackerWinMessage(siege));
+
         AttackerWin.attackerWin(siege);
     }
 
-    private static Translatable getTimedAttackerWinMessage(Siege siege) {
+    private static Translatable getStandardAttackerWinMessage(Siege siege) {
         //Base victory message
         String key = String.format("msg_%s_siege_timed_attacker_win", siege.getSiegeType().toLowerCase());
         Translatable message = null;
@@ -47,24 +52,27 @@ public class AttackerTimedWin {
         //Standard effects message
         String key2 = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toLowerCase());
         message.append(Translatable.of(key2));
+        return message;
+    }
 
+    private static Translatable getSpecialTimedAttackerWinMessage(Siege siege) {
         //Special effects message
+        Translatable message = null;
         switch (siege.getSiegeType()) {
             case CONQUEST:
                 if(siege.getStatus() == SiegeStatus.ATTACKER_CLOSE_WIN) {
-                    message.append(Translatable.of("msg_conquest_siege_attacker_close_win_special_effects", 
+                    message = Translatable.of("msg_conquest_siege_attacker_close_win_special_effects",
                             SiegeWarSettings.getSpecialVictoryEffectsWarchestReductionPercentageOnCloseVictory() + "%",
-                            SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() + "%"));
+                            SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() + "%");
                 }
                 break;
             case REVOLT:
                 if(siege.getStatus() == SiegeStatus.ATTACKER_CLOSE_WIN) {
-                    message.append(Translatable.of("msg_revolt_siege_attacker_close_win_special_effects",
-                            SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() + "%"));
+                    message = Translatable.of("msg_revolt_siege_attacker_close_win_special_effects",
+                            SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() + "%");
                 }
                 break;
         }
         return message;
     }
-
 }
