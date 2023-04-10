@@ -201,7 +201,7 @@ public class SiegeWarDistanceUtil {
 			return false;
 
 		//Check horizontal distance
-		return MathUtil.distance(location1.getX(), location2.getX(), location1.getZ(), location2.getZ()) < radius;
+		return MathUtil.distance(location1.getX(), location2.getX(), location1.getZ(), location2.getZ()) <= radius;
 	}
 
 	/**
@@ -238,7 +238,7 @@ public class SiegeWarDistanceUtil {
 	}
 
 	/**
-	 * Determine if the target location is protected by trap warfare mitigation
+	 * Determine if the target location is protected by wilderness trap warfare mitigation
 	 *
 	 * @param targetLocation target location
 	 */
@@ -257,7 +257,8 @@ public class SiegeWarDistanceUtil {
 
 	/**
 	 * Determine if the target location is protected by trap warfare mitigation
-	 *
+	 * We know when this method is called that it is wilderness
+	 * 
 	 * @param targetLocation target location
 	 * @param siegeBannerLocation location of nearby siege banner
 	 * @param protectionRadiusBlocks protection radius in blocks
@@ -267,9 +268,7 @@ public class SiegeWarDistanceUtil {
 	 * @return true if the location is protected
 	 */
 	public static boolean isTargetLocationProtectedByTrapWarfareMitigation(Location targetLocation, Location siegeBannerLocation, int protectionRadiusBlocks, int upperHeightLimit, int lowerHeightLimit) {
-		if(!TownyAPI.getInstance().isWilderness(targetLocation)) {
-			return false;  //In town. Protection does not apply.
-		} else if(targetLocation.getY() <= siegeBannerLocation.getY() + upperHeightLimit
+		if(targetLocation.getY() <= siegeBannerLocation.getY() + upperHeightLimit
 					&& targetLocation.getY() >= siegeBannerLocation.getY() + lowerHeightLimit) {
 			return false;  //Not high/low enough for protection
 		} else if(areLocationsCloseHorizontally(targetLocation, siegeBannerLocation, protectionRadiusBlocks)) {

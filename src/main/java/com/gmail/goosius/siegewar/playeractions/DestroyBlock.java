@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.gmail.goosius.siegewar.utils.SiegeWarBlockProtectionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.adventure.text.Component;
@@ -48,11 +49,21 @@ public class DestroyBlock {
 			return;
 		}
 
-		// Trap warfare block protection
-		if (qualifiesAsTrapWarfare(event, nearbySiege)) {
-			TownyMessaging.sendActionBarMessageToPlayer(event.getPlayer(), Component.text(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"), NamedTextColor.DARK_RED));
-			event.setCancelled(true);
-			return;
+		//Trap warfare block protection
+		if(TownyAPI.getInstance().isWilderness(event.getLocation())) {
+			//Trap warfare wilderness block protection
+			if(qualifiesAsTrapWarfare(event, nearbySiege)) {
+				event.setCancelled(true);
+				event.setCancelMessage(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"));
+				return;
+			}
+		} else {
+			//Trap warfare besieged-town block protection
+			if (SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled()
+					&& SiegeWarBlockProtectionUtil.isTownLocationProtectedByBesiegedTownTrapWarfareMitigation(event.getLocation())) {
+				event.setCancelled(true);
+				event.setCancelMessage(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"));
+			}
 		}
 
 		//Prevent destruction of siege-banner or support block
