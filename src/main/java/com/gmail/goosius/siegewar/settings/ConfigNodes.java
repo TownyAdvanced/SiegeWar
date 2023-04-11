@@ -586,7 +586,7 @@ public enum ConfigNodes {
 			"1200",
 			"",
 			"# Given any peaceful town, the largest-by-townblock, non-peaceful, non-sieged town, in this radius around the homeblock, is considered to be the guardian town.",
-			"# If a nation owns the guardian town of a peaceful town, that nation can subvert (instantly capture and occupy) the peaceful town"),
+			"# If a nation owns the guardian town, that nation can instantly subvert & occupy the peaceful town"),
 	OCCUPIED_TOWNS(
 			"occupied_towns",
 			"",
