@@ -15,6 +15,7 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translator;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -81,7 +82,6 @@ public class PeacefullySubvertTown {
 
 	private static void allowSubversionOrThrow(Player player, Nation residentsNation, Town targetPeacefulTown) throws TownyException {
 		final Translator translator =  Translator.locale(player);
-
 		if(!SiegeWarSettings.isPeacefulTownsSubvertEnabled())
 			throw new TownyException(translator.of("msg_err_action_disable"));
 

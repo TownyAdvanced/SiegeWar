@@ -161,7 +161,8 @@ public class SiegeWarTownEventListener implements Listener {
 	 * used by players as an easy exploit to escape occupation.
 	 * 
 	 * If a guardian town moves its homeblock, all peaceful towns it was guarding, are released.
-	 * NOTE: As per the "simplicity" theme of SW.2.0.0, this is preferred over a more complex scheme of keeping some towns and releasing others.
+	 * NOTE: As per the "simplicity" theme of SW.2.0.0, 
+	 * this is preferred over the alternative scheme of keeping the qualified towns and releasing the disqualified towns.
 	 * 
 	 */
 	@EventHandler
@@ -271,5 +272,4 @@ public class SiegeWarTownEventListener implements Listener {
 			}
 		}
 	}
-
 }
