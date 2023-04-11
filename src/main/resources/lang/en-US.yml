@@ -504,7 +504,7 @@ sg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their 
 msg_err_peaceful_towns_cannot_revolt: '&cPeaceful towns cannot revolt.'
 msg_err_capital_towns_cannot_go_peaceful: '&cCapital towns cannot go peaceful.'
 msg_err_cannot_subvert_not_enough_permissions: "&cYou do not have enough permissions to subvert the town."
-msg_err_cannot_subvert_dont_own_guardian_town: "&cYou cannot subvert this peaceful town, because your nation does not own the required Guardian Town. The Guardian Town is: %s."
+msg_err_cannot_subvert_dont_own_guardian_town: "&cSubvert not possible, because your nation does not own the required Guardian Town: %s."
 
 # Town neutrality
 

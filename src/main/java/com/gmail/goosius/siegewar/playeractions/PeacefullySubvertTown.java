@@ -117,10 +117,10 @@ public class PeacefullySubvertTown {
 			return;  //There is no guardian town. Subversion allowed
 
 		if(!guardianTown.hasNation())
-			throw new TownyException(translator.of("msg_err_cannot_subvert_dont_own_guardian_town", targetPeacefulTown.getName()));
+			throw new TownyException(translator.of("msg_err_cannot_subvert_dont_own_guardian_town", guardianTown.getName()));
 
 		if(guardianTown.getNationOrNull() != subvertingNation)
-			throw new TownyException(translator.of("msg_err_cannot_subvert_dont_own_guardian_town", targetPeacefulTown.getName()));
+			throw new TownyException(translator.of("msg_err_cannot_subvert_dont_own_guardian_town", guardianTown.getName()));
 	}
 
 }

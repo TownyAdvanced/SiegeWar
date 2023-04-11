@@ -1,19 +1,26 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyMessaging;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -162,13 +169,14 @@ public class SiegeWarTownPeacefulnessUtil {
 			return null;
 		Town guardianTown = null;
 		int winningNumTownBlocks = 0;
+		int searchRadiusInTownBlocks = SiegeWarSettings.getPeacefulTownsGuardianTownSearchRadius() / TownySettings.getTownBlockSize();
 		for(Town candidateGuardianTown: TownyAPI.getInstance().getTowns()) {
 			//Search all towns to find the guardian town
 			if (!candidateGuardianTown.isRuined()
 					&& candidateGuardianTown.hasHomeBlock()
 					&& !SiegeWarTownPeacefulnessUtil.isTownPeaceful(candidateGuardianTown)
 					&& !SiegeController.hasActiveSiege(candidateGuardianTown)
-					&& SiegeWarDistanceUtil.areTownsClose(peacefulTown, candidateGuardianTown, SiegeWarSettings.getPeacefulTownsGuardianTownSearchRadius())
+					&& SiegeWarDistanceUtil.areTownsClose(peacefulTown, candidateGuardianTown, searchRadiusInTownBlocks)
 					&& candidateGuardianTown.getNumTownBlocks() > winningNumTownBlocks) {
 				//New winning candidate found 
 				guardianTown = candidateGuardianTown;
@@ -176,6 +184,31 @@ public class SiegeWarTownPeacefulnessUtil {
 			}
 		}
 		return guardianTown;
+	}
+
+	/**
+	 * Release peaceful towns on a guardian town homeblock move
+	 *
+	 * @param townMovingHomeBlock the town about to move its homeblock
+	 * @return the number of peaceful towns released from occupation
+	 */
+	public static int releasePeacefulTownsOnGuardianTownHomeBlockMove(Town townMovingHomeBlock) {
+		if(!townMovingHomeBlock.hasHomeBlock())
+			return 0;
+		if(!townMovingHomeBlock.hasNation())
+			return 0;
+		Nation nationOfTownMovingHomeBlock = townMovingHomeBlock.getNationOrNull();
+		int numPeacefulTownsReleased = 0;
+		List<Town> peacefulTownsInOldRadius = SiegeWarDistanceUtil.getNearbyTownsPeacefulTowns(townMovingHomeBlock.getHomeBlockOrNull(), SiegeWarSettings.getPeacefulTownsGuardianTownSearchRadius());
+		for(Town peacefulTown: peacefulTownsInOldRadius) {
+			if (calculateGuardianTown(peacefulTown) == townMovingHomeBlock
+					&& TownOccupationController.isTownOccupied(peacefulTown)
+					&& peacefulTown.getNationOrNull() == nationOfTownMovingHomeBlock) {
+				TownOccupationController.removeTownOccupation(peacefulTown);
+				numPeacefulTownsReleased++;
+			}
+		}
+		return numPeacefulTownsReleased;
 	}
 
 }

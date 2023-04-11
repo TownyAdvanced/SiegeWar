@@ -21,7 +21,10 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -150,6 +153,16 @@ public class SiegeWarDistanceUtil {
 		} catch(TownyException te) {
 			return false;
 		}
+	}
+
+
+	public static boolean areTownBlocksClose(@NotNull TownBlock townBlock1, @NotNull TownBlock townBlock2, int radiusTownblocks) {
+		return areCoordsClose(
+			townBlock1.getWorld(),
+			townBlock1.getCoord(),
+			townBlock2.getWorld(), 
+			townBlock2.getCoord(),
+			radiusTownblocks);
 	}
 
 	private static boolean areCoordsClose(TownyWorld world1, Coord coord1, TownyWorld world2, Coord coord2, int radiusTownblocks) {
@@ -299,5 +312,18 @@ public class SiegeWarDistanceUtil {
 		Coord coord1 = townA.getHomeBlockOrNull().getCoord();
 		Coord coord2= townB.getHomeBlockOrNull().getCoord();
 		return (int)(Math.sqrt(Math.pow(coord1.getX() - coord2.getX(), 2) + Math.pow(coord1.getZ() - coord2.getZ(), 2)));
+	}
+
+	public static List<Town> getNearbyTownsPeacefulTowns(@NotNull TownBlock townBlock, int radius) {
+		List<Town> result = new ArrayList<>();
+		int radiusInTownBlocks = radius / TownySettings.getTownBlockSize();
+		for(Town town: TownyAPI.getInstance().getTowns()) {
+			if(SiegeWarTownPeacefulnessUtil.isTownPeaceful(town)
+					&& town.hasHomeBlock() 
+					&& areTownBlocksClose(town.getHomeBlockOrNull(), townBlock, radiusInTownBlocks)) {
+				result.add(town);
+			}
+		}
+		return result;
 	}
 }
