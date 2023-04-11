@@ -280,10 +280,6 @@ status_military_salary: "Stipendio Militare: "
 hover_message_click_to_claim: "Clicca per riscattare i soldi dovuti a te."
 #Added in 0.31
 msg_next_session_cannot_be_determined: "La prossima Sessione di Assedio non è stata programmata. Riprova più tardi."
-#Added in 0.32
-msg_err_cannot_subvert_towns_in_own_nation: "&cNon puoi sovvertire le città che sono nella tua stessa nazione."
-msg_err_cannot_subvert_town_zero_influence: "&cNon puoi sovvertire questa città, perchè la tua nazione non ha Influenza-Cittadina nella area locale."
-msg_err_cannot_subvert_town_insufficient_influence: "&cNon puoi sovvertire questa città, perchè %s ha più Influenza-Cittadina nella area locale (%d), rispetto alla tua nazione (%d)."
 #Added in 0.33
 nation_help_11: 'Raccogliere qualsiasi entrata dovuta a lei dallo stipendio militare.'
 msg_err_siege_war_collect_unavailable: "Non c'è nulla per te da raccogliere."
@@ -394,6 +390,8 @@ sg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their 
 msg_err_peaceful_towns_cannot_revolt: '&cPeaceful towns cannot revolt.'
 msg_err_capital_towns_cannot_go_peaceful: '&cCapital towns cannot go peaceful.'
 msg_err_cannot_subvert_not_enough_permissions: "&cYou do not have enough permissions to subvert the town."
+msg_err_cannot_subvert_dont_own_guardian_town: "&cSubvert not possible, because your nation does not own the required Guardian Town: %s."
+msg_peaceful_towns_released_on_homeblock_move: "&bBecause %s moved its homeblock, %d peaceful town(s) which it was guarding, were released from occupation."
 #Town neutrality
 msg_err_town_neutrality_not_supported: "&cSiegeWar does not support town neutrality. To protect your town from sieges, change your town to Peaceful, using '/sw town togglepeaceful'."
 #swa
