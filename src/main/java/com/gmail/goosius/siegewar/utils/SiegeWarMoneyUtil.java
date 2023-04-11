@@ -78,7 +78,7 @@ public class SiegeWarMoneyUtil {
 		
 		//Create message
 		Translatable message = Translatable.of(messageTranslationKey,
-				governmentToAward.getFormattedName(),
+				governmentToAward.getName(),
 				TownyEconomyHandler.getFormattedBalance(amountToAward));
 		
 		//Send message to government that got the money

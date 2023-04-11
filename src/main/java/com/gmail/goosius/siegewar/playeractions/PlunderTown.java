@@ -185,12 +185,12 @@ public class PlunderTown {
 			Messaging.sendGlobalMessage(
 				Translatable.of("msg_siege_war_town_bankrupted_from_plunder",
 						townName,
-						nation.getFormattedName()));
+						nation.getName()));
 		} else if (townDestroyed) {
 			Messaging.sendGlobalMessage(
 				Translatable.of("msg_siege_war_town_ruined_from_plunder",
 						townName,
-						nation.getFormattedName()));
+						nation.getName()));
 		}
 	}
 
