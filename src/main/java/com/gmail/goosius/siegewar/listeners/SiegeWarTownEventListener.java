@@ -11,6 +11,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.event.DeleteTownEvent;
 import com.palmergames.bukkit.towny.event.NewTownEvent;
 import com.palmergames.bukkit.towny.event.TownAddResidentRankEvent;
@@ -158,6 +159,10 @@ public class SiegeWarTownEventListener implements Listener {
 	 * If town is peaceful, sieged, or occupied, it can't move homeblock.
 	 * otherwise the move homeblock command could be / definitely would be
 	 * used by players as an easy exploit to escape occupation.
+	 * 
+	 * If a guardian town moves its homeblock, all peaceful towns it was guarding, are released.
+	 * NOTE: As per the "simplicity" theme of SW.2.0.0, this is preferred over a more complex scheme of keeping some towns and releasing others.
+	 * 
 	 */
 	@EventHandler
 	public void on(TownPreSetHomeBlockEvent event) {
@@ -182,7 +187,8 @@ public class SiegeWarTownEventListener implements Listener {
 			if(event.getTown().hasNation()) {
 				int numPeacefulTownsReleased = SiegeWarTownPeacefulnessUtil.releasePeacefulTownsOnGuardianTownHomeBlockMove(event.getTown());
 				if(numPeacefulTownsReleased > 0) {
-					send a message to say that x number of peaceful towns were released from occupation due to the homeblock move.
+					Translatable message = Translatable.of("msg_peaceful_towns_released_on_homeblock_move", event.getTown().getName(), numPeacefulTownsReleased);
+					TownyMessaging.sendPrefixedNationMessage(event.getTown().getNationOrNull(), message);
 				}
 			}
 		}
@@ -266,23 +272,4 @@ public class SiegeWarTownEventListener implements Listener {
 		}
 	}
 
-	@EventHandler
-	public void onTownRankGivenToPlayer(TownPreSetHomeBlockEvent event) {
-		//In Siegewar, if target town is peaceful or occupied, can't add military rank
-		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& PermissionUtil.doesTownRankAllowPermissionNode(event.getRank(), SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS)) {
-
-			//Get residents town
-			Town town = TownyAPI.getInstance().getResidentTownOrNull(event.getResident());
-			if(town != null) {
-				if(SiegeWarTownPeacefulnessUtil.isTownPeaceful(town)) {
-					event.setCancelled(true);
-					event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_war_siege_cannot_add_military_rank_to_peaceful_resident"));
-				} else if (TownOccupationController.isTownOccupied(town)) {
-					event.setCancelled(true);
-					event.setCancelMessage(Translation.of("siegewar_plugin_prefix") + Translation.of("msg_war_siege_cannot_add_military_rank_to_occupied_resident"));
-				}
-			}
-		}
-	}
 }

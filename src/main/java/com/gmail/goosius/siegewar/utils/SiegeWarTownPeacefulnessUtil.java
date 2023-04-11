@@ -14,6 +14,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
@@ -205,6 +206,7 @@ public class SiegeWarTownPeacefulnessUtil {
 					&& TownOccupationController.isTownOccupied(peacefulTown)
 					&& peacefulTown.getNationOrNull() == nationOfTownMovingHomeBlock) {
 				TownOccupationController.removeTownOccupation(peacefulTown);
+				TownyMessaging.sendPrefixedNationMessage(nationOfTownMovingHomeBlock, Translation.of("msg_nation_town_left", peacefulTown.getName()));
 				numPeacefulTownsReleased++;
 			}
 		}
