@@ -21,7 +21,6 @@ import com.palmergames.bukkit.towny.event.time.dailytaxes.PreTownPaysNationTaxEv
 import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
-import com.palmergames.bukkit.towny.event.town.TownMapColourNationalCalculationEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
 import com.palmergames.bukkit.towny.object.Town;
@@ -209,14 +208,6 @@ public class SiegeWarTownEventListener implements Listener {
 		if (SiegeController.hasSiege(event.getSuccumbingTown())) {
 			event.setCancelMessage(Translation.of("msg_err_cannot_merge_towns"));
 			event.setCancelled(true);
-		}
-	}
-
-	@EventHandler
-	public void on(TownMapColourNationalCalculationEvent event) {
-		if(TownOccupationController.isTownOccupied(event.getTown())) {
-			String mapColorHexCode = TownOccupationController.getTownOccupier(event.getTown()).getMapColorHexCode();
-			event.setMapColorHexCode(mapColorHexCode);
 		}
 	}
 

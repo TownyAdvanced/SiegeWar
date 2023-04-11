@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -12,16 +11,13 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -95,9 +91,9 @@ public class SiegeWarTownPeacefulnessUtil {
 		if (TownMetaDataController.getPeacefulness(town)) {
 			//Remove military ranks
 			SiegeWarMilitaryRanksUtil.removeMilitaryRanksFromTownResidents(town);
-			message = Translatable.of("msg_town_became_peaceful", town.getFormattedName());
+			message = Translatable.of("msg_town_became_peaceful", town.getName());
 		} else {
-			message = Translatable.of("msg_town_became_non_peaceful", town.getFormattedName());
+			message = Translatable.of("msg_town_became_non_peaceful", town.getName());
 		}
 
 		TownyMessaging.sendPrefixedTownMessage(town, message);

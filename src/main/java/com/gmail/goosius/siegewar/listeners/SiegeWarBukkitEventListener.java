@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarInventoryUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
