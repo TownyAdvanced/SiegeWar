@@ -11,7 +11,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownySettings;
+import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.event.DeleteTownEvent;
 import com.palmergames.bukkit.towny.event.NewTownEvent;
 import com.palmergames.bukkit.towny.event.TownAddResidentRankEvent;
@@ -158,7 +158,12 @@ public class SiegeWarTownEventListener implements Listener {
 	/*
 	 * If town is peaceful, sieged, or occupied, it can't move homeblock.
 	 * otherwise the move homeblock command could be / definitely would be
-	 * used by players as an easy and hard-to-moderate exploit to escape occupation.
+	 * used by players as an easy exploit to escape occupation.
+	 * 
+	 * If a guardian town moves its homeblock, all peaceful towns it was guarding, are released.
+	 * NOTE: As per the "simplicity" theme of SW.2.0.0, 
+	 * this is preferred over the alternative scheme of keeping the qualified towns and releasing the disqualified towns.
+	 * 
 	 */
 	@EventHandler
 	public void on(TownPreSetHomeBlockEvent event) {
@@ -178,6 +183,14 @@ public class SiegeWarTownEventListener implements Listener {
 			if(TownOccupationController.isTownOccupied(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(translator.of("siegewar_plugin_prefix") + translator.of("msg_err_occupied_town_cannot_move_homeblock"));
+			}
+			
+			if(event.getTown().hasNation()) {
+				int numPeacefulTownsReleased = SiegeWarTownPeacefulnessUtil.releasePeacefulTownsOnGuardianTownHomeBlockMove(event.getTown());
+				if(numPeacefulTownsReleased > 0) {
+					Translatable message = Translatable.of("msg_peaceful_towns_released_on_homeblock_move", event.getTown().getName(), numPeacefulTownsReleased);
+					TownyMessaging.sendPrefixedNationMessage(event.getTown().getNationOrNull(), message);
+				}
 			}
 		}
 	}

@@ -236,8 +236,8 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_SUBVERT_ENABLED);
 	}
 
-	public static int getPeacefulTownsTownyInfluenceRadius() {
-		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_TOWNY_INFLUENCE_RADIUS);
+	public static int getPeacefulTownsGuardianTownSearchRadius() {
+		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_GUARDIAN_TOWN_SEARCH_RADIUS);
 	}
 
 	public static int getWarCommonPeacefulTownsNewTownConfirmationRequirementDays() {
