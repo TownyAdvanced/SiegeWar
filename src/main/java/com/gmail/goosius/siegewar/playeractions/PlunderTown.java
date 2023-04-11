@@ -174,9 +174,9 @@ public class PlunderTown {
 		//Send plunder reduction message for close-win
 		if(siege.getStatus() == SiegeStatus.ATTACKER_CLOSE_WIN) {
 			if (siege.getSiegeType() == SiegeType.CONQUEST) {
-				Messaging.sendGlobalMessage(Translatable.of("msg_conquest_siege_attacker_close_win_plunder_reduced", SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory()));
+				Messaging.sendGlobalMessage(Translatable.of("msg_conquest_siege_attacker_close_win_plunder_reduced", SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() + "%"));
 			} else {
-				Messaging.sendGlobalMessage(Translatable.of("msg_revolt_siege_attacker_close_win_plunder_reduced", SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory()));
+				Messaging.sendGlobalMessage(Translatable.of("msg_revolt_siege_attacker_close_win_plunder_reduced", SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory()+ "%"));
 			}
 		}
 
