@@ -21,7 +21,6 @@ import com.palmergames.bukkit.towny.object.AddonCommand;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.util.ChatTools;
-import com.palmergames.util.MathUtil;
 
 public class SiegeWarNationSetOccupationTaxAddonCommand extends BaseCommand implements TabExecutor {
 
