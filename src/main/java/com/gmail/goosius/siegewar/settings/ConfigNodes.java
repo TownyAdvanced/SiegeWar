@@ -926,13 +926,13 @@ public enum ConfigNodes {
 			"# then a decisive victory is declared, otherwise a close victory is declared."),
 	SPECIAL_VICTORY_EFFECTS_WARCHEST_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY(
 			"special_victory_effects.warchest_reduction_percentage_on_close_victory",
-			"50.0",
+			"50",
 			"",
 			"# After a close victory, where a warchest is applicable, the warchest will be reduced by this amount.",
 			"# The losing side will receive the remainder."),
 	SPECIAL_VICTORY_EFFECTS_PLUNDER_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY(
 			"special_victory_effects.plunder_reduction_percentage_on_close_victory",
-			"50.0",
+			"50",
 			"",
 			"# After a close victory, where plunder is applicable, plunder will be reduced by this amount."),
 	SPECIAL_VICTORY_EFFECTS_WEAKNESS_ON_REVOLT_SIEGE_DECISIVE_DEFENDER_VICTORY(

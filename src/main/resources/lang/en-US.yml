@@ -601,8 +601,11 @@ siege_status_attacker_win: 'Decisive Attacker Victory'
 siege_status_defender_win: 'Decisive Defender Victory'
 
 #Siege Special Victory Effects
-msg_conquest_siege_attacker_close_win_special_effects: "&bBecause of the brave efforts of the defenders, the besieged town managed to recover %s of the War Chest, and Plunder will be reduced by %s."
-msg_revolt_siege_attacker_close_win_special_effects: "&bBecause of the brave efforts of the rebels, plunder will be reduced by %s."
-msg_conquest_siege_defender_close_win_special_effects: "&bBecause of the brave efforts of the attackers, the besieging nation managed to recover %s of the War Chest."
-msg_revolt_siege_defender_decisive_win_special_effects: "&bBecause of the great success of the rebels, the former occupying nation will now be afflicted with Demoralization (Damage -%d), until the siege immunity of the town expires."
 
+msg_conquest_siege_attacker_close_win_warchest_reduced: "&bBecause of the brave performance of the defenders, the besieged town was able to recover %s of the War Chest."
+msg_conquest_siege_defender_close_win_warchest_reduced: "&bBecause of the brave performance of the attackers, the besieging nation was able recover %s of the War Chest."
+
+msg_conquest_siege_attacker_close_win_plunder_reduced: "&bBecause of the brave performance of the defenders during the recent siege, the usual plunder amount was reduced by %s."
+msg_revolt_siege_attacker_close_win_plunder_reduced: "&bBecause of the brave performance of the rebels during the recent siege, the usual plunder amount was reduced by %s."
+
+msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (-%d damage until the siege immunity of the town expires)."

@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -96,8 +97,12 @@ public class PlunderTown {
 				* town.getTownBlocks().size()
 				* SiegeWarMoneyUtil.getMoneyMultiplier(town);
 		
-		//Redistribute money
+		//Adjust amount for close attacker win
+		if(siege.getStatus() == SiegeStatus.ATTACKER_CLOSE_WIN) {
+			totalPlunderAmount = totalPlunderAmount / 100 * (100 - SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory());
+		}
 		
+		//Redistribute money
 		if (SiegeWarSettings.isPlunderPaidOutOverDays()) {
 			// Plunder is paid out of server, and paid back over time.
 			totalPlunderAmount = createPlunderForNation(siege, nation, townName, totalPlunderAmount);
@@ -165,6 +170,15 @@ public class PlunderTown {
 						townName,
 						TownyEconomyHandler.getFormattedBalance(totalPlunderAmount),
 						nation.getName()));
+		
+		//Send plunder reduction message for close-win
+		if(siege.getStatus() == SiegeStatus.ATTACKER_CLOSE_WIN) {
+			if (siege.getSiegeType() == SiegeType.CONQUEST) {
+				Messaging.sendGlobalMessage(Translatable.of("msg_conquest_siege_attacker_close_win_plunder_reduced", SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() + "%"));
+			} else {
+				Messaging.sendGlobalMessage(Translatable.of("msg_revolt_siege_attacker_close_win_plunder_reduced", SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory()+ "%"));
+			}
+		}
 
 		//Send town bankrupted/destroyed message
 		if(townNewlyBankrupted) {
