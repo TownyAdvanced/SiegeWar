@@ -37,9 +37,9 @@ public class DefenderWin
 			if(siege.getStatus() == SiegeStatus.DEFENDER_WIN) {
 				Nation nation = (Nation)siege.getAttacker();
 				int currentDemoralizationAmount = SiegeWarNationUtil.getDemoralizationAmount(nation);
-				int newDemoralizationAmount = currentDemoralizationAmount + SiegeWarSettings.getRevoltSiegeDecisiveDefenderVictoryWeaknessAmount();
+				int newDemoralizationAmount = currentDemoralizationAmount + SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyOnDecisiveRebelVictory();
 				SiegeWarNationUtil.setDemoralizationAmount(nation, newDemoralizationAmount);
-				SiegeWarNationUtil.setDemoralizationDays(nation, SiegeWarSettings.getRevoltSiegeDecisiveDefenderVictoryWeaknessDurationDays());
+				SiegeWarNationUtil.setDemoralizationDays(nation, SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyDurationDays());
 			}
 		}
     }

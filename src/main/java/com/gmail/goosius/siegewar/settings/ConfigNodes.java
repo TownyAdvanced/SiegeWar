@@ -935,21 +935,18 @@ public enum ConfigNodes {
 			"50",
 			"",
 			"# After a close victory, where plunder is applicable, plunder will be reduced by this amount."),
-	SPECIAL_VICTORY_EFFECTS_REVOLT_SIEGE_DECISIVE_DEFENDER_VICTORY_WEAKNESS_AMOUNT(
-			"special_victory_effects.revolt_siege_decisive_defender_victory_weakness_amount",
-			"1",
+	SPECIAL_VICTORY_EFFECTS_SIEGE_BALANCE_PENALTY_ON_DECISIVE_REBEL_VICTORY(
+			"special_victory_effects.siege_balance_penalty_on_decisive_rebel_victory",
+			"-1500",
 			"",
-			"# In a revolt siege, after a decisive defender victory,",
-			"# attacker damage is reduced by this amount while siege immunity lasts.",
-			"# If another such defeat occurs, the penalty is increased by this amount.",
-			"# TIP: Demoralization can precipitate the defeat of an empire, as it loses more and more occupied towns",
-			"# TIP: This penalty affects revolt siege attackers who are certain to lose, and motivates them to keep fighting for a close victory, rather than giving up and leaving the battlefield."),
-	SPECIAL_VICTORY_EFFECTS_REVOLT_SIEGE_DECISIVE_DEFENDER_VICTORY_WEAKNESS_DURATION_DAYS(
-			"special_victory_effects.revolt_siege_decisive_defender_victory_weakness_duration_days",
+			"# After a decisive defender victory in a revolt siege,",
+			"# the former occupying nation is subject to a starting-siege-balance-penalty to any conquest sieges it initiates.",
+			"# If another such defeat occurs, the penalty is increased by this amount"),
+	SPECIAL_VICTORY_EFFECTS_SIEGE_BALANCE_PENALTY_DURATION_DAYS(
+			"special_victory_effects.siege_balance_penalty_duration_days",
 			"7",
 			"",
-			"# In a revolt siege, after a decisive defender victory,",
-			"# this value determines the duration of the attack damage penalty suffered by the attacker.",
+			"# this value determines the duration of the starting-siege-balance-penalty.",
 			"# If another such defeat occurs, the the duration is refreshed.");
 	private final String Root;
 	private final String Default;

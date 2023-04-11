@@ -252,15 +252,6 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(!isSWEnabledAndIsThisAWarAllowedWorld(event.getEntity().getWorld()))
 			return;
 
-		//Return if damager is not a player
-		if(!(event.getDamager() instanceof Player))
-			return;
-		
-		//Reduce damage is damager is from a demoralized nation
-		Resident resident = TownyAPI.getInstance().getResident(event.getDamager().getUniqueId());
-		if(resident != null && resident.hasNation() && NationMetaDataController.getDemoralizationDaysLeft(resident.getNationOrNull()) > 0)
-			event.setDamage(event.getFinalDamage() - NationMetaDataController.getDemoralizationAmount(resident.getNationOrNull()));
-
 		//Return if the entity being damaged is not a player
 		if(!(event.getEntity() instanceof Player))
 			return;

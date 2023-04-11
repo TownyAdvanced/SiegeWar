@@ -510,11 +510,11 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_PLUNDER_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY);
 	}
 
-	public static int getRevoltSiegeDecisiveDefenderVictoryWeaknessAmount() {
-		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_REVOLT_SIEGE_DECISIVE_DEFENDER_VICTORY_WEAKNESS_AMOUNT);
+	public static int getSpecialVictoryEffectsSiegeBalancePenaltyOnDecisiveRebelVictory() {
+		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_SIEGE_BALANCE_PENALTY_ON_DECISIVE_REBEL_VICTORY);
 	}
 
-	public static int getRevoltSiegeDecisiveDefenderVictoryWeaknessDurationDays() {
-		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_REVOLT_SIEGE_DECISIVE_DEFENDER_VICTORY_WEAKNESS_DURATION_DAYS);
+	public static int getSpecialVictoryEffectsSiegeBalancePenaltyDurationDays() {
+		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_SIEGE_BALANCE_PENALTY_DURATION_DAYS);
 	}
 }
