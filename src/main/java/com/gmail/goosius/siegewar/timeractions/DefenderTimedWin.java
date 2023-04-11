@@ -60,13 +60,14 @@ public class DefenderTimedWin {
         switch (siege.getSiegeType()) {
             case CONQUEST:
                 if(siege.getStatus() == SiegeStatus.DEFENDER_CLOSE_WIN) {
-                    message = Translatable.of("msg_conquest_siege_defender_close_win_special_effects",
+                    message = Translatable.of("msg_conquest_siege_defender_close_win_warchest_reduced",
                             SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() + "%");
                 }
                 break;
             case REVOLT:
                 if(siege.getStatus() == SiegeStatus.DEFENDER_WIN) {
-                    message = Translatable.of("msg_revolt_siege_defender_decisive_win_special_effects",
+                    message = Translatable.of("msg_revolt_siege_defender_decisive_win_demoralization",
+                            siege.getAttacker().getName(),
                             SiegeWarSettings.getSpecialVictoryWeaknessOnRevoltSiegeDecisiveDefenderVictory());
                 }
                 break;

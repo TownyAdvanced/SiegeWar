@@ -60,14 +60,8 @@ public class AttackerTimedWin {
         switch (siege.getSiegeType()) {
             case CONQUEST:
                 if(siege.getStatus() == SiegeStatus.ATTACKER_CLOSE_WIN) {
-                    message = Translatable.of("msg_conquest_siege_attacker_close_win_special_effects",
+                    message = Translatable.of("msg_conquest_siege_attacker_close_win_warchest_reduced",
                             SiegeWarSettings.getSpecialVictoryEffectsWarchestReductionPercentageOnCloseVictory() + "%",
-                            SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() + "%");
-                }
-                break;
-            case REVOLT:
-                if(siege.getStatus() == SiegeStatus.ATTACKER_CLOSE_WIN) {
-                    message = Translatable.of("msg_revolt_siege_attacker_close_win_special_effects",
                             SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() + "%");
                 }
                 break;
