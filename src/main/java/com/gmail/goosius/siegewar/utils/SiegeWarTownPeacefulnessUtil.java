@@ -95,9 +95,9 @@ public class SiegeWarTownPeacefulnessUtil {
 		if (TownMetaDataController.getPeacefulness(town)) {
 			//Remove military ranks
 			SiegeWarMilitaryRanksUtil.removeMilitaryRanksFromTownResidents(town);
-			message = Translatable.of("msg_town_became_peaceful", town.getFormattedName());
+			message = Translatable.of("msg_town_became_peaceful", town.getName());
 		} else {
-			message = Translatable.of("msg_town_became_non_peaceful", town.getFormattedName());
+			message = Translatable.of("msg_town_became_non_peaceful", town.getName());
 		}
 
 		TownyMessaging.sendPrefixedTownMessage(town, message);
