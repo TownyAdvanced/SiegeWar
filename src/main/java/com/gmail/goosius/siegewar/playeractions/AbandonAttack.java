@@ -74,8 +74,8 @@ public class AbandonAttack {
 			if(siege.getSiegeType() == SiegeType.REVOLT) {
 				message.append(Translatable.of("msg_revolt_siege_defender_decisive_win_demoralization", 
 						siege.getAttacker().getName(),
-						SiegeWarSettings.getRevoltSiegeDecisiveDefenderVictoryWeaknessAmount(),
-						SiegeWarSettings.getRevoltSiegeDecisiveDefenderVictoryWeaknessDurationDays()));
+						SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyOnDecisiveRebelVictory(),
+						SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyDurationDays()));
 			}
 		}
 

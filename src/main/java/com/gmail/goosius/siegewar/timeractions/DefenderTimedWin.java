@@ -18,6 +18,9 @@ public class DefenderTimedWin {
         if(Math.abs(siege.getSiegeBalance()) >= SiegeWarSettings.getSpecialVictoryEffectsDecisiveVictoryThreshold()) {
             siege.setStatus(SiegeStatus.DEFENDER_WIN);
             Messaging.sendGlobalMessage(getStandardTimedDefenderWinMessage(siege));
+            Translatable specialEffectsMessage = getSpecialTimedDefenderWinMessage(siege);
+            if(specialEffectsMessage != null)
+                Messaging.sendGlobalMessage(specialEffectsMessage);
         } else {
             siege.setStatus(SiegeStatus.DEFENDER_CLOSE_WIN);
             Messaging.sendGlobalMessage(getStandardTimedDefenderWinMessage(siege));
@@ -68,8 +71,8 @@ public class DefenderTimedWin {
                 if(siege.getStatus() == SiegeStatus.DEFENDER_WIN) {
                     message = Translatable.of("msg_revolt_siege_defender_decisive_win_demoralization",
                             siege.getAttacker().getName(),
-                            SiegeWarSettings.getRevoltSiegeDecisiveDefenderVictoryWeaknessAmount(),
-                            SiegeWarSettings.getRevoltSiegeDecisiveDefenderVictoryWeaknessDurationDays());
+                            SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyOnDecisiveRebelVictory(),
+                            SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyDurationDays());
                 }
                 break;
         }

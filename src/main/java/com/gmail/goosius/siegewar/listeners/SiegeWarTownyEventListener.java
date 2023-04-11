@@ -14,6 +14,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -110,6 +111,7 @@ public class SiegeWarTownyEventListener implements Listener {
             if(SiegeWarSettings.getMaxOccupationTaxPerPlot() > 0) {
                 TownOccupationController.collectNationOccupationTax();
             }
+            SiegeWarNationUtil.updateNationDemoralizationCounters();
         }
     }
 

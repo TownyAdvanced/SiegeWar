@@ -383,13 +383,13 @@ public class SiegeWarStatusScreenListener implements Listener {
             case ATTACKER_WIN:
                 return translator.of("status_town_siege_status_attacker_win");
 			case ATTACKER_CLOSE_WIN:
-				return translator.of("status_town_siege_status_attacker_close_win");
+				return translator.of("status_town_siege_status_close_attacker_win");
             case DEFENDER_SURRENDER:
                 return translator.of("status_town_siege_status_defender_surrender");
             case DEFENDER_WIN:
                 return translator.of("status_town_siege_status_defender_win");
 			case DEFENDER_CLOSE_WIN:
-				return translator.of("status_town_siege_status_defender_close_win");
+				return translator.of("status_town_siege_status_close_defender_win");
             case ATTACKER_ABANDON:
                 return translator.of("status_town_siege_status_attacker_abandon");
             case PENDING_DEFENDER_SURRENDER:
