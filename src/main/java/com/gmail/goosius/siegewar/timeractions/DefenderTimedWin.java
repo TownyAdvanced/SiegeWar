@@ -68,7 +68,8 @@ public class DefenderTimedWin {
                 if(siege.getStatus() == SiegeStatus.DEFENDER_WIN) {
                     message = Translatable.of("msg_revolt_siege_defender_decisive_win_demoralization",
                             siege.getAttacker().getName(),
-                            SiegeWarSettings.getSpecialVictoryWeaknessOnRevoltSiegeDecisiveDefenderVictory());
+                            SiegeWarSettings.getRevoltSiegeDecisiveDefenderVictoryWeaknessAmount(),
+                            SiegeWarSettings.getRevoltSiegeDecisiveDefenderVictoryWeaknessDurationDays());
                 }
                 break;
         }

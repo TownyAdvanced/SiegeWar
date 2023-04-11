@@ -2,9 +2,12 @@ package com.gmail.goosius.siegewar.listeners;
 
 import java.util.List;
 
+import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarInventoryUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -248,6 +251,15 @@ public class SiegeWarBukkitEventListener implements Listener {
 	public void on(EntityDamageByEntityEvent event) {	
 		if(!isSWEnabledAndIsThisAWarAllowedWorld(event.getEntity().getWorld()))
 			return;
+
+		//Return if damager is not a player
+		if(!(event.getDamager() instanceof Player))
+			return;
+		
+		//Reduce damage is damager is from a demoralized nation
+		Resident resident = TownyAPI.getInstance().getResident(event.getDamager().getUniqueId());
+		if(resident != null && resident.hasNation() && NationMetaDataController.getDemoralizationDaysLeft(resident.getNationOrNull()) > 0)
+			event.setDamage(event.getFinalDamage() - NationMetaDataController.getDemoralizationAmount(resident.getNationOrNull()));
 
 		//Return if the entity being damaged is not a player
 		if(!(event.getEntity() instanceof Player))

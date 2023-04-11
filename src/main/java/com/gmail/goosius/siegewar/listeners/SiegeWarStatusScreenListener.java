@@ -95,6 +95,22 @@ public class SiegeWarStatusScreenListener implements Listener {
 				}
 			}
 
+			//[Demoralization]
+			// Demoralization Amount: -1
+			// Demoralization Days Left: 7
+			if(NationMetaDataController.getDemoralizationDaysLeft(nation) > 0) {
+				//Create the text inside the hover item
+				Component hoverText = Component.empty();
+				hoverText = hoverText.append(Component.text(translator.of("status_nation_demoralization_amount", NationMetaDataController.getDemoralizationAmount(nation))));
+				hoverText = hoverText.append(Component.newline());
+				hoverText = hoverText.append(Component.text(translator.of("status_nation_demoralization_days_left", NationMetaDataController.getDemoralizationDaysLeft(nation))));
+				//Add the hover item to the screen
+				event.getStatusScreen().addComponentOf("siegeWar_demoralizationHover",
+						Component.empty()
+							.append(Component.text(hoverFormat(translator.of("status_nation_hover_title_demoralization")))
+							.hoverEvent(HoverEvent.showText(hoverText))));
+			}
+
 			//[Sieges]
 			// Offensive Sieges [3]: TownA, TownB, TownC
 			// Defensive Sieges [2]: TownX, TownY
@@ -116,7 +132,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 			}
 
 			//[War History]
-			// Towny Captured ...
+			// Towns Captured ...
 			// Towns Plundered ...
 			if(siegeAttacks.size() > 0 || siegeDefences.size() > 0) {
 				//Create the text inside the hover item
