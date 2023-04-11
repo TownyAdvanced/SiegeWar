@@ -280,10 +280,6 @@ status_military_salary: "Mức lương quân sự: "
 hover_message_click_to_claim: "Nhấp để yêu cầu số tiền nợ của bạn."
 #Added in 0.31
 msg_next_session_cannot_be_determined: "Phiên Xâm lược tiếp theo chưa được lên lịch. Thử lại sau."
-#Added in 0.32
-msg_err_cannot_subvert_towns_in_own_nation: "&cBạn không thể lật đổ các thị trấn thuộc quốc gia của mình."
-msg_err_cannot_subvert_town_zero_influence: "&cBạn không thể lật đổ thị trấn này, bởi vì quốc gia của bạn không có Towny-Influence trong khu vực địa phương."
-msg_err_cannot_subvert_town_insufficient_influence: "&cBạn không thể lật đổ thị trấn này, bởi vì %s có nhiều Towny-Influence ở khu vực địa phương (%d) hơn quốc gia của bạn (%d)."
 #Added in 0.33
 nation_help_11: 'Thu bất kỳ khoản thu nhập nào do bạn trả từ lương quân sự.'
 msg_err_siege_war_collect_unavailable: "Không có gì để bạn thu thập."
@@ -394,6 +390,8 @@ sg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their 
 msg_err_peaceful_towns_cannot_revolt: '&cPeaceful towns cannot revolt.'
 msg_err_capital_towns_cannot_go_peaceful: '&cCapital towns cannot go peaceful.'
 msg_err_cannot_subvert_not_enough_permissions: "&cYou do not have enough permissions to subvert the town."
+msg_err_cannot_subvert_dont_own_guardian_town: "&cSubvert not possible, because your nation does not own the required Guardian Town: %s."
+msg_peaceful_towns_released_on_homeblock_move: "&bBecause %s moved its homeblock, %d peaceful town(s) which it was guarding, were released from occupation."
 #Town neutrality
 msg_err_town_neutrality_not_supported: "&cSiegeWar does not support town neutrality. To protect your town from sieges, change your town to Peaceful, using '/sw town togglepeaceful'."
 #swa
