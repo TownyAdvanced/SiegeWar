@@ -24,6 +24,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 
 public class SiegeWarMoneyUtil {
@@ -31,18 +32,25 @@ public class SiegeWarMoneyUtil {
 	private static double estimatedTotalMoneyInEconomy = 0;
 
 	/**
-	 * Give the war chest to the winner
-	 * Used for a decisive victory
+	 * Give the war chest at the end of the siege, as long as it was a Conquest Siege.
 	 *
-	 * @param siege siege
-	 * @param winningGovernment the (decisively) winning government 	 
+	 * @param siege Siege
+	 * @param winningGovernment the winning Government
+	 * @param losingGovernment the losing Government, or null if the amount should be paid in full to the winner.
 	 */
-	public static void giveWarChestToWinner(Siege siege, Government winningGovernment) {
-		if(TownyEconomyHandler.isActive()) {
+	public static void handleWarChest(Siege siege, Government winningGovernment, Government losingGovernment) {
+		if (!siege.getSiegeType().paysWarChest() || !TownyEconomyHandler.isActive()) // Not a CONQUEST Siege.
+			return;
+
+		// If no losingGovernment is supplied, or it is a decisive ATTACKER_WIN, pay only the winner.
+		if (losingGovernment == null || siege.getStatus().awardsOnlyWinners()) {
 			giveWarChestTo(winningGovernment,
 					siege.getWarChestAmount(),
 					"War Chest Captured",
 					"msg_siege_war_attack_recover_war_chest");
+		
+		} else {
+			giveWarChestToBoth(siege, winningGovernment, losingGovernment);
 		}
 	}
 
@@ -54,24 +62,22 @@ public class SiegeWarMoneyUtil {
 	 * @param winningGovernment the (closely) winning government
 	 * @param losingGovernment the (closely) losing government
 	 */
-	public static void giveWarChestToBoth(Siege siege, Government winningGovernment, Government losingGovernment) {
-		if(TownyEconomyHandler.isActive()) {
-			//Calculate amounts
-			double amountForLosingGovernment = siege.getWarChestAmount() / 100 * SiegeWarSettings.getSpecialVictoryEffectsWarchestReductionPercentageOnCloseVictory();
-			double amountForWinningGovernment = siege.getWarChestAmount() - amountForLosingGovernment;
+	private static void giveWarChestToBoth(Siege siege, Government winningGovernment, Government losingGovernment) {
+		//Calculate amounts
+		double amountForLosingGovernment = siege.getWarChestAmount() / 100 * SiegeWarSettings.getSpecialVictoryEffectsWarchestReductionPercentageOnCloseVictory();
+		double amountForWinningGovernment = siege.getWarChestAmount() - amountForLosingGovernment;
 
-			//Give partial war chest to winner
-			giveWarChestTo(winningGovernment,
-					amountForWinningGovernment,
-					"War Chest Partially Recovered",
-					"msg_siege_war_attack_partially_recover_war_chest");
+		//Give partial war chest to winner
+		giveWarChestTo(winningGovernment,
+				amountForWinningGovernment,
+				"War Chest Partially Recovered",
+				"msg_siege_war_attack_partially_recover_war_chest");
 
-			//Give partial war chest to loser
-			giveWarChestTo(losingGovernment,
-					amountForLosingGovernment,
-					"War Chest Partially Recovered",
-					"msg_siege_war_attack_partially_recover_war_chest");
-		}
+		//Give partial war chest to loser
+		giveWarChestTo(losingGovernment,
+				amountForLosingGovernment,
+				"War Chest Partially Recovered",
+				"msg_siege_war_attack_partially_recover_war_chest");
 	}
 
 	private static void giveWarChestTo(Government governmentToAward,
@@ -246,7 +252,7 @@ public class SiegeWarMoneyUtil {
 		int amountToPaySoldier;
 		for(Map.Entry<Resident,Integer> soldierShareEntry: soldierSharesMap.entrySet()) {
 			amountToPaySoldier = (int)((amountValueOfOneShare * soldierShareEntry.getValue())); //Round down to avoid exploits for making extra money
-			switch(reason.toLowerCase()) {
+			switch(reason.toLowerCase(Locale.ROOT)) {
 				case "military salary":
 					makeMilitarySalaryAvailable(soldierShareEntry.getKey(), amountToPaySoldier);
 				break;

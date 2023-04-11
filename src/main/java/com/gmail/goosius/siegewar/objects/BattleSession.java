@@ -117,5 +117,12 @@ public class BattleSession {
 	public void setScheduledGeneralChatRestorationTime(double scheduledGeneralChatRestorationTime) {
 		this.scheduledGeneralChatRestorationTime = (long)scheduledGeneralChatRestorationTime;
 	}
+		
+	/**
+	 * @return true if the BattleSession is finished.
+	 */
+	public boolean isOver() {
+		return scheduledEndTime > 0 && System.currentTimeMillis() > scheduledEndTime;
+	}
 
 }

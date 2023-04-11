@@ -120,6 +120,11 @@ public class Siege {
 	public void setNumBattleSessionsCompleted(int num) {
 		numBattleSessionsCompleted = num;
 	}
+
+	public boolean hasCompletedAllBattleSessions() {
+		return numBattleSessionsCompleted >= SiegeWarSettings.getSiegeDurationBattleSessions();
+	}
+
 	public Government getAttacker() {
 		return attacker;
 	}
@@ -296,6 +301,10 @@ public class Siege {
 		}
 	}
 
+	public boolean hasPointsScored() {
+		return getAttackerBattlePoints() > 0 || getDefenderBattlePoints() > 0;
+	}
+	
 	public void adjustAttackerBattlePoints(int battleScore) {
 		attackerBattlePoints += battleScore;
 	}

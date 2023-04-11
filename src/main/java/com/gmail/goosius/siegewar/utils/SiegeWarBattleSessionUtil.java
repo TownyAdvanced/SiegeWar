@@ -105,24 +105,8 @@ public class SiegeWarBattleSessionUtil {
 				siege.setNumBattleSessionsCompleted(siege.getNumBattleSessionsCompleted()+1);
 
 				//If any battle points were gained, calculate a result
-				if(siege.getAttackerBattlePoints() > 0 || siege.getDefenderBattlePoints() > 0) {
-					//Adjust the siege balance
-					int siegeBalanceAdjustment = calculateSiegeBalanceAdjustment(siege);
-
-					//Apply the battle points of the winner to the siege balance
-					siege.adjustSiegeBalance(siegeBalanceAdjustment);
-
-					//Prepare result for messaging
-					battleResults.put(siege, siegeBalanceAdjustment);
-
-					// Potentially unjail the siegedTowns' prisoners if they attackers lost the battlesession.
-					if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()
-							&& SiegeWarSettings.isUnjailingAttackerResidents()
-							&& siege.getDefender() instanceof Town
-							&& siege.getAttacker() instanceof Nation) {
-						unjailPlayers((Nation) siege.getAttacker(), (Town) siege.getDefender());
-					}
-
+				if(siege.hasPointsScored()) {
+					tallyScoredPoints(siege);
 				}
 
 				//Remove glowing effects from players in bc sessions
@@ -168,6 +152,25 @@ public class SiegeWarBattleSessionUtil {
 		}
 	}
 
+	private static void tallyScoredPoints(Siege siege) {
+		//Adjust the siege balance
+		int siegeBalanceAdjustment = calculateSiegeBalanceAdjustment(siege);
+
+		//Apply the battle points of the winner to the siege balance
+		siege.adjustSiegeBalance(siegeBalanceAdjustment);
+
+		//Prepare result for messaging
+		battleResults.put(siege, siegeBalanceAdjustment);
+
+		// Potentially unjail the siegedTowns' prisoners if they attackers lost the battlesession.
+		if (siege.getAttackerBattlePoints() > siege.getDefenderBattlePoints()
+				&& SiegeWarSettings.isUnjailingAttackerResidents()
+				&& siege.getDefender() instanceof Town
+				&& siege.getAttacker() instanceof Nation) {
+			unjailPlayers((Nation) siege.getAttacker(), (Town) siege.getDefender());
+		}
+	}
+
 	private static void unjailPlayers(Nation attacker, Town defender) {
 		if (!defender.hasJails())
 			return;
@@ -189,7 +192,7 @@ public class SiegeWarBattleSessionUtil {
 		if (battleSession.isActive()) {
 			//A Battle session is active. Check to see if it finishes.
 
-			if(System.currentTimeMillis() > battleSession.getScheduledEndTime()) {
+			if(battleSession.isOver()) {
 				//Finish battle session
 				endBattleSession();
 			} else {

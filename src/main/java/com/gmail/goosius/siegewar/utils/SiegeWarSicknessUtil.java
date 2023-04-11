@@ -142,12 +142,7 @@ public class SiegeWarSicknessUtil {
     }
 
     public static boolean isOfficialSiegeParticipant(Player player, Resident resident, Siege siege) {
-        if (!resident.hasTown())
-            return false;
-
-        SiegeSide siegeSide = SiegeWarAllegianceUtil.calculateSiegePlayerSide(player, TownyAPI.getInstance().getResidentTownOrNull(resident), siege);
-
-        return siegeSide != SiegeSide.NOBODY;
+        return SiegeSide.getPlayerSiegeSide(siege, player) != SiegeSide.NOBODY;
     }
 
 }

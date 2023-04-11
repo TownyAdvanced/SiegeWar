@@ -3,7 +3,6 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
-import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.events.PreInvadeEvent;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
@@ -119,7 +118,7 @@ public class InvadeTown {
 		if(residentsNation != siege.getAttacker())
 			throw new TownyException(translator.of("msg_err_action_disable"));
 
-		if (siege.getStatus() != SiegeStatus.ATTACKER_DECISIVE_WIN && siege.getStatus() != SiegeStatus.ATTACKER_CLOSE_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
+		if (!siege.getStatus().allowsInvading())
 			throw new TownyException(translator.of("msg_err_cannot_invade_without_victory"));
 
 		if (siege.isTownInvaded())

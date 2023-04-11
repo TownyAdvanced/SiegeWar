@@ -23,7 +23,7 @@ public class SiegeWarImmunityUtil {
 	 * @param town the town which was besieged
 	 */
 	public static void grantRevoltImmunityAfterEndedSiege(Town town) {
-		long revoltImmunityDurationMillis = (long)(SiegeWarSettings.getRevoltImmunityPostSiegeHours() * 3600000) ;
+		long revoltImmunityDurationMillis = (long)(SiegeWarSettings.getRevoltImmunityPostSiegeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS);
 		TownMetaDataController.setRevoltImmunityEndTime(town, System.currentTimeMillis() + revoltImmunityDurationMillis);
 		town.save();
 	}
