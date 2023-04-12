@@ -41,7 +41,7 @@ public class SiegeWarTimerTaskController {
 	private static boolean evaluateTimedSiegeOutcome(Siege siege) {
 		switch(siege.getStatus()) {
 			case IN_PROGRESS:
-				//If last battle session has been completed, end siege and choose winner
+				//If last battle session of the siege has been completed, end siege and choose winner
 				if (siege.getNumBattleSessionsCompleted() >= SiegeWarSettings.getSiegeDurationBattleSessions()) {
 					SiegeController.endSiegeWithTimedWin(siege);
 					return true;
