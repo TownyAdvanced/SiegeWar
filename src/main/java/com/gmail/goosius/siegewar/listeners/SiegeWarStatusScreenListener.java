@@ -95,6 +95,22 @@ public class SiegeWarStatusScreenListener implements Listener {
 				}
 			}
 
+			//[Demoralization]
+			// Conquest Sieges Starting Balance: -1
+			// Days Left: 7
+			if(NationMetaDataController.getDemoralizationDaysLeft(nation) > 0) {
+				//Create the text inside the hover item
+				Component hoverText = Component.empty();
+				hoverText = hoverText.append(Component.text(translator.of("status_nation_demoralization_amount", NationMetaDataController.getDemoralizationAmount(nation))));
+				hoverText = hoverText.append(Component.newline());
+				hoverText = hoverText.append(Component.text(translator.of("status_nation_demoralization_days_left", NationMetaDataController.getDemoralizationDaysLeft(nation))));
+				//Add the hover item to the screen
+				event.getStatusScreen().addComponentOf("siegeWar_demoralizationHover",
+						Component.empty()
+							.append(Component.text(hoverFormat(translator.of("status_nation_hover_title_demoralization")))
+							.hoverEvent(HoverEvent.showText(hoverText))));
+			}
+
 			//[Sieges]
 			// Offensive Sieges [3]: TownA, TownB, TownC
 			// Defensive Sieges [2]: TownX, TownY
@@ -116,7 +132,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 			}
 
 			//[War History]
-			// Towny Captured ...
+			// Towns Captured ...
 			// Towns Plundered ...
 			if(siegeAttacks.size() > 0 || siegeDefences.size() > 0) {
 				//Create the text inside the hover item
@@ -367,13 +383,13 @@ public class SiegeWarStatusScreenListener implements Listener {
             case ATTACKER_WIN:
                 return translator.of("status_town_siege_status_attacker_win");
 			case ATTACKER_CLOSE_WIN:
-				return translator.of("status_town_siege_status_attacker_close_win");
+				return translator.of("status_town_siege_status_close_attacker_win");
             case DEFENDER_SURRENDER:
                 return translator.of("status_town_siege_status_defender_surrender");
             case DEFENDER_WIN:
                 return translator.of("status_town_siege_status_defender_win");
 			case DEFENDER_CLOSE_WIN:
-				return translator.of("status_town_siege_status_defender_close_win");
+				return translator.of("status_town_siege_status_close_defender_win");
             case ATTACKER_ABANDON:
                 return translator.of("status_town_siege_status_attacker_abandon");
             case PENDING_DEFENDER_SURRENDER:

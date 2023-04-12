@@ -72,8 +72,10 @@ public class AbandonAttack {
 			message.append(Translatable.of(key));
 			//Special effects
 			if(siege.getSiegeType() == SiegeType.REVOLT) {
-				message.append(Translatable.of("msg_revolt_siege_defender_decisive_win_special_effects", 
-						SiegeWarSettings.getSpecialVictoryWeaknessOnRevoltSiegeDecisiveDefenderVictory()));
+				message.append(Translatable.of("msg_revolt_siege_defender_decisive_win_demoralization", 
+						siege.getAttacker().getName(),
+						SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyOnDecisiveRebelVictory(),
+						SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyDurationDays()));
 			}
 		}
 

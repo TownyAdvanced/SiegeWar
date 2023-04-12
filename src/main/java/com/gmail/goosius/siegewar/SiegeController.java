@@ -23,6 +23,7 @@ import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
 import com.gmail.goosius.siegewar.utils.SiegeCampUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
@@ -451,6 +452,14 @@ public class SiegeController {
 		siege.setAttacker(attacker);
 		siege.setDefender(defender);
 		siege.setStatus(SiegeStatus.IN_PROGRESS);
+		//Add siege balance penalty due to demoralization
+		if(siegeType == SiegeType.CONQUEST) {
+			int siegeBalancePenalty = SiegeWarNationUtil.getDemoralizationAmount((Nation)attacker);
+			if(siegeBalancePenalty != 0) {
+				int newSiegeBalance = siege.getSiegeBalance() + siegeBalancePenalty;
+				siege.setSiegeBalance(newSiegeBalance);
+			}
+		}
 		siege.setTownPlundered(false);
 		siege.setTownInvaded(false);
 		siege.setNumberOfBannerControlReversals(0);
