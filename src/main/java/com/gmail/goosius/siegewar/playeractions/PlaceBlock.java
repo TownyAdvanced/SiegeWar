@@ -221,22 +221,30 @@ public class PlaceBlock {
 			throw new TownyException(Translatable.of("msg_err_this_town_is_not_allowed_to_be_attacked"));
 		
 		if(SiegeWarTownPeacefulnessUtil.isTownPeaceful(nearbyTown)) {
-			//Town is peaceful, so this action is a subversion or peaceful-revolt attempt
+			//Town is peaceful
 			if(residentsTown == nearbyTown) {
+				//This is the banner planter's town. This is an attempted revolt
 				if(TownOccupationController.isTownOccupied(residentsTown)) {
 					throw new TownyException(Translatable.of("peaceful_towns_cannot_revolt"));
 				}
 			} else {
+				//This is not the banner planter's town. This is an attempted subversion
 				PeacefullySubvertTown.processActionRequest(player, residentsNation, nearbyTown);
 			}
 		} else {
-			//Town is not peaceful, so this action is a start-siege or invade-town request
-			if (SiegeController.hasSiege(nearbyTown)) {
-				//If there is a siege, it is an attempt to invade the town
-				InvadeTown.processInvadeTownRequest(player, residentsNation, nearbyTown, SiegeController.getSiege(nearbyTown));
-			} else {
-				//If there is no siege, it is an attempt to start a new siege
+			//Town is not peaceful
+			if (residentsTown == nearbyTown) {
+				//This is the banner planter's town. This is an attempted revolt
 				evaluateStartNewSiegeAttempt(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
+			} else {
+				//This is not the banner planter's town
+				if(SiegeController.hasSiege(nearbyTown)) {
+					//Town has siege. This is an attempted invasion
+					InvadeTown.processInvadeTownRequest(player, residentsNation, nearbyTown, SiegeController.getSiege(nearbyTown));
+				} else {
+					//Town has no siege. This is an attempted siege start
+					evaluateStartNewSiegeAttempt(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
+				}
 			}
 		}
 	}
