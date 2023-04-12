@@ -94,7 +94,23 @@ public class SiegeWarStatusScreenListener implements Listener {
 					event.getStatusScreen().addComponentOf("bankString", updatedComponent);
 				}
 			}
-
+			
+			//[War History]
+			// Towny Captured ...
+			// Towns Plundered ...
+			if(SiegeWarSettings.getWarSiegeNationStatisticsEnabled()) {
+				//Create the text inside the hover item
+				Component hoverText = Component.empty();
+				hoverText = hoverText.append(Component.text(translator.of("status_nation_town_stats", NationMetaDataController.getTotalTownsGained(nation), NationMetaDataController.getTotalTownsLost(nation))));
+				hoverText = hoverText.append(Component.newline());
+				hoverText = hoverText.append(Component.text(translator.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation))));
+				//Add the hover item to the screen
+				event.getStatusScreen().addComponentOf("siegeWar_warHistoryHover",
+						Component.empty()
+								.append(Component.text(hoverFormat(translator.of("status_nation_hover_title_war_history")))
+										.hoverEvent(HoverEvent.showText(hoverText))));
+			}
+									
 			//[Demoralization]
 			// Conquest Sieges Starting Balance: -1
 			// Days Left: 7
@@ -128,22 +144,6 @@ public class SiegeWarStatusScreenListener implements Listener {
 				event.getStatusScreen().addComponentOf("siegeWar_siegesHover",
 						Component.empty()
 							.append(Component.text(hoverFormat(translator.of("status_nation_hover_title_sieges")))
-							.hoverEvent(HoverEvent.showText(hoverText))));
-			}
-
-			//[War History]
-			// Towns Captured ...
-			// Towns Plundered ...
-			if(siegeAttacks.size() > 0 || siegeDefences.size() > 0) {
-				//Create the text inside the hover item
-				Component hoverText = Component.empty();
-				hoverText = hoverText.append(Component.text(translator.of("status_nation_town_stats", NationMetaDataController.getTotalTownsGained(nation), NationMetaDataController.getTotalTownsLost(nation))));
-				hoverText = hoverText.append(Component.newline());
-				hoverText = hoverText.append(Component.text(translator.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation))));
-				//Add the hover item to the screen
-				event.getStatusScreen().addComponentOf("siegeWar_warHistoryHover",
-						Component.empty()
-							.append(Component.text(hoverFormat(translator.of("status_nation_hover_title_war_history")))
 							.hoverEvent(HoverEvent.showText(hoverText))));
 			}
 		}
