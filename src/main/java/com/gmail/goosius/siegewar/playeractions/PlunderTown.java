@@ -69,7 +69,7 @@ public class PlunderTown {
 
 		if(siege.isRevoltSiege()) {
 			// If the rebels won, plunder is not possible
-			if (siege.getStatus() == SiegeStatus.DEFENDER_WIN || siege.getStatus() == SiegeStatus.ATTACKER_ABANDON)
+			if (siege.getStatus() == SiegeStatus.DEFENDER_WIN || siege.getStatus() == SiegeStatus.DEFENDER_CLOSE_WIN || siege.getStatus() == SiegeStatus.ATTACKER_ABANDON)
 				throw new TownyException(translator.of("msg_err_siege_war_plunder_not_possible_rebels_won"));
 		}
 

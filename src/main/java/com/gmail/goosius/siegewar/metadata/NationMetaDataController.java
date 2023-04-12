@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.metadata;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.CustomDataField;
 import com.palmergames.bukkit.towny.object.metadata.DecimalDataField;
 import com.palmergames.bukkit.towny.object.metadata.IntegerDataField;
@@ -24,7 +25,11 @@ public class NationMetaDataController {
     
     //Occupation tax per plot. A value of -1 causes the applied value to be the "max" set in the config file.
     private static final DecimalDataField nationOccupationTaxPerPlot = new DecimalDataField("siegeWar_nationOccupationTaxPerPlot", -1.0);
- 
+
+    private static final IntegerDataField demoralizationDaysLeft = new IntegerDataField("siegeWar_demoralizationDaysLeft");
+
+    private static final IntegerDataField demoralizationAmount = new IntegerDataField("siegeWar_demoralizationAmount");
+
     public NationMetaDataController(SiegeWar plugin) {
         this.plugin = plugin;
     }
@@ -116,4 +121,37 @@ public class NationMetaDataController {
         }
     }
 
+    public static int getDemoralizationDaysLeft(Nation nation) {
+        if (!MetaDataUtil.hasMeta(nation, demoralizationDaysLeft))
+            return 0;
+        return MetaDataUtil.getInt(nation, demoralizationDaysLeft);
+    }
+
+    public static void setDemoralizationDays(Nation nation, int demoralizationDays) {
+        MetaDataUtil.setInt(nation, demoralizationDaysLeft, demoralizationDays, true);
+    }
+
+    public static void removeDemoralizationDays(Nation nation) {
+        IntegerDataField idf = (IntegerDataField) demoralizationDaysLeft.clone();
+        if (nation.hasMeta(idf.getKey())) {
+            nation.removeMetaData(idf, true);
+        }
+    }
+
+    public static int getDemoralizationAmount(Nation nation) {
+        if (!MetaDataUtil.hasMeta(nation, demoralizationAmount))
+            return 0;
+        return MetaDataUtil.getInt(nation, demoralizationAmount);
+    }
+
+    public static void setDemoralizationAmount(Nation nation, int amount) {
+        MetaDataUtil.setInt(nation, demoralizationAmount, amount,true);
+    }
+
+    public static void removeDemoralizationAmount(Nation nation) {
+        IntegerDataField idf = (IntegerDataField) demoralizationAmount.clone();
+        if (nation.hasMeta(idf.getKey())) {
+            nation.removeMetaData(idf, true);
+        }
+    }
 }
