@@ -161,10 +161,10 @@ msg_swa_set_siege_balance_success: '&bУспешно установлен оса
 #Added in 0.13
 msg_siege_war_version: '&bТекущая версия SiegeWar: %s.'
 #Added in 0.14
-msg_siege_war_banner_control_session_started: '&bСессия контроля над флагом начата. Оставайтесь рядом с флагом осады (%d блоков по горизонтали, %d блоков выше флага, %d блоков ниже флага), находясь не в городе и не в полёте в течении %s минут. Если ваш сеанс пройдёт успешно, вы получите контроль над флагом для своей стороны (или будет добавлен в список контроля флага).'
-msg_siege_war_banner_control_session_started_with_altitude: '&bСессия контроля над флагом начата. Оставайтесь рядом с флагом осады (%d блоков по горизонтали, %d блоков выше флага, %d блоков ниже флага), находясь не ниже его высоты, не в городе и не в полёте в течении %s минут. Если ваш сеанс пройдёт успешно, вы получите контроль над флагом для своей стороны (или будет добавлен в список контроля флага).'
-msg_siege_war_banner_control_session_failure: '&cСбой сеанса контроля над флагом!. Распространёнными причинами этого сбоя могут быть: смерть, отход слишком далеко от флага, вход в город или полёт.'
-msg_siege_war_banner_control_session_failure_with_altitude: '&cСбой сеанса контроля над флагом!. Распространёнными причинами этого сбоя могут быть: смерть, отход слишком далеко от флага, нахождение под флагом, вход в город или полёт.'
+msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain within %d blocks of the banner, but staying out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
+msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control session started. Remain within %d blocks of the banner, but staying below it''s altitude and out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
+msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, or entering the town,.'
+msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going below the banner altitude, or entering the town.'
 ##### Added in 0.15
 #Town Merging
 msg_err_cannot_merge_towns: '&cНевозможно объединить город, который находится в осаде!'
@@ -369,7 +369,7 @@ msg_siege_war_nation_refund_available: "A nation refund of %s is now available t
 msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
 msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
 #Invasion
-msg_err_cannot_invade_town_already_invaded: '&cYour nation has already captured the town.'
+msg_err_town_already_invaded: '&cYour nation has already captured the town.'
 msg_neutral_town_invaded: '&b%s has been captured by %s!'
 msg_nation_town_invaded: '&b%s, belonging to %s, has been captured by %s!'
 #Subverting
@@ -436,6 +436,9 @@ status_town_standalone_siege_immunity_timer: '&2Siege Immunity Timer: &a%s'
 #Nation Screen
 status_nation_hover_title_sieges: "%s[%sSieges%s]"
 status_nation_hover_title_war_history: "%s[%sWar-History%s]"
+status_nation_hover_title_demoralization: "%s[%sDemoralized%s]"
+status_nation_demoralization_amount: '&2Conquest Sieges Starting Balance: &a%d'
+status_nation_demoralization_days_left: '&2Days Left: &a%d'
 #Town Capture & Occupation
 msg_err_cannot_invade_without_victory: "&cYou cannot capture this town unless your nation is victorious in the siege."
 msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot capture this town while the siege is still in progress.'
@@ -464,5 +467,5 @@ msg_conquest_siege_attacker_close_win_warchest_reduced: "&bBecause of the brave 
 msg_conquest_siege_defender_close_win_warchest_reduced: "&bBecause of the brave performance of the attackers, the besieging nation was able recover %s of the War Chest."
 msg_conquest_siege_attacker_close_win_plunder_reduced: "&bBecause of the brave performance of the defenders during the recent siege, the usual plunder amount was reduced by %s."
 msg_revolt_siege_attacker_close_win_plunder_reduced: "&bBecause of the brave performance of the rebels during the recent siege, the usual plunder amount was reduced by %s."
-msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (-%d damage until the siege immunity of the town expires)."
+msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (%d siege-balance to conquest sieges it initiates), for %d days."
 
