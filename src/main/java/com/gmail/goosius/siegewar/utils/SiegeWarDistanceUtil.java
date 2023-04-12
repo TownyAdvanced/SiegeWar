@@ -198,7 +198,8 @@ public class SiegeWarDistanceUtil {
 			return false;
 
 		//Check vertical distance
-		double yDistance = MathUtil.distance(location1.getY(), location2.getY());
+		
+		double yDistance = Math.sqrt(MathUtil.sqr(location1.getY()) - MathUtil.sqr(location2.getY()));
 		if(yDistance > maxAllowedDistance)
 			return false;
 
