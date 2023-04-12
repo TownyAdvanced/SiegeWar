@@ -22,35 +22,45 @@ public class SiegeWarTimerTaskController {
 	/**
 	 * Evaluate timed siege outcomes
 	 * e.g. who wins if siege victory timer runs out ?
+	 * 
+	 * A maximum of 1 siege will be ended when this method is called.
 	 */
 	public static void evaluateTimedSiegeOutcomes() {
 		for (Siege siege : SiegeController.getSieges()) {
-			evaluateTimedSiegeOutcome(siege);
+			if(evaluateTimedSiegeOutcome(siege))
+				return;
 		}
 	}
 
 	/**
 	 * Evaluate the timed outcome of 1 siege
 	 *
-	 * @param siege
+	 * @param siege the siege
+	 * @return true if the siege was ended by this method call      	   	
 	 */
-	private static void evaluateTimedSiegeOutcome(Siege siege) {
+	private static boolean evaluateTimedSiegeOutcome(Siege siege) {
 		switch(siege.getStatus()) {
 			case IN_PROGRESS:
 				//If last battle session has been completed, end siege and choose winner
-				if (siege.getNumBattleSessionsCompleted() >= SiegeWarSettings.getSiegeDurationBattleSessions())
+				if (siege.getNumBattleSessionsCompleted() >= SiegeWarSettings.getSiegeDurationBattleSessions()) {
 					SiegeController.endSiegeWithTimedWin(siege);
-				break;
+					return true;
+				} else
+					return false;
 
 			case PENDING_DEFENDER_SURRENDER:
-				if (siege.getNumBattleSessionsCompleted() >= SiegeWarSettings.getSiegeDurationBattleSessions())
+				if (siege.getNumBattleSessionsCompleted() >= SiegeWarSettings.getSiegeDurationBattleSessions()) {
 					SurrenderDefence.surrenderDefence(siege);
-				break;
+					return true;
+				} else 
+					return false;
 
 			case PENDING_ATTACKER_ABANDON:
-				if (siege.getNumBattleSessionsCompleted() >= SiegeWarSettings.getSiegeDurationBattleSessions())
+				if (siege.getNumBattleSessionsCompleted() >= SiegeWarSettings.getSiegeDurationBattleSessions()) {
 					AbandonAttack.abandonAttack(siege);
-				break;
+					return true;
+				} else 
+					return false;
 
 			default:
 				//Siege is inactive i.e. in the 'aftermath' phase
@@ -58,6 +68,7 @@ public class SiegeWarTimerTaskController {
 				if (System.currentTimeMillis() > TownMetaDataController.getSiegeImmunityEndTime(siege.getTown())) {
 					SiegeController.removeSiege(siege);
 				}
+				return false;
 		}
 	}
 
