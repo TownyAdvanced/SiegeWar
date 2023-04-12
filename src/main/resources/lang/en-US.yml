@@ -98,9 +98,10 @@ msg_attackers: '&aAttackers'
 msg_defenders: '&aDefenders'
 
 #Siege immunities
-msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s hours.'
-msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s hours.'
-msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s hours.'
+
+msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s.'
+msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s.'
+msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s.'
 
 #Siege-zone block placement restrictions
 msg_war_siege_zone_block_placement_forbidden: '&cYou cannot place this type of block in the wilderness area of a siege zone.'
