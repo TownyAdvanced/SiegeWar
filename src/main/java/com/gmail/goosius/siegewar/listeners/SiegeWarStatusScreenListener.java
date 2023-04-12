@@ -96,8 +96,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 			}
 
 			//[Demoralization]
-			// Demoralization Amount: -1
-			// Demoralization Days Left: 7
+			// Conquest Sieges Starting Balance: -1
+			// Days Left: 7
 			if(NationMetaDataController.getDemoralizationDaysLeft(nation) > 0) {
 				//Create the text inside the hover item
 				Component hoverText = Component.empty();

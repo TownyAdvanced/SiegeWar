@@ -2,11 +2,8 @@ package com.gmail.goosius.siegewar.listeners;
 
 import java.util.List;
 
-import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
