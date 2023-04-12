@@ -208,7 +208,7 @@ public enum ConfigNodes {
 			"# If the value is 0, then money amounts are not modified."),
 	WAR_SIEGE_MAX_OCCUPATION_TAX_PER_PLOT(
 			"war.siege.money.max_occupation_tax_per_plot",
-			"2.0",
+			"1.0",
 			"",
 			"# The maximum that a nation can set for its occupation-tax, using /n set occupationtax.",
 			"# Each nation's occupation tax will always track the above value, unless they use the above command.",
