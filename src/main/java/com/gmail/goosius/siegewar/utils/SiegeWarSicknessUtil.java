@@ -51,11 +51,8 @@ public class SiegeWarSicknessUtil {
 
             if (nonOfficialLimiterEnabled && !isOfficialSiegeParticipant(player, resident, siege)) {
                 //Give war sickness to players who are not official participants in the SiegeZone
-                if (SiegeWarDistanceUtil.isInANonBesiegedTown(location)) {
-                    //Special war sickness
-                    givePlayerSpecialWarSicknessNow(player);
-                } else {
-                    //Full war sickness
+                if (TownyAPI.getInstance().isWilderness(location)) {
+                    //In Wilderness - Full war sickness
                     int warningDurationInSeconds = SiegeWarSettings.getNonResidentSicknessWarningTimeSeconds();
                     givePlayerFullWarSicknessWithWarning(
                         player,
@@ -64,6 +61,9 @@ public class SiegeWarSicknessUtil {
                         warningDurationInSeconds,
                         Translatable.of("msg_you_will_get_sickness", warningDurationInSeconds),
                         Translatable.of("msg_you_received_war_sickness"));
+                } else {
+                    //In a town - Special war sickness
+                    givePlayerSpecialWarSicknessNow(player);
                 }
             }
         }
