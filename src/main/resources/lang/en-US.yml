@@ -568,6 +568,9 @@ status_town_standalone_siege_immunity_timer: '&2Siege Immunity Timer: &a%s'
     
 status_nation_hover_title_sieges: "%s[%sSieges%s]"
 status_nation_hover_title_war_history: "%s[%sWar-History%s]"
+status_nation_hover_title_demoralization: "%s[%sDemoralized%s]"
+status_nation_demoralization_amount: '&2Conquest Sieges Starting Balance: &a%d'
+status_nation_demoralization_days_left: '&2Days Left: &a%d'
     
 #Town Capture & Occupation
 
@@ -612,5 +615,4 @@ msg_conquest_siege_defender_close_win_warchest_reduced: "&bBecause of the brave 
 msg_conquest_siege_attacker_close_win_plunder_reduced: "&bBecause of the brave performance of the defenders during the recent siege, the usual plunder amount was reduced by %s."
 msg_revolt_siege_attacker_close_win_plunder_reduced: "&bBecause of the brave performance of the rebels during the recent siege, the usual plunder amount was reduced by %s."
 
-msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (-%d damage until the siege immunity of the town expires)."
-
+msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (%d siege-balance to conquest sieges it initiates), for %d days."
