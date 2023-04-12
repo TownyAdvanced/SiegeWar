@@ -43,8 +43,8 @@ public class AttackerTimedWin {
             case REVOLT:
                 message = Translatable.of(key,
                         siege.getTown().getName(),
-                        siege.getAttacker().getName());
-                        siege.getStatus().getTimedVictoryTypeText();
+                        siege.getAttacker().getName(),
+                        siege.getStatus().getTimedVictoryTypeText());
                 break;
         }
 
