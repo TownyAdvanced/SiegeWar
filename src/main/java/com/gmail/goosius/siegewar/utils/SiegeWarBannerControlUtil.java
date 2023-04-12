@@ -102,22 +102,11 @@ public class SiegeWarBannerControlUtil {
 
 		//Notify Player in console
 		String sessionDurationText = TimeMgmt.getFormattedTimeValue(sessionDurationMillis);
-		if(SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled()) {
-			//Cannot be below banner
-			Messaging.sendMsg(player,
-				Translatable.of("msg_siege_war_banner_control_session_started",
-				TownySettings.getTownBlockSize(),
-				SiegeWarSettings.getBannerControlVerticalDistanceUpBlocks(),
-				SiegeWarSettings.getBannerControlVerticalDistanceDownBlocks(),
-				sessionDurationText));
-		} else {
-			//Can be below banner
-			Messaging.sendMsg(player,
-				Translatable.of("msg_siege_war_banner_control_session_started_with_altitude",
-				TownySettings.getTownBlockSize(),
-				SiegeWarSettings.getBannerControlVerticalDistanceUpBlocks(),
-				sessionDurationText));
-		}
+		String messageKey = SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled() ? "msg_siege_war_banner_control_session_started_with_altitude" : "msg_siege_war_banner_control_session_started";
+		Messaging.sendMsg(player,
+			Translatable.of(messageKey,
+			TownySettings.getTownBlockSize(),
+			sessionDurationText));
 
 		//Notify player in action bar
 		ChatColor bossBarMessageColor = ChatColor.valueOf(SiegeWarSettings.getBannerControlCaptureMessageColor().toUpperCase());
