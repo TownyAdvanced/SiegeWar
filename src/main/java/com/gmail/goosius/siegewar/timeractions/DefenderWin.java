@@ -3,7 +3,6 @@ package com.gmail.goosius.siegewar.timeractions;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
-import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
@@ -28,13 +27,13 @@ public class DefenderWin
     	siege.setSiegeWinner(SiegeSide.DEFENDERS);
 		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege);
 		if(siege.getSiegeType() == SiegeType.CONQUEST) {
-			if(siege.getStatus() == SiegeStatus.DEFENDER_WIN || siege.getStatus() == SiegeStatus.ATTACKER_ABANDON) {
+			if(siege.getStatus() == SiegeStatus.DEFENDER_DECISIVE_WIN || siege.getStatus() == SiegeStatus.ATTACKER_ABANDON) {
 				SiegeWarMoneyUtil.giveWarChestToWinner(siege, siege.getTown());
 			} else {
 				SiegeWarMoneyUtil.giveWarChestToBoth(siege, siege.getTown(), siege.getAttacker());
 			}
 		} else {
-			if(siege.getStatus() == SiegeStatus.DEFENDER_WIN|| siege.getStatus() == SiegeStatus.ATTACKER_ABANDON) {
+			if(siege.getStatus() == SiegeStatus.DEFENDER_DECISIVE_WIN|| siege.getStatus() == SiegeStatus.ATTACKER_ABANDON) {
 				Nation nation = (Nation)siege.getAttacker();
 				int currentDemoralizationAmount = SiegeWarNationUtil.getDemoralizationAmount(nation);
 				int newDemoralizationAmount = currentDemoralizationAmount + SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyOnDecisiveRebelVictory();

@@ -16,7 +16,7 @@ public class DefenderTimedWin {
 
     public static void defenderTimedWin(Siege siege) {
         if(Math.abs(siege.getSiegeBalance()) >= SiegeWarSettings.getSpecialVictoryEffectsDecisiveVictoryThreshold()) {
-            siege.setStatus(SiegeStatus.DEFENDER_WIN);
+            siege.setStatus(SiegeStatus.DEFENDER_DECISIVE_WIN);
             Messaging.sendGlobalMessage(getStandardTimedDefenderWinMessage(siege));
             Translatable specialEffectsMessage = getSpecialTimedDefenderWinMessage(siege);
             if(specialEffectsMessage != null)
@@ -68,7 +68,7 @@ public class DefenderTimedWin {
                 }
                 break;
             case REVOLT:
-                if(siege.getStatus() == SiegeStatus.DEFENDER_WIN) {
+                if(siege.getStatus() == SiegeStatus.DEFENDER_DECISIVE_WIN) {
                     message = Translatable.of("msg_revolt_siege_defender_decisive_win_demoralization",
                             siege.getAttacker().getName(),
                             SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyOnDecisiveRebelVictory(),

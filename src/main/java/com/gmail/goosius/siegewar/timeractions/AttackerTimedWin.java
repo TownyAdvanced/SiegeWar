@@ -16,7 +16,7 @@ public class AttackerTimedWin {
 
     public static void attackerTimedWin(Siege siege) {
         if(Math.abs(siege.getSiegeBalance()) >= SiegeWarSettings.getSpecialVictoryEffectsDecisiveVictoryThreshold()) {
-            siege.setStatus(SiegeStatus.ATTACKER_WIN);
+            siege.setStatus(SiegeStatus.ATTACKER_DECISIVE_WIN);
             Messaging.sendGlobalMessage(getStandardAttackerWinMessage(siege));
         } else {
             siege.setStatus(SiegeStatus.ATTACKER_CLOSE_WIN);
