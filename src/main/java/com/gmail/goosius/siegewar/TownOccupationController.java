@@ -121,8 +121,9 @@ public class TownOccupationController {
 		for (Town town : new ArrayList<>(nation.getTowns()))
 			if (TownOccupationController.isTownOccupied(town))
 				taxesPaid += collectNationOccupationTax(nation, taxPerPlot, town);
-		
-		TownyMessaging.sendPrefixedNationMessage(nation, Translatable.of("msg_occupation_taxes_collected_totaling", getMoney(taxesPaid)));
+
+		if(taxesPaid > 0)
+			TownyMessaging.sendPrefixedNationMessage(nation, Translatable.of("msg_occupation_taxes_collected_totaling", getMoney(taxesPaid)));
 	}
 
 	private static double collectNationOccupationTax(Nation nation, double taxPerPlot, Town town) {
