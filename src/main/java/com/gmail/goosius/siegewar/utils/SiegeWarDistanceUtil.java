@@ -188,21 +188,18 @@ public class SiegeWarDistanceUtil {
 		}
 	}
 
-	private static boolean areLocationsClose(Location location1, Location location2, int maxHorizontalDistance) {
+	private static boolean areLocationsClose(Location location1, Location location2, int maxAllowedDistance) {
 		if(!location1.getWorld().getName().equalsIgnoreCase(location2.getWorld().getName()))
 			return false;
 
 		//Check horizontal distance
 		double xzDistance = MathUtil.distance(location1.getX(), location2.getX(), location1.getZ(), location2.getZ());
-		if(xzDistance > maxHorizontalDistance)
+		if(xzDistance > maxAllowedDistance)
 			return false;
 
 		//Check vertical distance
-		if (location1.getY() == location2.getY())
-			return true;
-		if (location1.getY() > location2.getY() && location1.getY() - location2.getY() > SiegeWarSettings.getBannerControlVerticalDistanceUpBlocks())
-			return false;
-		if (location2.getY() > location1.getY() && location2.getY() - location1.getY() > SiegeWarSettings.getBannerControlVerticalDistanceDownBlocks())
+		double yDistance = MathUtil.distance(location1.getY(), location2.getY());
+		if(yDistance > maxAllowedDistance)
 			return false;
 
 		return true;

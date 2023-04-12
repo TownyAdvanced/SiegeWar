@@ -106,8 +106,6 @@ public class SiegeWarBannerControlUtil {
 		Messaging.sendMsg(player,
 			Translatable.of(messageKey,
 			TownySettings.getTownBlockSize(),
-			SiegeWarSettings.getBannerControlVerticalDistanceUpBlocks(),
-			SiegeWarSettings.getBannerControlVerticalDistanceDownBlocks(),
 			sessionDurationText));
 
 		//Notify player in action bar
