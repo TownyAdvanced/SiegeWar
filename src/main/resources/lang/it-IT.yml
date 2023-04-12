@@ -16,6 +16,10 @@ description: >
 #DarkPurple = &9, LightGreen = &a, LightBlue = &b
 #Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
+#SiegeWarAPI
+msg_err_player_town_is_not_sieged: "This player's town is not Sieged."
+msg_err_resident_town_is_not_sieged: "This resident's town is not Sieged."
+msg_err_town_is_not_sieged: "This town is not Sieged."
 #Added in (Siegewar version)
 #Siege war happy-path messages
 msg_siege_war_attack_pay_war_chest: '&bUna cassa di guerra è stata preparata da %s, con un valore di %s. Chiunque vince l''assedio otterrà il denaro all''interno.'
@@ -461,3 +465,4 @@ msg_conquest_siege_defender_close_win_warchest_reduced: "&bBecause of the brave 
 msg_conquest_siege_attacker_close_win_plunder_reduced: "&bBecause of the brave performance of the defenders during the recent siege, the usual plunder amount was reduced by %s."
 msg_revolt_siege_attacker_close_win_plunder_reduced: "&bBecause of the brave performance of the rebels during the recent siege, the usual plunder amount was reduced by %s."
 msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (-%d damage until the siege immunity of the town expires)."
+
