@@ -13,8 +13,8 @@ import com.palmergames.bukkit.towny.object.Translation;
  */
 public enum SiegeStatus {
     IN_PROGRESS(true, Translation.of("siege_status_in_progress")), 
-	ATTACKER_WIN(false, Translation.of("siege_status_attacker_win")), 
-	DEFENDER_WIN(false, Translation.of("siege_status_defender_win")), 
+	ATTACKER_DECISIVE_WIN(false, Translation.of("siege_status_attacker_win")), 
+	DEFENDER_DECISIVE_WIN(false, Translation.of("siege_status_defender_win")), 
 	ATTACKER_CLOSE_WIN(false, Translation.of("siege_status_attacker_close_win")),
 	DEFENDER_CLOSE_WIN(false, Translation.of("siege_status_defender_close_win")),
 	ATTACKER_ABANDON(false, Translation.of("siege_status_attacker_abandon")), 
@@ -36,9 +36,9 @@ public enum SiegeStatus {
             case "IN_PROGRESS":
                 return IN_PROGRESS;
             case "ATTACKER_WIN":
-                return ATTACKER_WIN;
+                return ATTACKER_DECISIVE_WIN;
             case "DEFENDER_WIN":
-                return DEFENDER_WIN;
+                return DEFENDER_DECISIVE_WIN;
 			case "ATTACKER_CLOSE_WIN":
 				return ATTACKER_CLOSE_WIN;
 			case "DEFENDER_CLOSE_WIN":
@@ -79,8 +79,8 @@ public enum SiegeStatus {
 	 */
 	public Translatable getTimedVictoryTypeText() {
 		switch(this) {
-			case ATTACKER_WIN:
-			case DEFENDER_WIN:
+			case ATTACKER_DECISIVE_WIN:
+			case DEFENDER_DECISIVE_WIN:
 				return Translatable.of("msg_decisive");
 			case ATTACKER_CLOSE_WIN:
 			case DEFENDER_CLOSE_WIN:

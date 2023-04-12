@@ -325,8 +325,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 						out.add(translator.of("status_town_siege_battle_time_remaining", siege.getFormattedBattleTimeRemaining(translator)));
 						break;
 
-					case ATTACKER_WIN:
-					case DEFENDER_WIN:
+					case ATTACKER_DECISIVE_WIN:
+					case DEFENDER_DECISIVE_WIN:
 					case ATTACKER_CLOSE_WIN:
 					case DEFENDER_CLOSE_WIN:
 					case DEFENDER_SURRENDER:
@@ -380,13 +380,13 @@ public class SiegeWarStatusScreenListener implements Listener {
         switch (siege.getStatus()) {
             case IN_PROGRESS:
                 return translator.of("status_town_siege_status_in_progress");
-            case ATTACKER_WIN:
+            case ATTACKER_DECISIVE_WIN:
                 return translator.of("status_town_siege_status_attacker_win");
 			case ATTACKER_CLOSE_WIN:
 				return translator.of("status_town_siege_status_close_attacker_win");
             case DEFENDER_SURRENDER:
                 return translator.of("status_town_siege_status_defender_surrender");
-            case DEFENDER_WIN:
+            case DEFENDER_DECISIVE_WIN:
                 return translator.of("status_town_siege_status_defender_win");
 			case DEFENDER_CLOSE_WIN:
 				return translator.of("status_town_siege_status_close_defender_win");
