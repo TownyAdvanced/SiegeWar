@@ -27,13 +27,13 @@ public class DefenderWin
     	siege.setSiegeWinner(SiegeSide.DEFENDERS);
 		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege);
 		if(siege.getSiegeType() == SiegeType.CONQUEST) {
-			if(siege.getStatus() == SiegeStatus.DEFENDER_DECISIVE_WIN) {
+			if(siege.getStatus() == SiegeStatus.DEFENDER_DECISIVE_WIN || siege.getStatus() == SiegeStatus.ATTACKER_ABANDON) {
 				SiegeWarMoneyUtil.giveWarChestToWinner(siege, siege.getTown());
 			} else {
 				SiegeWarMoneyUtil.giveWarChestToBoth(siege, siege.getTown(), siege.getAttacker());
 			}
 		} else {
-			if(siege.getStatus() == SiegeStatus.DEFENDER_DECISIVE_WIN) {
+			if(siege.getStatus() == SiegeStatus.DEFENDER_DECISIVE_WIN|| siege.getStatus() == SiegeStatus.ATTACKER_ABANDON) {
 				Nation nation = (Nation)siege.getAttacker();
 				int currentDemoralizationAmount = SiegeWarNationUtil.getDemoralizationAmount(nation);
 				int newDemoralizationAmount = currentDemoralizationAmount + SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyOnDecisiveRebelVictory();

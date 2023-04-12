@@ -303,12 +303,12 @@ public enum ConfigNodes {
 			"# The default value is 7."),
 	SIEGE_IMMUNITY_TIME_NEW_TOWN_HOURS(
 			"war.siege.times.siege_immunity_time_new_town_hours",
-			"120",
+			"168",
 			"",
 			"# This value determines how long a town is safe from sieges, after the town is founded.",
 			"# A high value allows more time to fortify new towns, but community engagement by mayors will be slower.",
 			"# A low value allows less time to fortify new towns, but community engagement by mayors will be faster.",
-			"# The default value is 120 (5 days)."),
+			"# The default value is 168 (7 days)."),
 	SIEGE_IMMUNITY_POST_SIEGE_HOURS(
 			"war.siege.times.siege_immunity_post_siege_hours",
 			"168",
