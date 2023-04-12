@@ -105,7 +105,7 @@ public class SiegeWarBattleSessionUtil {
 				siege.setNumBattleSessionsCompleted(siege.getNumBattleSessionsCompleted()+1);
 
 				//If any battle points were gained, calculate a result
-				if(siege.hasPointsScored()) {
+				if(siege.hasBattlePointsScored()) {
 					tallyScoredPoints(siege);
 				}
 

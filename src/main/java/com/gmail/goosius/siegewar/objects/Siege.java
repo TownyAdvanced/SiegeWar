@@ -301,7 +301,7 @@ public class Siege {
 		}
 	}
 
-	public boolean hasPointsScored() {
+	public boolean hasBattlePointsScored() {
 		return getAttackerBattlePoints() > 0 || getDefenderBattlePoints() > 0;
 	}
 	
