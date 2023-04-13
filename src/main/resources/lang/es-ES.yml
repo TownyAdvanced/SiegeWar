@@ -228,7 +228,7 @@ msg_err_siege_war_plunder_not_possible_rebels_won: '&cEl saqueo no es posible po
 #Added in 0.16
 #Nation war history
 status_nation_town_stats: '&2Captures Foreign/Home: &a%d&2/&a%d'
-status_nation_plunder_stats: '&2Plunder Gains/Losses: &a%d&2/&a%d'
+status_nation_plunder_stats: '&2Plunder Gains: &a%d'
 #Siege effects
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cSólo los residentes de la ciudad pueden spawnear en una ciudad asediada o zona de asedio.'
 #Added in 0.18
