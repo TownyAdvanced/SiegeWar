@@ -403,6 +403,17 @@ public class SiegeController {
 		return result;
 	}
 
+	public static int getNumActiveConquestAttackSieges(Nation nation) {
+		int result = 0;
+		Map<Siege, Town> activeOffensiveSieges = getActiveOffensiveSieges(nation);
+		for(Map.Entry<Siege,Town> mapEntry: activeOffensiveSieges.entrySet()) {
+			if(mapEntry.getKey().getSiegeType() == SiegeType.CONQUEST) {
+				result ++;
+			}
+		}
+		return result;
+	}
+
 	public static Map<Siege, Town> getActiveDefensiveSieges(Nation nation) {
 		Map<Siege, Town> result = new HashMap<>();
 		for(Siege siege : SiegeController.getSieges()) {
