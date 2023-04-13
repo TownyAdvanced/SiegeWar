@@ -83,9 +83,9 @@ msg_nobody: '&aNadie'
 msg_attackers: '&aAtacantes'
 msg_defenders: '&aDefensores'
 #Siege immunities
-msg_set_siege_immunities_town: 'Inmunidad de Asedio para la ciudad %s establecida por %s horas.'
-msg_set_siege_immunities_nation: 'Inmunidad de Asedio para todas las ciudades en la nación %s se establecieron por %s horas.'
-msg_set_siege_immunities_all: 'Inmunidad de asedios para todas las ciudades se establecieron a %s horas.'
+msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s.'
+msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s.'
+msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s.'
 #Siege-zone block placement restrictions
 msg_war_siege_zone_block_placement_forbidden: '&cNo puedes colocar este tipo de bloque en los valdíos de una zona de asedio.'
 msg_war_siege_zone_bucket_emptying_forbidden: '&cNo puedes usar este tipo de cubeta en los valdíos de una zona de asedio.'
@@ -463,9 +463,9 @@ siege_status_defender_close_win: 'Close Defender Victory'
 siege_status_attacker_win: 'Decisive Attacker Victory'
 siege_status_defender_win: 'Decisive Defender Victory'
 #Siege Special Victory Effects
-msg_conquest_siege_attacker_close_win_warchest_reduced: "&bBecause of the brave performance of the defenders, the besieged town was able to recover %s of the War Chest."
-msg_conquest_siege_defender_close_win_warchest_reduced: "&bBecause of the brave performance of the attackers, the besieging nation was able recover %s of the War Chest."
-msg_conquest_siege_attacker_close_win_plunder_reduced: "&bBecause of the brave performance of the defenders during the recent siege, the usual plunder amount was reduced by %s."
-msg_revolt_siege_attacker_close_win_plunder_reduced: "&bBecause of the brave performance of the rebels during the recent siege, the usual plunder amount was reduced by %s."
+msg_conquest_siege_attacker_close_win_warchest_reduced: "&bBecause the siege victory was CLOSE, the besieged town was able to recover %s of the War Chest."
+msg_conquest_siege_defender_close_win_warchest_reduced: "&bBecause the siege victory was CLOSE, the besieging nation was able to recover %s of the War Chest."
+msg_conquest_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege victory was CLOSE, the usual plunder amount was reduced by %s."
+msg_revolt_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege victory CLOSE, the usual plunder amount was reduced by %s."
 msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (%d siege-balance to conquest sieges it initiates), for %d days."
 
