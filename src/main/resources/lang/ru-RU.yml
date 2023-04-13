@@ -228,7 +228,7 @@ msg_err_siege_war_plunder_not_possible_rebels_won: '&cРазграбление �
 #Added in 0.16
 #Nation war history
 status_nation_town_stats: '&2Captures Foreign/Home: &a%d&2/&a%d'
-status_nation_plunder_stats: '&2Plunder Gains/Losses: &a%d&2/&a%d'
+status_nation_plunder_stats: '&2Plunder Gains: &a%d'
 #Siege effects
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cТолько жители города могут появляться в осаждённом городе или зоне осады.'
 #Added in 0.18
