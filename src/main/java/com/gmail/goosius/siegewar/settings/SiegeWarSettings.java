@@ -134,7 +134,7 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean doesThisNationHaveTooManyActiveSieges(Nation nation) {
-		return SiegeController.getActiveOffensiveSieges(nation).size() >= getWarSiegeMaxActiveSiegeAttacksPerNation();
+		return SiegeController.getNumActiveConquestAttackSieges(nation) >= getWarSiegeMaxActiveSiegeAttacksPerNation();
 	}
 
 	public static boolean getWarCommonPeacefulTownsEnabled() {
