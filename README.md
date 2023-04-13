@@ -1,14 +1,11 @@
 # SiegeWar
 *SiegeWar* adds a war system to *Towny*.
 ### Features
-* 🍎 **Healthy War Goals:** The purpose of war is geopolitical domination. The top 7 nations receive awards of money and Artefacts.
 * ⚔️ **Sieges:** Wars are conducted by means of sieges. A siege occurs when a nation attacks a town.
 * 🤖 **Automatic:** Sieges are started by players and automatically managed by the plugin. Daily staff management of sieges is not required.
-* 🏙️ **Minimally Destructive:** Towns cannot be damaged or stolen from during sieges.
-* 🚶 **Slow Paced:** Sieges last 3 days, giving defenders a chance to respond to attacks, and also making the system friendly to casual players.
-* 🌍 **Inclusive:** The whole server is involved, with no opt-outs. Towns have a cost-free *Neutrality* option, where they can become immune to attack, but vulnerable to instant-peaceful-occupation.
-* ♟️ **Strategic:** The system has many strategic elements (*e.g. deciding who/when/where to attack, & neutrality/occupation etc*). This can be great for thoughful/mature playerbases, but for servers which require more simplistic PVP contests, alternative war systems should be considered.
-
+* 🏙️ **Non-Destructive:** Towns cannot be damaged or stolen from during sieges.
+* 🚶 **Slow Paced:** Each siege lasts a total of 7 hours, spread over a weekend.
+* 🌍 **Inclusive:** The whole server is involved, with no opt-outs. Towns have a *Peaceful* option, where they can become immune to attack, but vulnerable to instant-capture.
 ### Videos
 * https://www.youtube.com/watch?v=0UU9-lVuHSY: Demonstrates how the plugin fits into a geopolitical context (*nation building, diplomacy, and war*), and also demonstrates some tactical features of sieges.
 * https://www.youtube.com/watch?v=raiAhk2Ru5Y: Demonstrates some tactical features of sieges (*players assembling an army, marching to a siegezone, approaching a siege banner surrounded by a fort, and attacking the enemy*).
@@ -16,7 +13,6 @@
 * [Download](https://github.com/TownyAdvanced/SiegeWar/releases)
 * [Installation Guide](https://github.com/TownyAdvanced/SiegeWar/wiki/Siege-War-Installation)
 * [User Guide](https://github.com/TownyAdvanced/SiegeWar/wiki/Siege-War-User-Guide)
-* [FAQ](https://github.com/TownyAdvanced/SiegeWar/wiki/Siege-War-FAQ)
 ### Credits:
 - *SiegeWar* was initially developed by [Goosius1](https://github.com/Goosius1), starting in the summer of 2019.
 - Originally *SiegeWar* was a fork of *Towny*, being built directly into *Towny*. 
