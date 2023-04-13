@@ -96,14 +96,21 @@ public class SiegeWarStatusScreenListener implements Listener {
 			}
 			
 			//[War History]
-			// Towny Captured ...
-			// Towns Plundered ...
+			// Towns Captured / Lost ...
+			// Plunder Gained ...
 			if(SiegeWarSettings.getWarSiegeNationStatisticsEnabled()) {
 				//Create the text inside the hover item
 				Component hoverText = Component.empty();
 				hoverText = hoverText.append(Component.text(translator.of("status_nation_town_stats", NationMetaDataController.getTotalTownsGained(nation), NationMetaDataController.getTotalTownsLost(nation))));
 				hoverText = hoverText.append(Component.newline());
-				hoverText = hoverText.append(Component.text(translator.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation), NationMetaDataController.getTotalPlunderLost(nation))));
+
+				/*
+				 * There is a problem in SW2.0.0 with recording plunder lost:
+				 * 1. Unlike in the previous occupation system, when you capture a town, all traces of the previous owner are removed.
+				 * 2. Thus if a winning besieger invades first before plundering ... the system has no knowledge of the previous nation, to record the plunderLost stat.
+				 * 3. I suggest this fix be part of a wider scheme to upgrade the feature .... e.g. add siege victories, defeats, type of sieges, types of victory etc. 
+				 */
+				hoverText = hoverText.append(Component.text(translator.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation))));
 				//Add the hover item to the screen
 				event.getStatusScreen().addComponentOf("siegeWar_warHistoryHover",
 						Component.empty()
