@@ -116,6 +116,7 @@ public class SiegeWarTownyEventListener implements Listener {
                 TownOccupationController.collectNationOccupationTax();
             }
             SiegeWarNationUtil.updateNationDemoralizationCounters();
+            SiegeWarMoneyUtil.calculateEstimatedTotalMoneyInEconomy(false);
         }
     }
 
