@@ -468,4 +468,9 @@ msg_conquest_siege_defender_close_win_warchest_reduced: "&bBecause the siege vic
 msg_conquest_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege victory was CLOSE, the usual plunder amount was reduced by %s."
 msg_revolt_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege victory CLOSE, the usual plunder amount was reduced by %s."
 msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (%d siege-balance to conquest sieges it initiates), for %d days."
-
+#Toxicity Reduction
+msg_general_chat_now_disabled: " General Chat will be disabled while the Battle Session is active, and for %s after it ends."
+msg_general_chat_now_restored: "&bGeneral Chat has been restored."
+msg_err_no_local_chat_in_siege_zones: "&cLocal Chat is disabled in Siege Zones."
+msg_err_no_general_chat_in_battle_session: "&cGeneral Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
+msg_can_also_chat_in_discord: " You can also chat in the server discord: %s."
