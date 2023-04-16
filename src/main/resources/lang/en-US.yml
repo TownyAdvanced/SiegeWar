@@ -619,3 +619,7 @@ msg_revolt_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege
 
 msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (%d siege-balance to conquest sieges it initiates), for %d days."
 
+#Toxicity Reduction
+
+msg_err_no_local_chat_in_siege_zones: "&cYou cannot use Local Chat in Siege Zones."
+msg_err_no_general_chat_in_battle_session: "&cYou cannot use General Chat while a Battle Session is active."

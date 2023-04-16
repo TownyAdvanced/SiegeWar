@@ -1,10 +1,12 @@
 package com.gmail.goosius.siegewar.listeners;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
@@ -17,6 +19,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
+import com.palmergames.bukkit.TownyChat.events.AsyncChatHookEvent;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.NationRemoveAllyEvent;
 import com.palmergames.bukkit.towny.event.NationRemoveTownEvent;
@@ -336,6 +339,33 @@ public class SiegeWarTownyEventListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void on(NationRemoveAllyEvent event) {
         tryBroadCastNationAllyRemoval(event.getRemovedNation(), event.getNation());
+    }
+
+    /**
+     * If toxicity reduction is enabled, the following effects apply:
+     * 1. No local chat in Siege Zones
+     * 2. No general chat if a BattleSession is in progress
+     * 
+     * @param asyncChatHookEvent the TownyChat event
+     */
+    @EventHandler()
+    public void on(AsyncChatHookEvent asyncChatHookEvent) {
+        if(!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.isToxicityReductionEnabled())
+            return;
+
+        String channelName = asyncChatHookEvent.getChannel().getName();
+
+        if(channelName.equalsIgnoreCase("local")) {
+            if(SiegeWarDistanceUtil.isLocationInActiveSiegeZone(asyncChatHookEvent.getPlayer().getLocation())) {
+                asyncChatHookEvent.setCancelled(true);
+                Messaging.sendErrorMsg(asyncChatHookEvent.getPlayer(), Translatable.of("msg_err_no_local_chat_in_siege_zones"));
+            }
+        } else if (channelName.equalsIgnoreCase("general")) {
+            if(BattleSession.getBattleSession().isActive()) {
+                asyncChatHookEvent.setCancelled(true);
+                Messaging.sendErrorMsg(asyncChatHookEvent.getPlayer(), Translatable.of("msg_err_no_general_chat_in_battle_session"));
+            }
+        }
     }
 
     /**

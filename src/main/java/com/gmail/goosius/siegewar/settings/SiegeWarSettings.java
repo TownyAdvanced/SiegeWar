@@ -509,4 +509,8 @@ public class SiegeWarSettings {
 	public static int getSpecialVictoryEffectsSiegeBalancePenaltyDurationDays() {
 		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_SIEGE_BALANCE_PENALTY_DURATION_DAYS);
 	}
+
+	public static boolean isToxicityReductionEnabled() {
+		return Settings.getBoolean(ConfigNodes.TOXICITY_REDUCTION_ENABLED);
+	}
 }

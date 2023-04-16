@@ -935,7 +935,28 @@ public enum ConfigNodes {
 			"7",
 			"",
 			"# this value determines the duration of the starting-siege-balance-penalty.",
-			"# If another such defeat occurs, the the duration is refreshed.");
+			"# If another such defeat occurs, the the duration is refreshed."),
+	TOXICITY_REDUCTION(
+			"toxicity_reduction",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                  TOXICITY REDUCTION                  | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	TOXICITY_REDUCTION_ENABLED(
+			"toxicity_reduction.enabled",
+			"true",
+			"",
+			"# If this value is true, the following chat effects apply:",
+			"# 1. Local Chat is not possible in Siege-Zones.",
+			"# 2. Global Chat is not possible during Battle Sessions (and for 10 mins after).",
+			"# TIP 1: This feature reduces aggression and toxicity among siege participants.",
+			"# TIP 2: This feature but also saves the rest of the server from being spammed with mid-siege smack-talk.");
+
 	private final String Root;
 	private final String Default;
 	private String[] comments;
