@@ -935,7 +935,40 @@ public enum ConfigNodes {
 			"7",
 			"",
 			"# this value determines the duration of the starting-siege-balance-penalty.",
-			"# If another such defeat occurs, the the duration is refreshed.");
+			"# If another such defeat occurs, the the duration is refreshed."),
+	TOXICITY_REDUCTION(
+			"toxicity_reduction",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                  TOXICITY REDUCTION                  | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	TOXICITY_REDUCTION_ENABLED(
+			"toxicity_reduction.enabled",
+			"true",
+			"",
+			"# If this value is true, the following chat effects apply:",
+			"# 1. Local Chat is not possible in Siege-Zones.",
+			"# 2. General Chat is not possible during Battle Sessions (and for 10 mins after).",
+			"# TIP 1: This feature reduces aggression and toxicity among siege participants.",
+			"# TIP 2: This feature also helps save the rest of the server from being spammed with siege-related smack-talk."),
+	TOXICITY_REDUCTION_GENERAL_CHAT_RESTORATION_AFTER_BATTLE_SESSION_MINUTES(
+			"toxicity_reduction.general_chat_restoration_after_battle_session_minutes",
+			"10",
+			"",
+			"# This value determines when the general chat will be restored after each battle session.",
+			"# The default value is 10."),
+	TOXICITY_REDUCTION_DISCORD_LINK(
+			"toxicity_reduction.discord_link",
+			"",
+			"",
+			"# If this value is not blank,",
+			"# Then players attempting general chat during battle sessions, will be directed towards the server discord.");
+
 	private final String Root;
 	private final String Default;
 	private String[] comments;

@@ -11,6 +11,7 @@ import java.time.LocalTime;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.util.TimeMgmt;
 import org.bukkit.Material;
 
 import org.bukkit.entity.EntityType;
@@ -508,5 +509,22 @@ public class SiegeWarSettings {
 
 	public static int getSpecialVictoryEffectsSiegeBalancePenaltyDurationDays() {
 		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_SIEGE_BALANCE_PENALTY_DURATION_DAYS);
+	}
+
+	public static boolean isToxicityReductionEnabled() {
+		return Settings.getBoolean(ConfigNodes.TOXICITY_REDUCTION_ENABLED);
+	}
+
+	public static double getToxicityReductionGeneralChatRestorationAfterBattleSessionMinutes() {
+		return Settings.getDouble(ConfigNodes.TOXICITY_REDUCTION_GENERAL_CHAT_RESTORATION_AFTER_BATTLE_SESSION_MINUTES);
+	}
+
+	//Convenience Method
+	public static double getToxicityReductionGeneralChatRestorationAfterBattleSessionMillis() {
+		return getToxicityReductionGeneralChatRestorationAfterBattleSessionMinutes() * TimeMgmt.ONE_MINUTE_IN_MILLIS;
+	}
+
+	public static String getToxicityReductionServerDiscordLink() {
+		return Settings.getString(ConfigNodes.TOXICITY_REDUCTION_DISCORD_LINK);
 	}
 }
