@@ -37,11 +37,15 @@ public class BattleSession {
 	private long scheduledEndTime;	//The time this battle session is scheduled to end
 	private Long scheduledStartTime;  //The time this battle session is scheduled to start
 	private long startTime;			//The time the session actually started
+	private boolean generalChatDisabled;
+	private long scheduledGeneralChatRestorationTime;
 
 	public BattleSession() {
 		active = false;
 		scheduledEndTime = 0;
 		scheduledStartTime = null;
+		generalChatDisabled = false;
+		scheduledGeneralChatRestorationTime = 0;
 	}
 
 	//Singleton
@@ -97,4 +101,21 @@ public class BattleSession {
 	public void setStartTime(long startTime) {
 		this.startTime = startTime;
 	}
+
+	public boolean isGeneralChatDisabled() {
+		return generalChatDisabled;
+	}
+
+	public void setGeneralChatDisabled(boolean generalChatDisabled) {
+		this.generalChatDisabled = generalChatDisabled;
+	}
+
+	public long getScheduledGeneralChatRestorationTime() {
+		return scheduledGeneralChatRestorationTime;
+	}
+
+	public void setScheduledGeneralChatRestorationTime(double scheduledGeneralChatRestorationTime) {
+		this.scheduledGeneralChatRestorationTime = (long)scheduledGeneralChatRestorationTime;
+	}
+
 }

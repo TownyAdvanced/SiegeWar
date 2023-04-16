@@ -42,6 +42,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.TranslationLoader;
 import com.palmergames.util.StringMgmt;
+import com.palmergames.util.TimeMgmt;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -344,7 +345,7 @@ public class SiegeWarTownyEventListener implements Listener {
     /**
      * If toxicity reduction is enabled, the following effects apply:
      * 1. No local chat in Siege Zones
-     * 2. No general chat if a BattleSession is in progress
+     * 2. No general chat if a BattleSession is in progress (and for 10 mins after)
      * 
      * @param asyncChatHookEvent the TownyChat event
      */
@@ -361,9 +362,14 @@ public class SiegeWarTownyEventListener implements Listener {
                 Messaging.sendErrorMsg(asyncChatHookEvent.getPlayer(), Translatable.of("msg_err_no_local_chat_in_siege_zones"));
             }
         } else if (channelName.equalsIgnoreCase("general")) {
-            if(BattleSession.getBattleSession().isActive()) {
+            if(BattleSession.getBattleSession().isGeneralChatDisabled()) {
                 asyncChatHookEvent.setCancelled(true);
-                Messaging.sendErrorMsg(asyncChatHookEvent.getPlayer(), Translatable.of("msg_err_no_general_chat_in_battle_session"));
+                String formattedDisableTime = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getToxicityReductionGeneralChatRestorationAfterBattleSessionMillis());
+                Translatable message = Translatable.of("msg_err_no_general_chat_in_battle_session", formattedDisableTime);
+                String discordLink = SiegeWarSettings.getToxicityReductionServerDiscordLink();
+                if(!discordLink.isEmpty())
+                    message.append(Translatable.of("msg_can_also_chat_in_discord", discordLink));
+                Messaging.sendErrorMsg(asyncChatHookEvent.getPlayer(), message);
             }
         }
     }

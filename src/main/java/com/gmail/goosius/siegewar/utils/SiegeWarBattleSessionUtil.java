@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class SiegeWarBattleSessionUtil {
 	
@@ -46,6 +47,7 @@ public class SiegeWarBattleSessionUtil {
 
 	public static void startBattleSession() {
 		BattleSession battleSession = BattleSession.getBattleSession();
+		//Set active
 		battleSession.setActive(true);
 		//Set the start time
 		battleSession.setStartTime(System.currentTimeMillis());
@@ -59,7 +61,14 @@ public class SiegeWarBattleSessionUtil {
 		try { Thread.sleep(5000); //Sleep to ensure recalculation is good
 		} catch (InterruptedException e) { e.printStackTrace();}
 		//Send global message to let the server know that the battle session started
-		Messaging.sendGlobalMessage(Translatable.of("msg_war_siege_battle_session_started"));
+		Translatable message = Translatable.of("msg_war_siege_battle_session_started");
+		//If toxicity reduction is enabled, disable the general chat
+		if(SiegeWarSettings.isToxicityReductionEnabled()) {
+			battleSession.setGeneralChatDisabled(true);
+			String formattedDisableTime = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getToxicityReductionGeneralChatRestorationAfterBattleSessionMillis());
+			message.append(Translatable.of("msg_general_chat_now_disabled", formattedDisableTime));
+		}
+		Messaging.sendGlobalMessage(message);
 		//Start the bossbar for the Battle Session
 		BossBarUtil.updateBattleSessionBossBar();
 	}
@@ -82,6 +91,9 @@ public class SiegeWarBattleSessionUtil {
 		
 		//Remove Battle Session Boss-Bars
 		BossBarUtil.removeBattleSessionBossBars();
+
+		//Schedule restoration of global chat
+		battleSession.setScheduledGeneralChatRestorationTime(System.currentTimeMillis() + SiegeWarSettings.getToxicityReductionGeneralChatRestorationAfterBattleSessionMillis());
 	}
 
 	public static void endBattleSessionForSiege(Siege siege) {
@@ -185,6 +197,14 @@ public class SiegeWarBattleSessionUtil {
 
 		} else {
 			//Battle session is inactive.
+
+			//Restore the general chat
+			if(SiegeWarSettings.isToxicityReductionEnabled()) {
+				if(battleSession.isGeneralChatDisabled() && System.currentTimeMillis() > battleSession.getScheduledGeneralChatRestorationTime()) {
+					battleSession.setGeneralChatDisabled(false);
+					Messaging.sendGlobalMessage(Translatable.of("msg_general_chat_now_restored"));
+				}
+			}
 
 			//If there is no battle session scheduled, attempt to schedule session now.
 			if(battleSession.getScheduledStartTime() == null) {
