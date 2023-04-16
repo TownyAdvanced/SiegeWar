@@ -532,10 +532,10 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.BAD_CONFIG_WARNINGS_ENABLED);
 	}
 	public static double getBadConfigWarningsTolerancePercentage() {
-		return Settings.getInt(ConfigNodes.BAD_CONFIG_WARNINGS_TOLERANCE_PERCENTAGE);
+		return Settings.getDouble(ConfigNodes.BAD_CONFIG_WARNINGS_TOLERANCE_PERCENTAGE);
 	}
 	public static double getBadConfigWarningsIdealPlunderPercentage() {
-		return Settings.getInt(ConfigNodes.BAD_CONFIG_WARNINGS_IDEAL_PLUNDER_PERCENTAGE);
+		return Settings.getDouble(ConfigNodes.BAD_CONFIG_WARNINGS_IDEAL_PLUNDER_PERCENTAGE);
 	}
 
 }

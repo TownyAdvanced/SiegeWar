@@ -986,8 +986,8 @@ public enum ConfigNodes {
 			"# If this value is true, then whenever the server starts, or whenever a SiegeWarAdmin logs in,",
 			"# a warning will be displayed if any important configs are set badly."),
 	BAD_CONFIG_WARNINGS_TOLERANCE_PERCENTAGE(
-		"bad_config_warnings.tolerance_percentage",
-			"5",
+			"bad_config_warnings.tolerance_percentage",
+			"5.0",
 			"",
 			"# This setting determines the tolerance of the bad-config-warnings.",
 			"# Example: If the 'ideal plunder rate' is set to 10%....then if the actual plunder config works out at below 5% or over 15%, a warning will be given."),
