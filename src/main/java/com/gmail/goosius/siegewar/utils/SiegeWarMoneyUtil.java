@@ -23,7 +23,6 @@ import com.palmergames.bukkit.towny.utils.MoneyUtil;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class SiegeWarMoneyUtil {
@@ -411,6 +410,16 @@ public class SiegeWarMoneyUtil {
 		}
 	}
 
+	/**
+	 * Calculate the estimated amount of money in the economy.
+	 * 
+	 * The result is stored in this class.
+	 * 
+	 * Result = (All money in town banks + All money in nation banks)
+	 *          +10% (an estimate of how much else residents are carrying)
+	 * 
+	 * @param siegeWarPluginError true if SW is in error.
+	 */
 	public static void calculateEstimatedTotalMoneyInEconomy(boolean siegeWarPluginError) {
 		if(siegeWarPluginError) {
 			SiegeWar.severe("SiegeWar is in safe mode. Money calculation not attempted.");
@@ -429,6 +438,7 @@ public class SiegeWarMoneyUtil {
 		result *= 1.1;
 		//Record result
 		estimatedTotalMoneyInEconomy = result;
+		//Show useful info in console
 		SiegeWar.info("Estimated Total Money In Economy: " + estimatedTotalMoneyInEconomy);
 		SiegeWar.info("Total Number of Townblocks: " + TownyAPI.getInstance().getTownBlocks().size());
 		SiegeWar.info("Estimated Value Per Townblock: " + estimatedTotalMoneyInEconomy / TownyAPI.getInstance().getTownBlocks().size());
