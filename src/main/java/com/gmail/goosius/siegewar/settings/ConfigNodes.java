@@ -997,7 +997,7 @@ public enum ConfigNodes {
 			"",
 			"# This value determines the ideal configured plunder value.",
 			"# Example: If the ideal percentage is 10%, then on plunder, we want to take 10% of the estimated town value.",
-			"# NOTE: The estimated town value is calculated by summing all the money in the economy, dividing by total-num-townblocks, then multiplying by num-townblocks in the town.",
+			"# NOTE: The estimated town value is calculated by estimating all the money in the economy, dividing by total-num-townblocks on the server, then multiplying by num-townblocks in the town.",
 			"# The default value for this config is 15.0"),
 	BAD_CONFIG_WARNINGS_IDEAL_WARCHEST_PERCENTAGE(
 			"bad_config_warnings.ideal_warchest_percentage",
