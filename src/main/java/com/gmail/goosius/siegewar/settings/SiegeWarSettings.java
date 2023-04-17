@@ -488,7 +488,7 @@ public class SiegeWarSettings {
 	}
 
 	public static double getKeepInventoryOnSiegeZoneDeathToolsDegradePercentage() {
-		return Settings.getDouble(ConfigNodes.KEEP_STUFF_ON_SIEGEZONE_DEATH_TOOLS_DEGRADE_PERCENTAGE);
+		return Settings.getDouble(ConfigNodes.KEEP_INVENTORY_ON_SIEGEZONE_DEATH_TOOL_DEGRADE_PERCENTAGE);
 	}
 
 	public static int getSpecialVictoryEffectsDecisiveVictoryThreshold() {
