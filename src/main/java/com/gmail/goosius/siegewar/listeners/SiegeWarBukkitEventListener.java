@@ -310,13 +310,15 @@ public class SiegeWarBukkitEventListener implements Listener {
 	 * If toxicity reduction is enabled, the following effect applies:
 	 * - No /tell if a battle session is active (and for 10 mins after)
 	 * 
+	 * This method will pick up any command where the first arg is "/<anything>tell"
+	 * 
 	 * @param event the player command preprocess event 
 	 */
 	@EventHandler
 	public void onCommand(PlayerCommandPreprocessEvent event){
 		if(!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.isToxicityReductionEnabled())
 			return;
-		if(event.getMessage().startsWith("/tell")) {
+		if(event.getMessage().split(" ")[0].endsWith("tell")) {
 			if(BattleSession.getBattleSession().isChatDisabled()) {
 				event.setCancelled(true);
 				SiegeWarNotificationUtil.notifyPlayerOfBattleSessionChatRestriction(event.getPlayer(), "tell");
