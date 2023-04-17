@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.listeners;
 
 import java.util.List;
 
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarWarningsUtil;
@@ -21,6 +22,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -301,6 +303,26 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 		if(DataCleanupUtil.isLegacyArtefact(event.getResult())) {
 			event.setResult(null); //Cannot repair artefact
+		}
+	}
+
+	/**
+	 * If toxicity reduction is enabled, the following effect applies:
+	 * - No /tell if a battle session is active (and for 10 mins after)
+	 * 
+	 * This method will pick up any command where the first arg is "/<anything>tell"
+	 * 
+	 * @param event the player command preprocess event 
+	 */
+	@EventHandler
+	public void onCommand(PlayerCommandPreprocessEvent event){
+		if(!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.isToxicityReductionEnabled())
+			return;
+		if(event.getMessage().split(" ")[0].endsWith("tell")) {
+			if(BattleSession.getBattleSession().isChatDisabled()) {
+				event.setCancelled(true);
+				SiegeWarNotificationUtil.notifyPlayerOfBattleSessionChatRestriction(event.getPlayer(), "tell");
+			}
 		}
 	}
 }

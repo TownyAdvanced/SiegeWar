@@ -520,7 +520,7 @@ public class SiegeWarSettings {
 	}
 
 	//Convenience Method
-	public static double getToxicityReductionGeneralChatRestorationAfterBattleSessionMillis() {
+	public static double getToxicityReductionChatRestorationAfterBattleSessionMillis() {
 		return getToxicityReductionGeneralChatRestorationAfterBattleSessionMinutes() * TimeMgmt.ONE_MINUTE_IN_MILLIS;
 	}
 

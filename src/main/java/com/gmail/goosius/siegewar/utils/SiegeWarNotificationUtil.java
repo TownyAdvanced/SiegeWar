@@ -4,17 +4,21 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 
+import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -129,4 +133,14 @@ public class SiegeWarNotificationUtil {
 		}
 	}
 
+	public static void notifyPlayerOfBattleSessionChatRestriction(Player player, String channelName) {
+		String formattedDisableTime = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getToxicityReductionChatRestorationAfterBattleSessionMillis());
+		String langStringKey = "msg_err_no_"+ channelName + "_chat_in_battle_session";
+		Translatable message = Translatable.of(langStringKey, formattedDisableTime);
+		String discordLink = SiegeWarSettings.getToxicityReductionServerDiscordLink();
+		if (!discordLink.isEmpty())
+			message.append(Translatable.of("msg_can_also_chat_in_discord", discordLink));
+		Messaging.sendMsg(player, message);
+
+	}
 }

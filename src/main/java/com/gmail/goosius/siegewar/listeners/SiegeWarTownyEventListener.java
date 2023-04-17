@@ -61,6 +61,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -348,30 +349,19 @@ public class SiegeWarTownyEventListener implements Listener {
      * 1. No local chat in Siege Zones
      * 2. No general chat if a BattleSession is in progress (and for 10 mins after)
      * 
-     * @param asyncChatHookEvent the TownyChat event
+     * @param event the AsyncChatHook event from TownyChat
      */
     @EventHandler()
-    public void on(AsyncChatHookEvent asyncChatHookEvent) {
-        if(!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.isToxicityReductionEnabled())
+    public void on(AsyncChatHookEvent event) {
+        if(!SiegeWarSettings.getWarSiegeEnabled() 
+            || !SiegeWarSettings.isToxicityReductionEnabled()
+            || !BattleSession.getBattleSession().isChatDisabled())
             return;
 
-        String channelName = asyncChatHookEvent.getChannel().getName();
-
-        if(channelName.equalsIgnoreCase("local")) {
-            if(SiegeWarDistanceUtil.isLocationInActiveSiegeZone(asyncChatHookEvent.getPlayer().getLocation())) {
-                asyncChatHookEvent.setCancelled(true);
-                Messaging.sendErrorMsg(asyncChatHookEvent.getPlayer(), Translatable.of("msg_err_no_local_chat_in_siege_zones"));
-            }
-        } else if (channelName.equalsIgnoreCase("general")) {
-            if(BattleSession.getBattleSession().isGeneralChatDisabled()) {
-                asyncChatHookEvent.setCancelled(true);
-                String formattedDisableTime = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getToxicityReductionGeneralChatRestorationAfterBattleSessionMillis());
-                Translatable message = Translatable.of("msg_err_no_general_chat_in_battle_session", formattedDisableTime);
-                String discordLink = SiegeWarSettings.getToxicityReductionServerDiscordLink();
-                if(!discordLink.isEmpty())
-                    message.append(Translatable.of("msg_can_also_chat_in_discord", discordLink));
-                Messaging.sendErrorMsg(asyncChatHookEvent.getPlayer(), message);
-            }
+        String channelName = event.getChannel().getName();
+        if(channelName.equalsIgnoreCase("local") || channelName.equalsIgnoreCase("general")) {
+            event.setCancelled(true);
+            SiegeWarNotificationUtil.notifyPlayerOfBattleSessionChatRestriction(event.getPlayer(), channelName);
         }
     }
 
