@@ -310,6 +310,8 @@ public class SiegeWarBukkitEventListener implements Listener {
 	 */
 	@EventHandler
 	public void onCommand(PlayerCommandPreprocessEvent event){
+		if(!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.isToxicityReductionEnabled())
+			return;
 		if(event.getMessage().startsWith("/tell")) {
 			if(BattleSession.getBattleSession().isChatDisabled()) {
 				event.setCancelled(true);
