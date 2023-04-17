@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class SiegeWarMoneyUtil {
 
-	private static double estimatedTotalMoneyInEconomy;
+	private static double estimatedTotalMoneyInEconomy = 0;
 
 	/**
 	 * Give the war chest to the winner
@@ -466,6 +466,9 @@ public class SiegeWarMoneyUtil {
 				SiegeWar.info("Ideal / Actual Occupation Tax Value: " + SiegeWarWarningsUtil.calculateIdealOccupationTaxValue() + " / " + SiegeWarSettings.getMaxOccupationTaxPerPlot());
 			}
 		}
+
+		//Show warnings in console if any are bad
+		SiegeWarWarningsUtil.sendWarningsIfConfigsBad(Bukkit.getConsoleSender());
 	}
 
 	public static double getEstimatedTotalMoneyInEconomy() {

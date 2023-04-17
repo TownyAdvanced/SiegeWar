@@ -629,5 +629,5 @@ msg_err_no_tell_in_battle_session: "&c/tell is disabled while a Battle Session i
 msg_can_also_chat_in_discord: " You can also chat in the server discord: %s."
 
 #Bad Config Warnings
-msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. The calculated ideal value is %s, but the actual configured value is %s."
-msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. The calculated ideal value is %s, but the actual configured value is %s."
+msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. Calculated ideal value: %s. Actual configured value: %s."
+msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. Calculated ideal value: %s. Actual configured value: %s."
