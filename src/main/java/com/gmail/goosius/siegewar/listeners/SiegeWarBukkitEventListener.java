@@ -1,9 +1,12 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import java.util.List;
+import java.util.Locale;
 
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
+import com.palmergames.util.TimeMgmt;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -20,6 +23,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -295,6 +299,27 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 		if(DataCleanupUtil.isLegacyArtefact(event.getResult())) {
 			event.setResult(null); //Cannot repair artefact
+		}
+	}
+
+	/**
+	 * If toxicity reduction is enabled, the following effect applies:
+	 * - No /tell if a battle session is active (and for 10 mins after)
+	 * 
+	 * @param event the player command preprocess event 
+	 */
+	@EventHandler
+	public void onCommand(PlayerCommandPreprocessEvent event){
+		if(event.getMessage().startsWith("/tell")) {
+			if(BattleSession.getBattleSession().isChatDisabled()) {
+				event.setCancelled(true);
+				String formattedDisableTime = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getToxicityReductionChatRestorationAfterBattleSessionMillis());
+				Translatable message = Translatable.of("msg_err_no_tell_in_battle_session", formattedDisableTime);
+				String discordLink = SiegeWarSettings.getToxicityReductionServerDiscordLink();
+				if (!discordLink.isEmpty())
+					message.append(Translatable.of("msg_can_also_chat_in_discord", discordLink));
+				event.setMessage(message.translate(Locale.ROOT));
+			}
 		}
 	}
 }

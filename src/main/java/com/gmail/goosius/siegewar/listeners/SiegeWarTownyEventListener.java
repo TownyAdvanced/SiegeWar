@@ -61,6 +61,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -351,26 +352,21 @@ public class SiegeWarTownyEventListener implements Listener {
      */
     @EventHandler()
     public void on(AsyncChatHookEvent asyncChatHookEvent) {
-        if(!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.isToxicityReductionEnabled())
+        if(!SiegeWarSettings.getWarSiegeEnabled() 
+            || !SiegeWarSettings.isToxicityReductionEnabled()
+            || !BattleSession.getBattleSession().isChatDisabled())
             return;
 
         String channelName = asyncChatHookEvent.getChannel().getName();
-
-        if(channelName.equalsIgnoreCase("local")) {
-            if(SiegeWarDistanceUtil.isLocationInActiveSiegeZone(asyncChatHookEvent.getPlayer().getLocation())) {
-                asyncChatHookEvent.setCancelled(true);
-                Messaging.sendErrorMsg(asyncChatHookEvent.getPlayer(), Translatable.of("msg_err_no_local_chat_in_siege_zones"));
-            }
-        } else if (channelName.equalsIgnoreCase("general")) {
-            if(BattleSession.getBattleSession().isGeneralChatDisabled()) {
-                asyncChatHookEvent.setCancelled(true);
-                String formattedDisableTime = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getToxicityReductionGeneralChatRestorationAfterBattleSessionMillis());
-                Translatable message = Translatable.of("msg_err_no_general_chat_in_battle_session", formattedDisableTime);
-                String discordLink = SiegeWarSettings.getToxicityReductionServerDiscordLink();
-                if(!discordLink.isEmpty())
-                    message.append(Translatable.of("msg_can_also_chat_in_discord", discordLink));
-                Messaging.sendErrorMsg(asyncChatHookEvent.getPlayer(), message);
-            }
+        if(channelName.equalsIgnoreCase("local") || channelName.equalsIgnoreCase("general")) {
+            asyncChatHookEvent.setCancelled(true);
+            String formattedDisableTime = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getToxicityReductionChatRestorationAfterBattleSessionMillis());
+            String langStringKey = "msg_err_no_"+ channelName + "_chat_in_battle_session";
+            Translatable message = Translatable.of(langStringKey, formattedDisableTime);
+            String discordLink = SiegeWarSettings.getToxicityReductionServerDiscordLink();
+            if (!discordLink.isEmpty())
+                message.append(Translatable.of("msg_can_also_chat_in_discord", discordLink));
+            asyncChatHookEvent.setMessage(message.translate(Locale.ROOT));
         }
     }
 

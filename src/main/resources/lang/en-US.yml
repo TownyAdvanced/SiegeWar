@@ -621,8 +621,9 @@ msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying n
 
 #Toxicity Reduction
 
-msg_general_chat_now_disabled: " General Chat will be disabled while the Battle Session is active, and for %s after it ends."
-msg_general_chat_now_restored: "&bGeneral Chat has been restored."
-msg_err_no_local_chat_in_siege_zones: "&cLocal Chat is disabled in Siege Zones."
+msg_chat_now_disabled: " General Chat, Local Chat, and /tell, will be disabled while the Battle Session is active, and for %s after it ends. If you want to chat, try using /tc, /nc, or /ac."
+msg_chat_now_restored: "&bGeneral Chat, Local Chat, and /tell, have been restored."
 msg_err_no_general_chat_in_battle_session: "&cGeneral Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
+msg_err_no_local_chat_in_battle_session: "&cLocal Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
+msg_err_no_tell_in_battle_session: "&c/tell is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
 msg_can_also_chat_in_discord: " You can also chat in the server discord: %s."

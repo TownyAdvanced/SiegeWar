@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class SiegeWarBattleSessionUtil {
 	
@@ -64,9 +63,12 @@ public class SiegeWarBattleSessionUtil {
 		Translatable message = Translatable.of("msg_war_siege_battle_session_started");
 		//If toxicity reduction is enabled, disable the general chat
 		if(SiegeWarSettings.isToxicityReductionEnabled()) {
-			battleSession.setGeneralChatDisabled(true);
-			String formattedDisableTime = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getToxicityReductionGeneralChatRestorationAfterBattleSessionMillis());
-			message.append(Translatable.of("msg_general_chat_now_disabled", formattedDisableTime));
+			battleSession.setChatDisabled(true);
+			String formattedDisableTime = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getToxicityReductionChatRestorationAfterBattleSessionMillis());
+			message.append(Translatable.of("msg_chat_now_disabled", formattedDisableTime));
+			String discordLink = SiegeWarSettings.getToxicityReductionServerDiscordLink();
+			if (!discordLink.isEmpty())
+				message.append(Translatable.of("msg_can_also_chat_in_discord", discordLink));
 		}
 		Messaging.sendGlobalMessage(message);
 		//Start the bossbar for the Battle Session
@@ -93,7 +95,7 @@ public class SiegeWarBattleSessionUtil {
 		BossBarUtil.removeBattleSessionBossBars();
 
 		//Schedule restoration of global chat
-		battleSession.setScheduledGeneralChatRestorationTime(System.currentTimeMillis() + SiegeWarSettings.getToxicityReductionGeneralChatRestorationAfterBattleSessionMillis());
+		battleSession.setScheduledGeneralChatRestorationTime(System.currentTimeMillis() + SiegeWarSettings.getToxicityReductionChatRestorationAfterBattleSessionMillis());
 	}
 
 	public static void endBattleSessionForSiege(Siege siege) {
@@ -200,8 +202,8 @@ public class SiegeWarBattleSessionUtil {
 
 			//Restore the general chat
 			if(SiegeWarSettings.isToxicityReductionEnabled()) {
-				if(battleSession.isGeneralChatDisabled() && System.currentTimeMillis() > battleSession.getScheduledGeneralChatRestorationTime()) {
-					battleSession.setGeneralChatDisabled(false);
+				if(battleSession.isChatDisabled() && System.currentTimeMillis() > battleSession.getScheduledGeneralChatRestorationTime()) {
+					battleSession.setChatDisabled(false);
 					Messaging.sendGlobalMessage(Translatable.of("msg_general_chat_now_restored"));
 				}
 			}
