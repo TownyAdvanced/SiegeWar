@@ -204,7 +204,7 @@ public class SiegeWarBattleSessionUtil {
 			if(SiegeWarSettings.isToxicityReductionEnabled()) {
 				if(battleSession.isChatDisabled() && System.currentTimeMillis() > battleSession.getScheduledGeneralChatRestorationTime()) {
 					battleSession.setChatDisabled(false);
-					Messaging.sendGlobalMessage(Translatable.of("msg_general_chat_now_restored"));
+					Messaging.sendGlobalMessage(Translatable.of("msg_chat_now_restored"));
 				}
 			}
 

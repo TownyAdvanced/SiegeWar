@@ -132,4 +132,15 @@ public class SiegeWarNotificationUtil {
 			e.printStackTrace();
 		}
 	}
+
+	public static void notifyPlayerOfBattleSessionChatRestriction(Player player, String channelName) {
+		String formattedDisableTime = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getToxicityReductionChatRestorationAfterBattleSessionMillis());
+		String langStringKey = "msg_err_no_"+ channelName + "_chat_in_battle_session";
+		Translatable message = Translatable.of(langStringKey, formattedDisableTime);
+		String discordLink = SiegeWarSettings.getToxicityReductionServerDiscordLink();
+		if (!discordLink.isEmpty())
+			message.append(Translatable.of("msg_can_also_chat_in_discord", discordLink));
+		Messaging.sendMsg(player, message);
+
+	}
 }

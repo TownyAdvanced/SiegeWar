@@ -313,12 +313,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		if(event.getMessage().startsWith("/tell")) {
 			if(BattleSession.getBattleSession().isChatDisabled()) {
 				event.setCancelled(true);
-				String formattedDisableTime = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getToxicityReductionChatRestorationAfterBattleSessionMillis());
-				Translatable message = Translatable.of("msg_err_no_tell_in_battle_session", formattedDisableTime);
-				String discordLink = SiegeWarSettings.getToxicityReductionServerDiscordLink();
-				if (!discordLink.isEmpty())
-					message.append(Translatable.of("msg_can_also_chat_in_discord", discordLink));
-				event.setMessage(message.translate(Locale.ROOT));
+				SiegeWarNotificationUtil.notifyPlayerOfBattleSessionChatRestriction(event.getPlayer(), "tell");
 			}
 		}
 	}

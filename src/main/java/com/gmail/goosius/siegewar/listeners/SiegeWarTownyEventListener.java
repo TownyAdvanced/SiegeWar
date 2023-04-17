@@ -348,25 +348,19 @@ public class SiegeWarTownyEventListener implements Listener {
      * 1. No local chat in Siege Zones
      * 2. No general chat if a BattleSession is in progress (and for 10 mins after)
      * 
-     * @param asyncChatHookEvent the TownyChat event
+     * @param event the AsyncChatHook event from TownyChat
      */
     @EventHandler()
-    public void on(AsyncChatHookEvent asyncChatHookEvent) {
+    public void on(AsyncChatHookEvent event) {
         if(!SiegeWarSettings.getWarSiegeEnabled() 
             || !SiegeWarSettings.isToxicityReductionEnabled()
             || !BattleSession.getBattleSession().isChatDisabled())
             return;
 
-        String channelName = asyncChatHookEvent.getChannel().getName();
+        String channelName = event.getChannel().getName();
         if(channelName.equalsIgnoreCase("local") || channelName.equalsIgnoreCase("general")) {
-            asyncChatHookEvent.setCancelled(true);
-            String formattedDisableTime = TimeMgmt.getFormattedTimeValue(SiegeWarSettings.getToxicityReductionChatRestorationAfterBattleSessionMillis());
-            String langStringKey = "msg_err_no_"+ channelName + "_chat_in_battle_session";
-            Translatable message = Translatable.of(langStringKey, formattedDisableTime);
-            String discordLink = SiegeWarSettings.getToxicityReductionServerDiscordLink();
-            if (!discordLink.isEmpty())
-                message.append(Translatable.of("msg_can_also_chat_in_discord", discordLink));
-            asyncChatHookEvent.setMessage(message.translate(Locale.ROOT));
+            event.setCancelled(true);
+            SiegeWarNotificationUtil.notifyPlayerOfBattleSessionChatRestriction(event.getPlayer(), channelName);
         }
     }
 
