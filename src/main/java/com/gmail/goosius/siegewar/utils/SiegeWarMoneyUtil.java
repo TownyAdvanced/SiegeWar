@@ -446,7 +446,6 @@ public class SiegeWarMoneyUtil {
 		result *= 1.1;
 		//Record result
 		estimatedTotalMoneyInEconomy = result;
-
 		//Show useful info in console
 		SiegeWar.info("Estimated Total Money In Economy: " + estimatedTotalMoneyInEconomy);
 		SiegeWar.info("Total Number of Townblocks: " + TownyAPI.getInstance().getTownBlocks().size());
