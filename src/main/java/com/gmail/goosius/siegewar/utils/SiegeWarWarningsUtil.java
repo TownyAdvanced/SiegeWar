@@ -16,47 +16,47 @@ public class SiegeWarWarningsUtil {
      *
      * @param sender the CommandSender to send the message to
      */
-    public static void sendBadConfigsWarnings(CommandSender sender) {
-        if(!TownyEconomyHandler.isActive()) 
+    public static void sendWarningsIfConfigsBad(CommandSender sender) {
+        if(!TownyEconomyHandler.isActive())
             return;
         if(sender instanceof Player && !sender.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN_BADCONFIGWARNINGS.getNode()))
             return;
         if(SiegeWarSettings.getWarSiegePlunderAmountPerPlot() > 0) {
-            sendBadPlunderWarning(sender);
+            sendWarningIfPlunderConfigBad(sender);
         }
         if(SiegeWarSettings.getWarSiegeWarchestCostPerPlot() > 0) {
-            sendBadWarChestWarning(sender);
+            sentWarningIfWarChestBad(sender);
         }
         if(SiegeWarSettings.getWarSiegeUpfrontCostPerPlot() > 0) {
-            sendBadUpFrontCostWarning(sender);
+            sendWarningIfUpfrontCostBad(sender);
         }
         if(SiegeWarSettings.getMaxOccupationTaxPerPlot() > 0) {
-            sendBadOccupationTaxWarning(sender);
+            sendWarningIfOccupationTaxBad(sender);
         }        
     }
 
-    private static void sendBadPlunderWarning(CommandSender sender) {
+    private static void sendWarningIfPlunderConfigBad(CommandSender sender) {
         double idealConfiguredValue = calculateIdealPlunderValue();
         double actualConfiguredValue = SiegeWarSettings.getWarSiegePlunderAmountPerPlot();
         String configIdentifier = "war:siege:money:plunder:amount_per_plot";
         sendBadWarConfigWarning(sender, idealConfiguredValue, actualConfiguredValue, configIdentifier);
     }
 
-    private static void sendBadWarChestWarning(CommandSender sender) {
+    private static void sentWarningIfWarChestBad(CommandSender sender) {
         double idealConfiguredValue = calculateIdealWarChestValue();
         double actualConfiguredValue = SiegeWarSettings.getWarSiegeWarchestCostPerPlot();
         String configIdentifier = "war:siege:money:warchest_cost_per_plot";
         sendBadWarConfigWarning(sender, idealConfiguredValue, actualConfiguredValue, configIdentifier);
     }
 
-    private static void sendBadUpFrontCostWarning(CommandSender sender) {
+    private static void sendWarningIfUpfrontCostBad(CommandSender sender) {
         double idealConfiguredValue = calculateIdealUpfrontCostValue();
         double actualConfiguredValue = SiegeWarSettings.getWarSiegeUpfrontCostPerPlot();
         String configIdentifier = "war:siege:money:upfront_cost_per_plot";
         sendBadWarConfigWarning(sender, idealConfiguredValue, actualConfiguredValue, configIdentifier);
     }
 
-    private static void sendBadOccupationTaxWarning(CommandSender sender) {
+    private static void sendWarningIfOccupationTaxBad(CommandSender sender) {
         double idealConfiguredValue = calculateIdealOccupationTaxValue();
         double actualConfiguredValue = SiegeWarSettings.getMaxOccupationTaxPerPlot();
         String configIdentifier = "war:siege:money:max_occupation_tax_per_plot";

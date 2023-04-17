@@ -87,7 +87,7 @@ public class SiegeWar extends JavaPlugin {
 		SiegeWarMoneyUtil.calculateEstimatedTotalMoneyInEconomy(siegeWarPluginError);
 
 		if(SiegeWarSettings.isBadConfigWarningsEnabled()) {
-			SiegeWarWarningsUtil.sendBadConfigsWarnings(Bukkit.getConsoleSender());
+			SiegeWarWarningsUtil.sendWarningsIfConfigsBad(Bukkit.getConsoleSender());
 		}
 		if(siegeWarPluginError) {
 			severe("SiegeWar did not load successfully, and is now in safe mode!");

@@ -20,13 +20,15 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.utils.MoneyUtil;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class SiegeWarMoneyUtil {
-	private static double estimatedTotalMoneyInEconomy = -1;
+
+	private static double estimatedTotalMoneyInEconomy;
 
 	/**
 	 * Give the war chest to the winner
@@ -412,19 +414,25 @@ public class SiegeWarMoneyUtil {
 
 	/**
 	 * Calculate the estimated amount of money in the economy.
-	 * 
+	 * <p>
 	 * The result is stored in this class.
-	 * 
+	 * <p>
 	 * Result = (All money in town banks + All money in nation banks)
-	 *          +10% (an estimate of how much else residents are carrying)
-	 * 
+	 * +10% (an estimate of how much else residents are carrying)
+	 *
 	 * @param siegeWarPluginError true if SW is in error.
 	 */
 	public static void calculateEstimatedTotalMoneyInEconomy(boolean siegeWarPluginError) {
-		if(siegeWarPluginError) {
+		if (siegeWarPluginError) {
 			SiegeWar.severe("SiegeWar is in safe mode. Money calculation not attempted.");
 			return;
 		}
+		Bukkit.getScheduler().runTaskAsynchronously(
+				SiegeWar.getSiegeWar(),
+				SiegeWarMoneyUtil::calculateEstimatedTotalMoneyInEconomyNow);
+	}
+
+	private static void calculateEstimatedTotalMoneyInEconomyNow() {
 		double result = 0;
 		//Town Accounts
 		for(Town town: TownyAPI.getInstance().getTowns()) {
@@ -464,4 +472,5 @@ public class SiegeWarMoneyUtil {
 	public static double getEstimatedTotalMoneyInEconomy() {
 		return estimatedTotalMoneyInEconomy;
 	}
+
 }
