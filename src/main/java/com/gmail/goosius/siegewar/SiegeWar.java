@@ -4,6 +4,8 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 
 import com.gmail.goosius.siegewar.utils.PermsCleanupUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarWarningsUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -82,6 +84,11 @@ public class SiegeWar extends JavaPlugin {
 		DataCleanupUtil.cleanupData(siegeWarPluginError, listenersRegistered);
 		PermsCleanupUtil.cleanupPerms(siegeWarPluginError);
 
+		SiegeWarMoneyUtil.calculateEstimatedTotalMoneyInEconomy(siegeWarPluginError);
+
+		if(SiegeWarSettings.isBadConfigWarningsEnabled()) {
+			SiegeWarWarningsUtil.sendWarningsIfConfigsBad(Bukkit.getConsoleSender());
+		}
 		if(siegeWarPluginError) {
 			severe("SiegeWar did not load successfully, and is now in safe mode!");
 		} else {

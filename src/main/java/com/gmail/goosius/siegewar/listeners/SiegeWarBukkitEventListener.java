@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarWarningsUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -211,6 +212,11 @@ public class SiegeWarBukkitEventListener implements Listener {
 				 * Thus, this line will always trigger a warning message.
 				 */
 				SiegeWarNotificationUtil.sendSiegeZoneProximityWarning(event.getPlayer(), activeSiegeAtPlayerLocation);
+			}
+
+			//Warn player if there are dodgy configs
+			if(SiegeWarSettings.isBadConfigWarningsEnabled()) {
+				SiegeWarWarningsUtil.sendWarningsIfConfigsBad(event.getPlayer());
 			}
 		}
 	}

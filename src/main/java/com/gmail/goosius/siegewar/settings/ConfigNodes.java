@@ -968,8 +968,60 @@ public enum ConfigNodes {
 			"",
 			"",
 			"# If this value is not blank,",
-			"# Then players attempting general chat during battle sessions, will be directed towards the server discord.");
-
+			"# Then players attempting general chat during battle sessions, will be directed towards the server discord."),
+	BAD_CONFIG_WARNINGS(
+			"bad_config_warnings",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                 BAD CONFIG WARNINGS                  | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	BAD_CONFIG_WARNINGS_ENABLED(
+			"bad_config_warnings.enabled",
+			"true",
+			"",
+			"# If this value is true, then whenever the server starts, or whenever a SiegeWarAdmin logs in,",
+			"# a warning will be displayed if any important configs are set badly."),
+	BAD_CONFIG_WARNINGS_TOLERANCE_PERCENTAGE(
+			"bad_config_warnings.tolerance_percentage",
+			"5.0",
+			"",
+			"# This setting determines the tolerance of the bad-config-warnings.",
+			"# Example: If the 'ideal plunder rate' is set to 10%....then if the actual plunder config works out at below 5% or over 15%, a warning will be given."),
+	BAD_CONFIG_WARNINGS_IDEAL_PLUNDER_PERCENTAGE(
+		"bad_config_warnings.ideal_plunder_percentage",
+			"15.0",
+			"",
+			"# This value determines the ideal configured plunder value.",
+			"# Example: If the ideal percentage is 10%, then on plunder, we want to take 10% of the estimated town value.",
+			"# NOTE: The estimated town value is calculated by estimating all the money in the economy, dividing by total-num-townblocks on the server, then multiplying by num-townblocks in the town.",
+			"# The default value for this config is 15.0"),
+	BAD_CONFIG_WARNINGS_IDEAL_WARCHEST_PERCENTAGE(
+			"bad_config_warnings.ideal_warchest_percentage",
+			"7.5",
+			"",
+			"# This value determines the ideal configured warchest value.",
+			"# Example: If the ideal percentage is 5%, then on siege-start, we want to take 5% of the estimated town value.",
+			"# The default value is 7.5"),
+	BAD_CONFIG_WARNINGS_IDEAL_UPFRONTCOST_PERCENTAGE(
+			"bad_config_warnings.ideal_upfrontcost_percentage",
+			"3.75",
+			"",
+			"# This value determines the ideal configured upfront-cost value.",
+			"# Example: If the ideal percentage is 2.5%, then on siege-start, we want to take 2.5% of the estimated town value.",
+			"# The default value is 3.75"),
+	BAD_CONFIG_WARNINGS_IDEAL_OCCUPATIONTAX_PERCENTAGE(
+			"bad_config_warnings.ideal_occupationtax_percentage",
+			"0.375",
+			"",
+			"# This value determines the ideal configured occupation-tax value.",
+			"# Example: If the ideal percentage is 0.25, then on each new day, we want to take 0.25% of the estimated town value.",
+			"# TIP: Generally you want to keep this low enough so that fake sieges for immunity purposes are not worthwhile.",
+			"# The default value is 0.375");
 	private final String Root;
 	private final String Default;
 	private String[] comments;
