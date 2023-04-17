@@ -1019,6 +1019,7 @@ public enum ConfigNodes {
 			"",
 			"# This value determines the ideal configured occupation-tax value.",
 			"# Example: If the ideal percentage is 0.25, then on each new day, we want to take 0.25% of the estimated town value.",
+			"# TIP: Generally you want to keep this low enough so that fake sieges for immunity purposes are not worthwhile.",
 			"# The default value is 0.375");
 	private final String Root;
 	private final String Default;
