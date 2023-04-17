@@ -628,10 +628,5 @@ msg_err_no_general_chat_in_battle_session: "&cGeneral Chat is disabled while a B
 msg_can_also_chat_in_discord: " You can also chat in the server discord: %s."
 
 #Bad Config Warnings
-<<<<<<< HEAD
 msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. The calculated ideal value is %s, but the actual configured value is %s."
 msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. The calculated ideal value is %s, but the actual configured value is %s."
-=======
-msg_err_plunder_configured_too_high: "&cWARNING: The server's configured value for money:plunder:amount_per_plot is too high. The calculated ideal value is %s, but the actual configured value is %s."
-msg_err_plunder_configured_too_low: "&cWARNING: The server's configured value for money:plunder:amount_per_plot is too low. The calculated ideal value is %s, but the actual configured value is %s."
->>>>>>> upstream/master
