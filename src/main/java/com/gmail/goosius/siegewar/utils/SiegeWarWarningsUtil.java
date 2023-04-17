@@ -15,14 +15,14 @@ public class SiegeWarWarningsUtil {
      *
      * @param sender the CommandSender to send the message to
      */
-    public static void sendBadConfigsWarnings(CommandSender sender) {
+    public static void sendWarningsIfConfigsBad(CommandSender sender) {
         if(sender instanceof Player && !sender.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWARADMIN_BADCONFIGWARNINGS.getNode())) {
             return;
         }
-        sendBadPlunderWarning(sender);
+        sendWarningIfPlunderConfigBad(sender);
     }
 
-    private static void sendBadPlunderWarning(CommandSender sender) {
+    private static void sendWarningIfPlunderConfigBad(CommandSender sender) {
         double actualConfiguredValue = SiegeWarSettings.getWarSiegePlunderAmountPerPlot();
         double idealConfiguredValue = calculateIdealPlunderValue();
         double toleranceAmount = idealConfiguredValue * SiegeWarSettings.getBadConfigWarningsTolerancePercentage() / 100;

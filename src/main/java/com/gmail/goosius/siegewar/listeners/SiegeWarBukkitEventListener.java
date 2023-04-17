@@ -2,7 +2,6 @@ package com.gmail.goosius.siegewar.listeners;
 
 import java.util.List;
 
-import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarWarningsUtil;
@@ -217,7 +216,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 
 			//Warn player if there are dodgy configs
 			if(SiegeWarSettings.isBadConfigWarningsEnabled()) {
-				SiegeWarWarningsUtil.sendBadConfigsWarnings(event.getPlayer());
+				SiegeWarWarningsUtil.sendWarningsIfConfigsBad(event.getPlayer());
 			}
 		}
 	}
