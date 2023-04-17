@@ -438,12 +438,27 @@ public class SiegeWarMoneyUtil {
 		result *= 1.1;
 		//Record result
 		estimatedTotalMoneyInEconomy = result;
+
 		//Show useful info in console
 		SiegeWar.info("Estimated Total Money In Economy: " + estimatedTotalMoneyInEconomy);
 		SiegeWar.info("Total Number of Townblocks: " + TownyAPI.getInstance().getTownBlocks().size());
 		SiegeWar.info("Estimated Value Per Townblock: " + estimatedTotalMoneyInEconomy / TownyAPI.getInstance().getTownBlocks().size());
-		SiegeWar.info("Ideal / Actual Plunder Value: " + SiegeWarWarningsUtil.calculateIdealPlunderValue() + " / " + SiegeWarSettings.getWarSiegePlunderAmountPerPlot());
 
+		//If warnings are enabled, show ideal/actual
+		if(SiegeWarSettings.isBadConfigWarningsEnabled()) {
+			if(SiegeWarSettings.getWarSiegePlunderAmountPerPlot() > 0) {
+				SiegeWar.info("Ideal / Actual Plunder Value: " + SiegeWarWarningsUtil.calculateIdealPlunderValue() + " / " + SiegeWarSettings.getWarSiegePlunderAmountPerPlot());
+			}
+			if(SiegeWarSettings.getWarSiegeWarchestCostPerPlot() > 0) {
+				SiegeWar.info("Ideal / Actual WarChest Value: " + SiegeWarWarningsUtil.calculateIdealWarChestValue() + " / " + SiegeWarSettings.getWarSiegeWarchestCostPerPlot());
+			}
+			if(SiegeWarSettings.getWarSiegeUpfrontCostPerPlot() > 0) {
+				SiegeWar.info("Ideal / Actual UpfrontCost Value: " + SiegeWarWarningsUtil.calculateIdealUpfrontCostValue() + " / " + SiegeWarSettings.getWarSiegeUpfrontCostPerPlot());
+			}
+			if(SiegeWarSettings.getMaxOccupationTaxPerPlot() > 0) {
+				SiegeWar.info("Ideal / Actual Occupation Tax Value: " + SiegeWarWarningsUtil.calculateIdealOccupationTaxValue() + " / " + SiegeWarSettings.getMaxOccupationTaxPerPlot());
+			}
+		}
 	}
 
 	public static double getEstimatedTotalMoneyInEconomy() {

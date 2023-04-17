@@ -537,5 +537,13 @@ public class SiegeWarSettings {
 	public static double getBadConfigWarningsIdealPlunderPercentage() {
 		return Settings.getDouble(ConfigNodes.BAD_CONFIG_WARNINGS_IDEAL_PLUNDER_PERCENTAGE);
 	}
-
+	public static double getBadConfigWarningsIdealWarchestPercentage() {
+		return Settings.getDouble(ConfigNodes.BAD_CONFIG_WARNINGS_IDEAL_WARCHEST_PERCENTAGE);
+	}	
+	public static double getBadConfigWarningsIdealUpfrontCostPercentage() {
+		return Settings.getDouble(ConfigNodes.BAD_CONFIG_WARNINGS_IDEAL_UPFRONTCOST_PERCENTAGE);
+	}	
+	public static double getBadConfigWarningsIdealOccupationTaxPercentage() {
+		return Settings.getDouble(ConfigNodes.BAD_CONFIG_WARNINGS_IDEAL_OCCUPATIONTAX_PERCENTAGE);
+	}
 }
