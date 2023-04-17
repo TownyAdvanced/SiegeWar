@@ -488,7 +488,7 @@ public class SiegeWarSettings {
 	}
 
 	public static double getKeepInventoryOnSiegeZoneDeathToolsDegradePercentage() {
-		return Settings.getDouble(ConfigNodes.KEEP_STUFF_ON_SIEGEZONE_DEATH_TOOLS_DEGRADE_PERCENTAGE);
+		return Settings.getDouble(ConfigNodes.KEEP_INVENTORY_ON_SIEGEZONE_DEATH_TOOL_DEGRADE_PERCENTAGE);
 	}
 
 	public static int getSpecialVictoryEffectsDecisiveVictoryThreshold() {
@@ -527,4 +527,15 @@ public class SiegeWarSettings {
 	public static String getToxicityReductionServerDiscordLink() {
 		return Settings.getString(ConfigNodes.TOXICITY_REDUCTION_DISCORD_LINK);
 	}
+
+	public static boolean isBadConfigWarningsEnabled() {
+		return Settings.getBoolean(ConfigNodes.BAD_CONFIG_WARNINGS_ENABLED);
+	}
+	public static double getBadConfigWarningsTolerancePercentage() {
+		return Settings.getDouble(ConfigNodes.BAD_CONFIG_WARNINGS_TOLERANCE_PERCENTAGE);
+	}
+	public static double getBadConfigWarningsIdealPlunderPercentage() {
+		return Settings.getDouble(ConfigNodes.BAD_CONFIG_WARNINGS_IDEAL_PLUNDER_PERCENTAGE);
+	}
+
 }

@@ -6,7 +6,7 @@ author: [Goosius,LlmDl]
 website: 'townyadvanced.github.io'
 prefix: ${project.artifactId}
 depend: [Towny]
-softdepend: [TownyCultures, dynmap, Dynmap-Towny]
+softdepend: [TownyCultures, TownyChat, dynmap, Dynmap-Towny]
 
 description: A war system made by Goosius for Towny.
 
@@ -37,6 +37,7 @@ permissions:
             siegewar.command.siegewaradmin.nation: true
             siegewar.command.siegewaradmin.installperms: true
             siegewar.command.siegewaradmin.battlesession: true
+            siegewar.command.siegewaradmin.badconfigwarnings: true
 
     siegewar.command.siegewar.*:
         description: User is able to do all /siegewar commands.

@@ -1,11 +1,13 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
@@ -18,12 +20,15 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.utils.MoneyUtil;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class SiegeWarMoneyUtil {
+
+	private static double estimatedTotalMoneyInEconomy;
 
 	/**
 	 * Give the war chest to the winner
@@ -405,6 +410,51 @@ public class SiegeWarMoneyUtil {
 				TownyMessaging.sendPrefixedTownMessage(siege.getTown(), moneyMessage);
 			}
 		}
+	}
+
+	/**
+	 * Calculate the estimated amount of money in the economy.
+	 * <p>
+	 * The result is stored in this class.
+	 * <p>
+	 * Result = (All money in town banks + All money in nation banks)
+	 * +10% (an estimate of how much else residents are carrying)
+	 *
+	 * @param siegeWarPluginError true if SW is in error.
+	 */
+	public static void calculateEstimatedTotalMoneyInEconomy(boolean siegeWarPluginError) {
+		if (siegeWarPluginError) {
+			SiegeWar.severe("SiegeWar is in safe mode. Money calculation not attempted.");
+			return;
+		}
+		Bukkit.getScheduler().runTaskAsynchronously(
+				SiegeWar.getSiegeWar(),
+				SiegeWarMoneyUtil::calculateEstimatedTotalMoneyInEconomyNow);
+	}
+
+	private static void calculateEstimatedTotalMoneyInEconomyNow() {
+		double result = 0;
+		//Town Accounts
+		for(Town town: TownyAPI.getInstance().getTowns()) {
+			result += town.getAccount().getHoldingBalance();
+		}
+		//Nation Accounts
+		for(Nation nation: TownyAPI.getInstance().getNations()) {
+			result += nation.getAccount().getHoldingBalance();
+		}
+		//Resident Accounts. Add 10% as an estimate for what residents have
+		result *= 1.1;
+		//Record result
+		estimatedTotalMoneyInEconomy = result;
+		//Show useful info in console
+		SiegeWar.info("Estimated Total Money In Economy: " + estimatedTotalMoneyInEconomy);
+		SiegeWar.info("Total Number of Townblocks: " + TownyAPI.getInstance().getTownBlocks().size());
+		SiegeWar.info("Estimated Value Per Townblock: " + estimatedTotalMoneyInEconomy / TownyAPI.getInstance().getTownBlocks().size());
+		SiegeWar.info("Ideal / Actual Plunder Value: " + SiegeWarWarningsUtil.calculateIdealPlunderValue() + " / " + SiegeWarSettings.getWarSiegePlunderAmountPerPlot());
+	}
+
+	public static double getEstimatedTotalMoneyInEconomy() {
+		return estimatedTotalMoneyInEconomy;
 	}
 
 }

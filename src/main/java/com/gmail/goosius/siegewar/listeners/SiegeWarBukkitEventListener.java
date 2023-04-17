@@ -1,12 +1,11 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import java.util.List;
-import java.util.Locale;
 
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
-import com.palmergames.util.TimeMgmt;
+import com.gmail.goosius.siegewar.utils.SiegeWarWarningsUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -215,6 +214,11 @@ public class SiegeWarBukkitEventListener implements Listener {
 				 * Thus, this line will always trigger a warning message.
 				 */
 				SiegeWarNotificationUtil.sendSiegeZoneProximityWarning(event.getPlayer(), activeSiegeAtPlayerLocation);
+			}
+
+			//Warn player if there are dodgy configs
+			if(SiegeWarSettings.isBadConfigWarningsEnabled()) {
+				SiegeWarWarningsUtil.sendWarningsIfConfigsBad(event.getPlayer());
 			}
 		}
 	}
