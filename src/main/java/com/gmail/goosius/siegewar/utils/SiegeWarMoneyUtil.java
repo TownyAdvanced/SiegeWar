@@ -20,23 +20,24 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.utils.MoneyUtil;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class SiegeWarMoneyUtil {
-	private static double estimatedTotalMoneyInEconomy = -1;
+	private static double estimatedTotalMoneyInEconomy = 0;
 
 	/**
 	 * Give the war chest to the winner
 	 * Used for a decisive victory
 	 *
-	 * @param siege siege
-	 * @param winningGovernment the (decisively) winning government 	 
+	 * @param siege             siege
+	 * @param winningGovernment the (decisively) winning government
 	 */
 	public static void giveWarChestToWinner(Siege siege, Government winningGovernment) {
-		if(TownyEconomyHandler.isActive()) {
+		if (TownyEconomyHandler.isActive()) {
 			giveWarChestTo(winningGovernment,
 					siege.getWarChestAmount(),
 					"War Chest Captured",
@@ -47,13 +48,13 @@ public class SiegeWarMoneyUtil {
 	/**
 	 * Split the warchest between both given governments
 	 * Used for a close victory
-	 * 
-	 * @param siege siege
+	 *
+	 * @param siege             siege
 	 * @param winningGovernment the (closely) winning government
-	 * @param losingGovernment the (closely) losing government
+	 * @param losingGovernment  the (closely) losing government
 	 */
 	public static void giveWarChestToBoth(Siege siege, Government winningGovernment, Government losingGovernment) {
-		if(TownyEconomyHandler.isActive()) {
+		if (TownyEconomyHandler.isActive()) {
 			//Calculate amounts
 			double amountForLosingGovernment = siege.getWarChestAmount() / 100 * SiegeWarSettings.getSpecialVictoryEffectsWarchestReductionPercentageOnCloseVictory();
 			double amountForWinningGovernment = siege.getWarChestAmount() - amountForLosingGovernment;
@@ -73,22 +74,22 @@ public class SiegeWarMoneyUtil {
 	}
 
 	private static void giveWarChestTo(Government governmentToAward,
-									   double amountToAward, 
+									   double amountToAward,
 									   String depositComment,
 									   String messageTranslationKey) {
 		//Award Amount
 		governmentToAward.getAccount().deposit(amountToAward, depositComment);
-		
+
 		//Create message
 		Translatable message = Translatable.of(messageTranslationKey,
 				governmentToAward.getName(),
 				TownyEconomyHandler.getFormattedBalance(amountToAward));
-		
+
 		//Send message to government that got the money
 		if (governmentToAward instanceof Nation)
-			TownyMessaging.sendPrefixedNationMessage((Nation)governmentToAward, message);
+			TownyMessaging.sendPrefixedNationMessage((Nation) governmentToAward, message);
 		else
-			TownyMessaging.sendPrefixedTownMessage((Town)governmentToAward, message);
+			TownyMessaging.sendPrefixedTownMessage((Town) governmentToAward, message);
 	}
 
 	/**
@@ -100,10 +101,10 @@ public class SiegeWarMoneyUtil {
 	public static double getMoneyMultiplier(Town town) {
 		double extraMoneyPercentage = SiegeWarSettings.getWarSiegeExtraMoneyPercentagePerTownLevel();
 
-		if(extraMoneyPercentage == 0) {
+		if (extraMoneyPercentage == 0) {
 			return 1;
 		} else {
-			return 1 + ((extraMoneyPercentage / 100) * (town.getLevelID() -1));
+			return 1 + ((extraMoneyPercentage / 100) * (town.getLevelID() - 1));
 		}
 	}
 
@@ -112,10 +113,10 @@ public class SiegeWarMoneyUtil {
 	 *
 	 * @param player collecting the military salary
 	 * @return true if payment is made
-	 *         false if payment cannot be made for various reasons.
+	 * false if payment cannot be made for various reasons.
 	 */
 	public static boolean collectMilitarySalary(Player player) throws Exception {
-		if(!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.getWarSiegeMilitarySalaryEnabled()) {
+		if (!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.getWarSiegeMilitarySalaryEnabled()) {
 			return false;
 		}
 		return collectIncome(player, "Military Salary",
@@ -125,11 +126,11 @@ public class SiegeWarMoneyUtil {
 	/**
 	 * If the player is due an income, pays it to the player
 	 *
-	 * @param player collecting the military salary
-	 * @param reason reason for payment
+	 * @param player               collecting the military salary
+	 * @param reason               reason for payment
 	 * @param successMessageLangId relevant lang string id
 	 * @return true if payment is made
-	 *         false if payment cannot be made for various reasons.
+	 * false if payment cannot be made for various reasons.
 	 */
 	private static boolean collectIncome(Player player,
 										 String reason,
@@ -139,7 +140,7 @@ public class SiegeWarMoneyUtil {
 			return false;
 
 		int incomeAmount;
-		switch(reason.toLowerCase()) {
+		switch (reason.toLowerCase()) {
 			case "military salary":
 				incomeAmount = ResidentMetaDataController.getMilitarySalaryAmount(resident);
 				break;
@@ -147,12 +148,12 @@ public class SiegeWarMoneyUtil {
 				throw new TownyException("Unknown income type");
 		}
 
-		if(incomeAmount != 0) {
+		if (incomeAmount != 0) {
 			resident.getAccount().deposit(incomeAmount, reason);
-			switch(reason.toLowerCase()) {
+			switch (reason.toLowerCase()) {
 				case "military salary":
 					ResidentMetaDataController.clearMilitarySalary(resident);
-				break;
+					break;
 				default:
 					throw new TownyException("Unknown income type");
 			}
@@ -166,7 +167,7 @@ public class SiegeWarMoneyUtil {
 	/**
 	 * Make some military salary money available to a resident
 	 *
-	 * @param soldier the resident to grant the amount to.
+	 * @param soldier              the resident to grant the amount to.
 	 * @param militarySalaryAmount the amount
 	 */
 	public static void makeMilitarySalaryAvailable(Resident soldier, int militarySalaryAmount) {
@@ -187,7 +188,7 @@ public class SiegeWarMoneyUtil {
 		double cost = SiegeWarSettings.getWarSiegeWarchestCostPerPlot()
 				* town.getTownBlocks().size();
 		cost = applyMoneyModifiers(cost, town);
-		return  cost;
+		return cost;
 	}
 
 	public static double calculateTotalSiegeStartCost(Town town) {
@@ -196,13 +197,13 @@ public class SiegeWarMoneyUtil {
 
 	private static double applyMoneyModifiers(double cost, Town town) {
 		//Increase cost if town is capitol
-		if(SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage() > 0
-			&& town.isCapital()) {
+		if (SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage() > 0
+				&& town.isCapital()) {
 			cost *= (1 + (SiegeWarSettings.getWarSiegeCapitalCostIncreasePercentage() / 100));
 		}
 
 		//Increase cost due to money multiplier & town size
-		if(SiegeWarSettings.getWarSiegeExtraMoneyPercentagePerTownLevel() > 0) {
+		if (SiegeWarSettings.getWarSiegeExtraMoneyPercentagePerTownLevel() > 0) {
 			cost *= getMoneyMultiplier(town);
 		}
 
@@ -210,20 +211,19 @@ public class SiegeWarMoneyUtil {
 	}
 
 	/**
-	 *
-	 * @param totalAmountForSoldiers total amount
-	 * @param town the town which pays
-	 * @param soldierSharesMap the shares of soldiers
-	 * @param reason reason for payment
+	 * @param totalAmountForSoldiers  total amount
+	 * @param town                    the town which pays
+	 * @param soldierSharesMap        the shares of soldiers
+	 * @param reason                  reason for payment
 	 * @param removeMoneyFromTownBank if true, remove money from town
 	 * @return true if money was paid. False if there were no soldiers
 	 */
 	public static boolean distributeMoneyAmongSoldiers(double totalAmountForSoldiers,
-													Town town,
-													Map<Resident, Integer> soldierSharesMap,
-													String reason,
-													boolean removeMoneyFromTownBank) {
-		if(soldierSharesMap.size() == 0)
+													   Town town,
+													   Map<Resident, Integer> soldierSharesMap,
+													   String reason,
+													   boolean removeMoneyFromTownBank) {
+		if (soldierSharesMap.size() == 0)
 			return false;
 
 		//Withdraw money from town if needed
@@ -233,7 +233,7 @@ public class SiegeWarMoneyUtil {
 
 		//Find out total shares within the army
 		int totalArmyShares = 0;
-		for(Integer share: soldierSharesMap.values()) {
+		for (Integer share : soldierSharesMap.values()) {
 			totalArmyShares += share;
 		}
 
@@ -242,12 +242,12 @@ public class SiegeWarMoneyUtil {
 
 		//Pay each soldier
 		int amountToPaySoldier;
-		for(Map.Entry<Resident,Integer> soldierShareEntry: soldierSharesMap.entrySet()) {
-			amountToPaySoldier = (int)((amountValueOfOneShare * soldierShareEntry.getValue())); //Round down to avoid exploits for making extra money
-			switch(reason.toLowerCase()) {
+		for (Map.Entry<Resident, Integer> soldierShareEntry : soldierSharesMap.entrySet()) {
+			amountToPaySoldier = (int) ((amountValueOfOneShare * soldierShareEntry.getValue())); //Round down to avoid exploits for making extra money
+			switch (reason.toLowerCase()) {
 				case "military salary":
 					makeMilitarySalaryAvailable(soldierShareEntry.getKey(), amountToPaySoldier);
-				break;
+					break;
 				default:
 					throw new RuntimeException("Unknown Income Type");
 			}
@@ -257,9 +257,9 @@ public class SiegeWarMoneyUtil {
 
 	/**
 	 * Can the nation afford to start their siege?
-	 * 
+	 *
 	 * @param nation Nation starting a siege.
-	 * @param town Town being sieged.
+	 * @param town   Town being sieged.
 	 * @throws TownyException thrown nation cannot pay.
 	 */
 	public static void throwIfNationCannotAffordToStartSiege(Nation nation, Town town) throws TownyException {
@@ -278,7 +278,7 @@ public class SiegeWarMoneyUtil {
 	 */
 	public static void throwIfTownCannotAffordToStartSiege(Town town) throws TownyException {
 		double cost = calculateUpfrontSiegeStartCost(town);
-		if(cost > 0) {
+		if (cost > 0) {
 			if (!TownyEconomyHandler.isActive())
 				return; //Siege cost does not apply
 			if (!town.getAccount().canPayFromHoldings(cost))
@@ -300,7 +300,7 @@ public class SiegeWarMoneyUtil {
 
 		if (days <= 1)
 			TownMetaDataController.removePlunderDebt(town);
-		else 
+		else
 			TownMetaDataController.setPlunderDebtDays(town, days - 1);
 	}
 
@@ -343,17 +343,17 @@ public class SiegeWarMoneyUtil {
 	public static void makeNationRefundAvailable(Resident king) {
 		//Refund some of the initial setup cost to the king
 		if (TownySettings.isUsingEconomy()
-			&& SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() > 0) {
+				&& SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete() > 0) {
 
 			//Make the nation refund available
 			//The player can later do "/n claim refund" to receive the money
-			int amountToRefund = (int)(TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
+			int amountToRefund = (int) (TownySettings.getNewNationPrice() * 0.01 * SiegeWarSettings.getWarSiegeNationCostRefundPercentageOnDelete());
 			ResidentMetaDataController.addNationRefundAmount(king, amountToRefund);
 
 			//If king is online, send message
-			if(king.isOnline()) {
+			if (king.isOnline()) {
 				Messaging.sendMsg(king.getPlayer(),
-					Translatable.of("msg_siege_war_nation_refund_available",
+						Translatable.of("msg_siege_war_nation_refund_available",
 								TownyEconomyHandler.getFormattedBalance(amountToRefund)).forLocale(king.getPlayer()));
 			}
 		}
@@ -375,7 +375,7 @@ public class SiegeWarMoneyUtil {
 			throw new TownyException(Translatable.of("msg_err_not_registered_1", player.getName()));
 
 		int refundAmount = ResidentMetaDataController.getNationRefundAmount(formerKing);
-		if(refundAmount != 0) {
+		if (refundAmount != 0) {
 			formerKing.getAccount().deposit(refundAmount, "Nation Refund");
 			ResidentMetaDataController.setNationRefundAmount(formerKing, 0);
 			Messaging.sendMsg(player, Translatable.of("msg_siege_war_nation_refund_claimed", TownyEconomyHandler.getFormattedBalance(refundAmount)));
@@ -388,19 +388,19 @@ public class SiegeWarMoneyUtil {
 
 	/**
 	 * Pay the upfront cost of starting the siege
-	 * 
+	 *
 	 * @param siege the siege
 	 */
 	public static void payUpfrontSiegeStartCost(Siege siege) {
 		double cost = SiegeWarMoneyUtil.calculateUpfrontSiegeStartCost(siege.getTown());
-		if(TownyEconomyHandler.isActive() && SiegeWarSettings.getWarSiegeUpfrontCostPerPlot() > 0) {
-			if(siege.getSiegeType() == SiegeType.CONQUEST) {
+		if (TownyEconomyHandler.isActive() && SiegeWarSettings.getWarSiegeUpfrontCostPerPlot() > 0) {
+			if (siege.getSiegeType() == SiegeType.CONQUEST) {
 				siege.getAttacker().getAccount().withdraw(cost, "Upfront cost of starting siege.");
 				Translatable moneyMessage =
 						Translatable.of("msg_nation_pay_upfront_siege_cost",
 								TownyEconomyHandler.getFormattedBalance(cost));
-				TownyMessaging.sendPrefixedNationMessage((Nation)siege.getAttacker(), moneyMessage);
-			} else if(siege.getSiegeType() == SiegeType.REVOLT) {
+				TownyMessaging.sendPrefixedNationMessage((Nation) siege.getAttacker(), moneyMessage);
+			} else if (siege.getSiegeType() == SiegeType.REVOLT) {
 				siege.getTown().getAccount().withdraw(cost, "Upfront cost of starting siege.");
 				Translatable moneyMessage =
 						Translatable.of("msg_town_pay_upfront_siege_cost",
@@ -412,19 +412,25 @@ public class SiegeWarMoneyUtil {
 
 	/**
 	 * Calculate the estimated amount of money in the economy.
-	 * 
+	 * <p>
 	 * The result is stored in this class.
-	 * 
+	 * <p>
 	 * Result = (All money in town banks + All money in nation banks)
-	 *          +10% (an estimate of how much else residents are carrying)
-	 * 
+	 * +10% (an estimate of how much else residents are carrying)
+	 *
 	 * @param siegeWarPluginError true if SW is in error.
 	 */
 	public static void calculateEstimatedTotalMoneyInEconomy(boolean siegeWarPluginError) {
-		if(siegeWarPluginError) {
+		if (siegeWarPluginError) {
 			SiegeWar.severe("SiegeWar is in safe mode. Money calculation not attempted.");
 			return;
 		}
+		Bukkit.getScheduler().runTaskAsynchronously(
+				SiegeWar.getSiegeWar(),
+				SiegeWarMoneyUtil::calculateEstimatedTotalMoneyInEconomyNow);
+	}
+
+	private static void calculateEstimatedTotalMoneyInEconomyNow() {
 		double result = 0;
 		//Town Accounts
 		for(Town town: TownyAPI.getInstance().getTowns()) {
@@ -443,7 +449,6 @@ public class SiegeWarMoneyUtil {
 		SiegeWar.info("Total Number of Townblocks: " + TownyAPI.getInstance().getTownBlocks().size());
 		SiegeWar.info("Estimated Value Per Townblock: " + estimatedTotalMoneyInEconomy / TownyAPI.getInstance().getTownBlocks().size());
 		SiegeWar.info("Ideal / Actual Plunder Value: " + SiegeWarWarningsUtil.calculateIdealPlunderValue() + " / " + SiegeWarSettings.getWarSiegePlunderAmountPerPlot());
-
 	}
 
 	public static double getEstimatedTotalMoneyInEconomy() {
