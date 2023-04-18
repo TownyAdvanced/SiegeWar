@@ -625,9 +625,9 @@ msg_chat_now_disabled: " General Chat, /lc, and /tell, will be disabled while th
 msg_chat_now_restored: "&bGeneral Chat, /lc, and /tell, have been restored."
 msg_err_no_general_chat_in_battle_session: "&cGeneral Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
 msg_err_no_local_chat_in_battle_session: "&cLocal Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
-msg_err_no_tell_in_battle_session: "&c/tell is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
+msg_err_no_tell_chat_in_battle_session: "&c/tell is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
 msg_can_also_chat_in_discord: " You can also chat in the server discord: %s."
 
 #Bad Config Warnings
-msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. The calculated ideal value is %s, but the actual configured value is %s."
-msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. The calculated ideal value is %s, but the actual configured value is %s."
+msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. Calculated ideal value: %s. Actual configured value: %s."
+msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. Calculated ideal value: %s. Actual configured value: %s."

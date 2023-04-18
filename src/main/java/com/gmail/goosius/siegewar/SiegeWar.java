@@ -84,11 +84,9 @@ public class SiegeWar extends JavaPlugin {
 		DataCleanupUtil.cleanupData(siegeWarPluginError, listenersRegistered);
 		PermsCleanupUtil.cleanupPerms(siegeWarPluginError);
 
+		//Calculate estimated total money in economy. This will run async.
 		SiegeWarMoneyUtil.calculateEstimatedTotalMoneyInEconomy(siegeWarPluginError);
 
-		if(SiegeWarSettings.isBadConfigWarningsEnabled()) {
-			SiegeWarWarningsUtil.sendWarningsIfConfigsBad(Bukkit.getConsoleSender());
-		}
 		if(siegeWarPluginError) {
 			severe("SiegeWar did not load successfully, and is now in safe mode!");
 		} else {
