@@ -5,7 +5,6 @@ import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 
 import com.gmail.goosius.siegewar.utils.PermsCleanupUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarWarningsUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
