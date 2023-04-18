@@ -84,20 +84,17 @@ public class PlaceBlock {
 			//Trap warfare block protection
 			if(event.hasTownBlock()) {
 				//Trap warfare besieged-town block protection
-				if (SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled()
-						&& SiegeWarBlockProtectionUtil.isTownLocationProtectedByTrapWarfareMitigation(event.getLocation(), event.getTownBlock().getTown())) {
+				if (SiegeWarBlockProtectionUtil.isTownLocationProtectedByTrapWarfareMitigation(event.getLocation(), event.getTownBlock().getTown())) {
 					event.setCancelled(true);
 					event.setCancelMessage(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"));
 				}
 			} else {
 				Siege nearbySiege = SiegeController.getActiveSiegeAtLocation(event.getLocation());
-				if(nearbySiege != null && SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled()) {
-					//Trap warfare wilderness block protection
-					if (SiegeWarBlockProtectionUtil.isWildernessLocationProtectedByTrapWarfareMitigation(event.getLocation(), nearbySiege)) {
-						event.setCancelled(true);
-						event.setCancelMessage(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"));
-						return;
-					}
+				//Trap warfare wilderness block protection
+				if(nearbySiege != null && SiegeWarBlockProtectionUtil.isWildernessLocationProtectedByTrapWarfareMitigation(event.getLocation(), nearbySiege)) {
+					event.setCancelled(true);
+					event.setCancelMessage(translator.of("msg_err_cannot_alter_blocks_near_siege_banner"));
+					return;
 				}
 				//Forbidden material placement prevention
 				if (qualifiesAsSiegeZoneForbiddenMaterial(block, mat, nearbySiege))

@@ -72,6 +72,57 @@ public enum SiegeStatus {
 		return this.name;
 	}
 
+	public boolean allowsPlundering() {
+		return attackersWon();
+	}
+
+	public boolean allowsInvading() {
+		return attackersWon();
+	}
+
+	public boolean attackersWon() {
+		switch(this) {
+		case ATTACKER_DECISIVE_WIN:
+		case ATTACKER_CLOSE_WIN:
+		case DEFENDER_SURRENDER:
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	public boolean defendersWon() {
+		switch(this) {
+		case DEFENDER_DECISIVE_WIN:
+		case DEFENDER_CLOSE_WIN:
+		case ATTACKER_ABANDON:
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	public boolean reducesPlunder() {
+		switch(this) {
+		case ATTACKER_CLOSE_WIN:
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	public boolean awardsOnlyWinners() {
+		switch(this) {
+		case ATTACKER_DECISIVE_WIN:
+		case DEFENDER_DECISIVE_WIN:
+		case DEFENDER_SURRENDER:
+		case ATTACKER_ABANDON:
+			return true;
+		default:
+			return false;
+		}
+	}
+
 	/**
 	 * Get text showing the type of a timed victory
 	 * 

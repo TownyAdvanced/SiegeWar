@@ -80,7 +80,7 @@ public class SiegeWarBannerControlUtil {
 				if(siege.getBannerControllingResidents().contains(resident))
 					continue;  // Player already on the BC list
 
-				SiegeSide siegeSide = SiegeWarAllegianceUtil.calculateSiegePlayerSide(player, resident.getTown(), siege);
+				SiegeSide siegeSide = SiegeSide.getPlayerSiegeSide(siege, player);
 
 				if(siegeSide != SiegeSide.NOBODY) {
 					addNewBannerControlSession(siege, player, resident, siegeSide);

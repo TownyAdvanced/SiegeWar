@@ -6,7 +6,6 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
 import org.bukkit.Bukkit;
@@ -103,14 +102,10 @@ public class CosmeticUtil {
 	 * @return The material for the colour of glass.
 	 */
     public static Material getGlassColor(Player player, Siege siege) {
-		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
 		if (siege.getBannerControlSessions().containsKey(player))
 			return getCaptureColor();
 
-		SiegeSide siegeSide = SiegeSide.NOBODY;
-		if(resident.hasTown())
-			siegeSide = SiegeWarAllegianceUtil.calculateSiegePlayerSide(player, TownyAPI.getInstance().getResidentTownOrNull(resident), siege);
-
+		SiegeSide siegeSide = SiegeSide.getPlayerSiegeSide(siege, player);
 
 		if (siegeSide == SiegeSide.NOBODY || siege.getBannerControllingSide() == SiegeSide.NOBODY)
 			return Material.GLASS;

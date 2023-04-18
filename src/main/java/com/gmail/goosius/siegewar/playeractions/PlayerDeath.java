@@ -14,7 +14,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarInventoryUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarScoringUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
@@ -121,7 +120,7 @@ public class PlayerDeath {
 				continue;
 
 			//Is player an attacker or defender in this siege?
-			if(SiegeWarAllegianceUtil.calculateSiegePlayerSide(deadPlayer, deadResidentTown, candidateSiege) == SiegeSide.NOBODY)
+			if(SiegeSide.getPlayerSiegeSide(nearestSiege, deadPlayer) == SiegeSide.NOBODY)
 				continue;
 
 			//Set nearestSiege if it is 1st viable one OR closer than smallestDistanceToSiege.
@@ -158,7 +157,7 @@ public class PlayerDeath {
 		//No penalty points without an active battle session
 		if (BattleSession.getBattleSession().isActive()) {
 			SiegeWarScoringUtil.awardPenaltyPoints(
-					SiegeWarAllegianceUtil.calculateSiegePlayerSide(deadPlayer, deadResidentTown, siege) == SiegeSide.ATTACKERS,
+					SiegeSide.getPlayerSiegeSide(siege, deadPlayer) == SiegeSide.ATTACKERS,
 					deadPlayer,
 					siege);
 		}

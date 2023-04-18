@@ -10,7 +10,6 @@ import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
-import com.gmail.goosius.siegewar.utils.SiegeWarAllegianceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockProtectionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
@@ -204,12 +203,7 @@ public class SiegeWarTownyEventListener implements Listener {
         }
 
         //Make convenience variables
-        boolean wildernessTrapWarfareMitigationEnabled = SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled();
-        boolean besiegedTownTrapWarfareMitigationEnabled = SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled();
-        int wildernessProtectionRadiusBlocks = SiegeWarSettings.getWildernessTrapWarfareMitigationRadiusBlocks();
         int townProtectionRadiusBlocks = SiegeWarSettings.getBesiegedTownTrapWarfareMitigationRadius();
-        int upperAlterLimit = SiegeWarSettings.getWildernessTrapWarfareMitigationUpperHeightLimit();
-        int lowerAlterLimit = SiegeWarSettings.getWildernessTrapWarfareMitigationLowerHeightLimit();
         Location siegeBannerLocation = siege.getFlagLocation();
 
         //Filter exploding blocks
@@ -218,17 +212,14 @@ public class SiegeWarTownyEventListener implements Listener {
         for(Block block: givenExplodeList) {
             if(TownyAPI.getInstance().isWilderness(block)) {
                 //Stop block exploding in wilderness
-                if (wildernessTrapWarfareMitigationEnabled && SiegeWarBlockProtectionUtil.isWildernessLocationProtectedByTrapWarfareMitigation(
+                if (SiegeWarBlockProtectionUtil.isWildernessLocationProtectedByTrapWarfareMitigation(
                         block.getLocation(),
-                        siegeBannerLocation,
-                        wildernessProtectionRadiusBlocks,
-                        upperAlterLimit,
-                        lowerAlterLimit)) {
+                        siegeBannerLocation)) {
                     finalExplodeList.remove(block);
                 }
             } else {
                 //Stop block exploding in besieged town
-                if (besiegedTownTrapWarfareMitigationEnabled && SiegeWarDistanceUtil.areLocationsCloseHorizontally(
+                if (SiegeWarDistanceUtil.areLocationsCloseHorizontally(
                         block.getLocation(),
                         siegeBannerLocation,
                         townProtectionRadiusBlocks)) {
@@ -415,7 +406,7 @@ public class SiegeWarTownyEventListener implements Listener {
         for (Player player : playersOnlineInGovernment) {
             Siege siege = SiegeController.getActiveSiegeAtLocation(player.getLocation());
             // Only put players into the map if they are an attacker or defender.
-            if (siege != null && getPlayerSiegeSide(player, siege).equals(SiegeSide.NOBODY)) {
+            if (siege != null && SiegeSide.getPlayerSiegeSide(siege, player).equals(SiegeSide.NOBODY)) {
                 if (siegePlayerMap.containsKey(siege)) {
                     siegePlayerMap.get(siege).add(player.getName());
                 } else {
@@ -424,17 +415,6 @@ public class SiegeWarTownyEventListener implements Listener {
             }
         }
         return siegePlayerMap;
-    }
-
-    /**
-     * Get the side of a siege a player is on.
-     * 
-     * @param player Player to test.
-     * @param siege  Siege to get the side the player might be on.
-     * @return SiegeSide of the player.
-     */
-    private SiegeSide getPlayerSiegeSide(Player player, Siege siege) {
-        return SiegeWarAllegianceUtil.calculateSiegePlayerSide(player, TownyAPI.getInstance().getResident(player).getTownOrNull(), siege);
     }
 
     /**

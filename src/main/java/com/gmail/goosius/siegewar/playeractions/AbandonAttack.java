@@ -45,7 +45,7 @@ public class AbandonAttack {
 		//Send global message
 		Messaging.sendGlobalMessage(getAbandonMessage(siege));
 		//Do abandon
-		if(siege.getNumBattleSessionsCompleted() < SiegeWarSettings.getSiegeDurationBattleSessions()) {
+		if(!siege.hasCompletedAllBattleSessions()) {
 			//Pending abandon
 			siege.setStatus(SiegeStatus.PENDING_ATTACKER_ABANDON);
 			SiegeController.saveSiege(siege);
@@ -59,7 +59,7 @@ public class AbandonAttack {
 	private static Translatable getAbandonMessage(Siege siege) {
 		Translatable message;
 		String key;
-		if (siege.getNumBattleSessionsCompleted() < SiegeWarSettings.getSiegeDurationBattleSessions()) {
+		if (!siege.hasCompletedAllBattleSessions()) {
 			//Pending
 			key = String.format("msg_%s_siege_attacker_abandon", siege.getSiegeType().toLowerCase());
 			message = Translatable.of(key, siege.getTown().getName(), siege.getAttacker().getName());

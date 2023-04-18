@@ -42,7 +42,7 @@ public class SurrenderDefence {
 		//Send global message
 		Messaging.sendGlobalMessage(getSurrenderMessage(siege));
 		//Do surrender
-		if(siege.getNumBattleSessionsCompleted() < SiegeWarSettings.getSiegeDurationBattleSessions()) {
+		if(!siege.hasCompletedAllBattleSessions()) {
 			//Pending surrender
 			siege.setStatus(SiegeStatus.PENDING_DEFENDER_SURRENDER);
 			SiegeController.saveSiege(siege);
@@ -56,7 +56,7 @@ public class SurrenderDefence {
 	private static Translatable getSurrenderMessage(Siege siege) {
 		Translatable message;
 		String key;
-		if (siege.getNumBattleSessionsCompleted() < SiegeWarSettings.getSiegeDurationBattleSessions()) {
+		if (!siege.hasCompletedAllBattleSessions()) {
 			key = String.format("msg_%s_siege_defender_surrender", siege.getSiegeType().toLowerCase());
 			message = Translatable.of(key, siege.getTown().getName(), siege.getAttacker().getName());
 		} else {

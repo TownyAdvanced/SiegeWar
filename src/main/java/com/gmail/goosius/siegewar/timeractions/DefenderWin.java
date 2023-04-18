@@ -1,14 +1,9 @@
 package com.gmail.goosius.siegewar.timeractions;
 
 import com.gmail.goosius.siegewar.enums.SiegeSide;
-import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
-import com.palmergames.bukkit.towny.object.Nation;
 
 /**
  * This class is responsible for processing siege defender wins
@@ -26,21 +21,7 @@ public class DefenderWin
     public static void defenderWin(Siege siege) {
     	siege.setSiegeWinner(SiegeSide.DEFENDERS);
 		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege);
-		if(siege.getSiegeType() == SiegeType.CONQUEST) {
-			if(siege.getStatus() == SiegeStatus.DEFENDER_DECISIVE_WIN || siege.getStatus() == SiegeStatus.ATTACKER_ABANDON) {
-				SiegeWarMoneyUtil.giveWarChestToWinner(siege, siege.getTown());
-			} else {
-				SiegeWarMoneyUtil.giveWarChestToBoth(siege, siege.getTown(), siege.getAttacker());
-			}
-		} else {
-			if(siege.getStatus() == SiegeStatus.DEFENDER_DECISIVE_WIN|| siege.getStatus() == SiegeStatus.ATTACKER_ABANDON) {
-				Nation nation = (Nation)siege.getAttacker();
-				int currentDemoralizationAmount = SiegeWarNationUtil.getDemoralizationAmount(nation);
-				int newDemoralizationAmount = currentDemoralizationAmount + SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyOnDecisiveRebelVictory();
-				SiegeWarNationUtil.setDemoralizationAmount(nation, newDemoralizationAmount);
-				SiegeWarNationUtil.setDemoralizationDays(nation, SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyDurationDays());
-			}
-		}
+		SiegeWarMoneyUtil.handleWarChest(siege, siege.getTown(), siege.getAttacker());
     }
 
 }

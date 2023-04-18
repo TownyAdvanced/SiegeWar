@@ -14,6 +14,7 @@ import org.bukkit.plugin.Plugin;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.utils.FileMgmt;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarBlockProtectionUtil;
 import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.config.migration.ConfigMigrator;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -73,6 +74,9 @@ public class Settings {
 			SiegeWar.severe("Problem Scheduling Battle Session! Disabling!");
 			loadSuccessFlag = false;
 		}
+
+		// Initialize Utils that requires config settings to be read once.
+		new SiegeWarBlockProtectionUtil();
 
 		return loadSuccessFlag;
 	}

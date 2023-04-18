@@ -39,4 +39,8 @@ public enum SiegeType {
     public String toLowerCase() {
     	return this.toString().toLowerCase(Locale.ROOT);
     }
+
+    public boolean paysWarChest() {
+        return this.equals(SiegeType.CONQUEST);
+    }
 }

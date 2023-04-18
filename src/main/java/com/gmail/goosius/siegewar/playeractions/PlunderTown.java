@@ -2,7 +2,6 @@ package com.gmail.goosius.siegewar.playeractions;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
@@ -67,14 +66,12 @@ public class PlunderTown {
 		if(siege.isTownPlundered())
 			throw new TownyException(translator.of("msg_err_siege_war_town_already_plundered", townToBePlundered.getName()));
 
-		if(siege.isRevoltSiege()) {
-			// If the rebels won, plunder is not possible
-			if (siege.getStatus() == SiegeStatus.DEFENDER_DECISIVE_WIN || siege.getStatus() == SiegeStatus.DEFENDER_CLOSE_WIN || siege.getStatus() == SiegeStatus.ATTACKER_ABANDON)
-				throw new TownyException(translator.of("msg_err_siege_war_plunder_not_possible_rebels_won"));
-		}
+		// If the rebels won, plunder is not possible
+		if(siege.isRevoltSiege() && siege.getStatus().defendersWon())
+			throw new TownyException(translator.of("msg_err_siege_war_plunder_not_possible_rebels_won"));
 
 		// Ensure the attacking nation has completed the win
-		if(siege.getStatus() != SiegeStatus.ATTACKER_DECISIVE_WIN && siege.getStatus() != SiegeStatus.ATTACKER_CLOSE_WIN && siege.getStatus() != SiegeStatus.DEFENDER_SURRENDER)
+		if(!siege.getStatus().allowsPlundering())
 			throw new TownyException(translator.of("msg_err_siege_war_cannot_plunder_without_victory"));
 
 		// Ensure tha attempted plunderer is from the victorious nation
@@ -97,8 +94,8 @@ public class PlunderTown {
 				* town.getTownBlocks().size()
 				* SiegeWarMoneyUtil.getMoneyMultiplier(town);
 		
-		//Adjust amount for close attacker win
-		if(siege.getStatus() == SiegeStatus.ATTACKER_CLOSE_WIN) {
+		//Adjust amount for ATTACKER_CLOSE_WIN.
+		if(siege.getStatus().reducesPlunder()) {
 			totalPlunderAmount = totalPlunderAmount / 100 * (100 - SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory());
 		}
 		
@@ -171,13 +168,10 @@ public class PlunderTown {
 						TownyEconomyHandler.getFormattedBalance(totalPlunderAmount),
 						nation.getName()));
 		
-		//Send plunder reduction message for close-win
-		if(siege.getStatus() == SiegeStatus.ATTACKER_CLOSE_WIN) {
-			if (siege.getSiegeType() == SiegeType.CONQUEST) {
-				Messaging.sendGlobalMessage(Translatable.of("msg_conquest_siege_attacker_close_win_plunder_reduced", SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() + "%"));
-			} else {
-				Messaging.sendGlobalMessage(Translatable.of("msg_revolt_siege_attacker_close_win_plunder_reduced", SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory()+ "%"));
-			}
+		//Send plunder reduction message for ATTACKER_CLOSE_WIN siege status.
+		if(siege.getStatus().reducesPlunder()) {
+			String langString = siege.getSiegeType() == SiegeType.CONQUEST ? "msg_conquest_siege_attacker_close_win_plunder_reduced" : "msg_revolt_siege_attacker_close_win_plunder_reduced";
+			Messaging.sendGlobalMessage(Translatable.of(langString, SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() + "%"));
 		}
 
 		//Send town bankrupted/destroyed message
