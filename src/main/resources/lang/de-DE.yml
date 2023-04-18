@@ -469,11 +469,12 @@ msg_conquest_siege_attacker_close_win_plunder_reduced: "&bBecause the recent sie
 msg_revolt_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege victory CLOSE, the usual plunder amount was reduced by %s."
 msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (%d siege-balance to conquest sieges it initiates), for %d days."
 #Toxicity Reduction
-msg_general_chat_now_disabled: " General Chat will be disabled while the Battle Session is active, and for %s after it ends."
-msg_general_chat_now_restored: "&bGeneral Chat has been restored."
-msg_err_no_local_chat_in_siege_zones: "&cLocal Chat is disabled in Siege Zones."
+msg_chat_now_disabled: " General Chat, /lc, and /tell, will be disabled while the Battle Session is active, and for %s after it ends. If you want to chat, try using /tc, /nc, or /ac."
+msg_chat_now_restored: "&bGeneral Chat, /lc, and /tell, have been restored."
 msg_err_no_general_chat_in_battle_session: "&cGeneral Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
+msg_err_no_local_chat_in_battle_session: "&cLocal Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
+msg_err_no_tell_chat_in_battle_session: "&c/tell is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
 msg_can_also_chat_in_discord: " You can also chat in the server discord: %s."
 #Bad Config Warnings
-msg_err_plunder_configured_too_high: "&cWARNING: The server's configured value for money:plunder:amount_per_plot is too high. The calculated ideal value is %s, but the actual configured value is %s."
-msg_err_plunder_configured_too_low: "&cWARNING: The server's configured value for money:plunder:amount_per_plot is too low. The calculated ideal value is %s, but the actual configured value is %s."
+msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. Calculated ideal value: %s. Actual configured value: %s."
+msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. Calculated ideal value: %s. Actual configured value: %s."
