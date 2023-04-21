@@ -1,6 +1,6 @@
 ---
 name: SiegeWar
-version: 0.50
+version: 0.51
 language: english
 author: Goosius
 website: 'http://townyadvanced.github.io/'
@@ -16,10 +16,15 @@ description: >
 #DarkPurple = &9, LightGreen = &a, LightBlue = &b
 #Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 siegewar_plugin_prefix: '&f[&6Chiến Sự&f] '
+#SiegeWarAPI
+msg_err_player_town_is_not_sieged: "This player's town is not Sieged."
+msg_err_resident_town_is_not_sieged: "This resident's town is not Sieged."
+msg_err_town_is_not_sieged: "This town is not Sieged."
 #Added in (Siegewar version)
 #Siege war happy-path messages
 msg_siege_war_attack_pay_war_chest: '&bMột rương chiến tranh đã được chuẩn bị bởi %s, với giá trị là %s. Ai thắng cuộc bao vây sẽ nhận được số tiền này.'
 msg_siege_war_attack_recover_war_chest: 'Rương chiến tranh đã được thu hồi bởi %s, với giá trị là %s.'
+msg_siege_war_attack_partially_recover_war_chest: '&bThe war chest has been partially recovered by %s, with a value of %s.'
 msg_siege_war_neutral_town_plundered: '&b%s đã bị cướp bóc: %s bởi %s!'
 msg_siege_war_nation_town_plundered: '&b%s đã bị cướp bóc: %s bởi %s!'
 msg_siege_war_town_ruined_from_plunder: '&b%s đã bị biến thành đống đổ nát bởi %s!'
@@ -44,8 +49,6 @@ msg_err_siege_war_town_voluntary_leave_impossible: "&cCác thị trấn không t
 msg_err_siege_war_revolt_immunity_active: "&cThị trấn của bạn có khả năng miễn trừ nổi loạn. Không ai có thể nổi dậy cho đến khi quyền miễn trừ nổi dậy kết thúc."
 #Attack
 msg_err_siege_war_banner_must_be_placed_above_ground: '&cBiểu ngữ bao vây phải được đặt trên mặt đất.'
-msg_err_siege_war_action_not_a_town_member: '&cBạn phải là thành viên của một thị trấn để thực hiện hành động này.'
-NUKE ???? msg_err_siege_war_action_not_a_nation_member: '&cBạn phải là thành viên của một quốc gia để thực hiện hành động này.'
 msg_err_siege_war_cannot_attack_own_town: '&cBạn không thể tấn công thị trấn của chính mình.'
 msg_err_siege_war_cannot_attack_town_in_own_nation: '&cBạn không thể tấn công một thị trấn trong quốc gia của mình.'
 msg_err_siege_war_cannot_attack_non_enemy_nation: '&cBạn không thể tấn công một thị trấn trừ khi quốc gia của thị trấn đó là kẻ thù của quốc gia bạn.'
@@ -68,28 +71,21 @@ msg_err_siege_war_banner_support_block_not_stable: "&cBạn không thể đặt 
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'Bạn không thể sử dụng mục này khi đang điều khiển biểu ngữ.'
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2Hẹn giờ miễn trừ chiến tranh: &a%s'
-status_town_siege_status_in_progress: 'Đang tiến hành'
+status_town_siege_status_in_progress: 'Contested'
 status_town_siege_status_banner_xyz: '&2 > Vị trí biểu ngữ XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 >Thời gian miễn trừ chiến tranh: &a%s'
-status_town_siege_victory_timer: '&2 > Thời gian chiến thắng: &a%s'
+status_town_siege_progress: '&2 > Progress: &a%d/%d'
 status_town_banner_control: '&2 > Kiểm soát Biểu ngữ: %s &a[%s]&2: &f'
 status_town_banner_control_nobody: '&2 > Kiểm soát Biểu ngữ: %s'
 #General
 status_no_green: '&aKHÔNG'
-msg_occupier: '&4*Occupier*'
 msg_nobody: '&a'
 msg_attackers: '&aKẻ tấn công'
 msg_defenders: '&aBên phòng thủ'
-#Town Neutrality
-status_town_peacefulness_status_change_timer: '&2Bạn có thể thay đổi trạng thái trung lập sau: &a%d ngày'
-msg_war_common_town_declared_peaceful: '&bTuyên bố trung lập!. Thị trấn sẽ được xác nhận là Trung lập sau %d ngày.'
-msg_war_common_town_declared_non_peaceful: '&bTuyên bố Không trung lập!. Thị trấn sẽ được xác nhận là Không trung lập sau %d ngày.'
-msg_war_common_town_peacefulness_countdown_cancelled: '&bThời gian thay đổi trạng thái Trung lập đã bị hủy.'
-msg_war_siege_cannot_add_nation_military_rank_to_peaceful_resident: '&cKhông thể thăng cấp quân hàm cho cư dân, vì họ đang ở trong một thị trấn Trung lập.'
 #Siege immunities
-msg_set_siege_immunities_town: 'Miễn trừ chiến tranh cho thị trấn %s được đặt thành %s giờ.'
-msg_set_siege_immunities_nation: 'Miễn trừ chiến tranh cho tất cả các thị trấn trong quốc gia %s được đặt thành %s giờ.'
-msg_set_siege_immunities_all: 'Miễn trừ chiến tranh cho tất cả các thị trấn được đặt thành %s giờ.'
+msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s.'
+msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s.'
+msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s.'
 #Siege-zone block placement restrictions
 msg_war_siege_zone_block_placement_forbidden: '&cBạn không thể đặt loại khối này quanh khu chiến sự.'
 msg_war_siege_zone_bucket_emptying_forbidden: '&cBạn không thể sử dụng vật phẩm này ở khu vực quanh khu chiến sự.'
@@ -102,25 +98,22 @@ msg_err_not_being_sieged: '&cTown %s không có bất kỳ cuộc tấn công n�
 msg_err_town_not_registered: '&cThị trấn %s chưa được đăng ký.'
 #Scoreboard
 hud_title: 'Chiến sự'
-hud_siegestatus: 'Thông tin chiến sự'
+hud_siege_status: 'Siege Status: '
 hud_attackers: 'Bên tấn công: '
 hud_defenders: 'Bên phòng thủ: '
 hud_banner_control: "Kiểm soát biểu ngữ: "
-hud_time_remaining: 'Thời gian còn lại: '
+hud_siege_progress: 'Siege Progress: '
 msg_swa_resident_already_has_control: '&cCư dân %s đã có quyền kiểm soát.'
 msg_swa_resident_doesnt_have_control: "&cCư dân %s đã mất quyền kiểm soát."
 msg_swa_set_plunder_success: '&bĐặt cướp bóc thành %s cho %s.'
-siege_status_in_progress: 'Đang tiến hành'
-siege_status_attacker_win: 'Kẻ tấn công giành chiến thắng'
-siege_status_defender_win: 'Bên phòng thủ công giành chiến thắng'
+siege_status_in_progress: 'Contested'
 siege_status_unknown: 'Không xác định'
 dynmap_siege_banner_control: 'Kiểm soát Biểu ngữ: %s'
-dynmap_siege_time_left: 'Thời gian còn lại: %s'
+dynmap_siege_progress: 'Siege Progress: %d/%d'
+dynmap_siege_status: 'Siege Status: %s'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4CẢNH BÁO: &cMột số thiết bị của bạn sắp hỏng trong hàng tồn kho.'
 msg_swa_remove_siege_success: '&bĐã loại bỏ vòng vây thành công.'
-msg_you_received_war_sickness: '&cBạn không phải là người tham gia cuộc chiến này và không thể ở trong Khu vực bị tấn công. Xin rời khỏi đây để xóa bỏ bệnh tật chiến tranh. Nguyên nhân phổ biến của chứng bệnh chiến tranh: ở trong một thị trấn trung lập, không có cấp bậc quân sự hoặc không phải là đồng minh của cả hai bên.'
-msg_you_will_get_sickness: '&cBạn không phải là người tham gia cuộc chiến này và không thể ở trong Khu vực bị tấn công. Vui lòng rời đi nếu không bạn sẽ bị bệnh chiến tranh sau %s giây.'
 #Added in 0.08:
 msg_swa_set_towns_gained_success: '&bĐã đặt số thị trấn chiếm được %d cho %s.'
 msg_swa_set_towns_lost_success: '&bĐã đặt số thị trấn bị mất %d cho %s.'
@@ -144,7 +137,7 @@ msg_na: 'N/A'
 status_town_siege_status_siege_balance: '&2 > Số tiền: &a%d'
 status_town_siege_status_warchest: '&2 > Rương chiến tranh: &a%s'
 #Battle sessions
-status_town_siege_battle: '&2Trận đánh'
+status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&2 > Thời gian còn lại: &a%s'
 msg_war_siege_battle_session_started: "&bMột phiên chiến đấu mới đã bắt đầu."
 msg_war_siege_battle_session_ended_with_battles: "&bTrận đấu hiện tại đã kết thúc. Các đội sau đây đã giành chiến thắng trong trận chiến của họ:"
@@ -168,10 +161,10 @@ msg_swa_set_siege_balance_success: '&bĐặt thành công số dư chiến tranh
 #Added in 0.13
 msg_siege_war_version: '&bPhiên bản SiegeWar hiện tại là: %s.'
 #Added in 0.14
-msg_siege_war_banner_control_session_started: '&bPhiên kiểm soát biểu ngữ đã bắt đầu. Ở gần biểu ngữ bao vây (%d khối theo chiều ngang, %d khối ở trên, %d khối bên dưới), không ở trong thị trấn và không bay trong %s. Nếu phiên của bạn thành công, bạn sẽ giành được quyền kiểm soát biểu ngữ cho phe của mình (hoặc được thêm vào danh sách kiểm soát biểu ngữ).'
-msg_siege_war_banner_control_session_started_with_altitude: '&bPhiên kiểm soát biểu ngữ đã bắt đầu. Ở gần biểu ngữ bao vây (%d khối theo chiều ngang, %d khối ở trên, %d khối bên dưới), không ở dưới độ cao của nó, không ở trong thị trấn và không bay trong %s. Nếu phiên của bạn thành công, bạn sẽ giành được quyền kiểm soát biểu ngữ cho phe của mình (hoặc được thêm vào danh sách kiểm soát biểu ngữ).'
-msg_siege_war_banner_control_session_failure: '&cPhiên kiểm soát biểu ngữ không thành công!. Các nguyên nhân phổ biến cho việc này bao gồm: chết, đi quá xa biểu ngữ, đi vào thị trấn hoặc đang bay.'
-msg_siege_war_banner_control_session_failure_with_altitude: '&cPhiên kiểm soát biểu ngữ không thành công!. Các nguyên nhân phổ biến cho việc này bao gồm: chết, đi quá xa so với biểu ngữ, đi dưới độ cao của biểu ngữ, đi vào thị trấn hoặc đang bay.'
+msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain within %d blocks of the banner, but staying out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
+msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control session started. Remain within %d blocks of the banner, but staying below it''s altitude and out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
+msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, or entering the town,.'
+msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going below the banner altitude, or entering the town.'
 ##### Added in 0.15
 #Town Merging
 msg_err_cannot_merge_towns: '&cKhông thể hợp nhất một thị trấn đang bị chiến tranh!'
@@ -200,99 +193,44 @@ hud_battle_defender_points: 'Điểm cho bên phòng thủ: '
 msg_err_cannot_start_siege_at_ruined_town: '&cBạn không thể tấn công một thị trấn đổ nát.'
 msg_err_cannot_start_siege_due_to_siege_immunity: '&cBạn không thể tấn công một thị trấn đổ nát.'
 msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cBạn không thể bắt đầu một cuộc nổi dậy vì thị trấn không ở trong tình trạng bị chiếm đóng.'
-msg_err_siege_war_cannot_attack_occupied_town_non_enemy_nation: '&cBạn không thể tấn công một thị trấn bị chiếm đóng trừ khi người chiếm đóng thị trấn đó là kẻ thù của quốc gia bạn.'
 msg_conquest_siege_started_neutral_town: '&bMột đội quân của %s đã tấn công %s. MỘT CUỘC CHIẾN ĐÃ BẮT ĐẦU!'
 msg_conquest_siege_started_nation_town: '&bMột đội quân của %s đã tấn công %s tại %s. MỘT CUỘC CHIẾN ĐÃ BẮT ĐẦU!'
-msg_liberation_siege_started_neutral_town: '&bMột đội quân của %s đã tấn công %s tại %s, trong một nỗ lực để loại bỏ sự chiếm đóng. MỘT CUỘC GIẢI PHÓNG ĐÃ BẮT ĐẦU!'
-msg_liberation_siege_started_nation_town: '&bMột đội quân của %s đã tấn công %s tại %s, trong một nỗ lực để loại bỏ sự chiếm đóng. MỘT CUỘC GIẢI PHÓNG ĐÃ BẮT ĐẦU!'
-msg_revolt_siege_started_neutral_town: '&bNgười dân thị trấn %s đã nổi dậy chống lại đội quân chiếm đóng của %s. MỘT CUỘC NỔI DẬY ĐÃ BẮT ĐẦU!'
-msg_revolt_siege_started_nation_town: '&bNgười dân thị trấn %s, thuộc quốc gia %s, đã nổi dậy chống lại đội quân chiếm đóng %s. MỘT CUỘC NỔI DẬY ĐÃ BẮT ĐẦU!'
-msg_suppression_siege_started_neutral_town: '&bQuốc gia %s đã tiến hành dập tắt hoạt động nổi dậy tại %s. CUỘC ĐÀN ÁP ĐÃ BẮT ĐẦU!'
-msg_suppression_siege_started_nation_town: '&bQuốc gia %s đã tiến hành dập tắt cuộc nổi dậy của %s tại %s. CUỘC ĐÀN ÁP ĐÃ BẮT ĐẦU!'
 #Banner Control
 msg_siege_war_defending_troops_at_siege_banner: '&bChiến sự %s > Quân phòng thủ đang ở dưới cờ bao vây.'
 #Town screen
-status_town_occupying_nation: '&2Quốc gia chiếm đóng: &a%s'
 status_town_siege: '&2Chiến sự:'
 status_town_siege_type: '&2 > Kiểu: &a%s'
 status_town_siege_status: '&2 > Trạng thái: &a%s'
 status_town_siege_attacker: '&2 > Kẻ tấn công: &a%s'
 status_town_siege_defender: '&2 > Đội phòng thủ: &a%s'
 status_town_siege_battle_points: '&2 > Điểm: &a%s &2/ &a%s'
-status_town_siege_status_attacker_win: 'Kẻ tấn công giành chiến thắng'
-status_town_siege_status_defender_win: 'Đội phòng thủ thành công'
+status_town_siege_status_attacker_win: 'Decisive Attacker Victory'
+status_town_siege_status_defender_win: 'Decisive Defender Victory'
+status_town_siege_status_close_attacker_win: 'Close Attacker Victory'
+status_town_siege_status_close_defender_win: 'Close Defender Victory'
 status_town_siege_status_attacker_abandon: 'Kẻ tấn công từ bỏ'
-status_town_siege_status_pending_attacker_abandon: 'Kẻ tấn công đang chờ xử lý từ bỏ, trong %s'
+status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending'
 status_town_siege_status_defender_surrender: 'Đội phòng thủ đầu hàng'
-status_town_siege_status_pending_defender_surrender: 'Thời gian xử lý đầu hàng, trong %s'
+status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending'
 status_town_siege_status_plundered: '&2 > Thị trấn bị cướp bóc: %s'
-status_town_siege_status_invaded: '   &2Thị trấn bị xâm chiếm: %s'
 #Siege statuses
 siege_status_attacker_abandon: 'Kẻ tấn công từ bỏ'
 siege_status_defender_surrender: 'Đội phòng thủ đầu hàng'
-siege_status_pending_attacker_abandon: 'Kẻ tấn công đang chờ xử lý từ bỏ'
-siege_status_pending_defender_surrender: 'Đội phòng thủ đang chờ xử lý đầu hàng'
+siege_status_pending_attacker_abandon: 'Attacker Abandon Pending'
+siege_status_pending_defender_surrender: 'Defender Surrender Pending'
 #Nation screen
-status_nation_occupied_home_towns: '&2Thị trấn quê hương bị chiếm đóng &a[%s]&2: &f'
-status_nation_occupied_foreign_towns: '&2Thị trấn nước ngoài bị chiếm đóng &a[%s]&2: &f'
 status_nation_offensive_sieges: '&2Cuộc vây hãm &a[%s]&2: &f'
 status_nation_defensive_sieges: '&2Cuộc phòng ngự vây hãm &a[%s]&2: &f'
-#Surrendering defences
-msg_conquest_siege_defender_surrender: '&bCuộc XÂM LƯỢC %s > Thị trấn đã đầu hàng quân đội %s.'
-msg_liberation_siege_defender_surrender: '&bCUỘC GIẢI PHÓNG tại %s > Đội quân chiếm đóng %s đã đầu hàng quân đội %s và việc chiếm đóng đã bị xóa bỏ.'
-msg_revolt_siege_defender_surrender: '&bCUỘC NỔI DẬY tại %s > Đội quân chiếm đóng của %s đã đầu hàng quân nổi dậy và việc chiếm đóng đã bị xóa bỏ.'
-msg_suppression_siege_defender_surrender: '&bCUỘC ĐÀN ÁP tại %s > Thị trấn đã đầu hàng đội quân chiếm đóng %s. '
-#Abandoning attacks
-msg_conquest_siege_attacker_abandon: '&bCUỘC XÂM LƯỢC tại %s > Đội quân %s đã từ bỏ cuộc tấn công.'
-msg_liberation_siege_attacker_abandon: '&bCUỘC GIẢI PHÓNG tại %s > Đội quân %s đã từ bỏ nỗ lực giải phóng thị trấn khỏi %s.'
-msg_revolt_siege_attacker_abandon: '&bCUỘC NỔI DẬY tại %s > Quân nổi dậy đã từ bỏ cuộc nổi dậy chống lại %s.'
-msg_suppression_siege_attacker_abandon: '&bCUỘC ĐÀN ÁP tại %s > Đội quân %s đã từ bỏ cuộc tấn công và thị trấn thoát khỏi sự chiếm đóng.'
 msg_err_town_cannot_end_siege_as_no_siege: '&cThị trấn gần đó không bị bao vây. Từ bỏ/Đầu hàng là không thể.'
 msg_err_town_cannot_end_siege_as_finished: '&cCuộc bao vây đã kết thúc hoặc dự kiến kết thúc. Từ bỏ/Đầu hàng là không thể.'
-#Timed wins
-msg_conquest_siege_timed_attacker_win: '&bCUỘC XÂM LƯỢC tại %s > Đội quân tấn công %s đã đánh bại đội quân phòng thủ %s. Thị trấn hiện đang sẵn sàng cho cuộc xâm lược và/hoặc cướp bóc.'
-msg_liberation_siege_timed_attacker_win: '&bCUỘC GIẢI PHÓNG tại %s > Đội quân tấn công của %s đã đánh bại đội quân chiếm đóng của %s, và giải phóng người dân thị trấn khỏi sự chiếm đóng.'
-msg_revolt_siege_timed_attacker_win: '&bCUỘC NỔI DẬY tại %s > Quân nổi dậy đã đánh bại quân chiếm đóng %s.'
-msg_suppression_siege_timed_attacker_win: '&bCUỘC ĐÀN ÁP tại %s > Đội quân chiếm đóng %s đã trấn áp thành công mọi cuộc nổi loạn của phiến quân. Thị trấn hiện đang sẵn sàng cho cuộc xâm lược và/hoặc cướp bóc.'
-msg_conquest_siege_timed_defender_win: '&bCUỘC XÂM LƯỢC tại %s > Đội quân phòng thủ %s đã đánh bại đội quân %s và đánh đuổi những kẻ tấn công.'
-msg_liberation_siege_timed_defender_win: '&bCUỘC GIẢI PHÓNG tại %s > Đội quân chiếm đóng %s đã đánh bại quân đội %s và ngăn chặn thành công các cuộc khởi nghĩa trong thị trấn.'
-msg_revolt_siege_timed_defender_win: '&bCUỘC NỔI DẬY tại %s > Đội quân chiếm đóng của %s đã dập tắt thành công cuộc nổi dậy. Thị trấn hiện đang sẵn sàng cho cuộc xâm lược và/hoặc cướp bóc.'
-msg_suppression_siege_timed_defender_win: '&bCuộc ĐÀN ÁP tại %s > Đội quân phòng thủ của %s đã đánh bại đội quân tấn công của %s, ngăn chặn âm mưu giải phóng thị trấn.'
-#Generic Victory messages
-msg_immediate_attacker_victory: " Những kẻ tấn công đã chiến thắng!"
-msg_pending_attacker_victory: " Bên tấn công sẽ được coi là chiến thắng sau %s."
-msg_immediate_defender_victory: " Đội phòng thủ đã chiến thắng!"
-msg_pending_defender_victory: " Bên phòng thủ sẽ được coi là chiến thắng sau %s."
-#Invasions
-msg_err_cannot_invade_own_town: '&cBạn không thể xâm chiếm thị trấn của riêng bạn.'
-msg_err_cannot_invade_without_victory: "Bạn không thể xâm chiếm thị trấn trừ khi quốc gia của bạn chiến thắng trong cuộc bao vây."
-msg_err_cannot_invade_siege_still_in_progress: '&cBạn không thể xâm lược khi cuộc bao vây vẫn đang diễn ra.'
-msg_err_cannot_invade_town_already_occupied: '& Không cần phải xâm lược vì quốc gia của bạn đã chiếm được thị trấn.'
-msg_err_cannot_invade_town_already_invaded: '&cQuốc gia của bạn đã xâm chiếm thị trấn.'
-msg_neutral_town_invaded: '&b%s đã bị %s xâm chiếm và bị chiếm đóng!'
-msg_nation_town_invaded: '&b%s, của %s, đã bị %s xâm chiếm và bị chiếm đóng!'
 #Plunder
 msg_err_siege_war_plunder_not_possible_rebels_won: '&cKhông thể cướp bóc vì phiến quân thị trấn đã chiến thắng.'
-#Admin commands
-msg_err_swa_cannot_set_invade_due_to_siege_type: '&cBạn không thể đặt cờ xâm lược cho kiểu chiến tranh này.'
-msg_err_swa_cannot_change_occupier_due_to_active_siege: '&cBạn không thể thay đổi người chiếm đóng nếu thị trấn có một cuộc chiến tranh đang diễn ra.'
-msg_swa_set_invade_success: '&bĐặt xâm chiếm thành %s cho %s.'
-msg_swa_town_occupation_removal_success: '&bNgười chiếm giữ thị trấn đã bị xóa cho %s.'
-msg_swa_town_occupation_change_success: '&bNgười chiếm giữ thị trấn đã thay đổi thành %s cho %s.'
 #Added in 0.16
 #Nation war history
-status_nation_town_stats: '&2Lịch sử xâm lược thị trấn - Nước ngoài/Quê hương: &a%d&2/&a%d'
-status_nation_plunder_stats: '&2Lịch sử cướp bóc thị trấn - Lãi/Lỗ: &a%d&2/&a%d'
+status_nation_town_stats: '&2Captures Foreign/Home: &a%d&2/&a%d'
+status_nation_plunder_stats: '&2Plunder Gains: &a%d'
 #Siege effects
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cChỉ những cư dân của thị trấn mới có thể xuất hiện trong một thị trấn bị tấn công hoặc khu vực bị tấn công.'
-#Nation Siege Immunity
-msg_err_siege_affected_home_nation_cannot_recruit: "&cQuốc gia không thể thêm thị trấn mới, vì một trong những thị trấn của quốc gia đó đang bị tấn công."
-msg_err_siege_affected_home_nation_town_cannot_recruit: "&cThị trấn không thể thêm cư dân mới, vì một trong những thành phố của quốc gia này đang bị tấn công."
-msg_err_siege_affected_home_nation_town_cannot_claim: "&cKhông thể mua thêm đất, vì một trong những thành phố của quốc gia bạn đang bị tấn công."
-msg_err_siege_affected_home_nation_town_cannot_unclaim: "&cKhông thể hủy đất đai, vì một trong những thành phố của quốc gia bạn đang bị tấn công."
-#Added in 0.17
-#Peaceful towns homeblock move restrictions
-msg_err_peaceful_town_cannot_move_homeblock: "&cCác thị trấn trung lập không thể di chuyển homeblocks của họ. Nếu bạn muốn di chuyển homeblocks của mình, trước tiên hãy tắt trung lập."
 #Added in 0.18
 #Homeblock move restrictions
 msg_err_besieged_town_cannot_move_homeblock: "&cCác thị trấn bị bao vây không thể di chuyển homeblocks của họ."
@@ -302,29 +240,12 @@ msg_err_occupied_town_cannot_move_homeblock: "&cCác thị trấn bị chiếm �
 status_town_siege_pending_balance_adjustment: '&2 | Đang chờ xử lý: &a%s'
 #Added in 0.21
 #General occupation commands error messages
-msg_err_cannot_change_occupation_town_not_occupied: '&cBạn không thể thay đổi trạng thái chiếm đóng vì thị trấn không có người ở.'
-msg_err_cannot_change_occupation_by_foreign_nation: '&cBạn không thể thay đổi tình trạng chiếm đóng vì quốc gia của bạn không phải là quốc gia chiếm đóng.'
-msg_err_cannot_change_occupation_of_besieged_town: '&cBạn không thể thay đổi tình trạng chiếm đóng của một thị trấn bị tấn công.'
 msg_err_town_and_capital_too_far_apart: "&cHomeblock của %s quá xa so với homeblock của %s."
-#Remove occupation command
-nation_help_14: "Loại bỏ sự chiếm đóng thị trấn khác bởi quốc gia của bạn."
-msg_remove_occupation_success: '&bQuốc gia %s đã hủy chiếm đóng %s.'
-#Transfer occupation command
-nation_help_15: "Chuyển sự chiếm đóng một thị trấn của quốc gia bạn sang một quốc gia khác"
-msg_err_cannot_transfer_occupation_king_not_online: "&cChuyển đổi quyền chiếm đóng không thành công vì vua của %s (%s) không trực tuyến."
-msg_would_you_accept_transfer_of_occupied_town: '&6Bạn có đồng ý chuyển quyền chiếm đóng của %s, từ %s sang quốc gia của bạn không?. Điều này sẽ khiến thị trấn bị chiếm đóng bởi quốc gia của bạn.'
-msg_transfer_occupation_success: '&bQuốc gia %s đã chuyển quyền chiếm đóng %s. Thị trấn hiện nằm dưới sự chiếm đóng của %s.'
-#Invite occupation command
-nation_help_16: "Mời một quốc gia chiếm thị trấn của bạn"
-msg_err_cannot_invite_occupation_town_already_occupied: '&cBạn không thể mời chiếm đóng vì thị trấn của bạn đã bị chiếm đóng.'
-msg_err_cannot_invite_occupation_king_not_online: "&cLời mời tham gia không thành công vì vua của %s (%s) không trực tuyến."
-msg_would_you_accept_town_request_for_occupation: '&6Bạn có đồng ý chiếm %s không?. Điều này sẽ khiến thị trấn bị chiếm đóng bởi quốc gia của bạn.'
-msg_invite_occupation_success: '&bThị trấn %s đã bị chiếm đóng bởi %s, theo yêu cầu riêng của họ.'
 #Added in 0.22
 #Revolt immunities
-msg_set_revolt_immunities_town: 'Miễn trừ nổi dậy cho thị trấn %s được đặt thành %s giờ.'
-msg_set_revolt_immunities_nation: 'Miễn trừ nổi dậy cho tất cả các thị trấn trong quốc gia %s được đặt thành %s giờ.'
-msg_set_revolt_immunities_all: 'Miễn trừ nổi dậy cho tất cả các thị trấn được đặt thành %s giờ.'
+msg_set_revolt_immunities_town: 'Revolt immunity for town %s set to %s.'
+msg_set_revolt_immunities_nation: 'Revolt immunities for all towns in nation %s set to %s.'
+msg_set_revolt_immunities_all: 'Revolt immunities for all towns set to %s.'
 #Added in 0.23
 msg_siege_war_banner_control_remaining_session_time: 'Thời gian cắm biểu ngữ: %s'
 #Added in 0.25
@@ -334,7 +255,6 @@ msg_siege_war_attacker_death: '&bChiến sự %s > Kẻ tấn công %s đã ch�
 msg_siege_war_defender_death: '&bChiến sự %s > Bên phòng thủ %s đã chết > Điểm Chiến đấu +%d'
 msg_siege_war_attacker_killed_by_player: '&bChiến sự %s > Kẻ tấn công %s đã bị giết bởi %s > Điểm Chiến đấu -%d'
 msg_siege_war_defender_killed_by_player: '&bChiến sự %s > Bên phòng thủ %s bị giết bởi %s > Điểm Chiến đấu +%d'
-status_town_days_to_peacefulness_status_change: 'Số ngày để thay đổi trạng thái trung lập'
 #Added in 0.27
 msg_next_siege_session_in_minutes: 'Phiên Chiến đấu tiếp theo sẽ diễn ra trong %s.'
 msg_session_is_active_now: 'Phiên chiến đấu đang hoạt động!'
@@ -364,63 +284,21 @@ status_military_salary: "Mức lương quân sự: "
 hover_message_click_to_claim: "Nhấp để yêu cầu số tiền nợ của bạn."
 #Added in 0.31
 msg_next_session_cannot_be_determined: "Phiên Xâm lược tiếp theo chưa được lên lịch. Thử lại sau."
-#Added in 0.32
-msg_peaceful_town_subverted: "&b%s đã bị %s lật đổ và chiếm đóng."
-msg_peaceful_town_revolted: "&b%s đã nổi dậy chống lại %s, và thoát khỏi sự chiếm đóng."
-msg_town_became_peaceful: '&b%s đã được xác nhận là Trung lập. Thị trấn hiện miễn trừ với các cuộc tấn công xâm lược, nhưng dễ bị phá hoại bởi các quốc gia lân cận. Cư dân không thể vào các khu vực bị bao vây hoặc đạt được cấp bậc quân sự quốc gia.'
-msg_town_became_non_peaceful: '&b%s đã được xác nhận là Không trung lập. Thị trấn không còn miễn trừ với các cuộc tấn công xâm lược và không còn dễ bị các quốc gia lân cận lật đổ. Cư dân có thể vào các khu vực bao vây và đạt được cấp bậc quân sự quốc gia.'
-msg_town_returned_to_pre_peaceful_occupier: " Thị trấn đã được trả lại cho người chiếm đóng trước khi chuyển sang trạng thái trung lập - %s."
-msg_err_cannot_subvert_town_already_occupied: "&cKhông cần phải lật đổ thị trấn này, vì quốc gia của bạn đã chiếm giữ nó rồi."
-msg_err_cannot_subvert_towns_in_own_nation: "&cBạn không thể lật đổ các thị trấn thuộc quốc gia của mình."
-msg_err_cannot_subvert_town_zero_influence: "&cBạn không thể lật đổ thị trấn này, bởi vì quốc gia của bạn không có Towny-Influence trong khu vực địa phương."
-msg_err_cannot_subvert_town_insufficient_influence: "&cBạn không thể lật đổ thị trấn này, bởi vì %s có nhiều Towny-Influence ở khu vực địa phương (%d) hơn quốc gia của bạn (%d)."
-msg_err_cannot_invite_peaceful_town_occupation: "&cBạn không thể mời chiếm đóng nếu thị trấn của bạn trung lập."
-msg_err_cannot_peacefully_revolt_because_unoccupied: "&cKhông cần phải nổi dậy một cách hòa bình, vì thị trấn của bạn không bị chiếm đóng."
-msg_err_cannot_peacefully_revolt_because_occupier_has_influence: "&cThị trấn của bạn không thể nổi dậy một cách hòa bình, bởi vì người cư ngụ ở đó, %s, vẫn có một số Towny-Influence trong khu vực địa phương (%d)."
 #Added in 0.33
 nation_help_11: 'Thu bất kỳ khoản thu nhập nào do bạn trả từ lương quân sự.'
 msg_err_siege_war_collect_unavailable: "Không có gì để bạn thu thập."
 msg.battle.session.cleanup.starting: "Phiên chiến đấu trước đó chưa hoàn thành. Bắt đầu dọn dẹp phiên chiến đấu. Mỗi trận chiến sẽ được giải quyết như một trận hòa, với điểm chiến đấu của cả kẻ tấn công và người phòng thủ bằng nhau."
 msg.battle.session.cleanup.complete: "Hoàn tất dọn dẹp phiên chiến đấu. %d trận chiến đã được giải quyết."
 msg_err_cannot_start_sieges_today: "&cMáy chủ của bạn đã giới hạn số ngày trong tuần có thể bắt đầu công thành. Cuộc bao vây không thể được bắt đầu ngày hôm nay."
-#Added in 0.35
-#Wall-Breach-Actions
-hud_breach_points: "Điểm phá hoại: "
-msg_wall_breach_successful: 'Phá tường thành công!'
-status_town_siege_breach_points: '&2 > Điểm phá hoại: &a%s'
-msg_err_not_enough_breach_points_for_action: '&cKhông có đủ điểm phá hoại cho hành động này. Bắt buộc: %d, Hiện có: %s.'
-msg_err_cannot_breach_without_battle_session: '&cBạn không thể thực hiện hành động Phá tường, hãy đợi đến phiên chiến đấu tiếp theo.'
-msg_err_cannot_breach_at_this_height: '&cBạn không thể thực hiện hành động Phá tường ở độ cao này. Giới hạn chiều cao được áp dụng khi ở gần homeblock. So với Chiều cao biểu ngữ công thành, MIN = %d, MAX = %d.'
-msg_err_breaching_cannot_place_this_material: '&cBạn không thể đặt loại khối này.'
-msg_err_breaching_cannot_destroy_this_material: '&cBạn không thể phá hủy loại khối này.'
-#Wall-Breach-Bonus
-msg_wall_breach_bonus_awarded_to_attackers: "&bChiến sự %s > %d kẻ tấn công đã đến được homeblock. Thưởng Phá Tường: +%d Điểm Chiến đấu."
-msg_wall_breach_bonus_awarded_to_defenders: "&bChiến sự %s > %d quân phòng thủ đã đến được homeblock. Thưởng Phá Tường: +%d Điểm Chiến đấu."
-msg_wall_breach_bonus_awarded: "&bBạn đã được thưởng Phần thưởng Phá Tường!"
-msg_err_already_received_wall_breach_bonus: '&cBạn đã nhận được Phần thưởng Phá Tường cho Phiên Chiến đấu này.'
-#Wall-Breach Cannons Integration
-msg_err_cannot_fire_cannon_without_battle_session: '&cBạn không thể bắn đại bác trong khu vực bị bao vây cho đến khi diễn ra Phiên Chiến đấu tiếp theo.'
-msg_err_cannot_fire_cannon_without_perms: '&cBạn không thể bắn khẩu pháo này. Kiểm tra xem bạn có phải là người tham gia chính thức trong cuộc bao vây hay không và bạn có cấp bậc cho phép bắn đại bác hay không.'
-#configuration-errors
-msg_error_misconfigured_place_blocks_whitelist: '&cMisconfigured Material on Wall-Breaching-Place-Blocks-Whitelist. Problem Entry: %s.'
-msg_error_misconfigured_destroy_blocks_blacklist: '&cMisconfigured Material on Wall-Breaching-Destroy-Blocks-Blacklist. Problem Entry: %s.'
 #Added in 0.36
 msg_err_nation_neutrality_not_supported: '&cSiegeWar không ủng hộ tính trung lập của quốc gia.'
 msg.townyperms.installation.complete: "Towny perms file adjusted for recommended SW setup."
 msg.townyconfig.installation.complete: "Towny config file adjusted for recommended SW setup."
 msg.installation.complete: "Việc cài đặt đã hoàn tất."
-#Added in 0.37
-msg_err_cannon_must_be_in_wilderness_or_besieged_town: "&cTrong Vùng bao vây, chỉ có thể bắn đại bác nếu chúng ở vùng hoang dã hoặc thị trấn bị bao vây."
 #Added in 0.41
-msg_capping_limiter_limit_exceeded_warning: "&cBạn đã vượt quá Giới hạn hàng ngày là %d Phiên chiến đấu. Bạn có thể giới hạn lại bằng %s."
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cLà một cư dân của thị trấn yên bình, bạn không thể dễ dàng vượt qua các Khu vực bị bao vây. Để tránh Bệnh Chiến tranh, hãy rời khỏi Khu vực chiến sự ngay lập tức.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cLà một cư dân của thị trấn yên bình, bạn không thể dễ dàng vượt qua các Khu vực bị bao vây. Để tránh Bệnh Chiến tranh, hãy rời khỏi Khu vực chiến sự ngay lập tức.'
-#Added in 0.42
-msg_siege_zone_proximity_warning: "&cCẢNH BÁO: Bạn đang ở trong Khu vực bị bao vây!. PVP luôn được kích hoạt ở đây."
-msg_siege_zone_proximity_warning_with_logout_risk: "&cCẢNH BÁO: Bạn đang ở trong Khu vực bị bao vây!. PVP luôn được kích hoạt ở đây. Bạn sẽ bị giết nếu đăng xuất khi đang ở trong Khu vực chiến sự."
-msg_player_killed_for_logging_out_in_siege_zone: "%s đã bị giết vì họ đã đăng xuất khi đang ở trong Khu vực bị bao vây."
 #Added in 0.43
-msg_err_cannot_surrender_liberation_siege: "&cBạn không thể đầu hàng quân phòng thủ trong một cuộc giải phóng."
 msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cTrong khi quá trình tập hợp quân đội đang diễn ra, bạn không thể phá hủy biểu ngữ bao vây hoặc khối được gắn vào."
 msg_err_cannot_alter_blocks_near_siege_banner: 'Bạn không thể đặt/phá hủy các khối ở vị trí này vì chúng nằm gần Biểu ngữ bao vây.'
 #Added in 0.44
@@ -434,49 +312,6 @@ warn_nation_had_town_removed: 'Cảnh báo: %s đã bị xóa khỏi quốc gia 
 warn_nation_had_ally_removed: 'Cảnh báo: %s đã bị xóa khỏi tư cách là đồng minh của quốc gia %s trong khi (những) người chơi %s đang ở trong vùng chiến sự tại %s.'
 #Message shown to the former allied nation's players when they have been removed as an ally.
 warn_your_nation_has_been_removed_as_an_ally: 'Cảnh báo: %s đã loại bỏ quốc gia của bạn với tư cách là đồng minh, trong khi một số thành viên quốc gia của bạn đang ở bên trong vùng chiến sự tại %s.'
-msg_global_domination_awards_header: '&bGiải thưởng thống trị đã được cấp!'
-msg_global_domination_awards_line: '&b%d - %s: %s + %s Cổ Vật.'
-msg_err_nation_domination_awards_no_capital: '&cKhông có thành phố, thủ đô nào để cất giữ Cổ Vật.'
-msg_err_nation_domination_awards_no_capital_homeblock: '&cKhông có homeblock để cất giữ Cổ Vật.'
-msg_err_nation_domination_awards_not_enough_chests: '&cKhông đủ rương trong homeblock để cất giữ Cổ Vật.'
-#Added in 0.46
-artefact_lore_summary_line: '&5Cổ vật loại: %d'
-artefact_lore_warning_line: '&cCẢNH Báo: Không ổn định sau %d ngày.'
-artefact_name_tree_feller: 'Người chặt cây'
-artefact_name_ground_digger: 'Máy đào đất'
-artefact_name_cobble_eater: 'Ruột sắt'
-artefact_name_sword_of_searing: 'Thanh kiếm của Địa chủ Searing'
-artefact_name_potion_of_enhanced_regeneration: 'Thuốc tái tạo tăng cường'
-artefact_name_potion_of_enhanced_strength: 'Thuốc cường hóa sức mạnh'
-artefact_name_potion_of_enhanced_absorbtion: 'Thuốc tăng cường hấp thụ'
-artefact_name_potion_of_true_invisibility: 'Thuốc tàng hình'
-artefact_name_splash_potion_of_enhanced_regeneration: 'Thuốc tái tạo tăng cường có thể ném được'
-artefact_name_splash_potion_of_enhanced_strength: 'Thuốc cường hóa sức mạnh có thể ném được'
-artefact_name_splash_potion_of_enhanced_absorbtion: 'Thuốc tăng cường hấp thụ có thể ném được'
-artefact_name_arrow_of_enhanced_hunger: 'Mũi tên của sự đói khát được tăng cường'
-artefact_name_potion_of_great_resistance: 'Thuốc kháng cự mạnh'
-artefact_name_arrow_of_knockup: 'Mũi tên hất tung'
-artefact_name_super_spiky_helmet: 'Mũ Bảo Hiểm Siêu Gai'
-artefact_name_bountiful_pickaxe: 'Cuốc Địa chủ'
-artefact_name_sword_of_immolation: 'Thanh kiếm bất tử'
-artefact_name_axe_of_the_berserker: 'Rìu của Địa chủ Berserker'
-artefact_name_bow_of_displacement: 'Cung dịch chuyển'
-artefact_name_arrow_of_doom: 'Mũi tên diệt vong'
-artefact_name_vorpal_sword: 'Thanh kiếm Vorpal'
-artefact_name_chicago_typewriter: 'Máy đánh chữ'
-artefact_name_trident_of_zeus: 'Cây đinh ba của thần Zeus'
-artefact_name_trident_of_poseidon: 'Cây đinh ba của thần Poseidon'
-artefact_name_chestplate_of_mars: 'Giáp ngực của người sao Hỏa'
-artefact_custom_effect_lore_lightning_strike_on_hit: '&7Triệu hồi sét trên các đòn đánh'
-#Added in 0.47
-artefact_name_antimatter_potion: 'Bình thuốc phản vật chất'
-artefact_custom_effect_lore_delayed_massive_self_explosion_on_consume: '&7Đồ uống phát nổ trong 7 giây'
-artefact_name_splash_potion_of_true_invisibility: 'Thuốc tàn hình có thể ném được'
-artefact_name_poison_blade: 'Lưỡi dao độc'
-artefact_custom_effect_lore_poison_on_hit: '&7Poison on Hit'
-artefact_name_blade_of_the_viper: 'Lưỡi kiếm của Viper'
-artefact_custom_effect_lore_strong_poison_on_hit: '&7Strong Poison on Hit'
-artefact_custom_effect_lore_slow_on_hit: '&7Làm chậm khi đánh'
 #Added in 0.48
 #Shown when an admin adds hours using /swa siegeduration addhours
 hours_added_to_sieges: '%s giờ đã được thêm vào thời lượng của tất cả các cuộc vây hãm.'
@@ -488,14 +323,12 @@ msg_err_besieged_capital_cannot_change_king: "&cQuốc gia của bạn không đ
 #Added in 0.50
 #Shown when a siege assembly is started in a town which already has a siege assembly.
 msg_err_town_already_has_a_siege_assembly: '&cThị trấn này đã có một Hội bao vây đang hoạt động.'
-#Shown when a town cannot start a siege because of their isAllowedToWar setting.
-msg_err_your_town_is_not_allowed_to_start_a_siege: 'Thị trấn của bạn không được phép bao vây vì họ không được phép tham chiến.'
-#Shown when a town cannot start a siege because of the target town's isAllowedToWar setting.
-msg_err_this_town_is_not_allowed_to_be_sieged: 'Bạn không thể bao vây Thị trấn này vì họ không được phép tham chiến.'
+#Shown when a town cannot be sieged or subverted because of the target town's isAllowedToWar setting.
+msg_err_this_town_is_not_allowed_to_be_attacked: 'You cannot siege or subvert this town, because they are not allowed to war.'
 #Shown when a nation cannot afford to start a siege.
-msg_err_you_cannot_afford_to_siege_for_x: "Quốc gia của bạn không đủ khả năng để bắt đầu Cuộc vây hãm này, nó sẽ tiêu tốn %s."
-#Show when a nation tries to start a siege when the economy is not active.
-msg_err_no_siege_economy_not_active: "Bạn không thể bắt đầu một cuộc bao vây trong khi Nền kinh tế bị vô hiệu hóa ở Towny."
+msg_err_your_nation_cannot_afford_to_siege_for_x: "Your nation cannot afford to begin this Siege, it would cost %s."
+#Shown when a town cannot afford to start a siege.
+msg_err_your_town_cannot_afford_to_siege_for_x: "Your town cannot afford to begin this Siege, it would cost %s."
 #Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
 msg_attackers_have_triggered_a_jail_break_freeing: "Những kẻ tấn công đã giành chiến thắng trong phiên chiến đấu, có kẻ vượt ngục, giải thoát cho %s."
 #Shown when a town takes on daily plunder debt.
@@ -507,18 +340,141 @@ msg_plunder_debt_payed_bankrupt: "Thị trấn của bạn đã trả khoản n�
 #Shown when a town cannot pay their daily plunder debt.
 msg_plunder_debt_cannot_be_payed: "Thị trấn %s không thể trả khoản nợ cướp bóc hàng ngày của họ và đã bị xóa!"
 #Shown in the town status screen when a town has plunder debt.
-status_town_plunder_debt: "Mắc nợ do bị cướp bóc: %s, %s thanh toán hàng ngày của %s vẫn còn."
-#Shown when the nation sets their peacefuloccupationtax
-msg_peaceful_occupation_tax_set: "Quốc gia của bạn đã quy định mức thuế chiếm đóng hòa bình hàng ngày là %s."
-#Shown when a town pays their nation peaceful occupation tax.
-msg_peaceful_occupation_tax_payed: "Quốc gia của bạn đã quy định mức thuế hòa bình phải đóng hàng ngày là %s."
-#Shown when a town pays their nation peaceful occupation tax with bankruptcy.
-msg_peaceful_occupation_tax_payed_bankrupt: "Thị trấn của bạn đã trả %s thuế chiếm đóng hòa bình cho quốc gia bằng cách phá sản."
-#Shown when a town cannot pay their nation peaceful occupation tax.
-msg_peaceful_occupation_tax_cannot_be_payed: "Thị trấn của bạn đã trả %s thuế chiếm đóng hòa bình cho quốc gia bằng cách phá sản!"
-#Shown in the nation status screen when a nation has nation peaceful occupation tax.
-status_nation_peaceful_occupation_tax: "Thuế chiếm đóng hòa bình: %s"
-#Shown when the nation tries to set a nation peaceful occupation tax over the maximum.
-msg_err_peaceful_occupation_tax_cannot_be_more_than: "Các quốc gia không thể thiết lập thuế chiếm đóng hòa bình lớn hơn %s."
-#Shown to nation when they are paid their peaceful occupation taxes.
-msg_peaceful_occupation_taxes_paid_totaling: "Quốc gia của bạn đã nhận được thuế chiếm đóng hòa bình với tổng số: %s."
+status_town_plunder_debt: "&2Plunder Debt Owing: %s, %s daily payments of %s remain."
+##################### Occupation Tax #############################
+#Shown when the nation sets their occupation tax
+msg_occupation_tax_set: "&bYour nation has set a daily occupation tax of %s per plot."
+#Shown when the nation sets their occupation tax
+msg_occupation_tax_set_max: "&bYour nation has set a daily occupation tax of maximum (%s per plot). The nation occupation tax will now automatically track the server-configured maximum."
+#Shown when a town pays their nation occupation tax.
+msg_occupation_tax_paid: "&bYour town paid the nation occupation tax of %s."
+#Shown when a town pays their nation occupation tax with bankruptcy.
+msg_occupation_tax_paid_bankrupt: "&cYour town paid the nation occupation tax of %s by going bankrupt."
+#Shown when a bankrupt town cannot pay their nation occupation tax.
+msg_occupation_tax_paid_with_debt: "&cYour town paid the nation occupation tax of %s with debt."
+#Shown when a town cannot pay their nation occupation tax.
+msg_occupation_tax_cannot_be_paid: "&cThe Town %s could not pay their nation occupation tax and has been removed!"
+#Shown in the nation status screen when a nation has nation occupation tax.
+status_nation_occupation_tax_per_plot: "&2Nation Occupation Tax: &c%s per plot"
+#Shown in the town status screen when a town has nation occupation tax to pay.
+status_town_occupation_tax: "&2Nation Occupation Tax: &c%s"
+#Shown when the nation tries to set a nation occupation tax over the maximum.
+msg_err_occupation_tax_cannot_be_more_than: "&cNations cannot set an occupation tax greater than %s."
+#Shown to nation when they collect their occupation taxes.
+msg_occupation_taxes_collected_totaling: "&bYour nation collected occupation taxes totalling %s."
+#####################################################################
+#Nation Refund
+nation_help_refund: "Claim any nation refund which is available to you."
+msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw nation claimrefund'"
+msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
+msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
+#Invasion
+msg_err_town_already_invaded: '&cYour nation has already captured the town.'
+msg_neutral_town_invaded: '&b%s has been captured by %s!'
+msg_nation_town_invaded: '&b%s, belonging to %s, has been captured by %s!'
+#Subverting
+msg_peaceful_town_subverted: "&b%s has been peacefully subverted and captured by %s."
+msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already owns and occupies it."
+#Revolting
+msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying nation of %s, and declared themselves free to choose their own destiny. A REVOLT SIEGE has begun!'
+#war sickness
+msg_you_will_get_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. Please enter a town or leave the Siege Zone, otherwise you will get War Sickness in %s seconds.'
+msg_you_received_war_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. To remove the War Sickness, enter a town or leave the Siege Zone.'
+#Town Status Screen
+status_town_days_to_peacefulness_status_change: '&2Days To Peacefulness Status Change: &b%d'
+#Town Peacefulness
+town_help_toggle_peaceful: 'Change your town peacefulness status'
+msg_war_common_town_declared_peaceful: '&bPeacefulness Declared! The town will be confirmed as Peaceful in %d day(s).'
+msg_war_common_town_declared_non_peaceful: '&bNon-Peacefulness Declared! The town will be confirmed as Non-Peaceful in %d day(s).'
+msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot gain nation-military ranks.'
+msg_town_became_non_peaceful: '&b%s has been confirmed as Non-Peaceful. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can now gain nation-military ranks.'
+msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Peaceful status change countdown was cancelled.'
+msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they belong to a Peaceful town.'
+sg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
+msg_err_peaceful_towns_cannot_revolt: '&cPeaceful towns cannot revolt.'
+msg_err_capital_towns_cannot_go_peaceful: '&cCapital towns cannot go peaceful.'
+msg_err_cannot_subvert_not_enough_permissions: "&cYou do not have enough permissions to subvert the town."
+msg_err_cannot_subvert_dont_own_guardian_town: "&cSubvert not possible, because your nation does not own the required Guardian Town: %s."
+msg_peaceful_towns_released_on_homeblock_move: "&bBecause %s moved its homeblock, %d peaceful town(s) which it was guarding, were released from occupation."
+#Town neutrality
+msg_err_town_neutrality_not_supported: "&cSiegeWar does not support town neutrality. To protect your town from sieges, change your town to Peaceful, using '/sw town togglepeaceful'."
+#swa
+msg_swa_set_invade_success: '&bSet captured to %s for %s.'
+msg_swa_town_peacefulness_change_success: '&bSuccessfully changed the peacefulness status of %s to %s.'
+msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation status of %s to %s.'
+msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended."
+#Timed wins
+msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has won a %s victory against the defending army of %s!.'
+msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!.'
+msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has defeated the rebels with a %s victory!.'
+msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded!. The attacking rebels have successfully driven off the attacking army of %s!, with a %s victory!.'
+msg_decisive: 'DECISIVE'
+msg_close: 'CLOSE'
+#Abandoning Attacks
+msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > The attacking army of %s has admitted defeat and retreated!. This action will be confirmed when siege progress is complete.'
+msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has admitted defeat and retreated!. This action will be confirmed when siege progress is complete.'
+msg_conquest_siege_attacker_abandon_confirmed: '&bCONQUEST SIEGE at %s > Attacker Abandon Confirmed!'
+msg_revolt_siege_attacker_abandon_confirmed: '&bREVOLT SIEGE at %s > Attacker Abandon Confirmed!'
+#Surrendering Defence
+msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has surrendered to the attacking army of %s!. This action will be confirmed when siege progress is complete.'
+msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The rebels have admitted defeat and surrendered to the attacking army of %s!. This action will be confirmed when siege progress is complete.'
+msg_conquest_siege_defender_surrender_confirmed: '&bCONQUEST SIEGE at %s > Defender Surrender Confirmed!.'
+msg_revolt_siege_defender_surrender_confirmed: '&bREVOLT SIEGE at %s > Defender Surrender Confirmed!.'
+msg_err_siege_occupied_towns_cannot_surrender_in_conquest_sieges: '&cIn CONQUEST sieges, occupied towns cannot surrender.'
+#Siege Results
+msg_conquest_siege_attacker_win_result: ' The town now stands open for invasion and/or plunder.'
+msg_conquest_siege_defender_win_result: ' The town has been saved!'
+msg_revolt_siege_attacker_win_result: ' The town now stands open for invasion and/or plunder.'
+msg_revolt_siege_defender_win_result: ' The town has won its freedom!'
+#Town Screen
+status_town_siege_status_invaded: '&2 > Town Captured: %s'
+status_town_peacefulness_flag: '&b(Peaceful)'
+status_town_hover_title_changing_peacefulness: "%s[%sChanging-Peacefulness%s]"
+status_town_hover_title_revolt_immunity: "%s[%sRevolt-Immunity%s]"
+status_town_hover_title_siege_immunity: "%s[%sSiege-Immunity%s]"
+status_town_standalone_siege_immunity_timer: '&2Siege Immunity Timer: &a%s'
+#Nation Screen
+status_nation_hover_title_sieges: "%s[%sSieges%s]"
+status_nation_hover_title_war_history: "%s[%sWar-History%s]"
+status_nation_hover_title_demoralization: "%s[%sDemoralized%s]"
+status_nation_demoralization_amount: '&2Conquest Sieges Starting Balance: &a%d'
+status_nation_demoralization_days_left: '&2Days Left: &a%d'
+#Town Capture & Occupation
+msg_err_cannot_invade_without_victory: "&cYou cannot capture this town unless your nation is victorious in the siege."
+msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot capture this town while the siege is still in progress.'
+msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this town, because your nation already owns and occupies it.'
+msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&cUnable to add military rank to resident, because they belong to an Occupied town.'
+msg_err_cannot_set_occupation_without_nation: '&cTown %s has no nation. You must set the nation first before you can set the town to Occupied.'
+msg_err_cannot_invade_not_enough_permissions: "&cYou do not have enough permissions to capture the town."
+msg_err_occupied_towns_cannot_leave_their_nations: "&cOccupied towns cannot leave their nations in the usual way. To leave the nation, start a revolt siege."
+#Siegezone proximity warning
+msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!."
+#Plunder
+msg_err_cannot_plunder_not_enough_permissions: "&cYou do not have enough permissions to plunder the town."
+#Not a town/nation member
+msg_err_siege_war_action_not_a_nation_member: '&cYou must be a member of a nation to do this action.'
+msg_err_siege_war_action_not_a_town_member: '&cBạn phải là thành viên của một thị trấn để thực hiện hành động này.'
+#Upfront Cost
+msg_town_pay_upfront_siege_cost: '&bYour town paid an upfront siege cost of %s.'
+msg_nation_pay_upfront_siege_cost: '&bYour nation paid an upfront siege cost of %s.'
+#Siege Statuses
+siege_status_attacker_close_win: 'Close Attacker Victory'
+siege_status_defender_close_win: 'Close Defender Victory'
+siege_status_attacker_win: 'Decisive Attacker Victory'
+siege_status_defender_win: 'Decisive Defender Victory'
+#Siege Special Victory Effects
+msg_conquest_siege_attacker_close_win_warchest_reduced: "&bBecause the siege victory was CLOSE, the besieged town was able to recover %s of the War Chest."
+msg_conquest_siege_defender_close_win_warchest_reduced: "&bBecause the siege victory was CLOSE, the besieging nation was able to recover %s of the War Chest."
+msg_conquest_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege victory was CLOSE, the usual plunder amount was reduced by %s."
+msg_revolt_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege victory CLOSE, the usual plunder amount was reduced by %s."
+msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (%d siege-balance to conquest sieges it initiates), for %d days."
+#Toxicity Reduction
+msg_chat_now_disabled: " General Chat, /lc, and /tell, will be disabled while the Battle Session is active, and for %s after it ends. If you want to chat, try using /tc, /nc, or /ac."
+msg_chat_now_restored: "&bGeneral Chat, /lc, and /tell, have been restored."
+msg_err_no_general_chat_in_battle_session: "&cGeneral Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
+msg_err_no_local_chat_in_battle_session: "&cLocal Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
+msg_err_no_tell_chat_in_battle_session: "&c/tell is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
+msg_can_also_chat_in_discord: " You can also chat in the server discord: %s."
+#Bad Config Warnings
+msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. Calculated ideal value: %s. Actual configured value: %s."
+msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. Calculated ideal value: %s. Actual configured value: %s."
