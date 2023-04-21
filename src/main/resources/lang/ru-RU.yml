@@ -423,12 +423,12 @@ msg_revolt_siege_defender_surrender_confirmed: '&bREVOLT SIEGE at %s > Defender 
 msg_err_siege_occupied_towns_cannot_surrender_in_conquest_sieges: '&cIn CONQUEST sieges, occupied towns cannot surrender.'
 #Siege Results
 msg_conquest_siege_attacker_win_result: ' The town now stands open for invasion and/or plunder.'
-msg_conquest_siege_defender_win_result: ' The town has been saved!'
+msg_conquest_siege_defender_win_result: ' Город был сохранён!'
 msg_revolt_siege_attacker_win_result: ' The town now stands open for invasion and/or plunder.'
 msg_revolt_siege_defender_win_result: ' The town has won its freedom!'
 #Town Screen
 status_town_siege_status_invaded: '&2 > Town Captured: %s'
-status_town_peacefulness_flag: '&b(Peaceful)'
+status_town_peacefulness_flag: '&b(Мирный)'
 status_town_hover_title_changing_peacefulness: "%s[%sChanging-Peacefulness%s]"
 status_town_hover_title_revolt_immunity: "%s[%sRevolt-Immunity%s]"
 status_town_hover_title_siege_immunity: "%s[%sSiege-Immunity%s]"
@@ -448,7 +448,7 @@ msg_err_cannot_set_occupation_without_nation: '&cTown %s has no nation. You must
 msg_err_cannot_invade_not_enough_permissions: "&cYou do not have enough permissions to capture the town."
 msg_err_occupied_towns_cannot_leave_their_nations: "&cOccupied towns cannot leave their nations in the usual way. To leave the nation, start a revolt siege."
 #Siegezone proximity warning
-msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!."
+msg_siege_zone_proximity_warning: "&cПРЕДУПРЕЖДЕНИЕ: Вы находитесь в зоне осады!."
 #Plunder
 msg_err_cannot_plunder_not_enough_permissions: "&cYou do not have enough permissions to plunder the town."
 #Not a town/nation member
@@ -474,7 +474,7 @@ msg_chat_now_restored: "&bGeneral Chat, /lc, and /tell, have been restored."
 msg_err_no_general_chat_in_battle_session: "&cGeneral Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
 msg_err_no_local_chat_in_battle_session: "&cLocal Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
 msg_err_no_tell_chat_in_battle_session: "&c/tell is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
-msg_can_also_chat_in_discord: " You can also chat in the server discord: %s."
+msg_can_also_chat_in_discord: " Вы также можете общаться на сервере discord: %s."
 #Bad Config Warnings
-msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. Calculated ideal value: %s. Actual configured value: %s."
-msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. Calculated ideal value: %s. Actual configured value: %s."
+msg_err_value_configured_too_high: "&cПредупреждение: Значение в конфигурации %s больше допустимого. Рекомендуемое: %s. В настоящее время установлено значение: %s."
+msg_err_value_configured_too_low: "&cПредупреждение: Значение в конфигурации %s меньше допустимого. Рекомендуемое: %s. В настоящее время установлено значение: %s."
