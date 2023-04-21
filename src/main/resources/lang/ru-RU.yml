@@ -435,10 +435,10 @@ status_town_hover_title_siege_immunity: "%s[%sSiege-Immunity%s]"
 status_town_standalone_siege_immunity_timer: '&2Siege Immunity Timer: &a%s'
 #Nation Screen
 status_nation_hover_title_sieges: "%s[%sSieges%s]"
-status_nation_hover_title_war_history: "%s[%sWar-History%s]"
+status_nation_hover_title_war_history: "%s[%sИстория-войн%s]"
 status_nation_hover_title_demoralization: "%s[%sDemoralized%s]"
 status_nation_demoralization_amount: '&2Conquest Sieges Starting Balance: &a%d'
-status_nation_demoralization_days_left: '&2Days Left: &a%d'
+status_nation_demoralization_days_left: '&2Дней осталось: &a%d'
 #Town Capture & Occupation
 msg_err_cannot_invade_without_victory: "&cYou cannot capture this town unless your nation is victorious in the siege."
 msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot capture this town while the siege is still in progress.'
