@@ -984,7 +984,11 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If this value is true, then whenever the server starts, or whenever a SiegeWarAdmin logs in,",
-			"# a warning will be displayed if any important configs are set badly."),
+			"# a warning will be displayed if any important configs are set badly.",
+			"# ",
+			"# NOTE: ",
+			"# If you have 'test/debug' towns or nations, make sure their bank balances are not too high, ",
+			"# otherwise the warnings will be inaccurate."),
 	BAD_CONFIG_WARNINGS_TOLERANCE_PERCENTAGE(
 			"bad_config_warnings.tolerance_percentage",
 			"5.0",
