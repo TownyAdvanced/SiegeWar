@@ -980,7 +980,7 @@ public enum ConfigNodes {
 			"############################################################",
 			""),
 	BAD_CONFIG_WARNINGS_ENABLED(
-			"bad_config_warnings.enabled",
+			"bad_config_warnings.feature_enabled",
 			"true",
 			"",
 			"# If this value is true, then whenever the server starts, or whenever a SiegeWarAdmin logs in,",
