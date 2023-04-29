@@ -148,7 +148,7 @@ public class PlaceBlock {
 		 * Example Key:
 		 * T = Town chunk, 
 		 * wB = wilderness chunk with banner
-		 * wS = wilderness chunk, where defender could safely hide
+		 * wS = wilderness chunk, where defender could safely hide + cap
 		 *
 		 * Example Map:
 		 *  ----------
