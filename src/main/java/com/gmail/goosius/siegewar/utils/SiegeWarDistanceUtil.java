@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -323,5 +324,28 @@ public class SiegeWarDistanceUtil {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * @param location location
+	 * @param targetTownBlock townblock
+     *                  
+	 * @return true if the given location is a distance of 1 from the target townblock
+	 */
+	public static boolean isDistanceToTownBlockOne(Location location, TownBlock targetTownBlock) {
+		Coord coordOfLocation = Coord.parseCoord(location);
+		if (coordOfLocation.equals(targetTownBlock.getCoord()))
+			return false; //Location is in the target townblock 
+
+		int offsetX = targetTownBlock.getCoord().getX() - coordOfLocation.getX();
+		int offsetZ = targetTownBlock.getCoord().getZ() - coordOfLocation.getZ();
+		if (offsetX > 1 || offsetZ > 1)
+			return false;  // Location is more than one chunk from target townblock
+
+		//Move location by the given offset, and see if it ends up in the target townblock
+		Location transposedLocation = location.add(offsetX, 0, offsetZ);
+		Coord coordOfTransposedLocation = Coord.parseCoord(transposedLocation);
+		//If, having moved a distance of 1, we are in target townblock, return true
+		return coordOfTransposedLocation.equals(targetTownBlock.getCoord());
 	}
 }

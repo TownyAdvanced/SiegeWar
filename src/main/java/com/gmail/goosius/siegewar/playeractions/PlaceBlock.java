@@ -8,6 +8,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockProtectionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
@@ -137,7 +138,22 @@ public class PlaceBlock {
 		if(adjacentCardinalTownBlocks.size() == 0 && adjacentNonCardinalTownBlocks.size() == 0)
 			return false;
 
-		//Ensure there is just one cardinal town block
+		/*
+		 * Ensure there is just one cardinal town block
+		 * This is to avoid the following scenario:
+		 * 
+		 * Example Key:
+		 * T = Town chunk, 
+		 * wB = wilderness chunk with banner
+		 * wS = wilderness chunk, where defender could safely hide
+		 *
+		 * Example Map:
+		 *  ----------
+		 * |   T  wS |   
+		 * |  wB  T   |
+		 *  ----------
+		 */
+		//This
 		if (adjacentCardinalTownBlocks.size() > 1)
 			throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
 
@@ -146,6 +162,10 @@ public class PlaceBlock {
 			? adjacentCardinalTownBlocks.get(0)
 			: adjacentNonCardinalTownBlocks.get(0);
 
+		//Ensure the banner is just one block away from the target townblock
+		if(SiegeWarDistanceUtil.isDistanceToTownBlockOne(block.getLocation(), townBlock))
+			throw new TownyException("Blarg");
+		
 		if (isWhiteBanner(block)) {
 			evaluatePlaceWhiteBannerNearTown(player, residentsTown, residentsNation, townBlock.getTownOrNull());
 		} else {
