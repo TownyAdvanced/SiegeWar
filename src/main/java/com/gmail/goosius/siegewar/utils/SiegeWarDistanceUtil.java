@@ -20,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -327,25 +328,21 @@ public class SiegeWarDistanceUtil {
 	}
 
 	/**
-	 * @param location location
-	 * @param targetTownBlock townblock
-     *                  
-	 * @return true if the given location is a distance of 1 from the target townblock
+	 * 
+	 * @param location location 
+	 * @param townBlock townblock
+	 * @param directionToTownBlock direction from the location to the townblock
+	 *
+	 * @return true if the location is a distance of 1 from the townblock
 	 */
-	public static boolean isDistanceToTownBlockOne(Location location, TownBlock targetTownBlock) {
+	public static boolean isDistanceToTownBlockOne(Location location, TownBlock townBlock, BlockFace directionToTownBlock) {
 		Coord coordOfLocation = Coord.parseCoord(location);
-		if (coordOfLocation.equals(targetTownBlock.getCoord()))
+		if (coordOfLocation.equals(townBlock.getCoord()))
 			return false; //Location is in the target townblock 
 
-		int offsetX = targetTownBlock.getCoord().getX() - coordOfLocation.getX();
-		int offsetZ = targetTownBlock.getCoord().getZ() - coordOfLocation.getZ();
-		if (offsetX > 1 || offsetZ > 1)
-			return false;  // Location is more than one chunk from target townblock
-
-		//Move location by the given offset, and see if it ends up in the target townblock
-		Location transposedLocation = location.add(offsetX, 0, offsetZ);
+		//Move location in the given direction, and return true if it ends up in the target townblock
+		Location transposedLocation = location.add(directionToTownBlock.getModX(), 0, directionToTownBlock.getModZ());
 		Coord coordOfTransposedLocation = Coord.parseCoord(transposedLocation);
-		//If, having moved a distance of 1, we are in target townblock, return true
-		return coordOfTransposedLocation.equals(targetTownBlock.getCoord());
+		return coordOfTransposedLocation.equals(townBlock.getCoord());
 	}
 }
