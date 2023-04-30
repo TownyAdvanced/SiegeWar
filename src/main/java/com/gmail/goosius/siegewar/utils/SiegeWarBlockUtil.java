@@ -13,7 +13,9 @@ import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,8 +35,8 @@ public class SiegeWarBlockUtil {
 	 */
 	public static List<TownBlock> getAllAdjacentTownBlocks(Block block) {
 		List<TownBlock> result = new ArrayList<>();
-		result.addAll(getCardinalAdjacentTownBlocks(block));
-		result.addAll(getNonCardinalAdjacentTownBlocks(block));
+		result.addAll(getCardinalAdjacentTownBlocks(block).values());
+		result.addAll(getNonCardinalAdjacentTownBlocks(block).values());
 		return result;
 	}
 
@@ -57,13 +59,13 @@ public class SiegeWarBlockUtil {
 	 * @param block the block to start from
 	 * @return list of adjacent cardinal townblocks
 	 */
-	public static List<TownBlock> getCardinalAdjacentTownBlocks(Block block) {
-		List<WorldCoord> coOrdinates = new ArrayList<>();
+	public static Map<BlockFace, TownBlock> getCardinalAdjacentTownBlocks(Block block) {
+		Map<BlockFace, WorldCoord> coOrdinates = new HashMap<>();
 		WorldCoord startingCoOrdinate = WorldCoord.parseWorldCoord(block);
-		coOrdinates.add(startingCoOrdinate.add(0,-1));
-		coOrdinates.add(startingCoOrdinate.add(0,1));
-		coOrdinates.add(startingCoOrdinate.add(1,0));
-		coOrdinates.add(startingCoOrdinate.add(-1,0));
+		coOrdinates.put(BlockFace.NORTH,startingCoOrdinate.add(0,-1));
+		coOrdinates.put(BlockFace.SOUTH,startingCoOrdinate.add(0,1));
+		coOrdinates.put(BlockFace.EAST,startingCoOrdinate.add(1,0));
+		coOrdinates.put(BlockFace.WEST,startingCoOrdinate.add(-1,0));
 		return getTownBlocks(coOrdinates);
 	}
 
@@ -73,21 +75,24 @@ public class SiegeWarBlockUtil {
 	 * @param block the block to start from
 	 * @return list of adjacent noncardinal townblocks
 	 */
-	public static List<TownBlock> getNonCardinalAdjacentTownBlocks(Block block) {
-		List<WorldCoord> coOrdinates = new ArrayList<>();
+	public static Map<BlockFace, TownBlock> getNonCardinalAdjacentTownBlocks(Block block) {
+		Map<BlockFace, WorldCoord> coOrdinates = new HashMap<>();
 		WorldCoord startingCoOrdinate = WorldCoord.parseWorldCoord(block);
-		coOrdinates.add(startingCoOrdinate.add(-1,1));
-		coOrdinates.add(startingCoOrdinate.add(1,1));
-		coOrdinates.add(startingCoOrdinate.add(1,-1));
-		coOrdinates.add(startingCoOrdinate.add(-1,-1));
+		coOrdinates.put(BlockFace.SOUTH_WEST, startingCoOrdinate.add(-1,1));
+		coOrdinates.put(BlockFace.SOUTH_EAST, startingCoOrdinate.add(1,1));
+		coOrdinates.put(BlockFace.NORTH_EAST, startingCoOrdinate.add(1,-1));
+		coOrdinates.put(BlockFace.NORTH_WEST, startingCoOrdinate.add(-1,-1));
 		return getTownBlocks(coOrdinates);
 	}
 
-	private static List<TownBlock> getTownBlocks(List<WorldCoord> coords) {
-		return coords.stream()
-			.filter(wc -> wc.hasTownBlock())
-			.map(wc -> wc.getTownBlockOrNull())
-			.collect(Collectors.toList());
+	private static Map<BlockFace, TownBlock> getTownBlocks(Map<BlockFace, WorldCoord> coords) {
+		Map<BlockFace, TownBlock> result = new HashMap<>();
+		for(Map.Entry<BlockFace, WorldCoord> mapEntry: coords.entrySet()) {
+			if(mapEntry.getValue().hasTownBlock()) {
+				result.put(mapEntry.getKey(), mapEntry.getValue().getTownBlockOrNull());
+			}
+		}
+		return result;
 	}
 
 	/**

@@ -8,6 +8,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockProtectionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
@@ -27,9 +28,11 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -132,19 +135,45 @@ public class PlaceBlock {
 		Nation residentsNation = resident.getNationOrNull();
 		
 		//Ensure there is at least 1 adjacent town
-		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
-		List<TownBlock> adjacentNonCardinalTownBlocks = SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block);
+		Map<BlockFace, TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
+		Map<BlockFace, TownBlock> adjacentNonCardinalTownBlocks = SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block);
 		if(adjacentCardinalTownBlocks.size() == 0 && adjacentNonCardinalTownBlocks.size() == 0)
 			return false;
 
-		//Ensure there is just one cardinal town block
+		/*
+		 * Ensure there is just one cardinal town block
+		 * This is to avoid the following scenario:
+		 * 
+		 * Example Key:
+		 * T = Town chunk, 
+		 * wB = wilderness chunk with banner
+		 * wS = wilderness chunk, where defender could safely hide + cap
+		 *
+		 * Example Map:
+		 *  ----------
+		 * |   T  wS |   
+		 * |  wB  T   |
+		 *  ----------
+		 */
+		//This
 		if (adjacentCardinalTownBlocks.size() > 1)
 			throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
 
 		//Get 1st nearby townblock
-		TownBlock townBlock = adjacentCardinalTownBlocks.size() > 0
-			? adjacentCardinalTownBlocks.get(0)
-			: adjacentNonCardinalTownBlocks.get(0);
+		TownBlock townBlock = null;
+		BlockFace directionToTownBlock = null;
+		Map<BlockFace,TownBlock> allNearbyTownBlocks = new HashMap<>();
+		allNearbyTownBlocks.putAll(adjacentCardinalTownBlocks);
+		allNearbyTownBlocks.putAll(adjacentNonCardinalTownBlocks);
+		for(Map.Entry<BlockFace,TownBlock> mapEntry: allNearbyTownBlocks.entrySet()) {
+			directionToTownBlock = mapEntry.getKey();
+			townBlock = mapEntry.getValue();
+			break;
+		}
+
+		//Ensure the banner is just one block away from the target townblock
+		if(!SiegeWarDistanceUtil.isDistanceToTownBlockOne(block.getLocation(), townBlock, directionToTownBlock))
+			throw new TownyException(translator.of("msg_err_banner_cannot_be_more_than_one_block_away"));
 
 		if (isWhiteBanner(block)) {
 			evaluatePlaceWhiteBannerNearTown(player, residentsTown, residentsNation, townBlock.getTownOrNull());

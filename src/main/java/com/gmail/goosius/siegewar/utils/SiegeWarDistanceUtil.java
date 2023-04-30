@@ -19,6 +19,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -323,5 +324,24 @@ public class SiegeWarDistanceUtil {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * 
+	 * @param location location 
+	 * @param townBlock townblock
+	 * @param directionToTownBlock direction from the location to the townblock
+	 *
+	 * @return true if the location is a distance of 1 from the townblock
+	 */
+	public static boolean isDistanceToTownBlockOne(Location location, TownBlock townBlock, BlockFace directionToTownBlock) {
+		Coord coordOfLocation = Coord.parseCoord(location);
+		if (coordOfLocation.equals(townBlock.getCoord()))
+			return false; //Location is in the target townblock 
+
+		//Move location in the given direction, and return true if it ends up in the target townblock
+		Location transposedLocation = location.add(directionToTownBlock.getModX(), 0, directionToTownBlock.getModZ());
+		Coord coordOfTransposedLocation = Coord.parseCoord(transposedLocation);
+		return coordOfTransposedLocation.equals(townBlock.getCoord());
 	}
 }
