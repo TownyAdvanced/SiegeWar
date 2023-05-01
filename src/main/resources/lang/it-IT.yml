@@ -479,3 +479,5 @@ msg_can_also_chat_in_discord: " You can also chat in the server discord: %s."
 msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. Calculated ideal value: %s. Actual configured value: %s."
 msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. Calculated ideal value: %s. Actual configured value: %s."
 msg_err_note_about_warnings: "&cNOTE: If you have 'test/debug' towns or nations, make sure their bank balances are not too high, otherwise the warnings will be inaccurate."
+#Block Placement
+msg_err_banner_cannot_be_more_than_one_block_away: "&cThe banner cannot be more than 1 block away from the target town."
