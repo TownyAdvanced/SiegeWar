@@ -815,7 +815,7 @@ public enum ConfigNodes {
 			"# +                                                      + #",
 			"# + 1. Mostly prevents Safe-Claim Ganks.                 + #",
 			"# + 2. Rewards towns for building walls / towers /gates. + #",
-			"# + 3. Encourage surface combat (rather than in holes).  + #",
+			"# + 3. Encourages surface combat (rather than in holes). + #",
 			"# + 4. Reduces terrain destruction during sieges.        + #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
