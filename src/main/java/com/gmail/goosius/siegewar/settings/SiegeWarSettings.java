@@ -301,6 +301,10 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.TRAP_WARFARE_MITIGATION_BESIEGED_TOWN_RADIUS);
 	}
 
+	public static boolean isBannerAtTownBorderEnabled() {
+		return Settings.getBoolean(ConfigNodes.TRAP_WARFARE_MITIGATION_BESIEGED_TOWN_BANNER_AT_BORDER_ENABLED);
+	}
+
 	public static boolean isWildernessTrapWarfareMitigationEnabled() {
 		return Settings.getBoolean(ConfigNodes.TRAP_WARFARE_MITIGATION_WILDERNESS_ENABLED);
 	}
