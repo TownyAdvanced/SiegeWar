@@ -172,7 +172,9 @@ public class PlaceBlock {
 		}
 
 		//Ensure the banner is just one block away from the target townblock
-		if(!SiegeWarDistanceUtil.isDistanceToTownBlockOne(block.getLocation(), townBlock, directionToTownBlock))
+		if(SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled()
+				&& SiegeWarSettings.isBannerAtTownBorderEnabled()
+				&& !SiegeWarDistanceUtil.isDistanceToTownBlockOne(block.getLocation(), townBlock, directionToTownBlock))
 			throw new TownyException(translator.of("msg_err_banner_cannot_be_more_than_one_block_away"));
 
 		if (isWhiteBanner(block)) {
