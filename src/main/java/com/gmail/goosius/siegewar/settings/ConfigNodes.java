@@ -835,7 +835,7 @@ public enum ConfigNodes {
 			"",
 			"# If this setting is true, then:",
 			"# 1. Safe-claim Ganks are mostly prevented, because defenders cannot build near the siege banner.",
-			"# 2. Defenders are compensated, by forcing the siege banner to be right on the town border, which encourages good walls / towers / gates."),
+			"# 2. Defenders are compensated, by forcing the siege banner to be right on the town border, which encourages walls / towers / gates."),
 	TRAP_WARFARE_MITIGATION_BESIEGED_TOWN_RADIUS(
 			"surface_warfare.besieged_town.radius",
 			"32",
