@@ -2,10 +2,10 @@
 *SiegeWar* adds a war system to *Towny*.
 ### Features
 * ⚔️ **Sieges:** Wars are conducted by means of sieges. A siege occurs when a nation attacks a town.
+* 🌍 **Inclusive:** The whole server is involved, with no opt-outs. So a nation can conquer the world!. 
 * 🤖 **Automatic:** Sieges are started by players and automatically managed by the plugin. Daily staff management of sieges is not required.
-* 🏙️ **Non-Destructive:** Towns cannot be damaged or stolen from during sieges.
-* 🚶 **Slow Paced:** Each siege lasts a total of 7 hours, spread over a weekend.
-* 🌍 **Inclusive:** The whole server is involved, with no opt-outs. Towns have a *Peaceful* option, where they can become immune to attack, but vulnerable to instant-capture.
+* 🚶 **Slow Paced:** Each siege consists of 7 hours fighting time, spread over the course of a weekend.
+* 🏙️ **Non-Destructive:** Towns cannot be damaged or stolen from during sieges. Towns can get extra protection by activating the *Peaceful* option, which makes them immune to sieges, but vulnerable to instant-capture.
 ### Videos
 * https://www.youtube.com/watch?v=0UU9-lVuHSY: Demonstrates how the plugin fits into a geopolitical context (*nation building, diplomacy, and war*), and also demonstrates some tactical features of sieges.
 * https://www.youtube.com/watch?v=raiAhk2Ru5Y: Demonstrates some tactical features of sieges (*players assembling an army, marching to a siegezone, approaching a siege banner surrounded by a fort, and attacking the enemy*).
