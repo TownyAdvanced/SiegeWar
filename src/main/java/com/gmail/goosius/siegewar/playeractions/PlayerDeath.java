@@ -74,11 +74,10 @@ public class PlayerDeath {
 				return;
 
 			Town deadResidentTown = deadResident.getTownOrNull();
-			Siege siege = findAValidSiege(deadPlayer, deadResidentTown);
+			Siege siege = findNearbyActiveSiegeWherePlayerIsParticipant(deadPlayer, deadResidentTown);
 
 			// If player is confirmed as close to one or more sieges in which they are
-			// eligible to be involved, apply siege point penalty for the nearest one, and
-			// keep inventory
+			// eligible to be involved, apply siege point penalty for the nearest one
 			if (siege != null) {
 				//Award penalty points w/ notification if siege is in progress
 				if(siege.getStatus() == SiegeStatus.IN_PROGRESS) {
@@ -104,7 +103,7 @@ public class PlayerDeath {
 			&& !TownyUniverse.getInstance().getPermissionSource().testPermission(deadPlayer, NATION_POINTS_NODE);
 	}
 
-	private static Siege findAValidSiege(Player deadPlayer, Town deadResidentTown) {
+	private static Siege findNearbyActiveSiegeWherePlayerIsParticipant(Player deadPlayer, Town deadResidentTown) {
 		Siege nearestSiege = null;
 		double smallestDistanceToSiege = 0;
 
@@ -119,8 +118,8 @@ public class PlayerDeath {
 			if(!SiegeWarDistanceUtil.isInSiegeZone(deadPlayer, candidateSiege))
 				continue;
 
-			//Is player an attacker or defender in this siege?
-			if(SiegeSide.getPlayerSiegeSide(nearestSiege, deadPlayer) == SiegeSide.NOBODY)
+			//Skip if player is not an official attacker or defender in siege
+			if(SiegeSide.getPlayerSiegeSide(candidateSiege, deadPlayer) == SiegeSide.NOBODY)
 				continue;
 
 			//Set nearestSiege if it is 1st viable one OR closer than smallestDistanceToSiege.
