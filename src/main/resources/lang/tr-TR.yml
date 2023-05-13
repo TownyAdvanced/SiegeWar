@@ -139,13 +139,13 @@ status_town_siege_status_warchest: '&8-&7 Ganimet Sandığı: &a%s'
 #Battle sessions
 status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&8-&7 Kalan Süre: &a%s'
-msg_war_siege_battle_session_started: "&7Yeni bir savaş aşaması başladı."
-msg_war_siege_battle_session_ended_with_battles: "&7Az önceki savaş aşamassı bitti. Şu taraflar kazandı:"
-msg_war_siege_battle_session_ended_without_battles: "&7Az önceki savaş aşamassı bitti. Herhangi bir savaş olmadı."
+msg_war_siege_battle_session_started: "&bA new Battle Session has started. All PVP protections inside Siege-Zones are suspended for the duration of the Battle Session."
+msg_war_siege_battle_session_ended_with_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. The following teams won their battles:"
+msg_war_siege_battle_session_ended_without_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. There were no battles."
 msg_war_siege_battle_session_ended_attacker_result: "&7 * Kuşatmacılar @ %s (%s)"
 msg_war_siege_battle_session_ended_defender_result: "&7 * Savunucular @ %s (%s)"
 msg_war_siege_battle_session_ended_draw_result: "&7 * Berabere @ %s (0)"
-msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBir sonraki savaş aşaması başlayana kadar bayrak kontrolü kazanılamaz. Bir sonraki savaş aşaması %s içerisinde başlayacaktır."
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next Battle Session starts. The next Battle Session will start in %s."
 #Hud
 hud_siege_balance: 'Kuşatma Bakiyesi: '
 hud_warchest: 'Ganimet Sandığı: '
@@ -258,10 +258,10 @@ msg_siege_war_defender_killed_by_player: '&7%s üzerindeki kuşatma &8-&7 Savunu
 #Added in 0.27
 msg_next_siege_session_in_minutes: 'Bir diğer kuşatma aşaması için: %s.'
 msg_session_is_active_now: 'Kuşatma aşaması şimdi aktif!'
-msg_err_battle_session_active: "&cSavaş aşaması çoktan başladı."
-msg_err_battle_session_inactive: "&cSavaş aşaması çoktan sona erdi."
-msg_battle_session_force_start: "&7Savaş aşaması zorla açıldı."
-msg_battle_session_force_end: "&7Savaş aşaması zorla kapatıldı."
+msg_err_battle_session_active: "&cA Battle Session has already started."
+msg_err_battle_session_inactive: "&cThe Battle Session has already ended."
+msg_battle_session_force_start: "&bA Battle Session has been force started."
+msg_battle_session_force_end: "&bThe Battle Session has been force ended."
 #Added in 0.28
 msg_town_immunity_expired: 'Kasabanızın kuşatma bağışıklığının süresi doldu.'
 #Unsiegeable towns strings
@@ -330,7 +330,7 @@ msg_err_your_nation_cannot_afford_to_siege_for_x: "Your nation cannot afford to 
 #Shown when a town cannot afford to start a siege.
 msg_err_your_town_cannot_afford_to_siege_for_x: "Your town cannot afford to begin this Siege, it would cost %s."
 #Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
-msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the battle session, resulting in a prison break, freeing %s."
+msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the Battle Session, resulting in a prison break, freeing %s."
 #Shown when a town takes on daily plunder debt.
 msg_plunder_debt_earned: "Your town's plunder costs were paid by the server! You will have to pay %s every day for %s days, to pay this back."
 #Shown when a town pays their daily plunder debt.
