@@ -355,22 +355,6 @@ public class SiegeWarTownyEventListener implements Listener {
     }
 
     /**
-     * If this is a peaceful town, UN-CANCEL the town spawn event
-     * 
-     * @param event town spawn event
-     */
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
-    public void on(TownSpawnEvent event) {
-        if(SiegeWarSettings.getWarSiegeEnabled() 
-                && SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
-                && SiegeWarSettings.isPeacefulTownPublicSpawnEnabled()) {
-            if (event.isCancelled() && SiegeWarTownPeacefulnessUtil.isTownPeaceful(event.getToTown())) {
-                event.setCancelled(false);
-            }
-        }
-    }
-
-    /**
      * Check over the players in a nation when that nation has been removed as an
      * ally, to see if they're in a siegezone.
      * 
