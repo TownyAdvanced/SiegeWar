@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.palmergames.bukkit.towny.event.damage.TownBlockPVPTestEvent;
@@ -25,6 +26,7 @@ public class SiegeWarPlotEventListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled()
 		    && event.getTownBlock().getWorld().isWarAllowed()
 		    && SiegeWarSettings.isStopTownyPlotPvpProtection()
+		    && BattleSession.getBattleSession().isActive()
 		    && !event.getTownBlock().getPermissions().pvp
 		    && SiegeWarDistanceUtil.isTownBlockInActiveSiegeZone(event.getTownBlock())) {
 				event.setPvp(true);

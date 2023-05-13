@@ -243,6 +243,8 @@ public class SiegeWarTownyEventListener implements Listener {
             return;
         if (!TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld()).isWarAllowed())
             return;
+        if (!BattleSession.getBattleSession().isActive())
+            return;
         if(!(event.getEntity() instanceof Player))
             return;
         if(event.getTown() == null)
@@ -277,6 +279,7 @@ public class SiegeWarTownyEventListener implements Listener {
     	        && SiegeWarSettings.getWarSiegeEnabled() 
                 && TownyAPI.getInstance().getTownyWorld(event.getAttacker().getWorld()).isWarAllowed()
                 && SiegeWarSettings.isStopTownyFriendlyFireProtection()
+                && BattleSession.getBattleSession().isActive()
                 && SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone(event.getAttacker())) {
             event.setPVP(true);
         }

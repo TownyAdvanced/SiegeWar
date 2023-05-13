@@ -265,9 +265,9 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 
 		/*
-		 * Catch-All to undo any remaining damage cancellation
+		 * Catch-All to undo any remaining damage cancellation during battle sessions
 		 */
-		if(event.isCancelled() && SiegeWarSettings.isStopAllPvpProtection()) {
+		if(event.isCancelled() && SiegeWarSettings.isStopAllPvpProtection() && BattleSession.getBattleSession().isActive()) {
 			event.setCancelled(false);
 		}
 
