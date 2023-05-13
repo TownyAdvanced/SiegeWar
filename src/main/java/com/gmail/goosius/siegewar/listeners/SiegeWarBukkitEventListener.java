@@ -141,7 +141,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 	/*
 	 * SW can affect whether an inventory is dropped and also can degrade an inventory.
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		//Check for siege-war related death effects
 		if(isSWEnabledAndIsThisAWarAllowedWorld(event.getEntity().getWorld())) {
