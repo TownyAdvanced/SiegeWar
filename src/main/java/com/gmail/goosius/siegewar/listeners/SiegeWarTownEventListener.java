@@ -268,10 +268,12 @@ public class SiegeWarTownEventListener implements Listener {
 
 	/**
 	 * If this is a peaceful town, UN-CANCEL the town spawn event
+	 * 
+	 * Lowest priority so that more important features like the siegezone-tp-block can can take precedence 
 	 *
 	 * @param event town spawn event
 	 */
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void on(TownSpawnEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
