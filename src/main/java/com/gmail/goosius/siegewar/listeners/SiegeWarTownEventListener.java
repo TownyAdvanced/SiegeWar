@@ -266,7 +266,6 @@ public class SiegeWarTownEventListener implements Listener {
 		}
 	}
 
-
 	/**
 	 * If this is a peaceful town, UN-CANCEL the town spawn event
 	 *
@@ -274,10 +273,6 @@ public class SiegeWarTownEventListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.HIGH)
 	public void on(TownSpawnEvent event) {
-		SiegeWar.info("TTT");
-
-		SiegeWar.info("Cancelled: " + event.isCancelled());
-
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
 				&& SiegeWarSettings.isPeacefulTownPublicSpawnEnabled()) {
