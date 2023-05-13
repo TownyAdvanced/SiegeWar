@@ -32,7 +32,7 @@ import org.bukkit.event.Listener;
 public class SiegeWarNationEventListener implements Listener {
 
 
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void onNationRankGivenToPlayer(NationRankAddEvent event) {
 		//In Siegewar, if target town is peaceful or occupied, can't add military rank
 		if(SiegeWarSettings.getWarSiegeEnabled()
@@ -56,7 +56,7 @@ public class SiegeWarNationEventListener implements Listener {
 	/*
 	 * SiegeWar will disable nation-zones if the town has a siege.
 	 */
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void onNationZoneStatus(NationZoneTownBlockStatusEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled() 
 			&& SiegeController.hasActiveSiege(event.getTown()))	{
@@ -68,7 +68,7 @@ public class SiegeWarNationEventListener implements Listener {
 	 * A nation being deleted with a siege means the siege ends,
 	 * and a king may receive a refund.
 	 */
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void onDeleteNation(DeleteNationEvent event) {
 		if(!SiegeWarSettings.getWarSiegeEnabled())
 			return;
@@ -93,7 +93,7 @@ public class SiegeWarNationEventListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void onPreNationEnemyRemove(NationPreRemoveEnemyEvent event) {
 		if(!SiegeWarSettings.getWarSiegeEnabled())
 			return;
@@ -162,6 +162,7 @@ public class SiegeWarNationEventListener implements Listener {
 		}
 	}
 
+	@EventHandler(ignoreCancelled = true)
 	public void onNationChangeKingEvent(NationKingChangeEvent event) {
 		if(!SiegeWarSettings.getWarSiegeEnabled())
 			return;
@@ -183,7 +184,7 @@ public class SiegeWarNationEventListener implements Listener {
 	 *
 	 * @param event the nation town pre leave event
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onTownAttemptsToLeaveNation(NationPreTownLeaveEvent event) {
 		if(!SiegeWarSettings.getWarSiegeEnabled())
 			return;

@@ -71,7 +71,7 @@ public class SiegeWarSafeModeListener implements Listener {
 		event.setCancelled(true);
 	}
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onShortTime(NewShortTimeEvent event) {
 		if (!plugin.isError())
 			return;

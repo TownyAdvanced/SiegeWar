@@ -10,7 +10,7 @@ import com.palmergames.bukkit.towny.object.Translatable;
 
 public class SiegeWarSelfListener implements Listener {
 	
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onBattleSessionPreStart(BattleSessionPreStartEvent event) {
 		if (SiegeWarSettings.cancelBattleSessionWhenNoActiveSieges()
 		&& (SiegeController.getSieges().isEmpty() || SiegeController.getSieges().stream().noneMatch(siege -> siege.getStatus().isActive()))) {
