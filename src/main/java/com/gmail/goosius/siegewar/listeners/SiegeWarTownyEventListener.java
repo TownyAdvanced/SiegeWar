@@ -24,6 +24,7 @@ import com.palmergames.bukkit.towny.event.NationRemoveTownEvent;
 import com.palmergames.bukkit.towny.event.NewDayEvent;
 import com.palmergames.bukkit.towny.event.TownRemoveResidentEvent;
 import com.palmergames.bukkit.towny.event.TownRemoveResidentRankEvent;
+import com.palmergames.bukkit.towny.event.TownSpawnEvent;
 import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
 import com.palmergames.bukkit.towny.event.TranslationLoadEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
@@ -350,6 +351,22 @@ public class SiegeWarTownyEventListener implements Listener {
         if(channelName.equalsIgnoreCase("local") || channelName.equalsIgnoreCase("general")) {
             event.setCancelled(true);
             SiegeWarNotificationUtil.notifyPlayerOfBattleSessionChatRestriction(event.getPlayer(), channelName);
+        }
+    }
+
+    /**
+     * If this is a peaceful town, UN-CANCEL the town spawn event
+     * 
+     * @param event town spawn event
+     */
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
+    public void on(TownSpawnEvent event) {
+        if(SiegeWarSettings.getWarSiegeEnabled() 
+                && SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
+                && SiegeWarSettings.isPeacefulTownPublicSpawnEnabled()) {
+            if (event.isCancelled() && SiegeWarTownPeacefulnessUtil.isTownPeaceful(event.getToTown())) {
+                event.setCancelled(false);
+            }
         }
     }
 
