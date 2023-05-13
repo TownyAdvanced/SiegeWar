@@ -20,7 +20,7 @@ public class SiegeWarPlotEventListener implements Listener {
 	 *
 	 * @param event the test event
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onTownBlockPVPTest(TownBlockPVPTestEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()
 		    && event.getTownBlock().getWorld().isWarAllowed()

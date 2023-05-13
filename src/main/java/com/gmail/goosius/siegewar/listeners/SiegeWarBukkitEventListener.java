@@ -141,7 +141,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 	/*
 	 * SW can affect whether an inventory is dropped and also can degrade an inventory.
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		//Check for siege-war related death effects
 		if(isSWEnabledAndIsThisAWarAllowedWorld(event.getEntity().getWorld())) {
@@ -201,7 +201,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 			&& (event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND);
 	}
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void on(PlayerJoinEvent event) {
 		if (isSWEnabledAndIsThisAWarAllowedWorld(event.getPlayer().getWorld())) {
 			Siege activeSiegeAtPlayerLocation = SiegeController.getActiveSiegeAtLocation(event.getPlayer().getLocation());
@@ -223,7 +223,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		if(!isSWEnabledAndIsThisAWarAllowedWorld(event.getPlayer().getWorld()))
 			return;
@@ -236,7 +236,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 	}
 
 	//Stops TNT/Minecarts from destroying blocks in the siegezone wilderness
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void on(EntityExplodeEvent event) {
 		if(isSWEnabledAndIsThisAWarAllowedWorld(event.getEntity().getWorld())
 				&& !event.isCancelled()
@@ -314,7 +314,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 	 * 
 	 * @param event the player command preprocess event 
 	 */
-	@EventHandler
+	@EventHandler (ignoreCancelled = true)
 	public void onCommand(PlayerCommandPreprocessEvent event){
 		if(!SiegeWarSettings.getWarSiegeEnabled() || !SiegeWarSettings.isToxicityReductionEnabled())
 			return;
