@@ -139,13 +139,13 @@ status_town_siege_status_warchest: '&2 > Cofre de Guerra: &a%s'
 #Battle sessions
 status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&2 > Tiempo Restante: &a%s'
-msg_war_siege_battle_session_started: "&bUna nueva sesión de batalla ha comenzado."
-msg_war_siege_battle_session_ended_with_battles: "&bLa sesión de batalla actual ha terminado. Los siguientes bandos ganaron sus batallas:"
-msg_war_siege_battle_session_ended_without_battles: "&bLa sesión de batalla actual ha terminado. No hubo batallas."
+msg_war_siege_battle_session_started: "&bA new Battle Session has started. All PVP protections inside Siege-Zones are suspended for the duration of the Battle Session."
+msg_war_siege_battle_session_ended_with_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. The following teams won their battles:"
+msg_war_siege_battle_session_ended_without_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. There were no battles."
 msg_war_siege_battle_session_ended_attacker_result: "&b * Atacantes @ %s (%s)"
 msg_war_siege_battle_session_ended_defender_result: "&b * Defensores @ %s (%s)"
 msg_war_siege_battle_session_ended_draw_result: "&b * Empate@ %s (0)"
-msg_war_siege_battle_session_break_cannot_get_banner_control: "&cEl control del estandarte no se puede ganar hasta que comience la siguiente sesión de batalla. La siguiente sesión comenzará en %s."
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next Battle Session starts. The next Battle Session will start in %s."
 #Hud
 hud_siege_balance: 'Saldo de Asedio: '
 hud_warchest: 'Cofre de Guerra: '
@@ -258,10 +258,10 @@ msg_siege_war_defender_killed_by_player: '&bAsedio de %s > Defensor %s fue asesi
 #Added in 0.27
 msg_next_siege_session_in_minutes: 'La próxima sesión de batalla es en %s.'
 msg_session_is_active_now: '¡Una Sesión de Batalla está activa ahora!'
-msg_err_battle_session_active: "&cUna sesión de batalla ya ha comenzado."
-msg_err_battle_session_inactive: "&cLa sesión de batalla ya ha terminado."
-msg_battle_session_force_start: "&bUna sesión de batalla ha sido forzada a iniciarse."
-msg_battle_session_force_end: "&bUna sesión de batalla ha sido forzada a terminarse."
+msg_err_battle_session_active: "&cA Battle Session has already started."
+msg_err_battle_session_inactive: "&cThe Battle Session has already ended."
+msg_battle_session_force_start: "&bA Battle Session has been force started."
+msg_battle_session_force_end: "&bThe Battle Session has been force ended."
 #Added in 0.28
 msg_town_immunity_expired: 'La inmunidad de asedio de tu ciudad ha expirado.'
 #Unsiegeable towns strings
@@ -330,7 +330,7 @@ msg_err_your_nation_cannot_afford_to_siege_for_x: "Your nation cannot afford to 
 #Shown when a town cannot afford to start a siege.
 msg_err_your_town_cannot_afford_to_siege_for_x: "Your town cannot afford to begin this Siege, it would cost %s."
 #Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
-msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the battle session, resulting in a prison break, freeing %s."
+msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the Battle Session, resulting in a prison break, freeing %s."
 #Shown when a town takes on daily plunder debt.
 msg_plunder_debt_earned: "Your town's plunder costs were paid by the server! You will have to pay %s every day for %s days, to pay this back."
 #Shown when a town pays their daily plunder debt.
