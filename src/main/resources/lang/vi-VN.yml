@@ -139,13 +139,13 @@ status_town_siege_status_warchest: '&2 > Rương chiến tranh: &a%s'
 #Battle sessions
 status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&2 > Thời gian còn lại: &a%s'
-msg_war_siege_battle_session_started: "&bMột phiên chiến đấu mới đã bắt đầu."
-msg_war_siege_battle_session_ended_with_battles: "&bTrận đấu hiện tại đã kết thúc. Các đội sau đây đã giành chiến thắng trong trận chiến của họ:"
-msg_war_siege_battle_session_ended_without_battles: "&bTrận đấu hiện tại đã kết thúc. Không có trận chiến nào đang diễn ra."
+msg_war_siege_battle_session_started: "&bA new Battle Session has started. All PVP protections inside Siege-Zones are suspended for the duration of the Battle Session."
+msg_war_siege_battle_session_ended_with_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. The following teams won their battles:"
+msg_war_siege_battle_session_ended_without_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. There were no battles."
 msg_war_siege_battle_session_ended_attacker_result: "&b * Kẻ tấn công @ %s (%s)"
 msg_war_siege_battle_session_ended_defender_result: "&b * Bên phòng thủ @ %s (%s)"
 msg_war_siege_battle_session_ended_draw_result: "&b * Draw @ %s (0)"
-msg_war_siege_battle_session_break_cannot_get_banner_control: "&cKhông thể giành được quyền kiểm soát biểu ngữ cho đến khi phiên chiến đấu tiếp theo bắt đầu. Phiên chiến đấu tiếp theo sẽ bắt đầu sau %s."
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next Battle Session starts. The next Battle Session will start in %s."
 #Hud
 hud_siege_balance: 'Số dư chiến tranh: '
 hud_warchest: 'Rương chiến tranh: '
@@ -258,10 +258,10 @@ msg_siege_war_defender_killed_by_player: '&bChiến sự %s > Bên phòng thủ 
 #Added in 0.27
 msg_next_siege_session_in_minutes: 'Phiên Chiến đấu tiếp theo sẽ diễn ra trong %s.'
 msg_session_is_active_now: 'Phiên chiến đấu đang hoạt động!'
-msg_err_battle_session_active: "&cMột phiên Trận chiến đã bắt đầu."
-msg_err_battle_session_inactive: "&cPhiên Trận chiến đã kết thúc."
-msg_battle_session_force_start: "&bMột phiên Trận chiến đã được bắt đầu."
-msg_battle_session_force_end: "&bPhiên Trận chiến đã bị buộc kết thúc."
+msg_err_battle_session_active: "&cA Battle Session has already started."
+msg_err_battle_session_inactive: "&cThe Battle Session has already ended."
+msg_battle_session_force_start: "&bA Battle Session has been force started."
+msg_battle_session_force_end: "&bThe Battle Session has been force ended."
 #Added in 0.28
 msg_town_immunity_expired: 'Miễn trừ chiến tranh của thị trấn của bạn đã hết hạn.'
 #Unsiegeable towns strings
@@ -330,7 +330,7 @@ msg_err_your_nation_cannot_afford_to_siege_for_x: "Your nation cannot afford to 
 #Shown when a town cannot afford to start a siege.
 msg_err_your_town_cannot_afford_to_siege_for_x: "Your town cannot afford to begin this Siege, it would cost %s."
 #Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
-msg_attackers_have_triggered_a_jail_break_freeing: "Những kẻ tấn công đã giành chiến thắng trong phiên chiến đấu, có kẻ vượt ngục, giải thoát cho %s."
+msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the Battle Session, resulting in a prison break, freeing %s."
 #Shown when a town takes on daily plunder debt.
 msg_plunder_debt_earned: "Chi phí cướp bóc của thị trấn của bạn đã được tạm ứng bởi máy chủ! Bạn sẽ phải trả %s mỗi ngày trong %s ngày để hoàn lại số tiền này."
 #Shown when a town pays their daily plunder debt.

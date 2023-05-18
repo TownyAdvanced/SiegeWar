@@ -139,13 +139,13 @@ status_town_siege_status_warchest: '&2 > Kriegskiste: &a%s'
 #Battle sessions
 status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&2 > Zeit verbleibend: &a%s'
-msg_war_siege_battle_session_started: "&bA neue Kampfrunde hat angefangen."
-msg_war_siege_battle_session_ended_with_battles: "&bDie Kampfrunde ist nun zuende. Folgende Teams haben ihre Kämpfe gewonnen:"
-msg_war_siege_battle_session_ended_without_battles: "&bDie Kampfrunde ist nun zuende. Es gab keine Kämpfe."
+msg_war_siege_battle_session_started: "&bA new Battle Session has started. All PVP protections inside Siege-Zones are suspended for the duration of the Battle Session."
+msg_war_siege_battle_session_ended_with_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. The following teams won their battles:"
+msg_war_siege_battle_session_ended_without_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. There were no battles."
 msg_war_siege_battle_session_ended_attacker_result: "&b * Angreifer @ %s (%s)"
 msg_war_siege_battle_session_ended_defender_result: "&b * Verteidiger @ %s (%s)"
 msg_war_siege_battle_session_ended_draw_result: "&b * Gleichstand @ %s (0)"
-msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBannerkontrolle kann erst erlangt werden wenn die nächste Kampfrunde startet. Die nächste Kampfrunde startet in %s."
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next Battle Session starts. The next Battle Session will start in %s."
 #Hud
 hud_siege_balance: 'Belagerungs Bilanz: '
 hud_warchest: 'Kriegskiste: '
@@ -258,10 +258,10 @@ msg_siege_war_defender_killed_by_player: '&bDie Belagerung von %s > Verteidiger 
 #Added in 0.27
 msg_next_siege_session_in_minutes: 'Die nächste Belagerungsrunde ist in %s.'
 msg_session_is_active_now: 'Die Belagerungsrunde ist nun gestartet!'
-msg_err_battle_session_active: "&cDie Belagerungsrunde hat schon gestartet."
-msg_err_battle_session_inactive: "&cDie Belagerungsrunde ist schon zuende."
-msg_battle_session_force_start: "&bDie Belagerungsrunde wurde gezwungenerweise gestartet."
-msg_battle_session_force_end: "&bDie Belagerungsrunde wurde gezwungenerweise beendet."
+msg_err_battle_session_active: "&cA Battle Session has already started."
+msg_err_battle_session_inactive: "&cThe Battle Session has already ended."
+msg_battle_session_force_start: "&bA Battle Session has been force started."
+msg_battle_session_force_end: "&bThe Battle Session has been force ended."
 #Added in 0.28
 msg_town_immunity_expired: 'Die Belagerungsimmunität deiner Stadt ist abgelaufen.'
 #Unsiegeable towns strings
@@ -330,7 +330,7 @@ msg_err_your_nation_cannot_afford_to_siege_for_x: "Your nation cannot afford to 
 #Shown when a town cannot afford to start a siege.
 msg_err_your_town_cannot_afford_to_siege_for_x: "Your town cannot afford to begin this Siege, it would cost %s."
 #Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
-msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the battle session, resulting in a prison break, freeing %s."
+msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the Battle Session, resulting in a prison break, freeing %s."
 #Shown when a town takes on daily plunder debt.
 msg_plunder_debt_earned: "Your town's plunder costs were paid by the server! You will have to pay %s every day for %s days, to pay this back."
 #Shown when a town pays their daily plunder debt.

@@ -27,10 +27,13 @@ public class SiegeWarActionListener implements Listener {
 	private final SiegeWar plugin;
 	
 	public SiegeWarActionListener(SiegeWar siegeWar) {
-
 		plugin = siegeWar;
 	}
-	
+
+	/**
+	 * Process block build.
+	 * Note: This event can be un-cancelled by SW
+	 */
 	@EventHandler
 	public void onBlockBuild(TownyBuildEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled())
@@ -40,7 +43,7 @@ public class SiegeWarActionListener implements Listener {
 	/*
 	 * SW will prevent an block break from altering an area around a banner.
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onBlockBreak(TownyDestroyEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			try {
@@ -55,7 +58,7 @@ public class SiegeWarActionListener implements Listener {
 	/*
 	 * SW will prevent fire from altering an area around a banner.
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onBurn(TownyBurnEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarBlockUtil.isBlockNearAnActiveSiegeBanner(event.getBlock())) {
 			event.setCancelled(true);
@@ -65,7 +68,7 @@ public class SiegeWarActionListener implements Listener {
 	/*
 	 * SW can affect the emptying of buckets, which could affect a banner.
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onBucketUse(TownyBuildEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled() 
 				&& !event.isCancelled()

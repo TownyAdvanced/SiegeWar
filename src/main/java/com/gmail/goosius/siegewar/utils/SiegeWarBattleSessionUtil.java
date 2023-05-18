@@ -141,6 +141,8 @@ public class SiegeWarBattleSessionUtil {
 				|| siege.getStatus() == SiegeStatus.PENDING_DEFENDER_SURRENDER) {
 				//Adjust numBattleSessionsCompleted
 				siege.setNumBattleSessionsCompleted(siege.getNumBattleSessionsCompleted()+1);
+				//Save siege to database
+				SiegeController.saveSiege(siege);
 			}
 		} catch (Throwable t) {
 			try {

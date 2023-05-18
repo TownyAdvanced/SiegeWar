@@ -24,7 +24,6 @@ import com.palmergames.bukkit.towny.event.NationRemoveTownEvent;
 import com.palmergames.bukkit.towny.event.NewDayEvent;
 import com.palmergames.bukkit.towny.event.TownRemoveResidentEvent;
 import com.palmergames.bukkit.towny.event.TownRemoveResidentRankEvent;
-import com.palmergames.bukkit.towny.event.TownSpawnEvent;
 import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
 import com.palmergames.bukkit.towny.event.TranslationLoadEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
@@ -79,7 +78,7 @@ public class SiegeWarTownyEventListener implements Listener {
 	   /*
      * Siegewar has to be conscious of when Towny has loaded the Towny database.
      */
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onTownyDatabaseLoad(TownyLoadedDatabaseEvent event) {
     	SiegeWar.info("Towny database reload detected, reloading sieges...");
         SiegeController.loadAll();
@@ -88,7 +87,7 @@ public class SiegeWarTownyEventListener implements Listener {
 	/*
 	 * When Towny is reloading the languages, make sure we're re-injecting our language strings. 
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onTownyLoadLanguages(TranslationLoadEvent event) {
 		Plugin plugin = SiegeWar.getSiegeWar();
 		Path langFolderPath = Paths.get(plugin.getDataFolder().getPath()).resolve("lang");
@@ -101,7 +100,7 @@ public class SiegeWarTownyEventListener implements Listener {
 				event.addTranslation(language, map.getKey(), map.getValue());
 	}
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onNewDay(NewDayEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled()) {
             if (SiegeWarSettings.isPlunderPaidOutOverDays()) {
@@ -121,7 +120,7 @@ public class SiegeWarTownyEventListener implements Listener {
     /*
      * On NewHours SW makes some calculations.
      */
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onNewHour(NewHourEvent event) {
         if(SiegeWarSettings.getWarSiegeEnabled()) {
             SiegeWarImmunityUtil.evaluateExpiredImmunities();
@@ -132,7 +131,7 @@ public class SiegeWarTownyEventListener implements Listener {
     /*
      * On each ShortTime period, SW makes some calcuations.
      */
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onShortTime(NewShortTimeEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled()) {
             SiegeWarNotificationUtil.sendSiegeZoneProximityWarnings();
@@ -152,7 +151,7 @@ public class SiegeWarTownyEventListener implements Listener {
      * @param event the TownyExplodingBlocksEvent event
      * @throws TownyException if something is misconfigured
      */
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH,ignoreCancelled = true)
     public void onBlockExploding(TownyExplodingBlocksEvent event) throws TownyException {
         if(!SiegeWarSettings.getWarSiegeEnabled())
             return;
@@ -244,6 +243,8 @@ public class SiegeWarTownyEventListener implements Listener {
             return;
         if (!TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld()).isWarAllowed())
             return;
+        if (!BattleSession.getBattleSession().isActive())
+            return;
         if(!(event.getEntity() instanceof Player))
             return;
         if(event.getTown() == null)
@@ -256,7 +257,7 @@ public class SiegeWarTownyEventListener implements Listener {
      * Prevent an outlaw being teleported away if the town they are outlawed in has an active siege.
      * @param event OutlawTeleportEvent thrown by Towny.
      */
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onOutlawTeleportEvent(OutlawTeleportEvent event) {
         if (SiegeWarSettings.getWarSiegeEnabled() 
                 && event.getOutlawLocation() != null
@@ -272,12 +273,13 @@ public class SiegeWarTownyEventListener implements Listener {
      * undo the cancellation
      * @param event the event
      */
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void on (TownyFriendlyFireTestEvent event) {
     	if (!event.isPVP()
     	        && SiegeWarSettings.getWarSiegeEnabled() 
                 && TownyAPI.getInstance().getTownyWorld(event.getAttacker().getWorld()).isWarAllowed()
                 && SiegeWarSettings.isStopTownyFriendlyFireProtection()
+                && BattleSession.getBattleSession().isActive()
                 && SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone(event.getAttacker())) {
             event.setPVP(true);
         }
@@ -340,7 +342,7 @@ public class SiegeWarTownyEventListener implements Listener {
      * 
      * @param event the AsyncChatHook event from TownyChat
      */
-    @EventHandler()
+    @EventHandler(ignoreCancelled = true)
     public void on(AsyncChatHookEvent event) {
         if(!SiegeWarSettings.getWarSiegeEnabled() 
             || !SiegeWarSettings.isToxicityReductionEnabled()

@@ -48,7 +48,7 @@ public class SiegeWarTownEventListener implements Listener {
 		plugin = instance;
 	}
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onTownGoesToRuin(TownRuinedEvent event) {
 		//Remove siege if town has one
 		if (SiegeController.hasSiege(event.getTown()))
@@ -61,7 +61,7 @@ public class SiegeWarTownEventListener implements Listener {
 	/*
 	 * If town is under siege, town cannot recruit new members
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onTownAddResident(TownPreAddResidentEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled() && SiegeWarSettings.getWarSiegeBesiegedTownRecruitmentDisabled()) {
 
@@ -78,7 +78,7 @@ public class SiegeWarTownEventListener implements Listener {
 	 * The SW peacefulness setting may then get applied
 	 * Also the SW siege immunity time is set
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onCreateNewTown(NewTownEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			Town town = event.getTown();
@@ -95,7 +95,7 @@ public class SiegeWarTownEventListener implements Listener {
 	/*
 	 * Upon attempting to claim land, SW will stop it under some conditions.
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onTownClaim(TownPreClaimEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			if (SiegeWarSettings.getWarSiegeBesiegedTownClaimingDisabled()) {
@@ -135,7 +135,7 @@ public class SiegeWarTownEventListener implements Listener {
 	/*
 	 * Siege War will prevent unclaiming land in some situations.
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onTownUnclaim(TownPreUnclaimCmdEvent event) {
 		Translator translator = Translator.locale(event.getResident().getPlayer());
 		if (SiegeWarSettings.getWarCommonOccupiedTownUnClaimingDisabled() && TownOccupationController.isTownOccupied(event.getTown())) {
@@ -166,7 +166,7 @@ public class SiegeWarTownEventListener implements Listener {
 	 * this is preferred over the alternative scheme of keeping the qualified towns and releasing the disqualified towns.
 	 * 
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void on(TownPreSetHomeBlockEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			Translator translator = Translator.locale(event.getPlayer());
@@ -199,13 +199,13 @@ public class SiegeWarTownEventListener implements Listener {
 	/*
 	 * A town being deleted with a siege means the siege ends.
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onDeleteTown(DeleteTownEvent event) {
 		if (SiegeController.hasSiege(event.getTownUUID()))
 			SiegeController.removeSiege(SiegeController.getSiegeByTownUUID(event.getTownUUID()));
 	}
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onTownMerge(TownPreMergeEvent event) {
 		if (SiegeController.hasSiege(event.getSuccumbingTown())) {
 			event.setCancelMessage(Translation.of("msg_err_cannot_merge_towns"));
@@ -236,7 +236,7 @@ public class SiegeWarTownEventListener implements Listener {
 	 *
 	 * @param event the pre-tax event
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onTownIsAboutToPayRegularTaxToNation(PreTownPaysNationTaxEvent event) {
 		if(!SiegeWarSettings.getWarSiegeEnabled())
 			return;
@@ -246,7 +246,7 @@ public class SiegeWarTownEventListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onTownRankGivenToPlayer(TownAddResidentRankEvent event) {
 		//In Siegewar, if target town is peaceful or occupied, can't add military rank
 		if(SiegeWarSettings.getWarSiegeEnabled()

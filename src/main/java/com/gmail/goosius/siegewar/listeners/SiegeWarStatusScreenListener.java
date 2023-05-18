@@ -47,7 +47,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 	 * via the resident status screen. Components are clickable to
 	 * claim monies owed.
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onResidentStatusScreen(ResidentStatusScreenEvent event) {
 		int salary = ResidentMetaDataController.getMilitarySalaryAmount(event.getResident());
 		if (salary > 0) {
@@ -62,7 +62,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 	/*
 	 * SiegeWar will add lines to Nation which have a siege
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onNationStatusScreen(NationStatusScreenEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			final Translator translator = Translator.locale(event.getCommandSender());
@@ -162,7 +162,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 	/*
 	 * SiegeWar will add lines to towns which have a siege
 	 */
-	@EventHandler
+	@EventHandler(ignoreCancelled = true)
 	public void onTownStatusScreen(TownStatusScreenEvent event) {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			final Translator translator = Translator.locale(event.getCommandSender());
