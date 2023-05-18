@@ -17,6 +17,7 @@ import com.palmergames.bukkit.towny.event.NewTownEvent;
 import com.palmergames.bukkit.towny.event.TownAddResidentRankEvent;
 import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownPreClaimEvent;
+import com.palmergames.bukkit.towny.event.TownSpawnEvent;
 import com.palmergames.bukkit.towny.event.time.dailytaxes.PreTownPaysNationTaxEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreMergeEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
@@ -29,6 +30,7 @@ import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 /**
@@ -263,4 +265,25 @@ public class SiegeWarTownEventListener implements Listener {
 			}
 		}
 	}
+
+	/**
+	 * If this is a peaceful town, UN-CANCEL the town spawn event
+	 * 
+	 * Lowest priority so that more important features like the siegezone-tp-block can can take precedence 
+	 *
+	 * @param event town spawn event
+	 */
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void on(TownSpawnEvent event) {
+		if(SiegeWarSettings.getWarSiegeEnabled()
+				&& SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
+				&& SiegeWarSettings.isPeacefulTownPublicSpawnEnabled()) {
+			if (event.isCancelled()
+					&& SiegeWarTownPeacefulnessUtil.isTownPeaceful(event.getToTown())
+					&& event.getToTown().isPublic()) {
+				event.setCancelled(false); //UN-Cancel the event
+			}
+		}
+	}
+
 }
