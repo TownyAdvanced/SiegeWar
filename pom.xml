@@ -9,7 +9,7 @@
     <java.version>1.8</java.version>
     <project.bukkitAPIVersion>1.13</project.bukkitAPIVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <towny.version>0.98.6.0</towny.version>
+    <towny.version>0.99.0.8</towny.version>
   </properties>
 
   <repositories>
