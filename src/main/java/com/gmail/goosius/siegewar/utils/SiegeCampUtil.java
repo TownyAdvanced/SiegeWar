@@ -41,7 +41,7 @@ public class SiegeCampUtil {
 			// SiegeCamp is ongoing, evaluate players around the SiegeCamp and reschedule the next evaluation in one minute.
 			if (!firstRun)
 				evaluatePlayers(camp);
-			Bukkit.getScheduler().runTaskLater(SiegeWar.getSiegeWar(), ()-> evaluateCamp(camp, false), 1200l);
+			SiegeWar.getSiegeWar().getScheduler().runLater(camp.getBannerBlock().getLocation(), ()-> evaluateCamp(camp, false), 1200l);
 		}	
 	}
 

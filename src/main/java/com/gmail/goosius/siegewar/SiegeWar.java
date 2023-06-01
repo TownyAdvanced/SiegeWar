@@ -14,6 +14,9 @@ import com.gmail.goosius.siegewar.settings.Settings;
 import com.palmergames.bukkit.config.CommentedConfiguration;
 import com.palmergames.bukkit.config.migration.ConfigMigrator;
 import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.scheduling.TaskScheduler;
+import com.palmergames.bukkit.towny.scheduling.impl.BukkitTaskScheduler;
+import com.palmergames.bukkit.towny.scheduling.impl.FoliaTaskScheduler;
 import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
@@ -38,8 +41,9 @@ import java.nio.file.Path;
 public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
-	private final Version requiredTownyVersion = Version.fromString("0.99.0.8");
+	private final String requiredTownyVersion = "0.99.1.0";
 	private static final SiegeHUDManager siegeHUDManager = new SiegeHUDManager();
+	private final Object scheduler;
 
 	private static boolean siegeWarPluginError = false;
 	private static boolean listenersRegistered = false;
@@ -55,15 +59,18 @@ public class SiegeWar extends JavaPlugin {
 	public static SiegeHUDManager getSiegeHUDManager() {
 		return siegeHUDManager;
 	}
+
+	public SiegeWar() {
+		plugin = this;
+		this.scheduler = townyVersionCheck() ? isFoliaClassPresent() ? new FoliaTaskScheduler(this) : new BukkitTaskScheduler(this) : null;
+	}
 	
     @Override
     public void onEnable() {
     	
-    	plugin = this;
-    	
     	printSickASCIIArt();
     	
-        if (!townyVersionCheck(getTownyVersion())) {
+        if (!townyVersionCheck()) {
             severe("Towny version does not meet required minimum version: " + requiredTownyVersion);
             siegeWarPluginError = true;
         } else {
@@ -127,8 +134,12 @@ public class SiegeWar extends JavaPlugin {
 		return getDescription().getVersion();
 	}
 	
-    private boolean townyVersionCheck(String version) {
-        return Version.fromString(version).compareTo(requiredTownyVersion) >= 0;
+    private boolean townyVersionCheck() {
+        try {
+			return Towny.isTownyVersionSupported(requiredTownyVersion);
+		} catch (NoSuchMethodError e) {
+			return false;
+		}
     }
 
     private String getTownyVersion() {
@@ -206,4 +217,16 @@ public class SiegeWar extends JavaPlugin {
 		plugin.getLogger().severe(msg);
 	}
 
+	public TaskScheduler getScheduler() {
+		return (TaskScheduler) this.scheduler;
+	}
+
+	private static boolean isFoliaClassPresent() {
+		try {
+			Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+			return true;
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
 }

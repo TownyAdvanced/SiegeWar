@@ -632,6 +632,6 @@ public class SiegeController {
 		Messaging.sendGlobalMessage(Translatable.of("attacker_has_begun_a_siegecamp_session", camp.getTownOfSiegeStarter(), camp.getTargetTown(), SiegeWarSettings.getSiegeCampPointsForSuccess(), SiegeWarSettings.getSiegeCampDurationInMinutes()));
 		// Add to SiegeCamp list and begin Evaluating this SiegeCamp for success.
 		addSiegeCamp(camp);
-		Bukkit.getScheduler().runTask(SiegeWar.getSiegeWar(), ()-> SiegeCampUtil.evaluateCamp(camp, true));
+		SiegeWar.getSiegeWar().getScheduler().run(camp.getBannerBlock().getLocation(), ()-> SiegeCampUtil.evaluateCamp(camp, true));
 	}
 }

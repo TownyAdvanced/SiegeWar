@@ -6,7 +6,6 @@ import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarWarningsUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -231,7 +230,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 		//Remove banner-control related glowing
 		if(SiegeController.getPlayersInBannerControlSessions().contains(event.getPlayer()) 
 		  && event.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
-			Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), () -> event.getPlayer().removePotionEffect(PotionEffectType.GLOWING));
+			SiegeWar.getSiegeWar().getScheduler().runLater(() -> event.getPlayer().removePotionEffect(PotionEffectType.GLOWING), 1l);
 		}
 	}
 
