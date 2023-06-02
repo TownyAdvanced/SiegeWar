@@ -24,14 +24,12 @@ import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translator;
 
-import com.palmergames.bukkit.towny.object.WorldCoord;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
