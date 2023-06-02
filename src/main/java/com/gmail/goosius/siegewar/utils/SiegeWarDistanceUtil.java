@@ -344,5 +344,4 @@ public class SiegeWarDistanceUtil {
 		}
 		return null;
 	}
-
 }

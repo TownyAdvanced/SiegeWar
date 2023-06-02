@@ -188,8 +188,7 @@ public class PlaceBlock {
 		return true;
 	}
 
-
-	/**
+		/**
          * Evaluates placing a white banner near a town
          *
          * Effects depend on the nature of the siege (if any) and the allegiances of the banner placer
