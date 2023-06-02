@@ -13,6 +13,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarBlockProtectionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarImmunityUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarInventoryUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
@@ -30,6 +31,7 @@ import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyExplosionDamagesEntityEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyFriendlyFireTestEvent;
 import com.palmergames.bukkit.towny.event.nation.NationRankRemoveEvent;
+import com.palmergames.bukkit.towny.event.player.PlayerKeepsInventoryEvent;
 import com.palmergames.bukkit.towny.event.teleport.OutlawTeleportEvent;
 import com.palmergames.bukkit.towny.event.time.NewHourEvent;
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
@@ -466,4 +468,29 @@ public class SiegeWarTownyEventListener implements Listener {
             return SiegeController.getActiveSiegeAtLocation(resident.getPlayer().getLocation());
         return null;
     }
+
+	/**
+	 * Have SiegeWar have the ultimate say on whether siege zones have inventory
+	 * keeping.
+	 * 
+	 * @param event {@link PlayerKeepsInventoryEvent} internal to Towny.
+	 */
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onTownyKeepInventoryEvent(PlayerKeepsInventoryEvent event) {
+		if (!SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getPlayer().getLocation()))
+			return;
+
+		// Towny is already going to keep the inventory, but we dont want inventories
+		// saved.
+		if (!event.isCancelled() && !SiegeWarSettings.isKeepInventoryOnSiegeZoneDeathEnabled()) {
+			event.setCancelled(true);
+			return;
+		}
+
+		// Towny is going to drop the inventory, but we want inventories saved.
+		if (event.isCancelled() && SiegeWarSettings.isKeepInventoryOnSiegeZoneDeathEnabled()) {
+			SiegeWarInventoryUtil.degradeInventory(event.getPlayer());
+			event.setCancelled(false);
+		}
+	}
 }
