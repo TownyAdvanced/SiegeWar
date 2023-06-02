@@ -13,10 +13,8 @@ import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,8 +34,8 @@ public class SiegeWarBlockUtil {
 	 */
 	public static List<TownBlock> getAllAdjacentTownBlocks(Block block) {
 		List<TownBlock> result = new ArrayList<>();
-		result.addAll(getCardinalAdjacentTownBlocks(block).values());
-		result.addAll(getNonCardinalAdjacentTownBlocks(block).values());
+		result.addAll(getCardinalAdjacentTownBlocks(block));
+		result.addAll(getNonCardinalAdjacentTownBlocks(block));
 		return result;
 	}
 
