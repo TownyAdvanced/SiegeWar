@@ -28,11 +28,10 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -133,10 +132,10 @@ public class PlaceBlock {
 		//Get resident's town and possibly their nation
 		Town residentsTown = resident.getTownOrNull();
 		Nation residentsNation = resident.getNationOrNull();
-		
-		//Ensure there is at least 1 adjacent town
-		Map<BlockFace, TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
-		Map<BlockFace, TownBlock> adjacentNonCardinalTownBlocks = SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block);
+
+		//On the COORD grid, find any townblocks adjacent to the COORD which this block is in
+		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
+		List<TownBlock> adjacentNonCardinalTownBlocks = SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block);
 		if(adjacentCardinalTownBlocks.size() == 0 && adjacentNonCardinalTownBlocks.size() == 0)
 			return false;
 
@@ -158,24 +157,24 @@ public class PlaceBlock {
 		//This
 		if (adjacentCardinalTownBlocks.size() > 1)
 			throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
-
-		//Get 1st nearby townblock
-		TownBlock townBlock = null;
-		BlockFace directionToTownBlock = null;
-		Map<BlockFace,TownBlock> allNearbyTownBlocks = new HashMap<>();
-		allNearbyTownBlocks.putAll(adjacentCardinalTownBlocks);
-		allNearbyTownBlocks.putAll(adjacentNonCardinalTownBlocks);
-		for(Map.Entry<BlockFace,TownBlock> mapEntry: allNearbyTownBlocks.entrySet()) {
-			directionToTownBlock = mapEntry.getKey();
-			townBlock = mapEntry.getValue();
-			break;
+		
+		TownBlock townBlock;
+		if(SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled() 
+				&& SiegeWarSettings.isBannerAtTownBorderEnabled()) {
+			/*
+			 * Ensure the banner is just one block away from the target townblock
+			 * On the minecraft LOCATION GRID, find the first adjacent townblock, if any
+			 */
+			townBlock = SiegeWarDistanceUtil.findFirstValidTownBlockAdjacentToMinecraftBlock(block);
+			if(townBlock == null)
+				throw new TownyException(translator.of("msg_err_banner_cannot_be_more_than_one_block_away"));
+		} else {
+			//Just get one of the adjacent townblocks
+			List<TownBlock> allTownBlocks = new ArrayList<>();
+			allTownBlocks.addAll(adjacentCardinalTownBlocks);
+			allTownBlocks.addAll(adjacentNonCardinalTownBlocks);
+			townBlock = allTownBlocks.get(0);
 		}
-
-		//Ensure the banner is just one block away from the target townblock
-		if(SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled()
-				&& SiegeWarSettings.isBannerAtTownBorderEnabled()
-				&& !SiegeWarDistanceUtil.isDistanceToTownBlockOne(block.getLocation(), townBlock, directionToTownBlock))
-			throw new TownyException(translator.of("msg_err_banner_cannot_be_more_than_one_block_away"));
 
 		if (isWhiteBanner(block)) {
 			evaluatePlaceWhiteBannerNearTown(player, residentsTown, residentsNation, townBlock.getTownOrNull());
