@@ -136,8 +136,8 @@ public class PlaceBlock {
 		Nation residentsNation = resident.getNationOrNull();
 
 		//On the COORD grid, find any townblocks adjacent to the COORD which this block is in
-		Map<BlockFace, TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
-		Map<BlockFace, TownBlock> adjacentNonCardinalTownBlocks = SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block);
+		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
+		List<TownBlock> adjacentNonCardinalTownBlocks = SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block);
 		if(adjacentCardinalTownBlocks.size() == 0 && adjacentNonCardinalTownBlocks.size() == 0)
 			return false;
 
@@ -173,8 +173,8 @@ public class PlaceBlock {
 		} else {
 			//Just get one of the adjacent townblocks
 			List<TownBlock> allTownBlocks = new ArrayList<>();
-			allTownBlocks.addAll(adjacentCardinalTownBlocks.values());
-			allTownBlocks.addAll(adjacentNonCardinalTownBlocks.values());
+			allTownBlocks.addAll(adjacentCardinalTownBlocks);
+			allTownBlocks.addAll(adjacentNonCardinalTownBlocks);
 			townBlock = allTownBlocks.get(0);
 		}
 

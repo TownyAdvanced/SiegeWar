@@ -14,6 +14,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -59,13 +60,13 @@ public class SiegeWarBlockUtil {
 	 * @param block the block to start from
 	 * @return list of adjacent cardinal townblocks
 	 */
-	public static Map<BlockFace, TownBlock> getCardinalAdjacentTownBlocks(Block block) {
-		Map<BlockFace, WorldCoord> coOrdinates = new HashMap<>();
+	public static List<TownBlock> getCardinalAdjacentTownBlocks(Block block) {
+		Set<WorldCoord> coOrdinates = new HashSet<>();
 		WorldCoord startingCoOrdinate = WorldCoord.parseWorldCoord(block);
-		coOrdinates.put(BlockFace.NORTH,startingCoOrdinate.add(0,-1));
-		coOrdinates.put(BlockFace.SOUTH,startingCoOrdinate.add(0,1));
-		coOrdinates.put(BlockFace.EAST,startingCoOrdinate.add(1,0));
-		coOrdinates.put(BlockFace.WEST,startingCoOrdinate.add(-1,0));
+		coOrdinates.add(startingCoOrdinate.add(0,-1));
+		coOrdinates.add(startingCoOrdinate.add(0,1));
+		coOrdinates.add(startingCoOrdinate.add(1,0));
+		coOrdinates.add(startingCoOrdinate.add(-1,0));
 		return getTownBlocks(coOrdinates);
 	}
 
@@ -75,22 +76,22 @@ public class SiegeWarBlockUtil {
 	 * @param block the block to start from
 	 * @return list of adjacent noncardinal townblocks
 	 */
-	public static Map<BlockFace, TownBlock> getNonCardinalAdjacentTownBlocks(Block block) {
-		Map<BlockFace, WorldCoord> coOrdinates = new HashMap<>();
+	public static List<TownBlock> getNonCardinalAdjacentTownBlocks(Block block) {
+		Set<WorldCoord> coOrdinates = new HashSet<>();
 		WorldCoord startingCoOrdinate = WorldCoord.parseWorldCoord(block);
-		coOrdinates.put(BlockFace.SOUTH_WEST, startingCoOrdinate.add(-1,1));
-		coOrdinates.put(BlockFace.SOUTH_EAST, startingCoOrdinate.add(1,1));
-		coOrdinates.put(BlockFace.NORTH_EAST, startingCoOrdinate.add(1,-1));
-		coOrdinates.put(BlockFace.NORTH_WEST, startingCoOrdinate.add(-1,-1));
+		coOrdinates.add(startingCoOrdinate.add(-1,1));
+		coOrdinates.add(startingCoOrdinate.add(1,1));
+		coOrdinates.add(startingCoOrdinate.add(1,-1));
+		coOrdinates.add(startingCoOrdinate.add(-1,-1));
 		return getTownBlocks(coOrdinates);
 	}
 
 	//Get any valid townblocks at the given coords
-	private static Map<BlockFace, TownBlock> getTownBlocks(Map<BlockFace, WorldCoord> coords) {
-		Map<BlockFace, TownBlock> result = new HashMap<>();
-		for(Map.Entry<BlockFace, WorldCoord> mapEntry: coords.entrySet()) {
-			if(mapEntry.getValue().hasTownBlock() && mapEntry.getValue().getTownBlockOrNull().hasTown()) {
-				result.put(mapEntry.getKey(), mapEntry.getValue().getTownBlockOrNull());
+	private static List<TownBlock> getTownBlocks(Set<WorldCoord> coords) {
+		List<TownBlock> result = new ArrayList<>();
+		for(WorldCoord worldCoord: coords) {
+			if(worldCoord.hasTownBlock() && worldCoord.getTownBlockOrNull().hasTown()) {
+				result.add(worldCoord.getTownBlockOrNull());
 			}
 		}
 		return result;
