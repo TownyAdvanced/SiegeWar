@@ -7,6 +7,7 @@ website: 'townyadvanced.github.io'
 prefix: ${project.artifactId}
 depend: [Towny]
 softdepend: [TownyCultures, TownyChat, dynmap, Dynmap-Towny]
+folia-supported: true
 
 description: A war system made by Goosius for Towny.
 
