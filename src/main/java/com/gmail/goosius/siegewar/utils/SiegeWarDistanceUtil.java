@@ -13,6 +13,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyWorld;
 import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.WorldCoord;
 import com.palmergames.util.MathUtil;
 
 import org.bukkit.Bukkit;
@@ -326,22 +327,22 @@ public class SiegeWarDistanceUtil {
 		return result;
 	}
 
-	/**
-	 * 
-	 * @param location location 
-	 * @param townBlock townblock
-	 * @param directionToTownBlock direction from the location to the townblock
-	 *
-	 * @return true if the location is a distance of 1 from the townblock
-	 */
-	public static boolean isDistanceToTownBlockOne(Location location, TownBlock townBlock, BlockFace directionToTownBlock) {
-		Coord coordOfLocation = Coord.parseCoord(location);
-		if (coordOfLocation.equals(townBlock.getCoord()))
-			return false; //Location is in the target townblock 
-
-		//Move location in the given direction, and return true if it ends up in the target townblock
-		Location transposedLocation = location.add(directionToTownBlock.getModX(), 0, directionToTownBlock.getModZ());
-		Coord coordOfTransposedLocation = Coord.parseCoord(transposedLocation);
-		return coordOfTransposedLocation.equals(townBlock.getCoord());
+	public static TownBlock findFirstValidTownBlockAdjacentToMinecraftBlock(Block block) {
+		int[] x = new int[]{-1,0,1,-1,1,-1,0,1};
+		int[] z = new int[]{-1,-1,-1,0,0,1,1,1};
+		Block adjacentBlock;
+		for(int i = 0; i < 8; i ++) {
+			adjacentBlock = block.getRelative(x[i], 0, z[i]);
+			if(!TownyAPI.getInstance().isWilderness(adjacentBlock)) {
+				//Adjacent townblock found
+				WorldCoord adjacentWorldCoord = WorldCoord.parseWorldCoord(adjacentBlock);
+				TownBlock adjacentTownBlock = TownyAPI.getInstance().getTownBlock(adjacentWorldCoord);
+				if(adjacentTownBlock != null && adjacentTownBlock.hasTown()) {
+					return adjacentTownBlock;
+				}
+			}
+		}
+		return null;
 	}
+
 }

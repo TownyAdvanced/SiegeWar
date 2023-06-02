@@ -85,10 +85,11 @@ public class SiegeWarBlockUtil {
 		return getTownBlocks(coOrdinates);
 	}
 
+	//Get any valid townblocks at the given coords
 	private static Map<BlockFace, TownBlock> getTownBlocks(Map<BlockFace, WorldCoord> coords) {
 		Map<BlockFace, TownBlock> result = new HashMap<>();
 		for(Map.Entry<BlockFace, WorldCoord> mapEntry: coords.entrySet()) {
-			if(mapEntry.getValue().hasTownBlock()) {
+			if(mapEntry.getValue().hasTownBlock() && mapEntry.getValue().getTownBlockOrNull().hasTown()) {
 				result.put(mapEntry.getKey(), mapEntry.getValue().getTownBlockOrNull());
 			}
 		}
