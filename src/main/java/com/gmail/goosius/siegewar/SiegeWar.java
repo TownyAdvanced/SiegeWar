@@ -62,10 +62,10 @@ public class SiegeWar extends JavaPlugin {
 
 	public SiegeWar() {
 		plugin = this;
-		this.scheduler = townyVersionCheck() ? isFoliaClassPresent() ? new FoliaTaskScheduler(this) : new BukkitTaskScheduler(this) : null;
+		this.scheduler = setScheduler();
 	}
-	
-    @Override
+
+	@Override
     public void onEnable() {
     	
     	printSickASCIIArt();
@@ -219,6 +219,17 @@ public class SiegeWar extends JavaPlugin {
 
 	public TaskScheduler getScheduler() {
 		return (TaskScheduler) this.scheduler;
+	}
+
+	private Object setScheduler() {
+		if (townyVersionCheck()) {
+			// We know that Towny is new enough to have the TaskSchedulers available.
+			if (isFoliaClassPresent())
+				return new FoliaTaskScheduler(this);
+			else
+				return new BukkitTaskScheduler(this);
+		}
+		return null; // Doesn't matter because SiegeWar will not pass the onEnable phase.
 	}
 
 	private static boolean isFoliaClassPresent() {
