@@ -197,12 +197,7 @@ public class SiegeWarBannerControlUtil {
 					CosmeticUtil.evaluateBeacon(bannerControlSession.getPlayer(), siege);
 					//Remove glowing effect
 					if(bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
-						Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-							@Override
-							public void run() {
-								bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
-							}
-						});
+						SiegeWar.getSiegeWar().getScheduler().runLater(bannerControlSession.getPlayer(), () -> bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING), 1l);
 					}
 					continue;
 				}
@@ -222,12 +217,7 @@ public class SiegeWarBannerControlUtil {
 					BossBarUtil.removeBannerCapBossBar(bannerControlSession.getPlayer());
 					//Remove glowing effect
 					if(bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
-						Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-							@Override
-							public void run() {
-								bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
-							}
-						});
+						SiegeWar.getSiegeWar().getScheduler().runLater(bannerControlSession.getPlayer(), () -> bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING), 1l);
 					}
 
 					//Update siege
@@ -365,23 +355,18 @@ public class SiegeWarBannerControlUtil {
 			}
 			//Ensure the player glows
 			BannerControlSession glowingSessionFinal = glowingSession;
-			Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-			public void run() {
-					List<PotionEffect> potionEffects = new ArrayList<>();
-					potionEffects.add(new PotionEffect(PotionEffectType.GLOWING, effectDurationTicks, 0));
-					glowingSessionFinal.getPlayer().addPotionEffects(potionEffects);
-				}
-			});
+			SiegeWar.getSiegeWar().getScheduler().runLater(glowingSessionFinal.getPlayer(), () -> {
+				List<PotionEffect> potionEffects = new ArrayList<>();
+				potionEffects.add(new PotionEffect(PotionEffectType.GLOWING, effectDurationTicks, 0));
+				glowingSessionFinal.getPlayer().addPotionEffects(potionEffects);
+			}, 1l);
 			//Ensure nobody else glows
 			for(BannerControlSession bannerControlSession: sessions) {
 				if(bannerControlSession == glowingSession)
 					continue;
 				if(bannerControlSession.getPlayer().hasPotionEffect(PotionEffectType.GLOWING)) {
-					Bukkit.getScheduler().scheduleSyncDelayedTask(SiegeWar.getSiegeWar(), new Runnable() {
-						public void run() {
-							bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING);
-						}
-					});
+					SiegeWar.getSiegeWar().getScheduler().runLater(bannerControlSession.getPlayer(), 
+						() -> bannerControlSession.getPlayer().removePotionEffect(PotionEffectType.GLOWING), 1l);
 				}
 			}
 		}

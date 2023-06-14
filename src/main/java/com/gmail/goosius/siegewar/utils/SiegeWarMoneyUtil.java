@@ -433,9 +433,8 @@ public class SiegeWarMoneyUtil {
 			SiegeWar.severe("SiegeWar is in safe mode. Money calculation not attempted.");
 			return;
 		}
-		Bukkit.getScheduler().runTaskAsynchronously(
-				SiegeWar.getSiegeWar(),
-				SiegeWarMoneyUtil::calculateEstimatedTotalMoneyInEconomyNow);
+
+		SiegeWar.getSiegeWar().getScheduler().runAsync(SiegeWarMoneyUtil::calculateEstimatedTotalMoneyInEconomyNow);
 	}
 
 	private static void calculateEstimatedTotalMoneyInEconomyNow() {
