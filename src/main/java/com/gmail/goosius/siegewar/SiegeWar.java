@@ -195,13 +195,13 @@ public class SiegeWar extends JavaPlugin {
 	}
 
 	private void printSickASCIIArt() {
-		String art = System.lineSeparator() + "#2DE2E6            _________.__                     #FF6C11__      __" +
-					 System.lineSeparator() + "#2DE2E6           /   _____/|__| ____   ____   ____#FF6C11/  \\    /  \\_____ _______" +
-					 System.lineSeparator() + "#2DE2E6           \\_____  \\ |  |/ __ \\ / ___\\_/ __ #FF6C11\\   \\/\\/   /\\__  \\\\_  __ \\" +
-					 System.lineSeparator() + "#2DE2E6           /        \\|  \\  ___// /_/  >  ___/#FF6C11\\        /  / __ \\|  | \\/" +
-					 System.lineSeparator() + "#2DE2E6          /_______  /|__|\\___  >___  / \\___  >#FF6C11\\__/\\  /  (____  /__|   " +
-					 System.lineSeparator() + "#2DE2E6                  \\/         \\/_____/      \\/      #FF6C11\\/        \\/" +
-					 System.lineSeparator() + "#791E94                                By Goosius & LlmDl" + System.lineSeparator(); 
+		String art = System.lineSeparator() + "<#2DE2E6>            _________.__                     <#FF6C11>__      __" +
+					 System.lineSeparator() + "<#2DE2E6>           /   _____/|__| ____   ____   ____<#FF6C11>/  \\    /  \\_____ _______" +
+					 System.lineSeparator() + "<#2DE2E6>           \\_____  \\ |  |/ __ \\ / ___\\_/ __ <#FF6C11>\\   \\/\\/   /\\__  \\\\_  __ \\" +
+					 System.lineSeparator() + "<#2DE2E6>           /        \\|  \\  ___// /_/  >  ___/<#FF6C11>\\        /  / __ \\|  | \\/" +
+					 System.lineSeparator() + "<#2DE2E6>          /_______  /|__|\\___  >___  / \\___  ><#FF6C11>\\__/\\  /  (____  /__|   " +
+					 System.lineSeparator() + "<#2DE2E6>                  \\/         \\/_____/      \\/      <#FF6C11>\\/        \\/" +
+					 System.lineSeparator() + "<#791E94>                                By Goosius & LlmDl" + System.lineSeparator(); 
 		Bukkit.getConsoleSender().sendMessage(Colors.translateColorCodes(art));
 	}
 
