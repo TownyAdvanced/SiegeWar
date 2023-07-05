@@ -1071,7 +1071,7 @@ public enum ConfigNodes {
 			"############################################################",
 			""),
 	BATTLE_COMMANDERS_ENABLED(
-			"battle_commanders._enabled",
+			"battle_commanders.enabled",
 			"true",
 			"",
 			"# If this value is true, then the Battle Commander feature is enabled.",
