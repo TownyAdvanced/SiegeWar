@@ -62,6 +62,12 @@ permissions:
         default: true
         children:
             siegewar.command.siegewar.hud: true
+            
+    siegewar.command.siegewar.spawn.*:
+        description: User is able to do all /siegewar spawn commands.
+        default: true
+        children:
+            siegewar.command.siegewar.spawn: true
 
     siegewar.command.siegewar.town.*:
         description: User is able to do all /siegewar town commands.
