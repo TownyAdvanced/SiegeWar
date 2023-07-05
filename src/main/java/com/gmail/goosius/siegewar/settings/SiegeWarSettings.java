@@ -554,4 +554,8 @@ public class SiegeWarSettings {
 	public static double getBadConfigWarningsIdealOccupationTaxPercentage() {
 		return Settings.getDouble(ConfigNodes.BAD_CONFIG_WARNINGS_IDEAL_OCCUPATIONTAX_PERCENTAGE);
 	}
+	
+	public static boolean isBattleCommandersEnabled() {
+		return Settings.getBoolean(ConfigNodes.BATTLE_COMMANDERS_ENABLED);
+	}
 }

@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Translatable;
 import org.bukkit.Bukkit;
@@ -22,6 +23,9 @@ public class SiegeWarBattleCommanderUtil {
      * - An official siege participant
      */
     public static void assignBattleCommanders() {
+        if(!SiegeWarSettings.isBattleCommandersEnabled()) {
+            return;
+        }
         Player attackingCommander = null;
         Player defendingCommander = null;
         String attackingCommanderName;

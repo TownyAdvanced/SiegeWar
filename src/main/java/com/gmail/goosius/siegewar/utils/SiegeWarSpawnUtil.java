@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -11,8 +12,25 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import org.bukkit.entity.Player;
 
-public class SiegeWarSpawnUtil {
+import java.util.HashSet;
+import java.util.Set;
 
+public class SiegeWarSpawnUtil {
+    
+    private static final Set<Player> playersWithTeleportPasses = new HashSet<>();
+    
+    public static boolean doesPlayerHasTeleportPass(Player player) {
+        return playersWithTeleportPasses.contains(player);
+    }
+    
+    private static void grandTeleportPassToPlayer(Player player) {
+        playersWithTeleportPasses.add(player);
+    }
+    
+    public static void removePlayerTeleportPass(Player player) {
+        playersWithTeleportPasses.remove(player);
+    }
+    
     /**
      * Evaluate a spawn to siege request
      *
@@ -24,9 +42,9 @@ public class SiegeWarSpawnUtil {
      * @param besiegedTown the besieged town
      */
     public static void evaluateSpawnToSiegeRequest(Player player, Town besiegedTown) throws TownyException {
-        if (!SiegeController.hasActiveSiege(besiegedTown))
-            throw new TownyException(Translatable.of("msg_err_not_being_sieged", besiegedTown.getName()));
-        
+        if(!SiegeWarSettings.isBattleCommandersEnabled()) {
+            throw new TownyException(Translatable.of("msg_err_cannot_spawn_feature_not_active"));
+        }
         Siege siege = SiegeController.getSiege(besiegedTown);
         if(siege == null) {
             throw new TownyException(Translatable.of("msg_err_not_being_sieged", besiegedTown.getName()));
@@ -65,6 +83,8 @@ public class SiegeWarSpawnUtil {
         if(SiegeWarDistanceUtil.getActiveSiegeZonePlayerIsRegisteredTo(battleCommander) != siege) {
             throw new TownyException(Translatable.of("msg_err_cannot_spawn_battle_commander_not_in_siegezone"));
         }
+        //Grant teleport pass in order to bypass SW's teleport blocker
+        grandTeleportPassToPlayer(player);
         //SPAWN!
         player.teleport(battleCommander);
     }
