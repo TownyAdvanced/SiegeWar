@@ -56,6 +56,8 @@ public class Siege {
 	private int attackerBattlePoints;
 	private int defenderBattlePoints;
 	private int numberOfBannerControlReversals;
+	private Resident attackingCommander;
+	private Resident defendingCommander;
 	
 	public Siege(Town town) {
 		this.town = town;
@@ -75,6 +77,8 @@ public class Siege {
 		attackerBattlePoints = 0;
 		defenderBattlePoints = 0;
 		numberOfBannerControlReversals = 0;
+		attackingCommander = null;
+		defendingCommander = null;
     }
 
     public Town getTown() {
@@ -405,4 +409,19 @@ public class Siege {
 		this.numberOfBannerControlReversals = numberOfBannerControlReversals;
 	}
 
+	public Resident getAttackingCommander() {
+		return attackingCommander;
+	}
+
+	public void setAttackingCommander(Resident attackingCommander) {
+		this.attackingCommander = attackingCommander;
+	}
+
+	public Resident getDefendingCommander() {
+		return defendingCommander;
+	}
+
+	public void setDefendingCommander(Resident defendingCommander) {
+		this.defendingCommander = defendingCommander;
+	}
 }
