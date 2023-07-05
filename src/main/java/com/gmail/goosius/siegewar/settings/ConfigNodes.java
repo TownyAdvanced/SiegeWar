@@ -1077,7 +1077,7 @@ public enum ConfigNodes {
 			"# If this value is true, then the Battle Commander feature is enabled.",
 			"# When a battle sessions starts, then for each siege, one player from each side may be designated as the Battle Commander.",
 			"# To qualify as a battle commander, a player must be an official participant with general or king rank, and be online and in the Siege-Zone.",
-			"# If one side has a battle commander, then any member can run /siege spawn <town> to spawn on the commander.");
+			"# If one side has a battle commander, then any member can run /sw spawn <town> to spawn on the commander.");
 	private final String Root;
 	private final String Default;
 	private String[] comments;
