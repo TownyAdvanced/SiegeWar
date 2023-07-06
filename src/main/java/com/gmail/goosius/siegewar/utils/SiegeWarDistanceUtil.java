@@ -65,6 +65,10 @@ public class SiegeWarDistanceUtil {
 		return playersRegisteredToActiveSiegeZones.containsKey(player);
 	}
 
+	public static Siege getActiveSiegeZonePlayerIsRegisteredTo(Player player) {
+		return playersRegisteredToActiveSiegeZones.get(player);
+	}
+	
 	public static void recalculatePlayersRegisteredToActiveSiegeZones() {
 		playersRegisteredToActiveSiegeZones.clear();
 		for(Player player: Bukkit.getOnlinePlayers()) {

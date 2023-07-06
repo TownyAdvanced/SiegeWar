@@ -10,6 +10,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.BossBarUtil;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarSpawnUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
@@ -36,7 +37,7 @@ import java.util.*;
 
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
-	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "preference", "version", "nextsession");
+	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "preference", "version", "nextsession", "spawn");
 
 	private static final List<String> siegewarTownTabCompletes = Arrays.asList("togglepeaceful");
 	
@@ -56,6 +57,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 					return NameUtil.filterByStart(siegewarTownTabCompletes, args[1]);
 				break;
 			case "hud":
+			case "spawn":
 				if (args.length == 2)
 					return NameUtil.filterByStart(new ArrayList<>(SiegeController.getNamesOfActivelySiegedTowns()), args[1]);
 				break;
@@ -76,12 +78,18 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void showSiegeWarHelp(CommandSender sender) {
 		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewar"));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw spawn", "[town]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw collect", "", Translatable.of("nation_help_11").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_12").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw town", "togglepeaceful", Translatable.of("town_help_toggle_peaceful").forLocale(sender)));
-		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nextsession", "", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw version", "", ""));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw preference", "beacons [on/off]", ""));
+	}
+
+	private void showSpawnHelp(CommandSender sender) {
+		TownyMessaging.sendMessage(sender, ChatTools.formatTitle("/siegewar spawn"));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw spawn", "[town]", ""));
 	}
 
 	private void showNationHelp(CommandSender sender) {
@@ -126,6 +134,9 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		case "focus":
 		case "hud":
 			parseSiegeWarHudCommand(player, StringMgmt.remFirstArg(args));
+			break;
+		case "spawn":
+			parseSiegeWarSpawnCommand(player, StringMgmt.remFirstArg(args));
 			break;
 		case "town":
 			parseSiegeWarTownCommand(player, StringMgmt.remFirstArg(args));
@@ -211,6 +222,21 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		}
 	}
 
+	private void parseSiegeWarSpawnCommand(Player player, String[] args) {
+		try {
+			if (args.length == 0) {
+				showSpawnHelp(player);
+			} else {
+				Town town = TownyUniverse.getInstance().getTown(args[0]);
+				if (town == null)
+					throw new TownyException(Translatable.of("msg_err_town_not_registered", args[0]));
+				SiegeWarSpawnUtil.evaluateSpawnToSiegeRequest(player, town);
+			}
+		} catch (TownyException e) {
+			Messaging.sendErrorMsg(player, e.getMessage(player));
+		}
+	}
+	
 	private void parseSiegeWarNationCommand(Player player, String[] args) {
 		if (args.length == 0) {
 			showNationHelp(player);

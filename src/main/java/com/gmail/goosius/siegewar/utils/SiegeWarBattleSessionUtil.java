@@ -71,6 +71,8 @@ public class SiegeWarBattleSessionUtil {
 				message.append(Translatable.of("msg_can_also_chat_in_discord", discordLink));
 		}
 		Messaging.sendGlobalMessage(message);
+		//Assign siege commanders
+		SiegeWarBattleCommanderUtil.assignBattleCommanders();
 		//Start the bossbar for the Battle Session
 		BossBarUtil.updateBattleSessionBossBar();
 	}
@@ -347,4 +349,5 @@ public class SiegeWarBattleSessionUtil {
 			return null;
 		}
 	}
+
 }

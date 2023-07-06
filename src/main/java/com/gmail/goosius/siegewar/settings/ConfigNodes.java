@@ -1058,7 +1058,26 @@ public enum ConfigNodes {
 			"# This value determines the ideal configured occupation-tax value.",
 			"# Example: If the ideal percentage is 0.375, then on each new day, we want to take 0.375% of the estimated town value.",
 			"# TIP: Generally you want to keep this low enough so that fake sieges for immunity purposes are not worthwhile.",
-			"# The default value is 0.375");
+			"# The default value is 0.375"),
+	BATTLE_COMMANDERS(
+			"battle_commanders",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                  BATTLE COMMANDERS                   | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	BATTLE_COMMANDERS_ENABLED(
+			"battle_commanders.enabled",
+			"true",
+			"",
+			"# If this value is true, then the Battle Commander feature is enabled.",
+			"# When a battle sessions starts, then for each siege, one player from each side may be designated as the Battle Commander.",
+			"# To qualify as a battle commander, a player must be an official participant with general or king rank, and be online and in the Siege-Zone.",
+			"# If one side has a battle commander, then any member can run /sw spawn <town> to spawn on the commander.");
 	private final String Root;
 	private final String Default;
 	private String[] comments;

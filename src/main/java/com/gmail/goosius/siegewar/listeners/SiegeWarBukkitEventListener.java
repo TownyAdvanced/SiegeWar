@@ -5,6 +5,7 @@ import java.util.List;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
+import com.gmail.goosius.siegewar.utils.SiegeWarSpawnUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarWarningsUtil;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -162,6 +163,12 @@ public class SiegeWarBukkitEventListener implements Listener {
 		// Let's ignore Citizens NPCs
 		if (PluginIntegrations.getInstance().checkCitizens(event.getPlayer()))
 			return;
+		
+		// Don't stop a player if they have a teleport pass
+		if(SiegeWarSpawnUtil.doesPlayerHasTeleportPass(event.getPlayer())) {
+			SiegeWarSpawnUtil.removePlayerTeleportPass(event.getPlayer());
+			return;
+		}
 		
 		// The teleport destination is in the wilderness.
 		if (TownyAPI.getInstance().isWilderness(event.getTo())) {
