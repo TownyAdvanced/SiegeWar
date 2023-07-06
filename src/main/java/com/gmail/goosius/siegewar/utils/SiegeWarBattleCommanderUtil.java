@@ -7,6 +7,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -55,8 +56,8 @@ public class SiegeWarBattleCommanderUtil {
                 }
 
                 //Display the commanders to all participants
-                attackingCommanderName = attackingCommander == null ? Translatable.of("no_battle_commander").translate(Locale.ROOT) : attackingCommander.getName();
-                defendingCommanderName = defendingCommander == null ? Translatable.of("no_battle_commander").translate(Locale.ROOT) : defendingCommander.getName();
+                attackingCommanderName = attackingCommander == null ? Translation.of("no_battle_commander") : attackingCommander.getName();
+                defendingCommanderName = defendingCommander == null ? Translation.of("no_battle_commander") : defendingCommander.getName();
                 SiegeWarNotificationUtil.informSiegeParticipants(siege, Translatable.of("msg_battle_commanders_assigned", siege.getTown().getName(), attackingCommanderName, defendingCommanderName));
             }
         }
