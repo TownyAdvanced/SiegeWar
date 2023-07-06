@@ -10,6 +10,7 @@ import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.WorldCoord;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
@@ -82,6 +83,11 @@ public class SiegeWarSpawnUtil {
         }
         if(SiegeWarDistanceUtil.getActiveSiegeZonePlayerIsRegisteredTo(battleCommander) != siege) {
             throw new TownyException(Translatable.of("msg_err_cannot_spawn_battle_commander_not_in_siegezone"));
+        }
+        Resident spawnerResident = TownyAPI.getInstance().getResident(player);
+        if(!spawnerResident.getTownOrNull().hasHomeBlock()
+                || !WorldCoord.parseWorldCoord(player).equals(spawnerResident.getTownOrNull().getHomeBlockOrNull().getWorldCoord())) {
+            throw new TownyException(Translatable.of("msg_err_cannot_spawn_not_in_homeblock"));
         }
         //Grant teleport pass in order to bypass SW's teleport blocker
         grandTeleportPassToPlayer(player);

@@ -650,5 +650,6 @@ msg_err_cannot_spawn_no_battle_commander: "&cYou cannot spawn to the siege becau
 msg_err_cannot_spawn_battle_commander_offline: "&cYou cannot spawn to the siege because your team's battle commander is offline."
 msg_err_cannot_spawn_battle_commander_dead: "&cYou cannot spawn to the siege because your team's battle commander is dead."
 msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cYou cannot spawn to the siege because your team's battle commander is not in the Siege-Zone."
+msg_err_cannot_spawn_not_in_homeblock: "&cYou must be in your town homeblock to spawn to the siege."
 
 
