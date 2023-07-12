@@ -94,7 +94,7 @@ admin_help_1: 'Tải lại tệp cấu hình và ngôn ngữ.'
 config_and_lang_file_reloaded_successfully: 'Đã tải lại thành công tệp Cấu hình và Ngôn ngữ.'
 config_and_lang_file_could_not_be_loaded: 'Tải lại không thành công. Xem bảng điều khiển để biết chi tiết.'
 #Added in 0.05:
-msg_err_not_being_sieged: '&cTown %s không có bất kỳ cuộc tấn công nào đang hoạt động.'
+msg_err_not_being_sieged: '&cTown %s does not have an active siege.'
 msg_err_town_not_registered: '&cThị trấn %s chưa được đăng ký.'
 #Scoreboard
 hud_title: 'Chiến sự'
@@ -481,3 +481,17 @@ msg_err_value_configured_too_low: "&cWARNING: The server's configured value for 
 msg_err_note_about_warnings: "&cNOTE: If you have 'test/debug' towns or nations, make sure their bank balances are not too high, otherwise the warnings will be inaccurate."
 #Block Placement
 msg_err_banner_cannot_be_more_than_one_block_away: "&cThe banner cannot be more than 1 block away from the target town."
+#Battle Commanders / Mobile Spawn Points
+msg_battle_commanders_assigned: "&bSiege at %s > Battle Commanders Assigned. Attacking Commander: %s. Defending Commander: %s."
+no_battle_commander: "<None>"
+msg_err_cannot_spawn_feature_not_active: "&cYou cannot spawn to the siege because the 'battle commanders' feature is disabled by your server."
+msg_err_cannot_spawn_siege_not_active: "&cYou cannot spawn to the siege because the siege is not active."
+msg_err_cannot_spawn_battle_session_not_active: "&cYou cannot spawn to the siege because there is no active battle session."
+msg_err_cannot_spawn_not_participant: "&cYou cannot spawn to the siege because you are not an official participant in the siege."
+msg_err_cannot_spawn_no_battle_commander: "&cYou cannot spawn to the siege because your team has no battle commander."
+msg_err_cannot_spawn_battle_commander_offline: "&cYou cannot spawn to the siege because your team's battle commander is offline."
+msg_err_cannot_spawn_battle_commander_dead: "&cYou cannot spawn to the siege because your team's battle commander is dead."
+msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cYou cannot spawn to the siege because your team's battle commander is not in the Siege-Zone."
+msg_err_cannot_spawn_not_in_homeblock: "&cYou must be in your town homeblock to spawn to the siege."
+
+
