@@ -27,8 +27,8 @@ public class SiegeWarBattleCommanderUtil {
         if(!SiegeWarSettings.isBattleCommandersEnabled()) {
             return;
         }
-        Player attackingCommander = null;
-        Player defendingCommander = null;
+        Player attackingCommander;
+        Player defendingCommander;
         String attackingCommanderName;
         String defendingCommanderName;
         for(Siege siege: SiegeController.getSieges()) {
@@ -36,6 +36,9 @@ public class SiegeWarBattleCommanderUtil {
                 //Wipe the current commanders
                 siege.setAttackingCommander(null);
                 siege.setDefendingCommander(null);
+                //Reset local vars
+                attackingCommander = null;
+                defendingCommander = null;
                 //Find the commanders for the siege
                 for(Player player: Bukkit.getOnlinePlayers()) {
                     if (SiegeWarDistanceUtil.isPlayerRegisteredToActiveSiegeZone(player)
