@@ -17,7 +17,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
-import com.palmergames.bukkit.TownyChat.events.AsyncChatHookEvent;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.NationRemoveAllyEvent;
 import com.palmergames.bukkit.towny.event.NationRemoveTownEvent;
@@ -333,27 +332,6 @@ public class SiegeWarTownyEventListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void on(NationRemoveAllyEvent event) {
         tryBroadCastNationAllyRemoval(event.getRemovedNation(), event.getNation());
-    }
-
-    /**
-     * If toxicity reduction is enabled, the following effects apply:
-     * 1. No local chat in Siege Zones
-     * 2. No general chat if a BattleSession is in progress (and for 10 mins after)
-     * 
-     * @param event the AsyncChatHook event from TownyChat
-     */
-    @EventHandler(ignoreCancelled = true)
-    public void on(AsyncChatHookEvent event) {
-        if(!SiegeWarSettings.getWarSiegeEnabled() 
-            || !SiegeWarSettings.isToxicityReductionEnabled()
-            || !BattleSession.getBattleSession().isChatDisabled())
-            return;
-
-        String channelName = event.getChannel().getName();
-        if(channelName.equalsIgnoreCase("local") || channelName.equalsIgnoreCase("general")) {
-            event.setCancelled(true);
-            SiegeWarNotificationUtil.notifyPlayerOfBattleSessionChatRestriction(event.getPlayer(), channelName);
-        }
     }
 
     /**

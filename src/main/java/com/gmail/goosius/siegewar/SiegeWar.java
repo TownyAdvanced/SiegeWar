@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar;
 
+import com.gmail.goosius.siegewar.listeners.SiegeWarTownyChatEventListener;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 
@@ -173,6 +174,10 @@ public class SiegeWar extends JavaPlugin {
 			pm.registerEvents(new SiegeWarPlotEventListener(this), this);
 			pm.registerEvents(new SiegeWarStatusScreenListener(), this);
 			pm.registerEvents(new SiegeWarSelfListener(), this);
+			if (getServer().getPluginManager().isPluginEnabled("townychat")) {
+				info("SiegeWar found TownyChat plugin, enabling TownyChat integration.");
+				pm.registerEvents(new SiegeWarTownyChatEventListener(), this);
+			}
 			return true;
 		}
 	}
