@@ -433,7 +433,12 @@ public class SiegeWarMoneyUtil {
 			SiegeWar.severe("SiegeWar is in safe mode. Money calculation not attempted.");
 			return;
 		}
-
+		if(!SiegeWarSettings.isBadConfigWarningsEnabled()) {
+			return;
+		}
+		if(!TownyEconomyHandler.isActive()) {
+			return;
+		}
 		SiegeWar.getSiegeWar().getScheduler().runAsync(SiegeWarMoneyUtil::calculateEstimatedTotalMoneyInEconomyNow);
 	}
 
