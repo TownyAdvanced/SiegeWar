@@ -204,6 +204,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 	private boolean siegeWarStopsNonResidentsTeleporting(PlayerTeleportEvent event) {
 		return SiegeWarSettings.getWarSiegeEnabled()
 			&& SiegeWarSettings.getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled()
+			&& BattleSession.getBattleSession().isActive()
 			&& (event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.COMMAND);
 	}
 
