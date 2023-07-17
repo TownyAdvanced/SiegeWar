@@ -82,11 +82,8 @@ public enum ConfigNodes {
 			"war.siege.switches.non_resident_spawn_into_siegezones_or_besieged_towns_disabled",
 			"true",
 			"",
-			"# If this setting is true, then only town residents are permitted to spawn into siegezones OR besieged towns.",
-			"# This setting is recommended to:",
-			"# 1. Protect players from accidentally spawning into a warzone while unprepared.",
-			"# 2. Discourage 'fake' sieges, by making the automatic siege impact harsher.",
-			"# 3. Even the spawn-advantage between attacking and defender."), 
+			"# If this setting is true, then during Battle Sessions, only town residents are permitted to spawn into Siege-Zones OR besieged towns.",
+			"# This setting is recommended to protect players from accidentally spawning into a PVP-active-area while unprepared."),
 	WAR_SIEGE_BESIEGED_TOWN_RECRUITMENT_DISABLED(
 			"war.siege.switches.besieged_town_recruitment_disabled",
 			"true",
