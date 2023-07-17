@@ -150,6 +150,7 @@ msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control 
 hud_siege_balance: 'Số dư chiến tranh: '
 hud_warchest: 'Rương chiến tranh: '
 hud_battle_time_remaining: 'Thời gian chiến đấu còn lại: '
+msg_err_hud_not_available_in_folia: "&cThe HUD is not available in Folia."
 #Dynmap
 dynmap_siege_battle_time_left: 'Thời gian chiến đấu còn lại: %s'
 #Banner control
