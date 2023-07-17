@@ -237,7 +237,7 @@ public class SiegeWar extends JavaPlugin {
 		return null; // Doesn't matter because SiegeWar will not pass the onEnable phase.
 	}
 
-	private static boolean isFoliaClassPresent() {
+	public static boolean isFoliaClassPresent() {
 		try {
 			Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
 			return true;

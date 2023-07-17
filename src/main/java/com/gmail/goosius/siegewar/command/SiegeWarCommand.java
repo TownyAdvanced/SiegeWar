@@ -204,6 +204,9 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 
 	private void parseSiegeWarHudCommand(Player player, String[] args) {
 		try {
+			if(SiegeWar.isFoliaClassPresent()) {
+				throw new TownyException(Translatable.of("msg_err_hud_not_available_in_folia"));
+			}
 			if (args.length == 0) {
 				TownyMessaging.sendMessage(player, ChatTools.formatTitle("/siegewar hud"));
 				TownyMessaging.sendMessage(player, ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
