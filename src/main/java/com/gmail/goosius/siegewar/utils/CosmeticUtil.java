@@ -84,7 +84,7 @@ public class CosmeticUtil {
 				player.sendBlockChange(block.getLocation(), Bukkit.createBlockData(Material.GLASS));
 		}
 	}
-	
+
 	public static void removeFakeBeacon(Player player, Location loc) {
 		player.sendBlockChange(loc.clone().subtract(0, 1, 0), Bukkit.createBlockData(loc.clone().subtract(0, 1, 0).getBlock().getType()));
 		player.sendBlockChange(loc.clone().subtract(0, 2, 0), Bukkit.createBlockData(loc.clone().subtract(0, 2, 0).getBlock().getType()));
@@ -105,7 +105,6 @@ public class CosmeticUtil {
 		}
 	}
 
-	
 	/**
 	 * @param player The player to get the glass color for.
 	 * @param siege The siege
