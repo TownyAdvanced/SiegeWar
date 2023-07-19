@@ -150,6 +150,7 @@ msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control 
 hud_siege_balance: 'Saldo de Asedio: '
 hud_warchest: 'Cofre de Guerra: '
 hud_battle_time_remaining: 'Tiempo Restante de Batalla: '
+msg_err_hud_not_available_in_folia: "&cThe HUD is not available in Folia."
 #Dynmap
 dynmap_siege_battle_time_left: 'Tiempo restante de Batalla: %s'
 #Banner control

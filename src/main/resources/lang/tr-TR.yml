@@ -150,6 +150,7 @@ msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control 
 hud_siege_balance: 'Kuşatma Bakiyesi: '
 hud_warchest: 'Ganimet Sandığı: '
 hud_battle_time_remaining: 'Savaşın Bitmesine: '
+msg_err_hud_not_available_in_folia: "&cThe HUD is not available in Folia."
 #Dynmap
 dynmap_siege_battle_time_left: 'Savaşın Bitmesine: %s'
 #Banner control
