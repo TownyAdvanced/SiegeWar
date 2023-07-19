@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.GlassColor;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
@@ -72,6 +73,10 @@ public class CosmeticUtil {
 			player.sendBlockChange(loc.clone().add(ironBlockLocations[i][0], -3, ironBlockLocations[i][1]), Bukkit.createBlockData(Material.IRON_BLOCK));
 		}
 
+		SiegeWar.getSiegeWar().getScheduler().runLater(player, () -> changeBlocksToGlass(player,loc), 1l);
+	}
+
+	private static void changeBlocksToGlass(Player player, Location loc) {
 		// Set any non-transparent blocks above the banner to glass.
 		for (int i = loc.getBlockY(); i < loc.getWorld().getMaxHeight(); i++) {
 			Block block = loc.getWorld().getBlockAt(loc.getBlockX(), i, loc.getBlockZ());
@@ -79,7 +84,7 @@ public class CosmeticUtil {
 				player.sendBlockChange(block.getLocation(), Bukkit.createBlockData(Material.GLASS));
 		}
 	}
-
+	
 	public static void removeFakeBeacon(Player player, Location loc) {
 		player.sendBlockChange(loc.clone().subtract(0, 1, 0), Bukkit.createBlockData(loc.clone().subtract(0, 1, 0).getBlock().getType()));
 		player.sendBlockChange(loc.clone().subtract(0, 2, 0), Bukkit.createBlockData(loc.clone().subtract(0, 2, 0).getBlock().getType()));
@@ -89,12 +94,17 @@ public class CosmeticUtil {
 			player.sendBlockChange(loc.clone().add(ironBlockLocations[i][0], -3, ironBlockLocations[i][1]), Bukkit.createBlockData(loc.clone().add(ironBlockLocations[i][0], -3, ironBlockLocations[i][1]).getBlock().getType()));
 		}
 
+		SiegeWar.getSiegeWar().getScheduler().runLater(player, () -> changeBlocksBackToNormal(player,loc), 1l);
+	}
+
+	private static void changeBlocksBackToNormal(Player player, Location loc) {
 		for (int i = loc.getBlockY(); i < loc.getWorld().getMaxHeight(); i++) {
 			Block block = loc.getWorld().getBlockAt(loc.getBlockX(), i, loc.getBlockZ());
 			if (block.getType().isBlock() && block.getType().isOccluding())
 				player.sendBlockChange(block.getLocation(), Bukkit.createBlockData(block.getType()));
 		}
 	}
+
 	
 	/**
 	 * @param player The player to get the glass color for.
