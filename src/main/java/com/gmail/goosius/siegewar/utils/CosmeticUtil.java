@@ -104,7 +104,7 @@ public class CosmeticUtil {
 				player.sendBlockChange(block.getLocation(), Bukkit.createBlockData(block.getType()));
 		}
 	}
-
+	
 	/**
 	 * @param player The player to get the glass color for.
 	 * @param siege The siege
