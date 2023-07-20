@@ -711,13 +711,6 @@ public enum ConfigNodes {
 			"# This setting determines the color of the boss bar message,",
 			"# which players see while they are capturing the banner."),
 
-	BANNER_CONTROL_ALLOWED_IN_TOWN(
-			"banner_control.allowed_in_town",
-			"false",
-			"",
-			"# Whether or not players inside the defending towns townblocks can be added to banner control."
-	),
-
 	SIEGE_START_DAY_LIMITER(
 		"siege_start_day_limiter",
 			"",
