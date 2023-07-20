@@ -35,13 +35,13 @@ msg_err_town_is_not_sieged: "This town is not Sieged."
 msg_siege_war_attack_pay_war_chest: '&bA war-chest has been prepared by %s, with a value of %s. Whoever wins the siege will get this money.'
 msg_siege_war_attack_recover_war_chest: '&bThe war chest has been recovered by %s, with a value of %s.'
 msg_siege_war_attack_partially_recover_war_chest: '&bThe war chest has been partially recovered by %s, with a value of %s.'
-msg_siege_war_neutral_town_plundered: '&b%s has been plundered of %s by %s!'
-msg_siege_war_nation_town_plundered: '&b%s has been plundered of %s by %s!'
-msg_siege_war_town_ruined_from_plunder: '&b%s has been reduced to ruins by %s!'
-msg_siege_war_town_bankrupted_from_plunder: '&b%s has been bankrupted by %s!'
-msg_siege_war_nation_defeated: '&b%s has been defeated!'
+msg_siege_war_neutral_town_plundered: '&b%s has been plundered of %s by %s!
+msg_siege_war_nation_town_plundered: '&b%s has been plundered of %s by %s!
+msg_siege_war_town_ruined_from_plunder: '&b%s has been reduced to ruins by %s!
+msg_siege_war_town_bankrupted_from_plunder: '&b%s has been bankrupted by %s!
+msg_siege_war_nation_defeated: '&b%s has been defeated!
 msg_siege_war_attacking_troops_at_siege_banner: '&bSiege on %s > Attackers are at the siege banner.'
-msg_siege_war_banner_control_session_success: '&bBanner control session succeeded!. You have been added to the banner control list.'
+msg_siege_war_banner_control_session_success: '&bBanner control session succeeded! You have been added to the banner control list.'
 msg_siege_war_banner_control_gained_by_attacker: '&bSiege on %s > The attackers have gained banner control.'
 msg_siege_war_banner_control_gained_by_defender: '&bSiege on %s > The defenders have gained banner control.'
 msg_town_destroyed_by_nation_tax: '&b%s couldn''t pay taxes and has fallen.'
@@ -146,7 +146,7 @@ msg_swa_set_plunder_gained_success: '&bSuccessfully set plunder gained to %d for
 msg_swa_set_plunder_lost_success: '&bSuccessfully set plunder lost to %d for %s.'
 msg_err_nation_not_registered: '&cNation %s is not registered.'
 
-msg_err_cannot_remove_enemy: '&cYou cannot remove a nation as enemy if you have an active siege against them!'
+msg_err_cannot_remove_enemy: '&cYou cannot remove a nation as enemy if you have an active siege against them!
 
 #Added in 0.09
 nation_help_12 : 'Pay your soldiers. The given amount will be distributed according to rank.'
@@ -188,8 +188,8 @@ msg_err_hud_not_available_in_folia: "&cThe HUD is not available in Folia."
 dynmap_siege_battle_time_left: 'Battle Time Left: %s'
 
 #Banner control
-msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > The attackers have stolen banner control from the defenders! (REVERSAL)'
-msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > The defenders have stolen banner control from the attackers! (REVERSAL)'
+msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > The attackers have stolen banner control from the defenders!(REVERSAL)'
+msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > The defenders have stolen banner control from the attackers!(REVERSAL)'
 msg_siege_war_banner_control_reversal_bonus: '. Cap-Point-Generation-Rate X %s.'
 
 #Admin
@@ -202,13 +202,13 @@ msg_siege_war_version: '&bThe current SiegeWar version is: %s.'
 
 msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain within %d blocks of the banner, but staying out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
 msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control session started. Remain within %d blocks of the banner, but staying below it''s altitude and out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
-msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, or entering the town,.'
-msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going below the banner altitude, or entering the town.'
+msg_siege_war_banner_control_session_failure: '&cBanner control session failed! Common causes for this include: dying, going too far from the banner, or entering the town,.'
+msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed! Common causes for this include: dying, going too far from the banner, going below the banner altitude, or entering the town.'
 
 ##### Added in 0.15
 
 # Town Merging
-msg_err_cannot_merge_towns: '&cUnable to merge a town that is under siege!'
+msg_err_cannot_merge_towns: '&cUnable to merge a town that is under siege!
 
 # General
 siege.name: '%s vs %s'
@@ -239,8 +239,8 @@ hud_battle_defender_points: 'DEF BAT Points: '
 msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruined town.'
 msg_err_cannot_start_siege_due_to_siege_immunity: '&cYou cannot start a siege now, because the nearby town has siege immunity.'
 msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cYou cannot start a revolt siege because the town is not in an occupied state.'
-msg_conquest_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A CONQUEST SIEGE has begun!'
-msg_conquest_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A CONQUEST SIEGE has begun!'
+msg_conquest_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A CONQUEST SIEGE has begun!
+msg_conquest_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A CONQUEST SIEGE has begun!
 
 # Banner Control
 msg_siege_war_defending_troops_at_siege_banner: '&bSiege on %s > Defenders are at the siege banner.'
@@ -324,7 +324,7 @@ msg_siege_war_defender_killed_by_player: '&bSiege of %s > Defender %s was killed
 
 # Added in 0.27
 msg_next_siege_session_in_minutes: 'The next Battle Session is in %s.'
-msg_session_is_active_now: 'A Battle Session is active now!'
+msg_session_is_active_now: 'A Battle Session is active now!
 msg_err_battle_session_active: "&cA Battle Session has already started."
 msg_err_battle_session_inactive: "&cThe Battle Session has already ended."
 msg_battle_session_force_start: "&bA Battle Session has been force started."
@@ -341,11 +341,11 @@ msg_surrender_action_cancelled: 'Siege surrender cancelled.'
 msg_abandon_action_cancelled: 'Siege abandon cancelled.'
 
 # Added in 0.29
-msg_err_siegecamp_too_close_to_another_siegecamp: 'Siege-Assembly too close to another Siege-Assembly!'
-msg_err_too_soon_since_your_last_siegecamp: 'It has been too soon since you last tried to attack this town!'
+msg_err_siegecamp_too_close_to_another_siegecamp: 'Siege-Assembly too close to another Siege-Assembly!
+msg_err_too_soon_since_your_last_siegecamp: 'It has been too soon since you last tried to attack this town!
 msg_err_your_siegecamp_failed_you_must_wait_x: 'Your Siege-Assembly failed to score enough points, you cannot attempt to attack the town again for %s.'
 attackers_scored_points_towards_siege_camp_x_of_x: '%s has scored points towards their Siege-Assembly: %s/%s.'
-attacker_has_begun_a_siegecamp_session: '%s has begun a Siege-Assembly against %s. If successful a Siege will begin! The attackers must score %s points within %s minutes.'
+attacker_has_begun_a_siegecamp_session: '%s has begun a Siege-Assembly against %s. If successful a Siege will begin!The attackers must score %s points within %s minutes.'
 
 # Added in 0.30
 msg_bossbar_preference_set: "&bBossBar preference set to %s."
@@ -420,7 +420,7 @@ msg_err_your_town_cannot_afford_to_siege_for_x: "Your town cannot afford to begi
 msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the Battle Session, resulting in a prison break, freeing %s."
 
 #Shown when a town takes on daily plunder debt.
-msg_plunder_debt_earned: "Your town's plunder costs were paid by the server! You will have to pay %s every day for %s days, to pay this back."
+msg_plunder_debt_earned: "Your town's plunder costs were paid by the server!You will have to pay %s every day for %s days, to pay this back."
 
 #Shown when a town pays their daily plunder debt.
 msg_plunder_debt_payed: "Your town paid the daily plunder debt of %s."
@@ -477,8 +477,8 @@ msg_err_siege_war_nation_refund_unavailable: "There is no nation refund availabl
 
 #Invasion
 msg_err_town_already_invaded: '&cYour nation has already captured the town.'
-msg_neutral_town_invaded: '&b%s has been captured by %s!'
-msg_nation_town_invaded: '&b%s, belonging to %s, has been captured by %s!'
+msg_neutral_town_invaded: '&b%s has been captured by %s!
+msg_nation_town_invaded: '&b%s, belonging to %s, has been captured by %s!
 
 #Subverting
 
@@ -487,7 +487,7 @@ msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert thi
 
 #Revolting
 
-msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying nation of %s, and declared themselves free to choose their own destiny. A REVOLT SIEGE has begun!'
+msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying nation of %s, and declared themselves free to choose their own destiny. A REVOLT SIEGE has begun!
 
 #war sickness
 
@@ -501,8 +501,8 @@ status_town_days_to_peacefulness_status_change: '&2Days To Peacefulness Status C
 #Town Peacefulness
     
 town_help_toggle_peaceful: 'Change your town peacefulness status'
-msg_war_common_town_declared_peaceful: '&bPeacefulness Declared! The town will be confirmed as Peaceful in %d day(s).'
-msg_war_common_town_declared_non_peaceful: '&bNon-Peacefulness Declared! The town will be confirmed as Non-Peaceful in %d day(s).'
+msg_war_common_town_declared_peaceful: '&bPeacefulness Declared!The town will be confirmed as Peaceful in %d day(s).'
+msg_war_common_town_declared_non_peaceful: '&bNon-Peacefulness Declared!The town will be confirmed as Non-Peaceful in %d day(s).'
 msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot gain nation-military ranks.'
 msg_town_became_non_peaceful: '&b%s has been confirmed as Non-Peaceful. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can now gain nation-military ranks.'
 msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Peaceful status change countdown was cancelled.'
@@ -527,34 +527,34 @@ msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless
 
 #Timed wins
 
-msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has won a %s victory against the defending army of %s!.'
-msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!.'
-msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has defeated the rebels with a %s victory!.'
-msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded!. The attacking rebels have successfully driven off the attacking army of %s!, with a %s victory!.'
+msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has won a %s victory against the defending army of %s!'
+msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!'
+msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has defeated the rebels with a %s victory!'
+msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded! The attacking rebels have successfully driven off the attacking army of %s!, with a %s victory!.'
 msg_decisive: 'DECISIVE'
 msg_close: 'CLOSE'
 
 
 #Abandoning Attacks
 
-msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > The attacking army of %s has admitted defeat and retreated!. This action will be confirmed when siege progress is complete.'
-msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has admitted defeat and retreated!. This action will be confirmed when siege progress is complete.'
-msg_conquest_siege_attacker_abandon_confirmed: '&bCONQUEST SIEGE at %s > Attacker Abandon Confirmed!'
-msg_revolt_siege_attacker_abandon_confirmed: '&bREVOLT SIEGE at %s > Attacker Abandon Confirmed!'
+msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > The attacking army of %s has admitted defeat and retreated! This action will be confirmed when siege progress is complete.'
+msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has admitted defeat and retreated! This action will be confirmed when siege progress is complete.'
+msg_conquest_siege_attacker_abandon_confirmed: '&bCONQUEST SIEGE at %s > Attacker Abandon Confirmed!
+msg_revolt_siege_attacker_abandon_confirmed: '&bREVOLT SIEGE at %s > Attacker Abandon Confirmed!
 
 
 #Surrendering Defence
 
-msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has surrendered to the attacking army of %s!. This action will be confirmed when siege progress is complete.'
-msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The rebels have admitted defeat and surrendered to the attacking army of %s!. This action will be confirmed when siege progress is complete.'
-msg_conquest_siege_defender_surrender_confirmed: '&bCONQUEST SIEGE at %s > Defender Surrender Confirmed!.'
-msg_revolt_siege_defender_surrender_confirmed: '&bREVOLT SIEGE at %s > Defender Surrender Confirmed!.'
+msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has surrendered to the attacking army of %s! This action will be confirmed when siege progress is complete.'
+msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The rebels have admitted defeat and surrendered to the attacking army of %s! This action will be confirmed when siege progress is complete.'
+msg_conquest_siege_defender_surrender_confirmed: '&bCONQUEST SIEGE at %s > Defender Surrender Confirmed!'
+msg_revolt_siege_defender_surrender_confirmed: '&bREVOLT SIEGE at %s > Defender Surrender Confirmed!'
 msg_err_siege_occupied_towns_cannot_surrender_in_conquest_sieges: '&cIn CONQUEST sieges, occupied towns cannot surrender.'
 
 #Siege Results
 
 msg_conquest_siege_attacker_win_result: ' The town now stands open for invasion and/or plunder.'
-msg_conquest_siege_defender_win_result: ' The town has been saved!'
+msg_conquest_siege_defender_win_result: ' The town has been saved!
 msg_revolt_siege_attacker_win_result: ' The town now stands open for invasion and/or plunder.'
 msg_revolt_siege_defender_win_result: ' The town has won its freedom!'
 
@@ -587,7 +587,7 @@ msg_err_occupied_towns_cannot_leave_their_nations: "&cOccupied towns cannot leav
 
 #Siegezone proximity warning
 
-msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!."
+msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!"
 
 #Plunder
 
