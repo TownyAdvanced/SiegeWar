@@ -530,7 +530,7 @@ msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless
 msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has won a %s victory against the defending army of %s!'
 msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!'
 msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has defeated the rebels with a %s victory!'
-msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded! The attacking rebels have successfully driven off the attacking army of %s!, with a %s victory!.'
+msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded! The attacking rebels have successfully driven off the attacking army of %s!, with a %s victory!'
 msg_decisive: 'DECISIVE'
 msg_close: 'CLOSE'
 
