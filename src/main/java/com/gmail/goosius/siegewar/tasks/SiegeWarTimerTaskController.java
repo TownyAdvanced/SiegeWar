@@ -1,7 +1,6 @@
 package com.gmail.goosius.siegewar.tasks;
 
 import com.gmail.goosius.siegewar.SiegeController;
-import com.gmail.goosius.siegewar.events.SiegeRemoveEvent;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.playeractions.AbandonAttack;
@@ -69,7 +68,6 @@ public class SiegeWarTimerTaskController {
 				//Wait for siege immunity timer to end then delete siege
 				if (System.currentTimeMillis() > TownMetaDataController.getSiegeImmunityEndTime(siege.getTown())) {
 					SiegeController.removeSiege(siege);
-					Bukkit.getPluginManager().callEvent(new SiegeRemoveEvent(siege));
 				}
 				return false;
 		}

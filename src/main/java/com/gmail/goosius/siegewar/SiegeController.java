@@ -16,6 +16,7 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
+import com.gmail.goosius.siegewar.events.SiegeRemoveEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
@@ -258,6 +259,8 @@ public class SiegeController {
 				e.printStackTrace();
 			}
 		}
+		//Call event
+		Bukkit.getPluginManager().callEvent(new SiegeRemoveEvent(siege));
 		//Remove siege from town
 		Town town = siege.getTown();
 		setSiege(town, false);
