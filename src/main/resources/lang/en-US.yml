@@ -331,7 +331,7 @@ msg_battle_session_force_start: "&bA Battle Session has been force started."
 msg_battle_session_force_end: "&bThe Battle Session has been force ended."
 
 # Added in 0.28
-msg_town_immunity_expired: "Your town''s Siege Immunity has expired."
+msg_town_immunity_expired: 'Your town''s Siege Immunity has expired.'
 
 #Unsiegeable towns strings
 msg_permanent: "permanent"
