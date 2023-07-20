@@ -8,9 +8,11 @@ import org.jetbrains.annotations.NotNull;
 public class BattleSessionStartedEvent extends Event {
 
 	private static final HandlerList handlers = new HandlerList();
+	private final String message;
 
-	public BattleSessionStartedEvent() {
+	public BattleSessionStartedEvent(String message) {
 		super(!Bukkit.getServer().isPrimaryThread());
+		this.message = message;
 	}
 
 	@NotNull
@@ -23,4 +25,7 @@ public class BattleSessionStartedEvent extends Event {
 		return handlers;
 	}
 
+	public String getMessage() {
+		return message;
+	}
 }

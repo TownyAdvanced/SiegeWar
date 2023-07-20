@@ -65,6 +65,7 @@ public class SurrenderDefence {
 			key = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toLowerCase());
 			message.append(Translatable.of(key));
 		}
+		siege.setEndMessage(message.toString());
 		return message;
 	}
 }

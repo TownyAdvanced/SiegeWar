@@ -1022,24 +1022,24 @@ public enum ConfigNodes {
 			"# See discord docs https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks"),
 	DISCORD_WEBHOOK_NOTIFICATION_SESSION_START(
 			"discord_webhook.notifcation_session_start",
-			"false",
-			"Announce when a battle session starts. Uses msg_war_siege_battle_session_started"),
+			"true",
+			"# Announce when a battle session starts. Uses msg_war_siege_battle_session_started"),
 	DISCORD_WEBHOOK_NOTIFICATION_SESSION_END(
 			"discord_webhook.notifcation_session_end",
-			"false",
-			"Announce when a battle session ends. Uses msg_war_siege_battle_session_ended_*"),
+			"true",
+			"# Announce when a battle session ends. Uses msg_war_siege_battle_session_ended_*"),
 	DISCORD_WEBHOOK_NOTIFICATION_SIEGECAMP_START(
 			"discord_webhook.notifcation_siegecamp_start",
 			"true",
-			"Announce when a siege camp starts. Uses attacker_has_begun_a_siegecamp_session"),
+			"# Announce when a siege camp starts. Uses attacker_has_begun_a_siegecamp_session"),
 	DISCORD_WEBHOOK_NOTIFICATION_SIEGE_START(
 			"discord_webhook.notifcation_siege_start",
 			"true",
-			"Announce when a battle siege starts. Uses msg_conquest_siege_started_*"),
+			"# Announce when a battle siege starts. Uses msg_conquest_siege_started_*"),
 	DISCORD_WEBHOOK_NOTIFICATION_SIEGE_END(
 			"discord_webhook.notifcation_siege_end",
 			"true",
-			"Announce when a battle session ends. Uses many localization options."),
+			"# Announce when a battle session ends. Uses msg_war_siege_battle_session_ended_*"),
 	BAD_CONFIG_WARNINGS(
 			"bad_config_warnings",
 			"",

@@ -54,13 +54,13 @@ public class SiegeWarBattleSessionUtil {
 		battleSession.setScheduledEndTime(System.currentTimeMillis() + (SiegeWarSettings.getWarSiegeBattleSessionsDurationMinutes() * 60000));
 		//Clear the scheduled start time
 		battleSession.setScheduledStartTime(null);
+		//Send global message to let the server know that the battle session started
+		Translatable message = Translatable.of("msg_war_siege_battle_session_started");
 		//Send up the Bukkit event for other plugins to listen for.
-		Bukkit.getPluginManager().callEvent(new BattleSessionStartedEvent());	
+		Bukkit.getPluginManager().callEvent(new BattleSessionStartedEvent(message.toString()));
 		//Recalculate recent battle sessions of players
 		try { Thread.sleep(5000); //Sleep to ensure recalculation is good
 		} catch (InterruptedException e) { e.printStackTrace();}
-		//Send global message to let the server know that the battle session started
-		Translatable message = Translatable.of("msg_war_siege_battle_session_started");
 		//If toxicity reduction is enabled, disable the general chat
 		if(SiegeWarSettings.isToxicityReductionEnabled()) {
 			battleSession.setChatDisabled(true);
@@ -87,8 +87,12 @@ public class SiegeWarBattleSessionUtil {
 		 */
 		for (Siege siege : SiegeController.getSieges())
 			endBattleSessionForSiege(siege);
-		
-		Bukkit.getPluginManager().callEvent(new BattleSessionEndedEvent());
+
+		StringBuilder message = new StringBuilder(getBattleSessionEndedMessageHeader(battleResults).toString());
+
+		getBattleSessionEndedMessageLines(battleResults).forEach(translatable -> message.append("\n").append(translatable.toString()));
+
+		Bukkit.getPluginManager().callEvent(new BattleSessionEndedEvent(message.toString()));
 		
 		//Send message
 		sendBattleSessionEndedMessage(battleResults);
@@ -268,15 +272,29 @@ public class SiegeWarBattleSessionUtil {
 	 * with a brief summary of who won any battles which were fought
 	 */
 	private static void sendBattleSessionEndedMessage(Map<Siege, Integer> battleResults) {
+		Messaging.sendGlobalMessage(getBattleSessionEndedMessageHeader(battleResults),getBattleSessionEndedMessageLines(battleResults));
+	}
+
+	/**
+	 * Send message to tell the server the current battle session has ended,
+	 * with a brief summary of who won any battles which were fought
+	 */
+	private static Translatable getBattleSessionEndedMessageHeader(Map<Siege, Integer> battleResults) {
 		Translatable header;
-		List<Translatable> lines = new ArrayList<>();
 
 		//Compile message
 		if(battleResults.size() == 0) {
-			header = Translatable.of("msg_war_siege_battle_session_ended_without_battles");
+			return Translatable.of("msg_war_siege_battle_session_ended_without_battles");
 		} else {
-			header = Translatable.of("msg_war_siege_battle_session_ended_with_battles");
+			return Translatable.of("msg_war_siege_battle_session_ended_with_battles");
+		}
+	}
 
+	private static List<Translatable> getBattleSessionEndedMessageLines(Map<Siege, Integer> battleResults) {
+		List<Translatable> lines = new ArrayList<>();
+
+		//Compile message
+		if(battleResults.size() != 0) {
 			Translatable resultLine;
 			for (Map.Entry<Siege, Integer> battleResultEntry : battleResults.entrySet()) {
 				if (battleResultEntry.getValue() > 0) {
@@ -297,10 +315,9 @@ public class SiegeWarBattleSessionUtil {
 				lines.add(resultLine);
 			}
 		}
-		//Send message
-		Messaging.sendGlobalMessage(header, lines);
+		return lines;
 	}
-												
+
 	public static String getFormattedTimeUntilNextBattleSessionStarts() {
 		Long startTimeOfTodaysNextBattleSession = BattleSession.getBattleSession().getScheduledStartTime();
 		if(startTimeOfTodaysNextBattleSession == null) {

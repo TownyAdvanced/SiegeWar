@@ -58,7 +58,8 @@ public class Siege {
 	private int numberOfBannerControlReversals;
 	private Resident attackingCommander;
 	private Resident defendingCommander;
-	
+	private String endMessage;
+
 	public Siege(Town town) {
 		this.town = town;
         siegeType = null;
@@ -79,6 +80,7 @@ public class Siege {
 		numberOfBannerControlReversals = 0;
 		attackingCommander = null;
 		defendingCommander = null;
+		endMessage = "";
     }
 
     public Town getTown() {
@@ -423,5 +425,13 @@ public class Siege {
 
 	public void setDefendingCommander(Resident defendingCommander) {
 		this.defendingCommander = defendingCommander;
+	}
+
+	public String getEndMessage() {
+		return endMessage;
+	}
+
+	public void setEndMessage(String message) {
+		this.endMessage = message;
 	}
 }

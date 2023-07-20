@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.events;
 
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.palmergames.bukkit.towny.object.Nation;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -27,6 +28,7 @@ public class SiegeEndEvent extends Event {
     private final String attackerName;
     private final String defenderName;
     private final String besiegedTownName;
+    private final Nation nation;
 
     public SiegeEndEvent(Siege siege) {
         super(!Bukkit.getServer().isPrimaryThread());
@@ -36,6 +38,7 @@ public class SiegeEndEvent extends Event {
         this.attackerName = siege.getAttackerName();
         this.defenderName = siege.getDefenderName();
         this.besiegedTownName = siege.getTown().getName();
+        this.nation = siege.isRevoltSiege() ? siege.getTown().getNationOrNull() : (Nation)siege.getAttackingNationIfPossibleElseTown();
     }
 
     @NotNull
@@ -89,4 +92,8 @@ public class SiegeEndEvent extends Event {
 	public String getDefenderName() {
 		return defenderName;
 	}
+
+    public Nation getNation() {
+        return nation;
+    }
 }
