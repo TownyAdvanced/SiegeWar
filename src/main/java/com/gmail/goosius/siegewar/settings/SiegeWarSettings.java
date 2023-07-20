@@ -329,6 +329,10 @@ public class SiegeWarSettings {
 		return Settings.getString(ConfigNodes.BANNER_CONTROL_CAPTURE_MESSAGE_COLOR);
 	}
 
+	public static boolean getBannerControlAllowedInTown() {
+		return Settings.getBoolean(ConfigNodes.BANNER_CONTROL_ALLOWED_IN_TOWN);
+	}
+
 	public static boolean areSiegeCampsEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_SIEGECAMPS_ENABLED);
 	}

@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.events.SiegeRemoveEvent;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
@@ -23,6 +24,7 @@ import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -617,6 +619,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				case "remove":
 					//Remove siege from system
 					SiegeController.removeSiege(siege);
+					Bukkit.getPluginManager().callEvent(new SiegeRemoveEvent(siege));
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_remove_siege_success"));
 					return;
 			}
