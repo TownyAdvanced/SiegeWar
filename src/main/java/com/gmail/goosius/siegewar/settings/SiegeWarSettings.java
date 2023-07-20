@@ -536,6 +536,34 @@ public class SiegeWarSettings {
 		return Settings.getString(ConfigNodes.TOXICITY_REDUCTION_DISCORD_LINK);
 	}
 
+	public static boolean isDiscordWebhookEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_ENABLED);
+	}
+
+	public static String getDiscordWebhookUrl() {
+		return Settings.getString(ConfigNodes.DISCORD_WEBHOOK_URL);
+	}
+
+	public static boolean isSessionStartNotificationEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_NOTIFICATION_SESSION_START);
+	}
+
+	public static boolean isSessionEndNotificationEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_NOTIFICATION_SESSION_END);
+	}
+
+	public static boolean isSiegeCampStartNotificationEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_NOTIFICATION_SIEGECAMP_START);
+	}
+
+	public static boolean isSiegeStartNotificationEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_NOTIFICATION_SIEGE_START);
+	}
+
+	public static boolean isSiegeEndNotificationEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_NOTIFICATION_SIEGE_END);
+	}
+
 	public static boolean isBadConfigWarningsEnabled() {
 		return Settings.getBoolean(ConfigNodes.BAD_CONFIG_WARNINGS_ENABLED);
 	}
