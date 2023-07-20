@@ -23,7 +23,6 @@ import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;

@@ -188,8 +188,8 @@ msg_err_hud_not_available_in_folia: "&cThe HUD is not available in Folia."
 dynmap_siege_battle_time_left: 'Battle Time Left: %s'
 
 #Banner control
-msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > The attackers have stolen banner control from the defenders!(REVERSAL)'
-msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > The defenders have stolen banner control from the attackers!(REVERSAL)'
+msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > The attackers have stolen banner control from the defenders! (REVERSAL)'
+msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > The defenders have stolen banner control from the attackers! (REVERSAL)'
 msg_siege_war_banner_control_reversal_bonus: '. Cap-Point-Generation-Rate X %s.'
 
 #Admin
@@ -202,7 +202,7 @@ msg_siege_war_version: '&bThe current SiegeWar version is: %s.'
 
 msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain within %d blocks of the banner, but staying out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
 msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control session started. Remain within %d blocks of the banner, but staying below it''s altitude and out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
-msg_siege_war_banner_control_session_failure: '&cBanner control session failed! Common causes for this include: dying, going too far from the banner, or entering the town,.'
+msg_siege_war_banner_control_session_failure: '&cBanner control session failed! Common causes for this include: dying, going too far from the banner, or entering the town.'
 msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed! Common causes for this include: dying, going too far from the banner, going below the banner altitude, or entering the town.'
 
 ##### Added in 0.15

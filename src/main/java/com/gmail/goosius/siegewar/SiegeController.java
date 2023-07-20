@@ -259,8 +259,6 @@ public class SiegeController {
 				e.printStackTrace();
 			}
 		}
-		//Call event
-		Bukkit.getPluginManager().callEvent(new SiegeRemoveEvent(siege));
 		//Remove siege from town
 		Town town = siege.getTown();
 		setSiege(town, false);
@@ -270,6 +268,8 @@ public class SiegeController {
 		siegedTowns.remove(siege.getTown());
 		//Save town
 		town.save();
+		//Call event
+		Bukkit.getPluginManager().callEvent(new SiegeRemoveEvent(siege));
 	}
 
 	public static void putTownInSiegeMap(Town town, Siege siege) {

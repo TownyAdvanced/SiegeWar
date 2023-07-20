@@ -10,7 +10,6 @@ import com.gmail.goosius.siegewar.utils.SiegeWarBannerControlUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSicknessUtil;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
-import org.bukkit.Bukkit;
 
 /**
  * This class intercepts siege related instructions coming from timer tasks.

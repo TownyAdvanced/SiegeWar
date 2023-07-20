@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  *       as these towns/nations may disappear after the siege.
  *       Rather they should use:
  *       event.getSiege().getAttackerName()
- *       siege.getSiege().getDefenderName()
+ *       event.getSiege().getDefenderName()
  *       event.getBesiegedTownName()
  */
 public class SiegeRemoveEvent extends Event {
@@ -62,7 +62,7 @@ public class SiegeRemoveEvent extends Event {
     /**
      * @return the siegeWinner as a String
      */
-    public String getSiegeWinner() {
+    public String getSiegeWinnerName() {
         return siegeWinner;
     }
 
