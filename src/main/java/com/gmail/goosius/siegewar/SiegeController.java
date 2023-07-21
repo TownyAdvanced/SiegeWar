@@ -16,6 +16,7 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
+import com.gmail.goosius.siegewar.events.SiegeRemoveEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
@@ -267,6 +268,8 @@ public class SiegeController {
 		siegedTowns.remove(siege.getTown());
 		//Save town
 		town.save();
+		//Call event
+		Bukkit.getPluginManager().callEvent(new SiegeRemoveEvent(siege));
 	}
 
 	public static void putTownInSiegeMap(Town town, Siege siege) {
