@@ -57,7 +57,7 @@ public class SiegeWarBattleSessionUtil {
 		//Send global message to let the server know that the battle session started
 		Translatable message = Translatable.of("msg_war_siege_battle_session_started");
 		//Send up the Bukkit event for other plugins to listen for.
-		Bukkit.getPluginManager().callEvent(new BattleSessionStartedEvent(message.toString()));
+		Bukkit.getPluginManager().callEvent(new BattleSessionStartedEvent(message.defaultLocale()));
 		//Recalculate recent battle sessions of players
 		try { Thread.sleep(5000); //Sleep to ensure recalculation is good
 		} catch (InterruptedException e) { e.printStackTrace();}
@@ -88,9 +88,9 @@ public class SiegeWarBattleSessionUtil {
 		for (Siege siege : SiegeController.getSieges())
 			endBattleSessionForSiege(siege);
 
-		StringBuilder message = new StringBuilder(getBattleSessionEndedMessageHeader(battleResults).toString());
+		StringBuilder message = new StringBuilder(getBattleSessionEndedMessageHeader(battleResults).defaultLocale());
 
-		getBattleSessionEndedMessageLines(battleResults).forEach(translatable -> message.append("\n").append(translatable.toString()));
+		getBattleSessionEndedMessageLines(battleResults).forEach(translatable -> message.append("\n").append(translatable.defaultLocale()));
 
 		Bukkit.getPluginManager().callEvent(new BattleSessionEndedEvent(message.toString()));
 		

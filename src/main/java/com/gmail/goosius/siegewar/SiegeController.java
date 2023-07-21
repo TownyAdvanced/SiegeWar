@@ -643,6 +643,6 @@ public class SiegeController {
 		addSiegeCamp(camp);
 		SiegeWar.getSiegeWar().getScheduler().run(camp.getBannerBlock().getLocation(), ()-> SiegeCampUtil.evaluateCamp(camp, true));
 		// Call event
-		Bukkit.getPluginManager().callEvent(new SiegeCampStartEvent(camp, translatable.toString()));
+		Bukkit.getPluginManager().callEvent(new SiegeCampStartEvent(camp, translatable.defaultLocale()));
 	}
 }

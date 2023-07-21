@@ -86,7 +86,7 @@ public class SiegeWarSelfListener implements Listener {
 		DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
 		webhook.addEmbed(new DiscordWebhook.EmbedObject()
 				.setColor(Color.decode(event.getNation().getMapColorHexCode()))
-				.setDescription(SiegeController.getGlobalSiegeStartMessage(event.getSiege()).toString().substring(2))
+				.setDescription(SiegeController.getGlobalSiegeStartMessage(event.getSiege()).defaultLocale().substring(2))
 		);
 		try {
 			webhook.execute();

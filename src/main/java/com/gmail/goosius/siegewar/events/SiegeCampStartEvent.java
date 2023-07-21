@@ -11,7 +11,7 @@ import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * An event that marks the end of a {@link SiegeCamp}.
+ * An event that marks the start of a {@link SiegeCamp}.
  *
  * SiegeCamps precede Sieges, acting as a minigame of sorts, in which the
  * Siege-starter must gain an amount of points:
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
  * sieged by actual enemies.
  *
  * @author ewof
- * @since 0.7.2
+ * @since 2.8.0
  */
 public class SiegeCampStartEvent extends Event {
 

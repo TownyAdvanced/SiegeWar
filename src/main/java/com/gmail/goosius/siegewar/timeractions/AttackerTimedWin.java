@@ -51,7 +51,7 @@ public class AttackerTimedWin {
         //Standard effects message
         String key2 = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toLowerCase());
         message.append(Translatable.of(key2));
-        siege.setEndMessage(message.toString());
+        siege.setEndMessage(message.defaultLocale());
         return message;
     }
 
