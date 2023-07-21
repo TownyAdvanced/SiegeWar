@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.listeners;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.events.*;
 import com.gmail.goosius.siegewar.utils.DiscordWebhook;
+import com.palmergames.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -33,7 +34,7 @@ public class SiegeWarSelfListener implements Listener {
 
 		webhook.addEmbed(new DiscordWebhook.EmbedObject()
 				.setColor(new Color(255, 157, 0))
-				.setDescription(event.getMessage().substring(2))
+				.setDescription(LegacyComponentSerializer.legacySection().deserialize(event.getMessage()).content())
 		);
 		try {
 			webhook.execute();
@@ -51,7 +52,7 @@ public class SiegeWarSelfListener implements Listener {
 
 		webhook.addEmbed(new DiscordWebhook.EmbedObject()
 				.setColor(new Color(255, 157, 0))
-				.setDescription(event.getMessage().substring(2))
+				.setDescription(LegacyComponentSerializer.legacySection().deserialize(event.getMessage()).content())
 		);
 		try {
 			webhook.execute();
