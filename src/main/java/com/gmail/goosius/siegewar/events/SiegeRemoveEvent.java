@@ -7,7 +7,7 @@ import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This event is triggered immediately after a siege is removed (via admin command or
+ * This event is triggered after the town is saved and the siege is removed.
  * Note: If end-users want names of the town/attacker/defender,
  *       they should be careful about getting the name via town/nation objects,
  *       as these towns/nations may disappear after the siege.
