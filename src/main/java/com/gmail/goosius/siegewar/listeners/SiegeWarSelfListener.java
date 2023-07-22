@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.events.*;
+import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.utils.DiscordWebhook;
 import com.palmergames.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.event.EventHandler;
@@ -81,7 +82,7 @@ public class SiegeWarSelfListener implements Listener {
 
 	@EventHandler
 	public void onSiegeWarStart(SiegeWarStartEvent event) {
-		if (!SiegeWarSettings.isDiscordWebhookEnabled() || SiegeWarSettings.isSiegeStartNotificationEnabled())
+		if (!SiegeWarSettings.isDiscordWebhookEnabled() || !SiegeWarSettings.isSiegeStartNotificationEnabled())
 			return;
 
 		DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
@@ -98,14 +99,15 @@ public class SiegeWarSelfListener implements Listener {
 
 	@EventHandler
 	public void onSiegeEnd(SiegeEndEvent event) {
-		if (!SiegeWarSettings.isDiscordWebhookEnabled() || !SiegeWarSettings.isSiegeEndNotificationEnabled())
+		Siege siege = event.getSiege();
+		if (!SiegeWarSettings.isDiscordWebhookEnabled() || !SiegeWarSettings.isSiegeEndNotificationEnabled() || !siege.getStatus().isActive())
 			return;
 
 		DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
 
 		webhook.addEmbed(new DiscordWebhook.EmbedObject()
 				.setColor(Color.decode(event.getNation().getMapColorHexCode()))
-				.setDescription(LegacyComponentSerializer.legacySection().deserialize(event.getSiege().getEndMessage()).content())
+				.setDescription(LegacyComponentSerializer.legacySection().deserialize(siege.getEndMessage()).content())
 		);
 		try {
 			webhook.execute();
@@ -123,7 +125,7 @@ public class SiegeWarSelfListener implements Listener {
 
 		webhook.addEmbed(new DiscordWebhook.EmbedObject()
 				.setColor(Color.decode(event.getNation().getMapColorHexCode()))
-				.setDescription(Translatable.of("msg_swa_remove_siege_success").defaultLocale())
+				.setDescription(LegacyComponentSerializer.legacySection().deserialize(Translatable.of("msg_swa_remove_siege_success").defaultLocale() + " " + event.getSiege().getTown().getName()).content())
 		);
 		try {
 			webhook.execute();
