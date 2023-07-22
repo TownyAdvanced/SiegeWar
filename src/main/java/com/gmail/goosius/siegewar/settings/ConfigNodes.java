@@ -1035,11 +1035,15 @@ public enum ConfigNodes {
 	DISCORD_WEBHOOK_NOTIFICATION_SIEGE_START(
 			"discord_webhook.notifcation_siege_start",
 			"true",
-			"# Announce when a battle siege starts. Uses msg_conquest_siege_started_*"),
+			"# Announce when a siege starts. Uses msg_conquest_siege_started_*"),
 	DISCORD_WEBHOOK_NOTIFICATION_SIEGE_END(
 			"discord_webhook.notifcation_siege_end",
 			"true",
-			"# Announce when a battle session ends. Uses msg_war_siege_battle_session_ended_*"),
+			"# Announce when a siege ends. Uses msg_war_siege_battle_session_ended_*"),
+	DISCORD_WEBHOOK_NOTIFICATION_SIEGE_REMOVE(
+			"discord_webhook.notifcation_siege_REMOVE",
+			"true",
+			"# Announce when a siege is removed. Uses msg_swa_remove_siege_success"),
 	BAD_CONFIG_WARNINGS(
 			"bad_config_warnings",
 			"",

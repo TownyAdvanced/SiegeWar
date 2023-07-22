@@ -564,6 +564,10 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_NOTIFICATION_SIEGE_END);
 	}
 
+	public static boolean isSiegeRemoveNotificationEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_NOTIFICATION_SIEGE_REMOVE);
+	}
+
 	public static boolean isBadConfigWarningsEnabled() {
 		return Settings.getBoolean(ConfigNodes.BAD_CONFIG_WARNINGS_ENABLED);
 	}

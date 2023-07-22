@@ -27,7 +27,7 @@ public class SiegeWarSelfListener implements Listener {
 
 	@EventHandler
 	public void onBattleSessionStarted(BattleSessionStartedEvent event) {
-		if (!SiegeWarSettings.isDiscordWebhookEnabled())
+		if (!SiegeWarSettings.isDiscordWebhookEnabled() || !SiegeWarSettings.isSessionStartNotificationEnabled())
 			return;
 
 		DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
@@ -45,7 +45,7 @@ public class SiegeWarSelfListener implements Listener {
 
 	@EventHandler
 	public void onBattleSessionEnded(BattleSessionEndedEvent event) {
-		if (!SiegeWarSettings.isDiscordWebhookEnabled())
+		if (!SiegeWarSettings.isDiscordWebhookEnabled() || !SiegeWarSettings.isSessionEndNotificationEnabled())
 			return;
 
 		DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
@@ -63,7 +63,7 @@ public class SiegeWarSelfListener implements Listener {
 
 	@EventHandler
 	public void onSiegeCampStart(SiegeCampStartEvent event) {
-		if (!SiegeWarSettings.isDiscordWebhookEnabled())
+		if (!SiegeWarSettings.isDiscordWebhookEnabled() || !SiegeWarSettings.isSiegeCampStartNotificationEnabled())
 			return;
 
 		DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
@@ -81,13 +81,13 @@ public class SiegeWarSelfListener implements Listener {
 
 	@EventHandler
 	public void onSiegeWarStart(SiegeWarStartEvent event) {
-		if (!SiegeWarSettings.isDiscordWebhookEnabled())
+		if (!SiegeWarSettings.isDiscordWebhookEnabled() || SiegeWarSettings.isSiegeStartNotificationEnabled())
 			return;
 
 		DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
 		webhook.addEmbed(new DiscordWebhook.EmbedObject()
 				.setColor(Color.decode(event.getNation().getMapColorHexCode()))
-				.setDescription(SiegeController.getGlobalSiegeStartMessage(event.getSiege()).defaultLocale().substring(2))
+				.setDescription(LegacyComponentSerializer.legacySection().deserialize(SiegeController.getGlobalSiegeStartMessage(event.getSiege()).defaultLocale()).content())
 		);
 		try {
 			webhook.execute();
@@ -98,14 +98,32 @@ public class SiegeWarSelfListener implements Listener {
 
 	@EventHandler
 	public void onSiegeEnd(SiegeEndEvent event) {
-		if (!SiegeWarSettings.isDiscordWebhookEnabled())
+		if (!SiegeWarSettings.isDiscordWebhookEnabled() || !SiegeWarSettings.isSiegeEndNotificationEnabled())
 			return;
 
 		DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
 
 		webhook.addEmbed(new DiscordWebhook.EmbedObject()
 				.setColor(Color.decode(event.getNation().getMapColorHexCode()))
-				.setDescription(event.getSiege().getEndMessage().substring(2))
+				.setDescription(LegacyComponentSerializer.legacySection().deserialize(event.getSiege().getEndMessage()).content())
+		);
+		try {
+			webhook.execute();
+		} catch (java.io.IOException e) {
+			SiegeWar.getSiegeWar().getLogger().severe(Arrays.toString(e.getStackTrace()));
+		}
+	}
+
+	@EventHandler
+	public void onSiegeRemove(SiegeRemoveEvent event) {
+		if (!SiegeWarSettings.isDiscordWebhookEnabled() || !SiegeWarSettings.isSiegeRemoveNotificationEnabled())
+			return;
+
+		DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
+
+		webhook.addEmbed(new DiscordWebhook.EmbedObject()
+				.setColor(Color.decode(event.getNation().getMapColorHexCode()))
+				.setDescription(Translatable.of("msg_swa_remove_siege_success").defaultLocale())
 		);
 		try {
 			webhook.execute();
