@@ -485,7 +485,9 @@ public class SiegeWarMoneyUtil {
 		//Calculate the average.
 		double totalMoneyInAllTowns = 0;
 		for(Town town: TownyAPI.getInstance().getTowns()) {
-			totalMoneyInAllTowns += town.getAccount().getHoldingBalance();
+			if(town.hasMayor() && !town.getMayor().isNPC()) {
+				totalMoneyInAllTowns += town.getAccount().getHoldingBalance();
+			}
 		}
 		double averageMoneyPerTown = totalMoneyInAllTowns / TownyAPI.getInstance().getTowns().size();
 
@@ -497,11 +499,13 @@ public class SiegeWarMoneyUtil {
 		double edgeCaseThreshold = averageMoneyPerTown * 3;
 		double moneyInOneTown;
 		for(Town town: TownyAPI.getInstance().getTowns()) {
-			moneyInOneTown = town.getAccount().getHoldingBalance();
-			if(moneyInOneTown < edgeCaseThreshold) {
-				result += moneyInOneTown;
-			} else {
-				result += averageMoneyPerTown;
+			if(town.hasMayor() && !town.getMayor().isNPC()) {
+				moneyInOneTown = town.getAccount().getHoldingBalance();
+				if (moneyInOneTown < edgeCaseThreshold) {
+					result += moneyInOneTown;
+				} else {
+					result += averageMoneyPerTown;
+				}
 			}
 		}
 		
@@ -514,7 +518,9 @@ public class SiegeWarMoneyUtil {
 		//Calculate the average.
 		double totalMoneyInAllNations = 0;
 		for(Nation nation: TownyAPI.getInstance().getNations()) {
-			totalMoneyInAllNations += nation.getAccount().getHoldingBalance();
+			if(nation.hasKing() && !nation.getKing().isNPC()) {
+				totalMoneyInAllNations += nation.getAccount().getHoldingBalance();
+			}
 		}
 		double averageMoneyPerNation = totalMoneyInAllNations / TownyAPI.getInstance().getTowns().size();
 
@@ -526,11 +532,13 @@ public class SiegeWarMoneyUtil {
 		double edgeCaseThreshold = averageMoneyPerNation * 3;
 		double moneyInOneNation;
 		for(Nation nation: TownyAPI.getInstance().getNations()) {
-			moneyInOneNation = nation.getAccount().getHoldingBalance();
-			if(moneyInOneNation < edgeCaseThreshold) {
-				result += moneyInOneNation;
-			} else {
-				result += averageMoneyPerNation;
+			if(nation.hasKing() && !nation.getKing().isNPC()) {
+				moneyInOneNation = nation.getAccount().getHoldingBalance();
+				if (moneyInOneNation < edgeCaseThreshold) {
+					result += moneyInOneNation;
+				} else {
+					result += averageMoneyPerNation;
+				}
 			}
 		}
 
