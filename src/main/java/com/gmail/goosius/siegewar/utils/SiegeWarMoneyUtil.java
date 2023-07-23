@@ -443,19 +443,13 @@ public class SiegeWarMoneyUtil {
 	}
 
 	private static void calculateEstimatedTotalMoneyInEconomyNow() {
+		//Calculate estimated total money in economy
 		double result = 0;
-		//Town Accounts
-		for(Town town: TownyAPI.getInstance().getTowns()) {
-			result += town.getAccount().getHoldingBalance();
-		}
-		//Nation Accounts
-		for(Nation nation: TownyAPI.getInstance().getNations()) {
-			result += nation.getAccount().getHoldingBalance();
-		}
-		//Resident Accounts. Add 10% as an estimate for what residents have
-		result *= 1.1;
-		//Record result
+		result += calculateEstimatedTotalMoneyInTowns();
+		result += calculateEstimatedTotalMoneyInNations();
+		result *= 1.1; //Add 10% as an estimate for what residents have 
 		estimatedTotalMoneyInEconomy = result;
+
 		//Show useful info in console
 		SiegeWar.info("Estimated Total Money In Economy: " + estimatedTotalMoneyInEconomy);
 		SiegeWar.info("Total Number of Townblocks: " + TownyAPI.getInstance().getTownBlocks().size());
@@ -485,4 +479,61 @@ public class SiegeWarMoneyUtil {
 		return estimatedTotalMoneyInEconomy;
 	}
 
+	private static double calculateEstimatedTotalMoneyInTowns() {
+		double result = 0;
+		
+		//Calculate the average.
+		double totalMoneyInAllTowns = 0;
+		for(Town town: TownyAPI.getInstance().getTowns()) {
+			totalMoneyInAllTowns += town.getAccount().getHoldingBalance();
+		}
+		double averageMoneyPerTown = totalMoneyInAllTowns / TownyAPI.getInstance().getTowns().size();
+
+		/*
+		 * Calculate the result, 
+		 * Some edge cases may be abnormally high. These could be admin towns or people who were cheating.
+		 * In these case, assign the average value.
+		 */
+		double edgeCaseThreshold = averageMoneyPerTown * 3;
+		double moneyInOneTown;
+		for(Town town: TownyAPI.getInstance().getTowns()) {
+			moneyInOneTown = town.getAccount().getHoldingBalance();
+			if(moneyInOneTown < edgeCaseThreshold) {
+				result += moneyInOneTown;
+			} else {
+				result += averageMoneyPerTown;
+			}
+		}
+		
+		return result;
+	}
+
+	private static double calculateEstimatedTotalMoneyInNations() {
+		double result = 0;
+
+		//Calculate the average.
+		double totalMoneyInAllNations = 0;
+		for(Nation nation: TownyAPI.getInstance().getNations()) {
+			totalMoneyInAllNations += nation.getAccount().getHoldingBalance();
+		}
+		double averageMoneyPerNation = totalMoneyInAllNations / TownyAPI.getInstance().getTowns().size();
+
+		/*
+		 * Calculate the result,
+		 * Some edge cases may be abnormally high. These could be admin nations or people who were cheating.
+		 * In these case, assign the average value.
+		 */
+		double edgeCaseThreshold = averageMoneyPerNation * 3;
+		double moneyInOneNation;
+		for(Nation nation: TownyAPI.getInstance().getNations()) {
+			moneyInOneNation = nation.getAccount().getHoldingBalance();
+			if(moneyInOneNation < edgeCaseThreshold) {
+				result += moneyInOneNation;
+			} else {
+				result += averageMoneyPerNation;
+			}
+		}
+
+		return result;
+	}
 }
