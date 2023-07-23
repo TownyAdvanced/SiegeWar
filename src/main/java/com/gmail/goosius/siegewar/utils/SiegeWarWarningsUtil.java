@@ -74,11 +74,12 @@ public class SiegeWarWarningsUtil {
         double toleranceAmount = idealConfiguredValue * SiegeWarSettings.getBadConfigWarningsTolerancePercentage() / 100;
         double lowerBound = idealConfiguredValue - toleranceAmount;
         double upperBound = idealConfiguredValue + toleranceAmount;
+        String idealConfiguredValueAsString = String.format("%,.2f", idealConfiguredValue);
         if(actualConfiguredValue > upperBound) {
-            Messaging.sendErrorMsg(sender, Translatable.of("msg_err_value_configured_too_high", configIdentifier, "" + idealConfiguredValue , "" + actualConfiguredValue));
+            Messaging.sendErrorMsg(sender, Translatable.of("msg_err_value_configured_too_high", configIdentifier, "" + idealConfiguredValueAsString , "" + actualConfiguredValue));
             return true;
         } else if (actualConfiguredValue < lowerBound) {
-            Messaging.sendErrorMsg(sender, Translatable.of("msg_err_value_configured_too_low", configIdentifier, "" + idealConfiguredValue, "" + actualConfiguredValue));
+            Messaging.sendErrorMsg(sender, Translatable.of("msg_err_value_configured_too_low", configIdentifier, "" + idealConfiguredValueAsString, "" + actualConfiguredValue));
             return true;
         } else {
             return false;
