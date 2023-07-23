@@ -22,7 +22,7 @@ public class SiegeWarSelfListener implements Listener {
 		if (SiegeWarSettings.cancelBattleSessionWhenNoActiveSieges()
 		&& (SiegeController.getSieges().isEmpty() || SiegeController.getSieges().stream().noneMatch(siege -> siege.getStatus().isActive()))) {
 			event.setCancelled(true);
-			event.setCancellationMsg(Translatable.of("battle_session_cancelled_no_sieges").defaultLocale());
+			event.setCancellationMsg(Translatable.of("battle_session_cancelled_no_sieges").translate());
 		}
 	}
 
@@ -88,7 +88,7 @@ public class SiegeWarSelfListener implements Listener {
 		DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
 		webhook.addEmbed(new DiscordWebhook.EmbedObject()
 				.setColor(Color.decode(event.getNation().getMapColorHexCode()))
-				.setDescription(LegacyComponentSerializer.legacySection().deserialize(SiegeController.getGlobalSiegeStartMessage(event.getSiege()).defaultLocale()).content())
+				.setDescription(LegacyComponentSerializer.legacySection().deserialize(SiegeController.getGlobalSiegeStartMessage(event.getSiege()).translate()).content())
 		);
 		try {
 			webhook.execute();
@@ -125,7 +125,7 @@ public class SiegeWarSelfListener implements Listener {
 
 		webhook.addEmbed(new DiscordWebhook.EmbedObject()
 				.setColor(Color.decode(event.getNation().getMapColorHexCode()))
-				.setDescription(LegacyComponentSerializer.legacySection().deserialize(Translatable.of("msg_swa_remove_siege_success").defaultLocale() + " " + event.getSiege().getTown().getName()).content())
+				.setDescription(LegacyComponentSerializer.legacySection().deserialize(Translatable.of("msg_swa_remove_siege_success").translate() + " " + event.getSiege().getTown().getName()).content())
 		);
 		try {
 			webhook.execute();
