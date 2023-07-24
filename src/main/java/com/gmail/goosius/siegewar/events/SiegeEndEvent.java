@@ -90,7 +90,6 @@ public class SiegeEndEvent extends Event {
 	/**
 	 * @return the defenderName
 	 */
-    @Nullable
 	public String getDefenderName() {
 		return defenderName;
 	}
