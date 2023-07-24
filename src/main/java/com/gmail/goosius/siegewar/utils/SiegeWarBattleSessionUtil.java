@@ -317,7 +317,7 @@ public class SiegeWarBattleSessionUtil {
 		}
 		return lines;
 	}
-
+												
 	public static String getFormattedTimeUntilNextBattleSessionStarts() {
 		Long startTimeOfTodaysNextBattleSession = BattleSession.getBattleSession().getScheduledStartTime();
 		if(startTimeOfTodaysNextBattleSession == null) {

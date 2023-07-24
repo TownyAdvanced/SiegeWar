@@ -546,7 +546,7 @@ public class SiegeController {
 
 		}
 	}
-
+	
 	/**
 	 * List of {@link SiegeCamp}s, objects which precede a Siege.
 	 */
