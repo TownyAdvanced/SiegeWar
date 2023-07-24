@@ -511,7 +511,7 @@ public class SiegeController {
 		SiegeController.saveSiege(siege);
 
 		//Call event
-		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter));
+		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, SiegeController.getGlobalSiegeStartMessage(siege).defaultLocale()));
 	}
 
 	private static void sendGlobalSiegeStartMessage(Siege siege) {

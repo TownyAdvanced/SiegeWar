@@ -16,7 +16,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.object.Translatable;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class SiegeWarSelfListener implements Listener {
 	

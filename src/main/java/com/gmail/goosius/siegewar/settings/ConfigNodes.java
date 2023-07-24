@@ -1024,7 +1024,7 @@ public enum ConfigNodes {
 			"discord_webhook.fallback_color",
 			"#FF0000",
 			"",
-			"# If a color cannot be determined from a nation the embed will use this color instead"),
+			"# If a color cannot be determined from a nation or the notification isn't associated with a nation (battle session notifications) the embed will use this color instead."),
 	DISCORD_WEBHOOK_NOTIFICATION_SESSION_START(
 			"discord_webhook.notifcation_session_start",
 			"true",

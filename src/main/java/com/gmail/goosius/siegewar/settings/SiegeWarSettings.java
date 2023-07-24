@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar.settings;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
