@@ -97,6 +97,6 @@ public class SiegeRemoveEvent extends Event {
     }
 
     public String getMessage() {
-        return LegacyComponentSerializer.legacySection().deserialize(Translatable.of("msg_swa_remove_siege_success").defaultLocale() + " " + getDefenderName()).content();
+        return LegacyComponentSerializer.legacySection().deserialize(Translatable.of("msg_swa_remove_siege", getBesiegedTownName()).defaultLocale()).content();
     }
 }
