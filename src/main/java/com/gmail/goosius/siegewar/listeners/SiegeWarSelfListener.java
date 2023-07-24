@@ -50,7 +50,7 @@ public class SiegeWarSelfListener implements Listener {
 		if (!SiegeWarSettings.isDiscordWebhookEnabled() || !SiegeWarSettings.isSiegeCampStartNotificationEnabled())
 			return;
 
-		DiscordWebhook.sendWebhookNotification(Color.decode(event.getNation().getMapColorHexCode()), event.getMessage());
+		DiscordWebhook.sendWebhookNotification(Color.decode("#" + event.getNation().getMapColorHexCode()), event.getMessage());
 	}
 
 	@EventHandler
@@ -58,7 +58,7 @@ public class SiegeWarSelfListener implements Listener {
 		if (!SiegeWarSettings.isDiscordWebhookEnabled() || !SiegeWarSettings.isSiegeStartNotificationEnabled())
 			return;
 
-		DiscordWebhook.sendWebhookNotification(Color.decode(event.getNation().getMapColorHexCode()), event.getMessage());
+		DiscordWebhook.sendWebhookNotification(Color.decode("#" + event.getNation().getMapColorHexCode()), event.getMessage());
 	}
 
 	@EventHandler
@@ -67,7 +67,7 @@ public class SiegeWarSelfListener implements Listener {
 		if (!SiegeWarSettings.isDiscordWebhookEnabled() || !SiegeWarSettings.isSiegeEndNotificationEnabled())
 			return;
 
-		DiscordWebhook.sendWebhookNotification(Color.decode(event.getNation().getMapColorHexCode()), siege.getEndMessage(), siege.getStatus().isActive());
+		DiscordWebhook.sendWebhookNotification(Color.decode("#" + event.getNation().getMapColorHexCode()), siege.getEndMessage(), siege.getStatus().isActive());
 	}
 
 	@EventHandler
@@ -75,6 +75,6 @@ public class SiegeWarSelfListener implements Listener {
 		if (!SiegeWarSettings.isDiscordWebhookEnabled() || !SiegeWarSettings.isSiegeRemoveNotificationEnabled())
 			return;
 
-		DiscordWebhook.sendWebhookNotification(Color.decode(event.getNation().getMapColorHexCode()), event.getMessage());
+		DiscordWebhook.sendWebhookNotification(Color.decode("#" + event.getNation().getMapColorHexCode()), event.getMessage());
 	}
 }
