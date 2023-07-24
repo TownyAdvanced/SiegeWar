@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.events;
 
+import com.palmergames.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -26,6 +27,6 @@ public class BattleSessionStartedEvent extends Event {
 	}
 
 	public String getMessage() {
-		return message;
+		return LegacyComponentSerializer.legacySection().deserialize(message).content();
 	}
 }

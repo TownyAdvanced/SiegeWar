@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.settings;
 
+import java.awt.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -542,6 +543,10 @@ public class SiegeWarSettings {
 
 	public static String getDiscordWebhookUrl() {
 		return Settings.getString(ConfigNodes.DISCORD_WEBHOOK_URL);
+	}
+
+	public static Color getFallbackColor() {
+		return Color.decode(Settings.getString(ConfigNodes.DISCORD_WEBHOOK_FALLBACK_COLOR));
 	}
 
 	public static boolean isSessionStartNotificationEnabled() {

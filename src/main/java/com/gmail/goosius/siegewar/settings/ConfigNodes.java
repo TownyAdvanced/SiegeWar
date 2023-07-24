@@ -1020,6 +1020,11 @@ public enum ConfigNodes {
 			"https://discord.com/api/webhooks/SECRET",
 			"",
 			"# See discord docs https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks"),
+	DISCORD_WEBHOOK_FALLBACK_COLOR(
+			"discord_webhook.fallback_color",
+			"#FF0000",
+			"",
+			"# If a color cannot be determined from a nation the embed will use this color instead"),
 	DISCORD_WEBHOOK_NOTIFICATION_SESSION_START(
 			"discord_webhook.notifcation_session_start",
 			"true",

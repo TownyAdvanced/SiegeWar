@@ -1,16 +1,15 @@
 package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 //https://gist.github.com/k3kdude/fba6f6b37594eae3d6f9475330733bdb
 
@@ -390,4 +389,22 @@ public class DiscordWebhook {
         }
     }
 
+    public static void sendWebhookNotification(Color color, String message) {
+        sendWebhookNotification(color, message, true);
+    }
+
+    public static void sendWebhookNotification(Color color, String message, boolean active) {
+        DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
+
+        webhook.addEmbed(new DiscordWebhook.EmbedObject()
+                .setColor(color)
+                .setDescription(message)
+        );
+        try {
+            webhook.execute();
+        } catch (java.io.IOException e) {
+            if (active)
+                SiegeWar.getSiegeWar().getLogger().severe(Arrays.toString(e.getStackTrace()));
+        }
+    }
 }

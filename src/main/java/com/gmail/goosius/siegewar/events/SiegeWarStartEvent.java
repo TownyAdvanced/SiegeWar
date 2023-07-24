@@ -1,6 +1,8 @@
 package com.gmail.goosius.siegewar.events;
 
+import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.palmergames.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.block.Block;
@@ -60,4 +62,8 @@ public class SiegeWarStartEvent extends Event {
 	public Town getTargetTown() {
 		return targetTown;
 	}
+
+    public String getMessage() {
+        return LegacyComponentSerializer.legacySection().deserialize(SiegeController.getGlobalSiegeStartMessage(siege).defaultLocale()).content();
+    }
 }
