@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -29,7 +30,8 @@ public class SiegeCampStartEvent extends Event {
     private final SiegeCamp siegeCamp;
     private final String message;
 
-    public SiegeCampStartEvent(SiegeCamp camp, String message){
+    public SiegeCampStartEvent(SiegeCamp camp, String message) {
+        super(!Bukkit.getServer().isPrimaryThread());
         this.siegeCamp = camp;
         this.message = message;
     }
