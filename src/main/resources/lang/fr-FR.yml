@@ -31,7 +31,7 @@ msg_siege_war_town_ruined_from_plunder: '&b%s a été réduit en ruines par %s!'
 msg_siege_war_town_bankrupted_from_plunder: '&b%s a été mis en faillite par %s!'
 msg_siege_war_nation_defeated: '&b%s a été vaincu !.'
 msg_siege_war_attacking_troops_at_siege_banner: '&bSiège sur %s > Les attaquants sont à la bannière de siège.'
-msg_siege_war_banner_control_session_success: '&bLa session de contrôle de bannière a réussi ! Vous avez été ajouté à la liste de contrôle des bannières.'
+msg_siege_war_banner_control_session_success: '&bBanner control session succeeded! You have been added to the banner control list.'
 msg_siege_war_banner_control_gained_by_attacker: '&bSiège sur %s > Les attaquants ont acquis le contrôle de la bannière.'
 msg_siege_war_banner_control_gained_by_defender: '&bSiège sur %s > Les défenseurs ont acquis le contrôle de la bannière.'
 msg_town_destroyed_by_nation_tax: '&b%s ne pouvait pas payer de taxes et est ruiné.'
@@ -164,8 +164,8 @@ msg_siege_war_version: '&bThe current SiegeWar version is: %s.'
 #Added in 0.14
 msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain within %d blocks of the banner, but staying out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
 msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control session started. Remain within %d blocks of the banner, but staying below it''s altitude and out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
-msg_siege_war_banner_control_session_failure: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, or entering the town,.'
-msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed!. Common causes for this include: dying, going too far from the banner, going below the banner altitude, or entering the town.'
+msg_siege_war_banner_control_session_failure: '&cBanner control session failed! Common causes for this include: dying, going too far from the banner, or entering the town.'
+msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed! Common causes for this include: dying, going too far from the banner, going below the banner altitude, or entering the town.'
 ##### Added in 0.15
 #Town Merging
 msg_err_cannot_merge_towns: '&cUnable to merge a town that is under siege!'
@@ -405,22 +405,22 @@ msg_swa_town_peacefulness_change_success: '&bSuccessfully changed the peacefulne
 msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation status of %s to %s.'
 msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended."
 #Timed wins
-msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has won a %s victory against the defending army of %s!.'
-msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!.'
-msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has defeated the rebels with a %s victory!.'
-msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded!. The attacking rebels have successfully driven off the attacking army of %s!, with a %s victory!.'
+msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has won a %s victory against the defending army of %s!'
+msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!'
+msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has defeated the rebels with a %s victory!'
+msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded! The attacking rebels have successfully driven off the attacking army of %s!, with a %s victory!'
 msg_decisive: 'DECISIVE'
 msg_close: 'CLOSE'
 #Abandoning Attacks
-msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > The attacking army of %s has admitted defeat and retreated!. This action will be confirmed when siege progress is complete.'
-msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has admitted defeat and retreated!. This action will be confirmed when siege progress is complete.'
+msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > The attacking army of %s has admitted defeat and retreated! This action will be confirmed when siege progress is complete.'
+msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has admitted defeat and retreated! This action will be confirmed when siege progress is complete.'
 msg_conquest_siege_attacker_abandon_confirmed: '&bCONQUEST SIEGE at %s > Attacker Abandon Confirmed!'
 msg_revolt_siege_attacker_abandon_confirmed: '&bREVOLT SIEGE at %s > Attacker Abandon Confirmed!'
 #Surrendering Defence
-msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has surrendered to the attacking army of %s!. This action will be confirmed when siege progress is complete.'
-msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The rebels have admitted defeat and surrendered to the attacking army of %s!. This action will be confirmed when siege progress is complete.'
-msg_conquest_siege_defender_surrender_confirmed: '&bCONQUEST SIEGE at %s > Defender Surrender Confirmed!.'
-msg_revolt_siege_defender_surrender_confirmed: '&bREVOLT SIEGE at %s > Defender Surrender Confirmed!.'
+msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has surrendered to the attacking army of %s! This action will be confirmed when siege progress is complete.'
+msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The rebels have admitted defeat and surrendered to the attacking army of %s! This action will be confirmed when siege progress is complete.'
+msg_conquest_siege_defender_surrender_confirmed: '&bCONQUEST SIEGE at %s > Defender Surrender Confirmed!'
+msg_revolt_siege_defender_surrender_confirmed: '&bREVOLT SIEGE at %s > Defender Surrender Confirmed!'
 msg_err_siege_occupied_towns_cannot_surrender_in_conquest_sieges: '&cIn CONQUEST sieges, occupied towns cannot surrender.'
 #Siege Results
 msg_conquest_siege_attacker_win_result: ' The town now stands open for invasion and/or plunder.'
@@ -449,7 +449,7 @@ msg_err_cannot_set_occupation_without_nation: '&cTown %s has no nation. You must
 msg_err_cannot_invade_not_enough_permissions: "&cYou do not have enough permissions to capture the town."
 msg_err_occupied_towns_cannot_leave_their_nations: "&cOccupied towns cannot leave their nations in the usual way. To leave the nation, start a revolt siege."
 #Siegezone proximity warning
-msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!."
+msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!"
 #Plunder
 msg_err_cannot_plunder_not_enough_permissions: "&cYou do not have enough permissions to plunder the town."
 #Not a town/nation member
@@ -479,7 +479,7 @@ msg_can_also_chat_in_discord: " You can also chat in the server discord: %s."
 #Bad Config Warnings
 msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. Calculated ideal value: %s. Actual configured value: %s."
 msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. Calculated ideal value: %s. Actual configured value: %s."
-msg_err_note_about_warnings: "&cNOTE: If you have 'test/debug' towns or nations, make sure their bank balances are not too high, otherwise the warnings will be inaccurate."
+msg_err_note_about_warnings: "&cNOTE: If your server has not launched yet, don't worry if the ideal values look wrong. The warnings will self-correct as soon as players start creating towns/nations."
 #Block Placement
 msg_err_banner_cannot_be_more_than_one_block_away: "&cThe banner cannot be more than 1 block away from the target town."
 #Battle Commanders / Mobile Spawn Points

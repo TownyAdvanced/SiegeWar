@@ -633,7 +633,7 @@ msg_can_also_chat_in_discord: " You can also chat in the server discord: %s."
 
 msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. Calculated ideal value: %s. Actual configured value: %s."
 msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. Calculated ideal value: %s. Actual configured value: %s."
-msg_err_note_about_warnings: "&cNOTE: If you have 'test/debug' towns or nations, make sure their bank balances are not too high, otherwise the warnings will be inaccurate."
+msg_err_note_about_warnings: "&cNOTE: If your server has not launched yet, don't worry if the ideal values look wrong. The warnings will self-correct as soon as players start creating towns/nations."
 
 #Block Placement
 
