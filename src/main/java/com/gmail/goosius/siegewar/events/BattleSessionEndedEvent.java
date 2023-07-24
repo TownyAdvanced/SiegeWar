@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class BattleSessionEndedEvent extends Event {
 
 	private static final HandlerList handlers = new HandlerList();
-	private String message;
+	private final String message;
 
 	public BattleSessionEndedEvent(String message) {
 		super(!Bukkit.getServer().isPrimaryThread());
