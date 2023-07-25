@@ -654,4 +654,4 @@ msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cYou cannot spawn to t
 msg_err_cannot_spawn_not_in_homeblock: "&cYou must be in your town homeblock to spawn to the siege."
 
 #Added in 2.8.0
-msg_swa_remove_siege: '&bSuccessfully removed siege of %s.'
+msg_swa_remove_siege: '&bSiege of %s removed via admin commands.'
