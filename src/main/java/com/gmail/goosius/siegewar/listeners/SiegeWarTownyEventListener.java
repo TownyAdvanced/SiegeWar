@@ -262,6 +262,7 @@ public class SiegeWarTownyEventListener implements Listener {
                 && event.getOutlawLocation() != null
                 && event.getOutlawLocation().getWorld() != null
                 && TownyAPI.getInstance().getTownyWorld(event.getOutlawLocation().getWorld()).isWarAllowed()
+                && event.getTown() != null
                 && SiegeController.hasActiveSiege(event.getTown())) {
     		event.setCancelled(true);
             }
