@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.settings;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -534,6 +535,42 @@ public class SiegeWarSettings {
 
 	public static String getToxicityReductionServerDiscordLink() {
 		return Settings.getString(ConfigNodes.TOXICITY_REDUCTION_DISCORD_LINK);
+	}
+
+	public static boolean isDiscordWebhookEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_ENABLED);
+	}
+
+	public static String getDiscordWebhookUrl() {
+		return Settings.getString(ConfigNodes.DISCORD_WEBHOOK_URL);
+	}
+
+	public static Color getFallbackColor() {
+		return Color.decode(Settings.getString(ConfigNodes.DISCORD_WEBHOOK_FALLBACK_COLOR));
+	}
+
+	public static boolean isSessionStartNotificationEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_NOTIFICATION_SESSION_START);
+	}
+
+	public static boolean isSessionEndNotificationEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_NOTIFICATION_SESSION_END);
+	}
+
+	public static boolean isSiegeCampStartNotificationEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_NOTIFICATION_SIEGECAMP_START);
+	}
+
+	public static boolean isSiegeStartNotificationEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_NOTIFICATION_SIEGE_START);
+	}
+
+	public static boolean isSiegeEndNotificationEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_NOTIFICATION_SIEGE_END);
+	}
+
+	public static boolean isSiegeRemoveNotificationEnabled() {
+		return Settings.getBoolean(ConfigNodes.DISCORD_WEBHOOK_NOTIFICATION_SIEGE_REMOVE);
 	}
 
 	public static boolean isBadConfigWarningsEnabled() {

@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.events;
 
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.palmergames.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.block.Block;
@@ -17,14 +18,16 @@ public class SiegeWarStartEvent extends Event {
     private final Nation nation;
     private final Block flag;
     private final Town targetTown;
+    private final String message;
 
-    public SiegeWarStartEvent(Siege siege, Town townOfSiegeStarter) {
+    public SiegeWarStartEvent(Siege siege, Town townOfSiegeStarter, String message) {
         this.siege = siege;
         this.siegeType = siege.getSiegeType().getName();
         this.targetTown = siege.getTown();
         this.townOfSiegeStarter = townOfSiegeStarter;
         this.nation = siege.isRevoltSiege() ? targetTown.getNationOrNull() : (Nation)siege.getAttackingNationIfPossibleElseTown();
         this.flag = siege.getFlagLocation().getBlock();
+        this.message = message;
     }
 
     @NotNull
@@ -60,4 +63,8 @@ public class SiegeWarStartEvent extends Event {
 	public Town getTargetTown() {
 		return targetTown;
 	}
+
+    public String getMessage() {
+        return LegacyComponentSerializer.legacySection().deserialize(message).content();
+    }
 }

@@ -4,6 +4,7 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -58,7 +59,8 @@ public class Siege {
 	private int numberOfBannerControlReversals;
 	private Resident attackingCommander;
 	private Resident defendingCommander;
-	
+	private String endMessage;
+
 	public Siege(Town town) {
 		this.town = town;
         siegeType = null;
@@ -79,6 +81,7 @@ public class Siege {
 		numberOfBannerControlReversals = 0;
 		attackingCommander = null;
 		defendingCommander = null;
+		endMessage = "";
     }
 
     public Town getTown() {
@@ -423,5 +426,13 @@ public class Siege {
 
 	public void setDefendingCommander(Resident defendingCommander) {
 		this.defendingCommander = defendingCommander;
+	}
+
+	public String getEndMessage() {
+		return LegacyComponentSerializer.legacySection().deserialize(endMessage).content();
+	}
+
+	public void setEndMessage(String message) {
+		this.endMessage = message;
 	}
 }

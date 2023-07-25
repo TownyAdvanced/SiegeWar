@@ -999,6 +999,56 @@ public enum ConfigNodes {
 			"",
 			"# If this value is not blank,",
 			"# Then players attempting general chat during battle sessions, will be directed towards the server discord."),
+	DISCORD_WEBHOOK(
+			"discord_webhook",
+			"",
+			"",
+			"",
+			"############################################################",
+			"# +------------------------------------------------------+ #",
+			"# |                  DISCORD WEBHOOK                     | #",
+			"# +------------------------------------------------------+ #",
+			"############################################################",
+			""),
+	DISCORD_WEBHOOK_ENABLED(
+			"discord_webhook.enabled",
+			"false",
+			"",
+			"# If this value is true, and a valid webhook is supplied, siegewar notifications will be announced in your discord server!"),
+	DISCORD_WEBHOOK_URL(
+			"discord_webhook.url",
+			"https://discord.com/api/webhooks/SECRET",
+			"",
+			"# See discord docs https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks"),
+	DISCORD_WEBHOOK_FALLBACK_COLOR(
+			"discord_webhook.fallback_color",
+			"#FF0000",
+			"",
+			"# If a color cannot be determined from a nation or the notification isn't associated with a nation (battle session notifications) the embed will use this color instead."),
+	DISCORD_WEBHOOK_NOTIFICATION_SESSION_START(
+			"discord_webhook.notifcation_session_start",
+			"true",
+			"# Announce when a battle session starts. Uses msg_war_siege_battle_session_started"),
+	DISCORD_WEBHOOK_NOTIFICATION_SESSION_END(
+			"discord_webhook.notifcation_session_end",
+			"true",
+			"# Announce when a battle session ends. Uses msg_war_siege_battle_session_ended_*"),
+	DISCORD_WEBHOOK_NOTIFICATION_SIEGECAMP_START(
+			"discord_webhook.notifcation_siegecamp_start",
+			"true",
+			"# Announce when a siege camp starts. Uses attacker_has_begun_a_siegecamp_session"),
+	DISCORD_WEBHOOK_NOTIFICATION_SIEGE_START(
+			"discord_webhook.notifcation_siege_start",
+			"true",
+			"# Announce when a siege starts. Uses msg_conquest_siege_started_*"),
+	DISCORD_WEBHOOK_NOTIFICATION_SIEGE_END(
+			"discord_webhook.notifcation_siege_end",
+			"true",
+			"# Announce when a siege ends. Uses msg_war_siege_battle_session_ended_*"),
+	DISCORD_WEBHOOK_NOTIFICATION_SIEGE_REMOVE(
+			"discord_webhook.notifcation_siege_REMOVE",
+			"true",
+			"# Announce when a siege is removed. Uses msg_swa_remove_siege_success"),
 	BAD_CONFIG_WARNINGS(
 			"bad_config_warnings",
 			"",

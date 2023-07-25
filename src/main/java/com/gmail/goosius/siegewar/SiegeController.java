@@ -17,6 +17,7 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.events.SiegeRemoveEvent;
+import com.gmail.goosius.siegewar.events.SiegeCampStartEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
@@ -481,7 +482,9 @@ public class SiegeController {
 		SiegeController.setSiege(targetTown, true);
 		SiegeController.putTownInSiegeMap(targetTown, siege);
 
-		sendGlobalSiegeStartMessage(siege);
+
+		Translatable startMessage = getGlobalSiegeStartMessage(siege);
+		Messaging.sendGlobalMessage(startMessage);
 
 		SiegeWarMoneyUtil.payUpfrontSiegeStartCost(siege);
 
@@ -510,36 +513,35 @@ public class SiegeController {
 		SiegeController.saveSiege(siege);
 
 		//Call event
-		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter));
+		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, startMessage.defaultLocale()));
 	}
 
-	private static void sendGlobalSiegeStartMessage(Siege siege) {
+	public static Translatable getGlobalSiegeStartMessage(Siege siege) {
 		switch (siege.getSiegeType()) {
-
+			case REVOLT:
+				return
+						Translatable.of("msg_revolt_siege_started",
+								siege.getTown().getName(),
+								siege.getAttacker().getName()
+						);
+			default:
 			case CONQUEST:
 				if (siege.getTown().hasNation()) {
-					Messaging.sendGlobalMessage(
+					return
 							Translatable.of("msg_conquest_siege_started_nation_town",
-							siege.getAttacker().getName(),
-							TownyAPI.getInstance().getTownNationOrNull(siege.getTown()).getName(),
-							siege.getTown().getName()
-					));
+									siege.getAttacker().getName(),
+									TownyAPI.getInstance().getTownNationOrNull(siege.getTown()).getName(),
+									siege.getTown().getName()
+							);
 				} else {
-					Messaging.sendGlobalMessage(
+					return
 							Translatable.of("msg_conquest_siege_started_neutral_town",
-							siege.getAttacker().getName(),
-							siege.getTown().getName()
-					));
+									siege.getAttacker().getName(),
+									siege.getTown().getName()
+							);
 				}
-				break;
 
-			case REVOLT:
-				Messaging.sendGlobalMessage(
-						Translatable.of("msg_revolt_siege_started",
-						siege.getTown().getName(),
-						siege.getAttacker().getName()
-				));
-				break;
+
 		}
 	}
 	
@@ -631,10 +633,14 @@ public class SiegeController {
 		if (SiegeCampUtil.hasFailedCamp(camp.getTargetTown(), camp.getTownOfSiegeStarter()))
 			throw new TownyException(Translatable.of("msg_err_too_soon_since_your_last_siegecamp"));
 
+		Translatable translatable = Translatable.of("attacker_has_begun_a_siegecamp_session", camp.getTownOfSiegeStarter(), camp.getTargetTown(), SiegeWarSettings.getSiegeCampPointsForSuccess(), SiegeWarSettings.getSiegeCampDurationInMinutes());
+
 		// Broadcast a message
-		Messaging.sendGlobalMessage(Translatable.of("attacker_has_begun_a_siegecamp_session", camp.getTownOfSiegeStarter(), camp.getTargetTown(), SiegeWarSettings.getSiegeCampPointsForSuccess(), SiegeWarSettings.getSiegeCampDurationInMinutes()));
+		Messaging.sendGlobalMessage(translatable);
 		// Add to SiegeCamp list and begin Evaluating this SiegeCamp for success.
 		addSiegeCamp(camp);
 		SiegeWar.getSiegeWar().getScheduler().run(camp.getBannerBlock().getLocation(), ()-> SiegeCampUtil.evaluateCamp(camp, true));
+		// Call event
+		Bukkit.getPluginManager().callEvent(new SiegeCampStartEvent(camp, translatable.defaultLocale()));
 	}
 }
