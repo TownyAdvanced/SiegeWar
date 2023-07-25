@@ -482,7 +482,9 @@ public class SiegeController {
 		SiegeController.setSiege(targetTown, true);
 		SiegeController.putTownInSiegeMap(targetTown, siege);
 
-		sendGlobalSiegeStartMessage(siege);
+
+		Translatable startMessage = getGlobalSiegeStartMessage(siege);
+		Messaging.sendGlobalMessage(startMessage);
 
 		SiegeWarMoneyUtil.payUpfrontSiegeStartCost(siege);
 
@@ -511,11 +513,7 @@ public class SiegeController {
 		SiegeController.saveSiege(siege);
 
 		//Call event
-		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, getGlobalSiegeStartMessage(siege).defaultLocale()));
-	}
-
-	private static void sendGlobalSiegeStartMessage(Siege siege) {
-		Messaging.sendGlobalMessage(getGlobalSiegeStartMessage(siege));
+		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, startMessage.defaultLocale()));
 	}
 
 	public static Translatable getGlobalSiegeStartMessage(Siege siege) {
