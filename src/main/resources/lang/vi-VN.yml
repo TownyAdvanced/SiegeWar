@@ -207,8 +207,8 @@ status_town_siege_defender: '&2 > Đội phòng thủ: &a%s'
 status_town_siege_battle_points: '&2 > Điểm: &a%s &2/ &a%s'
 status_town_siege_status_attacker_win: 'Bên tấn công dành chiến thắng'
 status_town_siege_status_defender_win: 'Bên phòng thủ giành chiến thắng'
-status_town_siege_status_close_attacker_win: 'Close Attacker Victory'
-status_town_siege_status_close_defender_win: 'Close Defender Victory'
+status_town_siege_status_close_attacker_win: 'Tấn công đã dành chiến thắng'
+status_town_siege_status_close_defender_win: 'Phòng thủ đã dành chiến thắng'
 status_town_siege_status_attacker_abandon: 'Bên tấn công từ bỏ cuộc chiến này'
 status_town_siege_status_pending_attacker_abandon: 'Bên tấn công đang từ bỏ cuộc chiến này'
 status_town_siege_status_defender_surrender: 'Đội phòng thủ đầu hàng'
@@ -356,25 +356,25 @@ msg_occupation_tax_paid_with_debt: "&cThị trấn của bạn đã trả thuế
 #Shown when a town cannot pay their nation occupation tax.
 msg_occupation_tax_cannot_be_paid: "&cThị trấn %s không thể nộp thuế chiếm đóng quốc gia của họ và đã bị xóa!"
 #Shown in the nation status screen when a nation has nation occupation tax.
-status_nation_occupation_tax_per_plot: "&2Nation Occupation Tax: &c%s per plot"
+status_nation_occupation_tax_per_plot: "&2Thuế quốc gia: &c%s trên mỗi plot"
 #Shown in the town status screen when a town has nation occupation tax to pay.
-status_town_occupation_tax: "&2Nation Occupation Tax: &c%s"
+status_town_occupation_tax: "&2Thuế quốc gia: &c%s"
 #Shown when the nation tries to set a nation occupation tax over the maximum.
-msg_err_occupation_tax_cannot_be_more_than: "&cNations cannot set an occupation tax greater than %s."
+msg_err_occupation_tax_cannot_be_more_than: "&cCác quốc gia không thể đặt thuế lớn hơn %s."
 #Shown to nation when they collect their occupation taxes.
-msg_occupation_taxes_collected_totaling: "&bYour nation collected occupation taxes totalling %s."
+msg_occupation_taxes_collected_totaling: "&bQuốc gia của bạn đã thu thuế tổng cộng %s."
 #####################################################################
 #Nation Refund
-nation_help_refund: "Claim any nation refund which is available to you."
-msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw nation claimrefund'"
-msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
-msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
+nation_help_refund: "Yêu cầu bất kỳ khoản tiền hoàn lại quốc gia nào có sẵn cho bạn."
+msg_siege_war_nation_refund_available: "Khoản hoàn trả quốc gia %s hiện có sẵn cho bạn. Nó có thể được yêu cầu bằng cách sử dụng '/sw nation claimrefund'"
+msg_siege_war_nation_refund_claimed: "Bạn đã yêu cầu khoản tiền hoàn lại quốc gia là %s."
+msg_err_siege_war_nation_refund_unavailable: "Không có hoàn lại quốc gia có sẵn cho bạn."
 #Invasion
 msg_err_town_already_invaded: '&cQuốc gia của bạn đã chiếm được thị trấn.'
 msg_neutral_town_invaded: '&b%s đã bị bắt giữ bởi %s!'
-msg_nation_town_invaded: '&b%s, belonging to %s, has been captured by %s!'
+msg_nation_town_invaded: '&b%s, thuộc về %s, đã bị %s chiếm giữ!'
 #Subverting
-msg_peaceful_town_subverted: "&b%s has been peacefully subverted and captured by %s."
+msg_peaceful_town_subverted: "&b%s đã bị lật đổ một cách hòa bình và bị chiếm bởi %s."
 msg_err_cannot_subvert_town_already_occupied: "&cKhông cần phải lật đổ thị trấn này, vì quốc gia của bạn đã sở hữu và chiếm giữ nó."
 #Revolting
 msg_revolt_siege_started: '&bNgười dân thị trấn %s đã nổi dậy chống lại quốc gia chiếm đóng %s, và tuyên bố họ được tự do lựa chọn vận mệnh của mình. CUỘC CHIẾN NỔI DẬY đã bắt đầu!'
@@ -387,12 +387,12 @@ status_town_days_to_peacefulness_status_change: '&2Ngày để thay đổi trạ
 town_help_toggle_peaceful: 'Thay đổi trạng thái yên bình cho thị trấn của bạn'
 msg_war_common_town_declared_peaceful: '&bTuyên bố hòa bình! Thị trấn sẽ được xác nhận là Hòa Bình sau %d ngày.'
 msg_war_common_town_declared_non_peaceful: '&bTrạng thái Hòa Bình không được bật! Thị trấn sẽ được xác nhận là Không Hòa Bình sau %d ngày.'
-msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot gain nation-military ranks.'
-msg_town_became_non_peaceful: '&b%s has been confirmed as Non-Peaceful. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can now gain nation-military ranks.'
-msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Peaceful status change countdown was cancelled.'
-msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they belong to a Peaceful town.'
-sg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
-msg_err_peaceful_towns_cannot_revolt: '&cPeaceful towns cannot revolt.'
+msg_town_became_peaceful: '&b%s đã được xác nhận là Bình yên. Thị trấn hiện miễn nhiễm với các cuộc tấn công bao vây, nhưng dễ bị phá hoại bởi các quốc gia lân cận. Cư dân không thể đạt được cấp bậc quân sự quốc gia.'
+msg_town_became_non_peaceful: '&b%s đã được xác nhận là Không hòa bình. Thị trấn không còn miễn nhiễm với các cuộc tấn công bao vây và không còn dễ bị các quốc gia lân cận lật đổ. Cư dân bây giờ có thể đạt được cấp bậc quân sự quốc gia.'
+msg_war_common_town_peacefulness_countdown_cancelled: '&bĐếm ngược thay đổi trạng thái Hòa bình đã bị hủy.'
+msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cKhông thể thêm cấp bậc quân sự cho cư dân, vì họ thuộc về một thị trấn Hòa bình.'
+sg_err_peaceful_town_cannot_move_homeblock: "&cCác thị trấn yên bình không thể thay đổi vị trí homeblock của họ. Nếu bạn muốn di chuyển vị trí homeblock của mình, trước tiên hãy tắt trạng thái yên bình."
+msg_err_peaceful_towns_cannot_revolt: '&cCác thị trấn yên bình không thể nổi dậy.'
 msg_err_capital_towns_cannot_go_peaceful: '&cCapital towns cannot go peaceful.'
 msg_err_cannot_subvert_not_enough_permissions: "&cYou do not have enough permissions to subvert the town."
 msg_err_cannot_subvert_dont_own_guardian_town: "&cSubvert not possible, because your nation does not own the required Guardian Town: %s."
@@ -494,5 +494,5 @@ msg_err_cannot_spawn_battle_commander_offline: "&cYou cannot spawn to the siege 
 msg_err_cannot_spawn_battle_commander_dead: "&cYou cannot spawn to the siege because your team's battle commander is dead."
 msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cYou cannot spawn to the siege because your team's battle commander is not in the Siege-Zone."
 msg_err_cannot_spawn_not_in_homeblock: "&cYou must be in your town homeblock to spawn to the siege."
-
-
+#Added in 2.8.0
+msg_swa_remove_siege: '&bSiege of %s removed via admin commands.'
