@@ -86,15 +86,16 @@ public class CosmeticUtil {
 	}
 
 	public static void removeFakeBeacon(Player player, Location loc) {
-		player.sendBlockChange(loc.clone().subtract(0, 1, 0), Bukkit.createBlockData(loc.clone().subtract(0, 1, 0).getBlock().getType()));
-		player.sendBlockChange(loc.clone().subtract(0, 2, 0), Bukkit.createBlockData(loc.clone().subtract(0, 2, 0).getBlock().getType()));
+		SiegeWar.getSiegeWar().getScheduler().runLater(player, () -> {
+			player.sendBlockChange(loc.clone().subtract(0, 1, 0), Bukkit.createBlockData(loc.clone().subtract(0, 1, 0).getBlock().getType()));
+			player.sendBlockChange(loc.clone().subtract(0, 2, 0), Bukkit.createBlockData(loc.clone().subtract(0, 2, 0).getBlock().getType()));
 
-		int[][] ironBlockLocations = {{1, 1}, {1, 0}, {1, -1}, {0, 1}, {0, 0}, {0, -1}, {-1, 1}, {-1, 0}, {-1, -1}};
-		for (int i = 0; i < 9; i++) {
-			player.sendBlockChange(loc.clone().add(ironBlockLocations[i][0], -3, ironBlockLocations[i][1]), Bukkit.createBlockData(loc.clone().add(ironBlockLocations[i][0], -3, ironBlockLocations[i][1]).getBlock().getType()));
-		}
-
-		SiegeWar.getSiegeWar().getScheduler().runLater(player, () -> changeBlocksBackToNormal(player,loc), 1l);
+			int[][] ironBlockLocations = {{1, 1}, {1, 0}, {1, -1}, {0, 1}, {0, 0}, {0, -1}, {-1, 1}, {-1, 0}, {-1, -1}};
+			for (int i = 0; i < 9; i++) {
+				player.sendBlockChange(loc.clone().add(ironBlockLocations[i][0], -3, ironBlockLocations[i][1]), Bukkit.createBlockData(loc.clone().add(ironBlockLocations[i][0], -3, ironBlockLocations[i][1]).getBlock().getType()));
+			}
+			changeBlocksBackToNormal(player,loc);
+		}, 1L);
 	}
 
 	private static void changeBlocksBackToNormal(Player player, Location loc) {

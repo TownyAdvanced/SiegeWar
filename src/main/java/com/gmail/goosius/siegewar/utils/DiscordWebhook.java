@@ -393,9 +393,6 @@ public class DiscordWebhook {
     }
 
     public static void sendWebhookNotification(Color color, String message, boolean active) {
-        if (!active)
-            return;
-
         DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
 
         String[] lines = message.split("\n");
@@ -411,7 +408,8 @@ public class DiscordWebhook {
         try {
             webhook.execute();
         } catch (java.io.IOException e) {
-            e.printStackTrace();
+            if (active)
+                e.printStackTrace();
         }
     }
 }

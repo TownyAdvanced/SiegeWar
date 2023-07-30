@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.events.BannerControlSessionEndedEvent;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -270,6 +271,8 @@ public class SiegeWarBannerControlUtil {
 				SiegeWar.severe("Problem evaluating banner control session for player " + bannerControlSession.getPlayer().getName());
 			}
 		}
+
+		Bukkit.getPluginManager().callEvent(new BannerControlSessionEndedEvent(siege));
 	}
 
 	private static void evaluateBannerControlPoints(Siege siege) {
