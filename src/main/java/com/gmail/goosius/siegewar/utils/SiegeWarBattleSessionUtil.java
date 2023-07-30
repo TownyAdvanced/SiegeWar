@@ -280,10 +280,8 @@ public class SiegeWarBattleSessionUtil {
 	 * with a brief summary of who won any battles which were fought
 	 */
 	private static Translatable getBattleSessionEndedMessageHeader(Map<Siege, Integer> battleResults) {
-		Translatable header;
-
 		//Compile message
-		if(battleResults.size() == 0) {
+		if(battleResults.isEmpty()) {
 			return Translatable.of("msg_war_siege_battle_session_ended_without_battles");
 		} else {
 			return Translatable.of("msg_war_siege_battle_session_ended_with_battles");

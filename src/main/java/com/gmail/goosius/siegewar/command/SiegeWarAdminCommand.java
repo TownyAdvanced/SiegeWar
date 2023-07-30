@@ -617,7 +617,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 				case "remove":
 					//Remove siege from system
 					SiegeController.removeSiege(siege);
-					Messaging.sendGlobalMessage(Translatable.of("msg_swa_remove_siege"));
+					Messaging.sendGlobalMessage(Translatable.of("msg_swa_remove_siege", siege.getTown().getName()));
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_remove_siege_success"));
 					return;
 			}

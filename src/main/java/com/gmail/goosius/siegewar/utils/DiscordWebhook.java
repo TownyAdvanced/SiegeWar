@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.utils;
 
-import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -394,17 +393,25 @@ public class DiscordWebhook {
     }
 
     public static void sendWebhookNotification(Color color, String message, boolean active) {
+        if (!active)
+            return;
+
         DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
 
-        webhook.addEmbed(new DiscordWebhook.EmbedObject()
+        String[] lines = message.split("\n");
+        EmbedObject embed = new DiscordWebhook.EmbedObject()
                 .setColor(color)
-                .setDescription(message)
-        );
+                .setDescription(lines[0]);
+        if (lines.length > 1)
+            for (int i = 1; i < lines.length; i++) {
+                embed.addField("Battle", lines[i], true);
+            }
+        webhook.addEmbed(embed);
+
         try {
             webhook.execute();
         } catch (java.io.IOException e) {
-            if (active)
-                SiegeWar.getSiegeWar().getLogger().severe(Arrays.toString(e.getStackTrace()));
+            e.printStackTrace();
         }
     }
 }

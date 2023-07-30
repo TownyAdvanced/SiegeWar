@@ -330,6 +330,11 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	}
 
 	private void parseSiegeWarTownCommand(Player player, String[] args) {
+		if (args.length == 0) {
+			showSiegeWarHelp(player);
+			return;
+		}
+
 		if (!player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_COMMAND_SIEGEWAR_TOWN.getNode(args[0]))) {
 			player.sendMessage(Translatable.of("msg_err_command_disable").forLocale(player));
 			return;
