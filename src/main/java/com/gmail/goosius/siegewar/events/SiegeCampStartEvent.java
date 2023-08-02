@@ -3,6 +3,7 @@ import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import com.palmergames.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
@@ -72,6 +73,6 @@ public class SiegeCampStartEvent extends Event {
     }
 
     public String getMessage() {
-        return LegacyComponentSerializer.legacySection().deserialize(message).content();
+        return PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(message));
     }
 }

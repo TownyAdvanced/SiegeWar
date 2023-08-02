@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.events;
 
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import com.palmergames.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Translatable;
 import org.bukkit.Bukkit;
@@ -97,6 +98,6 @@ public class SiegeRemoveEvent extends Event {
     }
 
     public String getMessage() {
-        return LegacyComponentSerializer.legacySection().deserialize(Translatable.of("msg_swa_remove_siege", getBesiegedTownName()).defaultLocale()).content();
+        return PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(Translatable.of("msg_swa_remove_siege", getBesiegedTownName()).defaultLocale()));
     }
 }

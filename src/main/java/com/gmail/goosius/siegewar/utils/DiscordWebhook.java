@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.bukkit.towny.object.Translatable;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.Color;
@@ -396,10 +397,16 @@ public class DiscordWebhook {
     public static void sendWebhookNotification(Color color, String message, boolean active) {
         DiscordWebhook webhook = new DiscordWebhook(SiegeWarSettings.getDiscordWebhookUrl());
 
-        webhook.addEmbed(new DiscordWebhook.EmbedObject()
+        String[] lines = message.split("\n");
+        EmbedObject embed = new DiscordWebhook.EmbedObject()
                 .setColor(color)
-                .setDescription(message)
-        );
+                .setDescription(lines[0]);
+        if (lines.length > 1)
+            for (int i = 1; i < lines.length; i++) {
+                embed.addField(Translatable.of("msg_swa_battle").defaultLocale(), lines[i], true);
+            }
+        webhook.addEmbed(embed);
+
         try {
             webhook.execute();
         } catch (java.io.IOException e) {

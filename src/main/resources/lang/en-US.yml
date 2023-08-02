@@ -655,3 +655,4 @@ msg_err_cannot_spawn_not_in_homeblock: "&cYou must be in your town homeblock to 
 
 #Added in 2.8.0
 msg_swa_remove_siege: '&bSiege of %s removed via admin commands.'
+msg_swa_battle: 'Battle'

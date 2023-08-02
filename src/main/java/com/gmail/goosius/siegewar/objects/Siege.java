@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import com.palmergames.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -429,7 +430,7 @@ public class Siege {
 	}
 
 	public String getEndMessage() {
-		return LegacyComponentSerializer.legacySection().deserialize(endMessage).content();
+		return PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(endMessage));
 	}
 
 	public void setEndMessage(String message) {
