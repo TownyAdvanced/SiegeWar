@@ -390,14 +390,17 @@ public class SiegeWarSettings {
 	}
 
 	@Nullable
-	public static LocalDateTime getFirstBattleSessionStartTimeForTomorrowUtc() {
-		LocalDate tomorrow = LocalDate.now().plusDays(1);
-		List<LocalDateTime> allBattleSessionStartTimesForTomorrow = getAllBattleSessionStartTimesForDay(tomorrow); 
-		if(allBattleSessionStartTimesForTomorrow.size() != 0) {
-			return allBattleSessionStartTimesForTomorrow.get(0);
-		} else {
-			return null;
+	public static LocalDateTime getNextBattleSessionDaysInAdvance() {
+		LocalDateTime nextSession = null;
+		// Check the next 1-6 days for battle session start times. 
+		for (int i = 1 ; i < 7 ; i++) {
+			List<LocalDateTime> allBattleSessionStartTimesForDate = getAllBattleSessionStartTimesForDay(LocalDate.now().plusDays(i));
+			if (allBattleSessionStartTimesForDate.size() != 0) {
+				nextSession = allBattleSessionStartTimesForDate.get(0);
+				break;
+			}
 		}
+		return nextSession;
 	}
 
 	private static List<LocalDateTime> getAllBattleSessionStartTimesForDay(LocalDate day) {
