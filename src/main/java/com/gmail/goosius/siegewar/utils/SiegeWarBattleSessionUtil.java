@@ -350,9 +350,9 @@ public class SiegeWarBattleSessionUtil {
 			}
 		}
 
-		//If no configured-start-time was found, look for the first configured time for tomorrow
+		//If no configured-start-time was found, look for the first configured time for the rest of the week.
 		if(nextStartDateTime == null) {
-			nextStartDateTime = SiegeWarSettings.getFirstBattleSessionStartTimeForTomorrowUtc();
+			nextStartDateTime = SiegeWarSettings.getNextBattleSessionDaysInAdvance();
 		}
 
 		//If nextStartTime is still null, return null, else return the UTC time in millis of the given value.
