@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -90,6 +91,18 @@ public class SiegeCampUtil {
 	private static void finishSiegeCamp(SiegeCamp camp) {
 
 		if (camp.getAttackerPoints() >= SiegeWarSettings.getSiegeCampPointsForSuccess()) {
+
+			Nation attackingNation = null;
+			if (camp.getAttacker() instanceof Nation)
+				attackingNation = (Nation) camp.getAttacker();
+
+			// Check to make sure the nation would not have too many active conquest sieges.
+			if (camp.getSiegeType().equals(SiegeType.CONQUEST)
+				&& attackingNation != null && SiegeWarSettings.doesThisNationHaveTooManyActiveSieges(attackingNation)) {
+				TownyMessaging.sendPrefixedNationMessage(attackingNation, Translatable.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));
+				return;
+			}
+
 			// Attackers scored enough points to start the Siege in ernest.
 			camp.startSiege();
 
