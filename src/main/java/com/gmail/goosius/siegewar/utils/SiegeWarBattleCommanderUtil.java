@@ -11,8 +11,6 @@ import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.Locale;
-
 public class SiegeWarBattleCommanderUtil {
     
     /**
