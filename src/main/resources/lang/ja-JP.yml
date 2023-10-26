@@ -17,58 +17,58 @@ description: >
 #Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
 #SiegeWarAPI
-msg_err_player_town_is_not_sieged: "This player's town is not Sieged."
-msg_err_resident_town_is_not_sieged: "This resident's town is not Sieged."
-msg_err_town_is_not_sieged: "This town is not Sieged."
+msg_err_player_town_is_not_sieged: "このプレイヤーの町は包囲されていません。"
+msg_err_resident_town_is_not_sieged: "この住民の町は包囲されていません。"
+msg_err_town_is_not_sieged: "この町は包囲されていません。"
 #Added in (Siegewar version)
 #Siege war happy-path messages
-msg_siege_war_attack_pay_war_chest: '&bA war-chest has been prepared by %s, with a value of %s. Whoever wins the siege will get this money.'
-msg_siege_war_attack_recover_war_chest: '&bThe war chest has been recovered by %s, with a value of %s.'
-msg_siege_war_attack_partially_recover_war_chest: '&bThe war chest has been partially recovered by %s, with a value of %s.'
-msg_siege_war_neutral_town_plundered: '&b%s has been plundered of %s by %s!'
-msg_siege_war_nation_town_plundered: '&b%s has been plundered of %s by %s!'
-msg_siege_war_town_ruined_from_plunder: '&b%s has been reduced to ruins by %s!'
-msg_siege_war_town_bankrupted_from_plunder: '&b%s has been bankrupted by %s!'
-msg_siege_war_nation_defeated: '&b%s has been defeated!'
-msg_siege_war_attacking_troops_at_siege_banner: '&bSiege on %s > Attackers are at the siege banner.'
-msg_siege_war_banner_control_session_success: '&bBanner control session succeeded! You have been added to the banner control list.'
-msg_siege_war_banner_control_gained_by_attacker: '&bSiege on %s > The attackers have gained banner control.'
-msg_siege_war_banner_control_gained_by_defender: '&bSiege on %s > The defenders have gained banner control.'
-msg_town_destroyed_by_nation_tax: '&b%s couldn''t pay taxes and has fallen.'
-msg_town_destroyed_by_nation_tax_multiple: '&bThe following towns could not afford the nation tax and have fallen: '
+msg_siege_war_attack_pay_war_chest: '&b%sが用意した戦争基金があります。その価値は%sです。包囲戦に勝利した者がこの資金を受け取ります。'
+msg_siege_war_attack_recover_war_chest: '&b%sが戦争基金を回収しました。その価値は%sです。'
+msg_siege_war_attack_partially_recover_war_chest: '&b%sが戦争基金を一部回収しました。その価値は%sです。'
+msg_siege_war_neutral_town_plundered: '&b%sは%sが%sによって略奪されました！'
+msg_siege_war_nation_town_plundered: '&b%sは%sが%sによって略奪されました！'
+msg_siege_war_town_ruined_from_plunder: '&b%sは%sによって荒廃しました！'
+msg_siege_war_town_bankrupted_from_plunder: '&b%sは%sによって破綻しました！'
+msg_siege_war_nation_defeated: '&b%sが敗北しました！'
+msg_siege_war_attacking_troops_at_siege_banner: '&b%sの包囲戦 > 攻撃者は包囲Bannerにいます。'
+msg_siege_war_banner_control_session_success: '&bBanner制御セッションに成功しました！Banner制御リストに追加されました。'
+msg_siege_war_banner_control_gained_by_attacker: '&b%sの包囲戦 > 攻撃者がBanner制御を獲得しました。'
+msg_siege_war_banner_control_gained_by_defender: '&b%sの包囲戦 > 防衛者がBanner制御を獲得しました。'
+msg_town_destroyed_by_nation_tax: '&b%sは税金を支払えずに崩壊しました。'
+msg_town_destroyed_by_nation_tax_multiple: '&b次の町は国家税を支払う余裕がなかったため、崩壊しました: '
 #Siege war error message
 #Recruiting
-msg_err_siege_besieged_town_cannot_recruit: "&cBesieged towns cannot recruit new residents."
+msg_err_siege_besieged_town_cannot_recruit: "&c包囲された町は新しい住民を募集できません。"
 #Claiming/Unclaiming
-msg_err_siege_claim_too_near_siege_zone: "&cThe claim is too close to a siege."
-msg_err_siege_besieged_town_cannot_claim: "&cBesieged towns cannot claim new land."
-msg_err_siege_besieged_town_cannot_unclaim: "&cBesieged towns (or towns which recently lost a siege) cannot un-claim land."
-msg_err_war_common_occupied_town_cannot_unclaim: "&cOccupied towns cannot un-claim land."
+msg_err_siege_claim_too_near_siege_zone: "&cこの領地はSiege Zoneに近すぎます。"
+msg_err_siege_besieged_town_cannot_claim: "&c包囲された町は新しい土地を主張できません。"
+msg_err_siege_besieged_town_cannot_unclaim: "&c包囲された町（または最近包囲に敗れた町）は土地の主張を取り消すことができません。"
+msg_err_war_common_occupied_town_cannot_unclaim: "&c占拠された町は土地の主張を取り消すことができません。"
 #Revolt
-msg_err_siege_war_town_voluntary_leave_impossible: "&cTowns cannot leave nations without agreement. To leave your nation, persuade the king (or an assistant) to kick your town."
-msg_err_siege_war_revolt_immunity_active: "&cYour town has revolt immunity. It cannot revolt until the revolt immunity expires."
+msg_err_siege_war_town_voluntary_leave_impossible: "&c合意なしに町は国を離れることはできません。国を離れるためには、王（または副王）に町を追い出すよう説得してください。"
+msg_err_siege_war_revolt_immunity_active: "&cあなたの町は反乱免疫がアクティブです。反乱免疫が切れるまで反乱を起こすことはできません。"
 #Attack
-msg_err_siege_war_banner_must_be_placed_above_ground: '&cThe siege banner must be placed above ground.'
-msg_err_siege_war_cannot_attack_own_town: '&cYou cannot attack your own town.'
-msg_err_siege_war_cannot_attack_town_in_own_nation: '&cYou cannot attack a town in your own nation.'
-msg_err_siege_war_cannot_attack_non_enemy_nation: '&cYou cannot attack a town unless the nation of that town is an enemy of your nation.'
-msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cYou cannot perform this action because this chunk is facing more than one town block. Try placing the item in a different area.'
-msg_err_siege_war_nation_already_attacking_town: '&cYour nation is already attacking this town.'
-msg_err_siege_war_cannot_attack_siege_immunity: '&cThe target town has siege immunity. It cannot be attacked until the siege immunity expires.'
-msg_err_siege_war_cannot_join_siege: '&cYou cannot attack a town while it is under siege by another nation.'
-msg_err_siege_war_nation_has_too_many_active_siege_attacks: '&cYour nation is at the maximum number of concurrent siege-attacks. To start another attack, one or more of the current attacks must finish.'
-msg_err_siege_war_town_not_close_enough_to_nation: '&cThe town is too far away from your nation capital to be attacked.'
+msg_err_siege_war_banner_must_be_placed_above_ground: '&c包囲Bannerは地上に配置する必要があります。'
+msg_err_siege_war_cannot_attack_own_town: '&c自分の町を攻撃することはできません。'
+msg_err_siege_war_cannot_attack_town_in_own_nation: '&c自分の国に属する町を攻撃することはできません。'
+msg_err_siege_war_cannot_attack_non_enemy_nation: '&cその町の国が自国の敵国でない限り、その町を攻撃することはできません。'
+msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cこのアクションは、このチャンクが複数の町ブロックに面しているため実行できません。別の場所にアイテムを配置してみてください。'
+msg_err_siege_war_nation_already_attacking_town: '&cあなたの国はすでにこの町を攻撃しています。'
+msg_err_siege_war_cannot_attack_siege_immunity: '&c対象の町は包囲免疫を持っています。包囲免疫が切れるまで攻撃できません。'
+msg_err_siege_war_cannot_join_siege: '&c他の国による包囲中に町を攻撃することはできません。'
+msg_err_siege_war_nation_has_too_many_active_siege_attacks: '&cあなたの国は同時に実行できる包囲攻撃の最大数に達しています。別の攻撃を開始するには、現在の攻撃のいくつかを終了する必要があります。'
+msg_err_siege_war_town_not_close_enough_to_nation: '&cその町はあなたの国の首都から遠すぎて攻撃できません。'
 #Invade
-msg_err_siege_war_no_siege_on_target_town: '&cThere is no siege on the target town of %s.'
+msg_err_siege_war_no_siege_on_target_town: '&c%sの対象町には包囲がありません。'
 #Plunder
-msg_err_siege_war_cannot_plunder_without_victory: "&cYou cannot plunder unless your nation is victorious in the siege."
-msg_err_siege_war_cannot_plunder_without_economy: "&cYou cannot plunder because no economy plugin is active"
-msg_err_siege_war_town_already_plundered: '&cThis town has already been plundered.'
+msg_err_siege_war_cannot_plunder_without_victory: "&c包囲に勝利していない限り、略奪はできません。"
+msg_err_siege_war_cannot_plunder_without_economy: "&c経済プラグインがアクティブでないため、略奪はできません。"
+msg_err_siege_war_town_already_plundered: '&cこの町は既に略奪されています。'
 #Block change
-msg_err_siege_war_cannot_destroy_siege_banner: "&cWhile the siege is in progress you cannot destroy the siege banner or the block it is attached to."
-msg_err_siege_war_banner_support_block_not_stable: "&cYou cannot place the banner on unstable ground e.g. sand or gravel."
+msg_err_siege_war_cannot_destroy_siege_banner: "&c包囲が進行中の間、包囲バナーやそれに取り付けられたブロックを破壊することはできません。"
+msg_err_siege_war_banner_support_block_not_stable: "&c不安定な地面（砂や砂利など）にバナーを配置することはできません。"
 #Banner control
-msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'You cannot use this item while in a banner control session.'
+msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'Banner制御セッション中はこのアイテムを使用できません。'
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2Revolt Immunity Timer: &a%s'
 status_town_siege_status_in_progress: 'Contested'
@@ -83,19 +83,19 @@ msg_nobody: '&aNobody'
 msg_attackers: '&aAttackers'
 msg_defenders: '&aDefenders'
 #Siege immunities
-msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s.'
-msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s.'
-msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s.'
+msg_set_siege_immunities_town: '町%sの包囲免疫が%sに設定されました。'
+msg_set_siege_immunities_nation: '国%s内のすべての町の包囲免疫が%sに設定されました。'
+msg_set_siege_immunities_all: 'すべての町の包囲免疫が%sに設定されました。'
 #Siege-zone block placement restrictions
-msg_war_siege_zone_block_placement_forbidden: '&cYou cannot place this type of block in the wilderness area of a siege zone.'
-msg_war_siege_zone_bucket_emptying_forbidden: '&cYou cannot use this type of bucket in the wilderness area of a siege zone.'
+msg_war_siege_zone_block_placement_forbidden: '&cSiege Zoneの未開発地域にはこの種類のブロックを配置できません。'
+msg_war_siege_zone_bucket_emptying_forbidden: '&cSiege Zoneの未開発地域でこの種類のバケツを使用することはできません。'
 #Added in 0.02:
-admin_help_1: 'Reload the config and language file.'
-config_and_lang_file_reloaded_successfully: 'Config and Language file reloaded successfully.'
-config_and_lang_file_could_not_be_loaded: 'Reload unsuccessful. See console for details.'
+admin_help_1: '設定と言語ファイルを再読み込みします。'
+config_and_lang_file_reloaded_successfully: '設定と言語ファイルは正常に再読み込みされました。'
+config_and_lang_file_could_not_be_loaded: '再読み込みに失敗しました。詳細はコンソールをご覧ください。'
 #Added in 0.05:
-msg_err_not_being_sieged: '&cTown %s does not have an active siege.'
-msg_err_town_not_registered: '&cTown %s is not registered.'
+msg_err_not_being_sieged: '&c町%sにはアクティブな包囲がありません。'
+msg_err_town_not_registered: '&c町%sは登録されていません。'
 #Scoreboard
 hud_title: 'Siege'
 hud_siege_status: 'Siege Status: '
@@ -103,31 +103,31 @@ hud_attackers: 'ATK: '
 hud_defenders: 'DEF: '
 hud_banner_control: "Banner Control: "
 hud_siege_progress: 'Siege Progress: '
-msg_swa_resident_already_has_control: '&cResident %s already has control.'
-msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
-msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
+msg_swa_resident_already_has_control: '&c住民%sはすでに制御しています。'
+msg_swa_resident_doesnt_have_control: "&c住民%sは制御していません。"
+msg_swa_set_plunder_success: '&b%sの略奪を%sに設定しました。'
 siege_status_in_progress: 'Contested'
 siege_status_unknown: 'Unknown'
 dynmap_siege_banner_control: 'Banner Control: %s'
 dynmap_siege_progress: 'Siege Progress: %d/%d'
 dynmap_siege_status: 'Siege Status: %s'
 #Added in 0.06:
-msg_inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to breaking due to inventory degradation.'
-msg_swa_remove_siege_success: '&bSuccessfully removed siege.'
+msg_inventory_degrade_warning: '&4警告: &cインベントリの劣化により、一部の装備が壊れそうです。'
+msg_swa_remove_siege_success: '&b包囲を正常に解除しました。'
 #Added in 0.08:
-msg_swa_set_towns_gained_success: '&bSuccessfully set towns gained to %d for %s.'
-msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
-msg_swa_set_plunder_gained_success: '&bSuccessfully set plunder gained to %d for %s.'
-msg_swa_set_plunder_lost_success: '&bSuccessfully set plunder lost to %d for %s.'
-msg_err_nation_not_registered: '&cNation %s is not registered.'
-msg_err_cannot_remove_enemy: '&cYou cannot remove a nation as enemy if you have an active siege against them!'
+msg_swa_set_towns_gained_success: '&b%sの獲得町数を%dに正常に設定しました。'
+msg_swa_set_towns_lost_success: '&b%sの喪失町数を%dに正常に設定しました。'
+msg_swa_set_plunder_gained_success: '&b%sの略奪獲得を%dに正常に設定しました。'
+msg_swa_set_plunder_lost_success: '&b%sの略奪喪失を%dに正常に設定しました。'
+msg_err_nation_not_registered: '&c国%sは登録されていません。'
+msg_err_cannot_remove_enemy: '&c対象の国とのアクティブな包囲がある場合、その国を敵として削除することはできません！'
 #Added in 0.09
-nation_help_12: 'Pay your soldiers. The given amount will be distributed according to rank.'
-msg_siege_war_military_salary_available: "A Military Salary of of %s is now available to you. It can be collected using '/sw collect'."
-msg_siege_war_military_salary_collected: "You have collected a military salary of %s."
-msg_err_siege_war_no_soldiers_to_pay: "There were no soldiers to pay."
-msg_err_siege_war_not_enough_nation_funds_to_pay: "The nation does not have enough funds to pay that amount."
-msg_siege_war_soldiers_paid: "The soldiers of the nation were paid a total of %s, which was distributed according to rank."
+nation_help_12: '兵士に給料を支払います。指定した金額は階級に応じて分配されます。'
+msg_siege_war_military_salary_available: "%sの軍事給与が利用可能です。'/sw collect' を使用して受け取れます。"
+msg_siege_war_military_salary_collected: "軍事給与%sを受け取りました。"
+msg_err_siege_war_no_soldiers_to_pay: "給料を支払う兵士はいませんでした。"
+msg_err_siege_war_not_enough_nation_funds_to_pay: "国にはその金額を支払うのに十分な資金がありません。"
+msg_siege_war_soldiers_paid: "国の兵士たちに合計%sを支払い、階級に応じて分配されました。"
 #Added in 0.11
 msg_err_invalid_bool: "&cInvalid option. Options: on/off"
 msg_beacon_preference_set: "&bBeacon preference set to %s."
@@ -139,13 +139,13 @@ status_town_siege_status_warchest: '&2 > War Chest: &a%s'
 #Battle sessions
 status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&2 > Time Remaining: &a%s'
-msg_war_siege_battle_session_started: "&bA new Battle Session has started. All PVP protections inside Siege-Zones are suspended for the duration of the Battle Session."
-msg_war_siege_battle_session_ended_with_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. The following teams won their battles:"
-msg_war_siege_battle_session_ended_without_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. There were no battles."
+msg_war_siege_battle_session_started: "&b新しいバトルセッションが開始されました。バトルセッションの期間中、包囲地域内のすべてのPVP保護が一時停止されます。"
+msg_war_siege_battle_session_ended_with_battles: "&b現在の戦闘セッションは終了しました。通常のPVP保護が復元されました。以下のチームが戦闘に勝利しました:"
+msg_war_siege_battle_session_ended_without_battles: "&b現在の戦闘セッションは終了しました。通常のPVP保護が復元されました。戦闘は行われませんでした。"
 msg_war_siege_battle_session_ended_attacker_result: "&b * Attackers @ %s (%s)"
 msg_war_siege_battle_session_ended_defender_result: "&b * Defenders @ %s (%s)"
 msg_war_siege_battle_session_ended_draw_result: "&b * Draw @ %s (0)"
-msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next Battle Session starts. The next Battle Session will start in %s."
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&c次の戦闘セッションが始まるまで、Banner制御は得られません。次の戦闘セッションは%sで始まります。"
 #Hud
 hud_siege_balance: 'Siege Balance: '
 hud_warchest: 'War Chest: '
@@ -154,18 +154,18 @@ msg_err_hud_not_available_in_folia: "&cThe HUD is not available in Folia."
 #Dynmap
 dynmap_siege_battle_time_left: 'Battle Time Left: %s'
 #Banner control
-msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > The attackers have stolen banner control from the defenders! (REVERSAL)'
-msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > The defenders have stolen banner control from the attackers! (REVERSAL)'
-msg_siege_war_banner_control_reversal_bonus: '. Cap-Point-Generation-Rate X %s.'
+msg_siege_war_banner_control_reversed_by_attacker: '&b%sの包囲 > 攻撃側が防御側からバナー制御を奪いました！（逆転）'
+msg_siege_war_banner_control_reversed_by_defender: '&b%sの包囲 > 防御側が攻撃側からバナー制御を奪いました！（逆転）'
+msg_siege_war_banner_control_reversal_bonus: '. cap pointの生成率 X %s.'
 #Admin
 msg_swa_set_siege_balance_success: '&bSuccessfully set siege balance to %d for %s.'
 #Added in 0.13
 msg_siege_war_version: '&bThe current SiegeWar version is: %s.'
 #Added in 0.14
-msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain within %d blocks of the banner, but staying out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
-msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control session started. Remain within %d blocks of the banner, but staying below it''s altitude and out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
-msg_siege_war_banner_control_session_failure: '&cBanner control session failed! Common causes for this include: dying, going too far from the banner, or entering the town.'
-msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed! Common causes for this include: dying, going too far from the banner, going below the banner altitude, or entering the town.'
+msg_siege_war_banner_control_session_started: '&bBanner制御セッションが開始しました。Bannerから%dブロック以内にとどまり、町から離れて%s間滞在してください。セッションが成功した場合、Banner制御が得られます（またはBanner制御リストに追加されます）。'
+msg_siege_war_banner_control_session_started_with_altitude: '&bBanner制御セッションが開始しました。Bannerから%dブロック以内にとどまり、町から離れてBannerの高度以下に滞在してください。%s間滞在してください。セッションが成功した場合、Banner制御が得られます（またはBanner制御リストに追加されます）。'
+msg_siege_war_banner_control_session_failure: '&cBanner制御セッションが失敗しました！一般的な原因は、死亡、Bannerから遠くに行く、町に入るなどです。'
+msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner制御セッションが失敗しました！一般的な原因は、死亡、Bannerから遠くに行く、Bannerの高度以下に行く、町に入るなどです。'
 ##### Added in 0.15
 #Town Merging
 msg_err_cannot_merge_towns: '&cUnable to merge a town that is under siege!'
@@ -205,14 +205,14 @@ status_town_siege_status: '&2 > Status: &a%s'
 status_town_siege_attacker: '&2 > Attacker: &a%s'
 status_town_siege_defender: '&2 > Defender: &a%s'
 status_town_siege_battle_points: '&2 > Points: &a%s &2/ &a%s'
-status_town_siege_status_attacker_win: 'Decisive Attacker Victory'
-status_town_siege_status_defender_win: 'Decisive Defender Victory'
-status_town_siege_status_close_attacker_win: 'Close Attacker Victory'
-status_town_siege_status_close_defender_win: 'Close Defender Victory'
-status_town_siege_status_attacker_abandon: 'Attacker Abandon'
-status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending'
-status_town_siege_status_defender_surrender: 'Defender Surrender'
-status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending'
+status_town_siege_status_attacker_win: '決定的な攻撃者の勝利'
+status_town_siege_status_defender_win: '決定的な防衛者の勝利'
+status_town_siege_status_close_attacker_win: '接戦の攻撃者の勝利'
+status_town_siege_status_close_defender_win: '接戦の防衛者の勝利'
+status_town_siege_status_attacker_abandon: '攻撃者の放棄'
+status_town_siege_status_pending_attacker_abandon: '攻撃者の放棄保留'
+status_town_siege_status_defender_surrender: '防衛者の降伏'
+status_town_siege_status_pending_defender_surrender: '防衛者の降伏保留'
 status_town_siege_status_plundered: '&2 > Town Plundered: %s'
 #Siege statuses
 siege_status_attacker_abandon: 'Attacker Abandon'
@@ -252,17 +252,17 @@ msg_siege_war_banner_control_remaining_session_time: 'Banner Cap Timer: %s'
 #Added in 0.25
 msg_err_siege_war_too_many_adjacent_towns: '&cYou cannot perform this action because the target chunk faces too many townblocks. Try placing the item in a different area.'
 #Added in 0.26
-msg_siege_war_attacker_death: '&bSiege of %s > Attacker %s died > Battle Points -%d'
-msg_siege_war_defender_death: '&bSiege of %s > Defender %s died > Battle Points +%d'
-msg_siege_war_attacker_killed_by_player: '&bSiege of %s > Attacker %s was killed by %s > Battle Points -%d'
-msg_siege_war_defender_killed_by_player: '&bSiege of %s > Defender %s was killed by %s > Battle Points +%d'
+msg_siege_war_attacker_death: '&bSiege of %s > Attacker %s が死亡しました > Battle Points -%d'
+msg_siege_war_defender_death: '&bSiege of %s > Defender %s が死亡しました > Battle Points +%d'
+msg_siege_war_attacker_killed_by_player: '&bSiege of %s > Attacker %s が%sによって殺されました > Battle Points -%d'
+msg_siege_war_defender_killed_by_player: '&bSiege of %s > Defender %s が%sによって殺されました > Battle Points +%d'
 #Added in 0.27
-msg_next_siege_session_in_minutes: 'The next Battle Session is in %s.'
-msg_session_is_active_now: 'A Battle Session is active now!'
-msg_err_battle_session_active: "&cA Battle Session has already started."
-msg_err_battle_session_inactive: "&cThe Battle Session has already ended."
-msg_battle_session_force_start: "&bA Battle Session has been force started."
-msg_battle_session_force_end: "&bThe Battle Session has been force ended."
+msg_next_siege_session_in_minutes: '次のバトルセッションは%s後です。'
+msg_session_is_active_now: '現在、バトルセッションがアクティブです！'
+msg_err_battle_session_active: "&cバトルセッションはすでに開始しています。"
+msg_err_battle_session_inactive: "&cバトルセッションは既に終了しています。"
+msg_battle_session_force_start: "&bバトルセッションが強制的に開始されました。"
+msg_battle_session_force_end: "&bバトルセッションが強制的に終了しました。"
 #Added in 0.28
 msg_town_immunity_expired: 'Your town''s Siege Immunity has expired.'
 #Unsiegeable towns strings
@@ -271,11 +271,11 @@ msg_error_must_be_num_or_permanent: '&cAmount must be a number or ''permanent''.
 msg_surrender_action_cancelled: 'Siege surrender cancelled.'
 msg_abandon_action_cancelled: 'Siege abandon cancelled.'
 #Added in 0.29
-msg_err_siegecamp_too_close_to_another_siegecamp: 'Siege-Assembly too close to another Siege-Assembly!'
-msg_err_too_soon_since_your_last_siegecamp: 'It has been too soon since you last tried to attack this town!'
-msg_err_your_siegecamp_failed_you_must_wait_x: 'Your Siege-Assembly failed to score enough points, you cannot attempt to attack the town again for %s.'
-attackers_scored_points_towards_siege_camp_x_of_x: '%s has scored points towards their Siege-Assembly: %s/%s.'
-attacker_has_begun_a_siegecamp_session: '%s has begun a Siege-Assembly against %s. If successful a Siege will begin! The attackers must score %s points within %s minutes.'
+msg_err_siegecamp_too_close_to_another_siegecamp: 'Siege-Assemblyは他のSiege-Assemblyに近すぎます！'
+msg_err_too_soon_since_your_last_siegecamp: '前回この町を攻撃しようとしてから時間が経過していません！'
+msg_err_your_siegecamp_failed_you_must_wait_x: 'あなたのSiege-Assemblyは十分なポイントを獲得できませんでした。再び町を攻撃するには%s待たなければなりません。'
+attackers_scored_points_towards_siege_camp_x_of_x: '%sが自分のSiege-Assemblyにポイントを獲得しました：%s/%s。'
+attacker_has_begun_a_siegecamp_session: '%sが%sに対してSiege-Assemblyを開始しました。成功すれば包囲が始まります！攻撃者は%s分以内に%sポイントを獲得する必要があります。'
 #Added in 0.30
 msg_bossbar_preference_set: "&bBossBar preference set to %s."
 bossbar_msg_battle_time_remaining: '&2Battle Session Time Remaining: &a%s'
@@ -286,16 +286,16 @@ hover_message_click_to_claim: "Click to claim money owed to you."
 #Added in 0.31
 msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
 #Added in 0.33
-nation_help_11: 'Collect any income due to you from military salary.'
-msg_err_siege_war_collect_unavailable: "There is nothing for you to collect."
-msg.battle.session.cleanup.starting: "The previous Battle Session did not complete. Initiating Battle Session Cleanup. Each battle will be resolved as a draw, with both attacker and defender battle points being applied to the siege balance."
-msg.battle.session.cleanup.complete: "Battle Session Cleanup complete. %d battles were resolved."
-msg_err_cannot_start_sieges_today: "&cYour server has limited the days-of-the-week when sieges can be started. Sieges cannot be started today."
+nation_help_11: '軍の給与から支給された収入を受け取ります。'
+msg_err_siege_war_collect_unavailable: "受け取るものがありません。"
+msg.battle.session.cleanup.starting: "前回のバトルセッションが完了しませんでした。バトルセッションのクリーンアップを開始します。各バトルは引き分けとして解決され、攻撃者と防御者のバトルポイントが包囲のバランスに適用されます。"
+msg.battle.session.cleanup.complete: "バトルセッションのクリーンアップが完了しました。%d つのバトルが解決されました。"
+msg_err_cannot_start_sieges_today: "&cサーバーは週の曜日で包囲を開始できる日を制限しています。今日は包囲を開始できません。"
 #Added in 0.36
-msg_err_nation_neutrality_not_supported: '&cSiegeWar does not support nation neutrality.'
-msg.townyperms.installation.complete: "Towny perms file adjusted for recommended SW setup."
-msg.townyconfig.installation.complete: "Towny config file adjusted for recommended SW setup."
-msg.installation.complete: "Installation Complete."
+msg_err_nation_neutrality_not_supported: '&cSiegeWarは国の中立性をサポートしていません。'
+msg.townyperms.installation.complete: "お勧めのSiegeWarセットアップに合わせてTownyの権限ファイルが調整されました。"
+msg.townyconfig.installation.complete: "お勧めのSiegeWarセットアップに合わせてTownyの設定ファイルが調整されました。"
+msg.installation.complete: "インストールが完了しました。"
 #Added in 0.41
 msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To avoid War Sickness, leave the Siege-Zone immediately.'
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To remove the War Sickness, leave the Siege-Zone immediately.'
@@ -365,57 +365,57 @@ msg_err_occupation_tax_cannot_be_more_than: "&cNations cannot set an occupation 
 msg_occupation_taxes_collected_totaling: "&bYour nation collected occupation taxes totalling %s."
 #####################################################################
 #Nation Refund
-nation_help_refund: "Claim any nation refund which is available to you."
-msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw nation claimrefund'"
-msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
-msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
+nation_help_refund: "利用可能な国の払い戻しを請求します。"
+msg_siege_war_nation_refund_available: "利用可能な国の払い戻し額は%sです。'/sw nation claimrefund'を使用して請求できます。"
+msg_siege_war_nation_refund_claimed: "国の払い戻し額%sを請求しました。"
+msg_err_siege_war_nation_refund_unavailable: "利用可能な国の払い戻しはありません。"
 #Invasion
-msg_err_town_already_invaded: '&cYour nation has already captured the town.'
-msg_neutral_town_invaded: '&b%s has been captured by %s!'
-msg_nation_town_invaded: '&b%s, belonging to %s, has been captured by %s!'
+msg_err_town_already_invaded: '&cすでにあなたの国がこの町を占拠しています。'
+msg_neutral_town_invaded: '&b%s が %s によって占拠されました！'
+msg_nation_town_invaded: '&b%s, %s に所属する町、が %s によって占拠されました！'
 #Subverting
-msg_peaceful_town_subverted: "&b%s has been peacefully subverted and captured by %s."
-msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already owns and occupies it."
+msg_peaceful_town_subverted: "&b%sが平和裏に転覆し、%sによって占拠されました。"
+msg_err_cannot_subvert_town_already_occupied: "&cこの町を転覆する必要はありません。なぜなら既にあなたの国が所有・占拠しているからです。"
 #Revolting
-msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying nation of %s, and declared themselves free to choose their own destiny. A REVOLT SIEGE has begun!'
+msg_revolt_siege_started: '&b%sの町の住民は%sの占拠国に対して立ち上がり、自分たちの運命を選ぶ自由を宣言しました。反乱の包囲が始まりました！'
 #war sickness
-msg_you_will_get_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. Please enter a town or leave the Siege Zone, otherwise you will get War Sickness in %s seconds.'
-msg_you_received_war_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. To remove the War Sickness, enter a town or leave the Siege Zone.'
+msg_you_will_get_sickness: '&c警告: Siege Zoneの野外にいますが、包囲戦の公式参加者ではありません。町に入るかSiege Zoneを離れない限り、%s秒後に戦争病を発症します。'
+msg_you_received_war_sickness: '&c警告: Siege Zoneの野外にいますが、包囲戦の公式参加者ではありません。戦争病を解消するには、町に入るかSiege Zoneを離れてください。'
 #Town Status Screen
 status_town_days_to_peacefulness_status_change: '&2Days To Peacefulness Status Change: &b%d'
 #Town Peacefulness
-town_help_toggle_peaceful: 'Change your town peacefulness status'
-msg_war_common_town_declared_peaceful: '&bPeacefulness Declared! The town will be confirmed as Peaceful in %d day(s).'
-msg_war_common_town_declared_non_peaceful: '&bNon-Peacefulness Declared! The town will be confirmed as Non-Peaceful in %d day(s).'
-msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot gain nation-military ranks.'
-msg_town_became_non_peaceful: '&b%s has been confirmed as Non-Peaceful. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can now gain nation-military ranks.'
-msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Peaceful status change countdown was cancelled.'
-msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they belong to a Peaceful town.'
+town_help_toggle_peaceful: '町の平和状態を切り替える'
+msg_war_common_town_declared_peaceful: '&b平和宣言！町は%d日後に平和と確認されます。'
+msg_war_common_town_declared_non_peaceful: '&b非平和宣言！町は%d日後に非平和と確認されます。'
+msg_town_became_peaceful: '&b%s が平和と確認されました。町は包囲攻撃に対して免疫を持ちますが、近隣国による転覆の対象となります。住民は国の軍事階級を獲得できません。'
+msg_town_became_non_peaceful: '&b%s が非平和と確認されました。町はもはや包囲攻撃に対して免疫を持たず、近隣国による転覆の対象となりません。住民は今後国の軍事階級を獲得できます。'
+msg_war_common_town_peacefulness_countdown_cancelled: '&b平和状態の変更のカウントダウンがキャンセルされました。'
+msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&c住民に軍事階級を追加できません。なぜなら、彼らは平和な町に所属しているからです。'
 sg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
-msg_err_peaceful_towns_cannot_revolt: '&cPeaceful towns cannot revolt.'
-msg_err_capital_towns_cannot_go_peaceful: '&cCapital towns cannot go peaceful.'
-msg_err_cannot_subvert_not_enough_permissions: "&cYou do not have enough permissions to subvert the town."
-msg_err_cannot_subvert_dont_own_guardian_town: "&cSubvert not possible, because your nation does not own the required Guardian Town: %s."
-msg_peaceful_towns_released_on_homeblock_move: "&bBecause %s moved its homeblock, %d peaceful town(s) which it was guarding, were released from occupation."
+msg_err_peaceful_towns_cannot_revolt: '&c平和な町は反乱できません。'
+msg_err_capital_towns_cannot_go_peaceful: '&c首都の町は平和にできません。'
+msg_err_cannot_subvert_not_enough_permissions: "&c町を転覆するための権限が不足しています。"
+msg_err_cannot_subvert_dont_own_guardian_town: "&c転覆が不可能です。なぜなら、あなたの国が必要な守護町 %s を所有していないからです。"
+msg_peaceful_towns_released_on_homeblock_move: "&b%s がホームブロックを移動したため、それを保護していた%dの平和な町が解放されました。"
 #Town neutrality
-msg_err_town_neutrality_not_supported: "&cSiegeWar does not support town neutrality. To protect your town from sieges, change your town to Peaceful, using '/sw town togglepeaceful'."
+msg_err_town_neutrality_not_supported: "&cSiegeWarは町の中立性をサポートしていません。シージから町を保護するには、'/sw town togglepeaceful'を使用して町を平和モードに切り替えてください。"
 #swa
-msg_swa_set_invade_success: '&bSet captured to %s for %s.'
-msg_swa_town_peacefulness_change_success: '&bSuccessfully changed the peacefulness status of %s to %s.'
-msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation status of %s to %s.'
-msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended."
+msg_swa_set_invade_success: '&b%sの侵攻を%sに設定しました。'
+msg_swa_town_peacefulness_change_success: '&b%sの平和ステータスを%sに変更しました。'
+msg_swa_town_occupation_change_success: '&b%sの占拠ステータスを%sに変更しました。'
+msg_err_command_not_allowed_on_active_siege: "シージが終了するまで、このコマンドは実行できません。"
 #Timed wins
-msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has won a %s victory against the defending army of %s!'
-msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!'
-msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has defeated the rebels with a %s victory!'
-msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded! The attacking rebels have successfully driven off the attacking army of %s!, with a %s victory!'
+msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > %sの攻撃軍が%sの勝利を収め、%sの防衛軍に対抗しました！'
+msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > %sの防衛軍が%sの勝利を収め、%sの攻撃軍に対抗しました！'
+msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > 以前に町を占拠していた%sの攻撃軍が%sの勝利を収め、反乱軍を打ち負かしました！'
+msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > 反乱が成功しました！反乱軍が%sの攻撃軍を%sの勝利を収め、町から追い払いました！'
 msg_decisive: 'DECISIVE'
 msg_close: 'CLOSE'
 #Abandoning Attacks
-msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > The attacking army of %s has admitted defeat and retreated! This action will be confirmed when siege progress is complete.'
-msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has admitted defeat and retreated! This action will be confirmed when siege progress is complete.'
-msg_conquest_siege_attacker_abandon_confirmed: '&bCONQUEST SIEGE at %s > Attacker Abandon Confirmed!'
-msg_revolt_siege_attacker_abandon_confirmed: '&bREVOLT SIEGE at %s > Attacker Abandon Confirmed!'
+msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > %sの攻撃軍が敗北を認め、退却しました！この行動は包囲の進捗が完了すると確認されます。'
+msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > 以前に町を占拠していた%sの攻撃軍が敗北を認め、退却しました！この行動は包囲の進捗が完了すると確認されます。'
+msg_conquest_siege_attacker_abandon_confirmed: '&bCONQUEST SIEGE at %s > 攻撃者の撤退が確認されました！'
+msg_revolt_siege_attacker_abandon_confirmed: '&bREVOLT SIEGE at %s > 攻撃者の撤退が確認されました！'
 #Surrendering Defence
 msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has surrendered to the attacking army of %s! This action will be confirmed when siege progress is complete.'
 msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The rebels have admitted defeat and surrendered to the attacking army of %s! This action will be confirmed when siege progress is complete.'
@@ -441,13 +441,13 @@ status_nation_hover_title_demoralization: "%s[%sDemoralized%s]"
 status_nation_demoralization_amount: '&2Conquest Sieges Starting Balance: &a%d'
 status_nation_demoralization_days_left: '&2Days Left: &a%d'
 #Town Capture & Occupation
-msg_err_cannot_invade_without_victory: "&cYou cannot capture this town unless your nation is victorious in the siege."
-msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot capture this town while the siege is still in progress.'
-msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this town, because your nation already owns and occupies it.'
-msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&cUnable to add military rank to resident, because they belong to an Occupied town.'
-msg_err_cannot_set_occupation_without_nation: '&cTown %s has no nation. You must set the nation first before you can set the town to Occupied.'
-msg_err_cannot_invade_not_enough_permissions: "&cYou do not have enough permissions to capture the town."
-msg_err_occupied_towns_cannot_leave_their_nations: "&cOccupied towns cannot leave their nations in the usual way. To leave the nation, start a revolt siege."
+msg_err_cannot_invade_without_victory: "&c包囲に勝利しない限り、この町を占拠できません。"
+msg_err_cannot_invade_siege_still_in_progress: '&c包囲が進行中の間、この町を占拠することはできません。'
+msg_err_cannot_invade_town_already_occupied: '&c既にあなたの国が所有・占拠しているため、この町を占拠する必要はありません。'
+msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&c住民に軍階級を追加できません。なぜなら、彼らは占拠された町に所属しているからです。'
+msg_err_cannot_set_occupation_without_nation: '&c町 %s は国がありません。町を占拠する前に国を設定する必要があります。'
+msg_err_cannot_invade_not_enough_permissions: "&cこの町を占拠するために必要な権限がありません。"
+msg_err_occupied_towns_cannot_leave_their_nations: "&c占拠された町は通常の方法で国を離れることはできません。国を脱退するには反乱包囲を開始してください。"
 #Siegezone proximity warning
 msg_siege_zone_proximity_warning: "&cWARNING: You are in a Siege-Zone!"
 #Plunder
@@ -464,36 +464,36 @@ siege_status_defender_close_win: 'Close Defender Victory'
 siege_status_attacker_win: 'Decisive Attacker Victory'
 siege_status_defender_win: 'Decisive Defender Victory'
 #Siege Special Victory Effects
-msg_conquest_siege_attacker_close_win_warchest_reduced: "&bBecause the siege victory was CLOSE, the besieged town was able to recover %s of the War Chest."
-msg_conquest_siege_defender_close_win_warchest_reduced: "&bBecause the siege victory was CLOSE, the besieging nation was able to recover %s of the War Chest."
-msg_conquest_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege victory was CLOSE, the usual plunder amount was reduced by %s."
-msg_revolt_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege victory CLOSE, the usual plunder amount was reduced by %s."
+msg_conquest_siege_attacker_close_win_warchest_reduced: "&b包囲の勝利が接戦だったため、包囲された町はWar Chestの%sを回復することができました。"
+msg_conquest_siege_defender_close_win_warchest_reduced: "&b包囲の勝利が接戦だったため、包囲国はWar Chestの%sを回復することができました。"
+msg_conquest_siege_attacker_close_win_plunder_reduced: "&b直近の包囲の勝利が接戦だったため、通常の略奪額が%s減少しました。"
+msg_revolt_siege_attacker_close_win_plunder_reduced: "&b直近の包囲の勝利が接戦だったため、通常の略奪額が%s減少しました。"
 msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (%d siege-balance to conquest sieges it initiates), for %d days."
 #Toxicity Reduction
-msg_chat_now_disabled: " General Chat, /lc, and /tell, will be disabled while the Battle Session is active, and for %s after it ends. If you want to chat, try using /tc, /nc, or /ac."
+msg_chat_now_disabled: "戦闘セッションがアクティブで、終了後%s間、一般チャット、/lc、/tellは無効になります。チャットを行いたい場合、/tc、/nc、または/allyを使用してみてください。"
 msg_chat_now_restored: "&bGeneral Chat, /lc, and /tell, have been restored."
-msg_err_no_general_chat_in_battle_session: "&cGeneral Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
-msg_err_no_local_chat_in_battle_session: "&cLocal Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
-msg_err_no_tell_chat_in_battle_session: "&c/tell is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
+msg_err_no_general_chat_in_battle_session: "&c戦闘セッションがアクティブで、終了後%s間、一般チャットは無効です。/tc、/nc、または/allyを使用してチャットしてみてください。"
+msg_err_no_local_chat_in_battle_session: "&c戦闘セッションがアクティブで、終了後%s間、ローカルチャットは無効です。/tc、/nc、または/allyを使用してチャットしてみてください。"
+msg_err_no_tell_chat_in_battle_session: "&c戦闘セッションがアクティブで、終了後%s間、/tellは無効です。/tc、/nc、または/allyを使用してチャットしてみてください。"
 msg_can_also_chat_in_discord: " You can also chat in the server discord: %s."
 #Bad Config Warnings
-msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. Calculated ideal value: %s. Actual configured value: %s."
-msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. Calculated ideal value: %s. Actual configured value: %s."
-msg_err_note_about_warnings: "&cNOTE: If your server has not launched yet, don't worry if the ideal values look wrong. The warnings will self-correct as soon as players start creating towns/nations."
+msg_err_value_configured_too_high: "&c警告: サーバーの設定値 %s が高すぎます。計算された理想値: %s。実際の設定値: %s。"
+msg_err_value_configured_too_low: "&c警告: サーバーの設定値 %s が低すぎます。計算された理想値: %s。実際の設定値: %s。"
+msg_err_note_about_warnings: "&c注意: サーバーがまだ起動していない場合、理想的な値が間違って見えても心配しないでください。プレイヤーが町や国を作成し始めると、警告は自動的に修正されます。"
 #Block Placement
 msg_err_banner_cannot_be_more_than_one_block_away: "&cThe banner cannot be more than 1 block away from the target town."
 #Battle Commanders / Mobile Spawn Points
-msg_battle_commanders_assigned: "&bSiege at %s > Battle Commanders Assigned. Attacking Commander: %s. Defending Commander: %s."
+msg_battle_commanders_assigned: "&b%sの包囲 > バトルコマンダーが指定されました。攻撃コマンダー: %s。防衛コマンダー: %s。"
 no_battle_commander: "<None>"
-msg_err_cannot_spawn_feature_not_active: "&cYou cannot spawn to the siege because the 'battle commanders' feature is disabled by your server."
-msg_err_cannot_spawn_siege_not_active: "&cYou cannot spawn to the siege because the siege is not active."
-msg_err_cannot_spawn_battle_session_not_active: "&cYou cannot spawn to the siege because there is no active battle session."
-msg_err_cannot_spawn_not_participant: "&cYou cannot spawn to the siege because you are not an official participant in the siege."
-msg_err_cannot_spawn_no_battle_commander: "&cYou cannot spawn to the siege because your team has no battle commander."
-msg_err_cannot_spawn_battle_commander_offline: "&cYou cannot spawn to the siege because your team's battle commander is offline."
-msg_err_cannot_spawn_battle_commander_dead: "&cYou cannot spawn to the siege because your team's battle commander is dead."
-msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cYou cannot spawn to the siege because your team's battle commander is not in the Siege-Zone."
-msg_err_cannot_spawn_not_in_homeblock: "&cYou must be in your town homeblock to spawn to the siege."
+msg_err_cannot_spawn_feature_not_active: "&cサーバーで 'battle commanders' 機能が無効にされているため、包囲にスポーンできません。"
+msg_err_cannot_spawn_siege_not_active: "&c包囲がアクティブでないため、包囲にスポーンできません。"
+msg_err_cannot_spawn_battle_session_not_active: "&cアクティブな戦闘セッションが存在しないため、包囲にスポーンできません。"
+msg_err_cannot_spawn_not_participant: "&c包囲の公式参加者ではないため、包囲にスポーンできません。"
+msg_err_cannot_spawn_no_battle_commander: "&cあなたのチームに戦闘指揮官がいないため、包囲にスポーンできません。"
+msg_err_cannot_spawn_battle_commander_offline: "&cあなたのチームの戦闘指揮官がオフラインのため、包囲にスポーンできません。"
+msg_err_cannot_spawn_battle_commander_dead: "&cあなたのチームの戦闘指揮官が死亡しているため、包囲にスポーンできません。"
+msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cあなたのチームの戦闘指揮官がSiege-Zoneにいないため、包囲にスポーンできません。"
+msg_err_cannot_spawn_not_in_homeblock: "&c包囲にスポーンするには、あなたの町のホームブロック内にいる必要があります。"
 #Added in 2.8.0
 msg_swa_remove_siege: '&bSiege of %s removed via admin commands.'
 msg_swa_battle: 'Battle'
