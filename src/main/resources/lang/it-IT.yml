@@ -17,9 +17,9 @@ description: >
 #Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
 #SiegeWarAPI
-msg_err_player_town_is_not_sieged: "This player's town is not Sieged."
-msg_err_resident_town_is_not_sieged: "This resident's town is not Sieged."
-msg_err_town_is_not_sieged: "This town is not Sieged."
+msg_err_player_town_is_not_sieged: "La città di questo giocatore non è Assediata."
+msg_err_resident_town_is_not_sieged: "La città di questo residente non è Assediata."
+msg_err_town_is_not_sieged: "Questa città non è assediata."
 #Added in (Siegewar version)
 #Siege war happy-path messages
 msg_siege_war_attack_pay_war_chest: '&bUna cassa di guerra è stata preparata da %s, con un valore di %s. Chiunque vince l''assedio otterrà il denaro all''interno.'
@@ -139,13 +139,13 @@ status_town_siege_status_warchest: '&2 > Cassa di Guerra: &a%s'
 #Battle sessions
 status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&2 > Tempo Rimanente: &a%s'
-msg_war_siege_battle_session_started: "&bA new Battle Session has started. All PVP protections inside Siege-Zones are suspended for the duration of the Battle Session."
-msg_war_siege_battle_session_ended_with_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. The following teams won their battles:"
-msg_war_siege_battle_session_ended_without_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. There were no battles."
+msg_war_siege_battle_session_started: "&bUna nuova sessione di battaglia è iniziata. Tutte le protezioni PVP all'interno delle Zone d'Assedio sono sospese per la durata della Sessione di Battaglia."
+msg_war_siege_battle_session_ended_with_battles: "&bL'attuale sessione di battaglia è terminata. Le normali protezioni in PVP sono state ripristinate. Le seguenti squadre hanno vinto le loro battaglie:"
+msg_war_siege_battle_session_ended_without_battles: "&bLa sessione di battaglia corrente è terminata. Le normali protezioni in PVP sono state ripristinate. Non ci sono state battaglie."
 msg_war_siege_battle_session_ended_attacker_result: "&b * Attaccanti @ %s (%s)"
 msg_war_siege_battle_session_ended_defender_result: "&b * Difensori @ %s (%s)"
 msg_war_siege_battle_session_ended_draw_result: "&b * Pareggio @ %s (0)"
-msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next Battle Session starts. The next Battle Session will start in %s."
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&cIl controllo dei banner non può essere ottenuto fino all'inizio della prossima sessione di battaglia. La prossima sessione di battaglia inizierà in %s."
 #Hud
 hud_siege_balance: 'Saldo Assedio: '
 hud_warchest: 'Cassa di Guerra: '
@@ -385,12 +385,12 @@ msg_you_received_war_sickness: '&cWARNING: You are in the wilderness of a Siege 
 status_town_days_to_peacefulness_status_change: '&2Days To Peacefulness Status Change: &b%d'
 #Town Peacefulness
 town_help_toggle_peaceful: 'Change your town peacefulness status'
-msg_war_common_town_declared_peaceful: '&bPeacefulness Declared! The town will be confirmed as Peaceful in %d day(s).'
-msg_war_common_town_declared_non_peaceful: '&bNon-Peacefulness Declared! The town will be confirmed as Non-Peaceful in %d day(s).'
+msg_war_common_town_declared_peaceful: '&bNeutralità Dichiarata! La città sarà confermata come Neutrale in %d giorni.'
+msg_war_common_town_declared_non_peaceful: '&bNon-Neutralità Dichiarata! La città sarà confermata come Non-Neutrale in %d giorni.'
 msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot gain nation-military ranks.'
 msg_town_became_non_peaceful: '&b%s has been confirmed as Non-Peaceful. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can now gain nation-military ranks.'
-msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Peaceful status change countdown was cancelled.'
-msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they belong to a Peaceful town.'
+msg_war_common_town_peacefulness_countdown_cancelled: '&bIl conto alla rovescia del cambio di stato pacifico è stato annullato.'
+msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cImpossibile aggiungere il rango militare al residente, perché appartiene a una città pacifica.'
 sg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
 msg_err_peaceful_towns_cannot_revolt: '&cPeaceful towns cannot revolt.'
 msg_err_capital_towns_cannot_go_peaceful: '&cCapital towns cannot go peaceful.'
@@ -444,7 +444,7 @@ status_nation_demoralization_days_left: '&2Days Left: &a%d'
 msg_err_cannot_invade_without_victory: "&cYou cannot capture this town unless your nation is victorious in the siege."
 msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot capture this town while the siege is still in progress.'
 msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this town, because your nation already owns and occupies it.'
-msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&cUnable to add military rank to resident, because they belong to an Occupied town.'
+msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&cImpossibile aggiungere il rango militare al residente, perché appartengono a una città occupata.'
 msg_err_cannot_set_occupation_without_nation: '&cTown %s has no nation. You must set the nation first before you can set the town to Occupied.'
 msg_err_cannot_invade_not_enough_permissions: "&cYou do not have enough permissions to capture the town."
 msg_err_occupied_towns_cannot_leave_their_nations: "&cOccupied towns cannot leave their nations in the usual way. To leave the nation, start a revolt siege."
