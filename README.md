@@ -13,6 +13,7 @@
 * [Download](https://github.com/TownyAdvanced/SiegeWar/releases)
 * [Installation Guide](https://github.com/TownyAdvanced/SiegeWar/wiki/Siege-War-Installation)
 * [User Guide](https://github.com/TownyAdvanced/SiegeWar/wiki/Siege-War-User-Guide)
+* [Maven/Gradle information](https://jitpack.io/#TownyAdvanced/SiegeWar)
 ### Credits:
 - *SiegeWar* was initially developed by [Goosius1](https://github.com/Goosius1), starting in the summer of 2019.
 - Originally *SiegeWar* was a fork of *Towny*, being built directly into *Towny*. 
@@ -21,3 +22,4 @@
 - Special thanks to the servers *CCNET*, *DatBlock*, and *EarthPol*, who pioneered the use of the system, and have provided much valuable information, feedback, and bug reports.
 - [Goosius1](https://github.com/Goosius1) was the maintainer of this repo for the TownyAdvanced org, until his retirement from *Minecraft* plugin development in October 2021.
 - *SiegeWar* is now maintained by the TownyAdvanced org.
+
