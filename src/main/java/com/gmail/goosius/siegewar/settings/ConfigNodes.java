@@ -23,6 +23,13 @@ public enum ConfigNodes {
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
+	WAR_SIEGE_DYNMAP_ROOT(
+			"war.siege.dynmap","","",""),
+	WAR_SIEGE_DYNMAP_LAYER_NAME(
+			"war.siege.dynmap.layer_name",
+			"SiegeWar",
+			"",
+			"# The named used in the Dynmap layer name."),
 	WAR_SIEGE_SWITCHES(
 			"war.siege.switches",
 			"",

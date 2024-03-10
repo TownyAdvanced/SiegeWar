@@ -59,7 +59,7 @@ public class DynmapIntegration {
         //Create siegewar marker set
         siegeWarMarkerSet = markerapi.getMarkerSet("siegewar.markerset");
         if (siegeWarMarkerSet == null) {
-            siegeWarMarkerSet = markerapi.createMarkerSet("siegewar.markerset", plugin.getName(), null, false);
+            siegeWarMarkerSet = markerapi.createMarkerSet("siegewar.markerset", SiegeWarSettings.getDynmapLayerName(), null, false);
         } else {
             siegeWarMarkerSet.setMarkerSetLabel(plugin.getName());
         }

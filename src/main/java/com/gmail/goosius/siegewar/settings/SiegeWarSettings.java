@@ -598,4 +598,8 @@ public class SiegeWarSettings {
 	public static boolean isBattleCommandersEnabled() {
 		return Settings.getBoolean(ConfigNodes.BATTLE_COMMANDERS_ENABLED);
 	}
+
+	public static String getDynmapLayerName() {
+		return Settings.getString(ConfigNodes.WAR_SIEGE_DYNMAP_LAYER_NAME);
+	}
 }
