@@ -496,4 +496,4 @@ msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cBạn không thể xu
 msg_err_cannot_spawn_not_in_homeblock: "Bạn phải ở trong khu homeblock của mình để xuất hiện trong cuộc bao vây."
 #Added in 2.8.0
 msg_swa_remove_siege: '&bCuộc bao vây của %s đã bị loại bỏ thông qua các lệnh của quản trị viên.'
-msg_swa_battle: 'Battle'
+msg_swa_battle: 'Trận chiến'

@@ -71,10 +71,10 @@ msg_err_siege_war_banner_support_block_not_stable: "&cВы не можете п�
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'Вы не можете использовать этот предмет в режиме контроля флаг.'
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2Таймер иммунитета к восстанию: &a%s'
-status_town_siege_status_in_progress: 'Contested'
+status_town_siege_status_in_progress: 'Конфликт'
 status_town_siege_status_banner_xyz: '&2 > Флаг XYZ: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > Таймер иммунитета: &%s'
-status_town_siege_progress: '&2 > Progress: &a%d/%d'
+status_town_siege_progress: '&2 > Прогресс: &a%d/%d'
 status_town_banner_control: '&2 > Контроль флага: %s &a[%s]&2: &f'
 status_town_banner_control_nobody: '&2 > Контроль флага: %s'
 #General
@@ -94,23 +94,23 @@ admin_help_1: 'Перезагрузить конфигурацию и языко
 config_and_lang_file_reloaded_successfully: 'Конфигурация и языковой файл успешно перезагружены.'
 config_and_lang_file_could_not_be_loaded: 'Не удалось перезагрузить. Подробности в консоли.'
 #Added in 0.05:
-msg_err_not_being_sieged: '&cTown %s does not have an active siege.'
+msg_err_not_being_sieged: '&cГород %s не находится в осаде.'
 msg_err_town_not_registered: '&cГород %s не зарегистрирован.'
 #Scoreboard
 hud_title: 'Осада'
-hud_siege_status: 'Siege Status: '
+hud_siege_status: 'Статус Осады: '
 hud_attackers: 'АТК: '
 hud_defenders: 'ЗАЩ: '
 hud_banner_control: "Контроль флага: "
-hud_siege_progress: 'Siege Progress: '
+hud_siege_progress: 'Прогресс Осады: '
 msg_swa_resident_already_has_control: '&cЖитель %s уже имеет контроль.'
 msg_swa_resident_doesnt_have_control: "&cЖитель %s не имеет контроля."
 msg_swa_set_plunder_success: '&bВторгся в %s для %s.'
 siege_status_in_progress: 'Contested'
 siege_status_unknown: 'Неизвестен'
 dynmap_siege_banner_control: 'Контроль флага: %s'
-dynmap_siege_progress: 'Siege Progress: %d/%d'
-dynmap_siege_status: 'Siege Status: %s'
+dynmap_siege_progress: 'Прогресс Осады: %d/%d'
+dynmap_siege_status: 'Статус Осады: %s'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4ВНИМАНИЕ: &cЧто-то из вашего снаряжения близко к поломке из-за деградации снаряжения после смерти.'
 msg_swa_remove_siege_success: '&bОсада успешно снята.'
@@ -137,7 +137,7 @@ msg_na: 'Н/А'
 status_town_siege_status_siege_balance: '&2 > Баланс: &a%d'
 status_town_siege_status_warchest: '&2 > Сундук Войны: &%s'
 #Battle sessions
-status_town_siege_battle: '&2Battle:'
+status_town_siege_battle: '&2Битва:'
 status_town_siege_battle_time_remaining: '&2 > Оставшееся время до захвата: %s'
 msg_war_siege_battle_session_started: "&bA new Battle Session has started. All PVP protections inside Siege-Zones are suspended for the duration of the Battle Session."
 msg_war_siege_battle_session_ended_with_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. The following teams won their battles:"
@@ -259,10 +259,10 @@ msg_siege_war_defender_killed_by_player: '&bОсада %s > Защитник %s 
 #Added in 0.27
 msg_next_siege_session_in_minutes: 'Следующая боевая сессия начнётся через %s минут.'
 msg_session_is_active_now: 'Боевая сессия активна!'
-msg_err_battle_session_active: "&cA Battle Session has already started."
-msg_err_battle_session_inactive: "&cThe Battle Session has already ended."
-msg_battle_session_force_start: "&bA Battle Session has been force started."
-msg_battle_session_force_end: "&bThe Battle Session has been force ended."
+msg_err_battle_session_active: "&cБоевая сессия уже началась."
+msg_err_battle_session_inactive: "&cБоевая сессия уже завершена."
+msg_battle_session_force_start: "&bБоевая сессия была принудительно начата."
+msg_battle_session_force_end: "&bБоевая сессия была принудительно завершена."
 #Added in 0.28
 msg_town_immunity_expired: 'Иммунитет от осад для вашего города истёк.'
 #Unsiegeable towns strings
@@ -358,9 +358,9 @@ msg_occupation_tax_cannot_be_paid: "&cThe Town %s could not pay their nation occ
 #Shown in the nation status screen when a nation has nation occupation tax.
 status_nation_occupation_tax_per_plot: "&2Nation Occupation Tax: &c%s per plot"
 #Shown in the town status screen when a town has nation occupation tax to pay.
-status_town_occupation_tax: "&2Nation Occupation Tax: &c%s"
+status_town_occupation_tax: "&2Налог за оккупацию нации; &c%s"
 #Shown when the nation tries to set a nation occupation tax over the maximum.
-msg_err_occupation_tax_cannot_be_more_than: "&cNations cannot set an occupation tax greater than %s."
+msg_err_occupation_tax_cannot_be_more_than: "&cНации не могут установить оккупационный налог выше чем %s."
 #Shown to nation when they collect their occupation taxes.
 msg_occupation_taxes_collected_totaling: "&bYour nation collected occupation taxes totalling %s."
 #####################################################################
@@ -382,18 +382,18 @@ msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occ
 msg_you_will_get_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. Please enter a town or leave the Siege Zone, otherwise you will get War Sickness in %s seconds.'
 msg_you_received_war_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. To remove the War Sickness, enter a town or leave the Siege Zone.'
 #Town Status Screen
-status_town_days_to_peacefulness_status_change: '&2Days To Peacefulness Status Change: &b%d'
+status_town_days_to_peacefulness_status_change: '&2Дней до изменения мирного статуса: &b%d'
 #Town Peacefulness
-town_help_toggle_peaceful: 'Change your town peacefulness status'
-msg_war_common_town_declared_peaceful: '&bPeacefulness Declared! The town will be confirmed as Peaceful in %d day(s).'
+town_help_toggle_peaceful: 'Измените мирный статус вашего города'
+msg_war_common_town_declared_peaceful: 'Установлен мирный статус! Город будет обозначен как мирный через %d день(ней).'
 msg_war_common_town_declared_non_peaceful: '&bNon-Peacefulness Declared! The town will be confirmed as Non-Peaceful in %d day(s).'
 msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot gain nation-military ranks.'
 msg_town_became_non_peaceful: '&b%s has been confirmed as Non-Peaceful. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can now gain nation-military ranks.'
 msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Peaceful status change countdown was cancelled.'
 msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they belong to a Peaceful town.'
 sg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
-msg_err_peaceful_towns_cannot_revolt: '&cPeaceful towns cannot revolt.'
-msg_err_capital_towns_cannot_go_peaceful: '&cCapital towns cannot go peaceful.'
+msg_err_peaceful_towns_cannot_revolt: '&cМирные города не могут восстать.'
+msg_err_capital_towns_cannot_go_peaceful: '&cСтолицы не могут быть мирными.'
 msg_err_cannot_subvert_not_enough_permissions: "&cYou do not have enough permissions to subvert the town."
 msg_err_cannot_subvert_dont_own_guardian_town: "&cSubvert not possible, because your nation does not own the required Guardian Town: %s."
 msg_peaceful_towns_released_on_homeblock_move: "&bBecause %s moved its homeblock, %d peaceful town(s) which it was guarding, were released from occupation."
@@ -401,16 +401,16 @@ msg_peaceful_towns_released_on_homeblock_move: "&bBecause %s moved its homeblock
 msg_err_town_neutrality_not_supported: "&cSiegeWar does not support town neutrality. To protect your town from sieges, change your town to Peaceful, using '/sw town togglepeaceful'."
 #swa
 msg_swa_set_invade_success: '&bSet captured to %s for %s.'
-msg_swa_town_peacefulness_change_success: '&bSuccessfully changed the peacefulness status of %s to %s.'
-msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation status of %s to %s.'
-msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended."
+msg_swa_town_peacefulness_change_success: '&bМирный статус успешно изменён с %s на %s.'
+msg_swa_town_occupation_change_success: '&bСтатус оккупации успешно изменён с %s на %s.'
+msg_err_command_not_allowed_on_active_siege: "Вы не можете выполнить эту команду, пока осада не завершится."
 #Timed wins
 msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has won a %s victory against the defending army of %s!'
 msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!'
 msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has defeated the rebels with a %s victory!'
 msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded! The attacking rebels have successfully driven off the attacking army of %s!, with a %s victory!'
-msg_decisive: 'DECISIVE'
-msg_close: 'CLOSE'
+msg_decisive: 'РАЗРЕШИТЬ'
+msg_close: 'ЗАКРЫТЬ'
 #Abandoning Attacks
 msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > The attacking army of %s has admitted defeat and retreated! This action will be confirmed when siege progress is complete.'
 msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has admitted defeat and retreated! This action will be confirmed when siege progress is complete.'
@@ -496,4 +496,4 @@ msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cYou cannot spawn to t
 msg_err_cannot_spawn_not_in_homeblock: "&cYou must be in your town homeblock to spawn to the siege."
 #Added in 2.8.0
 msg_swa_remove_siege: '&bSiege of %s removed via admin commands.'
-msg_swa_battle: 'Battle'
+msg_swa_battle: 'Битва'
