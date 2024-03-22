@@ -12,7 +12,6 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarInventoryUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarScoringUtil;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -43,8 +42,6 @@ public class PlayerDeath {
 	/**
 	 * Evaluates a siege death event.
 	 * <p>
-	 * Any player who dies in an active SiegeZone keeps inventory (with degrade)
-	 * <p>
 	 * If the dead player is officially involved in a nearby siege,
 	 * - The opposing team gains battle points
 	 * - Their inventory items degrade a little (e.g. 20%)
@@ -61,11 +58,6 @@ public class PlayerDeath {
 	 * @param playerDeathEvent The player death event
 	 */
 	public static void evaluateSiegePlayerDeath(Player deadPlayer, PlayerDeathEvent playerDeathEvent) {
-		//Keep inventory
-		if (SiegeWarSettings.isKeepInventoryOnSiegeZoneDeathEnabled() && SiegeWarDistanceUtil.isLocationInActiveSiegeZone(deadPlayer.getLocation())) {
-			SiegeWarInventoryUtil.degradeInventory(playerDeathEvent);
-			SiegeWarInventoryUtil.keepInventory(playerDeathEvent);
-		}
 		//Battle-points & banner-control-sessions
 		try {
 			Resident deadResident = TownyUniverse.getInstance().getResident(deadPlayer.getUniqueId());
