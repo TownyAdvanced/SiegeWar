@@ -42,7 +42,7 @@ import java.nio.file.Path;
 public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
-	private final String requiredTownyVersion = "0.99.3.0";
+	private final String requiredTownyVersion = "0.100.1.0";
 	private static final SiegeHUDManager siegeHUDManager = new SiegeHUDManager();
 	private final Object scheduler;
 
