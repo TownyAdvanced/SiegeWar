@@ -2,11 +2,11 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -95,7 +95,7 @@ public class SiegeWarSicknessUtil {
             playersWithFullWarSickness.add(player);
         }
 
-        Towny.getPlugin().getServer().getScheduler().runTaskLater(Towny.getPlugin(), () -> {
+        SiegeWar.getSiegeWar().getScheduler().runLater(player, () -> {
             if (SiegeWarDistanceUtil.isInSiegeZone(player, siege)) {
                 if (SiegeWarDistanceUtil.isInANonBesiegedTown(player.getLocation())) {
                     //Special War Sickness
@@ -134,11 +134,8 @@ public class SiegeWarSicknessUtil {
      */
     private static void givePlayerSpecialWarSicknessNow(Player player) {
         final int effectDurationTicks = (int)(TimeTools.convertToTicks(TownySettings.getShortInterval() + 5));
-        Towny.getPlugin().getServer().getScheduler().runTask(Towny.getPlugin(), new Runnable() {
-            public void run() {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, effectDurationTicks, 4));
-            }
-        });
+        SiegeWar.getSiegeWar().getScheduler().run(player, ()->
+            player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, effectDurationTicks, 4)));
     }
 
     public static boolean isOfficialSiegeParticipant(Player player, Resident resident, Siege siege) {
