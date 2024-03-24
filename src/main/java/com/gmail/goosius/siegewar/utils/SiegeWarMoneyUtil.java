@@ -111,7 +111,7 @@ public class SiegeWarMoneyUtil {
 		if(extraMoneyPercentage == 0) {
 			return 1;
 		} else {
-			return 1 + ((extraMoneyPercentage / 100) * (town.getLevelID() -1));
+			return 1 + ((extraMoneyPercentage / 100) * (town.getLevelNumber() -1));
 		}
 	}
 

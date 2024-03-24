@@ -275,7 +275,7 @@ public class SiegeWarDistanceUtil {
 	 * @throws TownyException thrown if the town or nation capital has no Homeblock set.
 	 */
 	private static boolean isTownTooFarFromNationCapitalByDistance(Nation nation, Town town) throws TownyException {
-		return TownySettings.getNationRequiresProximity() > 0 && MathUtil.distance(nation.getCapital().getHomeBlock().getCoord(), town.getHomeBlock().getCoord()) > TownySettings.getNationRequiresProximity();
+		return TownySettings.getNationProximityToCapital() > 0 && MathUtil.distance(nation.getCapital().getHomeBlock().getCoord(), town.getHomeBlock().getCoord()) > TownySettings.getNationProximityToCapital();
 	}
 
 	/**
@@ -299,7 +299,7 @@ public class SiegeWarDistanceUtil {
 	 * @throws TownyException thrown if the town or nation capital has no Homeblock set.
 	 */
 	private static boolean isTownTooFarFromNationCapitalByWorld(Nation nation, Town town) throws TownyException {
-		return TownySettings.getNationRequiresProximity() > 0 && !nation.getCapital().getHomeBlock().getWorld().getName().equals(town.getHomeBlock().getWorld().getName());
+		return TownySettings.getNationProximityToCapital() > 0 && !nation.getCapital().getHomeBlock().getWorld().getName().equals(town.getHomeBlock().getWorld().getName());
 	}
 
 	public static boolean isInANonBesiegedTown(Location location) {
