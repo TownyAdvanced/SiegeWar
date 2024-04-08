@@ -25,7 +25,8 @@ import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
-import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
@@ -288,6 +289,7 @@ public class SiegeWarTownEventListener implements Listener {
 						&& SiegeWarTownPeacefulnessUtil.isTownPeaceful(toTown)
 						&& toTown.isPublic()) {
 					event.setCancelled(false); //UN-Cancel the event
+					return; //Avoid re-cancelling event
 				}
 			}
 
