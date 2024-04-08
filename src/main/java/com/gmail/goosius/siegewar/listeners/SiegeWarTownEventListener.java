@@ -291,18 +291,19 @@ public class SiegeWarTownEventListener implements Listener {
 				}
 			}
 
-			try {
-				//If enabled in config, prevent teleportation to outposts during offensive siege & battle session
-				if (!SiegeController.getActiveOffensiveSieges(toTown.getNation()).isEmpty()
-						&& toTown.getTownBlock(WorldCoord.parseWorldCoord(event.getTo())).isOutpost()
-						&& SiegeWarSettings.getWarSiegeOutpostTeleportationDisabled() && BattleSession.getBattleSession().isActive()) {
-					Translator translator = Translator.locale(event.getPlayer());
+			Nation nation = toTown.getNationOrNull();
+			TownBlock tb = WorldCoord.parseWorldCoord(event.getTo()).getTownBlockOrNull();
+			if (nation == null || tb == null)
+				return;
+			//If enabled in config, prevent teleportation to outposts during offensive siege while battle session is active.
+			if (!SiegeController.getActiveOffensiveSieges(nation).isEmpty()
+					&& tb.isOutpost()
+					&& SiegeWarSettings.getWarSiegeOutpostTeleportationDisabled() && BattleSession.getBattleSession().isActive()) {
+				Translator translator = Translator.locale(event.getPlayer());
 
-					event.setCancelMessage(translator.of("siegewar_plugin_prefix") + translator.of("msg_err_cannot_spawn_outpost_during_battle_session"));
-					event.setCancelled(true); //Stop the teleport
-				}
-			} catch (TownyException e) {
-				e.printStackTrace();
+				event.setCancelMessage(translator.of("siegewar_plugin_prefix") + translator.of("msg_err_cannot_spawn_outpost_during_battle_session"));
+				event.setCancelled(true); //Stop the teleport
+
 			}
 		}
 	}
