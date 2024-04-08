@@ -91,6 +91,11 @@ public enum ConfigNodes {
 			"",
 			"# If this setting is true, then during Battle Sessions, only town residents are permitted to spawn into Siege-Zones OR besieged towns.",
 			"# This setting is recommended to protect players from accidentally spawning into a PVP-active-area while unprepared."),
+	WAR_SIEGE_OUTPOST_TELEPORTATION_DISABLED(
+			"war.siege.switches.outpost_teleportation_disabled",
+			"false",
+			"",
+			"# If true, then during Battle Sessions, teleportation to outposts for towns engaged in a siege is disabled."),
 	WAR_SIEGE_BESIEGED_TOWN_RECRUITMENT_DISABLED(
 			"war.siege.switches.besieged_town_recruitment_disabled",
 			"true",
