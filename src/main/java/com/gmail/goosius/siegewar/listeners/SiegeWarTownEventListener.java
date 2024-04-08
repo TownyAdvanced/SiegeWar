@@ -278,7 +278,7 @@ public class SiegeWarTownEventListener implements Listener {
 	 * @param event town spawn event
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void on(TownSpawnEvent event) throws TownyException {
+	public void on(TownSpawnEvent event) {
 		if(SiegeWarSettings.getWarSiegeEnabled()) {
 			Town toTown = event.getToTown();
 
