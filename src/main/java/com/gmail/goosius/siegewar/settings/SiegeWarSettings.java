@@ -131,6 +131,10 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_NON_RESIDENT_SPAWN_INTO_SIEGE_ZONES_OR_BESIEGED_TOWNS_DISABLED);
 	}
 
+	public static boolean getWarSiegeOutpostTeleportationDisabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_OUTPOST_TELEPORTATION_DISABLED);
+	}
+
 	public static int getWarSiegeMaxActiveSiegeAttacksPerNation() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_MAX_ACTIVE_SIEGE_ATTACKS_PER_NATION);
 	}

@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.listeners;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -24,10 +25,8 @@ import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreSetHomeBlockEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownToggleNeutralEvent;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.Translatable;
-import com.palmergames.bukkit.towny.object.Translation;
-import com.palmergames.bukkit.towny.object.Translator;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.*;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -268,22 +267,39 @@ public class SiegeWarTownEventListener implements Listener {
 
 	/**
 	 * If this is a peaceful town, UN-CANCEL the town spawn event
-	 * 
+	 * If the town's nation has an active offensive siege and a battle session is active, CANCEL town spawn event to outposts
+	 *
 	 * Lowest priority so that more important features like the siegezone-tp-block can can take precedence 
 	 *
 	 * @param event town spawn event
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
-	public void on(TownSpawnEvent event) {
-		if(SiegeWarSettings.getWarSiegeEnabled()
-				&& SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
+	public void on(TownSpawnEvent event) throws TownyException {
+		if(SiegeWarSettings.getWarSiegeEnabled()) {
+			Town toTown = event.getToTown();
+
+			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
 				&& SiegeWarSettings.isPeacefulTownPublicSpawnEnabled()) {
-			if (event.isCancelled()
-					&& SiegeWarTownPeacefulnessUtil.isTownPeaceful(event.getToTown())
-					&& event.getToTown().isPublic()) {
-				event.setCancelled(false); //UN-Cancel the event
+				if (event.isCancelled()
+						&& SiegeWarTownPeacefulnessUtil.isTownPeaceful(toTown)
+						&& toTown.isPublic()) {
+					event.setCancelled(false); //UN-Cancel the event
+				}
+			}
+
+			try {
+				//If enabled in config, prevent teleportation to outposts during offensive siege & battle session
+				if (!SiegeController.getActiveOffensiveSieges(toTown.getNation()).isEmpty()
+						&& toTown.getTownBlock(WorldCoord.parseWorldCoord(event.getTo())).isOutpost()
+						&& SiegeWarSettings.getWarSiegeOutpostTeleportationDisabled() && BattleSession.getBattleSession().isActive()) {
+					Translator translator = Translator.locale(event.getPlayer());
+
+					event.setCancelMessage(translator.of("siegewar_plugin_prefix") + translator.of("msg_err_cannot_spawn_outpost_during_battle_session"));
+					event.setCancelled(true); //Stop the teleport
+				}
+			} catch (TownyException e) {
+				e.printStackTrace();
 			}
 		}
 	}
-
 }
