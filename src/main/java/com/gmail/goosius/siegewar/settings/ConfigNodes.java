@@ -357,12 +357,13 @@ public enum ConfigNodes {
 			"# Various siege related effects can apply in this zone e.g. lose points on death, cannot TP in, cannot claim."),
 	WAR_SIEGE_BANNER_CONTROL_SESSION_RADIUS_BLOCKS(
 			"war.siege.distances.banner_control_session_radius_blocks",
-			"16",
+			"-1",
 			"",
 			"# The radius of the 'banner control'.",
 			"# This radius applies both horizontally and vertically, so players must be within radius on Y, and within radius horizontally.",
 			"# Players will begin a banner control session when inside this radius.",
-			"# This radius also applies to siege camps."),
+			"# This radius also applies to siege camps.",
+			"# Setting this value to below '0' will use the size of a Town Block as the radius."),
 	WAR_SIEGE_POINTS_BALANCING(
 			"war.siege.points_balancing",
 			"",
