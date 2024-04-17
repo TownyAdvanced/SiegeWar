@@ -494,6 +494,7 @@ msg_err_cannot_spawn_battle_commander_offline: "&cYou cannot spawn to the siege 
 msg_err_cannot_spawn_battle_commander_dead: "&cYou cannot spawn to the siege because your team's battle commander is dead."
 msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cYou cannot spawn to the siege because your team's battle commander is not in the Siege-Zone."
 msg_err_cannot_spawn_not_in_homeblock: "&cYou must be in your town homeblock to spawn to the siege."
+msg_err_cannot_spawn_outpost_during_battle_session: "&cYou cannot spawn to an outpost while your nation has an offensive siege during a battle session."
 #Added in 2.8.0
 msg_swa_remove_siege: '&bSiege of %s removed via admin commands.'
 msg_swa_battle: 'Battle'

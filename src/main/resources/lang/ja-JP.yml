@@ -494,6 +494,7 @@ msg_err_cannot_spawn_battle_commander_offline: "&cあなたのチームの戦闘
 msg_err_cannot_spawn_battle_commander_dead: "&cあなたのチームの戦闘指揮官が死亡しているため、包囲にスポーンできません。"
 msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cあなたのチームの戦闘指揮官がSiege-Zoneにいないため、包囲にスポーンできません。"
 msg_err_cannot_spawn_not_in_homeblock: "&c包囲にスポーンするには、あなたの町のホームブロック内にいる必要があります。"
+msg_err_cannot_spawn_outpost_during_battle_session: "&cYou cannot spawn to an outpost while your nation has an offensive siege during a battle session."
 #Added in 2.8.0
 msg_swa_remove_siege: '&bSiege of %s removed via admin commands.'
 msg_swa_battle: 'Battle'
