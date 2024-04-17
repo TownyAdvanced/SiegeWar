@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.gmail.goosius.siegewar.SiegeController;
+import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.util.TimeMgmt;
 import org.bukkit.Material;
@@ -125,6 +126,11 @@ public class SiegeWarSettings {
 	
 	public static int getWarSiegeZoneRadiusBlocks() {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_ZONE_RADIUS_BLOCKS);
+	}
+
+	public static int getWarSiegeBannerControlSessionRadiusBlocks() {
+		int radius = Settings.getInt(ConfigNodes.WAR_SIEGE_BANNER_CONTROL_SESSION_RADIUS_BLOCKS);
+		return radius < 0 ? TownySettings.getTownBlockSize() : radius;
 	}
 
 	public static boolean getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled() {
