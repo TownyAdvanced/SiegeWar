@@ -139,7 +139,7 @@ public class SiegeWarDistanceUtil {
 	}
 
 	public static boolean isInTimedPointZone(Location location, Siege siege) {
-		return areLocationsClose(location, siege.getFlagLocation(), TownySettings.getTownBlockSize());
+		return areLocationsClose(location, siege.getFlagLocation(), SiegeWarSettings.getWarSiegeBannerControlSessionRadiusBlocks());
 	}
 
 	public static boolean areTownsClose(Town town1, Town town2, int radiusTownblocks) {
@@ -237,7 +237,7 @@ public class SiegeWarDistanceUtil {
 	 * @param camp {@link SiegeCamp} to check against.
 	 */
 	public static boolean isInSiegeCampZone(Location location, SiegeCamp camp) {
-		return areLocationsClose(location, camp.getBannerBlock().getLocation(), TownySettings.getTownBlockSize());
+		return areLocationsClose(location, camp.getBannerBlock().getLocation(), SiegeWarSettings.getWarSiegeBannerControlSessionRadiusBlocks());
 	}
 
 	/**

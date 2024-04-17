@@ -106,7 +106,7 @@ public class SiegeWarBannerControlUtil {
 		String messageKey = SiegeWarSettings.isWildernessTrapWarfareMitigationEnabled() ? "msg_siege_war_banner_control_session_started_with_altitude" : "msg_siege_war_banner_control_session_started";
 		Messaging.sendMsg(player,
 			Translatable.of(messageKey,
-			TownySettings.getTownBlockSize(),
+			SiegeWarSettings.getWarSiegeBannerControlSessionRadiusBlocks(),
 			sessionDurationText));
 
 		//Notify player in action bar
