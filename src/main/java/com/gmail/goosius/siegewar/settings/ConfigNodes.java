@@ -355,6 +355,13 @@ public enum ConfigNodes {
 			"# The radius of the 'siege zone'.",
 			"# This radius applies only horizontally, so players can never get above a siegezone (e.g. to place lava there or something).",
 			"# Various siege related effects can apply in this zone e.g. lose points on death, cannot TP in, cannot claim."),
+	WAR_SIEGE_BANNER_CONTROL_SESSION_RADIUS_BLOCKS(
+			"war.siege.distances.banner_control_session_radius_blocks",
+			"16",
+			"",
+			"# The radius of the 'banner control'.",
+			"# This radius applies both horizontally and vertically, so players must be within radius on Y, and within radius horizontally.",
+			"# Players will begin a banner control session when inside this radius."),
 	WAR_SIEGE_POINTS_BALANCING(
 			"war.siege.points_balancing",
 			"",

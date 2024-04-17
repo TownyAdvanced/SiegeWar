@@ -127,6 +127,10 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_ZONE_RADIUS_BLOCKS);
 	}
 
+	public static int getWarSiegeBannerControlSessionRadiusBlocks() {
+		return Settings.getInt(ConfigNodes.WAR_SIEGE_BANNER_CONTROL_SESSION_RADIUS_BLOCKS);
+	}
+
 	public static boolean getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_NON_RESIDENT_SPAWN_INTO_SIEGE_ZONES_OR_BESIEGED_TOWNS_DISABLED);
 	}
