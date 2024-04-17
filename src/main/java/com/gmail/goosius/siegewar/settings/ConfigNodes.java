@@ -361,7 +361,8 @@ public enum ConfigNodes {
 			"",
 			"# The radius of the 'banner control'.",
 			"# This radius applies both horizontally and vertically, so players must be within radius on Y, and within radius horizontally.",
-			"# Players will begin a banner control session when inside this radius."),
+			"# Players will begin a banner control session when inside this radius.",
+			"# This radius also applies to siege camps."),
 	WAR_SIEGE_POINTS_BALANCING(
 			"war.siege.points_balancing",
 			"",
