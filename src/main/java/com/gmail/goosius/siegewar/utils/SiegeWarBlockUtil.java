@@ -53,6 +53,38 @@ public class SiegeWarBlockUtil {
 	}
 
 	/**
+	 * This method gets a list of town blocks in a square surrounding a block.
+	 *
+	 * @param block the center block
+	 * @param radius the radius from center to check in each direction
+	 * @param exclude the radius from center to exclude in each direction
+	 * @return list of all townblocks surrounding the center
+	 */
+	public static List<TownBlock> getSurroundingTownBlocks(Block block, int radius, int exclude) {
+		//TODO: ensure radius is larger than exclude
+		Set<WorldCoord> coOrdinates = new HashSet<>();
+		WorldCoord startingCoOrdinate = WorldCoord.parseWorldCoord(block);
+
+		for (int mainOffset = radius; mainOffset > exclude; mainOffset--) {
+			//Adds the corners for a given offset
+			coOrdinates.add(startingCoOrdinate.add(mainOffset, -mainOffset));
+			coOrdinates.add(startingCoOrdinate.add(mainOffset, mainOffset));
+			coOrdinates.add(startingCoOrdinate.add(-mainOffset, -mainOffset));
+			coOrdinates.add(startingCoOrdinate.add(-mainOffset, mainOffset));
+
+			//Fills between the corners for a given offset
+			for (int secondOffset = mainOffset - 1; secondOffset > -mainOffset; secondOffset--) {
+				coOrdinates.add(startingCoOrdinate.add(secondOffset, -mainOffset));
+				coOrdinates.add(startingCoOrdinate.add(secondOffset, mainOffset));
+				coOrdinates.add(startingCoOrdinate.add(-mainOffset, secondOffset));
+				coOrdinates.add(startingCoOrdinate.add(mainOffset, secondOffset));
+			}
+		}
+
+		return getTownBlocks(coOrdinates);
+	}
+
+	/**
 	 * This method gets a list of adjacent cardinal townblocks, either N, S, E or W.
 	 * 
 	 * @param block the block to start from
