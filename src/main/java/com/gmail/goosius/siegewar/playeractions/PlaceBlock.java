@@ -30,7 +30,6 @@ import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -147,13 +146,13 @@ public class PlaceBlock {
 			//On the COORD grid, find any townblocks surrounding the COORD which this block is in
 			List<TownBlock> allTownBlocks = SiegeWarBlockUtil.getSurroundingTownBlocks(block,
 					SiegeWarSettings.getWarSiegeBannerPlaceDistanceBlocksMax());
+			if (allTownBlocks.isEmpty()) return false;
+
 			List<TownBlock> excludedTownBlocks = SiegeWarBlockUtil.getSurroundingTownBlocks(block,
 					SiegeWarSettings.getWarSiegeBannerPlaceDistanceBlocksMin());
-			List<TownBlock> validTownBlocks = new ArrayList<>(allTownBlocks);
-			validTownBlocks.removeAll(excludedTownBlocks);
+			if (!excludedTownBlocks.isEmpty()) throw new TownyException(translator.of("msg_err_banner_cannot_be_close_to_any_town_block", SiegeWarSettings.getWarSiegeBannerPlaceDistanceBlocksMin()));
 
-			if (validTownBlocks.isEmpty()) return false;
-			townBlock = validTownBlocks.get(0);
+			townBlock = allTownBlocks.get(0);
 		}
 
 		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
