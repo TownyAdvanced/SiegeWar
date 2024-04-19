@@ -156,6 +156,8 @@ public class PlaceBlock {
 			townBlock = validTownBlocks.get(0);
 		}
 
+		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
+
 		/*
 		 * Ensure there is just one cardinal town block
 		 * This is to avoid the following scenario:
@@ -173,8 +175,8 @@ public class PlaceBlock {
 		 */
 		//This
 		//TODO: change logic to take into account banner capture radius, townblock size and townblock distance from town
-		//if (adjacentCardinalTownBlocks.size() > 1)
-		//	throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
+		if (adjacentCardinalTownBlocks.size() > 1)
+			throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
 
 		if (isWhiteBanner(block)) {
 			evaluatePlaceWhiteBannerNearTown(player, residentsTown, residentsNation, townBlock.getTownOrNull());
