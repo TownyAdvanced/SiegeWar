@@ -174,7 +174,7 @@ public class PlaceBlock {
 		 *  ----------
 		 */
 		//This
-		//TODO: change logic to take into account banner capture radius, townblock size and townblock distance from town
+		//TODO: change logic to take into account banner capture radius, townblock size and banner location in townblock
 		if (adjacentCardinalTownBlocks.size() > 1)
 			throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
 
