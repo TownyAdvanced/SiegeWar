@@ -120,7 +120,7 @@ public class PlaceBlock {
 	 */
 	private static boolean evaluatePlaceStandingBanner(Player player, Block block) throws TownyException {
 		final Translator translator = Translator.locale(player);
-		//Ensure the the banner is placed in wilderness
+		//Ensure that the banner is placed in wilderness
 		if (!TownyAPI.getInstance().isWilderness(block))
 			return false;
 
@@ -133,11 +133,28 @@ public class PlaceBlock {
 		Town residentsTown = resident.getTownOrNull();
 		Nation residentsNation = resident.getNationOrNull();
 
-		//On the COORD grid, find any townblocks adjacent to the COORD which this block is in
-		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
-		List<TownBlock> adjacentNonCardinalTownBlocks = SiegeWarBlockUtil.getNonCardinalAdjacentTownBlocks(block);
-		if(adjacentCardinalTownBlocks.size() == 0 && adjacentNonCardinalTownBlocks.size() == 0)
-			return false;
+		TownBlock townBlock;
+		if(SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled()
+				&& SiegeWarSettings.isBannerAtTownBorderEnabled()) {
+			/*
+			 * Ensure the banner is just one block away from the target townblock
+			 * On the minecraft LOCATION GRID, find the first adjacent townblock, if any
+			 */
+			townBlock = SiegeWarDistanceUtil.findFirstValidTownBlockAdjacentToMinecraftBlock(block);
+			if(townBlock == null)
+				throw new TownyException(translator.of("msg_err_banner_cannot_be_more_than_one_block_away"));
+		} else {
+			//On the COORD grid, find any townblocks surrounding the COORD which this block is in
+			List<TownBlock> allTownBlocks = SiegeWarBlockUtil.getSurroundingTownBlocks(block,
+					SiegeWarSettings.getWarSiegeBannerPlaceDistanceBlocksMax());
+			List<TownBlock> excludedTownBlocks = SiegeWarBlockUtil.getSurroundingTownBlocks(block,
+					SiegeWarSettings.getWarSiegeBannerPlaceDistanceBlocksMin());
+			List<TownBlock> validTownBlocks = new ArrayList<>(allTownBlocks);
+			validTownBlocks.removeAll(excludedTownBlocks);
+
+			if (validTownBlocks.isEmpty()) return false;
+			townBlock = validTownBlocks.get(0);
+		}
 
 		/*
 		 * Ensure there is just one cardinal town block
@@ -155,26 +172,9 @@ public class PlaceBlock {
 		 *  ----------
 		 */
 		//This
-		if (adjacentCardinalTownBlocks.size() > 1)
-			throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
-		
-		TownBlock townBlock;
-		if(SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled() 
-				&& SiegeWarSettings.isBannerAtTownBorderEnabled()) {
-			/*
-			 * Ensure the banner is just one block away from the target townblock
-			 * On the minecraft LOCATION GRID, find the first adjacent townblock, if any
-			 */
-			townBlock = SiegeWarDistanceUtil.findFirstValidTownBlockAdjacentToMinecraftBlock(block);
-			if(townBlock == null)
-				throw new TownyException(translator.of("msg_err_banner_cannot_be_more_than_one_block_away"));
-		} else {
-			//Just get one of the adjacent townblocks
-			List<TownBlock> allTownBlocks = new ArrayList<>();
-			allTownBlocks.addAll(adjacentCardinalTownBlocks);
-			allTownBlocks.addAll(adjacentNonCardinalTownBlocks);
-			townBlock = allTownBlocks.get(0);
-		}
+		//TODO: change logic to take into account banner capture radius, townblock size and townblock distance from town
+		//if (adjacentCardinalTownBlocks.size() > 1)
+		//	throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
 
 		if (isWhiteBanner(block)) {
 			evaluatePlaceWhiteBannerNearTown(player, residentsTown, residentsNation, townBlock.getTownOrNull());
