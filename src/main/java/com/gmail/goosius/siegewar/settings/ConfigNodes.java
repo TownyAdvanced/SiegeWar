@@ -370,14 +370,14 @@ public enum ConfigNodes {
 			"war.siege.distances.banner_place_distance_town_blocks.max",
 			"1",
 			"",
-			"# The maximum distance in Town Blocks that a banner can be placed from a town.",
+			"# The number of Town Blocks which a banner can be from a town to be placed for a siege.",
 			"# This distance applies both to surrendering and starting sieges.",
 			"# It is not recommended to set this value above 2."),
 	WAR_SIEGE_BANNER_PLACE_DISTANCE_TOWN_BLOCKS_MIN(
 			"war.siege.distances.banner_place_distance_town_blocks.min",
 			"0",
 			"",
-			"# The minimum distance in Town Blocks that a banner must be placed from a town.",
+			"# The number of Town Blocks which a banner must be further than from a town to be placed for a siege.",
 			"# This distance applies both to surrendering and starting sieges.",
 			"# This setting is ignored if 'surface_warfare.besieged_town.banner_at_border_enabled' is 'true'"),
 	WAR_SIEGE_POINTS_BALANCING(
