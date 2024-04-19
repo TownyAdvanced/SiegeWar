@@ -141,7 +141,7 @@ public class SiegeWarSettings {
 
 	public static int getWarSiegeBannerPlaceDistanceBlocksMin() {
 		int distance = Settings.getInt(ConfigNodes.WAR_SIEGE_BANNER_PLACE_DISTANCE_TOWN_BLOCKS_MIN);
-		return Math.max(distance, 1);
+		return Math.max(distance, 0);
 	}
 
 	public static boolean getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled() {
