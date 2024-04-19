@@ -133,6 +133,17 @@ public class SiegeWarSettings {
 		return radius < 0 ? TownySettings.getTownBlockSize() : radius;
 	}
 
+	public static int getWarSiegeBannerPlaceDistanceBlocksMax() {
+		int max = Settings.getInt(ConfigNodes.WAR_SIEGE_BANNER_PLACE_DISTANCE_TOWN_BLOCKS_MAX);
+		int min = getWarSiegeBannerPlaceDistanceBlocksMin();
+		return Math.max(max, min);
+	}
+
+	public static int getWarSiegeBannerPlaceDistanceBlocksMin() {
+		int distance = Settings.getInt(ConfigNodes.WAR_SIEGE_BANNER_PLACE_DISTANCE_TOWN_BLOCKS_MIN);
+		return Math.max(distance, 1);
+	}
+
 	public static boolean getWarSiegeNonResidentSpawnIntoSiegeZonesOrBesiegedTownsDisabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_NON_RESIDENT_SPAWN_INTO_SIEGE_ZONES_OR_BESIEGED_TOWNS_DISABLED);
 	}

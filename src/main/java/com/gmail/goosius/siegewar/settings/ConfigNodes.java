@@ -364,6 +364,23 @@ public enum ConfigNodes {
 			"# Players will begin a banner control session when inside this radius.",
 			"# This radius also applies to siege camps.",
 			"# Setting this value to below '0' will use the size of a Town Block as the radius."),
+	WAR_SIEGE_BANNER_PLACE_DISTANCE_TOWN_BLOCKS(
+			"war.siege.distances.banner_place_distance_town_blocks","","",""),
+	WAR_SIEGE_BANNER_PLACE_DISTANCE_TOWN_BLOCKS_MAX(
+			"war.siege.distances.banner_place_distance_town_blocks.max",
+			"1",
+			"",
+			"# The maximum distance in Town Blocks that a banner can be placed from a town, where 1 is adjacent.",
+			"# This distance applies both to surrendering and starting sieges.",
+			"# It is not recommended to set this value above 2."),
+	WAR_SIEGE_BANNER_PLACE_DISTANCE_TOWN_BLOCKS_MIN(
+			"war.siege.distances.banner_place_distance_town_blocks.min",
+			"1",
+			"",
+			"# The minimum distance in Town Blocks that a banner must be placed from a town, where 1 is adjacent.",
+			"# This distance applies both to surrendering and starting sieges.",
+			"# Setting this value to below '1' will use 1 Town Block distance.",
+			"# This setting is ignored if 'surface_warfare.besieged_town.banner_at_border_enabled' is 'true'"),
 	WAR_SIEGE_POINTS_BALANCING(
 			"war.siege.points_balancing",
 			"",
