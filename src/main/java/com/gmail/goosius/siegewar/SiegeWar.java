@@ -1,6 +1,6 @@
 package com.gmail.goosius.siegewar;
 
-import com.gmail.goosius.siegewar.listeners.SiegeWarTownyChatEventListener;
+import com.gmail.goosius.siegewar.listeners.*;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
 
@@ -25,15 +25,6 @@ import com.gmail.goosius.siegewar.command.SiegeWarCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarNationSetOccupationTaxAddonCommand;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.integration.dynmap.DynmapIntegration;
-import com.gmail.goosius.siegewar.listeners.SiegeWarActionListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarBukkitEventListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarNationEventListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarPlotEventListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarSafeModeListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarSelfListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarStatusScreenListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarTownEventListener;
-import com.gmail.goosius.siegewar.listeners.SiegeWarTownyEventListener;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -174,6 +165,7 @@ public class SiegeWar extends JavaPlugin {
 			pm.registerEvents(new SiegeWarPlotEventListener(this), this);
 			pm.registerEvents(new SiegeWarStatusScreenListener(), this);
 			pm.registerEvents(new SiegeWarSelfListener(), this);
+			pm.registerEvents(new SiegeWarLoreListener(), this);
 			if (getServer().getPluginManager().isPluginEnabled("TownyChat")) {
 				info("SiegeWar found TownyChat plugin, enabling TownyChat integration.");
 				pm.registerEvents(new SiegeWarTownyChatEventListener(), this);
