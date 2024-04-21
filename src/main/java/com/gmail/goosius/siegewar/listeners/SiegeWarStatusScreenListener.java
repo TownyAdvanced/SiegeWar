@@ -37,6 +37,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.Translator;
+import com.palmergames.bukkit.towny.utils.TownyComponents;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
 
@@ -317,7 +318,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 				Component hoverText = Component.empty();
 				hoverText = hoverText.append(Component.text(translator.of("status_town_siege")));
 				for (String line : out) {
-					hoverText = hoverText.append(Component.newline().append(Component.text(line)));
+					hoverText = hoverText.append(Component.newline().append(TownyComponents.miniMessage(line)));
 				}
 				event.getStatusScreen().addComponentOf("siegeWar_siegeHover", 
 						Component.empty()
