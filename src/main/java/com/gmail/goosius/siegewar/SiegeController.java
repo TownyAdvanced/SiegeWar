@@ -20,13 +20,9 @@ import com.gmail.goosius.siegewar.events.SiegeRemoveEvent;
 import com.gmail.goosius.siegewar.events.SiegeCampStartEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.gmail.goosius.siegewar.utils.DataCleanupUtil;
+import com.gmail.goosius.siegewar.utils.*;
 import com.gmail.goosius.siegewar.timeractions.AttackerTimedWin;
 import com.gmail.goosius.siegewar.timeractions.DefenderTimedWin;
-import com.gmail.goosius.siegewar.utils.SiegeCampUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
-import com.gmail.goosius.siegewar.utils.SiegeWarSiegeCompletionUtil;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Government;
@@ -40,7 +36,6 @@ import org.jetbrains.annotations.Nullable;
 import com.gmail.goosius.siegewar.metadata.SiegeMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.objects.SiegeCamp;
-import com.gmail.goosius.siegewar.utils.SiegeWarMoneyUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -511,6 +506,9 @@ public class SiegeController {
 
 		//Save to DB
 		SiegeController.saveSiege(siege);
+
+		//Do this before event so a plugin could edit in event
+		SiegeWarBannerLoreUtil.startSiege(siege);
 
 		//Call event
 		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, startMessage.defaultLocale()));

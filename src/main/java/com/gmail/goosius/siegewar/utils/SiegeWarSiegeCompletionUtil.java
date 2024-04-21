@@ -38,6 +38,9 @@ public class SiegeWarSiegeCompletionUtil {
 		//Save to db
 		SiegeController.saveSiege(siege);
 
+		//Do this before event so a plugin could edit in event
+		SiegeWarBannerLoreUtil.endSiege(siege);
+
 		//Fire SiegeEnded event
 		Bukkit.getPluginManager().callEvent(new SiegeEndEvent(siege));
 	}
