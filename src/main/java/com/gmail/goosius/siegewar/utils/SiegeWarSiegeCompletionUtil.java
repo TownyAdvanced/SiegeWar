@@ -41,7 +41,7 @@ public class SiegeWarSiegeCompletionUtil {
 
 		if (SiegeWarSettings.isSiegeLoreEnabled()) {
 			//Set outcome, winner, points, end time
-			SiegeWarBannerLoreUtil.finaliseBanner(siege);
+			SiegeWarLoreUtil.finaliseBanner(siege);
 		}
 
 		//Fire SiegeEnded event

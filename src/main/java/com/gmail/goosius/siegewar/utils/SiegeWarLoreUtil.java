@@ -3,16 +3,14 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.objects.Siege;
-import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Banner;
 import org.bukkit.block.BlockState;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-public class SiegeWarBannerLoreUtil {
+public class SiegeWarLoreUtil {
     public static final NamespacedKey NAME = new NamespacedKey(SiegeWar.getSiegeWar(), "banner_name");
     public static final NamespacedKey TYPE = new NamespacedKey(SiegeWar.getSiegeWar(), "banner_type");
     public static final NamespacedKey ATTACKER = new NamespacedKey(SiegeWar.getSiegeWar(), "banner_attacker");
@@ -24,6 +22,28 @@ public class SiegeWarBannerLoreUtil {
     public static final NamespacedKey START = new NamespacedKey(SiegeWar.getSiegeWar(), "banner_start");
     public static final NamespacedKey END = new NamespacedKey(SiegeWar.getSiegeWar(), "banner_end");
 
+    public static void copyBannerData(PersistentDataContainer from, PersistentDataContainer to) {
+        if (from.has(NAME, PersistentDataType.STRING))
+            to.set(NAME, PersistentDataType.STRING, from.get(NAME, PersistentDataType.STRING));
+        if (from.has(TYPE, PersistentDataType.STRING))
+            to.set(TYPE, PersistentDataType.STRING, from.get(TYPE, PersistentDataType.STRING));
+        if (from.has(ATTACKER, PersistentDataType.STRING))
+            to.set(ATTACKER, PersistentDataType.STRING, from.get(ATTACKER, PersistentDataType.STRING));
+        if (from.has(DEFENDER, PersistentDataType.STRING))
+            to.set(DEFENDER, PersistentDataType.STRING, from.get(DEFENDER, PersistentDataType.STRING));
+        if (from.has(ATTACKER_POINTS, PersistentDataType.INTEGER))
+            to.set(ATTACKER_POINTS, PersistentDataType.INTEGER, from.get(ATTACKER_POINTS, PersistentDataType.INTEGER));
+        if (from.has(DEFENDER_POINTS, PersistentDataType.INTEGER))
+            to.set(DEFENDER_POINTS, PersistentDataType.INTEGER, from.get(DEFENDER_POINTS, PersistentDataType.INTEGER));
+        if (from.has(OUTCOME, PersistentDataType.STRING))
+            to.set(OUTCOME, PersistentDataType.STRING, from.get(OUTCOME, PersistentDataType.STRING));
+        if (from.has(WINNER, PersistentDataType.STRING))
+            to.set(WINNER, PersistentDataType.STRING, from.get(WINNER, PersistentDataType.STRING));
+        if (from.has(START, PersistentDataType.LONG))
+            to.set(START, PersistentDataType.LONG, from.get(START, PersistentDataType.LONG));
+        if (from.has(END, PersistentDataType.LONG))
+            to.set(END, PersistentDataType.LONG, from.get(END, PersistentDataType.LONG));
+    }
 
     public static void setupBanner(Siege siege) {
         BlockState blockState = siege.getFlagBlock().getState();
