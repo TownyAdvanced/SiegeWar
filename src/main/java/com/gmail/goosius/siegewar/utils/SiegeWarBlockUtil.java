@@ -12,10 +12,8 @@ import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -50,6 +48,50 @@ public class SiegeWarBlockUtil {
 			.filter(tb -> tb.hasTown() && SiegeController.hasSiege(tb.getTownOrNull()))
 			.map(tb -> SiegeController.getSiege(tb.getTownOrNull()))
 			.collect(Collectors.toSet());
+	}
+
+	/**
+	 * This method gets a list of town blocks in a square surrounding a block.
+	 *
+	 * @param block the center block
+	 * @param maximum the maximum radius (in townblocks) from center to check in each direction
+	 * @param minimum the radius (in townblocks) from center to exclude in each direction
+	 * @return list of all townblocks within mimimum and maximum radius around center
+	 */
+	public static List<TownBlock> getSurroundingTownBlocks(Block block, int maximum, int minimum) {
+		if (minimum >= maximum) return Collections.emptyList();
+
+		Set<WorldCoord> coOrdinates = new HashSet<>();
+		WorldCoord startingCoOrdinate = WorldCoord.parseWorldCoord(block);
+
+		for (int mainOffset = maximum; mainOffset > minimum; mainOffset--) {
+			//Adds the corners for a given offset
+			coOrdinates.add(startingCoOrdinate.add(mainOffset, -mainOffset));
+			coOrdinates.add(startingCoOrdinate.add(mainOffset, mainOffset));
+			coOrdinates.add(startingCoOrdinate.add(-mainOffset, -mainOffset));
+			coOrdinates.add(startingCoOrdinate.add(-mainOffset, mainOffset));
+
+			//Fills between the corners for a given offset
+			for (int secondOffset = mainOffset - 1; secondOffset > -mainOffset; secondOffset--) {
+				coOrdinates.add(startingCoOrdinate.add(secondOffset, -mainOffset));
+				coOrdinates.add(startingCoOrdinate.add(secondOffset, mainOffset));
+				coOrdinates.add(startingCoOrdinate.add(-mainOffset, secondOffset));
+				coOrdinates.add(startingCoOrdinate.add(mainOffset, secondOffset));
+			}
+		}
+
+		return getTownBlocks(coOrdinates);
+	}
+
+	/**
+	 * This method gets a list of town blocks in a square surrounding a block.
+	 *
+	 * @param block the center block
+	 * @param radius the maximum radius (in townblocks) from center to check in each direction
+	 * @return list of all townblocks in radius around center
+	 */
+	public static List<TownBlock> getSurroundingTownBlocks(Block block, int radius) {
+		return getSurroundingTownBlocks(block, radius, 0);
 	}
 
 	/**

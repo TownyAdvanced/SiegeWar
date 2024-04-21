@@ -9,14 +9,14 @@
     <java.version>1.8</java.version>
     <project.bukkitAPIVersion>1.13</project.bukkitAPIVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <towny.version>0.100.1.0</towny.version>
+    <towny.version>0.100.2.0</towny.version>
   </properties>
 
   <repositories>
     <repository>
       <id>glaremasters repo</id>
       <url>https://repo.glaremasters.me/repository/towny/</url>
-    </repository>    
+    </repository>
     <repository>
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
@@ -45,7 +45,7 @@
 	<dependency>
       <groupId>com.palmergames.bukkit.towny</groupId>
       <artifactId>towny</artifactId>
-      <version>0.100.1.0</version>
+      <version>0.100.2.0</version>
       <scope>provided</scope>
 	</dependency>
     <dependency>

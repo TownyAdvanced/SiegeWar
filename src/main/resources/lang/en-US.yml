@@ -638,6 +638,7 @@ msg_err_note_about_warnings: "&cNOTE: If your server has not launched yet, don't
 #Block Placement
 
 msg_err_banner_cannot_be_more_than_one_block_away: "&cThe banner cannot be more than 1 block away from the target town."
+msg_err_banner_cannot_be_close_to_any_town_block: '&cThe banner must be at least %s full town block(s) away from any town.'
 
 #Battle Commanders / Mobile Spawn Points
 
