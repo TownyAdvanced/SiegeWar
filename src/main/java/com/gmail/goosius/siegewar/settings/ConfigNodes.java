@@ -372,7 +372,7 @@ public enum ConfigNodes {
 			"",
 			"# The number of Town Blocks which a banner can be from a town to be placed for a siege.",
 			"# This distance applies both to surrendering and starting sieges.",
-			"# It is not recommended to set this value above 2."),
+			"# It is not recommended to set this value above '3'."),
 	WAR_SIEGE_BANNER_PLACE_DISTANCE_TOWN_BLOCKS_MIN(
 			"war.siege.distances.banner_place_distance_town_blocks.min",
 			"0",
