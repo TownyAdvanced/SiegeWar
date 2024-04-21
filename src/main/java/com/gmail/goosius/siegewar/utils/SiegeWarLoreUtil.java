@@ -81,13 +81,13 @@ public class SiegeWarLoreUtil {
 
         container.set(TYPE, PersistentDataType.STRING, Translation.of("siege_lore_banner_type", siege.getSiegeType().getName()));
 
-        String short_attacker = Translation.of("siege_lore_color_attacker", siege.getAttacker().getName());
+        String short_attacker = Translation.of("siege_lore_color_attacker", siege.getAttackingNationIfPossibleElseTown().getName());
         String short_defender = Translation.of("siege_lore_color_defender", siege.getDefender().getName());
 
         container.set(NAME, PersistentDataType.STRING, Translation.of("siege_lore_banner_name", short_attacker, short_defender));
 
-        String attacker = Translation.of("siege_lore_color_attacker", siege.getAttacker().getFormattedName());
-        String defender = Translation.of("siege_lore_color_defender", siege.getDefender().getFormattedName());
+        String attacker = Translation.of("siege_lore_color_attacker", siege.getAttackingNationIfPossibleElseTown().getFormattedName());
+        String defender = Translation.of("siege_lore_color_defender", siege.getDefendingNationIfPossibleElseTown().getFormattedName());
         container.set(ATTACKER, PersistentDataType.STRING, Translation.of("siege_lore_banner_attacker", attacker));
         container.set(DEFENDER, PersistentDataType.STRING, Translation.of("siege_lore_banner_defender", defender));
 
