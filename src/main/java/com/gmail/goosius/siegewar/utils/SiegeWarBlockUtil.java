@@ -12,10 +12,8 @@ import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -61,7 +59,8 @@ public class SiegeWarBlockUtil {
 	 * @return list of all townblocks within mimimum and maximum radius around center
 	 */
 	public static List<TownBlock> getSurroundingTownBlocks(Block block, int maximum, int minimum) {
-		//TODO: ensure radius is larger than exclude
+		if (minimum >= maximum) return Collections.emptyList();
+
 		Set<WorldCoord> coOrdinates = new HashSet<>();
 		WorldCoord startingCoOrdinate = WorldCoord.parseWorldCoord(block);
 
