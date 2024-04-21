@@ -144,15 +144,19 @@ public class PlaceBlock {
 				throw new TownyException(translator.of("msg_err_banner_cannot_be_more_than_one_block_away"));
 		} else {
 			//On the COORD grid, find any townblocks surrounding the COORD which this block is in
-			List<TownBlock> allTownBlocks = SiegeWarBlockUtil.getSurroundingTownBlocks(block,
-					SiegeWarSettings.getWarSiegeBannerPlaceDistanceBlocksMax());
-			if (allTownBlocks.isEmpty()) return false;
 
+			//Cancel the action if any are closer than the minimum distance
 			List<TownBlock> excludedTownBlocks = SiegeWarBlockUtil.getSurroundingTownBlocks(block,
 					SiegeWarSettings.getWarSiegeBannerPlaceDistanceBlocksMin());
 			if (!excludedTownBlocks.isEmpty()) throw new TownyException(translator.of("msg_err_banner_cannot_be_close_to_any_town_block", SiegeWarSettings.getWarSiegeBannerPlaceDistanceBlocksMin()));
 
-			townBlock = allTownBlocks.get(0);
+			//Cancel the action if none are closer than the maximum distance and at least the minimum distance away
+			List<TownBlock> validTownBlocks = SiegeWarBlockUtil.getSurroundingTownBlocks(block,
+					SiegeWarSettings.getWarSiegeBannerPlaceDistanceBlocksMax(),
+					SiegeWarSettings.getWarSiegeBannerPlaceDistanceBlocksMin());
+			if (validTownBlocks.isEmpty()) return false;
+
+			townBlock = validTownBlocks.get(0);
 		}
 
 		List<TownBlock> adjacentCardinalTownBlocks = SiegeWarBlockUtil.getCardinalAdjacentTownBlocks(block);
