@@ -56,8 +56,8 @@ public class SiegeWarBlockUtil {
 	 * This method gets a list of town blocks in a square surrounding a block.
 	 *
 	 * @param block the center block
-	 * @param maximum the maximum radius from center to check in each direction
-	 * @param minimum the radius from center to exclude in each direction
+	 * @param maximum the maximum radius (in townblocks) from center to check in each direction
+	 * @param minimum the radius (in townblocks) from center to exclude in each direction
 	 * @return list of all townblocks within mimimum and maximum radius around center
 	 */
 	public static List<TownBlock> getSurroundingTownBlocks(Block block, int maximum, int minimum) {
@@ -88,7 +88,7 @@ public class SiegeWarBlockUtil {
 	 * This method gets a list of town blocks in a square surrounding a block.
 	 *
 	 * @param block the center block
-	 * @param radius the maximum radius from center to check in each direction
+	 * @param radius the maximum radius (in townblocks) from center to check in each direction
 	 * @return list of all townblocks in radius around center
 	 */
 	public static List<TownBlock> getSurroundingTownBlocks(Block block, int radius) {
