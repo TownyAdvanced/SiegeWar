@@ -56,15 +56,16 @@ public class SiegeWarBlockUtil {
 	 * This method gets a list of town blocks in a square surrounding a block.
 	 *
 	 * @param block the center block
-	 * @param radius the radius from center to check in each direction
-	 * @return list of all townblocks surrounding the center
+	 * @param maximum the maximum radius from center to check in each direction
+	 * @param minimum the radius from center to exclude in each direction
+	 * @return list of all townblocks within mimimum and maximum radius around center
 	 */
-	public static List<TownBlock> getSurroundingTownBlocks(Block block, int radius) {
+	public static List<TownBlock> getSurroundingTownBlocks(Block block, int maximum, int minimum) {
 		//TODO: ensure radius is larger than exclude
 		Set<WorldCoord> coOrdinates = new HashSet<>();
 		WorldCoord startingCoOrdinate = WorldCoord.parseWorldCoord(block);
 
-		for (int mainOffset = radius; mainOffset > 0; mainOffset--) {
+		for (int mainOffset = maximum; mainOffset > minimum; mainOffset--) {
 			//Adds the corners for a given offset
 			coOrdinates.add(startingCoOrdinate.add(mainOffset, -mainOffset));
 			coOrdinates.add(startingCoOrdinate.add(mainOffset, mainOffset));
@@ -81,6 +82,17 @@ public class SiegeWarBlockUtil {
 		}
 
 		return getTownBlocks(coOrdinates);
+	}
+
+	/**
+	 * This method gets a list of town blocks in a square surrounding a block.
+	 *
+	 * @param block the center block
+	 * @param radius the maximum radius from center to check in each direction
+	 * @return list of all townblocks in radius around center
+	 */
+	public static List<TownBlock> getSurroundingTownBlocks(Block block, int radius) {
+		return getSurroundingTownBlocks(block, radius, 0);
 	}
 
 	/**
