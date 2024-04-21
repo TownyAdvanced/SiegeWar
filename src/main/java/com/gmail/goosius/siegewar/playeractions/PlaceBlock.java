@@ -26,6 +26,7 @@ import com.palmergames.bukkit.towny.object.Translator;
 
 import org.bukkit.Material;
 import org.bukkit.Tag;
+import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -177,7 +178,6 @@ public class PlaceBlock {
 		 *  ----------
 		 */
 		//This
-		//TODO: change logic to take into account banner capture radius, townblock size and banner location in townblock
 		if (adjacentCardinalTownBlocks.size() > 1)
 			throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
 
