@@ -482,6 +482,7 @@ msg_err_value_configured_too_low: "&cCẢNH Báo: Giá trị được cấu hìn
 msg_err_note_about_warnings: "&cLƯU Ý: Nếu máy chủ của bạn chưa khởi chạy, đừng lo lắng nếu các giá trị lý tưởng có vẻ sai. Các cảnh báo sẽ tự sửa ngay khi người chơi bắt đầu tạo thị trấn/quốc gia."
 #Block Placement
 msg_err_banner_cannot_be_more_than_one_block_away: "&cBiểu ngữ không được cách thị trấn mục tiêu quá 1 dãy nhà."
+msg_err_banner_cannot_be_close_to_any_town_block: '&cThe banner must be at least %s full town block(s) away from any town.'
 #Battle Commanders / Mobile Spawn Points
 msg_battle_commanders_assigned: "&bCuộc vây hãm tại %s > Đã chỉ định Chỉ huy Chiến đấu. Chỉ huy tấn công: %s. Chỉ huy bảo vệ: %s."
 no_battle_commander: "<None>"
