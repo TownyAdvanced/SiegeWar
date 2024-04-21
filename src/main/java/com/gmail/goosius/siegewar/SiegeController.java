@@ -507,8 +507,8 @@ public class SiegeController {
 		//Save to DB
 		SiegeController.saveSiege(siege);
 
-		//Do this before event so a plugin could edit in event
-		SiegeWarBannerLoreUtil.startSiege(siege);
+		//Set name, type, attacker, defender, start time
+		SiegeWarBannerLoreUtil.setupBanner(siege);
 
 		//Call event
 		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, startMessage.defaultLocale()));
