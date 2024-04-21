@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.events.SiegeEndEvent;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import org.bukkit.Bukkit;
 
 /**
@@ -38,8 +39,10 @@ public class SiegeWarSiegeCompletionUtil {
 		//Save to db
 		SiegeController.saveSiege(siege);
 
-		//Set outcome, winner, points, end time
-		SiegeWarBannerLoreUtil.finaliseBanner(siege);
+		if (SiegeWarSettings.isSiegeLoreEnabled()) {
+			//Set outcome, winner, points, end time
+			SiegeWarBannerLoreUtil.finaliseBanner(siege);
+		}
 
 		//Fire SiegeEnded event
 		Bukkit.getPluginManager().callEvent(new SiegeEndEvent(siege));

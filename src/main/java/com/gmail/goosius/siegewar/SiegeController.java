@@ -507,8 +507,10 @@ public class SiegeController {
 		//Save to DB
 		SiegeController.saveSiege(siege);
 
-		//Set name, type, attacker, defender, start time
-		SiegeWarBannerLoreUtil.setupBanner(siege);
+		if (SiegeWarSettings.isSiegeLoreEnabled()) {
+			//Set name, type, attacker, defender, start time
+			SiegeWarBannerLoreUtil.setupBanner(siege);
+		}
 
 		//Call event
 		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, startMessage.defaultLocale()));
