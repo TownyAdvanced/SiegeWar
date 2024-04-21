@@ -111,10 +111,10 @@ public class SiegeWarLoreUtil {
         container.set(WINNER, PersistentDataType.STRING, Translation.of("siege_lore_banner_winner_and_outcome", winner, siege.getStatus().getName()));
 
         String attacker = container.getOrDefault(ATTACKER, PersistentDataType.STRING, "&eUnknown");
-        container.set(ATTACKER, PersistentDataType.STRING, Translation.of("siege_lore_banner_points", attacker));
+        container.set(ATTACKER, PersistentDataType.STRING, Translation.of("siege_lore_banner_points", attacker, siege.getAttackerBattlePoints()));
 
         String defender = container.getOrDefault(DEFENDER, PersistentDataType.STRING, "&eUnknown");
-        container.set(DEFENDER, PersistentDataType.STRING, Translation.of("siege_lore_banner_points", defender));
+        container.set(DEFENDER, PersistentDataType.STRING, Translation.of("siege_lore_banner_points", defender, siege.getDefenderBattlePoints()));
 
         String end = new SimpleDateFormat(Translation.of("siege_lore_date_format")).format(new Date(System.currentTimeMillis()));
 
