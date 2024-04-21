@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.listeners;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarLoreUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Banner;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
@@ -10,6 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 
 /**
@@ -58,7 +60,12 @@ public class SiegeWarLoreListener implements Listener {
 
         if (!SiegeWarLoreUtil.hasLoreKey(state.getPersistentDataContainer())) return;
 
+        ItemStack stack = item.getItemStack();
+
         SiegeWarLoreUtil.setBannerLore(meta, state.getPersistentDataContainer());
         SiegeWarLoreUtil.copyBannerData(state.getPersistentDataContainer(), meta.getPersistentDataContainer());
+
+        stack.setItemMeta(meta);
+        item.setItemStack(stack);
     }
 }
