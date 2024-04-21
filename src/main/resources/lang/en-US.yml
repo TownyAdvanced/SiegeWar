@@ -659,3 +659,17 @@ msg_err_cannot_spawn_outpost_during_battle_session: "&cYou cannot spawn to an ou
 #Added in 2.8.0
 msg_swa_remove_siege: '&bSiege of %s removed via admin commands.'
 msg_swa_battle: 'Battle'
+
+# Siege Lore
+siege_lore_date_format: 'dd/MM/yyyy HH:mm'
+siege_lore_color_attacker: '&c%s'
+siege_lore_color_defender: '&b%s'
+siege_lore_color_neutral: '&e%s'
+siege_lore_banner_name: '%s &evs %s'
+siege_lore_banner_type: '&5%s Siege'
+siege_lore_banner_attacker: '&dAttacker: %s'
+siege_lore_banner_defender: '&dDefender: %s'
+siege_lore_banner_points: '%s &5(%s)'
+siege_lore_banner_winner_and_outcome: '&dVictor: %s &5(%s)'
+siege_lore_banner_start: '&dStarted: &5%s'
+siege_lore_banner_end: '&dEnded: &5%s'
