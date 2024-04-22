@@ -108,8 +108,8 @@ public class SiegeWarLoreUtil {
                         Translation.of("siege_lore_banner_attacker")),
                 Translation.of("siege_lore_two_values",
                         Translation.of("siege_lore_color_attacker", attacker),
-                        Translation.of("siege_lore_secondary_value",
-                                Translation.of("siege_lore_color_value", attacker_points))));
+                        Translation.of("siege_lore_color_value",
+                                Translation.of("siege_lore_secondary_value", attacker_points))));
         lore.add(attacker_line);
 
         String defender_line = Translation.of("siege_lore_key_value",
@@ -117,8 +117,8 @@ public class SiegeWarLoreUtil {
                         Translation.of("siege_lore_banner_defender")),
                 Translation.of("siege_lore_two_values",
                         Translation.of("siege_lore_color_defender", defender),
-                        Translation.of("siege_lore_secondary_value",
-                                Translation.of("siege_lore_color_value", defender_points))));
+                        Translation.of("siege_lore_color_value",
+                                Translation.of("siege_lore_secondary_value", defender_points))));
         lore.add(defender_line);
 
         String winner_line = Translation.of("siege_lore_key_value",
@@ -126,8 +126,8 @@ public class SiegeWarLoreUtil {
                         Translation.of("siege_lore_banner_winner")),
                 Translation.of("siege_lore_two_values",
                         colored_winner,
-                        Translation.of("siege_lore_secondary_value",
-                                Translation.of("siege_lore_color_value", status))));
+                        Translation.of("siege_lore_color_value",
+                                Translation.of("siege_lore_secondary_value", status))));
         lore.add(winner_line);
 
         String start_line = Translation.of("siege_lore_key_value",
