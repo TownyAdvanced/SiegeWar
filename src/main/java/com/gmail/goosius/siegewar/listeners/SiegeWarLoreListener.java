@@ -1,9 +1,13 @@
 package com.gmail.goosius.siegewar.listeners;
 
+import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarLoreUtil;
+import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
@@ -12,9 +16,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataHolder;
 
 import java.util.Arrays;
 
@@ -24,6 +31,80 @@ import java.util.Arrays;
  *
  */
 public class SiegeWarLoreListener implements Listener {
+
+    private String getChatLoreForBanner(PersistentDataContainer data) {
+        String winner = Translation.of("siege_lore_color_value",
+                Translation.of("siege_lore_unknown"));
+        String opposition = Translation.of("siege_lore_color_value",
+                Translation.of("siege_lore_unknown"));
+        String key;
+        switch (SiegeWarLoreUtil.getSiegeWinningSideName(data)) {
+            case "ATTACKERS": {
+                winner = Translation.of("siege_lore_color_attacker",
+                        SiegeWarLoreUtil.getSiegeAttackerName(data));
+                opposition = Translation.of("siege_lore_color_defender",
+                        SiegeWarLoreUtil.getSiegeDefenderName(data));
+                key = "_attack";
+                break;
+            }
+            case "DEFENDERS": {
+                winner = Translation.of("siege_lore_color_defender",
+                        SiegeWarLoreUtil.getSiegeDefenderName(data));
+                opposition = Translation.of("siege_lore_color_attacker",
+                        SiegeWarLoreUtil.getSiegeAttackerName(data));
+                key = "_defence";
+                break;
+            }
+            case "NOBODY": {
+                winner = Translation.of("siege_lore_color_neutral",
+                        SiegeSide.NOBODY.getFormattedName());
+                opposition = Translation.of("siege_lore_color_neutral",
+                        SiegeSide.NOBODY.getFormattedName());
+            }
+            default: {
+                key = "_unknown";
+                break;
+            }
+        }
+
+
+        String type = SiegeWarLoreUtil.getSiegeTypeName(data);
+        String town = Translation.of("siege_lore_color_defender",
+                SiegeWarLoreUtil.getSiegeTownName(data));
+
+        return Translation.of("siege_lore_color_key",
+                    Translation.of("siege_lore_banner_chat_1", type)) +
+                Translation.of("siege_lore_color_key",
+                        Translation.of("siege_lore_banner_chat_2", town)) +
+                Translation.of("siege_lore_color_key",
+                        Translation.of("siege_lore_banner_chat_3", winner)) +
+                Translation.of("siege_lore_color_key",
+                        Translation.of("siege_lore_banner_chat_4" + key, opposition)) +
+                Translation.of("siege_lore_color_key",
+                        Translation.of("siege_lore_banner_chat_5" + key));
+    }
+
+    @EventHandler
+    public void onInteractBanner(PlayerInteractEvent event) {
+        PersistentDataContainer container;
+        if (event.hasBlock()) {
+            if (event.getClickedBlock().isEmpty()) return;
+            if (!Tag.BANNERS.isTagged(event.getClickedBlock().getType())) return;
+            if (!(event.getClickedBlock().getState() instanceof PersistentDataHolder)) return;
+            PersistentDataHolder holder = (PersistentDataHolder) event.getClickedBlock().getState();
+            container = holder.getPersistentDataContainer();
+        } else if (event.hasItem()) {
+            if (!Tag.BANNERS.isTagged(event.getMaterial())) return;
+            ItemStack item = event.getItem();
+            if (!item.hasItemMeta()) return;
+            container = item.getItemMeta().getPersistentDataContainer();
+        } else return;
+
+        if (!SiegeWarLoreUtil.hasLoreKey(container)) return;
+
+        Messaging.sendMsg(event.getPlayer(), getChatLoreForBanner(container));
+    }
+
     @EventHandler
     public void onPrepareCraft(PrepareItemCraftEvent event) {
         ItemStack resultItem = event.getInventory().getResult();
