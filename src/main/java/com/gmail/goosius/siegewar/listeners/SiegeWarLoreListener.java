@@ -7,6 +7,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarLoreUtil;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.TranslationLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -27,6 +28,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 /**
@@ -72,9 +74,13 @@ public class SiegeWarLoreListener implements Listener {
         }
 
 
-        String type = SiegeWarLoreUtil.getSiegeTypeName(data);
+        String type = Translation.of("siege_lore_color_value",
+                Translation.of("siege_lore_banner_type", SiegeWarLoreUtil.getSiegeTypeName(data)));
         String town = Translation.of("siege_lore_color_defender",
                 SiegeWarLoreUtil.getSiegeTownName(data));
+
+        String end = Translation.of("siege_lore_color_value",
+                new SimpleDateFormat(Translation.of("siege_lore_date_format")).format(SiegeWarLoreUtil.getSiegeEndTime(data)));
 
         return Translation.of("siege_lore_color_key",
                     Translation.of("siege_lore_banner_chat_1", type)) +
@@ -85,7 +91,7 @@ public class SiegeWarLoreListener implements Listener {
                 Translation.of("siege_lore_color_key",
                         Translation.of("siege_lore_banner_chat_4" + key, opposition)) +
                 Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_chat_5" + key));
+                        Translation.of("siege_lore_banner_chat_5" + key, end));
     }
 
     @EventHandler
@@ -134,7 +140,7 @@ public class SiegeWarLoreListener implements Listener {
         resultItem.setItemMeta(resultMeta);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true)
     public void onTryStartSiege(PreSiegeCampEvent event) {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
 
@@ -145,9 +151,11 @@ public class SiegeWarLoreListener implements Listener {
 
         event.setCancelled(true);
         event.setCancellationMsg(Translation.of("siege_lore_error_banner_cannot_be_used"));
+
+        Bukkit.getLogger().severe("" + event.isCancelled());
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlaceBlock(BlockPlaceEvent event) {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
 
