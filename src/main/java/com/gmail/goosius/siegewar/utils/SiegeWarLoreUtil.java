@@ -8,6 +8,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.block.Banner;
 import org.bukkit.block.BlockState;
 import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -34,7 +35,7 @@ public class SiegeWarLoreUtil {
         return container.has(LORE, PersistentDataType.BYTE);
     }
 
-    public static void setBannerLore(BannerMeta meta, PersistentDataContainer data) {
+    public static void setBannerLore(ItemMeta meta, PersistentDataContainer data) {
         if (!hasLoreKey(data)) return;
 
         if (data.has(NAME, PersistentDataType.STRING))
