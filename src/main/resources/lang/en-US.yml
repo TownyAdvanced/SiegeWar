@@ -690,6 +690,7 @@ siege_lore_banner_chat_4_attack: ', who overcame the defence of %s'
 siege_lore_banner_chat_5_attack: 'to take control of the town.'
 siege_lore_banner_chat_4_defence: ', who overcame the attack from %s'
 siege_lore_banner_chat_5_defence: 'to defend their town.'
-siege_lore_banner_chat_4_unknown: '.'
+siege_lore_banner_chat_4_unknown: ', fighting against %s'
+siege_lore_banner_chat_5_unknown: 'in a battle for the town.'
 
 siege_lore_shield_name: 'Siege Shield'
