@@ -673,6 +673,7 @@ siege_lore_color_value: '&e%s'
 
 siege_lore_key_value: '%s: %s'
 siege_lore_two_values: '%s %s'
+siege_lore_secondary_value: '(%s)'
 
 siege_lore_banner_name: 'Siege Banner'
 siege_lore_banner_type: 'Siege'
@@ -681,6 +682,5 @@ siege_lore_banner_defender: 'Defender'
 siege_lore_banner_winner: 'Victor'
 siege_lore_banner_start: 'Started'
 siege_lore_banner_end: 'Ended'
-siege_lore_banner_points: '(%s)'
 
 siege_lore_shield_name: 'Siege Shield'
