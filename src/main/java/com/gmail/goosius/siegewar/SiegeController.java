@@ -509,7 +509,7 @@ public class SiegeController {
 
 		if (SiegeWarSettings.isSiegeLoreEnabled()) {
 			//Set name, type, attacker, defender, start time
-			SiegeWarLoreUtil.setupBanner(siege);
+			SiegeWarLoreUtil.bannerSiegeStart(siege);
 		}
 
 		//Call event
