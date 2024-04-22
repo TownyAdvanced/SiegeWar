@@ -40,6 +40,46 @@ public class SiegeWarLoreUtil {
         return container.has(LORE, PersistentDataType.BYTE);
     }
 
+    public static String getSiegeTypeName(PersistentDataContainer container) {
+        return container.getOrDefault(TYPE, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
+    }
+
+    public static String getSiegeTownName(PersistentDataContainer container) {
+        return container.getOrDefault(TOWN, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
+    }
+
+    public static String getSiegeAttackerName(PersistentDataContainer container) {
+        return container.getOrDefault(ATTACKER, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
+    }
+
+    public static String getSiegeDefenderName(PersistentDataContainer container) {
+        return container.getOrDefault(DEFENDER, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
+    }
+
+    public static int getSiegeAttackerPoints(PersistentDataContainer container) {
+        return container.getOrDefault(ATTACKER_POINTS, PersistentDataType.INTEGER, 0);
+    }
+
+    public static int getSiegeDefenderPoints(PersistentDataContainer container) {
+        return container.getOrDefault(DEFENDER_POINTS, PersistentDataType.INTEGER, 0);
+    }
+
+    public static String getSiegeWinningSideName(PersistentDataContainer container) {
+        return container.getOrDefault(WINNER, PersistentDataType.STRING, SiegeSide.NOBODY.name());
+    }
+
+    public static String getSiegeStatusName(PersistentDataContainer container) {
+        return container.getOrDefault(STATUS, PersistentDataType.STRING, SiegeStatus.UNKNOWN.getName());
+    }
+
+    public static long getSiegeStartTime(PersistentDataContainer container) {
+        return container.getOrDefault(START, PersistentDataType.LONG, 0L);
+    }
+
+    public static long getSiegeEndTime(PersistentDataContainer container) {
+        return container.getOrDefault(END, PersistentDataType.LONG, 0L);
+    }
+
     public static void setBannerItem(ItemMeta meta, PersistentDataContainer data) {
         if (!hasLoreKey(data)) return;
 
