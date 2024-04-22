@@ -682,5 +682,8 @@ siege_lore_banner_defender: 'Defender'
 siege_lore_banner_winner: 'Victor'
 siege_lore_banner_start: 'Started'
 siege_lore_banner_end: 'Ended'
+siege_lore_banner_chat: 'This banner began the %s Siege of TownName, which ended in Victory for %s'
+siege_lore_banner_chat_attacker_victory: '%s, who overcame the defence to take control of the town.'
+siege_lore_banner_chat_defender_victory: '%s, who overcame their attackers and defended their town.'
 
 siege_lore_shield_name: 'Siege Shield'
