@@ -663,6 +663,7 @@ msg_swa_battle: 'Battle'
 # Siege Lore
 
 siege_lore_date_format: 'dd/MM/yyyy HH:mm'
+siege_lore_unknown: 'Unknown'
 
 siege_lore_color_attacker: '&c%s'
 siege_lore_color_defender: '&3%s'
