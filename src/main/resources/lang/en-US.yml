@@ -682,6 +682,7 @@ siege_lore_banner_defender: 'Defender'
 siege_lore_banner_winner: 'Victor'
 siege_lore_banner_start: 'Started'
 siege_lore_banner_end: 'Ended'
+
 siege_lore_banner_chat_1: 'This banner began the %s'
 siege_lore_banner_chat_2: ' Siege of %s'
 siege_lore_banner_chat_3: ', which ended in Victory for %s'
