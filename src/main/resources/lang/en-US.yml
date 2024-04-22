@@ -676,7 +676,7 @@ siege_lore_two_values: '%s %s'
 siege_lore_secondary_value: '(%s)'
 
 siege_lore_banner_name: 'Siege Banner'
-siege_lore_banner_type: 'Siege'
+siege_lore_banner_type: '%s Siege'
 siege_lore_banner_attacker: 'Attacker'
 siege_lore_banner_defender: 'Defender'
 siege_lore_banner_winner: 'Victor'
