@@ -5,7 +5,9 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarLoreUtil;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Banner;
@@ -13,10 +15,12 @@ import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -88,6 +92,8 @@ public class SiegeWarLoreListener implements Listener {
     public void onInteractBanner(PlayerInteractEvent event) {
         PersistentDataContainer container;
         if (event.hasBlock()) {
+            if (event.getHand() != EquipmentSlot.HAND) return;
+            if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
             if (event.getClickedBlock().isEmpty()) return;
             if (!Tag.BANNERS.isTagged(event.getClickedBlock().getType())) return;
             if (!(event.getClickedBlock().getState() instanceof PersistentDataHolder)) return;
@@ -138,6 +144,7 @@ public class SiegeWarLoreListener implements Listener {
         if (!SiegeWarLoreUtil.hasLoreKey(flag.getPersistentDataContainer())) return;
 
         event.setCancelled(true);
+        event.setCancellationMsg(Translation.of("siege_lore_error_banner_cannot_be_used"));
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
