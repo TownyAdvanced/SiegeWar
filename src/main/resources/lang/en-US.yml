@@ -661,15 +661,19 @@ msg_swa_remove_siege: '&bSiege of %s removed via admin commands.'
 msg_swa_battle: 'Battle'
 
 # Siege Lore
+
 siege_lore_date_format: 'dd/MM/yyyy HH:mm'
+
 siege_lore_color_attacker: '&c%s'
 siege_lore_color_defender: '&3%s'
 siege_lore_color_neutral: '&e%s'
+
+siege_lore_additional_info: '%s &e(%s)'
+
 siege_lore_banner_name: '%s &eSiege Banner'
-siege_lore_banner_type: '&5%s Siege'
-siege_lore_banner_attacker: '&dAttacker: %s'
-siege_lore_banner_defender: '&dDefender: %s'
-siege_lore_banner_points: '%s &5(%s)'
-siege_lore_banner_winner_and_outcome: '&dVictor: %s &5(%s)'
-siege_lore_banner_start: '&dStarted: &5%s'
-siege_lore_banner_end: '&dEnded: &5%s'
+siege_lore_banner_type: '&e%s Siege'
+siege_lore_banner_attacker: '&6Attacker: %s'
+siege_lore_banner_defender: '&6Defender: %s'
+siege_lore_banner_winner: '&6Victor: %s'
+siege_lore_banner_start: '&6Started: &e%s'
+siege_lore_banner_end: '&6Ended: &e%s'

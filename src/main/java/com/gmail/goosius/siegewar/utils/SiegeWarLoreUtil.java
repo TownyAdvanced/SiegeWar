@@ -111,13 +111,14 @@ public class SiegeWarLoreUtil {
         if (siege.getSiegeWinner() == SiegeSide.ATTACKERS) winner = Translation.of("siege_lore_color_attacker", siege.getAttackerName());
         else if (siege.getSiegeWinner() == SiegeSide.DEFENDERS) winner = Translation.of("siege_lore_color_defender", siege.getDefenderName());
         else winner = Translation.of("siege_lore_color_neutral", SiegeSide.NOBODY.getFormattedName().translate());
-        container.set(WINNER, PersistentDataType.STRING, Translation.of("siege_lore_banner_winner_and_outcome", winner, siege.getStatus().getName()));
+        winner = Translation.of("siege_lore_additional_info", winner, siege.getStatus().getName());
+        container.set(WINNER, PersistentDataType.STRING, Translation.of("siege_lore_banner_winner", winner));
 
         String attacker = container.getOrDefault(ATTACKER, PersistentDataType.STRING, "&eUnknown");
-        container.set(ATTACKER, PersistentDataType.STRING, Translation.of("siege_lore_banner_points", attacker, siege.getAttackerBattlePoints()));
+        container.set(ATTACKER, PersistentDataType.STRING, Translation.of("siege_lore_additional_info", attacker, siege.getAttackerBattlePoints()));
 
         String defender = container.getOrDefault(DEFENDER, PersistentDataType.STRING, "&eUnknown");
-        container.set(DEFENDER, PersistentDataType.STRING, Translation.of("siege_lore_banner_points", defender, siege.getDefenderBattlePoints()));
+        container.set(DEFENDER, PersistentDataType.STRING, Translation.of("siege_lore_additional_info", defender, siege.getDefenderBattlePoints()));
 
         String end = new SimpleDateFormat(Translation.of("siege_lore_date_format")).format(new Date(System.currentTimeMillis()));
 
