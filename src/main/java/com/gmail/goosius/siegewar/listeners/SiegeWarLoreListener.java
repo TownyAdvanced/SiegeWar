@@ -3,7 +3,7 @@ package com.gmail.goosius.siegewar.listeners;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarLoreUtil;
-import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.block.Banner;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
@@ -11,8 +11,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
 
 /**
  *
@@ -20,6 +24,29 @@ import org.bukkit.inventory.meta.BannerMeta;
  *
  */
 public class SiegeWarLoreListener implements Listener {
+    @EventHandler
+    public void onPrepareCraft(PrepareItemCraftEvent event) {
+        ItemStack resultItem = event.getInventory().getResult();
+        if (resultItem == null) return;
+        if (resultItem.getType() != Material.SHIELD) return;
+
+        ItemStack bannerItem = Arrays.stream(event.getInventory().getMatrix()).filter(itemStack -> {
+            if (itemStack == null) return false;
+            if (itemStack.getItemMeta() instanceof BannerMeta) {
+                return SiegeWarLoreUtil.hasLoreKey(itemStack.getItemMeta().getPersistentDataContainer());
+            }
+            return false;
+        }).findFirst().orElse(null);
+        if (bannerItem == null) return;
+
+        ItemMeta resultMeta = resultItem.getItemMeta();
+
+        SiegeWarLoreUtil.copyBannerData(bannerItem.getItemMeta().getPersistentDataContainer(), resultMeta.getPersistentDataContainer());
+        SiegeWarLoreUtil.setShieldItem(resultMeta, bannerItem.getItemMeta().getPersistentDataContainer());
+
+        resultItem.setItemMeta(resultMeta);
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onTryStartSiege(PreSiegeCampEvent event) {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
@@ -44,6 +71,7 @@ public class SiegeWarLoreListener implements Listener {
         if (!SiegeWarLoreUtil.hasLoreKey(meta.getPersistentDataContainer())) return;
 
         SiegeWarLoreUtil.copyBannerData(meta.getPersistentDataContainer(), state.getPersistentDataContainer());
+
         state.update();
     }
 
@@ -62,8 +90,8 @@ public class SiegeWarLoreListener implements Listener {
 
         ItemStack stack = item.getItemStack();
 
-        SiegeWarLoreUtil.setBannerLore(meta, state.getPersistentDataContainer());
         SiegeWarLoreUtil.copyBannerData(state.getPersistentDataContainer(), meta.getPersistentDataContainer());
+        SiegeWarLoreUtil.setBannerItem(meta, state.getPersistentDataContainer());
 
         stack.setItemMeta(meta);
         item.setItemStack(stack);
