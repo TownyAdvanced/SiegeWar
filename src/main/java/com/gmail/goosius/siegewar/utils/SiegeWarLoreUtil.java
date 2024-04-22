@@ -41,7 +41,7 @@ public class SiegeWarLoreUtil {
         if (data.has(NAME, PersistentDataType.STRING))
             meta.setDisplayName(data.get(NAME, PersistentDataType.STRING));
 
-        List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
+        List<String> lore = new ArrayList<>();
         if (data.has(TYPE, PersistentDataType.STRING)) lore.add(data.get(TYPE, PersistentDataType.STRING));
         if (data.has(ATTACKER, PersistentDataType.STRING)) lore.add(data.get(ATTACKER, PersistentDataType.STRING));
         if (data.has(DEFENDER, PersistentDataType.STRING)) lore.add(data.get(DEFENDER, PersistentDataType.STRING));
