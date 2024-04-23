@@ -39,23 +39,23 @@ public class SiegeWarLoreUtil {
         return container.has(LORE, PersistentDataType.BYTE);
     }
 
-    public static String colorAttacker(String string) {
+    private static String colorAttacker(String string) {
         return Translation.of("siege_lore_color_attacker", string);
     }
 
-    public static String colorDefender(String string) {
+    private static String colorDefender(String string) {
         return Translation.of("siege_lore_color_defender", string);
     }
 
-    public static String colorNeutral(String string) {
+    private static String colorNeutral(String string) {
         return Translation.of("siege_lore_color_neutral", string);
     }
 
-    public static String colorKey(String string) {
+    private static String colorKey(String string) {
         return Translation.of("siege_lore_color_key", string);
     }
 
-    public static String colorValue(String string) {
+    private static String colorValue(String string) {
         return Translation.of("siege_lore_color_value", string);
     }
 
