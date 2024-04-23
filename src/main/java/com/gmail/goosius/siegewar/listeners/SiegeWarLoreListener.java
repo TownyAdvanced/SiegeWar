@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.Messaging;
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -64,6 +65,7 @@ public class SiegeWarLoreListener implements Listener {
 
     @EventHandler
     public void onPrepareCraft(PrepareItemCraftEvent event) {
+        if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
         ItemStack resultItem = event.getInventory().getResult();
         if (resultItem == null) return;
         if (resultItem.getType() != Material.SHIELD) return;
