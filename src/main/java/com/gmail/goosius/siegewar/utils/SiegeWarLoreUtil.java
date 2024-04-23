@@ -225,7 +225,8 @@ public class SiegeWarLoreUtil {
 
     public static String bannerChat(PersistentDataContainer data) {
         String winner = getSiegeWinningSide(data);
-        return colorKey(Translation.of("siege_lore_banner_chat_1", colorValue(getSiegeType(data)))) +
+        if (winner == null) winner = "NOBODY";
+        return colorKey(Translation.of("siege_lore_banner_chat_1", getFormattedType(data))) +
                 colorKey(Translation.of("siege_lore_banner_chat_2", getFormattedTown(data))) +
                 colorKey(Translation.of("siege_lore_banner_chat_3", getFormattedWinner(data))) +
                 colorKey(Translation.of("siege_lore_banner_chat_4_" + winner, getFormattedOpposition(data))) +
