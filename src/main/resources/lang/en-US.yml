@@ -662,28 +662,28 @@ msg_swa_battle: 'Battle'
 
 # Siege Lore
 
-siege_lore_date_format: 'dd/MM/yyyy HH:mm'
-siege_lore_unknown: 'Unknown'
-
 siege_lore_color_attacker: '&c%s'
 siege_lore_color_defender: '&3%s'
 siege_lore_color_neutral: '&e%s'
 siege_lore_color_key: '&6%s'
 siege_lore_color_value: '&e%s'
 
-siege_lore_key_value: '%s: %s'
-siege_lore_two_values: '%s %s'
-siege_lore_secondary_value: '(%s)'
+siege_lore_format_date: 'dd/MM/yyyy HH:mm'
+siege_lore_format_key_value: '%s: %s'
+siege_lore_format_two_values: '%s %s'
+siege_lore_format_secondary_value: '(%s)'
 
 siege_lore_error_banner_cannot_be_used: 'Lore banners from previous sieges cannot be used to start new sieges.'
 
+siege_lore_unknown: 'Unknown'
+siege_lore_type: '%s Siege'
+siege_lore_attacker: 'Attacker'
+siege_lore_defender: 'Defender'
+siege_lore_winner: 'Victor'
+siege_lore_start: 'Started'
+siege_lore_end: 'Ended'
+
 siege_lore_banner_name: 'Siege Banner'
-siege_lore_banner_type: '%s Siege'
-siege_lore_banner_attacker: 'Attacker'
-siege_lore_banner_defender: 'Defender'
-siege_lore_banner_winner: 'Victor'
-siege_lore_banner_start: 'Started'
-siege_lore_banner_end: 'Ended'
 
 siege_lore_banner_chat_1: 'This banner began the %s'
 siege_lore_banner_chat_2: ' of %s'
