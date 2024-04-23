@@ -104,6 +104,8 @@ public class SiegeWarLoreListener implements Listener {
             PersistentDataHolder holder = (PersistentDataHolder) event.getClickedBlock().getState();
             container = holder.getPersistentDataContainer();
         } else if (event.hasItem()) {
+            if (event.getHand() != EquipmentSlot.HAND) return;
+            if (event.getAction() != Action.RIGHT_CLICK_AIR) return;
             if (!Tag.BANNERS.isTagged(event.getMaterial())) return;
             ItemStack item = event.getItem();
             if (!item.hasItemMeta()) return;
