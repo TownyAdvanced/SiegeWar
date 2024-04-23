@@ -115,8 +115,6 @@ public class SiegeWarLoreListener implements Listener {
 
         event.setCancelled(true);
         event.setCancellationMsg(Translation.of("siege_lore_error_banner_cannot_be_used"));
-
-        Bukkit.getLogger().severe("" + event.isCancelled());
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
