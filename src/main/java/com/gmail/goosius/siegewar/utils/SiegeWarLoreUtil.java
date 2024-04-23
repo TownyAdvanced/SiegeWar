@@ -134,7 +134,7 @@ public class SiegeWarLoreUtil {
         return container.getOrDefault(END, PersistentDataType.LONG, 0L);
     }
 
-    public static void setBannerItem(ItemMeta meta, PersistentDataContainer data) {
+    public static void bannerItem(ItemMeta meta, PersistentDataContainer data) {
         if (!hasLoreKey(data)) return;
 
         String town = data.getOrDefault(TOWN, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
@@ -146,10 +146,10 @@ public class SiegeWarLoreUtil {
 
         meta.setDisplayName(name);
 
-        setBannerLore(meta, data);
+        bannerLore(meta, data);
     }
 
-    public static void setShieldItem(ItemMeta meta, PersistentDataContainer data) {
+    public static void shieldItem(ItemMeta meta, PersistentDataContainer data) {
         if (!hasLoreKey(data)) return;
 
         String town = data.getOrDefault(TOWN, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
@@ -161,10 +161,10 @@ public class SiegeWarLoreUtil {
 
         meta.setDisplayName(name);
 
-        setBannerLore(meta, data);
+        bannerLore(meta, data);
     }
 
-    public static void setBannerLore(ItemMeta meta, PersistentDataContainer data) {
+    public static void bannerLore(ItemMeta meta, PersistentDataContainer data) {
         List<String> lore = new ArrayList<>();
 
         String type = data.getOrDefault(TYPE, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
@@ -242,7 +242,7 @@ public class SiegeWarLoreUtil {
         meta.setLore(lore);
     }
 
-    public static void copyBannerData(PersistentDataContainer from, PersistentDataContainer to) {
+    public static void bannerCopyData(PersistentDataContainer from, PersistentDataContainer to) {
         if (!hasLoreKey(from)) return;
         setLoreKey(to);
         if (from.has(TYPE, PersistentDataType.STRING))

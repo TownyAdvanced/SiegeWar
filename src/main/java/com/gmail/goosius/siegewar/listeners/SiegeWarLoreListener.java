@@ -1,8 +1,6 @@
 package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.Messaging;
-import com.gmail.goosius.siegewar.SiegeWar;
-import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.events.SiegeEndEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
@@ -29,7 +27,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 /**
@@ -101,8 +98,8 @@ public class SiegeWarLoreListener implements Listener {
 
         ItemMeta resultMeta = resultItem.getItemMeta();
 
-        SiegeWarLoreUtil.copyBannerData(bannerItem.getItemMeta().getPersistentDataContainer(), resultMeta.getPersistentDataContainer());
-        SiegeWarLoreUtil.setShieldItem(resultMeta, bannerItem.getItemMeta().getPersistentDataContainer());
+        SiegeWarLoreUtil.bannerCopyData(bannerItem.getItemMeta().getPersistentDataContainer(), resultMeta.getPersistentDataContainer());
+        SiegeWarLoreUtil.shieldItem(resultMeta, bannerItem.getItemMeta().getPersistentDataContainer());
 
         resultItem.setItemMeta(resultMeta);
     }
@@ -133,7 +130,7 @@ public class SiegeWarLoreListener implements Listener {
 
         if (!SiegeWarLoreUtil.hasLoreKey(meta.getPersistentDataContainer())) return;
 
-        SiegeWarLoreUtil.copyBannerData(meta.getPersistentDataContainer(), state.getPersistentDataContainer());
+        SiegeWarLoreUtil.bannerCopyData(meta.getPersistentDataContainer(), state.getPersistentDataContainer());
 
         state.update();
     }
@@ -153,8 +150,8 @@ public class SiegeWarLoreListener implements Listener {
 
         ItemStack stack = item.getItemStack();
 
-        SiegeWarLoreUtil.copyBannerData(state.getPersistentDataContainer(), meta.getPersistentDataContainer());
-        SiegeWarLoreUtil.setBannerItem(meta, state.getPersistentDataContainer());
+        SiegeWarLoreUtil.bannerCopyData(state.getPersistentDataContainer(), meta.getPersistentDataContainer());
+        SiegeWarLoreUtil.bannerItem(meta, state.getPersistentDataContainer());
 
         stack.setItemMeta(meta);
         item.setItemStack(stack);
