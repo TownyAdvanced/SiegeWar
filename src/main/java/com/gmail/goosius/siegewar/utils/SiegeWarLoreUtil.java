@@ -236,12 +236,9 @@ public class SiegeWarLoreUtil {
     public static void bannerItem(ItemMeta meta, PersistentDataContainer data) {
         if (!hasLoreKey(data)) return;
 
-        String town = getSiegeTown(data);
-
         String name = Translation.of("siege_lore_two_values",
-                Translation.of("siege_lore_color_defender", town),
-                Translation.of("siege_lore_color_neutral",
-                        Translation.of("siege_lore_banner_name")));
+                getFormattedTown(data),
+                colorNeutral(Translation.of("siege_lore_banner_name")));
 
         meta.setDisplayName(name);
 
@@ -254,44 +251,34 @@ public class SiegeWarLoreUtil {
         lore.add(getFormattedType(data));
 
         String attacker_line = Translation.of("siege_lore_key_value",
-                Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_attacker")),
+                colorKey(Translation.of("siege_lore_banner_attacker")),
                 Translation.of("siege_lore_two_values",
                         getFormattedAttacker(data),
-                        Translation.of("siege_lore_color_value",
-                                Translation.of("siege_lore_secondary_value", getFormattedAttackerPoints(data)))));
+                        colorValue(Translation.of("siege_lore_secondary_value", getFormattedAttackerPoints(data)))));
         lore.add(attacker_line);
 
         String defender_line = Translation.of("siege_lore_key_value",
-                Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_defender")),
+                colorKey(Translation.of("siege_lore_banner_defender")),
                 Translation.of("siege_lore_two_values",
                         getFormattedDefender(data),
-                        Translation.of("siege_lore_color_value",
-                                Translation.of("siege_lore_secondary_value", getFormattedDefenderPoints(data)))));
+                        colorValue(Translation.of("siege_lore_secondary_value", getFormattedDefenderPoints(data)))));
         lore.add(defender_line);
 
         String winner_line = Translation.of("siege_lore_key_value",
-                Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_winner")),
+                colorKey(Translation.of("siege_lore_banner_winner")),
                 Translation.of("siege_lore_two_values",
                         getFormattedWinner(data),
-                        Translation.of("siege_lore_color_value",
-                                Translation.of("siege_lore_secondary_value", getFormattedStatus(data)))));
+                        colorValue(Translation.of("siege_lore_secondary_value", getFormattedStatus(data)))));
         lore.add(winner_line);
 
         String start_line = Translation.of("siege_lore_key_value",
-                Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_start")),
-                Translation.of("siege_lore_color_value",
-                        getFormattedStart(data)));
+                colorKey(Translation.of("siege_lore_banner_start")),
+                colorValue(getFormattedStart(data)));
         lore.add(start_line);
 
         String end_line = Translation.of("siege_lore_key_value",
-                Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_end")),
-                Translation.of("siege_lore_color_value",
-                        getFormattedEnd(data)));
+                colorKey(Translation.of("siege_lore_banner_end")),
+                colorValue(getFormattedEnd(data)));
         lore.add(end_line);
 
 
