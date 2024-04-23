@@ -260,6 +260,8 @@ public class SiegeWarLoreUtil {
 
         ItemMeta meta = stack.getItemMeta();
 
+        copyData(holder, meta);
+
         meta.getPersistentDataContainer().set(LORE_ITEM, PersistentDataType.STRING, SIEGE_SHIELD);
 
         String name = Translation.of("siege_lore_format_two_values",
@@ -278,6 +280,8 @@ public class SiegeWarLoreUtil {
         if (!stack.hasItemMeta()) return;
 
         ItemMeta meta = stack.getItemMeta();
+
+        copyData(holder, meta);
 
         meta.getPersistentDataContainer().set(LORE_ITEM, PersistentDataType.STRING, SIEGE_BANNER);
 
