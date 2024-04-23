@@ -35,7 +35,7 @@ import java.util.Arrays;
  */
 public class SiegeWarLoreListener implements Listener {
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onSiegeStart(SiegeWarStartEvent event) {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
 
@@ -43,7 +43,7 @@ public class SiegeWarLoreListener implements Listener {
         SiegeWarLoreUtil.bannerSiegeStart(event.getSiege());
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onSiegeEnd(SiegeEndEvent event) {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
 
