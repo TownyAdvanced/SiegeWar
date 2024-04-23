@@ -116,6 +116,7 @@ public class SiegeWarLoreListener implements Listener {
         event.setCancellationMsg(Translation.of("siege_lore_error_banner_cannot_be_used"));
     }
 
+    //LOW to run before TownyBuildEvent, requires data potentially not included there, but must run SW listens for it
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlaceBlock(BlockPlaceEvent event) {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
