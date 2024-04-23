@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class SiegeWarLoreUtil {
-    public static final String SIEGE_BANNER = "siege_banner";
-    public static final String SIEGE_SHIELD = "siege_shield";
+    private static final String SIEGE_BANNER = "siege_banner";
+    private static final String SIEGE_SHIELD = "siege_shield";
 
     private static final NamespacedKey LORE_ITEM = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_item");
     private static final NamespacedKey TYPE = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_type");
@@ -137,53 +137,53 @@ public class SiegeWarLoreUtil {
     }
 
 
-    public static String getFormattedUnknown() {
+    private static String getFormattedUnknown() {
         return colorNeutral(Translation.of("siege_lore_unknown"));
     }
 
-    public static String getFormattedType(PersistentDataContainer container) {
+    private static String getFormattedType(PersistentDataContainer container) {
         String type = getSiegeType(container);
         if (type == null) return getFormattedUnknown();
 
         return colorValue(Translation.of("siege_lore_type", type));
     }
 
-    public static String getFormattedTown(PersistentDataContainer container) {
+    private static String getFormattedTown(PersistentDataContainer container) {
         String town = getSiegeTown(container);
         if (town == null) return getFormattedUnknown();
 
         return colorDefender(town);
     }
 
-    public static String getFormattedAttacker(PersistentDataContainer container) {
+    private static String getFormattedAttacker(PersistentDataContainer container) {
         String attacker = getSiegeAttacker(container);
         if (attacker == null) return getFormattedUnknown();
 
         return colorAttacker(attacker);
     }
 
-    public static String getFormattedDefender(PersistentDataContainer container) {
+    private static String getFormattedDefender(PersistentDataContainer container) {
         String defender = getSiegeDefender(container);
         if (defender == null) return getFormattedUnknown();
 
         return colorDefender(defender);
     }
 
-    public static String getFormattedAttackerPoints(PersistentDataContainer container) {
+    private static String getFormattedAttackerPoints(PersistentDataContainer container) {
         Integer points = getSiegeAttackerPoints(container);
         if (points == null) return getFormattedUnknown();
 
         return colorValue(String.valueOf(points));
     }
 
-    public static String getFormattedDefenderPoints(PersistentDataContainer container) {
+    private static String getFormattedDefenderPoints(PersistentDataContainer container) {
         Integer points = getSiegeDefenderPoints(container);
         if (points == null) return getFormattedUnknown();
 
         return colorValue(String.valueOf(points));
     }
 
-    public static String getFormattedWinner(PersistentDataContainer container) {
+    private static String getFormattedWinner(PersistentDataContainer container) {
         String winning_side = getSiegeWinningSide(container);
         if (winning_side == null) return getFormattedUnknown();
 
@@ -199,7 +199,7 @@ public class SiegeWarLoreUtil {
         }
     }
 
-    public static String getFormattedOpposition(PersistentDataContainer container) {
+    private static String getFormattedOpposition(PersistentDataContainer container) {
         String winning_side = getSiegeWinningSide(container);
         if (winning_side == null) return getFormattedUnknown();
 
@@ -215,14 +215,14 @@ public class SiegeWarLoreUtil {
         }
     }
 
-    public static String getFormattedStatus(PersistentDataContainer container) {
+    private static String getFormattedStatus(PersistentDataContainer container) {
         String status = getSiegeStatus(container);
         if (status == null) return getFormattedUnknown();
 
         return colorValue(status);
     }
 
-    public static String getFormattedStart(PersistentDataContainer container) {
+    private static String getFormattedStart(PersistentDataContainer container) {
         Long time = getSiegeStart(container);
         if (time == null) return getFormattedUnknown();
 
@@ -230,7 +230,7 @@ public class SiegeWarLoreUtil {
 
     }
 
-    public static String getFormattedEnd(PersistentDataContainer container) {
+    private static String getFormattedEnd(PersistentDataContainer container) {
         Long time = getSiegeEnd(container);
         if (time == null) return getFormattedUnknown();
 
