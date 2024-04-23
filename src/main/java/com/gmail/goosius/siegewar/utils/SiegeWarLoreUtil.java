@@ -61,52 +61,52 @@ public class SiegeWarLoreUtil {
 
 
     @Nullable
-    public static String getSiegeType(PersistentDataContainer container) {
+    private static String getSiegeType(PersistentDataContainer container) {
         return container.get(TYPE, PersistentDataType.STRING);
     }
 
     @Nullable
-    public static String getSiegeTown(PersistentDataContainer container) {
+    private static String getSiegeTown(PersistentDataContainer container) {
         return container.get(TOWN, PersistentDataType.STRING);
     }
 
     @Nullable
-    public static String getSiegeAttacker(PersistentDataContainer container) {
+    private static String getSiegeAttacker(PersistentDataContainer container) {
         return container.get(ATTACKER, PersistentDataType.STRING);
     }
 
     @Nullable
-    public static String getSiegeDefender(PersistentDataContainer container) {
+    private static String getSiegeDefender(PersistentDataContainer container) {
         return container.get(DEFENDER, PersistentDataType.STRING);
     }
 
     @Nullable
-    public static Integer getSiegeAttackerPoints(PersistentDataContainer container) {
+    private static Integer getSiegeAttackerPoints(PersistentDataContainer container) {
         return container.get(ATTACKER_POINTS, PersistentDataType.INTEGER);
     }
 
     @Nullable
-    public static Integer getSiegeDefenderPoints(PersistentDataContainer container) {
+    private static Integer getSiegeDefenderPoints(PersistentDataContainer container) {
         return container.get(DEFENDER_POINTS, PersistentDataType.INTEGER);
     }
 
     @Nullable
-    public static String getSiegeWinningSide(PersistentDataContainer container) {
+    private static String getSiegeWinningSide(PersistentDataContainer container) {
         return container.get(WINNER, PersistentDataType.STRING);
     }
 
     @Nullable
-    public static String getSiegeStatus(PersistentDataContainer container) {
+    private static String getSiegeStatus(PersistentDataContainer container) {
         return container.get(STATUS, PersistentDataType.STRING);
     }
 
     @Nullable
-    public static Long getSiegeStart(PersistentDataContainer container) {
+    private static Long getSiegeStart(PersistentDataContainer container) {
         return container.get(START, PersistentDataType.LONG);
     }
 
     @Nullable
-    public static Long getSiegeEnd(PersistentDataContainer container) {
+    private static Long getSiegeEnd(PersistentDataContainer container) {
         return container.get(END, PersistentDataType.LONG);
     }
 
