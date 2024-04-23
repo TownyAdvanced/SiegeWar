@@ -2,7 +2,6 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
-import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.NamespacedKey;
@@ -12,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import javax.annotation.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,61 +30,6 @@ public class SiegeWarLoreUtil {
     public static final NamespacedKey START = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_banner_start");
     public static final NamespacedKey END = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_banner_end");
 
-    public static String getBannerChat(PersistentDataContainer data) {
-        String winner = Translation.of("siege_lore_color_value",
-                Translation.of("siege_lore_unknown"));
-        String opposition = Translation.of("siege_lore_color_value",
-                Translation.of("siege_lore_unknown"));
-        String key;
-        switch (getSiegeWinningSideName(data)) {
-            case "ATTACKERS": {
-                winner = Translation.of("siege_lore_color_attacker",
-                        getSiegeAttackerName(data));
-                opposition = Translation.of("siege_lore_color_defender",
-                        getSiegeDefenderName(data));
-                key = "_attack";
-                break;
-            }
-            case "DEFENDERS": {
-                winner = Translation.of("siege_lore_color_defender",
-                        getSiegeDefenderName(data));
-                opposition = Translation.of("siege_lore_color_attacker",
-                        getSiegeAttackerName(data));
-                key = "_defence";
-                break;
-            }
-            case "NOBODY": {
-                winner = Translation.of("siege_lore_color_neutral",
-                        SiegeSide.NOBODY.getFormattedName());
-                opposition = Translation.of("siege_lore_color_neutral",
-                        SiegeSide.NOBODY.getFormattedName());
-            }
-            default: {
-                key = "_unknown";
-                break;
-            }
-        }
-
-
-        String type = Translation.of("siege_lore_color_value",
-                Translation.of("siege_lore_banner_type", getSiegeTypeName(data)));
-        String town = Translation.of("siege_lore_color_defender",
-                getSiegeTownName(data));
-
-        String end = Translation.of("siege_lore_color_value",
-                new SimpleDateFormat(Translation.of("siege_lore_date_format")).format(getSiegeEndTime(data)));
-
-        return Translation.of("siege_lore_color_key",
-                Translation.of("siege_lore_banner_chat_1", type)) +
-                Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_chat_2", town)) +
-                Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_chat_3", winner)) +
-                Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_chat_4" + key, opposition)) +
-                Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_chat_5" + key, end));
-    }
 
     public static void setLoreKey(PersistentDataContainer container) {
         container.set(LORE, PersistentDataType.BYTE, (byte)0);
@@ -94,50 +39,203 @@ public class SiegeWarLoreUtil {
         return container.has(LORE, PersistentDataType.BYTE);
     }
 
-    public static String getSiegeTypeName(PersistentDataContainer container) {
-        return container.getOrDefault(TYPE, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
+    public static String colorAttacker(String string) {
+        return Translation.of("siege_lore_color_attacker", string);
     }
 
-    public static String getSiegeTownName(PersistentDataContainer container) {
-        return container.getOrDefault(TOWN, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
+    public static String colorDefender(String string) {
+        return Translation.of("siege_lore_color_defender", string);
     }
 
-    public static String getSiegeAttackerName(PersistentDataContainer container) {
-        return container.getOrDefault(ATTACKER, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
+    public static String colorNeutral(String string) {
+        return Translation.of("siege_lore_color_neutral", string);
     }
 
-    public static String getSiegeDefenderName(PersistentDataContainer container) {
-        return container.getOrDefault(DEFENDER, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
+    public static String colorKey(String string) {
+        return Translation.of("siege_lore_color_key", string);
     }
 
-    public static int getSiegeAttackerPoints(PersistentDataContainer container) {
-        return container.getOrDefault(ATTACKER_POINTS, PersistentDataType.INTEGER, 0);
+    public static String colorValue(String string) {
+        return Translation.of("siege_lore_color_value", string);
     }
 
-    public static int getSiegeDefenderPoints(PersistentDataContainer container) {
-        return container.getOrDefault(DEFENDER_POINTS, PersistentDataType.INTEGER, 0);
+
+    @Nullable
+    public static String getSiegeType(PersistentDataContainer container) {
+        return container.get(TYPE, PersistentDataType.STRING);
     }
 
-    public static String getSiegeWinningSideName(PersistentDataContainer container) {
-        return container.getOrDefault(WINNER, PersistentDataType.STRING, SiegeSide.NOBODY.name());
+    @Nullable
+    public static String getSiegeTown(PersistentDataContainer container) {
+        return container.get(TOWN, PersistentDataType.STRING);
     }
 
-    public static String getSiegeStatusName(PersistentDataContainer container) {
-        return container.getOrDefault(STATUS, PersistentDataType.STRING, SiegeStatus.UNKNOWN.getName());
+    @Nullable
+    public static String getSiegeAttacker(PersistentDataContainer container) {
+        return container.get(ATTACKER, PersistentDataType.STRING);
     }
 
-    public static long getSiegeStartTime(PersistentDataContainer container) {
-        return container.getOrDefault(START, PersistentDataType.LONG, 0L);
+    @Nullable
+    public static String getSiegeDefender(PersistentDataContainer container) {
+        return container.get(DEFENDER, PersistentDataType.STRING);
     }
 
-    public static long getSiegeEndTime(PersistentDataContainer container) {
-        return container.getOrDefault(END, PersistentDataType.LONG, 0L);
+    @Nullable
+    public static Integer getSiegeAttackerPoints(PersistentDataContainer container) {
+        return container.get(ATTACKER_POINTS, PersistentDataType.INTEGER);
+    }
+
+    @Nullable
+    public static Integer getSiegeDefenderPoints(PersistentDataContainer container) {
+        return container.get(DEFENDER_POINTS, PersistentDataType.INTEGER);
+    }
+
+    @Nullable
+    public static String getSiegeWinningSide(PersistentDataContainer container) {
+        return container.get(WINNER, PersistentDataType.STRING);
+    }
+
+    @Nullable
+    public static String getSiegeStatus(PersistentDataContainer container) {
+        return container.get(STATUS, PersistentDataType.STRING);
+    }
+
+    @Nullable
+    public static Long getSiegeStart(PersistentDataContainer container) {
+        return container.get(START, PersistentDataType.LONG);
+    }
+
+    @Nullable
+    public static Long getSiegeEnd(PersistentDataContainer container) {
+        return container.get(END, PersistentDataType.LONG);
+    }
+
+
+    public static String getFormattedUnknown() {
+        return colorNeutral(Translation.of("siege_lore_unknown"));
+    }
+
+    public static String getFormattedType(PersistentDataContainer container) {
+        String type = getSiegeType(container);
+        if (type == null) return getFormattedUnknown();
+
+        return colorValue(Translation.of("siege_lore_banner_type", type));
+    }
+
+    public static String getFormattedTown(PersistentDataContainer container) {
+        String town = getSiegeTown(container);
+        if (town == null) return getFormattedUnknown();
+
+        return colorDefender(town);
+    }
+
+    public static String getFormattedAttacker(PersistentDataContainer container) {
+        String attacker = getSiegeAttacker(container);
+        if (attacker == null) return getFormattedUnknown();
+
+        return colorAttacker(attacker);
+    }
+
+    public static String getFormattedDefender(PersistentDataContainer container) {
+        String defender = getSiegeDefender(container);
+        if (defender == null) return getFormattedUnknown();
+
+        return colorDefender(defender);
+    }
+
+    public static String getFormattedAttackerPoints(PersistentDataContainer container) {
+        Integer points = getSiegeAttackerPoints(container);
+        if (points == null) return getFormattedUnknown();
+
+        return colorValue(String.valueOf(points));
+    }
+
+    public static String getFormattedDefenderPoints(PersistentDataContainer container) {
+        Integer points = getSiegeDefenderPoints(container);
+        if (points == null) return getFormattedUnknown();
+
+        return colorValue(String.valueOf(points));
+    }
+
+    public static String getFormattedWinner(PersistentDataContainer container) {
+        String winning_side = getSiegeWinningSide(container);
+        if (winning_side == null) return getFormattedUnknown();
+
+        switch (winning_side) {
+            case "ATTACKERS":
+                return getFormattedAttacker(container);
+            case "DEFENDERS":
+                return getFormattedDefender(container);
+            case "NOBODY":
+                return colorValue(SiegeSide.NOBODY.name());
+            default:
+                throw new RuntimeException("Unknown winning SiegeSide in SiegeWar lore item.");
+        }
+    }
+
+    public static String getFormattedOpposition(PersistentDataContainer container) {
+        String winning_side = getSiegeWinningSide(container);
+        if (winning_side == null) return getFormattedUnknown();
+
+        switch (winning_side) {
+            case "ATTACKERS":
+                return getFormattedDefender(container);
+            case "DEFENDERS":
+                return getFormattedAttacker(container);
+            case "NOBODY":
+                return colorValue(SiegeSide.NOBODY.name());
+            default:
+                throw new RuntimeException("Unknown winning SiegeSide in SiegeWar lore item.");
+        }
+    }
+
+    public static String getFormattedStatus(PersistentDataContainer container) {
+        String status = getSiegeStatus(container);
+        if (status == null) return getFormattedUnknown();
+
+        return colorValue(status);
+    }
+
+    public static String getFormattedStart(PersistentDataContainer container) {
+        Long time = getSiegeStart(container);
+        if (time == null) return getFormattedUnknown();
+
+        return colorValue(new SimpleDateFormat(Translation.of("siege_lore_date_format")).format(time));
+
+    }
+
+    public static String getFormattedEnd(PersistentDataContainer container) {
+        Long time = getSiegeEnd(container);
+        if (time == null) return getFormattedUnknown();
+
+        return colorValue(new SimpleDateFormat(Translation.of("siege_lore_date_format")).format(time));
+    }
+
+    public static void shieldItem(ItemMeta meta, PersistentDataContainer data) {
+        if (!hasLoreKey(data)) return;
+
+        String name = Translation.of("siege_lore_two_values",
+                getFormattedTown(data),
+                colorNeutral(Translation.of("siege_lore_shield_name")));
+
+        meta.setDisplayName(name);
+
+        bannerLore(meta, data);
+    }
+
+    public static String bannerChat(PersistentDataContainer data) {
+        String winner = getSiegeWinningSide(data);
+        return colorKey(Translation.of("siege_lore_banner_chat_1", colorValue(getSiegeType(data)))) +
+                colorKey(Translation.of("siege_lore_banner_chat_2", getFormattedTown(data))) +
+                colorKey(Translation.of("siege_lore_banner_chat_3", getFormattedWinner(data))) +
+                colorKey(Translation.of("siege_lore_banner_chat_4_" + winner, getFormattedOpposition(data))) +
+                colorKey(Translation.of("siege_lore_banner_chat_5_" + winner, getFormattedEnd(data)));
     }
 
     public static void bannerItem(ItemMeta meta, PersistentDataContainer data) {
         if (!hasLoreKey(data)) return;
 
-        String town = data.getOrDefault(TOWN, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
+        String town = getSiegeTown(data);
 
         String name = Translation.of("siege_lore_two_values",
                 Translation.of("siege_lore_color_defender", town),
@@ -149,93 +247,50 @@ public class SiegeWarLoreUtil {
         bannerLore(meta, data);
     }
 
-    public static void shieldItem(ItemMeta meta, PersistentDataContainer data) {
-        if (!hasLoreKey(data)) return;
-
-        String town = data.getOrDefault(TOWN, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
-
-        String name = Translation.of("siege_lore_two_values",
-                Translation.of("siege_lore_color_defender", town),
-                Translation.of("siege_lore_color_neutral",
-                        Translation.of("siege_lore_shield_name")));
-
-        meta.setDisplayName(name);
-
-        bannerLore(meta, data);
-    }
-
     public static void bannerLore(ItemMeta meta, PersistentDataContainer data) {
         List<String> lore = new ArrayList<>();
 
-        String type = data.getOrDefault(TYPE, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
-        String attacker = data.getOrDefault(ATTACKER, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
-        String defender = data.getOrDefault(DEFENDER, PersistentDataType.STRING, Translation.of("siege_lore_unknown"));
-        int attacker_points = data.getOrDefault(ATTACKER_POINTS, PersistentDataType.INTEGER, 0);
-        int defender_points = data.getOrDefault(ATTACKER_POINTS, PersistentDataType.INTEGER, 0);
-        String winner = data.getOrDefault(WINNER, PersistentDataType.STRING, SiegeSide.NOBODY.name());
-        String status = data.getOrDefault(STATUS, PersistentDataType.STRING, SiegeStatus.UNKNOWN.getName());
-        long start = data.getOrDefault(START, PersistentDataType.LONG, 0L);
-        long end = data.getOrDefault(END, PersistentDataType.LONG, 0L);
-
-        String colored_winner;
-        switch (winner) {
-            case "ATTACKERS":
-                colored_winner = Translation.of("siege_lore_color_attacker", attacker);
-                break;
-            case "DEFENDERS":
-                colored_winner = Translation.of("siege_lore_color_defender", defender);
-                break;
-            case "NOBODY":
-                colored_winner = Translation.of("siege_lore_color_neutral", SiegeSide.NOBODY.getFormattedName().translate());
-                break;
-            default:
-                colored_winner = Translation.of("siege_lore_color_value", Translation.of("siege_lore_unknown"));
-                break;
-        }
-
-        String type_line = Translation.of("siege_lore_color_value",
-                Translation.of("siege_lore_banner_type", type));
-        lore.add(type_line);
+        lore.add(getFormattedType(data));
 
         String attacker_line = Translation.of("siege_lore_key_value",
                 Translation.of("siege_lore_color_key",
                         Translation.of("siege_lore_banner_attacker")),
                 Translation.of("siege_lore_two_values",
-                        Translation.of("siege_lore_color_attacker", attacker),
+                        getFormattedAttacker(data),
                         Translation.of("siege_lore_color_value",
-                                Translation.of("siege_lore_secondary_value", attacker_points))));
+                                Translation.of("siege_lore_secondary_value", getFormattedAttackerPoints(data)))));
         lore.add(attacker_line);
 
         String defender_line = Translation.of("siege_lore_key_value",
                 Translation.of("siege_lore_color_key",
                         Translation.of("siege_lore_banner_defender")),
                 Translation.of("siege_lore_two_values",
-                        Translation.of("siege_lore_color_defender", defender),
+                        getFormattedDefender(data),
                         Translation.of("siege_lore_color_value",
-                                Translation.of("siege_lore_secondary_value", defender_points))));
+                                Translation.of("siege_lore_secondary_value", getFormattedDefenderPoints(data)))));
         lore.add(defender_line);
 
         String winner_line = Translation.of("siege_lore_key_value",
                 Translation.of("siege_lore_color_key",
                         Translation.of("siege_lore_banner_winner")),
                 Translation.of("siege_lore_two_values",
-                        colored_winner,
+                        getFormattedWinner(data),
                         Translation.of("siege_lore_color_value",
-                                Translation.of("siege_lore_secondary_value", status))));
+                                Translation.of("siege_lore_secondary_value", getFormattedStatus(data)))));
         lore.add(winner_line);
 
         String start_line = Translation.of("siege_lore_key_value",
                 Translation.of("siege_lore_color_key",
                         Translation.of("siege_lore_banner_start")),
                 Translation.of("siege_lore_color_value",
-                        new SimpleDateFormat(Translation.of("siege_lore_date_format")).format(start)));
+                        getFormattedStart(data)));
         lore.add(start_line);
 
         String end_line = Translation.of("siege_lore_key_value",
                 Translation.of("siege_lore_color_key",
                         Translation.of("siege_lore_banner_end")),
                 Translation.of("siege_lore_color_value",
-                        new SimpleDateFormat(Translation.of("siege_lore_date_format")).format(end)));
+                        getFormattedEnd(data)));
         lore.add(end_line);
 
 

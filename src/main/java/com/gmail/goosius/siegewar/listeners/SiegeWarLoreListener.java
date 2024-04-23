@@ -76,7 +76,7 @@ public class SiegeWarLoreListener implements Listener {
 
         if (!SiegeWarLoreUtil.hasLoreKey(container)) return;
 
-        Messaging.sendMsg(event.getPlayer(), SiegeWarLoreUtil.getBannerChat(container));
+        Messaging.sendMsg(event.getPlayer(), SiegeWarLoreUtil.bannerChat(container));
     }
 
     @EventHandler
