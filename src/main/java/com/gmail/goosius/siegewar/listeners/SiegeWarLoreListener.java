@@ -4,6 +4,8 @@ import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
+import com.gmail.goosius.siegewar.events.SiegeEndEvent;
+import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarLoreUtil;
 import com.palmergames.bukkit.towny.object.Translation;
@@ -36,6 +38,22 @@ import java.util.Arrays;
  *
  */
 public class SiegeWarLoreListener implements Listener {
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onSiegeStart(SiegeWarStartEvent event) {
+        if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
+
+        //Set name, type, attacker, defender, start time
+        SiegeWarLoreUtil.bannerSiegeStart(event.getSiege());
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onSiegeEnd(SiegeEndEvent event) {
+        if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
+
+        //Set outcome, winner, points, end time
+        SiegeWarLoreUtil.bannerSiegeEnd(event.getSiege());
+    }
 
     @EventHandler
     public void onInteractBanner(PlayerInteractEvent event) {

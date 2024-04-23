@@ -39,11 +39,6 @@ public class SiegeWarSiegeCompletionUtil {
 		//Save to db
 		SiegeController.saveSiege(siege);
 
-		if (SiegeWarSettings.isSiegeLoreEnabled()) {
-			//Set outcome, winner, points, end time
-			SiegeWarLoreUtil.bannerSiegeEnd(siege);
-		}
-
 		//Fire SiegeEnded event
 		Bukkit.getPluginManager().callEvent(new SiegeEndEvent(siege));
 	}
