@@ -1179,7 +1179,8 @@ public enum ConfigNodes {
 			"",
 			"# If this value is true, then the Siege Lore feature is enabled.",
 			"# When a banner is broken after a siege has ended, it will drop with a name and lore set to display info about the siege.",
-			"# Banners dropped from this feature can be placed and broken without losing lore, but can not be used to begin a new siege.");
+			"# Banners dropped from this feature can be placed and broken without losing lore, but can not be used to begin a new siege.",
+			"# Shields can be crafted from the lore banners and will inherit the lore and name from the banner.");
 	private final String Root;
 	private final String Default;
 	private String[] comments;
