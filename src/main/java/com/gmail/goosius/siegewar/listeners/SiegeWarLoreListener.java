@@ -1,6 +1,5 @@
 package com.gmail.goosius.siegewar.listeners;
 
-import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.events.SiegeEndEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
@@ -9,7 +8,7 @@ import com.gmail.goosius.siegewar.utils.SiegeWarLoreUtil;
 import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Material;
 import org.bukkit.Tag;
-import org.bukkit.block.Banner;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,9 +20,6 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BannerMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
 
 import java.util.Arrays;
@@ -54,28 +50,19 @@ public class SiegeWarLoreListener implements Listener {
     @EventHandler
     public void onInteractBanner(PlayerInteractEvent event) {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
+        if (event.getHand() != EquipmentSlot.HAND) return;
 
-        PersistentDataContainer container;
-        if (event.hasBlock()) {
-            if (event.getHand() != EquipmentSlot.HAND) return;
-            if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-            if (event.getClickedBlock().isEmpty()) return;
-            if (!Tag.BANNERS.isTagged(event.getClickedBlock().getType())) return;
-            if (!(event.getClickedBlock().getState() instanceof PersistentDataHolder)) return;
-            PersistentDataHolder holder = (PersistentDataHolder) event.getClickedBlock().getState();
-            container = holder.getPersistentDataContainer();
-        } else if (event.hasItem()) {
-            if (event.getHand() != EquipmentSlot.HAND) return;
-            if (event.getAction() != Action.RIGHT_CLICK_AIR) return;
-            if (!Tag.BANNERS.isTagged(event.getMaterial())) return;
-            ItemStack item = event.getItem();
-            if (!item.hasItemMeta()) return;
-            container = item.getItemMeta().getPersistentDataContainer();
+        PersistentDataHolder holder;
+
+        if (event.getClickedBlock() != null && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (!SiegeWarLoreUtil.isLoreItem(event.getClickedBlock().getState(), "siege_banner")) return;
+            holder = (PersistentDataHolder) event.getClickedBlock().getState();
+        } else if (event.getItem() != null && event.getAction() == Action.RIGHT_CLICK_AIR) {
+            if (!SiegeWarLoreUtil.isLoreItem(event.getItem(), "siege_banner")) return;
+            holder = event.getItem().getItemMeta();
         } else return;
 
-        if (!SiegeWarLoreUtil.isLoreItem(container)) return;
-
-        Messaging.sendMsg(event.getPlayer(), SiegeWarLoreUtil.bannerChat(container));
+        SiegeWarLoreUtil.sendBannerChat(holder, event.getPlayer());
     }
 
     @EventHandler
@@ -86,49 +73,35 @@ public class SiegeWarLoreListener implements Listener {
         if (resultItem == null) return;
         if (resultItem.getType() != Material.SHIELD) return;
 
-        ItemStack bannerItem = Arrays.stream(event.getInventory().getMatrix()).filter(itemStack -> {
-            if (itemStack == null) return false;
-            if (itemStack.getItemMeta() instanceof BannerMeta) {
-                return SiegeWarLoreUtil.isLoreItem(itemStack.getItemMeta().getPersistentDataContainer());
-            }
-            return false;
-        }).findFirst().orElse(null);
+        ItemStack bannerItem = Arrays.stream(event.getInventory().getMatrix())
+                .filter(itemStack -> SiegeWarLoreUtil.isLoreItem(itemStack, "siege_banner"))
+                .findFirst().orElse(null);
         if (bannerItem == null) return;
 
-        ItemMeta resultMeta = resultItem.getItemMeta();
-
-        SiegeWarLoreUtil.bannerCopyData(bannerItem.getItemMeta().getPersistentDataContainer(), resultMeta.getPersistentDataContainer());
-        SiegeWarLoreUtil.shieldItem(resultMeta, bannerItem.getItemMeta().getPersistentDataContainer());
-
-        resultItem.setItemMeta(resultMeta);
+        SiegeWarLoreUtil.setShieldStackFromHolder(resultItem, bannerItem.getItemMeta());
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onTryStartSiege(PreSiegeCampEvent event) {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
-
-        if (!(event.getFlag().getState() instanceof Banner)) return;
-        Banner flag = (Banner)event.getFlag().getState();
-
-        if (!SiegeWarLoreUtil.isLoreItem(flag.getPersistentDataContainer())) return;
+        if (SiegeWarLoreUtil.isLoreItem(event.getFlag().getState(), "siege_banner")) return;
 
         event.setCancelled(true);
         event.setCancellationMsg(Translation.of("siege_lore_error_banner_cannot_be_used"));
     }
 
-    //LOW to run before TownyBuildEvent, requires data potentially not included there, but must run SW listens for it
+    //LOW to run before TownyBuildEvent, requires data not included there, but must run before SW listens for it
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlaceBlock(BlockPlaceEvent event) {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
 
-        if (!(event.getItemInHand().getItemMeta() instanceof BannerMeta)) return;
-        if (!(event.getBlock().getState() instanceof Banner)) return;
-        Banner state = (Banner)event.getBlock().getState();
-        BannerMeta meta = (BannerMeta)event.getItemInHand().getItemMeta();
+        ItemStack stack = event.getItemInHand();
+        if (!SiegeWarLoreUtil.isLoreItem(stack, "siege_banner")) return;
 
-        if (!SiegeWarLoreUtil.isLoreItem(meta.getPersistentDataContainer())) return;
+        BlockState state = event.getBlock().getState();
+        if (!(state instanceof PersistentDataHolder) || !Tag.BANNERS.isTagged(state.getType())) return;
 
-        SiegeWarLoreUtil.bannerCopyData(meta.getPersistentDataContainer(), state.getPersistentDataContainer());
+        SiegeWarLoreUtil.copyData(stack.getItemMeta(), (PersistentDataHolder) state);
 
         state.update();
     }
@@ -138,20 +111,15 @@ public class SiegeWarLoreListener implements Listener {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
 
         if (event.getItems().isEmpty()) return;
+
+        BlockState state = event.getBlock().getState();
+        if (!SiegeWarLoreUtil.isLoreItem(state, "siege_banner")) return;
+
         Item item = event.getItems().get(0);
-        if (!(item.getItemStack().getItemMeta() instanceof BannerMeta)) return;
-        if (!(event.getBlockState() instanceof Banner)) return;
-        Banner state = (Banner)event.getBlockState();
-        BannerMeta meta = (BannerMeta)item.getItemStack().getItemMeta();
-
-        if (!SiegeWarLoreUtil.isLoreItem(state.getPersistentDataContainer())) return;
-
         ItemStack stack = item.getItemStack();
 
-        SiegeWarLoreUtil.bannerCopyData(state.getPersistentDataContainer(), meta.getPersistentDataContainer());
-        SiegeWarLoreUtil.bannerItem(meta, state.getPersistentDataContainer());
+        SiegeWarLoreUtil.setBannerStackFromHolder(stack, (PersistentDataHolder) state);
 
-        stack.setItemMeta(meta);
         item.setItemStack(stack);
     }
 }
