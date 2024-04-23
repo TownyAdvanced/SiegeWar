@@ -1,38 +1,68 @@
 package com.gmail.goosius.siegewar.utils;
 
+import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.Banner;
 import org.bukkit.block.BlockState;
+import org.bukkit.command.CommandSender;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SiegeWarLoreUtil {
-    public static final NamespacedKey LORE_ITEM = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_item");
+    public static final String SIEGE_BANNER = "siege_banner";
+    public static final String SIEGE_SHIELD = "siege_shield";
 
-    public static final NamespacedKey TYPE = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_type");
-    public static final NamespacedKey TOWN = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_town");
-    public static final NamespacedKey ATTACKER = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_attacker");
-    public static final NamespacedKey DEFENDER = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_defender");
-    public static final NamespacedKey ATTACKER_POINTS = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_attacker_points");
-    public static final NamespacedKey DEFENDER_POINTS = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_defender_points");
-    public static final NamespacedKey WINNER = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_winner");
-    public static final NamespacedKey STATUS = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_status");
-    public static final NamespacedKey START = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_start");
-    public static final NamespacedKey END = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_end");
+    private static final NamespacedKey LORE_ITEM = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_item");
+    private static final NamespacedKey TYPE = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_type");
+    private static final NamespacedKey TOWN = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_town");
+    private static final NamespacedKey ATTACKER = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_attacker");
+    private static final NamespacedKey DEFENDER = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_defender");
+    private static final NamespacedKey ATTACKER_POINTS = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_attacker_points");
+    private static final NamespacedKey DEFENDER_POINTS = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_defender_points");
+    private static final NamespacedKey WINNER = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_winner");
+    private static final NamespacedKey STATUS = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_status");
+    private static final NamespacedKey START = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_start");
+    private static final NamespacedKey END = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_end");
 
 
-    public static boolean isLoreItem(PersistentDataContainer container) {
-        return container.has(LORE_ITEM, PersistentDataType.STRING);
+    public static boolean isLoreItem(BlockState state) {
+        if (state == null) return false;
+        if (!(state instanceof PersistentDataHolder)) return false;
+        PersistentDataHolder holder = (PersistentDataHolder) state;
+        return holder.getPersistentDataContainer().has(LORE_ITEM, PersistentDataType.STRING);
+    }
+
+    public static boolean isLoreItem(BlockState state, String id) {
+        if (id == null) return false;
+        if (!isLoreItem(state)) return false;
+        PersistentDataHolder holder = (PersistentDataHolder) state;
+        String compare = holder.getPersistentDataContainer().get(LORE_ITEM, PersistentDataType.STRING);
+        return compare.equals(id);
+    }
+
+    public static boolean isLoreItem(ItemStack itemStack) {
+        if (itemStack == null) return false;
+        if (!itemStack.hasItemMeta()) return false;
+        return itemStack.getItemMeta().getPersistentDataContainer().has(LORE_ITEM, PersistentDataType.STRING);
+    }
+
+    public static boolean isLoreItem(ItemStack itemStack, String id) {
+        if (id == null) return false;
+        if (!isLoreItem(itemStack)) return false;
+        String compare = itemStack.getItemMeta().getPersistentDataContainer().get(LORE_ITEM, PersistentDataType.STRING);
+        return compare.equals(id);
     }
 
     private static String colorAttacker(String string) {
@@ -207,41 +237,62 @@ public class SiegeWarLoreUtil {
         return colorValue(new SimpleDateFormat(Translation.of("siege_lore_format_date")).format(time));
     }
 
-    public static void shieldItem(ItemMeta meta, PersistentDataContainer data) {
-        if (!isLoreItem(data)) return;
+    public static void sendBannerChat(PersistentDataHolder holder, CommandSender target) {
+        PersistentDataContainer data = holder.getPersistentDataContainer();
+
+        Locale locale = Translation.getLocale(target);
+
+        String winner = getSiegeWinningSide(data);
+        if (winner == null) winner = "NOBODY";
+
+        String chat = colorKey(Translation.of("siege_lore_banner_chat_1", locale, getFormattedType(data))) +
+                colorKey(Translation.of("siege_lore_banner_chat_2", locale, getFormattedTown(data))) +
+                colorKey(Translation.of("siege_lore_banner_chat_3", locale, getFormattedWinner(data))) +
+                colorKey(Translation.of("siege_lore_banner_chat_4_" + winner, locale, getFormattedOpposition(data))) +
+                colorKey(Translation.of("siege_lore_banner_chat_5_" + winner, locale, getFormattedEnd(data)));
+
+        Messaging.sendMsg(target, chat);
+    }
+
+    public static void setShieldStackFromHolder(ItemStack stack, PersistentDataHolder holder) {
+        if (stack == null || holder == null) return;
+        if (!stack.hasItemMeta()) return;
+
+        ItemMeta meta = stack.getItemMeta();
+
+        meta.getPersistentDataContainer().set(LORE_ITEM, PersistentDataType.STRING, SIEGE_SHIELD);
 
         String name = Translation.of("siege_lore_format_two_values",
-                getFormattedTown(data),
+                getFormattedTown(holder.getPersistentDataContainer()),
                 colorNeutral(Translation.of("siege_lore_shield_name")));
 
         meta.setDisplayName(name);
 
-        bannerLore(meta, data);
+        setBannerLore(meta, holder.getPersistentDataContainer());
+
+        stack.setItemMeta(meta);
     }
 
-    public static String bannerChat(PersistentDataContainer data) {
-        String winner = getSiegeWinningSide(data);
-        if (winner == null) winner = "NOBODY";
-        return colorKey(Translation.of("siege_lore_banner_chat_1", getFormattedType(data))) +
-                colorKey(Translation.of("siege_lore_banner_chat_2", getFormattedTown(data))) +
-                colorKey(Translation.of("siege_lore_banner_chat_3", getFormattedWinner(data))) +
-                colorKey(Translation.of("siege_lore_banner_chat_4_" + winner, getFormattedOpposition(data))) +
-                colorKey(Translation.of("siege_lore_banner_chat_5_" + winner, getFormattedEnd(data)));
-    }
+    public static void setBannerStackFromHolder(ItemStack stack, PersistentDataHolder holder) {
+        if (stack == null || holder == null) return;
+        if (!stack.hasItemMeta()) return;
 
-    public static void bannerItem(ItemMeta meta, PersistentDataContainer data) {
-        if (!isLoreItem(data)) return;
+        ItemMeta meta = stack.getItemMeta();
+
+        meta.getPersistentDataContainer().set(LORE_ITEM, PersistentDataType.STRING, SIEGE_BANNER);
 
         String name = Translation.of("siege_lore_format_two_values",
-                getFormattedTown(data),
+                getFormattedTown(holder.getPersistentDataContainer()),
                 colorNeutral(Translation.of("siege_lore_banner_name")));
 
         meta.setDisplayName(name);
 
-        bannerLore(meta, data);
+        setBannerLore(meta, holder.getPersistentDataContainer());
+
+        stack.setItemMeta(meta);
     }
 
-    public static void bannerLore(ItemMeta meta, PersistentDataContainer data) {
+    private static void setBannerLore(ItemMeta meta, PersistentDataContainer data) {
         List<String> lore = new ArrayList<>();
 
         lore.add(getFormattedType(data));
@@ -281,8 +332,12 @@ public class SiegeWarLoreUtil {
         meta.setLore(lore);
     }
 
-    public static void bannerCopyData(PersistentDataContainer from, PersistentDataContainer to) {
-        if (!isLoreItem(from)) return;
+    public static void copyData(PersistentDataHolder fromHolder, PersistentDataHolder toHolder) {
+        PersistentDataContainer from = fromHolder.getPersistentDataContainer();
+        PersistentDataContainer to = toHolder.getPersistentDataContainer();
+
+        if (!from.has(LORE_ITEM, PersistentDataType.STRING)) return;
+        to.set(LORE_ITEM, PersistentDataType.STRING, from.get(LORE_ITEM, PersistentDataType.STRING));
         if (from.has(TYPE, PersistentDataType.STRING))
             to.set(TYPE, PersistentDataType.STRING, from.get(TYPE, PersistentDataType.STRING));
         if (from.has(TOWN, PersistentDataType.STRING))
@@ -307,41 +362,34 @@ public class SiegeWarLoreUtil {
 
     public static void bannerSiegeStart(Siege siege) {
         BlockState blockState = siege.getFlagBlock().getState();
-        if (!(blockState instanceof Banner)) return;
-        Banner bannerState = (Banner) blockState;
+        if (!(blockState instanceof PersistentDataHolder)) return;
 
-        PersistentDataContainer container = bannerState.getPersistentDataContainer();
+        PersistentDataHolder holder = (PersistentDataHolder) blockState;
+        PersistentDataContainer container = holder.getPersistentDataContainer();
 
         container.set(LORE_ITEM, PersistentDataType.STRING, "siege_banner");
-
         container.set(TYPE, PersistentDataType.STRING, siege.getSiegeType().getName());
         container.set(TOWN, PersistentDataType.STRING, siege.getDefender().getName());
-
         container.set(ATTACKER, PersistentDataType.STRING, siege.getAttackingNationIfPossibleElseTown().getFormattedName());
         container.set(DEFENDER, PersistentDataType.STRING, siege.getDefendingNationIfPossibleElseTown().getFormattedName());
-
         container.set(START, PersistentDataType.LONG, System.currentTimeMillis());
 
-        bannerState.update();
+        blockState.update();
     }
 
     public static void bannerSiegeEnd(Siege siege) {
         BlockState blockState = siege.getFlagBlock().getState();
-        if (!(blockState instanceof Banner)) return;
-        Banner bannerState = (Banner) blockState;
+        if (!isLoreItem(blockState, "siege_banner")) return;
 
-        PersistentDataContainer container = bannerState.getPersistentDataContainer();
-
-        if (!isLoreItem(container)) return;
+        PersistentDataHolder holder = (PersistentDataHolder) blockState;
+        PersistentDataContainer container = holder.getPersistentDataContainer();
 
         container.set(WINNER, PersistentDataType.STRING, siege.getSiegeWinner().name());
         container.set(STATUS, PersistentDataType.STRING, siege.getStatus().getName());
-
         container.set(ATTACKER_POINTS, PersistentDataType.INTEGER, siege.getAttackerBattlePoints());
         container.set(DEFENDER_POINTS, PersistentDataType.INTEGER, siege.getDefenderBattlePoints());
-
         container.set(END, PersistentDataType.LONG, System.currentTimeMillis());
 
-        bannerState.update();
+        blockState.update();
     }
 }
