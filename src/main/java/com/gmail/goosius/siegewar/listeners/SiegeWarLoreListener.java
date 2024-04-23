@@ -36,62 +36,6 @@ import java.util.Arrays;
  */
 public class SiegeWarLoreListener implements Listener {
 
-    private String getChatLoreForBanner(PersistentDataContainer data) {
-        String winner = Translation.of("siege_lore_color_value",
-                Translation.of("siege_lore_unknown"));
-        String opposition = Translation.of("siege_lore_color_value",
-                Translation.of("siege_lore_unknown"));
-        String key;
-        switch (SiegeWarLoreUtil.getSiegeWinningSideName(data)) {
-            case "ATTACKERS": {
-                winner = Translation.of("siege_lore_color_attacker",
-                        SiegeWarLoreUtil.getSiegeAttackerName(data));
-                opposition = Translation.of("siege_lore_color_defender",
-                        SiegeWarLoreUtil.getSiegeDefenderName(data));
-                key = "_attack";
-                break;
-            }
-            case "DEFENDERS": {
-                winner = Translation.of("siege_lore_color_defender",
-                        SiegeWarLoreUtil.getSiegeDefenderName(data));
-                opposition = Translation.of("siege_lore_color_attacker",
-                        SiegeWarLoreUtil.getSiegeAttackerName(data));
-                key = "_defence";
-                break;
-            }
-            case "NOBODY": {
-                winner = Translation.of("siege_lore_color_neutral",
-                        SiegeSide.NOBODY.getFormattedName());
-                opposition = Translation.of("siege_lore_color_neutral",
-                        SiegeSide.NOBODY.getFormattedName());
-            }
-            default: {
-                key = "_unknown";
-                break;
-            }
-        }
-
-
-        String type = Translation.of("siege_lore_color_value",
-                Translation.of("siege_lore_banner_type", SiegeWarLoreUtil.getSiegeTypeName(data)));
-        String town = Translation.of("siege_lore_color_defender",
-                SiegeWarLoreUtil.getSiegeTownName(data));
-
-        String end = Translation.of("siege_lore_color_value",
-                new SimpleDateFormat(Translation.of("siege_lore_date_format")).format(SiegeWarLoreUtil.getSiegeEndTime(data)));
-
-        return Translation.of("siege_lore_color_key",
-                    Translation.of("siege_lore_banner_chat_1", type)) +
-                Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_chat_2", town)) +
-                Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_chat_3", winner)) +
-                Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_chat_4" + key, opposition)) +
-                Translation.of("siege_lore_color_key",
-                        Translation.of("siege_lore_banner_chat_5" + key, end));
-    }
-
     @EventHandler
     public void onInteractBanner(PlayerInteractEvent event) {
         PersistentDataContainer container;
@@ -114,7 +58,7 @@ public class SiegeWarLoreListener implements Listener {
 
         if (!SiegeWarLoreUtil.hasLoreKey(container)) return;
 
-        Messaging.sendMsg(event.getPlayer(), getChatLoreForBanner(container));
+        Messaging.sendMsg(event.getPlayer(), SiegeWarLoreUtil.getBannerChat(container));
     }
 
     @EventHandler

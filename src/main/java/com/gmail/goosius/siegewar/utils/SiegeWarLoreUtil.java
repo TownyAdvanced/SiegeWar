@@ -8,14 +8,12 @@ import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Banner;
 import org.bukkit.block.BlockState;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class SiegeWarLoreUtil {
@@ -31,6 +29,62 @@ public class SiegeWarLoreUtil {
     public static final NamespacedKey STATUS = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_banner_status");
     public static final NamespacedKey START = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_banner_start");
     public static final NamespacedKey END = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_banner_end");
+
+    public static String getBannerChat(PersistentDataContainer data) {
+        String winner = Translation.of("siege_lore_color_value",
+                Translation.of("siege_lore_unknown"));
+        String opposition = Translation.of("siege_lore_color_value",
+                Translation.of("siege_lore_unknown"));
+        String key;
+        switch (getSiegeWinningSideName(data)) {
+            case "ATTACKERS": {
+                winner = Translation.of("siege_lore_color_attacker",
+                        getSiegeAttackerName(data));
+                opposition = Translation.of("siege_lore_color_defender",
+                        getSiegeDefenderName(data));
+                key = "_attack";
+                break;
+            }
+            case "DEFENDERS": {
+                winner = Translation.of("siege_lore_color_defender",
+                        getSiegeDefenderName(data));
+                opposition = Translation.of("siege_lore_color_attacker",
+                        getSiegeAttackerName(data));
+                key = "_defence";
+                break;
+            }
+            case "NOBODY": {
+                winner = Translation.of("siege_lore_color_neutral",
+                        SiegeSide.NOBODY.getFormattedName());
+                opposition = Translation.of("siege_lore_color_neutral",
+                        SiegeSide.NOBODY.getFormattedName());
+            }
+            default: {
+                key = "_unknown";
+                break;
+            }
+        }
+
+
+        String type = Translation.of("siege_lore_color_value",
+                Translation.of("siege_lore_banner_type", getSiegeTypeName(data)));
+        String town = Translation.of("siege_lore_color_defender",
+                getSiegeTownName(data));
+
+        String end = Translation.of("siege_lore_color_value",
+                new SimpleDateFormat(Translation.of("siege_lore_date_format")).format(getSiegeEndTime(data)));
+
+        return Translation.of("siege_lore_color_key",
+                Translation.of("siege_lore_banner_chat_1", type)) +
+                Translation.of("siege_lore_color_key",
+                        Translation.of("siege_lore_banner_chat_2", town)) +
+                Translation.of("siege_lore_color_key",
+                        Translation.of("siege_lore_banner_chat_3", winner)) +
+                Translation.of("siege_lore_color_key",
+                        Translation.of("siege_lore_banner_chat_4" + key, opposition)) +
+                Translation.of("siege_lore_color_key",
+                        Translation.of("siege_lore_banner_chat_5" + key, end));
+    }
 
     public static void setLoreKey(PersistentDataContainer container) {
         container.set(LORE, PersistentDataType.BYTE, (byte)0);
