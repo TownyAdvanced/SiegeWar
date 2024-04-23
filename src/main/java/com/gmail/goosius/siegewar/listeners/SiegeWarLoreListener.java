@@ -40,6 +40,7 @@ public class SiegeWarLoreListener implements Listener {
     @EventHandler
     public void onInteractBanner(PlayerInteractEvent event) {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
+
         PersistentDataContainer container;
         if (event.hasBlock()) {
             if (event.getHand() != EquipmentSlot.HAND) return;
@@ -66,6 +67,7 @@ public class SiegeWarLoreListener implements Listener {
     @EventHandler
     public void onPrepareCraft(PrepareItemCraftEvent event) {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
+
         ItemStack resultItem = event.getInventory().getResult();
         if (resultItem == null) return;
         if (resultItem.getType() != Material.SHIELD) return;
