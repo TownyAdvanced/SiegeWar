@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SiegeWarLoreUtil {
-    public static final NamespacedKey LORE = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore");
+    public static final NamespacedKey LORE_ITEM = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_item");
 
     public static final NamespacedKey TYPE = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_type");
     public static final NamespacedKey TOWN = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_town");
@@ -31,12 +31,8 @@ public class SiegeWarLoreUtil {
     public static final NamespacedKey END = new NamespacedKey(SiegeWar.getSiegeWar(), "siege_lore_end");
 
 
-    public static void setLoreKey(PersistentDataContainer container) {
-        container.set(LORE, PersistentDataType.BYTE, (byte)0);
-    }
-
-    public static boolean hasLoreKey(PersistentDataContainer container) {
-        return container.has(LORE, PersistentDataType.BYTE);
+    public static boolean isLoreItem(PersistentDataContainer container) {
+        return container.has(LORE_ITEM, PersistentDataType.STRING);
     }
 
     private static String colorAttacker(String string) {
@@ -212,7 +208,7 @@ public class SiegeWarLoreUtil {
     }
 
     public static void shieldItem(ItemMeta meta, PersistentDataContainer data) {
-        if (!hasLoreKey(data)) return;
+        if (!isLoreItem(data)) return;
 
         String name = Translation.of("siege_lore_format_two_values",
                 getFormattedTown(data),
@@ -234,7 +230,7 @@ public class SiegeWarLoreUtil {
     }
 
     public static void bannerItem(ItemMeta meta, PersistentDataContainer data) {
-        if (!hasLoreKey(data)) return;
+        if (!isLoreItem(data)) return;
 
         String name = Translation.of("siege_lore_format_two_values",
                 getFormattedTown(data),
@@ -286,8 +282,7 @@ public class SiegeWarLoreUtil {
     }
 
     public static void bannerCopyData(PersistentDataContainer from, PersistentDataContainer to) {
-        if (!hasLoreKey(from)) return;
-        setLoreKey(to);
+        if (!isLoreItem(from)) return;
         if (from.has(TYPE, PersistentDataType.STRING))
             to.set(TYPE, PersistentDataType.STRING, from.get(TYPE, PersistentDataType.STRING));
         if (from.has(TOWN, PersistentDataType.STRING))
@@ -317,7 +312,7 @@ public class SiegeWarLoreUtil {
 
         PersistentDataContainer container = bannerState.getPersistentDataContainer();
 
-        setLoreKey(container);
+        container.set(LORE_ITEM, PersistentDataType.STRING, "siege_banner");
 
         container.set(TYPE, PersistentDataType.STRING, siege.getSiegeType().getName());
         container.set(TOWN, PersistentDataType.STRING, siege.getDefender().getName());
@@ -337,7 +332,7 @@ public class SiegeWarLoreUtil {
 
         PersistentDataContainer container = bannerState.getPersistentDataContainer();
 
-        if (!hasLoreKey(container)) return;
+        if (!isLoreItem(container)) return;
 
         container.set(WINNER, PersistentDataType.STRING, siege.getSiegeWinner().name());
         container.set(STATUS, PersistentDataType.STRING, siege.getStatus().getName());

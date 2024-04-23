@@ -73,7 +73,7 @@ public class SiegeWarLoreListener implements Listener {
             container = item.getItemMeta().getPersistentDataContainer();
         } else return;
 
-        if (!SiegeWarLoreUtil.hasLoreKey(container)) return;
+        if (!SiegeWarLoreUtil.isLoreItem(container)) return;
 
         Messaging.sendMsg(event.getPlayer(), SiegeWarLoreUtil.bannerChat(container));
     }
@@ -89,7 +89,7 @@ public class SiegeWarLoreListener implements Listener {
         ItemStack bannerItem = Arrays.stream(event.getInventory().getMatrix()).filter(itemStack -> {
             if (itemStack == null) return false;
             if (itemStack.getItemMeta() instanceof BannerMeta) {
-                return SiegeWarLoreUtil.hasLoreKey(itemStack.getItemMeta().getPersistentDataContainer());
+                return SiegeWarLoreUtil.isLoreItem(itemStack.getItemMeta().getPersistentDataContainer());
             }
             return false;
         }).findFirst().orElse(null);
@@ -110,7 +110,7 @@ public class SiegeWarLoreListener implements Listener {
         if (!(event.getFlag().getState() instanceof Banner)) return;
         Banner flag = (Banner)event.getFlag().getState();
 
-        if (!SiegeWarLoreUtil.hasLoreKey(flag.getPersistentDataContainer())) return;
+        if (!SiegeWarLoreUtil.isLoreItem(flag.getPersistentDataContainer())) return;
 
         event.setCancelled(true);
         event.setCancellationMsg(Translation.of("siege_lore_error_banner_cannot_be_used"));
@@ -126,7 +126,7 @@ public class SiegeWarLoreListener implements Listener {
         Banner state = (Banner)event.getBlock().getState();
         BannerMeta meta = (BannerMeta)event.getItemInHand().getItemMeta();
 
-        if (!SiegeWarLoreUtil.hasLoreKey(meta.getPersistentDataContainer())) return;
+        if (!SiegeWarLoreUtil.isLoreItem(meta.getPersistentDataContainer())) return;
 
         SiegeWarLoreUtil.bannerCopyData(meta.getPersistentDataContainer(), state.getPersistentDataContainer());
 
@@ -144,7 +144,7 @@ public class SiegeWarLoreListener implements Listener {
         Banner state = (Banner)event.getBlockState();
         BannerMeta meta = (BannerMeta)item.getItemStack().getItemMeta();
 
-        if (!SiegeWarLoreUtil.hasLoreKey(state.getPersistentDataContainer())) return;
+        if (!SiegeWarLoreUtil.isLoreItem(state.getPersistentDataContainer())) return;
 
         ItemStack stack = item.getItemStack();
 
