@@ -236,7 +236,7 @@ public class SiegeWarLoreUtil {
     public static void bannerItem(ItemMeta meta, PersistentDataContainer data) {
         if (!hasLoreKey(data)) return;
 
-        String name = Translation.of("siege_lore_two_values",
+        String name = Translation.of("siege_lore_format_two_values",
                 getFormattedTown(data),
                 colorNeutral(Translation.of("siege_lore_banner_name")));
 
