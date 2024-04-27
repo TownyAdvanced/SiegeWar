@@ -116,7 +116,7 @@ public class SiegeWarLoreListener implements Listener {
 
         if (event.getItems().isEmpty()) return;
 
-        BlockState state = event.getBlock().getState();
+        BlockState state = event.getBlockState();
         if (!SiegeWarLoreUtil.isLoreItem(state, "siege_banner")) return;
 
         Item item = event.getItems().get(0);
