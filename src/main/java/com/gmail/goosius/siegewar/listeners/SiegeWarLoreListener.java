@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.events.SiegeEndEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarLoreUtil;
+import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
 import com.palmergames.bukkit.towny.object.Translation;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -90,7 +91,10 @@ public class SiegeWarLoreListener implements Listener {
         event.setCancellationMsg(Translation.of("siege_lore_error_banner_cannot_be_used"));
     }
 
-    //LOW to run before TownyBuildEvent, requires data not included there, but must run before SW listens for it
+    /**
+     * Copies lore data from a "siege_banner" ItemMeta PDC to a banner BlockState PDC
+     * LOW priority to run and use ItemInHand methods before {@link com.gmail.goosius.siegewar.listeners.SiegeWarActionListener#onBlockBuild(TownyBuildEvent)}
+     */
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlaceBlock(BlockPlaceEvent event) {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
