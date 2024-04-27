@@ -93,6 +93,7 @@ public class SiegeWarLoreListener implements Listener {
 
     /**
      * Copies lore data from a "siege_banner" ItemMeta PDC to a banner BlockState PDC
+     * This is necessary as Spigot/Minecraft do not copy PDC or Lore from items to blocks (and back)
      * LOW priority to run and use ItemInHand methods before {@link com.gmail.goosius.siegewar.listeners.SiegeWarActionListener#onBlockBuild(TownyBuildEvent)}
      */
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
