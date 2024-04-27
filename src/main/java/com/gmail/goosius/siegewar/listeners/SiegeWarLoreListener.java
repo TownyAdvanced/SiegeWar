@@ -36,7 +36,7 @@ public class SiegeWarLoreListener implements Listener {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
 
         //Set name, type, attacker, defender, start time
-        SiegeWarLoreUtil.bannerSiegeStart(event.getSiege());
+        SiegeWarLoreUtil.applySiegeStartLoreToBannerState(event.getSiege());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -44,7 +44,7 @@ public class SiegeWarLoreListener implements Listener {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
 
         //Set outcome, winner, points, end time
-        SiegeWarLoreUtil.bannerSiegeEnd(event.getSiege());
+        SiegeWarLoreUtil.applySiegeEndLoreToBannerState(event.getSiege());
     }
 
     @EventHandler

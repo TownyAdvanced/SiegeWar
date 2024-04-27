@@ -364,7 +364,7 @@ public class SiegeWarLoreUtil {
             to.set(END, PersistentDataType.LONG, from.get(END, PersistentDataType.LONG));
     }
 
-    public static void bannerSiegeStart(Siege siege) {
+    public static void applySiegeStartLoreToBannerState(Siege siege) {
         BlockState blockState = siege.getFlagBlock().getState();
         if (!(blockState instanceof PersistentDataHolder)) return;
 
@@ -381,7 +381,7 @@ public class SiegeWarLoreUtil {
         blockState.update();
     }
 
-    public static void bannerSiegeEnd(Siege siege) {
+    public static void applySiegeEndLoreToBannerState(Siege siege) {
         BlockState blockState = siege.getFlagBlock().getState();
         if (!isLoreItem(blockState, "siege_banner")) return;
 
