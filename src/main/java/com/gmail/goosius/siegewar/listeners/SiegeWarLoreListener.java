@@ -84,7 +84,7 @@ public class SiegeWarLoreListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onTryStartSiege(PreSiegeCampEvent event) {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
-        if (SiegeWarLoreUtil.isLoreItem(event.getFlag().getState(), "siege_banner")) return;
+        if (!SiegeWarLoreUtil.isLoreItem(event.getFlag().getState(), "siege_banner")) return;
 
         event.setCancelled(true);
         event.setCancellationMsg(Translation.of("siege_lore_error_banner_cannot_be_used"));
