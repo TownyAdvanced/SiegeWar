@@ -101,7 +101,7 @@ public class SiegeWarLoreListener implements Listener {
         BlockState state = event.getBlock().getState();
         if (!(state instanceof PersistentDataHolder) || !Tag.BANNERS.isTagged(state.getType())) return;
 
-        SiegeWarLoreUtil.copyData(stack.getItemMeta(), (PersistentDataHolder) state);
+        SiegeWarLoreUtil.copyPersistentLoreDataToHolder(stack.getItemMeta(), (PersistentDataHolder) state);
 
         state.update();
     }

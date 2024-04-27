@@ -260,7 +260,7 @@ public class SiegeWarLoreUtil {
 
         ItemMeta meta = stack.getItemMeta();
 
-        copyData(holder, meta);
+        copyPersistentLoreDataToHolder(holder, meta);
 
         meta.getPersistentDataContainer().set(LORE_ITEM, PersistentDataType.STRING, SIEGE_SHIELD);
 
@@ -281,7 +281,7 @@ public class SiegeWarLoreUtil {
 
         ItemMeta meta = stack.getItemMeta();
 
-        copyData(holder, meta);
+        copyPersistentLoreDataToHolder(holder, meta);
 
         meta.getPersistentDataContainer().set(LORE_ITEM, PersistentDataType.STRING, SIEGE_BANNER);
 
@@ -336,7 +336,7 @@ public class SiegeWarLoreUtil {
         meta.setLore(lore);
     }
 
-    public static void copyData(PersistentDataHolder fromHolder, PersistentDataHolder toHolder) {
+    public static void copyPersistentLoreDataToHolder(PersistentDataHolder fromHolder, PersistentDataHolder toHolder) {
         PersistentDataContainer from = fromHolder.getPersistentDataContainer();
         PersistentDataContainer to = toHolder.getPersistentDataContainer();
 
