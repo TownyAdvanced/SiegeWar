@@ -620,6 +620,10 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.BATTLE_COMMANDERS_ENABLED);
 	}
 
+	public static boolean isSiegeLoreEnabled() {
+		return Settings.getBoolean(ConfigNodes.SIEGE_LORE_ENABLED);
+	}
+
 	public static String getDynmapLayerName() {
 		return Settings.getString(ConfigNodes.WAR_SIEGE_DYNMAP_LAYER_NAME);
 	}
