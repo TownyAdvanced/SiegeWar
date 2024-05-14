@@ -161,7 +161,7 @@ public class SiegeWarBukkitEventListener implements Listener {
 			return;
 		
 		// Let's ignore Citizens NPCs
-		if (PluginIntegrations.getInstance().checkCitizens(event.getPlayer()))
+		if (PluginIntegrations.getInstance().isNPC(event.getPlayer()))
 			return;
 		
 		// Don't stop a player if they have a teleport pass
