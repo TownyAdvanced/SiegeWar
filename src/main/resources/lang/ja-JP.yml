@@ -482,6 +482,7 @@ msg_err_value_configured_too_low: "&c警告: サーバーの設定値 %s が低�
 msg_err_note_about_warnings: "&c注意: サーバーがまだ起動していない場合、理想的な値が間違って見えても心配しないでください。プレイヤーが町や国を作成し始めると、警告は自動的に修正されます。"
 #Block Placement
 msg_err_banner_cannot_be_more_than_one_block_away: "&cThe banner cannot be more than 1 block away from the target town."
+msg_err_banner_cannot_be_close_to_any_town_block: '&cThe banner must be at least %s full town block(s) away from any town.'
 #Battle Commanders / Mobile Spawn Points
 msg_battle_commanders_assigned: "&b%sの包囲 > バトルコマンダーが指定されました。攻撃コマンダー: %s。防衛コマンダー: %s。"
 no_battle_commander: "<None>"
