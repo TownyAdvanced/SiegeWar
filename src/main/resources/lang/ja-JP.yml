@@ -171,7 +171,6 @@ msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner制御セ�
 msg_err_cannot_merge_towns: '&cUnable to merge a town that is under siege!'
 #General
 siege.name: '%s vs %s'
-msg_err_action_disable: '&cYou don''t have enough permissions for that action.'
 msg_err_unknown_town: '&cUnknown Town'
 msg_err_unknown_nation: '&cUnknown Nation'
 #Siege Types
@@ -528,3 +527,12 @@ siege_lore_banner_chat_5_DEFENDERS: ' to defend their town on %s'
 siege_lore_banner_chat_4_NOBODY: ', fighting against %s'
 siege_lore_banner_chat_5_NOBODY: ' in a battle for the town on %s'
 siege_lore_shield_name: 'Siege Shield'
+siege_err_conquest_sieges_disabled_in_the_config: "Conquest sieges have been disabled in the siegewar config."
+siege_err_revolt_sieges_disabled_in_the_config: "Revolt sieges have been disabled in the siegewar config."
+msg_err_peaceful_subversion_disabled_in_the_config: "&cIn the siegewar config, peaceful towns subverting is disabled. You cannot begin a siege on this town."
+msg_err_abandoning_attack_disabled_in_the_config: "&cIn the siegewar config, abandoning attacks has been disabled."
+msg_err_town_surrender_disabled_in_the_config: "&cIn the siegewar config, town surrender has been disabled."
+msg_err_invading_disabled_in_the_config: "&cIn the siegewar config, invading towns has been disabled."
+msg_err_action_disable_missing_node: '&cYou don''t have enough permissions for that action: %s'
+msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "Your nation is not the attacker, you cannot invade this town."
+msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "You do not have the authority to abandon or surrender this siege."
