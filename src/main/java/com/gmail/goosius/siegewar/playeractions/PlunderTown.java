@@ -13,6 +13,7 @@ import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.event.DeleteTownEvent.Cause;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.EconomyAccount;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -155,7 +156,7 @@ public class PlunderTown {
 
 		//Save data
 		if(townDestroyed) {
-			TownyUniverse.getInstance().getDataSource().removeTown(town);
+			TownyUniverse.getInstance().getDataSource().removeTown(town, Cause.BANKRUPTCY);
 		} else {
 			SiegeController.saveSiege(siege);
 		}

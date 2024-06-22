@@ -12,6 +12,7 @@ import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.event.DeleteTownEvent.Cause;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -330,7 +331,7 @@ public class SiegeWarMoneyUtil {
 			if (town.getAccount().getHoldingBalance() - amount < debtCap * -1) {
 				// The Town cannot afford to pay their plunder debt.
 				Messaging.sendGlobalMessage(Translatable.of("msg_plunder_debt_cannot_be_payed", town.getName()));
-				TownyUniverse.getInstance().getDataSource().removeTown(town);
+				TownyUniverse.getInstance().getDataSource().removeTown(town, Cause.BANKRUPTCY);
 				return;
 			}
 
@@ -340,7 +341,7 @@ public class SiegeWarMoneyUtil {
 
 		} else {
 			Messaging.sendGlobalMessage(Translatable.of("msg_plunder_debt_cannot_be_payed", town.getName()));
-			TownyUniverse.getInstance().getDataSource().removeTown(town);
+			TownyUniverse.getInstance().getDataSource().removeTown(town, Cause.BANKRUPTCY);
 		}
 	}
 

@@ -8,6 +8,7 @@ import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.event.DeleteTownEvent.Cause;
 import com.palmergames.bukkit.towny.exceptions.AlreadyRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
@@ -144,7 +145,7 @@ public class TownOccupationController {
 				// The Town cannot afford to pay the nation occupation tax.
 				Messaging.sendGlobalMessage(Translatable.of("msg_occupation_tax_cannot_be_paid", town.getName()));
 				removeTownOccupation(town);
-				TownyUniverse.getInstance().getDataSource().removeTown(town);
+				TownyUniverse.getInstance().getDataSource().removeTown(town, Cause.BANKRUPTCY);
 				return 0;
 			}
 
@@ -162,7 +163,7 @@ public class TownOccupationController {
 		} else {
 			Messaging.sendGlobalMessage(Translatable.of("msg_occupation_tax_cannot_be_paid", town.getName()));
 			removeTownOccupation(town);
-			TownyUniverse.getInstance().getDataSource().removeTown(town);
+			TownyUniverse.getInstance().getDataSource().removeTown(town, Cause.BANKRUPTCY);
 			return 0;
 		}
 	}
