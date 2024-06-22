@@ -83,7 +83,7 @@ public class PeacefullySubvertTown {
 	private static void allowSubversionOrThrow(Player player, Nation residentsNation, Town targetPeacefulTown) throws TownyException {
 		final Translator translator =  Translator.locale(player);
 		if(!SiegeWarSettings.isPeacefulTownsSubvertEnabled())
-			throw new TownyException(translator.of("msg_err_action_disable"));
+			throw new TownyException(translator.of("msg_err_peaceful_subversion_disabled_in_the_config"));
 
 		if(residentsNation == null)
 			throw new TownyException(translator.of("msg_err_siege_war_action_not_a_nation_member"));  //Can't subvert if nationless

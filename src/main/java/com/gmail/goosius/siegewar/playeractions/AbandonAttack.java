@@ -30,10 +30,10 @@ public class AbandonAttack {
 	 */
 	public static void processAbandonAttackRequest(Player player, Siege siege) throws TownyException {
 		if(!SiegeWarSettings.getWarSiegeAbandonEnabled())
-			throw new TownyException(Translatable.of("msg_err_action_disable"));
+			throw new TownyException(Translatable.of("msg_err_abandoning_attack_disabled_in_the_config"));
 
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ABANDON.getNode()))
-			throw new TownyException(Translatable.of("msg_err_action_disable"));
+			throw new TownyException(Translatable.of("msg_err_action_disable_missing_node", SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_ABANDON.getNode()));
 
 		Confirmation
 			.runOnAccept(()-> abandonAttack(siege))

@@ -24,10 +24,10 @@ public class SurrenderDefence {
 
 	public static void processSurrenderDefenceRequest(Player player, Siege siege) throws TownyException {
 		if(!SiegeWarSettings.getWarSiegeSurrenderEnabled())
-			throw new TownyException(Translatable.of("msg_err_action_disable").forLocale(player));
+			throw new TownyException(Translatable.of("msg_err_town_surrender_disabled_in_the_config").forLocale(player));
 
 		if (!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER.getNode()))
-			throw new TownyException(Translatable.of("msg_err_action_disable").forLocale(player));
+			throw new TownyException(Translatable.of("msg_err_action_disable_missing_node", SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_SURRENDER.getNode()).forLocale(player));
 
 		if (siege.getSiegeType() == SiegeType.CONQUEST && TownOccupationController.isTownOccupied(siege.getTown()))
 			throw new TownyException(Translatable.of("msg_err_siege_occupied_towns_cannot_surrender_in_conquest_sieges").forLocale(player));

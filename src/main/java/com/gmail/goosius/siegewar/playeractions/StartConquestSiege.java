@@ -57,9 +57,10 @@ public class StartConquestSiege {
 	private static void allowSiegeOrThrow(Player player, Nation nationOfSiegeStarter, Town targetTown) throws TownyException {
 		final Translator translator = Translator.locale(player);
 
-		if (!SiegeWarSettings.getConquestSiegesEnabled()
-		|| !TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_STARTCONQUESTSIEGE.getNode()))
-			throw new TownyException(translator.of("msg_err_action_disable"));
+		if (!SiegeWarSettings.getConquestSiegesEnabled())
+			throw new TownyException(translator.of("siege_err_conquest_sieges_disabled_in_the_config"));
+		if(!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_STARTCONQUESTSIEGE.getNode()))
+			throw new TownyException(translator.of("msg_err_action_disable_missing_node", SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_STARTCONQUESTSIEGE.getNode()));
 
 		if (targetTown.hasNation()) {
 			Nation nationOfDefendingTown = targetTown.getNationOrNull();
