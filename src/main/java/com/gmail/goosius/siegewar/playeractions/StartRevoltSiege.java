@@ -56,9 +56,10 @@ public class StartRevoltSiege {
 
 	private static void allowSiegeOrThrow(Player player, Town targetTown) throws TownyException {
 		final Translator translator = Translator.locale(player);
-        if (!SiegeWarSettings.getRevoltSiegesEnabled()
-        || !TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_STARTREVOLTSIEGE.getNode()))
-            throw new TownyException(translator.of("msg_err_action_disable"));
+        if (!SiegeWarSettings.getRevoltSiegesEnabled())
+        	throw new TownyException(translator.of("siege_err_revolt_sieges_disabled_in_the_config"));
+        if(!TownyUniverse.getInstance().getPermissionSource().testPermission(player, SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_STARTREVOLTSIEGE.getNode()))
+            throw new TownyException(translator.of("msg_err_action_disable_missing_node", SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_STARTREVOLTSIEGE.getNode()));
 
         if(SiegeWarTownPeacefulnessUtil.isTownPeaceful(targetTown))
             throw new TownyException(translator.of("msg_err_peaceful_towns_cannot_revolt"));

@@ -223,7 +223,7 @@ public class PlaceBlock {
 			//Member of defending town
 			SurrenderDefence.processSurrenderDefenceRequest(player, siege);
 		} else {
-			throw new TownyException(translator.of("msg_err_action_disable"));
+			throw new TownyException(translator.of("msg_err_you_arent_able_to_abandon_or_surrender_this_siege"));
 		}
 	}
 

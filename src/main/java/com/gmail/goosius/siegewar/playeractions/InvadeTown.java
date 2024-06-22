@@ -101,7 +101,7 @@ public class InvadeTown {
 	private static void allowInvasionOrThrow(Player player, Nation residentsNation, Town targetTown, Siege siege) throws TownyException {
 		final Translator translator = Translator.locale(player);
 		if(!SiegeWarSettings.getWarSiegeInvadeEnabled())
-			throw new TownyException(translator.of("msg_err_action_disable"));
+			throw new TownyException(translator.of("msg_err_invading_disabled_in_the_config"));
 
 		if(residentsNation == null)
 			throw new TownyException(translator.of("msg_err_siege_war_action_not_a_nation_member"));  //Can't invade if nationless
@@ -116,7 +116,7 @@ public class InvadeTown {
 			throw new TownyException(translator.of("msg_err_cannot_invade_town_already_occupied"));
 
 		if(residentsNation != siege.getAttacker())
-			throw new TownyException(translator.of("msg_err_action_disable"));
+			throw new TownyException(translator.of("msg_err_your_nation_is_not_the_attacking_nation_cannot_invade"));
 
 		if (!siege.getStatus().allowsInvading())
 			throw new TownyException(translator.of("msg_err_cannot_invade_without_victory"));
