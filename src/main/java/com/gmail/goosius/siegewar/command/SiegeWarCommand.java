@@ -3,9 +3,12 @@ package com.gmail.goosius.siegewar.command;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BattleSession;
+import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.BossBarUtil;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
@@ -17,16 +20,14 @@ import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.Town;
-import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.towny.object.*;
 import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -205,7 +206,31 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void parseSiegeWarHudCommand(Player player, String[] args) {
 		try {
 			if(SiegeWar.isFoliaClassPresent()) {
-				throw new TownyException(Translatable.of("msg_err_hud_not_available_in_folia"));
+				Town town = TownyUniverse.getInstance().getTown(args[0]);
+				if (town == null)
+					throw new TownyException(Translatable.of("msg_err_town_not_registered", args[0]));
+
+				if (!SiegeController.getSiegedTowns().contains(town))
+					throw new TownyException(Translatable.of("msg_err_not_being_sieged", town.getName()));
+				Siege siege = SiegeController.getSiege(town);
+				final Translator translator = Translator.locale(player);
+				player.sendMessage(ChatColor.GOLD + "§l" + SiegeHUDManager.checkLength(siege.getTown().getName()) + " " + translator.of("hud_title"));
+				player.sendMessage(ChatColor.GOLD + "- Siege Type" + ": " + ChatColor.WHITE + SiegeHUDManager.checkLength(siege.getSiegeType().getTranslatedName().forLocale(player)));
+				player.sendMessage(ChatColor.GOLD + "- Attackers" + ": " + ChatColor.WHITE + SiegeHUDManager.checkLength(siege.getAttackerNameForDisplay()));
+				player.sendMessage(ChatColor.GOLD + "- Defenders" + ": " + ChatColor.WHITE + SiegeHUDManager.checkLength(siege.getDefenderNameForDisplay()));
+				player.sendMessage(ChatColor.GOLD + "- Balance" + ": " + ChatColor.WHITE + siege.getSiegeBalance().toString());
+				player.sendMessage(ChatColor.GOLD + "- Progress" + ": " + ChatColor.WHITE + siege.getNumBattleSessionsCompleted() + "/" + SiegeWarSettings.getSiegeDurationBattleSessions());
+				player.sendMessage(ChatColor.GOLD + "- Status" + ": " + ChatColor.WHITE + siege.getStatus().getName());
+				if (TownyEconomyHandler.isActive()) {
+					player.sendMessage(ChatColor.GOLD + "- Warchest" + ": " + ChatColor.WHITE + TownyEconomyHandler.getFormattedBalance(siege.getWarChestAmount()));
+				} else {
+					player.sendMessage(ChatColor.GOLD + "- Warchest" + ": " + ChatColor.WHITE + "-");
+				}
+				player.sendMessage(ChatColor.GOLD + "- Banner Control" + ": " + ChatColor.WHITE + siege.getBannerControllingSide().getFormattedName().forLocale(player) + (siege.getBannerControllingSide() == SiegeSide.NOBODY ? "" : " (" + siege.getBannerControllingResidents().size() + ")"));
+				player.sendMessage(ChatColor.GOLD + "- Attacker Points" + ": " + ChatColor.WHITE + siege.getFormattedAttackerBattlePoints());
+				player.sendMessage(ChatColor.GOLD + "- Defender Points" + ": " + ChatColor.WHITE + siege.getFormattedDefenderBattlePoints());
+				player.sendMessage(ChatColor.GOLD + "- Time Remaining" + ": " + ChatColor.WHITE + siege.getFormattedBattleTimeRemaining(translator));
+				return;
 			}
 			if (args.length == 0) {
 				TownyMessaging.sendMessage(player, ChatTools.formatTitle("/siegewar hud"));
