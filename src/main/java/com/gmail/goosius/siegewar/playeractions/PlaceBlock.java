@@ -128,10 +128,10 @@ public class PlaceBlock {
 		if (resident == null || !resident.hasTown())
 			throw new TownyException(translator.of("msg_err_siege_war_action_not_a_town_member"));
 
+
 		//Get resident's town and possibly their nation
 		Town residentsTown = resident.getTownOrNull();
 		Nation residentsNation = resident.getNationOrNull();
-
 		TownBlock townBlock;
 		if(SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled()
 				&& SiegeWarSettings.isBannerAtTownBorderEnabled()) {
@@ -251,6 +251,10 @@ public class PlaceBlock {
 		if(!nearbyTown.isAllowedToWar())
 			throw new TownyException(Translatable.of("msg_err_this_town_is_not_allowed_to_be_attacked"));
 		
+		//Ensure the player is not part of a peaceful town.
+		if (SiegeWarTownPeacefulnessUtil.isTownPeaceful(residentsTown))
+			throw new TownyException(Translatable.of("msg_err_cannot_start_siege_as_a_peaceful_town"));
+
 		if(SiegeWarTownPeacefulnessUtil.isTownPeaceful(nearbyTown)) {
 			//Town is peaceful
 			if(residentsTown == nearbyTown) {
