@@ -128,10 +128,10 @@ public class PlaceBlock {
 		if (resident == null || !resident.hasTown())
 			throw new TownyException(translator.of("msg_err_siege_war_action_not_a_town_member"));
 
-
 		//Get resident's town and possibly their nation
 		Town residentsTown = resident.getTownOrNull();
 		Nation residentsNation = resident.getNationOrNull();
+
 		TownBlock townBlock;
 		if(SiegeWarSettings.isBesiegedTownTownTrapWarfareMitigationEnabled()
 				&& SiegeWarSettings.isBannerAtTownBorderEnabled()) {

@@ -176,7 +176,8 @@ public class SiegeWarNationEventListener implements Listener {
 			return;
 		}
 
-		if (SiegeWarTownPeacefulnessUtil.isTownPeaceful(newCapital)) {
+		if (!SiegeWarSettings.capitalsAllowedTownPeacefulness()
+				&& SiegeWarTownPeacefulnessUtil.isTownPeaceful(newCapital)) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_change_capital_because_peaceful"));
 			return;
