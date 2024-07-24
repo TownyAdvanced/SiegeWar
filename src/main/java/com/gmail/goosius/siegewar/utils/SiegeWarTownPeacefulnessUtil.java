@@ -85,6 +85,12 @@ public class SiegeWarTownPeacefulnessUtil {
 		}
 		TownMetaDataController.setPeacefulnessChangeCountdownDays(town, 0);
 		
+		// The Town would become a peaceful capital city, which is not allowed.
+		if (!SiegeWarSettings.capitalsAllowedTownPeacefulness() && town.isCapital() && !TownMetaDataController.getPeacefulness(town)) {
+			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_err_your_town_cannot_be_peaceful_while_a_capital_city"));
+			return;
+		}
+
 		//Reverse the town peacefulness setting
 		TownMetaDataController.setPeacefulness(town, !TownMetaDataController.getPeacefulness(town));
 		
