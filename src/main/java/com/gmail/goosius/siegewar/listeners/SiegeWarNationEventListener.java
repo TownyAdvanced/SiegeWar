@@ -164,20 +164,25 @@ public class SiegeWarNationEventListener implements Listener {
 
 	@EventHandler(ignoreCancelled = true)
 	public void onNationChangeKingEvent(NationKingChangeEvent event) {
-		if(!SiegeWarSettings.getWarSiegeEnabled())
+		if(!SiegeWarSettings.getWarSiegeEnabled() || !event.isCapitalChange())
 			return;
 
 		Town oldCapital = event.getOldKing().getTownOrNull();
 		Town newCapital = event.getNewKing().getTownOrNull();
-		if (SiegeWarSettings.getWarSiegeEnabled()
-			&& SiegeWarSettings.getWarSiegeBesiegedCapitalsCannotChangeKing()
-			&& event.isCapitalChange()
+		if (SiegeWarSettings.getWarSiegeBesiegedCapitalsCannotChangeKing()
 			&& (SiegeController.hasSiege(oldCapital) || SiegeController.hasSiege(newCapital))) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_besieged_capital_cannot_change_king"));
+			return;
+		}
+
+		if (SiegeWarTownPeacefulnessUtil.isTownPeaceful(newCapital)) {
+			event.setCancelled(true);
+			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_change_capital_because_peaceful"));
+			return;
 		}
 	}
-
+	
 	/**
 	 * In SiegeWar, occupied towns cannot leave their nation in the normal way.
 	 * Intead they must be either kicked, or win a revolt siege.

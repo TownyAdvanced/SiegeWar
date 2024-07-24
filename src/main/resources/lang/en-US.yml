@@ -705,3 +705,5 @@ msg_err_invading_disabled_in_the_config: "&cIn the siegewar config, invading tow
 msg_err_action_disable_missing_node: '&cYou don''t have enough permissions for that action: %s'
 msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "Your nation is not the attacker, you cannot invade this town."
 msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "You do not have the authority to abandon or surrender this siege."
+
+msg_err_cannot_change_capital_because_peaceful: "You cannot change the capital of the nation, because the new capital is peaceful."
