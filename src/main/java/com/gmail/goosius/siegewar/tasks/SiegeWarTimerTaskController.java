@@ -10,6 +10,8 @@ import com.gmail.goosius.siegewar.utils.SiegeWarBannerControlUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarSicknessUtil;
 import com.gmail.goosius.siegewar.utils.CosmeticUtil;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
 
 /**
  * This class intercepts siege related instructions coming from timer tasks.
@@ -86,7 +88,7 @@ public class SiegeWarTimerTaskController {
 	}
 
 
-	public static void evaluateWarSickness() {
+	public static void evaluateWarSickness() throws TownyException {
 		SiegeWarSicknessUtil.evaluateWarSickness();
 	}
 

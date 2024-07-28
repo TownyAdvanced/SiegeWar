@@ -7,14 +7,20 @@ import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
+import com.palmergames.adventure.text.Component;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeTools;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -30,7 +36,7 @@ public class SiegeWarSicknessUtil {
      * Evaluate all war sickness:
      * - Unofficial Siege-Participant effects
      */
-    public static void evaluateWarSickness() {
+    public static void evaluateWarSickness() throws TownyException {
         boolean nonOfficialLimiterEnabled = SiegeWarSettings.getPunishingNonSiegeParticipantsInSiegeZone();
         
         for (Player player : Bukkit.getOnlinePlayers()) {
@@ -49,7 +55,13 @@ public class SiegeWarSicknessUtil {
             if (resident == null)
                 continue;
 
-            if (nonOfficialLimiterEnabled && !isOfficialSiegeParticipant(player, resident, siege)) {
+            Nation attackerNation = TownyAPI.getInstance().getNation(siege.getAttackerName());
+            Nation defenderNation = TownyAPI.getInstance().getNation(siege.getDefenderName());
+
+            boolean isAllyOfAttacker = attackerNation != null && attackerNation.getAllies().contains(resident.getNation());
+            boolean isAllyOfDefender = defenderNation != null && defenderNation.getAllies().contains(resident.getNation());
+
+            if (nonOfficialLimiterEnabled && !isOfficialSiegeParticipant(player, resident, siege) ) {
                 //Give war sickness to players who are not official participants in the SiegeZone
                 if (TownyAPI.getInstance().isWilderness(location)) {
                     //In Wilderness - Full war sickness
@@ -64,6 +76,23 @@ public class SiegeWarSicknessUtil {
                 } else {
                     //In a town - Special war sickness
                     givePlayerSpecialWarSicknessNow(player);
+                }
+            } else if(isAllyOfAttacker && isAllyOfDefender){
+                //Give war sickness to players who are allies to both Attacker and Defender.
+                if (TownyAPI.getInstance().isWilderness(location)) {
+                    int warningDurationInSeconds = SiegeWarSettings.getNonResidentSicknessWarningTimeSeconds();
+                    givePlayerFullWarSicknessWithWarning(
+                            player,
+                            resident,
+                            siege,
+                            warningDurationInSeconds,
+                            Translatable.of("msg_you_will_get_sickness", warningDurationInSeconds),
+                            Translatable.of("msg_you_received_war_sickness"));
+                    Objects.requireNonNull(resident.getPlayer()).sendMessage(ChatColor.RED + "You have been given war sickness because you have an Alliance with BOTH the Attackers & Defenders!");
+                } else {
+                    //In a town - Special war sickness
+                    givePlayerSpecialWarSicknessNow(player);
+                    Objects.requireNonNull(resident.getPlayer()).sendMessage(ChatColor.RED + "You have been given war sickness because you have an Alliance with BOTH the Attackers & Defenders!");
                 }
             }
         }
