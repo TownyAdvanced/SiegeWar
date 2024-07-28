@@ -125,8 +125,10 @@ public class InvadeTown {
 			throw new TownyException(translator.of("msg_err_town_already_invaded"));
 
 		//prevent capitals from being invaded.
-		if(siege.getTown().getNation().getCapital() == siege.getTown()){
-			throw new TownyException(translator.of("msg_err_capital_town"));
+		if(siege.getTown().hasNation()){
+			if(siege.getTown().getNation().getCapital() == siege.getTown()){
+				throw new TownyException(translator.of("msg_err_capital_town"));
+			}
 		}
 
 		SiegeWarDistanceUtil.throwIfTownIsTooFarFromNationCapitalByWorld(residentsNation, targetTown);
