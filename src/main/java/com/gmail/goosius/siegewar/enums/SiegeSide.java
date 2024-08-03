@@ -41,6 +41,18 @@ public enum SiegeSide {
 		return SiegeSide.NOBODY;
 	}
 
+	public static boolean isDefender(Siege siege, Player player) {
+		return getPlayerSiegeSide(siege, player).equals(SiegeSide.DEFENDERS);
+	}
+
+	public static boolean isAttacker(Siege siege, Player player) {
+		return getPlayerSiegeSide(siege, player).equals(SiegeSide.ATTACKERS);
+	}
+
+	public static boolean isNobody(Siege siege, Player player) {
+		return getPlayerSiegeSide(siege, player).equals(SiegeSide.NOBODY);
+	}
+
 	private static boolean isTownGuard(Player player, Town town) {
 		return town.hasResident(player)
 				&& player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS.getNode());

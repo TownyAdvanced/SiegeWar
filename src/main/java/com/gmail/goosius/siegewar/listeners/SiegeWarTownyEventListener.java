@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.SiegeWarAPI;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
@@ -459,15 +460,36 @@ public class SiegeWarTownyEventListener implements Listener {
 		if (!SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getPlayer().getLocation()))
 			return;
 
-		// Towny is already going to keep the inventory, but we dont want inventories
-		// saved.
-		if (!event.isCancelled() && !SiegeWarSettings.isKeepInventoryOnSiegeZoneDeathEnabled()) {
-			event.setCancelled(true);
-			return;
+		// Towny is already going to keep the inventory.
+		if (!event.isCancelled()) {
+			// But we dont want inventories saved.
+			if (!SiegeWarSettings.isKeepInventoryOnSiegeZoneDeathEnabled()) {
+				event.setCancelled(true);
+				return;
+			}
+			// But we don't want defenders that are losing too greatly to keep their inventories.
+			if (SiegeWarSettings.isDefendersDropInventoryWhenLosingEnabled()) {
+				Siege siege = SiegeWarAPI.getActiveSiegeAtLocation(event.getLocation());
+				if (!SiegeSide.isDefender(siege, event.getPlayer()))
+					return;
+				if (siege.getSiegeBalance() > SiegeWarSettings.getDefendersDropInventoryWhenLosingThreshold())
+					return;
+
+				event.setCancelled(true);
+				return;
+			}
 		}
 
 		// Towny is going to drop the inventory, but we want inventories saved.
 		if (event.isCancelled() && SiegeWarSettings.isKeepInventoryOnSiegeZoneDeathEnabled()) {
+
+			Siege siege = SiegeWarAPI.getActiveSiegeAtLocation(event.getLocation());
+			// But we don't want defenders that are losing too greatly to keep their inventories.
+			if (SiegeWarSettings.isDefendersDropInventoryWhenLosingEnabled()
+				&& SiegeSide.isDefender(siege, event.getPlayer())
+				&& siege.getSiegeBalance() <= SiegeWarSettings.getDefendersDropInventoryWhenLosingThreshold())
+				return;
+
 			SiegeWarInventoryUtil.degradeInventory(event.getPlayer());
 			event.setCancelled(false);
 		}
