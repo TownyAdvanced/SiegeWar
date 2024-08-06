@@ -969,7 +969,7 @@ public enum ConfigNodes {
 			"keep_inventory_on_siegezone_death.disable_for_defenders.enable",
 			"false",
 			"",
-			"# This feature, when enabled, will cause defenders to not keep their inventory if the Siege point balance is too far negative.",
+			"# This feature, when enabled, will cause defenders to not keep their inventory if the Siege point balance is too far positive.",
 			"# ie: They defenders are losing by a great number."),
 	KEEP_INVENTORY_ON_SIEGEZONE_DEATH_DISABLE_FOR_DEFENDERS_THRESHOLD(
 			"keep_inventory_on_siegezone_death.disable_for_defenders.threshold",
