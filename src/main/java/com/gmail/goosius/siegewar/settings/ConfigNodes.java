@@ -973,9 +973,9 @@ public enum ConfigNodes {
 			"# ie: They defenders are losing by a great number."),
 	KEEP_INVENTORY_ON_SIEGEZONE_DEATH_DISABLE_FOR_DEFENDERS_THRESHOLD(
 			"keep_inventory_on_siegezone_death.disable_for_defenders.threshold",
-			"-500",
+			"500",
 			"",
-			"# The threshold required to cause defenders to lose their inventory. If the Siege point balance is equal to or lower than this number",
+			"# The threshold required to cause defenders to lose their inventory. If the Siege point balance is equal to or greater than this number",
 			"# and disable_for_defenders is enabled, defenders will not keep their inventories."),
 
 	SPECIAL_VICTORY_EFFECTS(

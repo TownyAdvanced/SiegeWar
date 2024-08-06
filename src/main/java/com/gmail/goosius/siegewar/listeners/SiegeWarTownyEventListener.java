@@ -10,6 +10,7 @@ import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
+import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockProtectionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
@@ -472,7 +473,8 @@ public class SiegeWarTownyEventListener implements Listener {
 				Siege siege = SiegeWarAPI.getActiveSiegeAtLocation(event.getLocation());
 				if (!SiegeSide.isDefender(siege, event.getPlayer()))
 					return;
-				if (siege.getSiegeBalance() > SiegeWarSettings.getDefendersDropInventoryWhenLosingThreshold())
+				if (SiegeWarBattleSessionUtil.getSiegeBalanceIfSessionEndedNow(siege)
+					< SiegeWarSettings.getDefendersDropInventoryWhenLosingThreshold())
 					return;
 
 				event.setCancelled(true);
@@ -487,7 +489,7 @@ public class SiegeWarTownyEventListener implements Listener {
 			// But we don't want defenders that are losing too greatly to keep their inventories.
 			if (SiegeWarSettings.isDefendersDropInventoryWhenLosingEnabled()
 				&& SiegeSide.isDefender(siege, event.getPlayer())
-				&& siege.getSiegeBalance() <= SiegeWarSettings.getDefendersDropInventoryWhenLosingThreshold())
+				&& SiegeWarBattleSessionUtil.getSiegeBalanceIfSessionEndedNow(siege) >= SiegeWarSettings.getDefendersDropInventoryWhenLosingThreshold())
 				return;
 
 			SiegeWarInventoryUtil.degradeInventory(event.getPlayer());

@@ -189,6 +189,15 @@ public class SiegeWarBattleSessionUtil {
 		Messaging.sendGlobalMessage(Translatable.of("msg_attackers_have_triggered_a_jail_break_freeing", StringMgmt.join(freedNames, ", ")));
 	}
 
+	public static int getSiegeBalanceIfSessionEndedNow(Siege siege) {
+		int siegeBalanceAdjustment = calculateSiegeBalanceAdjustment(siege);
+		int futureBalance = siege.getSiegeBalance() + siegeBalanceAdjustment;
+		if(SiegeWarSettings.getSiegeBalanceCapValue() != -1) {
+			futureBalance = Math.min(futureBalance, SiegeWarSettings.getSiegeBalanceCapValue());
+		}
+		return futureBalance;
+	}
+
 	public static void evaluateBattleSessions() {
 		BattleSession battleSession = BattleSession.getBattleSession();
 
