@@ -963,6 +963,21 @@ public enum ConfigNodes {
 			"# The percentage by which a player's tools (including swords & armour) degrade when they die.",
 			"# TIP: If this is set too high, new / casual / prone-to-dying players will be effectively excluded from sieges.",
 			"# The default value is 5.0"),
+	KEEP_INVENTORY_ON_SIEGEZONE_DEATH_DISABLE_FOR_DEFENDERS_ROOT(
+			"keep_inventory_on_siegezone_death.disable_for_defenders","","",""),
+	KEEP_INVENTORY_ON_SIEGEZONE_DEATH_DISABLE_FOR_DEFENDERS_ENABLE(
+			"keep_inventory_on_siegezone_death.disable_for_defenders.enable",
+			"false",
+			"",
+			"# This feature, when enabled, will cause defenders to not keep their inventory if the Siege point balance is too far positive.",
+			"# ie: They defenders are losing by a great number."),
+	KEEP_INVENTORY_ON_SIEGEZONE_DEATH_DISABLE_FOR_DEFENDERS_THRESHOLD(
+			"keep_inventory_on_siegezone_death.disable_for_defenders.threshold",
+			"500",
+			"",
+			"# The threshold required to cause defenders to lose their inventory. If the Siege point balance is equal to or greater than this number",
+			"# and disable_for_defenders is enabled, defenders will not keep their inventories."),
+
 	SPECIAL_VICTORY_EFFECTS(
 			"special_victory_effects",
 			"",

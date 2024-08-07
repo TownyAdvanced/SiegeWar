@@ -524,6 +524,14 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.KEEP_INVENTORY_ON_SIEGEZONE_DEATH_TOOL_DEGRADE_PERCENTAGE);
 	}
 
+	public static boolean isDefendersDropInventoryWhenLosingEnabled() {
+		return Settings.getBoolean(ConfigNodes.KEEP_INVENTORY_ON_SIEGEZONE_DEATH_DISABLE_FOR_DEFENDERS_ENABLE);
+	}
+
+	public static int getDefendersDropInventoryWhenLosingThreshold() {
+		return Settings.getInt(ConfigNodes.KEEP_INVENTORY_ON_SIEGEZONE_DEATH_DISABLE_FOR_DEFENDERS_THRESHOLD);
+	}
+
 	public static int getSpecialVictoryEffectsDecisiveVictoryThreshold() {
 		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_DECISIVE_VICTORY_THRESHOLD);
 	}
