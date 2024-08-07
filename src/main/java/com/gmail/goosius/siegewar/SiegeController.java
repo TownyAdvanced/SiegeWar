@@ -260,6 +260,11 @@ public class SiegeController {
 				e.printStackTrace();
 			}
 		}
+
+		// SiegeRemoveEvent doesn't take a null siegewinner well.
+		if (siege.getSiegeWinner() == null)
+			siege.setSiegeWinner(SiegeSide.NOBODY);
+
 		//Remove siege from town
 		Town town = siege.getTown();
 		setSiege(town, false);
