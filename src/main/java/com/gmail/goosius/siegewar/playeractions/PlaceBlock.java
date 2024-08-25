@@ -357,15 +357,10 @@ public class PlaceBlock {
 		if(adjacentSieges.size() > 1)
 			throw new TownyException(translator.of("msg_err_siege_war_too_many_adjacent_towns"));
 
-		Siege adjacentSiege = adjacentSieges.iterator().next();
+		//Attempt plunder.
+		PlunderTown.processPlunderTownRequest(player, adjacentSieges.iterator().next());
 
-		//Attempt plunder. Call TownPlunderedEvent if the plunder doesn't throw an exception.
-		try {
-			PlunderTown.processPlunderTownRequest(player, adjacentSiege);
-		} catch (TownyException e) {
-			return;
-		}
-
+		//Call TownPlunderedEvent if the plunder doesn't throw an exception.
 		Bukkit.getPluginManager().callEvent(new TownPlunderedEvent(adjacentSiege, player));
 	}
 	
