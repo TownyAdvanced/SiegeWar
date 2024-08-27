@@ -141,7 +141,7 @@ public enum ConfigNodes {
 			"war.siege.switches.only_one_action_enabled",
 			"false",
 			"",
-			"# If true, players can only either siege or plunder a town, not both.",
+			"# If true, players can only either invade or plunder a town, not both.",
 			"# If false, players can perform both actions."
 	),
 
