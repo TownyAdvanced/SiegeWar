@@ -97,7 +97,7 @@ config_and_lang_file_could_not_be_loaded: 'Tải lại không thành công. Xem 
 msg_err_not_being_sieged: '&cThị trấn %s không có một cuộc bao vây nào.'
 msg_err_town_not_registered: '&cThị trấn %s chưa được đăng ký.'
 #Scoreboard
-hud_title: 'Chiến sự'
+hud_title: '&6&l%s Siege'
 hud_siege_status: 'Thông tin cuộc chiến: '
 hud_attackers: 'Bên tấn công: '
 hud_defenders: 'Bên phòng thủ: '
