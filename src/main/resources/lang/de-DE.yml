@@ -97,7 +97,7 @@ config_and_lang_file_could_not_be_loaded: 'Neuladung nicht erfolgreich. Schau in
 msg_err_not_being_sieged: '&cTown %s does not have an active siege.'
 msg_err_town_not_registered: '&cDie Stadt %s ist nicht regestriert.'
 #Scoreboard
-hud_title: 'Belagerung'
+hud_title: '&6&l%s Siege'
 hud_siege_status: 'Siege Status: '
 hud_attackers: 'ANG: '
 hud_defenders: 'VER: '
