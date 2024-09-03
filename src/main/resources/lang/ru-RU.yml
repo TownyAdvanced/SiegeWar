@@ -97,7 +97,7 @@ config_and_lang_file_could_not_be_loaded: 'Не удалось перезагр�
 msg_err_not_being_sieged: '&cГород %s не находится в осаде.'
 msg_err_town_not_registered: '&cГород %s не зарегистрирован.'
 #Scoreboard
-hud_title: 'Осада'
+hud_title: '&6&l%s Siege'
 hud_siege_status: 'Статус Осады: '
 hud_attackers: 'АТК: '
 hud_defenders: 'ЗАЩ: '
