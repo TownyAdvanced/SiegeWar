@@ -21,7 +21,7 @@ public class SiegeWarHud {
             return;
         }
         final Translator translator = Translator.locale(p);
-        board.getObjective("WAR_HUD_OBJ").setDisplayName(SiegeHUDManager.checkLength(ChatColor.GOLD + "§l" + siege.getTown().getName()) + " " + translator.of("hud_title"));
+        board.getObjective("WAR_HUD_OBJ").setDisplayName(translator.of("hud_title", SiegeHUDManager.checkLength(siege.getTown().getName())));
         board.getTeam("siegeType").setSuffix(SiegeHUDManager.checkLength(siege.getSiegeType().getTranslatedName().forLocale(p)));
         board.getTeam("attackers").setSuffix(SiegeHUDManager.checkLength(siege.getAttackerNameForDisplay()));
         board.getTeam("defenders").setSuffix(SiegeHUDManager.checkLength(siege.getDefenderNameForDisplay()));
