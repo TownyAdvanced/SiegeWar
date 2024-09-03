@@ -97,7 +97,7 @@ config_and_lang_file_could_not_be_loaded: '再読み込みに失敗しました�
 msg_err_not_being_sieged: '&c町%sにはアクティブな包囲がありません。'
 msg_err_town_not_registered: '&c町%sは登録されていません。'
 #Scoreboard
-hud_title: 'Siege'
+hud_title: '&6&l%s Siege'
 hud_siege_status: 'Siege Status: '
 hud_attackers: 'ATK: '
 hud_defenders: 'DEF: '
