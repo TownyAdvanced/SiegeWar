@@ -516,6 +516,10 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_NATION_COST_REFUND_PERCENTAGE_ON_DELETE);
 	}
 
+	public static double getTownPeacefulnessCost() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_TOWN_PEACEFULNESS_COST);
+	}
+
 	public static boolean isKeepInventoryOnSiegeZoneDeathEnabled() {
 		return Settings.getBoolean(ConfigNodes.KEEP_INVENTORY_ON_SIEGEZONE_DEATH_ENABLED);
 	}
