@@ -1,8 +1,10 @@
 package com.gmail.goosius.siegewar.listeners;
 
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.events.SiegeEndEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
+import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarLoreUtil;
 import com.palmergames.bukkit.towny.event.actions.TownyBuildEvent;
@@ -37,7 +39,8 @@ public class SiegeWarLoreListener implements Listener {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
 
         //Set name, type, attacker, defender, start time
-        SiegeWarLoreUtil.applySiegeStartLoreToBannerState(event.getSiege());
+        Siege siege = event.getSiege();
+        SiegeWar.getSiegeWar().getScheduler().run(siege.getFlagLocation(), () -> SiegeWarLoreUtil.applySiegeStartLoreToBannerState(siege));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -45,7 +48,8 @@ public class SiegeWarLoreListener implements Listener {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
 
         //Set outcome, winner, points, end time
-        SiegeWarLoreUtil.applySiegeEndLoreToBannerState(event.getSiege());
+        Siege siege = event.getSiege();
+        SiegeWar.getSiegeWar().getScheduler().run(siege.getFlagLocation(), () -> SiegeWarLoreUtil.applySiegeEndLoreToBannerState(siege));
     }
 
     @EventHandler
