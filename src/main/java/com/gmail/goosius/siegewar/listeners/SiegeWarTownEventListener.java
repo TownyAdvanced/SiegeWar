@@ -252,6 +252,9 @@ public class SiegeWarTownEventListener implements Listener {
 
 	@EventHandler(ignoreCancelled = true)
 	public void onTownRankGivenToPlayer(TownAddResidentRankEvent event) {
+		if (!SiegeWarSettings.arePeacefulTownsNotAllowedToAssignMilitaryRanks())
+			return;
+
 		//In Siegewar, if target town is peaceful or occupied, can't add military rank
 		if(SiegeWarSettings.getWarSiegeEnabled()
 				&& PermissionUtil.doesTownRankAllowPermissionNode(event.getRank(), SiegeWarPermissionNodes.SIEGEWAR_TOWN_SIEGE_BATTLE_POINTS)) {

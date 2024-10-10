@@ -267,6 +267,10 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_GUARDIAN_TOWN_SEARCH_RADIUS);
 	}
 
+	public static boolean arePeacefulTownsNotAllowedToAssignMilitaryRanks() {
+		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_CANNOT_ASSIGN_MILITARY_RANKS);
+	}
+
 	public static int getWarCommonPeacefulTownsNewTownConfirmationRequirementDays() {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_NEW_TOWN_CONFIRMATION_REQUIREMENT_DAYS);
 	}
