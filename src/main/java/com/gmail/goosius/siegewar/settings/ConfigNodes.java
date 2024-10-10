@@ -228,6 +228,14 @@ public enum ConfigNodes {
 			"# The value specifies what proportion of the initial nation cost is refunded, when the nation is deleted or defeated.",
 			"# This feature supports nations which actively participate in geopolitics but are ultimately defeated by stronger opponents.",
 			"# Set to 0.0 to disable"),
+	WAR_SIEGE_TOWN_PEACEFULNESS_COST(
+			"war.siege.money.town_peacefulness_daily_cost",
+			"0.0",
+			"",
+			"# The cost that a town must pay to remain peaceful. Disabled when set to 0.0.",
+			"# This cost is paid after a town pays their upkeep and has their days-to-peaceful-change counted.",
+			"# If a town cannot pay the peaceful cost after they have their peaceful setting changed back to false."),
+	
 	WAR_SIEGE_QUANTITIES(
 			"war.siege.quantities",
 			"",

@@ -117,6 +117,9 @@ public class SiegeWarTownyEventListener implements Listener {
             }
             SiegeWarNationUtil.updateNationDemoralizationCounters();
             SiegeWarMoneyUtil.calculateEstimatedTotalMoneyInEconomy(false);
+            if (SiegeWarSettings.getTownPeacefulnessCost() > 0.0) {
+                SiegeWarTownPeacefulnessUtil.chargeForPeacefulTowns();
+            }
         }
     }
 
