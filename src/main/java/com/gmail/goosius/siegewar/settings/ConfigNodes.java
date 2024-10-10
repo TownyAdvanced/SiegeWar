@@ -137,6 +137,14 @@ public enum ConfigNodes {
 			"",
 			"# When true, players will have a glowing effect."),
 
+	WAR_SIEGE_ONLY_ONE_ACTION_ENABLED(
+			"war.siege.switches.only_one_action_enabled",
+			"false",
+			"",
+			"# If true, players can only either invade or plunder a town, not both.",
+			"# If false, players can perform both actions."
+	),
+
 	WAR_SIEGE_MONEY(
 			"war.siege.money",
 			"",

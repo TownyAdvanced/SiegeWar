@@ -512,6 +512,11 @@ public class SiegeWarSettings {
 	public static boolean isGlowingEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_GLOWING);
 	}
+
+	public static boolean isOnlyOneActionEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_ONLY_ONE_ACTION_ENABLED);
+	}
+
 	public static double getWarSiegeNationCostRefundPercentageOnDelete() {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_NATION_COST_REFUND_PERCENTAGE_ON_DELETE);
 	}

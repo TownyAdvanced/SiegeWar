@@ -124,6 +124,9 @@ public class InvadeTown {
 		if (siege.isTownInvaded())
 			throw new TownyException(translator.of("msg_err_town_already_invaded"));
 
+		if (SiegeWarSettings.isOnlyOneActionEnabled() && siege.isTownPlundered())
+			throw new TownyException(translator.of("msg_err_town_already_plundered_only_one_action"));
+
 		SiegeWarDistanceUtil.throwIfTownIsTooFarFromNationCapitalByWorld(residentsNation, targetTown);
 
 		SiegeWarDistanceUtil.throwIfTownIsTooFarFromNationCapitalByDistance(residentsNation, targetTown);
