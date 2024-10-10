@@ -97,7 +97,7 @@ config_and_lang_file_could_not_be_loaded: 'Tải lại không thành công. Xem 
 msg_err_not_being_sieged: '&cThị trấn %s không có một cuộc bao vây nào.'
 msg_err_town_not_registered: '&cThị trấn %s chưa được đăng ký.'
 #Scoreboard
-hud_title: 'Chiến sự'
+hud_title: '&6&l%s Siege'
 hud_siege_status: 'Thông tin cuộc chiến: '
 hud_attackers: 'Bên tấn công: '
 hud_defenders: 'Bên phòng thủ: '
@@ -536,3 +536,6 @@ msg_err_invading_disabled_in_the_config: "&cIn the siegewar config, invading tow
 msg_err_action_disable_missing_node: '&cYou don''t have enough permissions for that action: %s'
 msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "Your nation is not the attacker, you cannot invade this town."
 msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "You do not have the authority to abandon or surrender this siege."
+msg_err_cannot_change_capital_because_peaceful: "&cYou cannot change the capital of the nation, because the new capital is peaceful."
+msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cYour town could not change to peaceful because capital cities are not allowed to be peaceful."
+msg_err_cannot_start_siege_as_a_peaceful_town: "&cYou cannot begin a siege, because your town is peaceful."
