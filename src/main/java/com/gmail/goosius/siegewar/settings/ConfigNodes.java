@@ -643,6 +643,13 @@ public enum ConfigNodes {
 			"",
 			"# Given any peaceful town, the largest-by-townblock, non-peaceful, non-sieged town, in this radius around the homeblock, is considered to be the guardian town.",
 			"# If a nation owns the guardian town, that nation can instantly subvert & occupy the peaceful town"),
+	PEACEFUL_TOWNS_CANNOT_ASSIGN_MILITARY_RANKS(
+			"peaceful_towns.cannot_assign_military_ranks",
+			"true",
+			"",
+			"# Prevents players in peaceful towns from being given ranks with military-rank-permission nodes.",
+			"# It is not recommended to set this to false."),
+
 	OCCUPIED_TOWNS(
 			"occupied_towns",
 			"",
