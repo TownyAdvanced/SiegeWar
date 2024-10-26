@@ -215,4 +215,25 @@ public class SiegeWarTownPeacefulnessUtil {
 		return numPeacefulTownsReleased;
 	}
 
+	public static void chargeForPeacefulTowns() {
+		double townPeacefulnessCost = SiegeWarSettings.getTownPeacefulnessCost();
+		if (townPeacefulnessCost <= 0.0)
+			return;
+		TownyAPI.getInstance().getTowns().stream()
+			.filter(SiegeWarTownPeacefulnessUtil::isTownPeaceful)
+			.filter(SiegeWarTownPeacefulnessUtil::cannotAffordPeacefulNess)
+			.forEach(SiegeWarTownPeacefulnessUtil::removePeacefulness);
+
+		TownyAPI.getInstance().getTowns().stream()
+			.filter(SiegeWarTownPeacefulnessUtil::isTownPeaceful)
+			.forEach(t-> t.getAccount().withdraw(townPeacefulnessCost, "Daily SiegeWar peaceful cost."));
+	}
+
+	private static boolean cannotAffordPeacefulNess(Town town) {
+		return !town.getAccount().canPayFromHoldings(SiegeWarSettings.getTownPeacefulnessCost());
+	}
+
+	private static void removePeacefulness(Town town) {
+		setTownPeacefulness(town, false);
+	}
 }

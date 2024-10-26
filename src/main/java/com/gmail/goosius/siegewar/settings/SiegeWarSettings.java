@@ -267,6 +267,10 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_GUARDIAN_TOWN_SEARCH_RADIUS);
 	}
 
+	public static boolean arePeacefulTownsNotAllowedToAssignMilitaryRanks() {
+		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_CANNOT_ASSIGN_MILITARY_RANKS);
+	}
+
 	public static int getWarCommonPeacefulTownsNewTownConfirmationRequirementDays() {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_NEW_TOWN_CONFIRMATION_REQUIREMENT_DAYS);
 	}
@@ -512,8 +516,17 @@ public class SiegeWarSettings {
 	public static boolean isGlowingEnabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_GLOWING);
 	}
+
+	public static boolean isOnlyOneActionEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_ONLY_ONE_ACTION_ENABLED);
+	}
+
 	public static double getWarSiegeNationCostRefundPercentageOnDelete() {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_NATION_COST_REFUND_PERCENTAGE_ON_DELETE);
+	}
+
+	public static double getTownPeacefulnessCost() {
+		return Settings.getDouble(ConfigNodes.WAR_SIEGE_TOWN_PEACEFULNESS_COST);
 	}
 
 	public static boolean isKeepInventoryOnSiegeZoneDeathEnabled() {
@@ -522,6 +535,14 @@ public class SiegeWarSettings {
 
 	public static double getKeepInventoryOnSiegeZoneDeathToolsDegradePercentage() {
 		return Settings.getDouble(ConfigNodes.KEEP_INVENTORY_ON_SIEGEZONE_DEATH_TOOL_DEGRADE_PERCENTAGE);
+	}
+
+	public static boolean isDefendersDropInventoryWhenLosingEnabled() {
+		return Settings.getBoolean(ConfigNodes.KEEP_INVENTORY_ON_SIEGEZONE_DEATH_DISABLE_FOR_DEFENDERS_ENABLE);
+	}
+
+	public static int getDefendersDropInventoryWhenLosingThreshold() {
+		return Settings.getInt(ConfigNodes.KEEP_INVENTORY_ON_SIEGEZONE_DEATH_DISABLE_FOR_DEFENDERS_THRESHOLD);
 	}
 
 	public static int getSpecialVictoryEffectsDecisiveVictoryThreshold() {

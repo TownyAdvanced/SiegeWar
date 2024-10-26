@@ -67,6 +67,9 @@ public class PlunderTown {
 		if(siege.isTownPlundered())
 			throw new TownyException(translator.of("msg_err_siege_war_town_already_plundered", townToBePlundered.getName()));
 
+		if (SiegeWarSettings.isOnlyOneActionEnabled() && siege.isTownInvaded())
+			throw new TownyException(translator.of("msg_err_town_already_invaded_only_one_action"));
+
 		// If the rebels won, plunder is not possible
 		if(siege.isRevoltSiege() && siege.getStatus().defendersWon())
 			throw new TownyException(translator.of("msg_err_siege_war_plunder_not_possible_rebels_won"));

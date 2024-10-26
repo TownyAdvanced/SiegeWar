@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.SiegeWarAPI;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
@@ -9,6 +10,7 @@ import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.tasks.SiegeWarTimerTaskController;
+import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockProtectionUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarBlockUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarDistanceUtil;
@@ -115,6 +117,9 @@ public class SiegeWarTownyEventListener implements Listener {
             }
             SiegeWarNationUtil.updateNationDemoralizationCounters();
             SiegeWarMoneyUtil.calculateEstimatedTotalMoneyInEconomy(false);
+            if (SiegeWarSettings.getTownPeacefulnessCost() > 0.0) {
+                SiegeWarTownPeacefulnessUtil.chargeForPeacefulTowns();
+            }
         }
     }
 
@@ -459,15 +464,37 @@ public class SiegeWarTownyEventListener implements Listener {
 		if (!SiegeWarDistanceUtil.isLocationInActiveSiegeZone(event.getPlayer().getLocation()))
 			return;
 
-		// Towny is already going to keep the inventory, but we dont want inventories
-		// saved.
-		if (!event.isCancelled() && !SiegeWarSettings.isKeepInventoryOnSiegeZoneDeathEnabled()) {
-			event.setCancelled(true);
-			return;
+		// Towny is already going to keep the inventory.
+		if (!event.isCancelled()) {
+			// But we dont want inventories saved.
+			if (!SiegeWarSettings.isKeepInventoryOnSiegeZoneDeathEnabled()) {
+				event.setCancelled(true);
+				return;
+			}
+			// But we don't want defenders that are losing too greatly to keep their inventories.
+			if (SiegeWarSettings.isDefendersDropInventoryWhenLosingEnabled()) {
+				Siege siege = SiegeWarAPI.getActiveSiegeAtLocation(event.getLocation());
+				if (!SiegeSide.isDefender(siege, event.getPlayer()))
+					return;
+				if (SiegeWarBattleSessionUtil.getSiegeBalanceIfSessionEndedNow(siege)
+					< SiegeWarSettings.getDefendersDropInventoryWhenLosingThreshold())
+					return;
+
+				event.setCancelled(true);
+				return;
+			}
 		}
 
 		// Towny is going to drop the inventory, but we want inventories saved.
 		if (event.isCancelled() && SiegeWarSettings.isKeepInventoryOnSiegeZoneDeathEnabled()) {
+
+			Siege siege = SiegeWarAPI.getActiveSiegeAtLocation(event.getLocation());
+			// But we don't want defenders that are losing too greatly to keep their inventories.
+			if (SiegeWarSettings.isDefendersDropInventoryWhenLosingEnabled()
+				&& SiegeSide.isDefender(siege, event.getPlayer())
+				&& SiegeWarBattleSessionUtil.getSiegeBalanceIfSessionEndedNow(siege) >= SiegeWarSettings.getDefendersDropInventoryWhenLosingThreshold())
+				return;
+
 			SiegeWarInventoryUtil.degradeInventory(event.getPlayer());
 			event.setCancelled(false);
 		}

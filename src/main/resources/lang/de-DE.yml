@@ -539,7 +539,5 @@ msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "You do not have the 
 msg_err_cannot_change_capital_because_peaceful: "&cYou cannot change the capital of the nation, because the new capital is peaceful."
 msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cYour town could not change to peaceful because capital cities are not allowed to be peaceful."
 msg_err_cannot_start_siege_as_a_peaceful_town: "&cYou cannot begin a siege, because your town is peaceful."
-#Added in 2.13.0
-#Only One Action
 msg_err_town_already_plundered_only_one_action: "&cYou cannot invade an already plundered nation."
 msg_err_town_already_invaded_only_one_action: "&cYou cannot plunder an already invaded nation."
