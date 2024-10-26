@@ -122,7 +122,7 @@ msg_swa_set_plunder_lost_success: '&bSe estableció saqueno perdido para %d por 
 msg_err_nation_not_registered: '&cNación %s no está registrada.'
 msg_err_cannot_remove_enemy: '&c!No puedes eliminar una nación como enemiga si tienes un asedio activo en contra de esa nación!'
 #Added in 0.09
-nation_help_12: 'Paga a tus soldados. La cantidad será distribuida de acuerdo a su rango militar.'
+nation_help_siegewar_12: 'Pay your soldiers. The given amount will be distributed according to rank.'
 msg_siege_war_military_salary_available: "Un Salario Militar de %s está disponible. Puedes reclamarlo usando \"/sw collect\"."
 msg_siege_war_military_salary_collected: "Has reclamado un salario militar de %s."
 msg_err_siege_war_no_soldiers_to_pay: "No habian soldados a quien pagar."
@@ -285,7 +285,7 @@ hover_message_click_to_claim: "Haz clic para reclamar el dinero que se te debe."
 #Added in 0.31
 msg_next_session_cannot_be_determined: "La próxima sesión de asedio no ha sido programada. Inténtalo de nuevo más tarde."
 #Added in 0.33
-nation_help_11: 'Recoge cualquier ingreso de tu salario militar.'
+nation_help_siegewar_11: 'Collect any income due to you from military salary.'
 msg_err_siege_war_collect_unavailable: "No hay nada que recolectar."
 msg.battle.session.cleanup.starting: "La Sesión de Batalla anterior no se completó. Iniciando Limpieza de Sesión de Batalla. Cada batalla se resolverá como un empate y se aplicarán los puntos de batalla tanto del atacante como del defensor al saldo del asedio."
 msg.battle.session.cleanup.complete: "Limpieza de la sesión de batalla completada. %d batallas fueron resueltas."
