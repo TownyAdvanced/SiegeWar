@@ -122,7 +122,7 @@ msg_swa_set_plunder_lost_success: '&b%sの略奪喪失を%dに正常に設定し
 msg_err_nation_not_registered: '&c国%sは登録されていません。'
 msg_err_cannot_remove_enemy: '&c対象の国とのアクティブな包囲がある場合、その国を敵として削除することはできません！'
 #Added in 0.09
-nation_help_12: '兵士に給料を支払います。指定した金額は階級に応じて分配されます。'
+nation_help_siegewar_12: 'Pay your soldiers. The given amount will be distributed according to rank.'
 msg_siege_war_military_salary_available: "%sの軍事給与が利用可能です。'/sw collect' を使用して受け取れます。"
 msg_siege_war_military_salary_collected: "軍事給与%sを受け取りました。"
 msg_err_siege_war_no_soldiers_to_pay: "給料を支払う兵士はいませんでした。"
@@ -285,7 +285,7 @@ hover_message_click_to_claim: "Click to claim money owed to you."
 #Added in 0.31
 msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
 #Added in 0.33
-nation_help_11: '軍の給与から支給された収入を受け取ります。'
+nation_help_siegewar_11: 'Collect any income due to you from military salary.'
 msg_err_siege_war_collect_unavailable: "受け取るものがありません。"
 msg.battle.session.cleanup.starting: "前回のバトルセッションが完了しませんでした。バトルセッションのクリーンアップを開始します。各バトルは引き分けとして解決され、攻撃者と防御者のバトルポイントが包囲のバランスに適用されます。"
 msg.battle.session.cleanup.complete: "バトルセッションのクリーンアップが完了しました。%d つのバトルが解決されました。"
@@ -539,3 +539,5 @@ msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "You do not have the 
 msg_err_cannot_change_capital_because_peaceful: "&cYou cannot change the capital of the nation, because the new capital is peaceful."
 msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cYour town could not change to peaceful because capital cities are not allowed to be peaceful."
 msg_err_cannot_start_siege_as_a_peaceful_town: "&cYou cannot begin a siege, because your town is peaceful."
+msg_err_town_already_plundered_only_one_action: "&cYou cannot invade an already plundered nation."
+msg_err_town_already_invaded_only_one_action: "&cYou cannot plunder an already invaded nation."

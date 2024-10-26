@@ -122,7 +122,7 @@ msg_swa_set_plunder_lost_success: '&7Successfully set plunder lost to A for B.'
 msg_err_nation_not_registered: '&c%s adlı ulus kayıtlı değildir.'
 msg_err_cannot_remove_enemy: '&cAktif bir kuşatman varsa onlara karşı olan savaşçıl tutumunu hemen değiştiremezsin!'
 #Added in 0.09
-nation_help_12: 'Askerlerine biraz zab öde. Verilen miktar, rütbeye göre dağıtılacaktır.'
+nation_help_siegewar_12: 'Pay your soldiers. The given amount will be distributed according to rank.'
 msg_siege_war_military_salary_available: "%s adlı kasabanın, size askeri maaştan bir geliri var. Temin edebilmek için '/sw collect' yazınız."
 msg_siege_war_military_salary_collected: "%s askeri maaşını başarıyla topladınız."
 msg_err_siege_war_no_soldiers_to_pay: "Ödeme yapılacak asker yok."
@@ -285,7 +285,7 @@ hover_message_click_to_claim: "Hakkın olan ödemeleri toplamak için tıkla."
 #Added in 0.31
 msg_next_session_cannot_be_determined: "Bir sonraki Kuşatma Oturumu planlanmadı. Daha sonra tekrar deneyin."
 #Added in 0.33
-nation_help_11: 'Herhangi bir gelir toplayın: yağma, askeri maaş veya ulusal borç iadesi.'
+nation_help_siegewar_11: 'Collect any income due to you from military salary.'
 msg_err_siege_war_collect_unavailable: "Yağmalar, askeri maaş veya ulusal borç iadesinden sizin için gelir yoktur."
 msg.battle.session.cleanup.starting: "The previous Battle Session did not complete. Initiating Battle Session Cleanup. Each battle will be resolved as a draw, with both attacker and defender battle points being applied to the siege balance."
 msg.battle.session.cleanup.complete: "Battle Session Cleanup complete. %d battles were resolved."
@@ -539,3 +539,5 @@ msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "You do not have the 
 msg_err_cannot_change_capital_because_peaceful: "&cYou cannot change the capital of the nation, because the new capital is peaceful."
 msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cYour town could not change to peaceful because capital cities are not allowed to be peaceful."
 msg_err_cannot_start_siege_as_a_peaceful_town: "&cYou cannot begin a siege, because your town is peaceful."
+msg_err_town_already_plundered_only_one_action: "&cYou cannot invade an already plundered nation."
+msg_err_town_already_invaded_only_one_action: "&cYou cannot plunder an already invaded nation."
