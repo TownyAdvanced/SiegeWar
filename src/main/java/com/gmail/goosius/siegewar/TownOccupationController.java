@@ -144,8 +144,10 @@ public class TownOccupationController {
 			if (town.getAccount().getHoldingBalance() - tax < debtCap * -1) {
 				// The Town cannot afford to pay the nation occupation tax.
 				Messaging.sendGlobalMessage(Translatable.of("msg_occupation_tax_cannot_be_paid", town.getName()));
-				removeTownOccupation(town);
-				TownyUniverse.getInstance().getDataSource().removeTown(town, Cause.BANKRUPTCY);
+				if (TownySettings.doesNationTaxDeleteConqueredTownsWhichCannotPay()) {
+					removeTownOccupation(town);
+					TownyUniverse.getInstance().getDataSource().removeTown(town, Cause.BANKRUPTCY);
+				}
 				return 0;
 			}
 
