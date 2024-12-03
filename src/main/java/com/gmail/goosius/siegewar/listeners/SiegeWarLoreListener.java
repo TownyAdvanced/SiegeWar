@@ -1,5 +1,6 @@
 package com.gmail.goosius.siegewar.listeners;
 
+import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.events.PreSiegeCampEvent;
 import com.gmail.goosius.siegewar.events.SiegeEndEvent;
 import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
@@ -45,7 +46,7 @@ public class SiegeWarLoreListener implements Listener {
         if (!SiegeWarSettings.isSiegeLoreEnabled()) return;
 
         //Set outcome, winner, points, end time
-        SiegeWarLoreUtil.applySiegeEndLoreToBannerState(event.getSiege());
+        SiegeWar.getSiegeWar().getScheduler().run(event.getSiege().getFlagLocation(), () -> SiegeWarLoreUtil.applySiegeEndLoreToBannerState(event.getSiege()));
     }
 
     @EventHandler
