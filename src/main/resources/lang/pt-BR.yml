@@ -1,0 +1,545 @@
+---
+name: SiegeWar
+version: 0.51
+language: english
+author: Goosius
+website: 'http://townyadvanced.github.io/'
+description: >
+  Language file for all game messages.  Do not alter this file. If you wish to change any of the entries, make a copy named something else. Alternate language files can be enabled by altering the [language] entry in config.yml
+#You MUST retain spacing in the texts.
+#If a text begins or ends with a space, it must remain that way.
+#%s = data to be supplied by the plugin.
+#Text colouring
+#--------------
+#Black = &0, Navy = &1, Green = &2, Blue = &3, Red = &4
+#Purple = &5, Gold = &6, LightGray = &7, Gray = &8
+#DarkPurple = &9, LightGreen = &a, LightBlue = &b
+#Rose = &c, LightPurple = &d, Yellow = &e, White = &f
+siegewar_plugin_prefix: '&f[&6GuerraDeCerco&f] '
+#SiegeWarAPI
+msg_err_player_town_is_not_sieged: "A cidade deste jogador não está sitiada."
+msg_err_resident_town_is_not_sieged: "A cidade deste residente não está sitiada."
+msg_err_town_is_not_sieged: "Esta cidade não está sitiada."
+#Added in (Siegewar version)
+#Siege war happy-path messages
+msg_siege_war_attack_pay_war_chest: '&bUm baú de guerra foi preparado por %s, com um valor de %s. Quem vencer o cerco ficará com esse dinheiro.'
+msg_siege_war_attack_recover_war_chest: '&bO baú de guerra foi recuperado por %s, com um valor de %s.'
+msg_siege_war_attack_partially_recover_war_chest: '&bO baú de guerra foi parcialmente recuperado por %s, com um valor de %s.'
+msg_siege_war_neutral_town_plundered: '&b%s foi saqueada em %s por %s!'
+msg_siege_war_nation_town_plundered: '&b%s foi saqueada em %s por %s!'
+msg_siege_war_town_ruined_from_plunder: '&b%s foi reduzida a ruínas por %s!'
+msg_siege_war_town_bankrupted_from_plunder: '&b%s foi à falência por %s!'
+msg_siege_war_nation_defeated: '&b%s foi derrotada!'
+msg_siege_war_attacking_troops_at_siege_banner: '&bCerco em %s > Os atacantes estão na bandeira de cerco.'
+msg_siege_war_banner_control_session_success: '&bSessão de controle da bandeira bem-sucedida! Você foi adicionado à lista de controle da bandeira.'
+msg_siege_war_banner_control_gained_by_attacker: '&bCerco em %s > Os atacantes assumiram o controle da bandeira.'
+msg_siege_war_banner_control_gained_by_defender: '&bCerco em %s > Os defensores assumiram o controle da bandeira.'
+msg_town_destroyed_by_nation_tax: '&b%s não conseguiu pagar os impostos e caiu.'
+msg_town_destroyed_by_nation_tax_multiple: '&bAs seguintes cidades não puderam pagar o imposto nacional e caíram: '
+#Siege war error message
+#Recruiting
+msg_err_siege_besieged_town_cannot_recruit: "&cCidades sitiadas não podem recrutar novos residentes."
+#Claiming/Unclaiming
+msg_err_siege_claim_too_near_siege_zone: "&cA reivindicação está muito perto de um cerco."
+msg_err_siege_besieged_town_cannot_claim: "&cCidades sitiadas não podem reivindicar novos terrenos."
+msg_err_siege_besieged_town_cannot_unclaim: "&cCidades sitiadas (ou que perderam um cerco recentemente) não podem desmarcar terrenos."
+msg_err_war_common_occupied_town_cannot_unclaim: "&cCidades ocupadas não podem desmarcar terrenos."
+#Revolt
+msg_err_siege_war_town_voluntary_leave_impossible: "&cCidades não podem sair de nações sem acordo. Para sair de sua nação, convença o rei (ou um assistente) a expulsar sua cidade."
+msg_err_siege_war_revolt_immunity_active: "&cSua cidade possui imunidade à revolta. Ela não pode se revoltar até que a imunidade expire."
+#Attack
+msg_err_siege_war_banner_must_be_placed_above_ground: '&cA bandeira de cerco deve ser colocada acima do solo.'
+msg_err_siege_war_cannot_attack_own_town: '&cVocê não pode atacar sua própria cidade.'
+msg_err_siege_war_cannot_attack_town_in_own_nation: '&cVocê não pode atacar uma cidade de sua própria nação.'
+msg_err_siege_war_cannot_attack_non_enemy_nation: '&cVocê não pode atacar uma cidade, a menos que a nação dessa cidade seja inimiga de sua nação.'
+msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cVocê não pode realizar esta ação porque este bloco está em mais de um bloco de cidade. Tente colocar o item em outra área.'
+msg_err_siege_war_nation_already_attacking_town: '&cSua nação já está atacando esta cidade.'
+msg_err_siege_war_cannot_attack_siege_immunity: '&cA cidade alvo tem imunidade ao cerco. Não pode ser atacada até que a imunidade ao cerco expire.'
+msg_err_siege_war_cannot_join_siege: '&cVocê não pode atacar uma cidade enquanto ela estiver sob cerco de outra nação.'
+msg_err_siege_war_nation_has_too_many_active_siege_attacks: '&cSua nação está no número máximo de ataques de cerco simultâneos. Para iniciar outro ataque, um ou mais dos ataques atuais devem terminar.'
+msg_err_siege_war_town_not_close_enough_to_nation: '&cA cidade está muito distante da capital de sua nação para ser atacada.'
+#Invade
+msg_err_siege_war_no_siege_on_target_town: '&cNão há cerco na cidade alvo de %s.'
+#Plunder
+msg_err_siege_war_cannot_plunder_without_victory: "&cVocê não pode saquear a menos que sua nação seja vitoriosa no cerco."
+msg_err_siege_war_cannot_plunder_without_economy: "&cVocê não pode saquear porque não há um plugin de economia ativo."
+msg_err_siege_war_town_already_plundered: '&cEsta cidade já foi saqueada.'
+#Block change
+msg_err_siege_war_cannot_destroy_siege_banner: "&cEnquanto o cerco estiver em andamento, você não pode destruir a bandeira de cerco ou o bloco em que ela está fixada."
+msg_err_siege_war_banner_support_block_not_stable: "&cVocê não pode colocar a bandeira em solo instável, como areia ou cascalho."
+#Banner control
+msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'Você não pode usar este item durante uma sessão de controle da bandeira.'
+#Town Info Siege Section
+status_town_revolt_immunity_timer: '&2Cronômetro de Imunidade à Revolta: &a%s'
+status_town_siege_status_in_progress: 'Em Disputa'
+status_town_siege_status_banner_xyz: '&2 > Bandeira XYZ: &a%d,%d,%d'
+status_town_siege_immunity_timer: '&2 > Cronômetro de Imunidade: &a%s'
+status_town_siege_progress: '&2 > Progresso: &a%d/%d'
+status_town_banner_control: '&2 > Controle da Bandeira: %s &a[%s]&2: &f'
+status_town_banner_control_nobody: '&2 > Controle da Bandeira: %s'
+#General
+status_no_green: '&aNÃO'
+msg_nobody: '&aNinguém'
+msg_attackers: '&aAtacantes'
+msg_defenders: '&aDefensores'
+#Siege immunities
+msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s.'
+msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s.'
+msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s.'
+#Siege-zone block placement restrictions
+msg_war_siege_zone_block_placement_forbidden: '&cYou cannot place this type of block in the wilderness area of a siege zone.'
+msg_war_siege_zone_bucket_emptying_forbidden: '&cYou cannot use this type of bucket in the wilderness area of a siege zone.'
+#Added in 0.02:
+admin_help_1: 'Reload the config and language file.'
+config_and_lang_file_reloaded_successfully: 'Config and Language file reloaded successfully.'
+config_and_lang_file_could_not_be_loaded: 'Reload unsuccessful. See console for details.'
+#Added in 0.05:
+msg_err_not_being_sieged: '&cTown %s does not have an active siege.'
+msg_err_town_not_registered: '&cTown %s is not registered.'
+#Scoreboard
+hud_title: '&6&l%s Siege'
+hud_siege_status: 'Siege Status: '
+hud_attackers: 'ATK: '
+hud_defenders: 'DEF: '
+hud_banner_control: "Banner Control: "
+hud_siege_progress: 'Siege Progress: '
+msg_swa_resident_already_has_control: '&cResident %s already has control.'
+msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
+msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
+siege_status_in_progress: 'Contested'
+siege_status_unknown: 'Unknown'
+dynmap_siege_banner_control: 'Banner Control: %s'
+dynmap_siege_progress: 'Siege Progress: %d/%d'
+dynmap_siege_status: 'Siege Status: %s'
+#Added in 0.06:
+msg_inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to breaking due to inventory degradation.'
+msg_swa_remove_siege_success: '&bSuccessfully removed siege.'
+#Added in 0.08:
+msg_swa_set_towns_gained_success: '&bSuccessfully set towns gained to %d for %s.'
+msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
+msg_swa_set_plunder_gained_success: '&bSuccessfully set plunder gained to %d for %s.'
+msg_swa_set_plunder_lost_success: '&bSuccessfully set plunder lost to %d for %s.'
+msg_err_nation_not_registered: '&cNation %s is not registered.'
+msg_err_cannot_remove_enemy: '&cYou cannot remove a nation as enemy if you have an active siege against them!'
+#Added in 0.09
+nation_help_siegewar_12: 'Pay your soldiers. The given amount will be distributed according to rank.'
+msg_siege_war_military_salary_available: "A Military Salary of %s is now available to you. It can be collected using '/sw collect'."
+msg_siege_war_military_salary_collected: "You have collected a military salary of %s."
+msg_err_siege_war_no_soldiers_to_pay: "There were no soldiers to pay."
+msg_err_siege_war_not_enough_nation_funds_to_pay: "The nation does not have enough funds to pay that amount."
+msg_siege_war_soldiers_paid: "The soldiers of the nation were paid a total of %s, which was distributed according to rank."
+#Added in 0.11
+msg_err_invalid_bool: "&cInvalid option. Options: on/off"
+msg_beacon_preference_set: "&bBeacon preference set to %s."
+#Misc
+msg_na: 'N/A'
+#Town screen
+status_town_siege_status_siege_balance: '&2 > Balance: &a%d'
+status_town_siege_status_warchest: '&2 > War Chest: &a%s'
+#Battle sessions
+status_town_siege_battle: '&2Battle:'
+status_town_siege_battle_time_remaining: '&2 > Time Remaining: &a%s'
+msg_war_siege_battle_session_started: "&bA new Battle Session has started. All PVP protections inside Siege-Zones are suspended for the duration of the Battle Session."
+msg_war_siege_battle_session_ended_with_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. The following teams won their battles:"
+msg_war_siege_battle_session_ended_without_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. There were no battles."
+msg_war_siege_battle_session_ended_attacker_result: "&b * Attackers @ %s (%s)"
+msg_war_siege_battle_session_ended_defender_result: "&b * Defenders @ %s (%s)"
+msg_war_siege_battle_session_ended_draw_result: "&b * Draw @ %s (0)"
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next Battle Session starts. The next Battle Session will start in %s."
+#Hud
+hud_siege_balance: 'Siege Balance: '
+hud_warchest: 'War Chest: '
+hud_battle_time_remaining: 'BAT Time Left: '
+msg_err_hud_not_available_in_folia: "&cThe HUD is not available in Folia."
+#Dynmap
+dynmap_siege_battle_time_left: 'Battle Time Left: %s'
+#Banner control
+msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > The attackers have stolen banner control from the defenders! (REVERSAL)'
+msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > The defenders have stolen banner control from the attackers! (REVERSAL)'
+msg_siege_war_banner_control_reversal_bonus: '. Cap-Point-Generation-Rate X %s.'
+#Admin
+msg_swa_set_siege_balance_success: '&bSuccessfully set siege balance to %d for %s.'
+#Added in 0.13
+msg_siege_war_version: '&bThe current SiegeWar version is: %s.'
+#Added in 0.14
+msg_siege_war_banner_control_session_started: '&bSessão de controle de banner iniciada. Permaneça dentro de %d blocos do banner, mas fora da cidade, por %s. Se sua sessão for bem-sucedida, você ganhará o controle do banner para o seu lado (ou será adicionado à lista de controle do banner).'
+msg_siege_war_banner_control_session_started_with_altitude: '&bSessão de controle de banner iniciada. Permaneça dentro de %d blocos do banner, mas abaixo de sua altitude e fora da cidade, por %s. Se sua sessão for bem-sucedida, você ganhará o controle do banner para o seu lado (ou será adicionado à lista de controle do banner).'
+msg_siege_war_banner_control_session_failure: '&cSessão de controle de banner falhou! Causas comuns incluem: morrer, afastar-se muito do banner ou entrar na cidade.'
+msg_siege_war_banner_control_session_failure_with_altitude: '&cSessão de controle de banner falhou! Causas comuns incluem: morrer, afastar-se muito do banner, ir abaixo da altitude do banner ou entrar na cidade.'
+##### Added in 0.15
+#Town Merging
+msg_err_cannot_merge_towns: '&cNão é possível fundir uma cidade que está sob cerco!'
+#General
+siege.name: '%s vs %s'
+msg_err_unknown_town: '&cCidade desconhecida'
+msg_err_unknown_nation: '&cNação desconhecida'
+#Siege Types
+siege_type_conquest: 'Conquista'
+siege_type_liberation: 'Libertação'
+siege_type_revolt: 'Revolta'
+siege_type_suppression: 'Supressão'
+#Dynmap
+dynmap_siege_title: 'Cerco: %s vs %s'
+dynmap_siege_type: 'Tipo: %s'
+dynmap_siege_town: 'Cidade: %s'
+dynmap_siege_balance: 'Balanço do Cerco: %d'
+dynmap_siege_war_chest: 'Cofre de Guerra: %s'
+dynmap_siege_battle_points: 'Pontos de Batalha: %s / %s'
+#HUD
+hud_siege_type: 'Tipo: '
+hud_battle_attacker_points: 'Pontos de BAT ATK: '
+hud_battle_defender_points: 'Pontos de BAT DEF: '
+#Starting sieges
+msg_err_cannot_start_siege_at_ruined_town: '&cVocê não pode iniciar um cerco em uma cidade arruinada.'
+msg_err_cannot_start_siege_due_to_siege_immunity: '&cVocê não pode iniciar um cerco agora, pois a cidade próxima tem imunidade a cercos.'
+msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cVocê não pode iniciar um cerco de revolta porque a cidade não está ocupada.'
+msg_conquest_siege_started_neutral_town: '&bUm exército pertencente a %s atacou %s. Um CERCO DE CONQUISTA começou!'
+msg_conquest_siege_started_nation_town: '&bUm exército pertencente a %s atacou %s em %s. Um CERCO DE CONQUISTA começou!'
+#Banner Control
+msg_siege_war_defending_troops_at_siege_banner: '&bCerco em %s > Defensores estão no banner de cerco.'
+#Town screen
+status_town_siege: '&2Cerco:'
+status_town_siege_type: '&2 > Tipo: &a%s'
+status_town_siege_status: '&2 > Status: &a%s'
+status_town_siege_attacker: '&2 > Atacante: &a%s'
+status_town_siege_defender: '&2 > Defensor: &a%s'
+status_town_siege_battle_points: '&2 > Pontos: &a%s &2/ &a%s'
+status_town_siege_status_attacker_win: 'Vitória Decisiva do Atacante'
+status_town_siege_status_defender_win: 'Vitória Decisiva do Defensor'
+status_town_siege_status_close_attacker_win: 'Vitória Apertada do Atacante'
+status_town_siege_status_close_defender_win: 'Vitória Apertada do Defensor'
+status_town_siege_status_attacker_abandon: 'Atacante Abandonou'
+status_town_siege_status_pending_attacker_abandon: 'Abandono do Atacante Pendente'
+status_town_siege_status_defender_surrender: 'Defensor Rendeu-se'
+status_town_siege_status_pending_defender_surrender: 'Rendição do Defensor Pendente'
+status_town_siege_status_plundered: '&2 > Cidade Saqueada: %s'
+#Siege statuses
+siege_status_attacker_abandon: 'Atacante Abandonou'
+siege_status_defender_surrender: 'Defensor Rendeu-se'
+siege_status_pending_attacker_abandon: 'Abandono do Atacante Pendente'
+siege_status_pending_defender_surrender: 'Rendição do Defensor Pendente'
+#Nation screen
+status_nation_offensive_sieges: '&2Cercos Ofensivos &a[%s]&2: &f'
+status_nation_defensive_sieges: '&2Cercos Defensivos &a[%s]&2: &f'
+msg_err_town_cannot_end_siege_as_no_siege: '&cA cidade próxima não tem cerco. Abandono/Rendição não é possível.'
+msg_err_town_cannot_end_siege_as_finished: '&cO cerco terminou ou está programado para terminar. Abandono/Rendição não é possível.'
+#Plunder
+msg_err_siege_war_plunder_not_possible_rebels_won: '&cSaque não é possível porque os rebeldes da cidade venceram o cerco.'
+#Added in 0.16
+#Nation war history
+status_nation_town_stats: '&2Capturas Estrangeira/Local: &a%d&2/&a%d'
+status_nation_plunder_stats: '&2Ganhos de Saque: &a%d'
+#Siege effects
+msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cSomente residentes da cidade podem aparecer em uma cidade sitiada ou zona de cerco.'
+#Added in 0.18
+#Homeblock move restrictions
+msg_err_besieged_town_cannot_move_homeblock: "&cCidades sitiadas não podem mover seus blocos iniciais."
+msg_err_occupied_town_cannot_move_homeblock: "&cCidades ocupadas não podem mover seus blocos iniciais."
+#Added in 0.20
+#Town status screen's pending balance adjustment
+status_town_siege_pending_balance_adjustment: '&2 | Pendente: &a%s'
+#Added in 0.21
+#General occupation commands error messages
+msg_err_town_and_capital_too_far_apart: "&cO bloco principal de %s está muito distante do bloco principal da capital de %s."
+#Added in 0.22
+#Revolt immunities
+msg_set_revolt_immunities_town: 'Imunidade de revolta para a cidade %s definida como %s.'
+msg_set_revolt_immunities_nation: 'Imunidade de revolta para todas as cidades na nação %s definida como %s.'
+msg_set_revolt_immunities_all: 'Imunidade de revolta para todas as cidades definida como %s.'
+#Added in 0.23
+msg_siege_war_banner_control_remaining_session_time: 'Tempo Restante para Captura da Bandeira: %s'
+#Added in 0.25
+msg_err_siege_war_too_many_adjacent_towns: '&cVocê não pode realizar esta ação porque o chunk alvo está próximo a muitos blocos de cidade. Tente colocar o item em outra área.'
+#Added in 0.26
+msg_siege_war_attacker_death: '&bCerco de %s > O atacante %s morreu > Pontos de Batalha -%d'
+msg_siege_war_defender_death: '&bCerco de %s > O defensor %s morreu > Pontos de Batalha +%d'
+msg_siege_war_attacker_killed_by_player: '&bCerco de %s > O atacante %s foi morto por %s > Pontos de Batalha -%d'
+msg_siege_war_defender_killed_by_player: '&bCerco de %s > O defensor %s foi morto por %s > Pontos de Batalha +%d'
+#Added in 0.27
+msg_next_siege_session_in_minutes: 'A próxima Sessão de Batalha começa em %s minutos.'
+msg_session_is_active_now: 'Uma Sessão de Batalha está ativa agora!'
+msg_err_battle_session_active: "&cUma Sessão de Batalha já foi iniciada."
+msg_err_battle_session_inactive: "&cA Sessão de Batalha já terminou."
+msg_battle_session_force_start: "&bUma Sessão de Batalha foi iniciada forçadamente."
+msg_battle_session_force_end: "&bA Sessão de Batalha foi encerrada forçadamente."
+#Added in 0.28
+msg_town_immunity_expired: 'A Imunidade de Cerco da sua cidade expirou.'
+#Unsiegeable towns strings
+msg_permanent: "permanente"
+msg_error_must_be_num_or_permanent: '&cO valor deve ser um número ou ''permanente''.'
+msg_surrender_action_cancelled: 'A rendição do cerco foi cancelada.'
+msg_abandon_action_cancelled: 'O abandono do cerco foi cancelado.'
+#Added in 0.29
+msg_err_siegecamp_too_close_to_another_siegecamp: 'A Montagem de Cerco está muito próxima de outra Montagem de Cerco!'
+msg_err_too_soon_since_your_last_siegecamp: 'Foi muito recente desde a última tentativa de atacar esta cidade!'
+msg_err_your_siegecamp_failed_you_must_wait_x: 'Sua Montagem de Cerco não conseguiu marcar pontos suficientes. Você não pode tentar atacar a cidade novamente por %s.'
+attackers_scored_points_towards_siege_camp_x_of_x: '%s marcou pontos para a sua Montagem de Cerco: %s/%s.'
+attacker_has_begun_a_siegecamp_session: '%s iniciou uma Montagem de Cerco contra %s. Se for bem-sucedida, um Cerco começará! Os atacantes devem marcar %s pontos em %s minutos.'
+#Added in 0.30
+msg_bossbar_preference_set: "&bPreferência de Barra de Chefe definida como %s."
+bossbar_msg_battle_time_remaining: '&2Tempo Restante da Sessão de Batalha: &a%s'
+msg_err_siege_war_revolt_immunity_permanent: "&cSua cidade possui imunidade de revolta permanente. Ela não pode se revoltar."
+status_sieged: "%s[%sSob Cerco%s]"
+status_military_salary: "Salário Militar: "
+hover_message_click_to_claim: "Clique para receber o dinheiro devido a você."
+#Added in 0.31
+msg_next_session_cannot_be_determined: "A próxima Sessão de Cerco ainda não foi agendada. Tente novamente mais tarde."
+#Added in 0.33
+nation_help_siegewar_11: 'Colete qualquer rendimento devido a você do salário militar.'
+msg_err_siege_war_collect_unavailable: "Não há nada para você coletar."
+msg.battle.session.cleanup.starting: "A Sessão de Batalha anterior não foi concluída. Iniciando a Limpeza da Sessão de Batalha. Cada batalha será resolvida como empate, com pontos de batalha sendo aplicados ao saldo do cerco."
+msg.battle.session.cleanup.complete: "Limpeza da Sessão de Batalha concluída. %d batalhas foram resolvidas."
+msg_err_cannot_start_sieges_today: "&cO servidor limitou os dias da semana em que cerco pode ser iniciado. Cerco não pode ser iniciado hoje."
+#Added in 0.36
+msg_err_nation_neutrality_not_supported: '&cO Cerco de Guerra não suporta a neutralidade de nações.'
+msg.townyperms.installation.complete: "Arquivo de permissões do Towny ajustado para configuração recomendada do Cerco de Guerra."
+msg.townyconfig.installation.complete: "Arquivo de configuração do Towny ajustado para configuração recomendada do Cerco de Guerra."
+msg.installation.complete: "Instalação Completa."
+#Added in 0.41
+msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cComo um residente de cidade pacífica, você não pode passar facilmente por Zonas de Cerco. Para evitar a Doença de Guerra, saia imediatamente da Zona de Cerco.'
+msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cComo um residente de cidade pacífica, você não pode passar facilmente por Zonas de Cerco. Para remover a Doença de Guerra, saia imediatamente da Zona de Cerco.'
+#Added in 0.43
+msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cEnquanto a montagem de cerco está em andamento, você não pode destruir a bandeira de cerco ou o bloco ao qual ela está anexada."
+msg_err_cannot_alter_blocks_near_siege_banner: 'Você não pode colocar/destruir blocos neste local próximo à Bandeira de Cerco.'
+#Added in 0.44
+#Message shown siege-wide when a player loses a siegewar rank while in a siegezone.
+warn_resident_had_rank_removed: 'Aviso: %s perdeu o cargo %s enquanto estava na zona de cerco em %s.'
+#Message shown when a town kicks a resident who is in a siege zone.
+warn_resident_had_town_removed: 'Aviso: %s foi removido da cidade %s enquanto estava na zona de cerco em %s.'
+#Message shown when a nation kicks a town which has players in a siege zone.
+warn_nation_had_town_removed: 'Aviso: %s foi removida da nação %s enquanto o(s) jogador(es) %s estavam localizados na zona de cerco em %s.'
+#Message shown when a nation removes an ally which has players in a siege zone.
+warn_nation_had_ally_removed: 'Aviso: %s foi removido como aliado da nação %s enquanto o(s) jogador(es) %s estavam localizados na zona de cerco em %s.'
+#Message shown to the former allied nation's players when they have been removed as an ally.
+warn_your_nation_has_been_removed_as_an_ally: 'Aviso: %s removeu sua nação como aliado, enquanto alguns dos seus membros estão dentro das zonas de cerco, em %s.'
+#Added in 0.48
+#Shown when an admin adds hours using /swa siegeduration addhours
+hours_added_to_sieges: '%s horas foram adicionadas à duração de todos os cercos.'
+#Shown when SW cancels a battle session because there's no active sieges.
+battle_session_cancelled_no_sieges: 'Sem cercos ativos, cancelando Sessão de Batalha'
+#Added in 0.49
+#Shown when a nation tries to set their capital city while it is sieged.
+msg_err_besieged_capital_cannot_change_king: "&cSua nação não pode mudar de rei enquanto suas cidades estão sob cerco."
+#Added in 0.50
+#Shown when a siege assembly is started in a town which already has a siege assembly.
+msg_err_town_already_has_a_siege_assembly: '&cEsta cidade já possui uma Assemblea de Cerco ativa.'
+#Shown when a town cannot be sieged or subverted because of the target town's isAllowedToWar setting.
+msg_err_this_town_is_not_allowed_to_be_attacked: 'Você não pode cercar ou subverter esta cidade, porque ela não pode entrar em guerra.'
+#Shown when a nation cannot afford to start a siege.
+msg_err_your_nation_cannot_afford_to_siege_for_x: "Sua nação não pode arcar com os custos para iniciar este Cerco, custaria %s."
+#Shown when a town cannot afford to start a siege.
+msg_err_your_town_cannot_afford_to_siege_for_x: "Sua cidade não pode arcar com os custos para iniciar este Cerco, custaria %s."
+#Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
+msg_attackers_have_triggered_a_jail_break_freeing: "Os atacantes venceram a Sessão de Batalha, resultando em uma fuga da prisão, libertando %s."
+#Shown when a town takes on daily plunder debt.
+msg_plunder_debt_earned: "Os custos de saque da sua cidade foram pagos pelo servidor! Você terá que pagar %s todos os dias durante %s dias para quitar isso."
+#Shown when a town pays their daily plunder debt.
+msg_plunder_debt_payed: "Sua cidade pagou a dívida de saque diária de %s."
+#Shown when a town pays their daily plunder debt with bankruptcy.
+msg_plunder_debt_payed_bankrupt: "Sua cidade pagou a dívida de saque diária de %s ao entrar em falência."
+#Shown when a town cannot pay their daily plunder debt.
+msg_plunder_debt_cannot_be_payed: "A cidade %s não conseguiu pagar sua dívida de saque diária e foi removida!"
+#Shown in the town status screen when a town has plunder debt.
+status_town_plunder_debt: "&2Dívida de Saque Devida: %s, %s pagamentos diários de %s restantes."
+##################### Occupation Tax #############################
+#Shown when the nation sets their occupation tax
+msg_occupation_tax_set: "&bSua nação definiu um imposto de ocupação diário de %s por terreno."
+#Shown when the nation sets their occupation tax
+msg_occupation_tax_set_max: "&bSua nação definiu um imposto de ocupação diário máximo (%s por terreno). O imposto de ocupação da nação agora rastreará automaticamente o máximo configurado no servidor."
+#Shown when a town pays their nation occupation tax.
+msg_occupation_tax_paid: "&bSua cidade pagou o imposto de ocupação da nação de %s."
+#Shown when a town pays their nation occupation tax with bankruptcy.
+msg_occupation_tax_paid_bankrupt: "&cSua cidade pagou o imposto de ocupação da nação de %s ao entrar em falência."
+#Shown when a bankrupt town cannot pay their nation occupation tax.
+msg_occupation_tax_paid_with_debt: "&cSua cidade pagou o imposto de ocupação da nação de %s com dívida."
+#Shown when a town cannot pay their nation occupation tax.
+msg_occupation_tax_cannot_be_paid: "&cA cidade %s não conseguiu pagar seu imposto de ocupação à nação e foi removida!"
+#Shown in the nation status screen when a nation has nation occupation tax.
+status_nation_occupation_tax_per_plot: "&2Imposto de Ocupação da Nação: &c%s por terreno"
+#Shown in the town status screen when a town has nation occupation tax to pay.
+status_town_occupation_tax: "&2Imposto de Ocupação da Nação: &c%s"
+#Shown when the nation tries to set a nation occupation tax over the maximum.
+msg_err_occupation_tax_cannot_be_more_than: "&cNações não podem definir um imposto de ocupação maior que %s."
+#Shown to nation when they collect their occupation taxes.
+msg_occupation_taxes_collected_totaling: "&bSua nação coletou impostos de ocupação totalizando %s."
+#####################################################################
+#Nation Refund
+nation_help_refund: "Reivindique qualquer reembolso de nação que esteja disponível para você."
+msg_siege_war_nation_refund_available: "Um reembolso de nação de %s está agora disponível para você. Pode ser reivindicado usando '/sw nation claimrefund'"
+msg_siege_war_nation_refund_claimed: "Você reivindicou o reembolso de nação de %s."
+msg_err_siege_war_nation_refund_unavailable: "Não há reembolso de nação disponível para você."
+#Invasion
+msg_err_town_already_invaded: '&cSua nação já capturou a cidade.'
+msg_neutral_town_invaded: '&b%s foi capturada por %s!'
+msg_nation_town_invaded: '&b%s, pertencente a %s, foi capturada por %s!'
+#Subverting
+msg_peaceful_town_subverted: "&b%s foi subvertida pacificamente e capturada por %s."
+msg_err_cannot_subvert_town_already_occupied: "&cNão há necessidade de subverter esta cidade, porque sua nação já a possui e ocupa."
+#Revolting
+msg_revolt_siege_started: '&bOs habitantes de %s se levantaram contra a nação ocupante de %s, e se declararam livres para escolher seu próprio destino. Um CERCO DE REVOLTA começou!'
+#war sickness
+msg_you_will_get_sickness: '&cATENÇÃO: Você está na selva de uma Zona de Cerco, mas não é um participante oficial do cerco. Por favor, entre em uma cidade ou saia da Zona de Cerco, caso contrário, você sofrerá de Doença de Guerra em %s segundos.'
+msg_you_received_war_sickness: '&cATENÇÃO: Você está na selva de uma Zona de Cerco, mas não é um participante oficial do cerco. Para remover a Doença de Guerra, entre em uma cidade ou saia da Zona de Cerco.'
+#Town Status Screen
+status_town_days_to_peacefulness_status_change: '&2Dias Para Mudança de Status de Paz: &b%d'
+#Town Peacefulness
+town_help_toggle_peaceful: 'Mude o status de paz de sua cidade'
+msg_war_common_town_declared_peaceful: '&bPaz Declarada! A cidade será confirmada como Pacífica em %d dia(s).'
+msg_war_common_town_declared_non_peaceful: '&bNão-Paz Declarada! A cidade será confirmada como Não-Pacífica em %d dia(s).'
+msg_town_became_peaceful: '&b%s foi confirmada como Pacífica. A cidade agora está imune a ataques de cerco, mas vulnerável a ser subvertida por nações próximas. Residentes não podem ganhar postos militares nacionais.'
+msg_town_became_non_peaceful: '&b%s foi confirmada como Não-Pacífica. A cidade não está mais imune a ataques de cerco e não está mais vulnerável a ser subvertida por nações próximas. Residentes agora podem ganhar postos militares nacionais.'
+msg_war_common_town_peacefulness_countdown_cancelled: '&bA contagem regressiva para a mudança de status de Paz foi cancelada.'
+msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cIncapaz de adicionar posto militar ao residente, porque eles pertencem a uma cidade Pacífica.'
+sg_err_peaceful_town_cannot_move_homeblock: "&cCidades Pacíficas não podem mover seus homeblocks. Se você deseja mover seu homeblock, primeiro desative a paz."
+msg_err_peaceful_towns_cannot_revolt: '&cCidades Pacíficas não podem revoltar-se.'
+msg_err_capital_towns_cannot_go_peaceful: '&cCidades capitais não podem se tornar pacíficas.'
+msg_err_cannot_subvert_not_enough_permissions: "&cVocê não tem permissões suficientes para subverter a cidade."
+msg_err_cannot_subvert_dont_own_guardian_town: "&cSubverter não é possível, porque sua nação não possui a Cidade Guardiã necessária: %s."
+msg_peaceful_towns_released_on_homeblock_move: "&bPorque %s moveu seu homeblock, %d cidade(s) pacífica(s) que estava protegendo foram liberadas da ocupação."
+#Town neutrality
+msg_err_town_neutrality_not_supported: "&cSiegeWar não suporta a neutralidade de cidades. Para proteger sua cidade de cerques, mude sua cidade para Pacífica, usando '/sw town togglepeaceful'."
+#swa
+msg_swa_set_invade_success: '&bCaptura definida para %s para %s.'
+msg_swa_town_peacefulness_change_success: '&bMudança de status de paz de %s para %s bem-sucedida.'
+msg_swa_town_occupation_change_success: '&bMudança de status de ocupação de %s para %s bem-sucedida.'
+msg_err_command_not_allowed_on_active_siege: "Você não pode executar este comando a menos que o cerco tenha terminado."
+#Timed wins
+msg_conquest_siege_timed_attacker_win: '&bCERCO DE CONQUISTA em %s > O exército atacante de %s venceu uma vitória %s contra o exército defensor de %s!'
+msg_conquest_siege_timed_defender_win: '&bCERCO DE CONQUISTA em %s > O exército defensor de %s venceu uma vitória %s contra o exército atacante de %s!'
+msg_revolt_siege_timed_attacker_win: '&bCERCO DE REVOLTA em %s > O exército atacante de %s, que anteriormente ocupava a cidade, derrotou os rebeldes com uma vitória %s!'
+msg_revolt_siege_timed_defender_win: '&bCERCO DE REVOLTA em %s > A rebelião foi bem-sucedida! Os rebeldes atacantes conseguiram expulsar o exército atacante de %s!, com uma vitória %s!'
+msg_decisive: 'DECISIVO'
+msg_close: 'FECHAR'
+#Abandoning Attacks
+msg_conquest_siege_attacker_abandon: '&bCERCO DE CONQUISTA em %s > O exército atacante de %s admitiu a derrota e se retirou! Esta ação será confirmada quando o progresso do cerco estiver completo.'
+msg_revolt_siege_attacker_abandon: '&bCERCO DE REVOLTA em %s > O exército atacante de %s, que anteriormente ocupava a cidade, admitiu a derrota e se retirou! Esta ação será confirmada quando o progresso do cerco estiver completo.'
+msg_conquest_siege_attacker_abandon_confirmed: '&bCERCO DE CONQUISTA em %s > Abandono do Atacante Confirmado!'
+msg_revolt_siege_attacker_abandon_confirmed: '&bCERCO DE REVOLTA em %s > Abandono do Atacante Confirmado!'
+#Surrendering Defence
+msg_conquest_siege_defender_surrender: '&bCERCO DE CONQUISTA em %s > A cidade se rendeu ao exército atacante de %s! Esta ação será confirmada quando o progresso do cerco estiver completo.'
+msg_revolt_siege_defender_surrender: '&bCERCO DE REVOLTA em %s > Os rebeldes admitiram a derrota e se renderam ao exército atacante de %s! Esta ação será confirmada quando o progresso do cerco estiver completo.'
+msg_conquest_siege_defender_surrender_confirmed: '&bCERCO DE CONQUISTA em %s > Rendição do Defensor Confirmada!'
+msg_revolt_siege_defender_surrender_confirmed: '&bCERCO DE REVOLTA em %s > Rendição do Defensor Confirmada!'
+msg_err_siege_occupied_towns_cannot_surrender_in_conquest_sieges: '&cEm cerques de CONQUISTA, cidades ocupadas não podem se render.'
+#Siege Results
+msg_conquest_siege_attacker_win_result: ' A cidade agora está aberta para invasão e/ou pilhagem.'
+msg_conquest_siege_defender_win_result: ' A cidade foi salva!'
+msg_revolt_siege_attacker_win_result: ' A cidade agora está aberta para invasão e/ou pilhagem.'
+msg_revolt_siege_defender_win_result: ' A cidade conquistou sua liberdade!'
+#Town Screen
+status_town_siege_status_invaded: '&2 > Cidade Capturada: %s'
+status_town_peacefulness_flag: '&b(Pacífica)'
+status_town_hover_title_changing_peacefulness: "%s[%sMudando-Paz%s]"
+status_town_hover_title_revolt_immunity: "%s[%sImunidade à Revolta%s]"
+status_town_hover_title_siege_immunity: "%s[%sImunidade ao Cerco%s]"
+status_town_standalone_siege_immunity_timer: '&2Temporizador de Imunidade ao Cerco: &a%s'
+#Nation Screen
+status_nation_hover_title_sieges: "%s[%sCerques%s]"
+status_nation_hover_title_war_history: "%s[%sHistória da Guerra%s]"
+status_nation_hover_title_demoralization: "%s[%sDesmoralizado%s]"
+status_nation_demoralization_amount: '&2Saldo Inicial de Cerques de Conquista: &a%d'
+status_nation_demoralization_days_left: '&2Dias Restantes: &a%d'
+#Town Capture & Occupation
+msg_err_cannot_invade_without_victory: "&cVocê não pode capturar esta cidade a menos que sua nação seja vitoriosa no cerco."
+msg_err_cannot_invade_siege_still_in_progress: '&cVocê não pode capturar esta cidade enquanto o cerco ainda estiver em andamento.'
+msg_err_cannot_invade_town_already_occupied: '&cNão há necessidade de capturar esta cidade, pois sua nação já a possui e ocupa.'
+msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&cNão é possível adicionar o rank militar ao residente, porque ele pertence a uma cidade Ocupada.'
+msg_err_cannot_set_occupation_without_nation: '&cA cidade %s não possui nação. Você deve definir a nação primeiro antes de poder definir a cidade como Ocupada.'
+msg_err_cannot_invade_not_enough_permissions: "&cVocê não tem permissões suficientes para capturar a cidade."
+msg_err_occupied_towns_cannot_leave_their_nations: "&cCidades ocupadas não podem deixar suas nações da maneira usual. Para deixar a nação, inicie um cerco de revolta."
+#Siegezone proximity warning
+msg_siege_zone_proximity_warning: "&cATENÇÃO: Você está em uma Zona de Cerco!"
+#Plunder
+msg_err_cannot_plunder_not_enough_permissions: "&cVocê não tem permissões suficientes para saquear a cidade."
+#Not a town/nation member
+msg_err_siege_war_action_not_a_nation_member: '&cVocê deve ser um membro de uma nação para realizar esta ação.'
+msg_err_siege_war_action_not_a_town_member: '&cVocê deve ser um membro de uma cidade para realizar esta ação.'
+#Upfront Cost
+msg_town_pay_upfront_siege_cost: '&bSua cidade pagou um custo adiantado de cerco de %s.'
+msg_nation_pay_upfront_siege_cost: '&bSua nação pagou um custo adiantado de cerco de %s.'
+#Siege Statuses
+siege_status_attacker_close_win: 'Vitória Próxima do Atacante'
+siege_status_defender_close_win: 'Vitória Próxima do Defensor'
+siege_status_attacker_win: 'Vitória Decisiva do Atacante'
+siege_status_defender_win: 'Vitória Decisiva do Defensor'
+#Siege Special Victory Effects
+msg_conquest_siege_attacker_close_win_warchest_reduced: "&bComo a vitória no cerco foi APERTADA, a cidade sitiada conseguiu recuperar %s do Cofrinho de Guerra."
+msg_conquest_siege_defender_close_win_warchest_reduced: "&bComo a vitória no cerco foi APERTADA, a nação sitiante conseguiu recuperar %s do Cofrinho de Guerra."
+msg_conquest_siege_attacker_close_win_plunder_reduced: "&bComo a recente vitória no cerco foi APERTADA, o valor habitual do saque foi reduzido em %s."
+msg_revolt_siege_attacker_close_win_plunder_reduced: "&bComo a recente vitória no cerco foi APERTADA, o valor habitual do saque foi reduzido em %s."
+msg_revolt_siege_defender_decisive_win_demoralization: "&bA antiga nação ocupante, %s, se abala com a perda decisiva de sua colônia, e está desmoralizada (%d saldo de cerco para os cercos que iniciar), por %d dias."
+#Toxicity Reduction
+msg_chat_now_disabled: " O Chat Geral, /lc e /tell estarão desativados enquanto a Sessão de Batalha estiver ativa, e por %s após o término. Se você quiser conversar, tente usar /tc, /nc ou /ac."
+msg_chat_now_restored: "&bO Chat Geral, /lc e /tell foram restaurados."
+msg_err_no_general_chat_in_battle_session: "&cO Chat Geral está desativado enquanto uma Sessão de Batalha estiver ativa, e por %s após o término. Tente conversar usando /tc, /nc ou /ac."
+msg_err_no_local_chat_in_battle_session: "&cO Chat Local está desativado enquanto uma Sessão de Batalha estiver ativa, e por %s após o término. Tente conversar usando /tc, /nc ou /ac."
+msg_err_no_tell_chat_in_battle_session: "&c/tell está desativado enquanto uma Sessão de Batalha estiver ativa, e por %s após o término. Tente conversar usando /tc, /nc ou /ac."
+msg_can_also_chat_in_discord: " Você também pode conversar no Discord do servidor: %s."
+#Bad Config Warnings
+msg_err_value_configured_too_high: "&cAVISO: O valor configurado do servidor para %s está muito alto. Valor ideal calculado: %s. Valor configurado atual: %s."
+msg_err_value_configured_too_low: "&cAVISO: O valor configurado do servidor para %s está muito baixo. Valor ideal calculado: %s. Valor configurado atual: %s."
+msg_err_note_about_warnings: "&cNOTA: Se o seu servidor ainda não foi lançado, não se preocupe se os valores ideais parecerem errados. Os avisos se corrigirão assim que os jogadores começarem a criar cidades/nações."
+#Block Placement
+msg_err_banner_cannot_be_more_than_one_block_away: "&cO banner não pode estar a mais de 1 bloco de distância da cidade-alvo."
+msg_err_banner_cannot_be_close_to_any_town_block: '&cO banner deve estar pelo menos %s bloco(s) da cidade mais próxima.'
+#Battle Commanders / Mobile Spawn Points
+msg_battle_commanders_assigned: "&bCerco em %s > Comandantes de Batalha Atribuídos. Comandante Atacante: %s. Comandante Defensor: %s."
+no_battle_commander: "<Nenhum>"
+msg_err_cannot_spawn_feature_not_active: "&cVocê não pode spawnar no cerco porque a função 'comandantes de batalha' está desativada no seu servidor."
+msg_err_cannot_spawn_siege_not_active: "&cVocê não pode spawnar no cerco porque o cerco não está ativo."
+msg_err_cannot_spawn_battle_session_not_active: "&cVocê não pode spawnar no cerco porque não há sessão de batalha ativa."
+msg_err_cannot_spawn_not_participant: "&cVocê não pode spawnar no cerco porque não é um participante oficial do cerco."
+msg_err_cannot_spawn_no_battle_commander: "&cVocê não pode spawnar no cerco porque sua equipe não tem um comandante de batalha."
+msg_err_cannot_spawn_battle_commander_offline: "&cVocê não pode spawnar no cerco porque o comandante de batalha da sua equipe está offline."
+msg_err_cannot_spawn_battle_commander_dead: "&cVocê não pode spawnar no cerco porque o comandante de batalha da sua equipe está morto."
+msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cVocê não pode spawnar no cerco porque o comandante de batalha da sua equipe não está na Zona de Cerco."
+msg_err_cannot_spawn_not_in_homeblock: "&cVocê deve estar no seu bloco de casa para spawnar no cerco."
+msg_err_cannot_spawn_outpost_during_battle_session: "&cVocê não pode spawnar em um posto avançado enquanto sua nação tiver um cerco ofensivo durante uma sessão de batalha."
+#Added in 2.8.0
+msg_swa_remove_siege: '&bCerco de %s removido via comandos administrativos.'
+msg_swa_battle: 'Batalha'
+#Siege Lore
+siege_lore_color_attacker: '&c%s'
+siege_lore_color_defender: '&3%s'
+siege_lore_color_neutral: '&e%s'
+siege_lore_color_key: '&6%s'
+siege_lore_color_value: '&e%s'
+siege_lore_format_date: 'dd/MM/yyyy HH:mm'
+siege_lore_format_key_value: '%s: %s'
+siege_lore_format_two_values: '%s %s'
+siege_lore_format_secondary_value: '(%s)'
+siege_lore_error_banner_cannot_be_used: 'Bandeiras de lore de cercos anteriores não podem ser usadas para iniciar novos cercos.'
+siege_lore_unknown: 'Desconhecido'
+siege_lore_type: '%s Cerco'
+siege_lore_attacker: 'Atacante'
+siege_lore_defender: 'Defensor'
+siege_lore_winner: 'Vencedor'
+siege_lore_start: 'Iniciado'
+siege_lore_end: 'Encerrado'
+siege_lore_banner_name: 'Bandeira do Cerco'
+siege_lore_banner_chat_1: 'Esta bandeira iniciou o %s'
+siege_lore_banner_chat_2: ' de %s'
+siege_lore_banner_chat_3: ', que terminou em Vitória para %s'
+siege_lore_banner_chat_4_ATTACKERS: ', que superou a defesa de %s'
+siege_lore_banner_chat_5_ATTACKERS: ' para tomar o controle da cidade em %s'
+siege_lore_banner_chat_4_DEFENDERS: ', que superou o ataque de %s'
+siege_lore_banner_chat_5_DEFENDERS: ' para defender sua cidade em %s'
+siege_lore_banner_chat_4_NOBODY: ', lutando contra %s'
+siege_lore_banner_chat_5_NOBODY: ' em uma batalha pela cidade em %s'
+siege_lore_shield_name: 'Escudo do Cerco'
+siege_err_conquest_sieges_disabled_in_the_config: "Cercos de conquista foram desativados na configuração do cerco."
+siege_err_revolt_sieges_disabled_in_the_config: "Cercos de revolta foram desativados na configuração do cerco."
+msg_err_peaceful_subversion_disabled_in_the_config: "&cNa configuração do cerco, subversão de cidades pacíficas está desativada. Você não pode iniciar um cerco nesta cidade."
+msg_err_abandoning_attack_disabled_in_the_config: "&cNa configuração do cerco, abandonar ataques foi desativado."
+msg_err_town_surrender_disabled_in_the_config: "&cNa configuração do cerco, rendição de cidades foi desativada."
+msg_err_invading_disabled_in_the_config: "&cNa configuração do cerco, invasão de cidades foi desativada."
+msg_err_action_disable_missing_node: '&cVocê não tem permissões suficientes para essa ação: %s'
+msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "Sua nação não é a atacante, você não pode invadir esta cidade."
+msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "Você não tem autoridade para abandonar ou se render neste cerco."
+msg_err_cannot_change_capital_because_peaceful: "&cVocê não pode mudar a capital da nação, porque a nova capital é pacífica."
+msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cSua cidade não pode mudar para pacífica porque cidades capitais não podem ser pacíficas."
+msg_err_cannot_start_siege_as_a_peaceful_town: "&cVocê não pode iniciar um cerco, porque sua cidade é pacífica."
+#Added in 2.13.0
+#Only One Action
+msg_err_town_already_plundered_only_one_action: "&cVocê não pode invadir uma nação já saqueada."
+msg_err_town_already_invaded_only_one_action: "&cVocê não pode saquear uma nação já invadida."
