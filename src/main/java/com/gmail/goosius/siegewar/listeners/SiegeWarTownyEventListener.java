@@ -507,18 +507,23 @@ public class SiegeWarTownyEventListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onTownRankAdded(TownAddResidentRankEvent event) {
-		checkRankForBattleCommanderNodeAndCancel(event.getRank(), event.getResident(), event);
+		String rank = event.getRank();
+		if (!TownyPerms.getTownRankPermissions(rank).contains(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_STARTCONQUESTSIEGE.getNode()))
+			return;
+
+		checkRankForBattleCommanderNodeAndCancel(rank, event.getResident(), event);
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onNationRankAdded(NationRankAddEvent event) {
-		checkRankForBattleCommanderNodeAndCancel(event.getRank(), event.getResident(), event);
+		String rank = event.getRank();
+		if (!TownyPerms.getNationRankPermissions(rank).contains(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_STARTCONQUESTSIEGE.getNode()))
+			return;
+
+		checkRankForBattleCommanderNodeAndCancel(rank, event.getResident(), event);
 	}
 
 	private void checkRankForBattleCommanderNodeAndCancel(String rank, Resident resident, CancellableTownyEvent event) {
-		if (!TownyPerms.getTownRankPermissions(rank).contains(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_STARTCONQUESTSIEGE.getNode()))
-			return;
-		
 		if (!resident.hasTown() || !SiegeWarAPI.hasSiege(resident))
 			return;
 
