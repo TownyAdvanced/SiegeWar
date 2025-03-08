@@ -508,7 +508,8 @@ public class SiegeWarTownyEventListener implements Listener {
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onTownRankAdded(TownAddResidentRankEvent event) {
 		String rank = event.getRank();
-		if (!TownyPerms.getTownRankPermissions(rank).contains(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_STARTCONQUESTSIEGE.getNode()))
+
+		if (!rankContainsStartConquestSiegeNode(TownyPerms.getTownRankPermissions(rank)))
 			return;
 
 		checkRankForBattleCommanderNodeAndCancel(rank, event.getResident(), event);
@@ -517,14 +518,25 @@ public class SiegeWarTownyEventListener implements Listener {
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onNationRankAdded(NationRankAddEvent event) {
 		String rank = event.getRank();
-		if (!TownyPerms.getNationRankPermissions(rank).contains(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_STARTCONQUESTSIEGE.getNode()))
+
+		if (!rankContainsStartConquestSiegeNode(TownyPerms.getNationRankPermissions(rank)))
 			return;
 
 		checkRankForBattleCommanderNodeAndCancel(rank, event.getResident(), event);
 	}
 
+	private boolean rankContainsStartConquestSiegeNode(List<String> nodes) {
+		for (String node : nodes) {
+			if (node.equalsIgnoreCase("siegewar.nation.siege.*"))
+				return true;
+			if (node.equalsIgnoreCase(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_STARTCONQUESTSIEGE.getNode()))
+				return true;
+		}
+		return false;
+	}
+
 	private void checkRankForBattleCommanderNodeAndCancel(String rank, Resident resident, CancellableTownyEvent event) {
-		if (!resident.hasTown() || !SiegeWarAPI.hasSiege(resident))
+		if (!resident.hasTown() || !hasSiege(resident))
 			return;
 
 		if (SiegeWarSettings.isBattleCommandersRanksBlockedDuringSieges()) {
@@ -537,5 +549,16 @@ public class SiegeWarTownyEventListener implements Listener {
 			event.setCancelled(true);
 			event.setCancelMessage(Translatable.of("siege_msg_err_cannot_assign_rank_during_active_battlesession", rank).forLocale(resident));
 		}
+	}
+
+	private boolean hasSiege(Resident resident) {
+		if (SiegeWarAPI.hasSiege(resident))
+			return true;
+
+		if (!resident.hasNation())
+			return false;
+
+		Nation nation = resident.getNationOrNull();
+		return SiegeWarAPI.getActiveDefensiveSieges(nation).size() + SiegeWarAPI.getActiveOffensiveSieges(nation).size() > 0;
 	}
 }
