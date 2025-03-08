@@ -716,3 +716,6 @@ msg_err_cannot_start_siege_as_a_peaceful_town: "&cYou cannot begin a siege, beca
 
 msg_err_town_already_plundered_only_one_action: "&cYou cannot invade an already plundered nation."
 msg_err_town_already_invaded_only_one_action: "&cYou cannot plunder an already invaded nation."
+
+siege_msg_err_cannot_assign_rank_during_active_battlesession: "&cYou cannot add the %s rank while the battle session is active."
+siege_msg_err_cannot_assign_rank_during_active_siege: "&cYou cannot add the %s rank while your town is involved in a siege."

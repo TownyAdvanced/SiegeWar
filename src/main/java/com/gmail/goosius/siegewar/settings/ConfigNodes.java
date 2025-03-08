@@ -1200,6 +1200,21 @@ public enum ConfigNodes {
 			"# When a battle sessions starts, then for each siege, one player from each side may be designated as the Battle Commander.",
 			"# To qualify as a battle commander, a player must be an official participant with general or king rank, and be online and in the Siege-Zone.",
 			"# If one side has a battle commander, then any member can run /sw spawn <town> to spawn on the commander."),
+
+	BATTLE_COMMANDERS_BLOCK_ASSIGNMENT_DURING_BATTLE_SESSIONS(
+			"battle_commanders.block_rank_assignment_during_active_battlesessions",
+			"false",
+			"",
+			"# If this value is true, then the ranks containing the siegewar.nation.siege.startconquestsiege permission node",
+			"# cannot be assigned to players who are part of a siege with an active battle session."),
+
+	BATTLE_COMMANDERS_BLOCK_ASSIGNMENT_DURING_SIEGES(
+			"battle_commanders.block_rank_assignment_during_sieges",
+			"false",
+			"",
+			"# If this value is true, then the ranks containing the siegewar.nation.siege.startconquestsiege permission node",
+			"# cannot be assigned to players who are part of a siege."),
+
 	SIEGE_LORE(
 			"siege_lore",
 			"",
