@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.SiegeWarAPI;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
@@ -21,9 +22,11 @@ import com.gmail.goosius.siegewar.utils.SiegeWarNationUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.gmail.goosius.siegewar.utils.SiegeWarNotificationUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.event.CancellableTownyEvent;
 import com.palmergames.bukkit.towny.event.NationRemoveAllyEvent;
 import com.palmergames.bukkit.towny.event.NationRemoveTownEvent;
 import com.palmergames.bukkit.towny.event.NewDayEvent;
+import com.palmergames.bukkit.towny.event.TownAddResidentRankEvent;
 import com.palmergames.bukkit.towny.event.TownRemoveResidentEvent;
 import com.palmergames.bukkit.towny.event.TownRemoveResidentRankEvent;
 import com.palmergames.bukkit.towny.event.TownyLoadedDatabaseEvent;
@@ -31,6 +34,7 @@ import com.palmergames.bukkit.towny.event.TranslationLoadEvent;
 import com.palmergames.bukkit.towny.event.actions.TownyExplodingBlocksEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyExplosionDamagesEntityEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyFriendlyFireTestEvent;
+import com.palmergames.bukkit.towny.event.nation.NationRankAddEvent;
 import com.palmergames.bukkit.towny.event.nation.NationRankRemoveEvent;
 import com.palmergames.bukkit.towny.event.player.PlayerKeepsInventoryEvent;
 import com.palmergames.bukkit.towny.event.teleport.OutlawTeleportEvent;
@@ -42,6 +46,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.TranslationLoader;
+import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import com.palmergames.util.StringMgmt;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -498,5 +503,62 @@ public class SiegeWarTownyEventListener implements Listener {
 			SiegeWarInventoryUtil.degradeInventory(event.getPlayer());
 			event.setCancelled(false);
 		}
+	}
+
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+	public void onTownRankAdded(TownAddResidentRankEvent event) {
+		String rank = event.getRank();
+
+		if (!rankContainsStartConquestSiegeNode(TownyPerms.getTownRankPermissions(rank)))
+			return;
+
+		checkRankForBattleCommanderNodeAndCancel(rank, event.getResident(), event);
+	}
+
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+	public void onNationRankAdded(NationRankAddEvent event) {
+		String rank = event.getRank();
+
+		if (!rankContainsStartConquestSiegeNode(TownyPerms.getNationRankPermissions(rank)))
+			return;
+
+		checkRankForBattleCommanderNodeAndCancel(rank, event.getResident(), event);
+	}
+
+	private boolean rankContainsStartConquestSiegeNode(List<String> nodes) {
+		for (String node : nodes) {
+			if (node.equalsIgnoreCase("siegewar.nation.siege.*"))
+				return true;
+			if (node.equalsIgnoreCase(SiegeWarPermissionNodes.SIEGEWAR_NATION_SIEGE_STARTCONQUESTSIEGE.getNode()))
+				return true;
+		}
+		return false;
+	}
+
+	private void checkRankForBattleCommanderNodeAndCancel(String rank, Resident resident, CancellableTownyEvent event) {
+		if (!resident.hasTown() || !hasSiege(resident))
+			return;
+
+		if (SiegeWarSettings.isBattleCommandersRanksBlockedDuringSieges()) {
+			event.setCancelled(true);
+			event.setCancelMessage(Translatable.of("siege_msg_err_cannot_assign_rank_during_active_siege", rank).forLocale(resident));
+			return;
+		}
+
+		if (SiegeWarSettings.isBattleCommandersRanksBlockedDuringActiveBattleSession() && SiegeWarAPI.isBattleSessionActive()) {
+			event.setCancelled(true);
+			event.setCancelMessage(Translatable.of("siege_msg_err_cannot_assign_rank_during_active_battlesession", rank).forLocale(resident));
+		}
+	}
+
+	private boolean hasSiege(Resident resident) {
+		if (SiegeWarAPI.hasSiege(resident))
+			return true;
+
+		if (!resident.hasNation())
+			return false;
+
+		Nation nation = resident.getNationOrNull();
+		return SiegeWarAPI.getActiveDefensiveSieges(nation).size() + SiegeWarAPI.getActiveOffensiveSieges(nation).size() > 0;
 	}
 }

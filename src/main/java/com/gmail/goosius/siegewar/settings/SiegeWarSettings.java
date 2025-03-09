@@ -641,6 +641,14 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.BATTLE_COMMANDERS_ENABLED);
 	}
 
+	public static boolean isBattleCommandersRanksBlockedDuringActiveBattleSession() {
+		return Settings.getBoolean(ConfigNodes.BATTLE_COMMANDERS_BLOCK_ASSIGNMENT_DURING_BATTLE_SESSIONS);
+	}
+
+	public static boolean isBattleCommandersRanksBlockedDuringSieges() {
+		return Settings.getBoolean(ConfigNodes.BATTLE_COMMANDERS_BLOCK_ASSIGNMENT_DURING_SIEGES);
+	}
+
 	public static boolean isSiegeLoreEnabled() {
 		return Settings.getBoolean(ConfigNodes.SIEGE_LORE_ENABLED);
 	}
