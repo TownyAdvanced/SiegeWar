@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: ['17']
+        java: ['21']
     name: Drafting SiegeWar Release
     steps:
       - name: checkout repo content
