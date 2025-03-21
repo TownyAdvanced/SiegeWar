@@ -299,7 +299,8 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.BEACON_MARKERS_ENABLED);
 	}
 
-	public static boolean getBeaconsBattleSesionOnly() {
+	public static boolean getBeaconsBattleSessionOnly() {
+
 		return Settings.getBoolean(ConfigNodes.BEACON_MARKERS_BATTLE_SESSION_ONLY);
 	}
 
