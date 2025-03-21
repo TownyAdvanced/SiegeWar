@@ -299,6 +299,10 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.BEACON_MARKERS_ENABLED);
 	}
 
+	public static boolean getBeaconsBattleSesionOnly() {
+		return Settings.getBoolean(ConfigNodes.BEACON_MARKERS_BATTLE_SESSION_ONLY);
+	}
+
 	public static String getBeaconCaptureColor() {
 		return Settings.getString(ConfigNodes.BEACON_MARKERS_CAPTURE_COLOR);
 	}

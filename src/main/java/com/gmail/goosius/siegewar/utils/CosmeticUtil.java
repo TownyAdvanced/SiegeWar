@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.GlassColor;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -54,7 +55,7 @@ public class CosmeticUtil {
 
     public static void evaluateBeacon(Player player, Siege siege) {
 		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-		if (SiegeWarSettings.getBeaconsEnabled() && !ResidentMetaDataController.getBeaconsDisabled(resident))
+		if (SiegeWarSettings.getBeaconsEnabled() && (!SiegeWarSettings.getBeaconsBattleSesionOnly() || (SiegeWarSettings.getBeaconsBattleSesionOnly() && BattleSession.getBattleSession().isActive())) && !ResidentMetaDataController.getBeaconsDisabled(resident))
 			createFakeBeacon(player, siege.getFlagLocation(), getGlassColor(player, siege));
     }
 
