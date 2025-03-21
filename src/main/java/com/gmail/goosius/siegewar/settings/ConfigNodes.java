@@ -713,6 +713,11 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If enabled, client-side beacons will be shown for players at the siege banner while they are in a siege zone."),
+	BEACON_MARKERS_BATTLE_SESSION_ONLY(
+			"beacon_markers.battle_session_only",
+			"false",
+			"",
+			"# If enabled, client-side beacons will only be shown for players when there is an active battle session."),
 	BEACON_MARKERS_CAPTURE_COLOR(
 			"beacon_markers.capture_color",
 			"yellow",
