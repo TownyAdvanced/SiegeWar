@@ -55,7 +55,7 @@ public class CosmeticUtil {
 
     public static void evaluateBeacon(Player player, Siege siege) {
 		Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
-		if (SiegeWarSettings.getBeaconsEnabled() && (!SiegeWarSettings.getBeaconsBattleSesionOnly() || (SiegeWarSettings.getBeaconsBattleSesionOnly() && BattleSession.getBattleSession().isActive())) && !ResidentMetaDataController.getBeaconsDisabled(resident))
+		if (SiegeWarSettings.getBeaconsEnabled() && (!SiegeWarSettings.getBeaconsBattleSessionOnly() || (SiegeWarSettings.getBeaconsBattleSessionOnly() && BattleSession.getBattleSession().isActive())) && !ResidentMetaDataController.getBeaconsDisabled(resident))
 			createFakeBeacon(player, siege.getFlagLocation(), getGlassColor(player, siege));
     }
 
