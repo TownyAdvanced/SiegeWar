@@ -8,6 +8,7 @@ import com.gmail.goosius.siegewar.events.SiegeWarStartEvent;
 import com.gmail.goosius.siegewar.events.SiegeEndEvent;
 import com.gmail.goosius.siegewar.events.SiegeRemoveEvent;
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.utils.CosmeticUtil;
 import com.gmail.goosius.siegewar.utils.DiscordWebhook;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -39,6 +40,9 @@ public class SiegeWarSelfListener implements Listener {
 
 	@EventHandler
 	public void onBattleSessionEnded(BattleSessionEndedEvent event) {
+		if (SiegeWarSettings.getBeaconsBattleSessionOnly())
+			SiegeController.getSieges().forEach((siege) -> CosmeticUtil.removeFakeBeacons(siege));
+
 		if (!SiegeWarSettings.isDiscordWebhookEnabled() || !SiegeWarSettings.isSessionEndNotificationEnabled())
 			return;
 
