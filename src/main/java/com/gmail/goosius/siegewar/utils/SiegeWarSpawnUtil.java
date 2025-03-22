@@ -11,7 +11,10 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.WorldCoord;
+import com.palmergames.paperlib.PaperLib;
+
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -91,6 +94,6 @@ public class SiegeWarSpawnUtil {
         //Grant teleport pass in order to bypass SW's teleport blocker
         grandTeleportPassToPlayer(player);
         //SPAWN!
-        player.teleport(battleCommander);
+        PaperLib.teleportAsync(player, battleCommander.getLocation(), TeleportCause.COMMAND);
     }
 }
