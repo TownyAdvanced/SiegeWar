@@ -12,6 +12,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import com.gmail.goosius.siegewar.enums.SiegeRemoveReason;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeType;
@@ -250,7 +251,7 @@ public class SiegeController {
 	 * 
 	 * @param siege the siege
 	 */
-	public static void removeSiege(Siege siege) {
+	public static void removeSiege(Siege siege, SiegeRemoveReason reason) {
 		//End siege if it is not already ended
 		if(siege.getStatus().isActive()) {
 			try {
@@ -275,7 +276,7 @@ public class SiegeController {
 		//Save town
 		town.save();
 		//Call event
-		Bukkit.getPluginManager().callEvent(new SiegeRemoveEvent(siege));
+		Bukkit.getPluginManager().callEvent(new SiegeRemoveEvent(siege, reason));
 	}
 
 	public static void putTownInSiegeMap(Town town, Siege siege) {
