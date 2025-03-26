@@ -1,0 +1,10 @@
+before_install:
+    # Make sure SDKMAN is addressable and up-to-date.
+    - source "$HOME/.sdkman/bin/sdkman-init.sh"
+    - sdk update
+    # Use Eclipse Temurin 21 builds
+    - sdk install java 21-tem
+    - sdk use java 21-tem
+    # Use a modern Maven binary
+    - sdk install maven 3.8.3
+    - sdk use maven 3.8.3
