@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.tasks;
 
 import com.gmail.goosius.siegewar.SiegeController;
+import com.gmail.goosius.siegewar.enums.SiegeRemoveReason;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.playeractions.AbandonAttack;
@@ -66,7 +67,7 @@ public class SiegeWarTimerTaskController {
 				//Siege is inactive i.e. in the 'aftermath' phase
 				//Wait for siege immunity timer to end then delete siege
 				if (System.currentTimeMillis() > TownMetaDataController.getSiegeImmunityEndTime(siege.getTown())) {
-					SiegeController.removeSiege(siege);
+					SiegeController.removeSiege(siege, SiegeRemoveReason.IMMUNITY_EXPIRED);
 				}
 				return false;
 		}

@@ -2,6 +2,7 @@ package com.gmail.goosius.siegewar.listeners;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.enums.SiegeRemoveReason;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.utils.PermissionUtil;
@@ -56,7 +57,7 @@ public class SiegeWarTownEventListener implements Listener {
 	public void onTownGoesToRuin(TownRuinedEvent event) {
 		//Remove siege if town has one
 		if (SiegeController.hasSiege(event.getTown()))
-			SiegeController.removeSiege(SiegeController.getSiege(event.getTown()));
+			SiegeController.removeSiege(SiegeController.getSiege(event.getTown()), SiegeRemoveReason.TOWN_RUIN);
 		//Remove occupier if town has one
 		if (TownOccupationController.isTownOccupied(event.getTown()))
 			TownOccupationController.removeTownOccupation(event.getTown());
@@ -206,7 +207,7 @@ public class SiegeWarTownEventListener implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onDeleteTown(DeleteTownEvent event) {
 		if (SiegeController.hasSiege(event.getTownUUID()))
-			SiegeController.removeSiege(SiegeController.getSiegeByTownUUID(event.getTownUUID()));
+			SiegeController.removeSiege(SiegeController.getSiegeByTownUUID(event.getTownUUID()), SiegeRemoveReason.TOWN_DELETE);
 	}
 
 	@EventHandler(ignoreCancelled = true)

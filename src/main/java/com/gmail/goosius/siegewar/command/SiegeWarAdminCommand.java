@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.command;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.TownOccupationController;
+import com.gmail.goosius.siegewar.enums.SiegeRemoveReason;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
 import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
@@ -616,7 +617,7 @@ public class SiegeWarAdminCommand implements TabExecutor {
 					return;
 				case "remove":
 					//Remove siege from system
-					SiegeController.removeSiege(siege);
+					SiegeController.removeSiege(siege, SiegeRemoveReason.ADMIN_COMMAND);
 					Messaging.sendGlobalMessage(Translatable.of("msg_swa_remove_siege", siege.getTown().getName()));
 					Messaging.sendMsg(sender, Translatable.of("msg_swa_remove_siege_success"));
 					return;
