@@ -495,8 +495,12 @@ msg_err_cannot_spawn_battle_commander_dead: "&cVocê não pode spawnar no cerco 
 msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cVocê não pode spawnar no cerco porque o comandante de batalha da sua equipe não está na Zona de Cerco."
 msg_err_cannot_spawn_not_in_homeblock: "&cVocê deve estar no seu bloco de casa para spawnar no cerco."
 msg_err_cannot_spawn_outpost_during_battle_session: "&cVocê não pode spawnar em um posto avançado enquanto sua nação tiver um cerco ofensivo durante uma sessão de batalha."
-#Added in 2.8.0
-msg_swa_remove_siege: '&bCerco de %s removido via comandos administrativos.'
+#Webhook
+msg_swa_remove_siege_admin_command: '&bSiege of %s removed via admin commands.'
+msg_swa_remove_siege_nation_delete: '&bSiege of %s removed because the attacking nation no longer exists.'
+msg_swa_remove_siege_town_delete: '&bSiege of %s removed because the town was deleted.'
+msg_swa_remove_siege_town_ruin: '&bSiege of %s removed because the town was ruined.'
+msg_swa_remove_siege_immunity_expired: '&bSiege of %s removed because siege immunity expired.'
 msg_swa_battle: 'Batalha'
 #Siege Lore
 siege_lore_color_attacker: '&c%s'
