@@ -495,8 +495,12 @@ msg_err_cannot_spawn_battle_commander_dead: "&cYou cannot spawn to the siege bec
 msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cYou cannot spawn to the siege because your team's battle commander is not in the Siege-Zone."
 msg_err_cannot_spawn_not_in_homeblock: "&cYou must be in your town homeblock to spawn to the siege."
 msg_err_cannot_spawn_outpost_during_battle_session: "&cYou cannot spawn to an outpost while your nation has an offensive siege during a battle session."
-#Added in 2.8.0
-msg_swa_remove_siege: '&bSiege of %s removed via admin commands.'
+#Webhook
+msg_swa_remove_siege_admin_command: '&bSiege of %s removed via admin commands.'
+msg_swa_remove_siege_nation_delete: '&bSiege of %s removed because the attacking nation no longer exists.'
+msg_swa_remove_siege_town_delete: '&bSiege of %s removed because the town was deleted.'
+msg_swa_remove_siege_town_ruin: '&bSiege of %s removed because the town was ruined.'
+msg_swa_remove_siege_immunity_expired: '&bSiege of %s removed because siege immunity expired.'
 msg_swa_battle: 'Битва'
 #Siege Lore
 siege_lore_color_attacker: '&c%s'
