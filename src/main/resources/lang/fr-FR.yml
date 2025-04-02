@@ -17,21 +17,21 @@ description: >
 #Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
 #SiegeWarAPI
-msg_err_player_town_is_not_sieged: "This player's town is not Sieged."
-msg_err_resident_town_is_not_sieged: "This resident's town is not Sieged."
-msg_err_town_is_not_sieged: "This town is not Sieged."
+msg_err_player_town_is_not_sieged: "La ville de ce joueur n'est pas assiégée."
+msg_err_resident_town_is_not_sieged: "La ville de ce résident n'est pas assiégée."
+msg_err_town_is_not_sieged: "Cette ville n’est pas assiégée."
 #Added in (Siegewar version)
 #Siege war happy-path messages
 msg_siege_war_attack_pay_war_chest: '&bUn coffre de guerre a été préparé par %s, avec une valeur de %s. Celui qui remporte le siège recevra cet argent.'
 msg_siege_war_attack_recover_war_chest: '&bLe coffre de guerre a été récupéré par %s, avec une valeur de %s.'
-msg_siege_war_attack_partially_recover_war_chest: '&bThe war chest has been partially recovered by %s, with a value of %s.'
+msg_siege_war_attack_partially_recover_war_chest: '&bLe coffre de guerre a été partiellement récupéré par %s, avec une valeur de %s.'
 msg_siege_war_neutral_town_plundered: '&b%s a été pillé de %s par %s !'
 msg_siege_war_nation_town_plundered: '&b%s a été pillé de %s par %s !'
 msg_siege_war_town_ruined_from_plunder: '&b%s a été réduit en ruines par %s!'
 msg_siege_war_town_bankrupted_from_plunder: '&b%s a été mis en faillite par %s!'
 msg_siege_war_nation_defeated: '&b%s a été vaincu !.'
 msg_siege_war_attacking_troops_at_siege_banner: '&bSiège sur %s > Les attaquants sont à la bannière de siège.'
-msg_siege_war_banner_control_session_success: '&bBanner control session succeeded! You have been added to the banner control list.'
+msg_siege_war_banner_control_session_success: '&bContrôle de la bannière acquit ! Vous avez été ajouté à la liste des joueurs contrôlant la bannière.'
 msg_siege_war_banner_control_gained_by_attacker: '&bSiège sur %s > Les attaquants ont acquis le contrôle de la bannière.'
 msg_siege_war_banner_control_gained_by_defender: '&bSiège sur %s > Les défenseurs ont acquis le contrôle de la bannière.'
 msg_town_destroyed_by_nation_tax: '&b%s ne pouvait pas payer de taxes et est ruiné.'
