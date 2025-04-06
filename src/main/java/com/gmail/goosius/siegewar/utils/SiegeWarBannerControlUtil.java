@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.events.BannerControlSessionEndedEvent;
+import com.gmail.goosius.siegewar.events.BannerControlSessionPreStartEvent;
 import com.gmail.goosius.siegewar.events.BannerControlSessionStartedEvent;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.BattleSession;
@@ -99,6 +100,11 @@ public class SiegeWarBannerControlUtil {
 		long sessionEndTime = System.currentTimeMillis() + sessionDurationMillis;
 		BannerControlSession bannerControlSession =
 			new BannerControlSession(resident, player, siegeSide, sessionEndTime);
+
+		BannerControlSessionPreStartEvent preStartEvent = new BannerControlSessionPreStartEvent(siege, bannerControlSession);
+		Bukkit.getPluginManager().callEvent(preStartEvent);
+		if (preStartEvent.isCancelled()) return;
+
 		siege.addBannerControlSession(player, bannerControlSession);
 
 		//Notify Player in console
