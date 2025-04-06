@@ -133,6 +133,10 @@ public class SiegeWarSettings {
 		return radius < 0 ? TownySettings.getTownBlockSize() : radius;
 	}
 
+	public static boolean getWarSiegeBannerControlSessionCheckWilderness() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BANNER_CONTROL_SESSION_CHECK_WILDERNESS);
+	}
+
 	public static int getWarSiegeBannerPlaceDistanceBlocksMax() {
 		int max = Settings.getInt(ConfigNodes.WAR_SIEGE_BANNER_PLACE_DISTANCE_TOWN_BLOCKS_MAX);
 		int min = getWarSiegeBannerPlaceDistanceBlocksMin();
