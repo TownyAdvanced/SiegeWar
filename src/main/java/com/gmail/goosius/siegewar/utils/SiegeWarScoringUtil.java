@@ -31,7 +31,7 @@ public class SiegeWarScoringUtil {
 	 * @return true if a player in in the timed point zone
 	 */
 	public static boolean isPlayerInTimedPointZone(Player player, Siege siege) {
-		return TownyAPI.getInstance().isWilderness(player.getLocation())
+		return (!SiegeWarSettings.getWarSiegeBannerControlSessionCheckWilderness() || TownyAPI.getInstance().isWilderness(player.getLocation()))
 				&& SiegeWarDistanceUtil.isInTimedPointZone(player.getLocation(), siege);
 	}
 
