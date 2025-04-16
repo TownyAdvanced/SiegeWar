@@ -380,6 +380,13 @@ public enum ConfigNodes {
 			"# Players will begin a banner control session when inside this radius.",
 			"# This radius also applies to siege camps.",
 			"# Setting this value to below '0' will use the size of a Town Block as the radius."),
+	WAR_SIEGE_BANNER_CONTROL_SESSION_CHECK_WILDERNESS(
+			"war.siege.distances.banner_control_session_check_wilderness",
+			"true",
+			"",
+			"# If true will check if the player is in wilderness and check the radius blocks when checking if a player is in a timed point zone.",
+			"# If false it will only check the radius blocks when checking if a player is in a timed point zone.",
+			"# Setting this to false is not intended behavior and may break some features, you should only really use this if you're moving the banner to inside of towns"),
 	WAR_SIEGE_BANNER_PLACE_DISTANCE_TOWN_BLOCKS(
 			"war.siege.distances.banner_place_distance_town_blocks","","",""),
 	WAR_SIEGE_BANNER_PLACE_DISTANCE_TOWN_BLOCKS_MAX(
