@@ -15,6 +15,7 @@ import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translatable;
+import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.util.TimeMgmt;
 import com.palmergames.util.TimeTools;
 import org.bukkit.Bukkit;
@@ -102,8 +103,8 @@ public class SiegeWarBannerControlUtil {
 			new BannerControlSession(resident, player, siegeSide, sessionEndTime);
 
 		BannerControlSessionPreStartEvent preStartEvent = new BannerControlSessionPreStartEvent(siege, bannerControlSession);
-		Bukkit.getPluginManager().callEvent(preStartEvent);
-		if (preStartEvent.isCancelled()) return;
+		if (BukkitTools.isEventCancelled(preStartEvent))
+			return;
 
 		siege.addBannerControlSession(player, bannerControlSession);
 
