@@ -2,6 +2,8 @@ package com.gmail.goosius.siegewar.events;
 
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.Siege;
+
+import org.bukkit.Bukkit;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -15,6 +17,7 @@ public class BannerControlSessionPreStartEvent extends Event implements Cancella
     private boolean cancelled;
 
     public BannerControlSessionPreStartEvent(Siege siege, BannerControlSession bannerControlSession) {
+        super(!Bukkit.getServer().isPrimaryThread());
         this.siege = siege;
         this.bannerControlSession = bannerControlSession;
     }
