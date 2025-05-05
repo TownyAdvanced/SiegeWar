@@ -97,7 +97,7 @@ config_and_lang_file_could_not_be_loaded: 'Tải lại không thành công. Xem 
 msg_err_not_being_sieged: '&cThị trấn %s không có một cuộc bao vây nào.'
 msg_err_town_not_registered: '&cThị trấn %s chưa được đăng ký.'
 #Scoreboard
-hud_title: '&6&l%s Siege'
+hud_title: '&6&lCuộc bao vây %s'
 hud_siege_status: 'Thông tin cuộc chiến: '
 hud_attackers: 'Bên tấn công: '
 hud_defenders: 'Bên phòng thủ: '
@@ -227,7 +227,7 @@ msg_err_town_cannot_end_siege_as_finished: '&cCuộc bao vây đã kết thúc h
 msg_err_siege_war_plunder_not_possible_rebels_won: '&cKhông thể cướp bóc vì phiến quân thị trấn đã chiến thắng.'
 #Added in 0.16
 #Nation war history
-status_nation_town_stats: '&2Captures Foreign/Home: &a%d&2/&a%d'
+status_nation_town_stats: '&2Vùng bị chiếm Ngoài/Nội bộ: &a%d&2/&a%d'
 status_nation_plunder_stats: '&2Số tiền thu được từ cướp bóc: &a%d'
 #Siege effects
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&cChỉ những cư dân của thị trấn mới có thể xuất hiện trong một thị trấn bị tấn công hoặc khu vực bị tấn công.'
@@ -525,27 +525,27 @@ siege_lore_banner_chat_1: 'Biểu ngữ này bắt đầu %s'
 siege_lore_banner_chat_2: ' của %s'
 siege_lore_banner_chat_3: ', kết thúc với Chiến thắng cho %s'
 siege_lore_banner_chat_4_ATTACKERS: ', người đã vượt qua sự bảo vệ của %s'
-siege_lore_banner_chat_5_ATTACKERS: ' to take control of the town on %s'
-siege_lore_banner_chat_4_DEFENDERS: ', who overcame the attack from %s'
-siege_lore_banner_chat_5_DEFENDERS: ' to defend their town on %s'
-siege_lore_banner_chat_4_NOBODY: ', fighting against %s'
-siege_lore_banner_chat_5_NOBODY: ' in a battle for the town on %s'
-siege_lore_shield_name: 'Siege Shield'
-siege_err_conquest_sieges_disabled_in_the_config: "Conquest sieges have been disabled in the siegewar config."
-siege_err_revolt_sieges_disabled_in_the_config: "Revolt sieges have been disabled in the siegewar config."
-msg_err_peaceful_subversion_disabled_in_the_config: "&cIn the siegewar config, peaceful towns subverting is disabled. You cannot begin a siege on this town."
-msg_err_abandoning_attack_disabled_in_the_config: "&cIn the siegewar config, abandoning attacks has been disabled."
-msg_err_town_surrender_disabled_in_the_config: "&cIn the siegewar config, town surrender has been disabled."
-msg_err_invading_disabled_in_the_config: "&cIn the siegewar config, invading towns has been disabled."
-msg_err_action_disable_missing_node: '&cYou don''t have enough permissions for that action: %s'
-msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "Your nation is not the attacker, you cannot invade this town."
-msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "You do not have the authority to abandon or surrender this siege."
-msg_err_cannot_change_capital_because_peaceful: "&cYou cannot change the capital of the nation, because the new capital is peaceful."
-msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cYour town could not change to peaceful because capital cities are not allowed to be peaceful."
-msg_err_cannot_start_siege_as_a_peaceful_town: "&cYou cannot begin a siege, because your town is peaceful."
+siege_lore_banner_chat_5_ATTACKERS: ' để kiểm soát thị trấn %s'
+siege_lore_banner_chat_4_DEFENDERS: ', người đã vượt qua cuộc tấn công %s'
+siege_lore_banner_chat_5_DEFENDERS: ' để bảo vệ thị trấn %s'
+siege_lore_banner_chat_4_NOBODY: ', chiến đấu chống lại %s'
+siege_lore_banner_chat_5_NOBODY: ' trong trận chiến giành thị trấn %s'
+siege_lore_shield_name: 'Lá chắn công thành'
+siege_err_conquest_sieges_disabled_in_the_config: "Chế độ bao vây chinh phục đã bị vô hiệu hóa trong cấu hình siegewar."
+siege_err_revolt_sieges_disabled_in_the_config: "Chế độ bao vây nổi loạn đã bị vô hiệu hóa trong cấu hình siegewar."
+msg_err_peaceful_subversion_disabled_in_the_config: "&cTrong cấu hình siegewar, việc phá hoại thị trấn hòa bình bị vô hiệu hóa. Bạn không thể bắt đầu cuộc bao vây thị trấn này."
+msg_err_abandoning_attack_disabled_in_the_config: "&cTrong cấu hình siegewar, chức năng bỏ cuộc tấn công đã bị vô hiệu hóa."
+msg_err_town_surrender_disabled_in_the_config: "&cTrong cấu hình siegewar, tính năng đầu hàng thị trấn đã bị vô hiệu hóa."
+msg_err_invading_disabled_in_the_config: "&cTrong cấu hình siegewar, tính năng xâm lược thị trấn đã bị vô hiệu hóa."
+msg_err_action_disable_missing_node: '&cBạn không có đủ quyền cho hành động đó: %s'
+msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "Quốc gia của bạn không phải là bên tấn công, bạn không thể xâm lược thị trấn này."
+msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "Bạn không có thẩm quyền từ bỏ hoặc đầu hàng cuộc bao vây này."
+msg_err_cannot_change_capital_because_peaceful: "&cBạn không thể thay đổi thủ đô của quốc gia, vì thủ đô mới là nơi yên bình."
+msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cThị trấn của bạn không thể trở nên yên bình vì các thủ đô không được phép yên bình."
+msg_err_cannot_start_siege_as_a_peaceful_town: "&cBạn không thể bắt đầu cuộc bao vây vì thị trấn của bạn đang yên bình."
 #Added in 2.13.0
 #Only One Action
-msg_err_town_already_plundered_only_one_action: "&cYou cannot invade an already plundered nation."
-msg_err_town_already_invaded_only_one_action: "&cYou cannot plunder an already invaded nation."
-siege_msg_err_cannot_assign_rank_during_active_battlesession: "&cYou cannot add the %s rank while the battle session is active."
-siege_msg_err_cannot_assign_rank_during_active_siege: "&cYou cannot add the %s rank while your town is involved in a siege."
+msg_err_town_already_plundered_only_one_action: "&cBạn không thể xâm lược một quốc gia đã bị cướp bóc."
+msg_err_town_already_invaded_only_one_action: "&cBạn không thể cướp bóc một quốc gia đã bị xâm lược."
+siege_msg_err_cannot_assign_rank_during_active_battlesession: "&cBạn không thể thêm thứ hạng %s khi phiên chiến đấu đang diễn ra."
+siege_msg_err_cannot_assign_rank_during_active_siege: "&cBạn không thể thêm thứ hạng %s khi thị trấn của bạn đang bị bao vây."
