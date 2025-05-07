@@ -41,7 +41,7 @@ msg_town_destroyed_by_nation_tax_multiple: '&bThe following towns could not affo
 msg_err_siege_besieged_town_cannot_recruit: "&cBesieged towns cannot recruit new residents."
 #Claiming/Unclaiming
 msg_err_siege_claim_too_near_siege_zone: "&c区块过于接近围攻。"
-msg_err_siege_besieged_town_cannot_claim: "&cBesieged towns cannot claim new land."
+msg_err_siege_besieged_town_cannot_claim: "被围攻的城镇不能宣称新的地块。"
 msg_err_siege_besieged_town_cannot_unclaim: "&cBesieged towns (or towns which recently lost a siege) cannot un-claim land."
 msg_err_war_common_occupied_town_cannot_unclaim: "被占领城镇不能取消对土地的所有权。"
 #Revolt
@@ -50,8 +50,8 @@ msg_err_siege_war_revolt_immunity_active: "&cYour town has revolt immunity. It c
 #Attack
 msg_err_siege_war_banner_must_be_placed_above_ground: '&cThe siege banner must be placed above ground.'
 msg_err_siege_war_cannot_attack_own_town: '&cYou cannot attack your own town.'
-msg_err_siege_war_cannot_attack_town_in_own_nation: '&cYou cannot attack a town in your own nation.'
-msg_err_siege_war_cannot_attack_non_enemy_nation: '&cYou cannot attack a town unless the nation of that town is an enemy of your nation.'
+msg_err_siege_war_cannot_attack_town_in_own_nation: '&c你不能攻击自己所在国家的城镇。'
+msg_err_siege_war_cannot_attack_non_enemy_nation: '&c你不能攻击一个城镇，除非该城镇属于敌国。'
 msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cYou cannot perform this action because this chunk is facing more than one town block. Try placing the item in a different area.'
 msg_err_siege_war_nation_already_attacking_town: '&cYour nation is already attacking this town.'
 msg_err_siege_war_cannot_attack_siege_immunity: '&cThe target town has siege immunity. It cannot be attacked until the siege immunity expires.'
@@ -91,14 +91,14 @@ msg_war_siege_zone_block_placement_forbidden: '&cYou cannot place this type of b
 msg_war_siege_zone_bucket_emptying_forbidden: '&cYou cannot use this type of bucket in the wilderness area of a siege zone.'
 #Added in 0.02:
 admin_help_1: 'Reload the config and language file.'
-config_and_lang_file_reloaded_successfully: 'Config and Language file reloaded successfully.'
-config_and_lang_file_could_not_be_loaded: 'Reload unsuccessful. See console for details.'
+config_and_lang_file_reloaded_successfully: '配置和语言文件重新加载成功。'
+config_and_lang_file_could_not_be_loaded: '重新加载失败。了解详情请查看控制台。'
 #Added in 0.05:
 msg_err_not_being_sieged: '&cTown %s does not have an active siege.'
 msg_err_town_not_registered: '&cTown %s is not registered.'
 #Scoreboard
 hud_title: '&6&l%s Siege'
-hud_siege_status: 'Siege Status: '
+hud_siege_status: '围攻状态: '
 hud_attackers: '进攻方: '
 hud_defenders: '防守方: '
 hud_banner_control: "旗帜控制: "
