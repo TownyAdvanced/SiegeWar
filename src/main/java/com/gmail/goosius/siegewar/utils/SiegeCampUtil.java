@@ -105,6 +105,8 @@ public class SiegeCampUtil {
 
 			// Attackers scored enough points to start the Siege in ernest.
 			camp.startSiege();
+			// Remove the SiegeCamp.
+			SiegeController.removeSiegeCamp(camp);
 
 		} else {
 			// Attackers were thwarted, they are penalized with a cooldown on making another SiegeCamp on this town.
