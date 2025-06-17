@@ -71,12 +71,12 @@ msg_err_siege_war_banner_support_block_not_stable: "&cYou cannot place the banne
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'You cannot use this item while in a banner control session.'
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2Revolt Immunity Timer: &a%s'
-status_town_siege_status_in_progress: 'Contested'
-status_town_siege_status_banner_xyz: '&2 > Banner XYZ: &a%d,%d,%d'
+status_town_siege_status_in_progress: '正在进行中'
+status_town_siege_status_banner_xyz: '&2 > 旗帜坐标: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > Immunity Timer: &a%s'
-status_town_siege_progress: '&2 > Progress: &a%d/%d'
+status_town_siege_progress: '&2 > 进度：&a%d/%d'
 status_town_banner_control: '&2 > Banner Control: %s &a[%s]&2: &f'
-status_town_banner_control_nobody: '&2 > Banner Control: %s'
+status_town_banner_control_nobody: '&2 > 旗帜控制: %s'
 #General
 status_no_green: '&a否'
 msg_nobody: '&a无'
@@ -97,23 +97,23 @@ config_and_lang_file_could_not_be_loaded: '重新加载失败。了解详情请�
 msg_err_not_being_sieged: '&cTown %s does not have an active siege.'
 msg_err_town_not_registered: '&cTown %s is not registered.'
 #Scoreboard
-hud_title: '&6&l%s Siege'
+hud_title: '&6&l%s 围攻'
 hud_siege_status: '围攻状态: '
 hud_attackers: '进攻方: '
 hud_defenders: '防守方: '
 hud_banner_control: "旗帜控制: "
 hud_siege_progress: '攻城进度: '
-msg_swa_resident_already_has_control: '&cResident %s already has control.'
-msg_swa_resident_doesnt_have_control: "&cResident %s doesn't have control."
+msg_swa_resident_already_has_control: '&c居民 %s 已取得控制权。'
+msg_swa_resident_doesnt_have_control: "&c居民 %s 未取得控制权。"
 msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
-siege_status_in_progress: 'Contested'
+siege_status_in_progress: '正在进行中'
 siege_status_unknown: '未知'
 dynmap_siege_banner_control: '旗帜控制: %s'
 dynmap_siege_progress: '围攻进度: %d/%d'
 dynmap_siege_status: '围攻状态: %s'
 #Added in 0.06:
 msg_inventory_degrade_warning: '&4WARNING: &cSome of your gear is close to breaking due to inventory degradation.'
-msg_swa_remove_siege_success: '&bSuccessfully removed siege.'
+msg_swa_remove_siege_success: '&b成功移除围攻。'
 #Added in 0.08:
 msg_swa_set_towns_gained_success: '&bSuccessfully set towns gained to %d for %s.'
 msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
@@ -132,7 +132,7 @@ msg_siege_war_soldiers_paid: "The soldiers of the nation were paid a total of %s
 msg_err_invalid_bool: "&cInvalid option. Options: on/off"
 msg_beacon_preference_set: "&bBeacon preference set to %s."
 #Misc
-msg_na: 'N/A'
+msg_na: '不可用'
 #Town screen
 status_town_siege_status_siege_balance: '&2 > Balance: &a%d'
 status_town_siege_status_warchest: '&2 > War Chest: &a%s'
