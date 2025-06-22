@@ -43,7 +43,7 @@ msg_err_siege_besieged_town_cannot_recruit: "&cBesieged towns cannot recruit new
 msg_err_siege_claim_too_near_siege_zone: "&c区块过于接近围攻。"
 msg_err_siege_besieged_town_cannot_claim: "被围攻的城镇不能宣称新的地块。"
 msg_err_siege_besieged_town_cannot_unclaim: "&cBesieged towns (or towns which recently lost a siege) cannot un-claim land."
-msg_err_war_common_occupied_town_cannot_unclaim: "被占领城镇不能取消对土地的所有权。"
+msg_err_war_common_occupied_town_cannot_unclaim: "被占领城镇不能放弃土地。"
 #Revolt
 msg_err_siege_war_town_voluntary_leave_impossible: "&c城镇无法未经同意离开所在国家。如果你要离开你所在国家，请劝说国王(或一名国家官员)踢出你的城镇。"
 msg_err_siege_war_revolt_immunity_active: "&cYour town has revolt immunity. It cannot revolt until the revolt immunity expires."
@@ -369,9 +369,9 @@ msg_siege_war_nation_refund_available: "A nation refund of %s is now available t
 msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
 msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
 #Invasion
-msg_err_town_already_invaded: '&cYour nation has already captured the town.'
-msg_neutral_town_invaded: '&b%s has been captured by %s!'
-msg_nation_town_invaded: '&b%s, belonging to %s, has been captured by %s!'
+msg_err_town_already_invaded: '&c你的国家已经占领了该镇。'
+msg_neutral_town_invaded: '&b%s 已被 %s 占领！'
+msg_nation_town_invaded: '&b归属于 %s的%s，已被 %s 占领！'
 #Subverting
 msg_peaceful_town_subverted: "&b%s has been peacefully subverted and captured by %s."
 msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already owns and occupies it."
@@ -379,7 +379,7 @@ msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert thi
 msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying nation of %s, and declared themselves free to choose their own destiny. A REVOLT SIEGE has begun!'
 #war sickness
 msg_you_will_get_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. Please enter a town or leave the Siege Zone, otherwise you will get War Sickness in %s seconds.'
-msg_you_received_war_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. To remove the War Sickness, enter a town or leave the Siege Zone.'
+msg_you_received_war_sickness: '&c警告: 你已进入围攻区的野外，但你不是围攻的正式参与者。请进入一个城镇或离开围困区以消除战争病。'
 #Town Status Screen
 status_town_days_to_peacefulness_status_change: '&2Days To Peacefulness Status Change: &b%d'
 #Town Peacefulness
@@ -548,4 +548,4 @@ msg_err_cannot_start_siege_as_a_peaceful_town: "&c你不能发动围攻，因为
 msg_err_town_already_plundered_only_one_action: "&c你不能入侵一个已经被掠夺的国家。"
 msg_err_town_already_invaded_only_one_action: "&c你不能掠夺一个已经被入侵的国家。"
 siege_msg_err_cannot_assign_rank_during_active_battlesession: "&cYou cannot add the %s rank while the battle session is active."
-siege_msg_err_cannot_assign_rank_during_active_siege: "&cYou cannot add the %s rank while your town is involved in a siege."
+siege_msg_err_cannot_assign_rank_during_active_siege: "&c你不能在你的城镇参与围攻时授予 %s 。"
