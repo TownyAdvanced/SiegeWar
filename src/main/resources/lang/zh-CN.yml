@@ -300,7 +300,7 @@ msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&c作为一个和�
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&c作为一个和平城镇的居民，你不能轻易穿过围攻区。为消除战争病，请立即离开围攻区。'
 #Added in 0.43
 msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cWhile the siege assembly is in progress you cannot destroy the siege banner or the block it is attached to."
-msg_err_cannot_alter_blocks_near_siege_banner: 'You cannot place/destroy blocks at this location near the Siege Banner.'
+msg_err_cannot_alter_blocks_near_siege_banner: '你不能在接近围攻旗帜的地方放置/摧毁方块。'
 #Added in 0.44
 #Message shown siege-wide when a player loses a siegewar rank while in a siegezone.
 warn_resident_had_rank_removed: 'Warning: %s had their rank %s taken from them while in the siegezone at %s.'
@@ -445,14 +445,14 @@ msg_err_cannot_invade_siege_still_in_progress: '&c你不能在围攻仍在进行
 msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this town, because your nation already owns and occupies it.'
 msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&cUnable to add military rank to resident, because they belong to an Occupied town.'
 msg_err_cannot_set_occupation_without_nation: '&cTown %s has no nation. You must set the nation first before you can set the town to Occupied.'
-msg_err_cannot_invade_not_enough_permissions: "&cYou do not have enough permissions to capture the town."
+msg_err_cannot_invade_not_enough_permissions: "&c你没有足够的权限使用这个指令去占领该镇。"
 msg_err_occupied_towns_cannot_leave_their_nations: "&cOccupied towns cannot leave their nations in the usual way. To leave the nation, start a revolt siege."
 #Siegezone proximity warning
 msg_siege_zone_proximity_warning: "&c警告: 你已进入围攻区！"
 #Plunder
 msg_err_cannot_plunder_not_enough_permissions: "&c你没有足够的权限使用这个指令去掠夺该镇."
 #Not a town/nation member
-msg_err_siege_war_action_not_a_nation_member: '&cYou must be a member of a nation to do this action.'
+msg_err_siege_war_action_not_a_nation_member: '&c你必须是一个国家的成员才能执行此操作。'
 msg_err_siege_war_action_not_a_town_member: '&c你必须是一个城镇的成员才能执行此操作。'
 #Upfront Cost
 msg_town_pay_upfront_siege_cost: '&b你的城镇预付了 %s的围攻费用。'
@@ -533,10 +533,10 @@ siege_lore_banner_chat_5_NOBODY: ' 在为城镇 %s 作战中'
 siege_lore_shield_name: 'Siege Shield'
 siege_err_conquest_sieges_disabled_in_the_config: "在围攻战插件配置中已禁用征服围攻。"
 siege_err_revolt_sieges_disabled_in_the_config: "Revolt sieges have been disabled in the siegewar config."
-msg_err_peaceful_subversion_disabled_in_the_config: "&cIn the siegewar config, peaceful towns subverting is disabled. You cannot begin a siege on this town."
-msg_err_abandoning_attack_disabled_in_the_config: "&cIn the siegewar config, abandoning attacks has been disabled."
-msg_err_town_surrender_disabled_in_the_config: "&cIn the siegewar config, town surrender has been disabled."
-msg_err_invading_disabled_in_the_config: "&cIn the siegewar config, invading towns has been disabled."
+msg_err_peaceful_subversion_disabled_in_the_config: "&c在SiegeWar配置文件中，颠覆城镇和平状态已被禁用。你不能对这个城镇发动围攻。"
+msg_err_abandoning_attack_disabled_in_the_config: "&c在SiegeWar配置文件中，放弃进攻已被禁用。"
+msg_err_town_surrender_disabled_in_the_config: "&c在SiegeWar配置文件中，城镇投降已被禁用。"
+msg_err_invading_disabled_in_the_config: "&c在SiegeWar配置文件中，入侵城镇已被禁用。"
 msg_err_action_disable_missing_node: '&c你没有足够的权限使用这个指令: %s'
 msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "你的国家不是攻击方，你不能入侵这个城镇。"
 msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "你无权在这场围攻中放弃或投降。"
