@@ -280,7 +280,7 @@ msg_bossbar_preference_set: "&bBossBar preference set to %s."
 bossbar_msg_battle_time_remaining: '&2Battle Session Time Remaining: &a%s'
 msg_err_siege_war_revolt_immunity_permanent: "&cYour town has permanent revolt immunity. It cannot revolt."
 status_sieged: "%s[%s被围攻%s]"
-status_military_salary: "军饷： "
+status_military_salary: "Military Salary: "
 hover_message_click_to_claim: "Click to claim money owed to you."
 #Added in 0.31
 msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
@@ -440,10 +440,10 @@ status_nation_hover_title_demoralization: "%s[%s士气低落%s]"
 status_nation_demoralization_amount: '&2Conquest Sieges Starting Balance: &a%d'
 status_nation_demoralization_days_left: '&2剩余天数: &a%d'
 #Town Capture & Occupation
-msg_err_cannot_invade_without_victory: "&cYou cannot capture this town unless your nation is victorious in the siege."
+msg_err_cannot_invade_without_victory: "&c你不能占领这个城镇，除非你的国家在围攻中获胜。"
 msg_err_cannot_invade_siege_still_in_progress: '&c你不能在围攻仍在进行中时占领这个城镇。'
 msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this town, because your nation already owns and occupies it.'
-msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&cUnable to add military rank to resident, because they belong to an Occupied town.'
+msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&c不能为居民增加军衔，因为他们属于一被占领的城镇。'
 msg_err_cannot_set_occupation_without_nation: '&cTown %s has no nation. You must set the nation first before you can set the town to Occupied.'
 msg_err_cannot_invade_not_enough_permissions: "&c你没有足够的权限使用这个指令去占领该镇。"
 msg_err_occupied_towns_cannot_leave_their_nations: "&cOccupied towns cannot leave their nations in the usual way. To leave the nation, start a revolt siege."
@@ -465,16 +465,16 @@ siege_status_defender_win: '绝对防守方胜利'
 #Siege Special Victory Effects
 msg_conquest_siege_attacker_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的城镇能够收回战争费用中的 %s。"
 msg_conquest_siege_defender_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的国家能够收回战争费用中的 %s。"
-msg_conquest_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege victory was CLOSE, the usual plunder amount was reduced by %s."
-msg_revolt_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege victory CLOSE, the usual plunder amount was reduced by %s."
+msg_conquest_siege_attacker_close_win_plunder_reduced: "&b因为最近的围困胜利是 CLOSE，通常的掠夺量被减少 %s。"
+msg_revolt_siege_attacker_close_win_plunder_reduced: "&b因为最近的围困胜利是 CLOSE，通常的掠夺量被减少 %s。"
 msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (%d siege-balance to conquest sieges it initiates), for %d days."
 #Toxicity Reduction
 msg_chat_now_disabled: " General Chat, /lc, and /tell, will be disabled while the Battle Session is active, and for %s after it ends. If you want to chat, try using /tc, /nc, or /ac."
-msg_chat_now_restored: "&bGeneral Chat, /lc, and /tell, have been restored."
+msg_chat_now_restored: "&b公屏聊天、 /lc和 /tell已恢复使用。"
 msg_err_no_general_chat_in_battle_session: "&cGeneral Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
 msg_err_no_local_chat_in_battle_session: "&cLocal Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
 msg_err_no_tell_chat_in_battle_session: "&c/tell is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
-msg_can_also_chat_in_discord: " You can also chat in the server discord: %s."
+msg_can_also_chat_in_discord: " 您也可以在服务器的discord频道中聊天: %s。"
 #Bad Config Warnings
 msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. Calculated ideal value: %s. Actual configured value: %s."
 msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. Calculated ideal value: %s. Actual configured value: %s."
@@ -497,9 +497,9 @@ msg_err_cannot_spawn_not_in_homeblock: "&c你必须在你的城镇家园区块�
 msg_err_cannot_spawn_outpost_during_battle_session: "&cYou cannot spawn to an outpost while your nation has an offensive siege during a battle session."
 #Webhook
 msg_swa_remove_siege_admin_command: '&bSiege of %s removed via admin commands.'
-msg_swa_remove_siege_nation_delete: '由于攻击方国家不再存在， %s 的围攻已移除。'
-msg_swa_remove_siege_town_delete: '&%s的围攻已移除，因为该镇已被删除。'
-msg_swa_remove_siege_town_ruin: '&bSiege of %s removed because the town was ruined.'
+msg_swa_remove_siege_nation_delete: '由于攻击方国家不再存在， %s 的围攻已被移除。'
+msg_swa_remove_siege_town_delete: '&%s的围攻已被移除，因为该镇已删除。'
+msg_swa_remove_siege_town_ruin: '&%s的围攻已被移除，因为该镇已沦为废墟。'
 msg_swa_remove_siege_immunity_expired: '&bSiege of %s removed because siege immunity expired.'
 msg_swa_battle: 'Battle'
 #Siege Lore
