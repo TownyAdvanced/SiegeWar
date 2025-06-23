@@ -129,7 +129,7 @@ msg_err_siege_war_no_soldiers_to_pay: "There were no soldiers to pay."
 msg_err_siege_war_not_enough_nation_funds_to_pay: "The nation does not have enough funds to pay that amount."
 msg_siege_war_soldiers_paid: "The soldiers of the nation were paid a total of %s, which was distributed according to rank."
 #Added in 0.11
-msg_err_invalid_bool: "&cInvalid option. Options: on/off"
+msg_err_invalid_bool: "&c无效的选项。可用选项：on/off"
 msg_beacon_preference_set: "&bBeacon preference set to %s."
 #Misc
 msg_na: '不可用'
@@ -138,7 +138,7 @@ status_town_siege_status_siege_balance: '&2 > Balance: &a%d'
 status_town_siege_status_warchest: '&2 > War Chest: &a%s'
 #Battle sessions
 status_town_siege_battle: '&2Battle:'
-status_town_siege_battle_time_remaining: '&2 > Time Remaining: &a%s'
+status_town_siege_battle_time_remaining: '&2 > 剩余时间: &a%s'
 msg_war_siege_battle_session_started: "&bA new Battle Session has started. All PVP protections inside Siege-Zones are suspended for the duration of the Battle Session."
 msg_war_siege_battle_session_ended_with_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. The following teams won their battles:"
 msg_war_siege_battle_session_ended_without_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. There were no battles."
@@ -204,8 +204,8 @@ status_town_siege_status: '&2 > Status: &a%s'
 status_town_siege_attacker: '&2 > Attacker: &a%s'
 status_town_siege_defender: '&2 > Defender: &a%s'
 status_town_siege_battle_points: '&2 > Points: &a%s &2/ &a%s'
-status_town_siege_status_attacker_win: 'Decisive Attacker Victory'
-status_town_siege_status_defender_win: 'Decisive Defender Victory'
+status_town_siege_status_attacker_win: '绝对进攻方胜利'
+status_town_siege_status_defender_win: '绝对防守方胜利'
 status_town_siege_status_close_attacker_win: '偏进攻方胜利'
 status_town_siege_status_close_defender_win: '偏防守方胜利'
 status_town_siege_status_attacker_abandon: '进攻方放弃'
@@ -279,25 +279,25 @@ attacker_has_begun_a_siegecamp_session: '%s has begun a Siege-Assembly against %
 msg_bossbar_preference_set: "&bBossBar preference set to %s."
 bossbar_msg_battle_time_remaining: '&2Battle Session Time Remaining: &a%s'
 msg_err_siege_war_revolt_immunity_permanent: "&cYour town has permanent revolt immunity. It cannot revolt."
-status_sieged: "%s[%sSieged%s]"
-status_military_salary: "Military Salary: "
+status_sieged: "%s[%s被围攻%s]"
+status_military_salary: "军饷： "
 hover_message_click_to_claim: "Click to claim money owed to you."
 #Added in 0.31
 msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
 #Added in 0.33
 nation_help_siegewar_11: 'Collect any income due to you from military salary.'
-msg_err_siege_war_collect_unavailable: "There is nothing for you to collect."
+msg_err_siege_war_collect_unavailable: "没有任何东西可供您收集。"
 msg.battle.session.cleanup.starting: "The previous Battle Session did not complete. Initiating Battle Session Cleanup. Each battle will be resolved as a draw, with both attacker and defender battle points being applied to the siege balance."
 msg.battle.session.cleanup.complete: "Battle Session Cleanup complete. %d battles were resolved."
-msg_err_cannot_start_sieges_today: "&cYour server has limited the days-of-the-week when sieges can be started. Sieges cannot be started today."
+msg_err_cannot_start_sieges_today: "&c你的服务器限制了可发动围攻的每周天数。当前无法发动围攻。"
 #Added in 0.36
-msg_err_nation_neutrality_not_supported: '&cSiegeWar does not support nation neutrality.'
+msg_err_nation_neutrality_not_supported: '&cSiegewar不支持国家中立。'
 msg.townyperms.installation.complete: "Towny perms file adjusted for recommended SW setup."
 msg.townyconfig.installation.complete: "Towny config file adjusted for recommended SW setup."
 msg.installation.complete: "安装完毕。"
 #Added in 0.41
-msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To avoid War Sickness, leave the Siege-Zone immediately.'
-msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&cAs a peaceful town resident, you cannot pass easily through Siege-Zones. To remove the War Sickness, leave the Siege-Zone immediately.'
+msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&c作为一个和平城镇的居民，你不能轻易穿过围攻区。为避免战争病，请立即离开围攻区。'
+msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&c作为一个和平城镇的居民，你不能轻易穿过围攻区。为消除战争病，请立即离开围攻区。'
 #Added in 0.43
 msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cWhile the siege assembly is in progress you cannot destroy the siege banner or the block it is attached to."
 msg_err_cannot_alter_blocks_near_siege_banner: 'You cannot place/destroy blocks at this location near the Siege Banner.'
@@ -378,31 +378,31 @@ msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert thi
 #Revolting
 msg_revolt_siege_started: '&bThe townspeople of %s have risen up against the occupying nation of %s, and declared themselves free to choose their own destiny. A REVOLT SIEGE has begun!'
 #war sickness
-msg_you_will_get_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. Please enter a town or leave the Siege Zone, otherwise you will get War Sickness in %s seconds.'
+msg_you_will_get_sickness: '&c警告: 你已进入围攻区的野外，但你不是围攻的正式参与者。请进入一个城镇或离开围困区，否则你将在%s秒内患上战争病。'
 msg_you_received_war_sickness: '&c警告: 你已进入围攻区的野外，但你不是围攻的正式参与者。请进入一个城镇或离开围困区以消除战争病。'
 #Town Status Screen
 status_town_days_to_peacefulness_status_change: '&2Days To Peacefulness Status Change: &b%d'
 #Town Peacefulness
 town_help_toggle_peaceful: '更改您的城镇和平状态'
-msg_war_common_town_declared_peaceful: '&bPeacefulness Declared! The town will be confirmed as Peaceful in %d day(s).'
-msg_war_common_town_declared_non_peaceful: '&bNon-Peacefulness Declared! The town will be confirmed as Non-Peaceful in %d day(s).'
-msg_town_became_peaceful: '&b%s has been confirmed as Peaceful. The town is now immune to siege attacks, but vulnerable to getting subverted by nearby nations. Residents cannot gain nation-military ranks.'
-msg_town_became_non_peaceful: '&b%s has been confirmed as Non-Peaceful. The town is no longer immune to siege attacks, and no longer vulnerable to getting subverted by nearby nations. Residents can now gain nation-military ranks.'
-msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Peaceful status change countdown was cancelled.'
-msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they belong to a Peaceful town.'
-sg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
+msg_war_common_town_declared_peaceful: '&b和平宣言！该镇将在%d天内被确认为和平城镇。'
+msg_war_common_town_declared_non_peaceful: '&b战争宣言！该镇将在%d天内被确认为非和平城镇。'
+msg_town_became_peaceful: '&b%s 已被确认为和平城镇。该镇现在免受围攻攻击，但易受附近国家的颠覆，居民无法获得国家军衔。'
+msg_town_became_non_peaceful: '&b%s 已被确认为非和平城镇。该镇现在不再免受围攻攻击，但不再易受附近国家的颠覆，居民现在可以获得国家军衔。'
+msg_war_common_town_peacefulness_countdown_cancelled: '&b和平状态变更倒计时已取消。'
+msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&c不能为居民增加军衔，因为他们属于一个和平的城镇。'
+sg_err_peaceful_town_cannot_move_homeblock: "&c和平城镇不能更改他们的家园区块。如果你想移动你的家园区块，请先变更和平状态。"
 msg_err_peaceful_towns_cannot_revolt: '&c和平城镇不能起义。'
-msg_err_capital_towns_cannot_go_peaceful: '&cCapital towns cannot go peaceful.'
-msg_err_cannot_subvert_not_enough_permissions: "&cYou do not have enough permissions to subvert the town."
+msg_err_capital_towns_cannot_go_peaceful: '&c首都城镇不能处于和平状态。'
+msg_err_cannot_subvert_not_enough_permissions: "&c你没有足够的权限使用这个指令去颠覆该镇。"
 msg_err_cannot_subvert_dont_own_guardian_town: "&cSubvert not possible, because your nation does not own the required Guardian Town: %s."
 msg_peaceful_towns_released_on_homeblock_move: "&bBecause %s moved its homeblock, %d peaceful town(s) which it was guarding, were released from occupation."
 #Town neutrality
-msg_err_town_neutrality_not_supported: "&cSiegeWar does not support town neutrality. To protect your town from sieges, change your town to Peaceful, using '/sw town togglepeaceful'."
+msg_err_town_neutrality_not_supported: "&cSiegewar不支持城镇中立。为了保护你的城镇免受围攻，请使用“/sw town togglepeaceful”将你的城镇更改为和平状态。"
 #swa
 msg_swa_set_invade_success: '&bSet captured to %s for %s.'
-msg_swa_town_peacefulness_change_success: '&bSuccessfully changed the peacefulness status of %s to %s.'
-msg_swa_town_occupation_change_success: '&bSuccessfully changed the occupation status of %s to %s.'
-msg_err_command_not_allowed_on_active_siege: "You cannot run this command unless the siege has ended."
+msg_swa_town_peacefulness_change_success: '&b成功将 %s 的和平状态变更为 %s。'
+msg_swa_town_occupation_change_success: '&b成功将 %s 的占领状态变更为 %s。'
+msg_err_command_not_allowed_on_active_siege: "您不能在包围未结束时运行此命令。"
 #Timed wins
 msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has won a %s victory against the defending army of %s!'
 msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!'
@@ -425,7 +425,7 @@ msg_err_siege_occupied_towns_cannot_surrender_in_conquest_sieges: '&cIn CONQUEST
 msg_conquest_siege_attacker_win_result: ' The town now stands open for invasion and/or plunder.'
 msg_conquest_siege_defender_win_result: ' The town has been saved!'
 msg_revolt_siege_attacker_win_result: ' The town now stands open for invasion and/or plunder.'
-msg_revolt_siege_defender_win_result: ' The town has won its freedom!'
+msg_revolt_siege_defender_win_result: ' 该镇赢得了自由！'
 #Town Screen
 status_town_siege_status_invaded: '&2 > Town Captured: %s'
 status_town_peacefulness_flag: '&b(和平)'
@@ -434,14 +434,14 @@ status_town_hover_title_revolt_immunity: "%s[%sRevolt-Immunity%s]"
 status_town_hover_title_siege_immunity: "%s[%sSiege-Immunity%s]"
 status_town_standalone_siege_immunity_timer: '&2Siege Immunity Timer: &a%s'
 #Nation Screen
-status_nation_hover_title_sieges: "%s[%sSieges%s]"
-status_nation_hover_title_war_history: "%s[%sWar-History%s]"
-status_nation_hover_title_demoralization: "%s[%sDemoralized%s]"
+status_nation_hover_title_sieges: "%s[%s围攻%s]"
+status_nation_hover_title_war_history: "%s[%s战争史%s]"
+status_nation_hover_title_demoralization: "%s[%s士气低落%s]"
 status_nation_demoralization_amount: '&2Conquest Sieges Starting Balance: &a%d'
 status_nation_demoralization_days_left: '&2剩余天数: &a%d'
 #Town Capture & Occupation
 msg_err_cannot_invade_without_victory: "&cYou cannot capture this town unless your nation is victorious in the siege."
-msg_err_cannot_invade_siege_still_in_progress: '&cYou cannot capture this town while the siege is still in progress.'
+msg_err_cannot_invade_siege_still_in_progress: '&c你不能在围攻仍在进行中时占领这个城镇。'
 msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this town, because your nation already owns and occupies it.'
 msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&cUnable to add military rank to resident, because they belong to an Occupied town.'
 msg_err_cannot_set_occupation_without_nation: '&cTown %s has no nation. You must set the nation first before you can set the town to Occupied.'
@@ -493,12 +493,12 @@ msg_err_cannot_spawn_no_battle_commander: "&cYou cannot spawn to the siege becau
 msg_err_cannot_spawn_battle_commander_offline: "&cYou cannot spawn to the siege because your team's battle commander is offline."
 msg_err_cannot_spawn_battle_commander_dead: "&cYou cannot spawn to the siege because your team's battle commander is dead."
 msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cYou cannot spawn to the siege because your team's battle commander is not in the Siege-Zone."
-msg_err_cannot_spawn_not_in_homeblock: "&cYou must be in your town homeblock to spawn to the siege."
+msg_err_cannot_spawn_not_in_homeblock: "&c你必须在你的城镇家园区块中才能发动围攻。"
 msg_err_cannot_spawn_outpost_during_battle_session: "&cYou cannot spawn to an outpost while your nation has an offensive siege during a battle session."
 #Webhook
 msg_swa_remove_siege_admin_command: '&bSiege of %s removed via admin commands.'
-msg_swa_remove_siege_nation_delete: '&bSiege of %s removed because the attacking nation no longer exists.'
-msg_swa_remove_siege_town_delete: '&bSiege of %s removed because the town was deleted.'
+msg_swa_remove_siege_nation_delete: '由于攻击方国家不再存在， %s 的围攻已移除。'
+msg_swa_remove_siege_town_delete: '&%s的围攻已移除，因为该镇已被删除。'
 msg_swa_remove_siege_town_ruin: '&bSiege of %s removed because the town was ruined.'
 msg_swa_remove_siege_immunity_expired: '&bSiege of %s removed because siege immunity expired.'
 msg_swa_battle: 'Battle'
