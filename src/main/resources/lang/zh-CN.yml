@@ -450,7 +450,7 @@ msg_err_occupied_towns_cannot_leave_their_nations: "&cOccupied towns cannot leav
 #Siegezone proximity warning
 msg_siege_zone_proximity_warning: "&c警告: 你已进入围攻区！"
 #Plunder
-msg_err_cannot_plunder_not_enough_permissions: "&c你没有足够的权限使用这个指令去掠夺该镇."
+msg_err_cannot_plunder_not_enough_permissions: "&c你没有足够的权限使用这个指令去掠夺该镇。"
 #Not a town/nation member
 msg_err_siege_war_action_not_a_nation_member: '&c你必须是一个国家的成员才能执行此操作。'
 msg_err_siege_war_action_not_a_town_member: '&c你必须是一个城镇的成员才能执行此操作。'
