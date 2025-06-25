@@ -17,9 +17,9 @@ description: >
 #Rose = &c, LightPurple = &d, Yellow = &e, White = &f
 siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
 #SiegeWarAPI
-msg_err_player_town_is_not_sieged: "这个玩家的城镇未被围攻。"
+msg_err_player_town_is_not_sieged: "该玩家的城镇未被围攻。"
 msg_err_resident_town_is_not_sieged: "这个居民的城镇未被围攻。"
-msg_err_town_is_not_sieged: "这个城镇未被围攻。"
+msg_err_town_is_not_sieged: "该城镇未被围攻。"
 #Added in (Siegewar version)
 #Siege war happy-path messages
 msg_siege_war_attack_pay_war_chest: '&bA war-chest has been prepared by %s, with a value of %s. Whoever wins the siege will get this money.'
@@ -38,7 +38,7 @@ msg_town_destroyed_by_nation_tax: '&b%s 因无法支付税款而倒闭。'
 msg_town_destroyed_by_nation_tax_multiple: '&bThe following towns could not afford the nation tax and have fallen: '
 #Siege war error message
 #Recruiting
-msg_err_siege_besieged_town_cannot_recruit: "&cBesieged towns cannot recruit new residents."
+msg_err_siege_besieged_town_cannot_recruit: "被围攻的城镇不能招募新的居民。"
 #Claiming/Unclaiming
 msg_err_siege_claim_too_near_siege_zone: "&c区块过于接近围攻区。"
 msg_err_siege_besieged_town_cannot_claim: "被围攻的城镇不能宣称新的地块。"
@@ -48,25 +48,25 @@ msg_err_war_common_occupied_town_cannot_unclaim: "被占领城镇不能放弃土
 msg_err_siege_war_town_voluntary_leave_impossible: "&c城镇无法未经同意离开所在国家。如果你要离开你所在国家，请劝说国王(或一名国家官员)踢出你的城镇。"
 msg_err_siege_war_revolt_immunity_active: "&cYour town has revolt immunity. It cannot revolt until the revolt immunity expires."
 #Attack
-msg_err_siege_war_banner_must_be_placed_above_ground: '&cThe siege banner must be placed above ground.'
-msg_err_siege_war_cannot_attack_own_town: '&cYou cannot attack your own town.'
+msg_err_siege_war_banner_must_be_placed_above_ground: '&c围攻旗帜必须被放置在地表。'
+msg_err_siege_war_cannot_attack_own_town: '&b你不能攻击你自己的城镇。'
 msg_err_siege_war_cannot_attack_town_in_own_nation: '&c你不能攻击自己所在国家的城镇。'
 msg_err_siege_war_cannot_attack_non_enemy_nation: '&c你不能攻击一个城镇，除非该城镇属于敌国。'
 msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cYou cannot perform this action because this chunk is facing more than one town block. Try placing the item in a different area.'
-msg_err_siege_war_nation_already_attacking_town: '&cYour nation is already attacking this town.'
+msg_err_siege_war_nation_already_attacking_town: '&c你的国家已经在攻击这个城镇。'
 msg_err_siege_war_cannot_attack_siege_immunity: '&cThe target town has siege immunity. It cannot be attacked until the siege immunity expires.'
-msg_err_siege_war_cannot_join_siege: '&cYou cannot attack a town while it is under siege by another nation.'
+msg_err_siege_war_cannot_join_siege: '&c你不能攻击一个正在被另一个国家围攻的城镇。'
 msg_err_siege_war_nation_has_too_many_active_siege_attacks: '&cYour nation is at the maximum number of concurrent siege-attacks. To start another attack, one or more of the current attacks must finish.'
-msg_err_siege_war_town_not_close_enough_to_nation: '&cThe town is too far away from your nation capital to be attacked.'
+msg_err_siege_war_town_not_close_enough_to_nation: '&c该镇离你的国家的首都太远，不能被攻击。'
 #Invade
-msg_err_siege_war_no_siege_on_target_town: '&cThere is no siege on the target town of %s.'
+msg_err_siege_war_no_siege_on_target_town: '&c目标城镇 %s未被围攻。'
 #Plunder
 msg_err_siege_war_cannot_plunder_without_victory: "&cYou cannot plunder unless your nation is victorious in the siege."
 msg_err_siege_war_cannot_plunder_without_economy: "&cYou cannot plunder because no economy plugin is active"
 msg_err_siege_war_town_already_plundered: '&cThis town has already been plundered.'
 #Block change
 msg_err_siege_war_cannot_destroy_siege_banner: "&cWhile the siege is in progress you cannot destroy the siege banner or the block it is attached to."
-msg_err_siege_war_banner_support_block_not_stable: "&cYou cannot place the banner on unstable ground e.g. sand or gravel."
+msg_err_siege_war_banner_support_block_not_stable: "&c您不能将旗帜放置在不稳定的地面上，例如沙子或沙砾。"
 #Banner control
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'You cannot use this item while in a banner control session.'
 #Town Info Siege Section
@@ -87,10 +87,10 @@ msg_set_siege_immunities_town: '%s 镇的围攻豁免设置为 %s。'
 msg_set_siege_immunities_nation: '国家所有城镇的围攻豁免 %s 被设置为 %s。'
 msg_set_siege_immunities_all: '所有城镇的围攻豁免被设置为 %s。'
 #Siege-zone block placement restrictions
-msg_war_siege_zone_block_placement_forbidden: '&cYou cannot place this type of block in the wilderness area of a siege zone.'
-msg_war_siege_zone_bucket_emptying_forbidden: '&cYou cannot use this type of bucket in the wilderness area of a siege zone.'
+msg_war_siege_zone_block_placement_forbidden: '&c你不能将此类型的方块放置在围攻区的野外。'
+msg_war_siege_zone_bucket_emptying_forbidden: '&c你不能在围攻区的野外使用此类型的桶。'
 #Added in 0.02:
-admin_help_1: 'Reload the config and language file.'
+admin_help_1: '重新加载配置和语言文件。'
 config_and_lang_file_reloaded_successfully: '配置和语言文件重新加载成功。'
 config_and_lang_file_could_not_be_loaded: '重新加载失败。请查看控制台以了解详情。'
 #Added in 0.05:
@@ -265,18 +265,18 @@ msg_battle_session_force_end: "&bThe Battle Session has been force ended."
 #Added in 0.28
 msg_town_immunity_expired: 'Your town''s Siege Immunity has expired.'
 #Unsiegeable towns strings
-msg_permanent: "permanent"
-msg_error_must_be_num_or_permanent: '&cAmount must be a number or ''permanent''.'
-msg_surrender_action_cancelled: 'Siege surrender cancelled.'
-msg_abandon_action_cancelled: 'Siege abandon cancelled.'
+msg_permanent: "永久"
+msg_error_must_be_num_or_permanent: '&c数量必须是一个数字或 "permanent" (永久)。'
+msg_surrender_action_cancelled: '围攻投降已取消。'
+msg_abandon_action_cancelled: '围攻放弃已取消。'
 #Added in 0.29
 msg_err_siegecamp_too_close_to_another_siegecamp: 'Siege-Assembly too close to another Siege-Assembly!'
-msg_err_too_soon_since_your_last_siegecamp: 'It has been too soon since you last tried to attack this town!'
+msg_err_too_soon_since_your_last_siegecamp: '距离你上次攻击这个城镇的时间还太短，暂时无法再次进攻！'
 msg_err_your_siegecamp_failed_you_must_wait_x: 'Your Siege-Assembly failed to score enough points, you cannot attempt to attack the town again for %s.'
 attackers_scored_points_towards_siege_camp_x_of_x: '%s has scored points towards their Siege-Assembly: %s/%s.'
 attacker_has_begun_a_siegecamp_session: '%s has begun a Siege-Assembly against %s. If successful a Siege will begin! The attackers must score %s points within %s minutes.'
 #Added in 0.30
-msg_bossbar_preference_set: "&bBossBar preference set to %s."
+msg_bossbar_preference_set: "&bBossBar 偏好设置为 %s"
 bossbar_msg_battle_time_remaining: '&2Battle Session Time Remaining: &a%s'
 msg_err_siege_war_revolt_immunity_permanent: "&cYour town has permanent revolt immunity. It cannot revolt."
 status_sieged: "%s[%s被围攻%s]"
@@ -476,11 +476,11 @@ msg_err_no_local_chat_in_battle_session: "&cLocal Chat is disabled while a Battl
 msg_err_no_tell_chat_in_battle_session: "&c/tell is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
 msg_can_also_chat_in_discord: " 您也可以在服务器的discord频道中聊天: %s。"
 #Bad Config Warnings
-msg_err_value_configured_too_high: "&cWARNING: The server's configured value for %s is too high. Calculated ideal value: %s. Actual configured value: %s."
-msg_err_value_configured_too_low: "&cWARNING: The server's configured value for %s is too low. Calculated ideal value: %s. Actual configured value: %s."
-msg_err_note_about_warnings: "&cNOTE: If your server has not launched yet, don't worry if the ideal values look wrong. The warnings will self-correct as soon as players start creating towns/nations."
+msg_err_value_configured_too_high: "&c警告: 服务器配置的 %s 值太高。计算出的理想值为: %s。实际配置值为: %s。"
+msg_err_value_configured_too_low: "&c警告: 服务器配置的 %s 值太低。计算出的理想值为: %s。实际配置值为: %s。"
+msg_err_note_about_warnings: "&c注意: 如果您的服务器尚未启动, 请不要担心理想值看起来有误。当玩家开始创建城镇/国家时，警告将会自动更正。"
 #Block Placement
-msg_err_banner_cannot_be_more_than_one_block_away: "&cThe banner cannot be more than 1 block away from the target town."
+msg_err_banner_cannot_be_more_than_one_block_away: "&c旗帜距离目标城镇不能超过 1 个方块。"
 msg_err_banner_cannot_be_close_to_any_town_block: '&cThe banner must be at least %s full town block(s) away from any town.'
 #Battle Commanders / Mobile Spawn Points
 msg_battle_commanders_assigned: "&bSiege at %s > Battle Commanders Assigned. Attacking Commander: %s. Defending Commander: %s."
@@ -488,11 +488,11 @@ no_battle_commander: "<None>"
 msg_err_cannot_spawn_feature_not_active: "&cYou cannot spawn to the siege because the 'battle commanders' feature is disabled by your server."
 msg_err_cannot_spawn_siege_not_active: "&cYou cannot spawn to the siege because the siege is not active."
 msg_err_cannot_spawn_battle_session_not_active: "&cYou cannot spawn to the siege because there is no active battle session."
-msg_err_cannot_spawn_not_participant: "&cYou cannot spawn to the siege because you are not an official participant in the siege."
-msg_err_cannot_spawn_no_battle_commander: "&cYou cannot spawn to the siege because your team has no battle commander."
-msg_err_cannot_spawn_battle_commander_offline: "&cYou cannot spawn to the siege because your team's battle commander is offline."
-msg_err_cannot_spawn_battle_commander_dead: "&cYou cannot spawn to the siege because your team's battle commander is dead."
-msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cYou cannot spawn to the siege because your team's battle commander is not in the Siege-Zone."
+msg_err_cannot_spawn_not_participant: "&c你不能传送到围攻区，因为你不是围攻的正式参与者。"
+msg_err_cannot_spawn_no_battle_commander: "&c你无法传送到围攻，因为你的队伍没有战斗指挥官。"
+msg_err_cannot_spawn_battle_commander_offline: "&c你无法传送到围攻，因为你的队伍的战斗指挥官不在线。"
+msg_err_cannot_spawn_battle_commander_dead: "&c你无法传送到围攻，因为你的队伍的战斗指挥官已死亡。"
+msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&c你无法传送到围攻，因为你的队伍的战斗指挥官未处于围攻区内。"
 msg_err_cannot_spawn_not_in_homeblock: "&c你必须在你的城镇中心区块中才能传送至围攻。"
 msg_err_cannot_spawn_outpost_during_battle_session: "&cYou cannot spawn to an outpost while your nation has an offensive siege during a battle session."
 #Webhook
@@ -532,7 +532,7 @@ siege_lore_banner_chat_4_NOBODY: '，在与 %s 战斗时'
 siege_lore_banner_chat_5_NOBODY: ' 在为城镇 %s 作战中'
 siege_lore_shield_name: 'Siege Shield'
 siege_err_conquest_sieges_disabled_in_the_config: "&c在SiegeWar配置文件中，征服围攻已被禁用。"
-siege_err_revolt_sieges_disabled_in_the_config: "Revolt sieges have been disabled in the siegewar config."
+siege_err_revolt_sieges_disabled_in_the_config: "&c在SiegeWar配置文件中，起义围攻已被禁用。"
 msg_err_peaceful_subversion_disabled_in_the_config: "&c在SiegeWar配置文件中，颠覆城镇和平状态已被禁用。你不能对这个城镇发动围攻。"
 msg_err_abandoning_attack_disabled_in_the_config: "&c在SiegeWar配置文件中，放弃进攻已被禁用。"
 msg_err_town_surrender_disabled_in_the_config: "&c在SiegeWar配置文件中，城镇投降已被禁用。"
