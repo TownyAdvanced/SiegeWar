@@ -40,7 +40,7 @@ msg_town_destroyed_by_nation_tax_multiple: '&bThe following towns could not affo
 #Recruiting
 msg_err_siege_besieged_town_cannot_recruit: "&cBesieged towns cannot recruit new residents."
 #Claiming/Unclaiming
-msg_err_siege_claim_too_near_siege_zone: "&c区块过于接近围攻。"
+msg_err_siege_claim_too_near_siege_zone: "&c区块过于接近围攻区。"
 msg_err_siege_besieged_town_cannot_claim: "被围攻的城镇不能宣称新的地块。"
 msg_err_siege_besieged_town_cannot_unclaim: "&cBesieged towns (or towns which recently lost a siege) cannot un-claim land."
 msg_err_war_common_occupied_town_cannot_unclaim: "被占领城镇不能放弃土地。"
@@ -92,7 +92,7 @@ msg_war_siege_zone_bucket_emptying_forbidden: '&cYou cannot use this type of buc
 #Added in 0.02:
 admin_help_1: 'Reload the config and language file.'
 config_and_lang_file_reloaded_successfully: '配置和语言文件重新加载成功。'
-config_and_lang_file_could_not_be_loaded: '重新加载失败。了解详情请查看控制台。'
+config_and_lang_file_could_not_be_loaded: '重新加载失败。请查看控制台以了解详情。'
 #Added in 0.05:
 msg_err_not_being_sieged: '&cTown %s does not have an active siege.'
 msg_err_town_not_registered: '&cTown %s is not registered.'
@@ -176,7 +176,7 @@ msg_err_unknown_nation: '&c未知国家'
 #Siege Types
 siege_type_conquest: '征服'
 siege_type_liberation: '解放'
-siege_type_revolt: 'Revolt'
+siege_type_revolt: '起义'
 siege_type_suppression: '镇压'
 #Dynmap
 dynmap_siege_title: 'Siege: %s vs %s'
@@ -300,7 +300,7 @@ msg_war_siege_peaceful_player_warned_for_being_in_siegezone: '&c作为一个和�
 msg_war_siege_peaceful_player_punished_for_being_in_siegezone: '&c作为一个和平城镇的居民，你不能轻易穿过围攻区。为消除战争病，请立即离开围攻区。'
 #Added in 0.43
 msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cWhile the siege assembly is in progress you cannot destroy the siege banner or the block it is attached to."
-msg_err_cannot_alter_blocks_near_siege_banner: '你不能在接近围攻旗帜的地方放置/摧毁方块。'
+msg_err_cannot_alter_blocks_near_siege_banner: '你不能在围攻旗帜附近放置/摧毁方块。'
 #Added in 0.44
 #Message shown siege-wide when a player loses a siegewar rank while in a siegezone.
 warn_resident_had_rank_removed: 'Warning: %s had their rank %s taken from them while in the siegezone at %s.'
@@ -371,7 +371,7 @@ msg_err_siege_war_nation_refund_unavailable: "There is no nation refund availabl
 #Invasion
 msg_err_town_already_invaded: '&c你的国家已经占领了该镇。'
 msg_neutral_town_invaded: '&b%s 已被 %s 占领！'
-msg_nation_town_invaded: '&b归属于 %s的%s，已被 %s 占领！'
+msg_nation_town_invaded: '&b %s，归属于%s，已被 %s 占领！'
 #Subverting
 msg_peaceful_town_subverted: "&b%s has been peacefully subverted and captured by %s."
 msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already owns and occupies it."
@@ -390,7 +390,7 @@ msg_town_became_peaceful: '&b%s 已被确认为和平城镇。该镇现在免受
 msg_town_became_non_peaceful: '&b%s 已被确认为非和平城镇。该镇现在不再免受围攻攻击，但不再易受附近国家的颠覆，居民现在可以获得国家军衔。'
 msg_war_common_town_peacefulness_countdown_cancelled: '&b和平状态变更倒计时已取消。'
 msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&c不能为居民增加军衔，因为他们属于一个和平的城镇。'
-sg_err_peaceful_town_cannot_move_homeblock: "&c和平城镇不能更改他们的家园区块。如果你想移动你的家园区块，请先变更和平状态。"
+sg_err_peaceful_town_cannot_move_homeblock: "&c和平城镇不能更改他们的中心区块。如果你想移动你的中心区块，请先变更和平状态。"
 msg_err_peaceful_towns_cannot_revolt: '&c和平城镇不能起义。'
 msg_err_capital_towns_cannot_go_peaceful: '&c首都城镇不能处于和平状态。'
 msg_err_cannot_subvert_not_enough_permissions: "&c你没有足够的权限使用这个指令去颠覆该镇。"
@@ -402,7 +402,7 @@ msg_err_town_neutrality_not_supported: "&cSiegewar不支持城镇中立。为了
 msg_swa_set_invade_success: '&bSet captured to %s for %s.'
 msg_swa_town_peacefulness_change_success: '&b成功将 %s 的和平状态变更为 %s。'
 msg_swa_town_occupation_change_success: '&b成功将 %s 的占领状态变更为 %s。'
-msg_err_command_not_allowed_on_active_siege: "您不能在包围未结束时运行此命令。"
+msg_err_command_not_allowed_on_active_siege: "您不能在围攻未结束时运行此命令。"
 #Timed wins
 msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has won a %s victory against the defending army of %s!'
 msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!'
@@ -443,7 +443,7 @@ status_nation_demoralization_days_left: '&2剩余天数: &a%d'
 msg_err_cannot_invade_without_victory: "&c你不能占领这个城镇，除非你的国家在围攻中获胜。"
 msg_err_cannot_invade_siege_still_in_progress: '&c你不能在围攻仍在进行中时占领这个城镇。'
 msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this town, because your nation already owns and occupies it.'
-msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&c不能为居民增加军衔，因为他们属于一被占领的城镇。'
+msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&c不能为居民增加军衔，因为他们属于一个被占领的城镇。'
 msg_err_cannot_set_occupation_without_nation: '&cTown %s has no nation. You must set the nation first before you can set the town to Occupied.'
 msg_err_cannot_invade_not_enough_permissions: "&c你没有足够的权限使用这个指令去占领该镇。"
 msg_err_occupied_towns_cannot_leave_their_nations: "&cOccupied towns cannot leave their nations in the usual way. To leave the nation, start a revolt siege."
@@ -493,7 +493,7 @@ msg_err_cannot_spawn_no_battle_commander: "&cYou cannot spawn to the siege becau
 msg_err_cannot_spawn_battle_commander_offline: "&cYou cannot spawn to the siege because your team's battle commander is offline."
 msg_err_cannot_spawn_battle_commander_dead: "&cYou cannot spawn to the siege because your team's battle commander is dead."
 msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&cYou cannot spawn to the siege because your team's battle commander is not in the Siege-Zone."
-msg_err_cannot_spawn_not_in_homeblock: "&c你必须在你的城镇家园区块中才能发动围攻。"
+msg_err_cannot_spawn_not_in_homeblock: "&c你必须在你的城镇中心区块中才能传送至围攻。"
 msg_err_cannot_spawn_outpost_during_battle_session: "&cYou cannot spawn to an outpost while your nation has an offensive siege during a battle session."
 #Webhook
 msg_swa_remove_siege_admin_command: '&bSiege of %s removed via admin commands.'
@@ -531,13 +531,13 @@ siege_lore_banner_chat_5_DEFENDERS: ' 保卫他们的城镇 %s'
 siege_lore_banner_chat_4_NOBODY: '，在与 %s 战斗时'
 siege_lore_banner_chat_5_NOBODY: ' 在为城镇 %s 作战中'
 siege_lore_shield_name: 'Siege Shield'
-siege_err_conquest_sieges_disabled_in_the_config: "在围攻战插件配置中已禁用征服围攻。"
+siege_err_conquest_sieges_disabled_in_the_config: "&c在SiegeWar配置文件中，征服围攻已被禁用。"
 siege_err_revolt_sieges_disabled_in_the_config: "Revolt sieges have been disabled in the siegewar config."
 msg_err_peaceful_subversion_disabled_in_the_config: "&c在SiegeWar配置文件中，颠覆城镇和平状态已被禁用。你不能对这个城镇发动围攻。"
 msg_err_abandoning_attack_disabled_in_the_config: "&c在SiegeWar配置文件中，放弃进攻已被禁用。"
 msg_err_town_surrender_disabled_in_the_config: "&c在SiegeWar配置文件中，城镇投降已被禁用。"
 msg_err_invading_disabled_in_the_config: "&c在SiegeWar配置文件中，入侵城镇已被禁用。"
-msg_err_action_disable_missing_node: '&c你没有足够的权限使用这个指令: %s'
+msg_err_action_disable_missing_node: '&c你没有足够的权限进行该操作:%s'
 msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "你的国家不是攻击方，你不能入侵这个城镇。"
 msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "你无权在这场围攻中放弃或投降。"
 msg_err_cannot_change_capital_because_peaceful: "&c你不能更改国家首都，因为新首都处于和平状态。"
