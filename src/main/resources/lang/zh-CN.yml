@@ -102,7 +102,7 @@ hud_siege_status: '围攻状态: '
 hud_attackers: '进攻方: '
 hud_defenders: '防守方: '
 hud_banner_control: "旗帜控制: "
-hud_siege_progress: '攻城进度: '
+hud_siege_progress: '围攻进度: '
 msg_swa_resident_already_has_control: '&c居民 %s 已取得控制权。'
 msg_swa_resident_doesnt_have_control: "&c居民 %s 未取得控制权。"
 msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
@@ -221,7 +221,7 @@ siege_status_pending_defender_surrender: 'Defender Surrender Pending'
 #Nation screen
 status_nation_offensive_sieges: '&2Offensive Sieges &a[%s]&2: &f'
 status_nation_defensive_sieges: '&2Defensive Sieges &a[%s]&2: &f'
-msg_err_town_cannot_end_siege_as_no_siege: '&c附近的城镇没有被围攻。无法被放弃/投降。'
+msg_err_town_cannot_end_siege_as_no_siege: '&c附近的城镇没有被围攻。无法放弃/投降。'
 msg_err_town_cannot_end_siege_as_finished: '&cThe siege is finished or scheduled to finish. Abandon/Surrender not possible.'
 #Plunder
 msg_err_siege_war_plunder_not_possible_rebels_won: '&cPlunder not possible because the town rebels won the siege.'
@@ -541,7 +541,7 @@ msg_err_action_disable_missing_node: '&c你没有足够的权限使用这个指�
 msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "你的国家不是攻击方，你不能入侵这个城镇。"
 msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "你无权在这场围攻中放弃或投降。"
 msg_err_cannot_change_capital_because_peaceful: "&c你不能更改国家首都，因为新首都处于和平状态。"
-msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&c你的城镇不能被设置为和平状态，因为首都不可被设置为和平。"
+msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&c你的城镇不能被设置为和平状态，因为首都城镇不可被设置为和平。"
 msg_err_cannot_start_siege_as_a_peaceful_town: "&c你不能发动围攻，因为你的城镇处于和平状态。"
 #Added in 2.13.0
 #Only One Action
