@@ -142,9 +142,9 @@ status_town_siege_battle_time_remaining: '&2 > 剩余时间: &a%s'
 msg_war_siege_battle_session_started: "&bA new Battle Session has started. All PVP protections inside Siege-Zones are suspended for the duration of the Battle Session."
 msg_war_siege_battle_session_ended_with_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. The following teams won their battles:"
 msg_war_siege_battle_session_ended_without_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. There were no battles."
-msg_war_siege_battle_session_ended_attacker_result: "&b * Attackers @ %s (%s)"
-msg_war_siege_battle_session_ended_defender_result: "&b * Defenders @ %s (%s)"
-msg_war_siege_battle_session_ended_draw_result: "&b * Draw @ %s (0)"
+msg_war_siege_battle_session_ended_attacker_result: "&b * 进攻方@ %s (%s)"
+msg_war_siege_battle_session_ended_defender_result: "&b * 防守方@ %s (%s)"
+msg_war_siege_battle_session_ended_draw_result: "&b * 平局@ %s (0)"
 msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next Battle Session starts. The next Battle Session will start in %s."
 #Hud
 hud_siege_balance: 'Siege Balance: '
@@ -184,15 +184,15 @@ dynmap_siege_type: '类型:%s'
 dynmap_siege_town: '城镇: %s'
 dynmap_siege_balance: 'Siege Balance: %d'
 dynmap_siege_war_chest: 'War Chest: %s'
-dynmap_siege_battle_points: 'Battle Points: %s / %s'
+dynmap_siege_battle_points: '战斗点数: %s / %s'
 #HUD
 hud_siege_type: '类型: '
-hud_battle_attacker_points: 'ATK BAT Points: '
-hud_battle_defender_points: 'DEF BAT Points: '
+hud_battle_attacker_points: '进攻方战斗点数: '
+hud_battle_defender_points: '防守方战斗点数: '
 #Starting sieges
 msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruined town.'
 msg_err_cannot_start_siege_due_to_siege_immunity: '&cYou cannot start a siege now, because the nearby town has siege immunity.'
-msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&cYou cannot start a revolt siege because the town is not in an occupied state.'
+msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&c你不能发动起义围攻，因为该镇不处于被占领状态。'
 msg_conquest_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A CONQUEST SIEGE has begun!'
 msg_conquest_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A CONQUEST SIEGE has begun!'
 #Banner Control
@@ -203,7 +203,7 @@ status_town_siege_type: '&2 > Type: &a%s'
 status_town_siege_status: '&2 > Status: &a%s'
 status_town_siege_attacker: '&2 > Attacker: &a%s'
 status_town_siege_defender: '&2 > Defender: &a%s'
-status_town_siege_battle_points: '&2 > Points: &a%s &2/ &a%s'
+status_town_siege_battle_points: '&2 > 战斗点数: &a%s &2/ &a%s'
 status_town_siege_status_attacker_win: '绝对进攻方胜利'
 status_town_siege_status_defender_win: '绝对防守方胜利'
 status_town_siege_status_close_attacker_win: '偏进攻方胜利'
@@ -233,8 +233,8 @@ status_nation_plunder_stats: '&2Plunder Gains: &a%d'
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&c只有城镇居民才能传送到一个被围攻的城镇或围攻区。'
 #Added in 0.18
 #Homeblock move restrictions
-msg_err_besieged_town_cannot_move_homeblock: "&c被围攻的城镇不能更改他们的中心区块。"
-msg_err_occupied_town_cannot_move_homeblock: "&c被占领的城镇不能更改他们的中心区块。"
+msg_err_besieged_town_cannot_move_homeblock: "&c被围攻的城镇不能更改其中心区块。"
+msg_err_occupied_town_cannot_move_homeblock: "&c被占领的城镇不能更改其中心区块。"
 #Added in 0.20
 #Town status screen's pending balance adjustment
 status_town_siege_pending_balance_adjustment: '&2 | Pending: &a%s'
@@ -251,10 +251,10 @@ msg_siege_war_banner_control_remaining_session_time: '旗帜控制倒计时:%s'
 #Added in 0.25
 msg_err_siege_war_too_many_adjacent_towns: '&cYou cannot perform this action because the target chunk faces too many townblocks. Try placing the item in a different area.'
 #Added in 0.26
-msg_siege_war_attacker_death: '&bSiege of %s > Attacker %s died > Battle Points -%d'
-msg_siege_war_defender_death: '&bSiege of %s > Defender %s died > Battle Points +%d'
-msg_siege_war_attacker_killed_by_player: '&bSiege of %s > Attacker %s was killed by %s > Battle Points -%d'
-msg_siege_war_defender_killed_by_player: '&bSiege of %s > Defender %s was killed by %s > Battle Points +%d'
+msg_siege_war_attacker_death: '&bSiege of %s > 进攻方 %s 死亡> 战斗点数 -%d'
+msg_siege_war_defender_death: '&bSiege of %s > 防守方 %s 死亡> 战斗点数 +%d'
+msg_siege_war_attacker_killed_by_player: '&bSiege of %s > 进攻方%s 被 %s 击杀> 战斗点数 -%d'
+msg_siege_war_defender_killed_by_player: '&bSiege of %s > 防守方 %s 被 %s 击杀> 战斗点数 +%d'
 #Added in 0.27
 msg_next_siege_session_in_minutes: 'The next Battle Session is in %s.'
 msg_session_is_active_now: 'A Battle Session is active now!'
@@ -390,7 +390,7 @@ msg_town_became_peaceful: '&b%s 已被确认为和平城镇。该镇现在免受
 msg_town_became_non_peaceful: '&b%s 已被确认为非和平城镇。该镇现在不再免受围攻攻击，但不再易受附近国家的颠覆，居民现在可以获得国家军衔。'
 msg_war_common_town_peacefulness_countdown_cancelled: '&b和平状态变更倒计时已取消。'
 msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&c不能为居民增加军衔，因为他们属于一个和平的城镇。'
-sg_err_peaceful_town_cannot_move_homeblock: "&c和平城镇不能更改他们的中心区块。如果你想移动你的中心区块，请先变更和平状态。"
+sg_err_peaceful_town_cannot_move_homeblock: "&c和平城镇不能更改其中心区块。如果你想移动你的中心区块，请先变更和平状态。"
 msg_err_peaceful_towns_cannot_revolt: '&c和平城镇不能起义。'
 msg_err_capital_towns_cannot_go_peaceful: '&c首都城镇不能处于和平状态。'
 msg_err_cannot_subvert_not_enough_permissions: "&c你没有足够的权限使用这个指令去颠覆该镇。"
@@ -483,7 +483,7 @@ msg_err_note_about_warnings: "&c注意: 如果您的服务器尚未启动, 请�
 msg_err_banner_cannot_be_more_than_one_block_away: "&c旗帜距离目标城镇不能超过 1 个方块。"
 msg_err_banner_cannot_be_close_to_any_town_block: '&cThe banner must be at least %s full town block(s) away from any town.'
 #Battle Commanders / Mobile Spawn Points
-msg_battle_commanders_assigned: "&bSiege at %s > Battle Commanders Assigned. Attacking Commander: %s. Defending Commander: %s."
+msg_battle_commanders_assigned: "&bSiege at %s > 战斗指挥官已被指派。进攻方指挥官: %s。防守方指挥官: %s。"
 no_battle_commander: "<None>"
 msg_err_cannot_spawn_feature_not_active: "&cYou cannot spawn to the siege because the 'battle commanders' feature is disabled by your server."
 msg_err_cannot_spawn_siege_not_active: "&cYou cannot spawn to the siege because the siege is not active."
