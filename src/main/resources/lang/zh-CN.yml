@@ -130,7 +130,7 @@ msg_err_siege_war_not_enough_nation_funds_to_pay: "The nation does not have enou
 msg_siege_war_soldiers_paid: "The soldiers of the nation were paid a total of %s, which was distributed according to rank."
 #Added in 0.11
 msg_err_invalid_bool: "&c无效的选项。可用选项：on/off"
-msg_beacon_preference_set: "&bBeacon preference set to %s."
+msg_beacon_preference_set: "&b旗帜信标光束偏好设置为 %s"
 #Misc
 msg_na: '不可用'
 #Town screen
@@ -168,7 +168,7 @@ msg_siege_war_banner_control_session_failure: '&cBanner control session failed! 
 msg_siege_war_banner_control_session_failure_with_altitude: '&cBanner control session failed! Common causes for this include: dying, going too far from the banner, going below the banner altitude, or entering the town.'
 ##### Added in 0.15
 #Town Merging
-msg_err_cannot_merge_towns: '&cUnable to merge a town that is under siege!'
+msg_err_cannot_merge_towns: '&c无法合并一个正在被围攻的城镇！'
 #General
 siege.name: '%s vs %s'
 msg_err_unknown_town: '&c未知城镇'
@@ -193,7 +193,7 @@ hud_battle_defender_points: '防守方战斗点数: '
 msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruined town.'
 msg_err_cannot_start_siege_due_to_siege_immunity: '&cYou cannot start a siege now, because the nearby town has siege immunity.'
 msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&c你不能发动起义围攻，因为该镇不处于被占领状态。'
-msg_conquest_siege_started_neutral_town: '&bAn army belonging to %s has attacked %s. A CONQUEST SIEGE has begun!'
+msg_conquest_siege_started_neutral_town: '&b一支属于%s的军队攻击了%s。一个征服围攻开始了！'
 msg_conquest_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A CONQUEST SIEGE has begun!'
 #Banner Control
 msg_siege_war_defending_troops_at_siege_banner: '&bSiege on %s > Defenders are at the siege banner.'
