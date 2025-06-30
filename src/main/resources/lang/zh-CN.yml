@@ -42,7 +42,7 @@ msg_err_siege_besieged_town_cannot_recruit: "被围攻的城镇不能招募新�
 #Claiming/Unclaiming
 msg_err_siege_claim_too_near_siege_zone: "&c区块过于接近围攻区。"
 msg_err_siege_besieged_town_cannot_claim: "被围攻的城镇不能宣称新的地块。"
-msg_err_siege_besieged_town_cannot_unclaim: "&cBesieged towns (or towns which recently lost a siege) cannot un-claim land."
+msg_err_siege_besieged_town_cannot_unclaim: "&c被围攻的城镇(或最近在围攻中被击败的城镇)不能放弃土地。"
 msg_err_war_common_occupied_town_cannot_unclaim: "被占领城镇不能放弃土地。"
 #Revolt
 msg_err_siege_war_town_voluntary_leave_impossible: "&c城镇无法未经同意离开所在国家。如果你要离开你所在国家，请劝说国王(或一名国家官员)踢出你的城镇。"
@@ -120,14 +120,14 @@ msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
 msg_swa_set_plunder_gained_success: '&bSuccessfully set plunder gained to %d for %s.'
 msg_swa_set_plunder_lost_success: '&bSuccessfully set plunder lost to %d for %s.'
 msg_err_nation_not_registered: '&cNation %s is not registered.'
-msg_err_cannot_remove_enemy: '&cYou cannot remove a nation as enemy if you have an active siege against them!'
+msg_err_cannot_remove_enemy: '&c你不能移除敌国，如果在你目前在一场正在进行的围攻中与他们交战！'
 #Added in 0.09
 nation_help_siegewar_12: 'Pay your soldiers. The given amount will be distributed according to rank.'
 msg_siege_war_military_salary_available: "A Military Salary of of %s is now available to you. It can be collected using '/sw collect'."
 msg_siege_war_military_salary_collected: "You have collected a military salary of %s."
 msg_err_siege_war_no_soldiers_to_pay: "There were no soldiers to pay."
-msg_err_siege_war_not_enough_nation_funds_to_pay: "The nation does not have enough funds to pay that amount."
-msg_siege_war_soldiers_paid: "The soldiers of the nation were paid a total of %s, which was distributed according to rank."
+msg_err_siege_war_not_enough_nation_funds_to_pay: "国家没有足够的资金来支付这笔款项。"
+msg_siege_war_soldiers_paid: "向全国士兵按军衔分配支付了总计%s的薪金。"
 #Added in 0.11
 msg_err_invalid_bool: "&c无效的选项。可用选项：on/off"
 msg_beacon_preference_set: "&b旗帜信标光束偏好设置为 %s"
@@ -446,7 +446,7 @@ msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this
 msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&c不能为居民增加军衔，因为他们属于一个被占领的城镇。'
 msg_err_cannot_set_occupation_without_nation: '&cTown %s has no nation. You must set the nation first before you can set the town to Occupied.'
 msg_err_cannot_invade_not_enough_permissions: "&c你没有足够的权限使用这个指令去占领该镇。"
-msg_err_occupied_towns_cannot_leave_their_nations: "&cOccupied towns cannot leave their nations in the usual way. To leave the nation, start a revolt siege."
+msg_err_occupied_towns_cannot_leave_their_nations: "&c被占领的城镇不能以通常的方式离开自己的国家。如果您想要让您的城镇离开国家，就需要发动起义围攻。"
 #Siegezone proximity warning
 msg_siege_zone_proximity_warning: "&c警告: 你已进入围攻区！"
 #Plunder
