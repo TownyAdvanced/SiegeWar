@@ -125,7 +125,7 @@ msg_err_cannot_remove_enemy: '&c你不能移除敌国，如果在你目前在一
 nation_help_siegewar_12: 'Pay your soldiers. The given amount will be distributed according to rank.'
 msg_siege_war_military_salary_available: "A Military Salary of of %s is now available to you. It can be collected using '/sw collect'."
 msg_siege_war_military_salary_collected: "You have collected a military salary of %s."
-msg_err_siege_war_no_soldiers_to_pay: "There were no soldiers to pay."
+msg_err_siege_war_no_soldiers_to_pay: "没有士兵需要支付报酬。"
 msg_err_siege_war_not_enough_nation_funds_to_pay: "国家没有足够的资金来支付这笔款项。"
 msg_siege_war_soldiers_paid: "向全国士兵按军衔分配支付了总计%s的薪金。"
 #Added in 0.11
@@ -160,7 +160,7 @@ msg_siege_war_banner_control_reversal_bonus: '. Cap-Point-Generation-Rate X %s.'
 #Admin
 msg_swa_set_siege_balance_success: '&bSuccessfully set siege balance to %d for %s.'
 #Added in 0.13
-msg_siege_war_version: '&bThe current SiegeWar version is: %s.'
+msg_siege_war_version: '&b当前Siegewar插件版本为: %s。'
 #Added in 0.14
 msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain within %d blocks of the banner, but staying out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
 msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control session started. Remain within %d blocks of the banner, but staying below it''s altitude and out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
@@ -193,16 +193,16 @@ hud_battle_defender_points: '防守方战斗点数: '
 msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruined town.'
 msg_err_cannot_start_siege_due_to_siege_immunity: '&cYou cannot start a siege now, because the nearby town has siege immunity.'
 msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&c你不能发动起义围攻，因为该镇不处于被占领状态。'
-msg_conquest_siege_started_neutral_town: '&b一支属于%s的军队攻击了%s。一个征服围攻开始了！'
+msg_conquest_siege_started_neutral_town: '&b一支属于%s的军队攻击了%s。一场征服围攻开始了！'
 msg_conquest_siege_started_nation_town: '&bAn army belonging to %s has attacked %s at %s. A CONQUEST SIEGE has begun!'
 #Banner Control
 msg_siege_war_defending_troops_at_siege_banner: '&bSiege on %s > Defenders are at the siege banner.'
 #Town screen
 status_town_siege: '&2Siege:'
-status_town_siege_type: '&2 > Type: &a%s'
-status_town_siege_status: '&2 > Status: &a%s'
-status_town_siege_attacker: '&2 > Attacker: &a%s'
-status_town_siege_defender: '&2 > Defender: &a%s'
+status_town_siege_type: '&2 > 类型: &a%s'
+status_town_siege_status: '&2 > 状态: &a%s'
+status_town_siege_attacker: '&2 > 进攻方: &a%s'
+status_town_siege_defender: '&2 > 防守方: &a%s'
 status_town_siege_battle_points: '&2 > 战斗点数: &a%s &2/ &a%s'
 status_town_siege_status_attacker_win: '绝对进攻方胜利'
 status_town_siege_status_defender_win: '绝对防守方胜利'
@@ -281,7 +281,7 @@ bossbar_msg_battle_time_remaining: '&2Battle Session Time Remaining: &a%s'
 msg_err_siege_war_revolt_immunity_permanent: "&cYour town has permanent revolt immunity. It cannot revolt."
 status_sieged: "%s[%s被围攻%s]"
 status_military_salary: "Military Salary: "
-hover_message_click_to_claim: "Click to claim money owed to you."
+hover_message_click_to_claim: "点击收取所欠您的款项。"
 #Added in 0.31
 msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
 #Added in 0.33
@@ -349,11 +349,11 @@ msg_occupation_tax_set_max: "&bYour nation has set a daily occupation tax of max
 #Shown when a town pays their nation occupation tax.
 msg_occupation_tax_paid: "&bYour town paid the nation occupation tax of %s."
 #Shown when a town pays their nation occupation tax with bankruptcy.
-msg_occupation_tax_paid_bankrupt: "&cYour town paid the nation occupation tax of %s by going bankrupt."
+msg_occupation_tax_paid_bankrupt: "&c你的城镇通过破产支付了%s的国家占领税。"
 #Shown when a bankrupt town cannot pay their nation occupation tax.
-msg_occupation_tax_paid_with_debt: "&cYour town paid the nation occupation tax of %s with debt."
+msg_occupation_tax_paid_with_debt: "&c你的城镇通过债务上缴了%s的国税。"
 #Shown when a town cannot pay their nation occupation tax.
-msg_occupation_tax_cannot_be_paid: "&cThe Town %s could not pay their nation occupation tax and has been removed!"
+msg_occupation_tax_cannot_be_paid: "&c城镇 %s 无法支付其国家占领税，已被移除！"
 #Shown in the nation status screen when a nation has nation occupation tax.
 status_nation_occupation_tax_per_plot: "&2国家占领税: &c每块地皮%s"
 #Shown in the town status screen when a town has nation occupation tax to pay.
@@ -444,7 +444,7 @@ msg_err_cannot_invade_without_victory: "&c你不能占领这个城镇，除非�
 msg_err_cannot_invade_siege_still_in_progress: '&c你不能在围攻仍在进行中时占领这个城镇。'
 msg_err_cannot_invade_town_already_occupied: '&cThere is no need to capture this town, because your nation already owns and occupies it.'
 msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&c不能为居民增加军衔，因为他们属于一个被占领的城镇。'
-msg_err_cannot_set_occupation_without_nation: '&cTown %s has no nation. You must set the nation first before you can set the town to Occupied.'
+msg_err_cannot_set_occupation_without_nation: '&c城镇 %s 不属于任何一个国家。您必须先设置国家，然后才能将该镇设置为被占领。'
 msg_err_cannot_invade_not_enough_permissions: "&c你没有足够的权限使用这个指令去占领该镇。"
 msg_err_occupied_towns_cannot_leave_their_nations: "&c被占领的城镇不能以通常的方式离开自己的国家。如果您想要让您的城镇离开国家，就需要发动起义围攻。"
 #Siegezone proximity warning
