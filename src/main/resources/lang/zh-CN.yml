@@ -222,7 +222,7 @@ siege_status_pending_defender_surrender: 'Defender Surrender Pending'
 status_nation_offensive_sieges: '&2进攻围攻 &a[%s]&2: &f'
 status_nation_defensive_sieges: '&2防守围攻 &a[%s]&2: &f'
 msg_err_town_cannot_end_siege_as_no_siege: '&c附近的城镇没有被围攻。无法放弃/投降。'
-msg_err_town_cannot_end_siege_as_finished: '&cThe siege is finished or scheduled to finish. Abandon/Surrender not possible.'
+msg_err_town_cannot_end_siege_as_finished: '&c围攻已经完成或计划完成。无法放弃/投降。'
 #Plunder
 msg_err_siege_war_plunder_not_possible_rebels_won: '&c不能掠夺，因为该镇反叛并赢得了围攻。'
 #Added in 0.16
