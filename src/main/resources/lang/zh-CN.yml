@@ -228,7 +228,7 @@ msg_err_siege_war_plunder_not_possible_rebels_won: '&c不能掠夺，因为该�
 #Added in 0.16
 #Nation war history
 status_nation_town_stats: '&2占领/被占领： &a%d&2/&a%d'
-status_nation_plunder_stats: '&2掠夺数: &a%d'
+status_nation_plunder_stats: '&2掠夺所得: &a%d'
 #Siege effects
 msg_err_siege_war_cannot_spawn_into_siegezone_or_besieged_town: '&c只有城镇居民才能传送到一个被围攻的城镇或围攻区。'
 #Added in 0.18
