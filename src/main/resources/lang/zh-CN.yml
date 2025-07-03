@@ -500,7 +500,7 @@ msg_swa_remove_siege_admin_command: '&b%s 的围攻已通过管理员命令删�
 msg_swa_remove_siege_nation_delete: '由于攻击方国家不再存在， %s 的围攻已被移除。'
 msg_swa_remove_siege_town_delete: '&%s的围攻已被移除，因为该镇已删除。'
 msg_swa_remove_siege_town_ruin: '&%s的围攻已被移除，因为该镇已沦为废墟。'
-msg_swa_remove_siege_immunity_expired: '&bSiege of %s removed because siege immunity expired.'
+msg_swa_remove_siege_immunity_expired: '&b位于%s的一场围攻已被移除，因为围攻豁免已过期。'
 msg_swa_battle: 'Battle'
 #Siege Lore
 siege_lore_color_attacker: '&c%s'
