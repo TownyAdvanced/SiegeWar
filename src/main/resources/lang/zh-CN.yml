@@ -28,7 +28,7 @@ msg_siege_war_attack_partially_recover_war_chest: '&bThe war chest has been part
 msg_siege_war_neutral_town_plundered: '&b%s has been plundered of %s by %s!'
 msg_siege_war_nation_town_plundered: '&b%s has been plundered of %s by %s!'
 msg_siege_war_town_ruined_from_plunder: '&b%s has been reduced to ruins by %s!'
-msg_siege_war_town_bankrupted_from_plunder: '&b%s 已因 %s而倒闭！'
+msg_siege_war_town_bankrupted_from_plunder: '&b%s 已因 %s而破产！'
 msg_siege_war_nation_defeated: '&b%s 已被击败！'
 msg_siege_war_attacking_troops_at_siege_banner: '&bSiege on %s > Attackers are at the siege banner.'
 msg_siege_war_banner_control_session_success: '&bBanner control session succeeded! You have been added to the banner control list.'
@@ -46,7 +46,7 @@ msg_err_siege_besieged_town_cannot_unclaim: "&c被围攻的城镇(或最近在�
 msg_err_war_common_occupied_town_cannot_unclaim: "被占领城镇不能放弃土地。"
 #Revolt
 msg_err_siege_war_town_voluntary_leave_impossible: "&c城镇无法未经同意离开所在国家。如果你要离开你所在国家，请劝说国王(或一名国家官员)踢出你的城镇。"
-msg_err_siege_war_revolt_immunity_active: "&cYour town has revolt immunity. It cannot revolt until the revolt immunity expires."
+msg_err_siege_war_revolt_immunity_active: "&c你的镇处于起义豁免状态。在起义豁免到期之前不能反抗。"
 #Attack
 msg_err_siege_war_banner_must_be_placed_above_ground: '&c围攻旗帜必须被放置在地表。'
 msg_err_siege_war_cannot_attack_own_town: '&b你不能攻击你自己的城镇。'
@@ -278,7 +278,7 @@ attacker_has_begun_a_siegecamp_session: '%s has begun a Siege-Assembly against %
 #Added in 0.30
 msg_bossbar_preference_set: "&bBossBar 偏好设置为 %s"
 bossbar_msg_battle_time_remaining: '&2Battle Session Time Remaining: &a%s'
-msg_err_siege_war_revolt_immunity_permanent: "&c你的城镇有永久的起义豁免，不能反抗。"
+msg_err_siege_war_revolt_immunity_permanent: "&c你的城镇处于永久起义豁免状态，不能反抗。"
 status_sieged: "%s[%s被围攻%s]"
 status_military_salary: "Military Salary: "
 hover_message_click_to_claim: "点击收取所欠您的款项。"
@@ -364,7 +364,7 @@ msg_err_occupation_tax_cannot_be_more_than: "&c国家不能设置一个大于%s�
 msg_occupation_taxes_collected_totaling: "&b你的国家征收了共计%s的占领税。"
 #####################################################################
 #Nation Refund
-nation_help_refund: "Claim any nation refund which is available to you."
+nation_help_refund: "领取任何有效的国家待付款项。"
 msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw nation claimrefund'"
 msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
 msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
@@ -423,7 +423,7 @@ msg_revolt_siege_defender_surrender_confirmed: '&bREVOLT SIEGE at %s > Defender 
 msg_err_siege_occupied_towns_cannot_surrender_in_conquest_sieges: '&cIn CONQUEST sieges, occupied towns cannot surrender.'
 #Siege Results
 msg_conquest_siege_attacker_win_result: ' 该镇现已开放供入侵和/或掠夺。'
-msg_conquest_siege_defender_win_result: ' The town has been saved!'
+msg_conquest_siege_defender_win_result: ' 该镇已被拯救！'
 msg_revolt_siege_attacker_win_result: ' 该镇现已开放供入侵和/或掠夺。'
 msg_revolt_siege_defender_win_result: ' 该镇赢得了自由！'
 #Town Screen
