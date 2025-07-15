@@ -25,15 +25,15 @@ msg_err_town_is_not_sieged: "该城镇未被围攻。"
 msg_siege_war_attack_pay_war_chest: '&bA war-chest has been prepared by %s, with a value of %s. Whoever wins the siege will get this money.'
 msg_siege_war_attack_recover_war_chest: '&bThe war chest has been recovered by %s, with a value of %s.'
 msg_siege_war_attack_partially_recover_war_chest: '&bThe war chest has been partially recovered by %s, with a value of %s.'
-msg_siege_war_neutral_town_plundered: '&b%s has been plundered of %s by %s!'
-msg_siege_war_nation_town_plundered: '&b%s has been plundered of %s by %s!'
+msg_siege_war_neutral_town_plundered: '&b%s 被 %s 掠夺了 %s！'
+msg_siege_war_nation_town_plundered: '&b%s 被 %s 掠夺了 %s！'
 msg_siege_war_town_ruined_from_plunder: '&b%s has been reduced to ruins by %s!'
 msg_siege_war_town_bankrupted_from_plunder: '&b%s 已因 %s而破产！'
 msg_siege_war_nation_defeated: '&b%s 已被击败！'
-msg_siege_war_attacking_troops_at_siege_banner: '&bSiege on %s > Attackers are at the siege banner.'
-msg_siege_war_banner_control_session_success: '&bBanner control session succeeded! You have been added to the banner control list.'
-msg_siege_war_banner_control_gained_by_attacker: '&bSiege on %s > The attackers have gained banner control.'
-msg_siege_war_banner_control_gained_by_defender: '&bSiege on %s > The defenders have gained banner control.'
+msg_siege_war_attacking_troops_at_siege_banner: '&bSiege on %s > 进攻方抵达围攻旗帜处。'
+msg_siege_war_banner_control_session_success: '&b成功控制旗帜！你已被添加到旗帜控制列表。'
+msg_siege_war_banner_control_gained_by_attacker: '&bSiege on %s > 进攻方已获得旗帜控制权。'
+msg_siege_war_banner_control_gained_by_defender: '&bSiege on %s > 防守方已获得旗帜控制权。'
 msg_town_destroyed_by_nation_tax: '&b%s 因无法支付税款而倒闭。'
 msg_town_destroyed_by_nation_tax_multiple: '&b以下城镇因无力上缴国税而倒闭: '
 #Siege war error message
@@ -68,7 +68,7 @@ msg_err_siege_war_town_already_plundered: '&c此镇已被掠夺。'
 msg_err_siege_war_cannot_destroy_siege_banner: "&c围攻正在进行中，你不能摧毁围攻旗帜或旗帜所附着的方块。"
 msg_err_siege_war_banner_support_block_not_stable: "&c您不能将旗帜放置在不稳定的地面上，例如沙子或沙砾。"
 #Banner control
-msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: 'You cannot use this item while in a banner control session.'
+msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: '你不能在尝试控制旗帜时使用此物品。'
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2起义豁免倒计时: &a%s'
 status_town_siege_status_in_progress: '正在进行中'
@@ -196,7 +196,7 @@ msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&c你不能发动起�
 msg_conquest_siege_started_neutral_town: '&b一支属于%s的军队攻击了%s。一场征服围攻开始了！'
 msg_conquest_siege_started_nation_town: '&b一支属于%s的军队在%s攻击了%s。一场征服围攻开始了！'
 #Banner Control
-msg_siege_war_defending_troops_at_siege_banner: '&bSiege on %s > Defenders are at the siege banner.'
+msg_siege_war_defending_troops_at_siege_banner: '&bSiege on %s > 防守方抵达围攻旗帜处。'
 #Town screen
 status_town_siege: '&2Siege:'
 status_town_siege_type: '&2 > 类型: &a%s'
