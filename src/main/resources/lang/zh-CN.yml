@@ -97,7 +97,7 @@ config_and_lang_file_could_not_be_loaded: '重新加载失败。请查看控制�
 msg_err_not_being_sieged: '&c城镇 %s 没有有效的围攻。'
 msg_err_town_not_registered: '&c城镇 %s 未被注册。'
 #Scoreboard
-hud_title: '&6&l%s 围攻'
+hud_title: '&6&l%s Siege'
 hud_siege_status: '围攻状态: '
 hud_attackers: '进攻方: '
 hud_defenders: '防守方: '
@@ -156,7 +156,7 @@ dynmap_siege_battle_time_left: '剩余战斗时间: %s'
 #Banner control
 msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > 进攻方从防守方手中夺回了旗帜控制权！(局势逆转)'
 msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > 防守方从进攻方手中夺回了旗帜控制权！(局势逆转)'
-msg_siege_war_banner_control_reversal_bonus: '。旗帜给予战斗点数 × %s。'
+msg_siege_war_banner_control_reversal_bonus: '。控制旗帜所给予的战斗点数的生成速率 × %s。'
 #Admin
 msg_swa_set_siege_balance_success: '&bSuccessfully set siege balance to %d for %s.'
 #Added in 0.13
@@ -276,7 +276,7 @@ msg_err_your_siegecamp_failed_you_must_wait_x: 'Your Siege-Assembly failed to sc
 attackers_scored_points_towards_siege_camp_x_of_x: '%s has scored points towards their Siege-Assembly: %s/%s.'
 attacker_has_begun_a_siegecamp_session: '%s has begun a Siege-Assembly against %s. If successful a Siege will begin! The attackers must score %s points within %s minutes.'
 #Added in 0.30
-msg_bossbar_preference_set: "&bBossBar 偏好设置为 %s"
+msg_bossbar_preference_set: "&bBoss血条偏好设置为 %s。"
 bossbar_msg_battle_time_remaining: '&2Battle Session Time Remaining: &a%s'
 msg_err_siege_war_revolt_immunity_permanent: "&c你的城镇处于永久起义豁免状态，不能反抗。"
 status_sieged: "%s[%s被围攻%s]"
@@ -305,13 +305,13 @@ msg_err_cannot_alter_blocks_near_siege_banner: '你不能在围攻旗帜附近�
 #Message shown siege-wide when a player loses a siegewar rank while in a siegezone.
 warn_resident_had_rank_removed: '警告: %s 的 %s 头衔在 %s 的围攻区内被移除。'
 #Message shown when a town kicks a resident who is in a siege zone.
-warn_resident_had_town_removed: '警告: %s 被城镇 %s 踢出，目前该玩家处于 %s 的围攻区内。'
+warn_resident_had_town_removed: '警告: %s 被城镇 %s 踢出，而目前该玩家位于 %s 的围攻区内。'
 #Message shown when a nation kicks a town which has players in a siege zone.
-warn_nation_had_town_removed: '警告: %s 被国家 %s 踢出，而玩家 %s 位于 %s 的围攻区内。'
+warn_nation_had_town_removed: '警告: %s 被国家 %s 踢出，而目前该玩家 %s 位于 %s 的围攻区内。'
 #Message shown when a nation removes an ally which has players in a siege zone.
-warn_nation_had_ally_removed: '警告: %s 被盟友 %s 踢出，而玩家 %s 位于 %s 的围攻区内。'
+warn_nation_had_ally_removed: '警告: %s 被盟友 %s 踢出，而目前该玩家 %s 位于 %s 的围攻区内。'
 #Message shown to the former allied nation's players when they have been removed as an ally.
-warn_your_nation_has_been_removed_as_an_ally: '警告: %s 不再将您的国家视为盟友，而您的部分国家成员位于围攻区内，位于 %s。'
+warn_your_nation_has_been_removed_as_an_ally: '警告: %s 不再将您的国家视为盟友，而目前您的部分国家成员位于围攻区内，位于 %s。'
 #Added in 0.48
 #Shown when an admin adds hours using /swa siegeduration addhours
 hours_added_to_sieges: '%s小时已被添加到所有围攻的持续时间。'
@@ -526,7 +526,7 @@ siege_lore_banner_chat_2: ' of %s'
 siege_lore_banner_chat_3: ', 以 %s的胜利告终'
 siege_lore_banner_chat_4_ATTACKERS: ', 通过击败 %s 的防御'
 siege_lore_banner_chat_5_ATTACKERS: ' 占领城镇 %s'
-siege_lore_banner_chat_4_DEFENDERS: ', 通过击败 %s 的进攻'
+siege_lore_banner_chat_4_DEFENDERS: '，通过击败 %s 的进攻'
 siege_lore_banner_chat_5_DEFENDERS: ' 保卫他们的城镇 %s'
 siege_lore_banner_chat_4_NOBODY: '，在与 %s 战斗时'
 siege_lore_banner_chat_5_NOBODY: ' 在为城镇 %s 作战中'
