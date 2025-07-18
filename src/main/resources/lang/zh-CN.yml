@@ -135,7 +135,7 @@ msg_beacon_preference_set: "&b旗帜信标光束偏好设置为 %s"
 msg_na: '不可用'
 #Town screen
 status_town_siege_status_siege_balance: '&2 > Balance: &a%d'
-status_town_siege_status_warchest: '&2 > War Chest: &a%s'
+status_town_siege_status_warchest: '&2 > 军费开支: &a%s'
 #Battle sessions
 status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&2 > 剩余时间: &a%s'
@@ -547,5 +547,5 @@ msg_err_cannot_start_siege_as_a_peaceful_town: "&c你不能发动围攻，因为
 #Only One Action
 msg_err_town_already_plundered_only_one_action: "&c你不能入侵一个已经被掠夺的国家。"
 msg_err_town_already_invaded_only_one_action: "&c你不能掠夺一个已经被入侵的国家。"
-siege_msg_err_cannot_assign_rank_during_active_battlesession: "&cYou cannot add the %s rank while the battle session is active."
+siege_msg_err_cannot_assign_rank_during_active_battlesession: "当战斗回合仍在进行时，&c你不能添加 %s 头衔。"
 siege_msg_err_cannot_assign_rank_during_active_siege: "&c你不能在你的城镇参与围攻时授予 %s 。"
