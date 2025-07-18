@@ -22,11 +22,11 @@ msg_err_resident_town_is_not_sieged: "这个居民的城镇未被围攻。"
 msg_err_town_is_not_sieged: "该城镇未被围攻。"
 #Added in (Siegewar version)
 #Siege war happy-path messages
-msg_siege_war_attack_pay_war_chest: '&bA war-chest has been prepared by %s, with a value of %s. Whoever wins the siege will get this money.'
-msg_siege_war_attack_recover_war_chest: '&bThe war chest has been recovered by %s, with a value of %s.'
-msg_siege_war_attack_partially_recover_war_chest: '&bThe war chest has been partially recovered by %s, with a value of %s.'
-msg_siege_war_neutral_town_plundered: '&b%s 被 %s 掠夺了 %s！'
-msg_siege_war_nation_town_plundered: '&b%s 被 %s 掠夺了 %s！'
+msg_siege_war_attack_pay_war_chest: '&b一笔军费开支已经由%s准备，其价值为%s。任何赢得围攻的一方都会得到这笔钱。'
+msg_siege_war_attack_recover_war_chest: '&b军费开支已被%s收回，其值为%s。'
+msg_siege_war_attack_partially_recover_war_chest: '&b军费开支已被%s部分收回，其值为%s。'
+msg_siege_war_neutral_town_plundered: '&b%s has been plundered of %s by %s!'
+msg_siege_war_nation_town_plundered: '&b%s has been plundered of %s by %s!'
 msg_siege_war_town_ruined_from_plunder: '&b%s 因无力支付 %s 所设置的掠夺税而沦为废墟！'
 msg_siege_war_town_bankrupted_from_plunder: '&b%s 已因 %s而破产！'
 msg_siege_war_nation_defeated: '&b%s 已被击败！'
@@ -84,7 +84,7 @@ msg_attackers: '&a进攻方'
 msg_defenders: '&a防守方'
 #Siege immunities
 msg_set_siege_immunities_town: '城镇 %s 的围攻豁免设置为 %s。'
-msg_set_siege_immunities_nation: '国家 %s 所有城镇的围攻豁免被设置为 %s。'
+msg_set_siege_immunities_nation: '国家%s所有城镇的围攻豁免被设置为 %s。'
 msg_set_siege_immunities_all: '所有城镇的围攻豁免被设置为 %s。'
 #Siege-zone block placement restrictions
 msg_war_siege_zone_block_placement_forbidden: '&c你不能将此类型的方块放置在围攻区的野外。'
@@ -94,7 +94,7 @@ admin_help_1: '重新加载配置和语言文件。'
 config_and_lang_file_reloaded_successfully: '配置和语言文件重新加载成功。'
 config_and_lang_file_could_not_be_loaded: '重新加载失败。请查看控制台以了解详情。'
 #Added in 0.05:
-msg_err_not_being_sieged: '&c城镇 %s 没有有效的围攻。'
+msg_err_not_being_sieged: '&c城镇%s没有正在进行的围攻。'
 msg_err_town_not_registered: '&c城镇 %s 未被注册。'
 #Scoreboard
 hud_title: '&6&l%s Siege'
@@ -103,8 +103,8 @@ hud_attackers: '进攻方: '
 hud_defenders: '防守方: '
 hud_banner_control: "旗帜控制: "
 hud_siege_progress: '围攻进度: '
-msg_swa_resident_already_has_control: '&c居民 %s 已取得控制权。'
-msg_swa_resident_doesnt_have_control: "&c居民 %s 未取得控制权。"
+msg_swa_resident_already_has_control: '&c居民%s已取得控制权。'
+msg_swa_resident_doesnt_have_control: "&c居民%s未取得控制权。"
 msg_swa_set_plunder_success: '&bSet plundered to %s for %s.'
 siege_status_in_progress: '正在进行中'
 siege_status_unknown: '未知'
@@ -119,12 +119,12 @@ msg_swa_set_towns_gained_success: '&bSuccessfully set towns gained to %d for %s.
 msg_swa_set_towns_lost_success: '&bSuccessfully set towns lost to %d for %s.'
 msg_swa_set_plunder_gained_success: '&bSuccessfully set plunder gained to %d for %s.'
 msg_swa_set_plunder_lost_success: '&bSuccessfully set plunder lost to %d for %s.'
-msg_err_nation_not_registered: '&c国家 %s 未被注册。'
+msg_err_nation_not_registered: '&c国家%s未被注册。'
 msg_err_cannot_remove_enemy: '&c你不能移除敌国，如果在你目前在一场正在进行的围攻中与他们交战！'
 #Added in 0.09
 nation_help_siegewar_12: '酬劳你的士兵。给定的金额将按等级分配。'
-msg_siege_war_military_salary_available: "您现在可以获得 %s 的军薪。输入 '/sw collect' 来领取。"
-msg_siege_war_military_salary_collected: "你已经领取了 %s 的军薪。"
+msg_siege_war_military_salary_available: "您现在可以获得%s的军薪。输入 '/sw collect' 来领取。"
+msg_siege_war_military_salary_collected: "你已经领取了%s的军薪。"
 msg_err_siege_war_no_soldiers_to_pay: "没有士兵需要支付报酬。"
 msg_err_siege_war_not_enough_nation_funds_to_pay: "国家没有足够的资金来支付这笔款项。"
 msg_siege_war_soldiers_paid: "向全国士兵按军衔分配支付了总计%s的薪金。"
@@ -139,16 +139,16 @@ status_town_siege_status_warchest: '&2 > 军费开支: &a%s'
 #Battle sessions
 status_town_siege_battle: '&2Battle:'
 status_town_siege_battle_time_remaining: '&2 > 剩余时间: &a%s'
-msg_war_siege_battle_session_started: "&bA new Battle Session has started. All PVP protections inside Siege-Zones are suspended for the duration of the Battle Session."
-msg_war_siege_battle_session_ended_with_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. The following teams won their battles:"
-msg_war_siege_battle_session_ended_without_battles: "&bThe current Battle Session has ended. Normal PVP protections have been restored. There were no battles."
+msg_war_siege_battle_session_started: "&b一个新的战斗回合已开始。围攻区内所有PVP保护将在此期间暂时失效。"
+msg_war_siege_battle_session_ended_with_battles: "&b当前战斗回合已结束，PVP保护已恢复。以下队伍赢得了战斗:"
+msg_war_siege_battle_session_ended_without_battles: "&b当前战斗回合已结束，PVP保护已恢复，战斗已停止。"
 msg_war_siege_battle_session_ended_attacker_result: "&b * 进攻方@ %s (%s)"
 msg_war_siege_battle_session_ended_defender_result: "&b * 防守方@ %s (%s)"
 msg_war_siege_battle_session_ended_draw_result: "&b * 平局@ %s (0)"
-msg_war_siege_battle_session_break_cannot_get_banner_control: "&cBanner control cannot be gained until the next Battle Session starts. The next Battle Session will start in %s."
+msg_war_siege_battle_session_break_cannot_get_banner_control: "&c在下次战斗会话开始之前无法控制旗帜。下一个战斗回合将在%s内开始。"
 #Hud
 hud_siege_balance: 'Siege Balance: '
-hud_warchest: 'War Chest: '
+hud_warchest: '军费开支: '
 hud_battle_time_remaining: '剩余战斗时间: '
 msg_err_hud_not_available_in_folia: "&cHUD在 Folia 中不可用。"
 #Dynmap
@@ -183,14 +183,14 @@ dynmap_siege_title: 'Siege: %s vs %s'
 dynmap_siege_type: '类型:%s'
 dynmap_siege_town: '城镇: %s'
 dynmap_siege_balance: 'Siege Balance: %d'
-dynmap_siege_war_chest: 'War Chest: %s'
+dynmap_siege_war_chest: '军费开支: %s'
 dynmap_siege_battle_points: '战斗点数: %s / %s'
 #HUD
 hud_siege_type: '类型: '
 hud_battle_attacker_points: '进攻方战斗点数: '
 hud_battle_defender_points: '防守方战斗点数: '
 #Starting sieges
-msg_err_cannot_start_siege_at_ruined_town: '&cYou cannot start a siege at a ruined town.'
+msg_err_cannot_start_siege_at_ruined_town: '&c你不能对一个已经沦为废墟的城镇发动围攻。'
 msg_err_cannot_start_siege_due_to_siege_immunity: '&c你现在不能发动围攻，因为附近的城镇豁免围攻。'
 msg_err_cannot_start_revolt_siege_as_town_is_unoccupied: '&c你不能发动起义围攻，因为该镇不处于被占领状态。'
 msg_conquest_siege_started_neutral_town: '&b一支属于%s的军队攻击了%s。一场征服围攻开始了！'
@@ -240,14 +240,14 @@ msg_err_occupied_town_cannot_move_homeblock: "&c被占领的城镇不能更改�
 status_town_siege_pending_balance_adjustment: '&2 | Pending: &a%s'
 #Added in 0.21
 #General occupation commands error messages
-msg_err_town_and_capital_too_far_apart: "&c %s 的中心区块距离 %s 的首都的中心区块过远。"
+msg_err_town_and_capital_too_far_apart: "&c%s的中心区块距离%s的首都的中心区块过远。"
 #Added in 0.22
 #Revolt immunities
-msg_set_revolt_immunities_town: '城镇 %s 的起义豁免设置为 %s。'
-msg_set_revolt_immunities_nation: '国家 %s 的所有城镇的起义豁免被设置为 %s。'
+msg_set_revolt_immunities_town: '城镇%s的起义豁免设置为 %s。'
+msg_set_revolt_immunities_nation: '国家%s的所有城镇的起义豁免被设置为 %s。'
 msg_set_revolt_immunities_all: '所有城镇的起义豁免被设置为 %s。'
 #Added in 0.23
-msg_siege_war_banner_control_remaining_session_time: '旗帜控制倒计时:%s'
+msg_siege_war_banner_control_remaining_session_time: '旗帜控制倒计时: %s'
 #Added in 0.25
 msg_err_siege_war_too_many_adjacent_towns: '&cYou cannot perform this action because the target chunk faces too many townblocks. Try placing the item in a different area.'
 #Added in 0.26
@@ -256,12 +256,12 @@ msg_siege_war_defender_death: '&bSiege of %s > 防守方 %s 死亡> 战斗点数
 msg_siege_war_attacker_killed_by_player: '&bSiege of %s > 进攻方%s 被 %s 击杀> 战斗点数 -%d'
 msg_siege_war_defender_killed_by_player: '&bSiege of %s > 防守方 %s 被 %s 击杀> 战斗点数 +%d'
 #Added in 0.27
-msg_next_siege_session_in_minutes: 'The next Battle Session is in %s.'
-msg_session_is_active_now: 'A Battle Session is active now!'
-msg_err_battle_session_active: "&cA Battle Session has already started."
-msg_err_battle_session_inactive: "&cThe Battle Session has already ended."
-msg_battle_session_force_start: "&bA Battle Session has been force started."
-msg_battle_session_force_end: "&bThe Battle Session has been force ended."
+msg_next_siege_session_in_minutes: '下一战斗回合将在%s内开始。'
+msg_session_is_active_now: '战斗回合正在进行中！'
+msg_err_battle_session_active: "&c战斗回合已开始。"
+msg_err_battle_session_inactive: "&c战斗回合已结束。"
+msg_battle_session_force_start: "&b战斗回合已被强制开始。"
+msg_battle_session_force_end: "&b战斗回合已被强制结束。"
 #Added in 0.28
 msg_town_immunity_expired: '你的城镇的围攻豁免已经过期。'
 #Unsiegeable towns strings
@@ -277,8 +277,8 @@ attackers_scored_points_towards_siege_camp_x_of_x: '%s has scored points towards
 attacker_has_begun_a_siegecamp_session: '%s has begun a Siege-Assembly against %s. If successful a Siege will begin! The attackers must score %s points within %s minutes.'
 #Added in 0.30
 msg_bossbar_preference_set: "&bBoss血条偏好设置为 %s。"
-bossbar_msg_battle_time_remaining: '&2Battle Session Time Remaining: &a%s'
-msg_err_siege_war_revolt_immunity_permanent: "&c你的城镇处于永久起义豁免状态，不能反抗。"
+bossbar_msg_battle_time_remaining: '&2战斗回合剩余时间: &a%s'
+msg_err_siege_war_revolt_immunity_permanent: "&c你的城镇处于永久起义豁免状态，不能起义。"
 status_sieged: "%s[%s被围攻%s]"
 status_military_salary: "军费薪金: "
 hover_message_click_to_claim: "点击收取所欠您的款项。"
@@ -288,7 +288,7 @@ msg_next_session_cannot_be_determined: "The next Siege Session has not been sche
 nation_help_siegewar_11: '收取所有军薪。'
 msg_err_siege_war_collect_unavailable: "没有任何东西可供您收集。"
 msg.battle.session.cleanup.starting: "The previous Battle Session did not complete. Initiating Battle Session Cleanup. Each battle will be resolved as a draw, with both attacker and defender battle points being applied to the siege balance."
-msg.battle.session.cleanup.complete: "Battle Session Cleanup complete. %d battles were resolved."
+msg.battle.session.cleanup.complete: "战斗回合清理完成。%d场战斗已被中止。"
 msg_err_cannot_start_sieges_today: "&c你的服务器限制了可发动围攻的每周天数。当前无法发动围攻。"
 #Added in 0.36
 msg_err_nation_neutrality_not_supported: '&cSiegewar不支持国家中立。'
@@ -303,20 +303,20 @@ msg_err_siege_war_cannot_destroy_siege_camp_banner: "&cWhile the siege assembly 
 msg_err_cannot_alter_blocks_near_siege_banner: '你不能在围攻旗帜附近放置/摧毁方块。'
 #Added in 0.44
 #Message shown siege-wide when a player loses a siegewar rank while in a siegezone.
-warn_resident_had_rank_removed: '警告: %s 的 %s 头衔在 %s 的围攻区内被移除。'
+warn_resident_had_rank_removed: '警告: %s的%s头衔在%s的围攻区内被移除。'
 #Message shown when a town kicks a resident who is in a siege zone.
-warn_resident_had_town_removed: '警告: %s 被城镇 %s 踢出，而目前该玩家位于 %s 的围攻区内。'
+warn_resident_had_town_removed: '警告: %s被城镇%s踢出，而目前该玩家位于%s的围攻区内。'
 #Message shown when a nation kicks a town which has players in a siege zone.
-warn_nation_had_town_removed: '警告: %s 被国家 %s 踢出，而目前该玩家 %s 位于 %s 的围攻区内。'
+warn_nation_had_town_removed: '警告: %s被国家%s踢出，而目前该玩家%s位于%s的围攻区内。'
 #Message shown when a nation removes an ally which has players in a siege zone.
-warn_nation_had_ally_removed: '警告: %s 被盟友 %s 踢出，而目前该玩家 %s 位于 %s 的围攻区内。'
+warn_nation_had_ally_removed: '警告: %s被盟友%s 踢出，而目前该玩家%s位于%s的围攻区内。'
 #Message shown to the former allied nation's players when they have been removed as an ally.
-warn_your_nation_has_been_removed_as_an_ally: '警告: %s 不再将您的国家视为盟友，而目前您的部分国家成员位于围攻区内，位于 %s。'
+warn_your_nation_has_been_removed_as_an_ally: '警告: %s不再将您的国家视为盟友，而目前您的部分国家成员位于围攻区内，位于%s。'
 #Added in 0.48
 #Shown when an admin adds hours using /swa siegeduration addhours
 hours_added_to_sieges: '%s小时已被添加到所有围攻的持续时间。'
 #Shown when SW cancels a battle session because there's no active sieges.
-battle_session_cancelled_no_sieges: 'No active Sieges, cancelling Battle Session'
+battle_session_cancelled_no_sieges: '暂无有效围攻，战斗回合已被取消'
 #Added in 0.49
 #Shown when a nation tries to set their capital city while it is sieged.
 msg_err_besieged_capital_cannot_change_king: "&c你的国家在你的城镇被围攻时不能改变国王。"
@@ -330,7 +330,7 @@ msg_err_your_nation_cannot_afford_to_siege_for_x: "你的国家无法发动这�
 #Shown when a town cannot afford to start a siege.
 msg_err_your_town_cannot_afford_to_siege_for_x: "你的城镇无法发动这个围攻，它将消耗%s。"
 #Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
-msg_attackers_have_triggered_a_jail_break_freeing: "The attackers have won the Battle Session, resulting in a prison break, freeing %s."
+msg_attackers_have_triggered_a_jail_break_freeing: "进攻方赢得了此战斗回合，导致越狱，释放了%s。"
 #Shown when a town takes on daily plunder debt.
 msg_plunder_debt_earned: "Your town's plunder costs were paid by the server! You will have to pay %s every day for %s days, to pay this back."
 #Shown when a town pays their daily plunder debt.
@@ -338,7 +338,7 @@ msg_plunder_debt_payed: "Your town paid the daily plunder debt of %s."
 #Shown when a town pays their daily plunder debt with bankruptcy.
 msg_plunder_debt_payed_bankrupt: "Your town paid the daily plunder debt of %s by going bankrupt."
 #Shown when a town cannot pay their daily plunder debt.
-msg_plunder_debt_cannot_be_payed: "&c城镇 %s 无法支付其掠夺债务，并且已被移除！"
+msg_plunder_debt_cannot_be_payed: "&c城镇%s无法支付其掠夺债务，并且已被移除！"
 #Shown in the town status screen when a town has plunder debt.
 status_town_plunder_debt: "&2Plunder Debt Owing: %s, %s daily payments of %s remain."
 ##################### Occupation Tax #############################
@@ -353,7 +353,7 @@ msg_occupation_tax_paid_bankrupt: "&c你的城镇通过破产支付了%s的国�
 #Shown when a bankrupt town cannot pay their nation occupation tax.
 msg_occupation_tax_paid_with_debt: "&c你的城镇通过债务上缴了%s的国家占领税。"
 #Shown when a town cannot pay their nation occupation tax.
-msg_occupation_tax_cannot_be_paid: "&c城镇 %s 无法支付其国家占领税，并且已被移除！"
+msg_occupation_tax_cannot_be_paid: "&c城镇%s无法支付其国家占领税，并且已被移除！"
 #Shown in the nation status screen when a nation has nation occupation tax.
 status_nation_occupation_tax_per_plot: "&2国家占领税: &c每块地皮%s"
 #Shown in the town status screen when a town has nation occupation tax to pay.
@@ -370,13 +370,13 @@ msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
 msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
 #Invasion
 msg_err_town_already_invaded: '&c你的国家已经占领了该镇。'
-msg_neutral_town_invaded: '&b%s 已被 %s 占领！'
-msg_nation_town_invaded: '&b %s，归属于%s，已被 %s 占领！'
+msg_neutral_town_invaded: '&b%s已被 %s占领！'
+msg_nation_town_invaded: '&b%s，归属于%s，已被%s占领！'
 #Subverting
 msg_peaceful_town_subverted: "&b%s has been peacefully subverted and captured by %s."
 msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already owns and occupies it."
 #Revolting
-msg_revolt_siege_started: '&b %s 的城镇人民挺身而出，反对占领国 %s，并宣布自己可以自由地选择属于他们自己的命运。一场起义围攻已经开始！'
+msg_revolt_siege_started: '&b%s的城镇人民挺身而出，反对占领国%s，并宣布自己可以自由地选择属于他们自己的命运。一场起义围攻已经开始！'
 #war sickness
 msg_you_will_get_sickness: '&c警告: 你已进入围攻区的野外，但你不是围攻的正式参与者。请进入一个城镇或离开围困区，否则你将在%s秒内患上战争病。'
 msg_you_received_war_sickness: '&c警告: 你已进入围攻区的野外，但你不是围攻的正式参与者。请进入一个城镇或离开围困区以消除战争病。'
@@ -386,8 +386,8 @@ status_town_days_to_peacefulness_status_change: '&2和平状态变更天数: &b%
 town_help_toggle_peaceful: '更改您的城镇和平状态'
 msg_war_common_town_declared_peaceful: '&b和平宣言！该镇将在%d天内被确认为和平城镇。'
 msg_war_common_town_declared_non_peaceful: '&b战争宣言！该镇将在%d天内被确认为非和平城镇。'
-msg_town_became_peaceful: '&b%s 已被确认为和平城镇。该镇现在免受围攻攻击，但易受附近国家的颠覆，居民无法获得国家军衔。'
-msg_town_became_non_peaceful: '&b%s 已被确认为非和平城镇。该镇现在不再免受围攻攻击，但不再易受附近国家的颠覆，居民现在可以获得国家军衔。'
+msg_town_became_peaceful: '&b%s已被确认为和平城镇。该镇现在免受围攻攻击，但易受附近国家的颠覆，居民无法获得国家军衔。'
+msg_town_became_non_peaceful: '&b%s已被确认为非和平城镇。该镇现在不再免受围攻攻击，但不再易受附近国家的颠覆，居民现在可以获得国家军衔。'
 msg_war_common_town_peacefulness_countdown_cancelled: '&b和平状态变更倒计时已取消。'
 msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&c不能为居民增加军衔，因为他们属于一个和平的城镇。'
 sg_err_peaceful_town_cannot_move_homeblock: "&c和平城镇不能更改其中心区块。如果你想移动你的中心区块，请先变更和平状态。"
@@ -395,21 +395,21 @@ msg_err_peaceful_towns_cannot_revolt: '&c和平城镇不能起义。'
 msg_err_capital_towns_cannot_go_peaceful: '&c首都城镇不能处于和平状态。'
 msg_err_cannot_subvert_not_enough_permissions: "&c你没有足够的权限使用这个指令去颠覆该镇。"
 msg_err_cannot_subvert_dont_own_guardian_town: "&cSubvert not possible, because your nation does not own the required Guardian Town: %s."
-msg_peaceful_towns_released_on_homeblock_move: "&b因为 %s 更改了其中心区块，其守卫的和平城镇 %d 从占领中释放。"
+msg_peaceful_towns_released_on_homeblock_move: "&b因为%s更改了其中心区块，其守卫的和平城镇%d从占领中自动释放。"
 #Town neutrality
 msg_err_town_neutrality_not_supported: "&cSiegewar不支持城镇中立。为了保护你的城镇免受围攻，请使用“/sw town togglepeaceful”将你的城镇更改为和平状态。"
 #swa
 msg_swa_set_invade_success: '&bSet captured to %s for %s.'
-msg_swa_town_peacefulness_change_success: '&b成功将 %s 的和平状态变更为 %s。'
-msg_swa_town_occupation_change_success: '&b成功将 %s 的占领状态变更为 %s。'
+msg_swa_town_peacefulness_change_success: '&b成功将%s的和平状态变更为%s。'
+msg_swa_town_occupation_change_success: '&b成功将%s的占领状态变更为 %s。'
 msg_err_command_not_allowed_on_active_siege: "您不能在围攻未结束时运行此命令。"
 #Timed wins
-msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking army of %s has won a %s victory against the defending army of %s!'
-msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!'
-msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has defeated the rebels with a %s victory!'
-msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded! The attacking rebels have successfully driven off the attacking army of %s!, with a %s victory!'
+msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > 属于%s的进攻部队击溃了属于 %s 的防守部队并取得了%s胜利！'
+msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > 属于%s的防守部队击溃了属于%s的进攻部队并取得了%s胜利！'
+msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > 属于%s的，曾占领该城镇的进攻部队击败了起义部队并取得了%s胜利！'
+msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > 起义胜利！进攻的起义部队成功地击退%s的进攻部队并取得了%s胜利！'
 msg_decisive: '绝对'
-msg_close: 'CLOSE'
+msg_close: '相对'
 #Abandoning Attacks
 msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > The attacking army of %s has admitted defeat and retreated! This action will be confirmed when siege progress is complete.'
 msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has admitted defeat and retreated! This action will be confirmed when siege progress is complete.'
@@ -444,7 +444,7 @@ msg_err_cannot_invade_without_victory: "&c你不能占领这个城镇，除非�
 msg_err_cannot_invade_siege_still_in_progress: '&c你不能在围攻仍在进行中时占领这个城镇。'
 msg_err_cannot_invade_town_already_occupied: '&c无需夺取这个城镇，因为你的民族已经占领并拥有了它。'
 msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&c不能为居民增加军衔，因为他们属于一个被占领的城镇。'
-msg_err_cannot_set_occupation_without_nation: '&c城镇 %s 不属于任何一个国家。您必须先设置国家，然后才能将该镇设置为被占领。'
+msg_err_cannot_set_occupation_without_nation: '&c城镇%s不属于任何一个国家。您必须先设置国家，然后才能将该镇设置为被占领。'
 msg_err_cannot_invade_not_enough_permissions: "&c你没有足够的权限使用这个指令去占领该镇。"
 msg_err_occupied_towns_cannot_leave_their_nations: "&c被占领的城镇不能以通常的方式离开自己的国家。如果您想要让您的城镇离开国家，就需要发动起义围攻。"
 #Siegezone proximity warning
@@ -455,52 +455,52 @@ msg_err_cannot_plunder_not_enough_permissions: "&c你没有足够的权限使用
 msg_err_siege_war_action_not_a_nation_member: '&c你必须是一个国家的成员才能执行此操作。'
 msg_err_siege_war_action_not_a_town_member: '&c你必须是一个城镇的成员才能执行此操作。'
 #Upfront Cost
-msg_town_pay_upfront_siege_cost: '&b你的城镇预付了 %s的围攻费用。'
-msg_nation_pay_upfront_siege_cost: '&b你的国家预付了 %s的围攻费用。'
+msg_town_pay_upfront_siege_cost: '&b你的城镇预付了%s的围攻费用。'
+msg_nation_pay_upfront_siege_cost: '&b你的国家预付了%s的围攻费用。'
 #Siege Statuses
 siege_status_attacker_close_win: '偏进攻方胜利'
 siege_status_defender_close_win: '偏防守方胜利'
 siege_status_attacker_win: '绝对进攻方胜利'
 siege_status_defender_win: '绝对防守方胜利'
 #Siege Special Victory Effects
-msg_conquest_siege_attacker_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的城镇能够收回战争费用中的 %s。"
-msg_conquest_siege_defender_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的国家能够收回战争费用中的 %s。"
-msg_conquest_siege_attacker_close_win_plunder_reduced: "&b因为最近的围攻胜利是 CLOSE，通常的掠夺量被减少 %s。"
-msg_revolt_siege_attacker_close_win_plunder_reduced: "&b因为最近的围攻胜利是 CLOSE，通常的掠夺量被减少 %s。"
+msg_conquest_siege_attacker_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的城镇能够收回战争费用中的%s。"
+msg_conquest_siege_defender_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的国家能够收回战争费用中的%s。"
+msg_conquest_siege_attacker_close_win_plunder_reduced: "&b因为最近的围攻胜利是相对性的，通常的掠夺量被减少%s。"
+msg_revolt_siege_attacker_close_win_plunder_reduced: "&b因为最近的围攻胜利是相对性的，通常的掠夺量被减少%s。"
 msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (%d siege-balance to conquest sieges it initiates), for %d days."
 #Toxicity Reduction
-msg_chat_now_disabled: " General Chat, /lc, and /tell, will be disabled while the Battle Session is active, and for %s after it ends. If you want to chat, try using /tc, /nc, or /ac."
+msg_chat_now_disabled: " 战斗回合处于活跃状态时，公屏聊天、/lc 和 /tell已被禁用，%s后将重新可用。请尝试使用 /tc、/nc或 /ac。"
 msg_chat_now_restored: "&b公屏聊天、 /lc和 /tell已恢复使用。"
-msg_err_no_general_chat_in_battle_session: "&cGeneral Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
-msg_err_no_local_chat_in_battle_session: "&cLocal Chat is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
-msg_err_no_tell_chat_in_battle_session: "&c/tell is disabled while a Battle Session is active, and for %s after it ends. Try chatting using /tc, /nc, or /ac."
+msg_err_no_general_chat_in_battle_session: "&c战斗回合处于活跃状态时公屏聊天已被禁用，%s后将重新可用。请尝试使用 /tc、/nc或 /ac。"
+msg_err_no_local_chat_in_battle_session: "&c战斗回合处于活跃状态时/lc已被禁用，%s后将重新可用。请尝试使用/tc、/nc或/ac。"
+msg_err_no_tell_chat_in_battle_session: "&c战斗回合处于活跃状态时/tell已被禁用，%s后将重新可用。请尝试使用/tc、/nc或/ac。"
 msg_can_also_chat_in_discord: " 您也可以在服务器的discord频道中聊天: %s。"
 #Bad Config Warnings
 msg_err_value_configured_too_high: "&c警告: 服务器配置的 %s 值太高。计算出的理想值为: %s。实际配置值为: %s。"
-msg_err_value_configured_too_low: "&c警告: 服务器配置的 %s 值太低。计算出的理想值为: %s。实际配置值为: %s。"
+msg_err_value_configured_too_low: "&c警告: 服务器配置的%s值太低。计算出的理想值为: %s。实际配置值为: %s。"
 msg_err_note_about_warnings: "&c注意: 如果您的服务器尚未启动，请不要担心理想值看起来有误。当玩家开始创建城镇/国家时，警告将会自动更正。"
 #Block Placement
 msg_err_banner_cannot_be_more_than_one_block_away: "&c旗帜距离目标城镇不能超过1个方块。"
-msg_err_banner_cannot_be_close_to_any_town_block: '&cThe banner must be at least %s full town block(s) away from any town.'
+msg_err_banner_cannot_be_close_to_any_town_block: '&c旗帜必须至少距离任何城镇%s格以上。'
 #Battle Commanders / Mobile Spawn Points
 msg_battle_commanders_assigned: "&bSiege at %s > 战斗指挥官已被指派。进攻方指挥官: %s。防守方指挥官: %s。"
-no_battle_commander: "<无>"
+no_battle_commander: "<None>"
 msg_err_cannot_spawn_feature_not_active: "&c你不能传送到围攻，因为服务器禁用了“战斗指挥官”功能。"
 msg_err_cannot_spawn_siege_not_active: "&c你不能传送到围攻，因为围攻未被激活。"
-msg_err_cannot_spawn_battle_session_not_active: "&cYou cannot spawn to the siege because there is no active battle session."
+msg_err_cannot_spawn_battle_session_not_active: "&c你不能传送到围攻，因为暂无活跃的战斗回合。"
 msg_err_cannot_spawn_not_participant: "&c你不能传送到围攻区，因为你不是围攻的正式参与者。"
 msg_err_cannot_spawn_no_battle_commander: "&c你不能传送到围攻，因为你的队伍没有战斗指挥官。"
 msg_err_cannot_spawn_battle_commander_offline: "&c你不能传送到围攻，因为你的队伍的战斗指挥官不在线。"
 msg_err_cannot_spawn_battle_commander_dead: "&c你不能传送到围攻，因为你的队伍的战斗指挥官已死亡。"
 msg_err_cannot_spawn_battle_commander_not_in_siegezone: "&c你不能传送到围攻，因为你的队伍的战斗指挥官未处于围攻区内。"
 msg_err_cannot_spawn_not_in_homeblock: "&c你必须在你的城镇中心区块中才能传送至围攻。"
-msg_err_cannot_spawn_outpost_during_battle_session: "&cYou cannot spawn to an outpost while your nation has an offensive siege during a battle session."
+msg_err_cannot_spawn_outpost_during_battle_session: "&c你不能在你的国家正在战斗回合内参与进攻围攻时传送至前哨。"
 #Webhook
-msg_swa_remove_siege_admin_command: '&b %s 的围攻已通过管理员命令删除。'
-msg_swa_remove_siege_nation_delete: '由于攻击方国家不再存在， %s 的围攻已被移除。'
+msg_swa_remove_siege_admin_command: '&b位于%s的围攻已通过管理员命令删除。'
+msg_swa_remove_siege_nation_delete: '由于攻击方国家不再存在，位于%s的围攻已被移除。'
 msg_swa_remove_siege_town_delete: '&%s的围攻已被移除，因为该镇已删除。'
 msg_swa_remove_siege_town_ruin: '&%s的围攻已被移除，因为该镇已沦为废墟。'
-msg_swa_remove_siege_immunity_expired: '&b位于 %s 的一场围攻已被移除，因为围攻豁免已过期。'
+msg_swa_remove_siege_immunity_expired: '&b位于%s的一场围攻已被移除，因为围攻豁免已过期。'
 msg_swa_battle: 'Battle'
 #Siege Lore
 siege_lore_color_attacker: '&c%s'
@@ -512,24 +512,24 @@ siege_lore_format_date: 'dd/MM/yyyy HH:mm'
 siege_lore_format_key_value: '%s: %s'
 siege_lore_format_two_values: '%s %s'
 siege_lore_format_secondary_value: '(%s)'
-siege_lore_error_banner_cannot_be_used: '已用于上一场围攻的旧旗帜无法用于发动新围攻。'
+siege_lore_error_banner_cannot_be_used: '已被用于上一场围攻的旧旗帜无法再被用于发动新围攻。'
 siege_lore_unknown: '未知'
 siege_lore_type: '%s 围攻'
-siege_lore_attacker: '进攻者'
-siege_lore_defender: '防御者'
+siege_lore_attacker: '进攻方'
+siege_lore_defender: '防守方'
 siege_lore_winner: '胜利方'
 siege_lore_start: '已开始'
 siege_lore_end: '已结束'
 siege_lore_banner_name: '围攻旗帜'
-siege_lore_banner_chat_1: '这面旗帜开启了 %s'
+siege_lore_banner_chat_1: '此旗帜发动了%s'
 siege_lore_banner_chat_2: ' of %s'
-siege_lore_banner_chat_3: '，以 %s 的胜利告终'
-siege_lore_banner_chat_4_ATTACKERS: ', 通过击败 %s 的防御'
-siege_lore_banner_chat_5_ATTACKERS: ' 占领城镇 %s'
-siege_lore_banner_chat_4_DEFENDERS: '，通过击败 %s 的进攻'
-siege_lore_banner_chat_5_DEFENDERS: ' 保卫他们的城镇 %s'
-siege_lore_banner_chat_4_NOBODY: '，在与 %s 战斗时'
-siege_lore_banner_chat_5_NOBODY: ' 在为城镇 %s 作战中'
+siege_lore_banner_chat_3: '，以%s的胜利告终'
+siege_lore_banner_chat_4_ATTACKERS: '，通过击溃%s的防御'
+siege_lore_banner_chat_5_ATTACKERS: ' 占领城镇%s'
+siege_lore_banner_chat_4_DEFENDERS: '，通过击退%s的进攻'
+siege_lore_banner_chat_5_DEFENDERS: ' 保卫他们的城镇%s'
+siege_lore_banner_chat_4_NOBODY: '，对%s作战'
+siege_lore_banner_chat_5_NOBODY: ' 在为城镇%s作战中'
 siege_lore_shield_name: 'Siege Shield'
 siege_err_conquest_sieges_disabled_in_the_config: "&c在SiegeWar配置文件中，征服围攻已被禁用。"
 siege_err_revolt_sieges_disabled_in_the_config: "&c在SiegeWar配置文件中，起义围攻已被禁用。"
@@ -537,7 +537,7 @@ msg_err_peaceful_subversion_disabled_in_the_config: "&c在SiegeWar配置文件�
 msg_err_abandoning_attack_disabled_in_the_config: "&c在SiegeWar配置文件中，放弃进攻已被禁用。"
 msg_err_town_surrender_disabled_in_the_config: "&c在SiegeWar配置文件中，城镇投降已被禁用。"
 msg_err_invading_disabled_in_the_config: "&c在SiegeWar配置文件中，入侵城镇已被禁用。"
-msg_err_action_disable_missing_node: '&c你没有足够的权限进行该操作:%s'
+msg_err_action_disable_missing_node: '&c你没有足够的权限进行该操作: %s'
 msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "你的国家不是攻击方，你不能入侵这个城镇。"
 msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "你无权在这场围攻中放弃或投降。"
 msg_err_cannot_change_capital_because_peaceful: "&c你不能更改国家首都，因为新首都处于和平状态。"
@@ -547,5 +547,5 @@ msg_err_cannot_start_siege_as_a_peaceful_town: "&c你不能发动围攻，因为
 #Only One Action
 msg_err_town_already_plundered_only_one_action: "&c你不能入侵一个已经被掠夺的国家。"
 msg_err_town_already_invaded_only_one_action: "&c你不能掠夺一个已经被入侵的国家。"
-siege_msg_err_cannot_assign_rank_during_active_battlesession: "当战斗回合仍在进行时，&c你不能添加 %s 头衔。"
+siege_msg_err_cannot_assign_rank_during_active_battlesession: "当战斗回合仍在进行时，&c你不能添加%s头衔。"
 siege_msg_err_cannot_assign_rank_during_active_siege: "&c你不能在你的城镇参与围攻时授予 %s 。"
