@@ -68,7 +68,7 @@ msg_err_siege_war_town_already_plundered: '&c此镇已被掠夺。'
 msg_err_siege_war_cannot_destroy_siege_banner: "&c围攻正在进行中，你不能摧毁围攻旗帜或旗帜所附着的方块。"
 msg_err_siege_war_banner_support_block_not_stable: "&c您不能将旗帜放置在不稳定的地面上，例如沙子或沙砾。"
 #Banner control
-msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: '你不能在尝试控制旗帜时使用此物品。'
+msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: '你不能在尝试取得旗帜控制权时使用此物品。'
 #Town Info Siege Section
 status_town_revolt_immunity_timer: '&2起义豁免倒计时: &a%s'
 status_town_siege_status_in_progress: '正在进行中'
@@ -209,15 +209,15 @@ status_town_siege_status_defender_win: '绝对防守方胜利'
 status_town_siege_status_close_attacker_win: '偏进攻方胜利'
 status_town_siege_status_close_defender_win: '偏防守方胜利'
 status_town_siege_status_attacker_abandon: '进攻方放弃'
-status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending'
+status_town_siege_status_pending_attacker_abandon: '进攻方请求放弃(等待确认中)'
 status_town_siege_status_defender_surrender: '防守方投降'
-status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending'
+status_town_siege_status_pending_defender_surrender: '防守方请求投降(等待确认中)'
 status_town_siege_status_plundered: '&2 > 掠夺城镇: %s'
 #Siege statuses
 siege_status_attacker_abandon: '进攻方放弃'
 siege_status_defender_surrender: '防守方投降'
-siege_status_pending_attacker_abandon: 'Attacker Abandon Pending'
-siege_status_pending_defender_surrender: 'Defender Surrender Pending'
+siege_status_pending_attacker_abandon: '进攻方请求放弃(等待确认中)'
+siege_status_pending_defender_surrender: '防守方请求投降(等待确认中)'
 #Nation screen
 status_nation_offensive_sieges: '&2进攻围攻 &a[%s]&2: &f'
 status_nation_defensive_sieges: '&2防守围攻 &a[%s]&2: &f'
@@ -283,7 +283,7 @@ status_sieged: "%s[%s被围攻%s]"
 status_military_salary: "军费薪金: "
 hover_message_click_to_claim: "点击收取所欠您的款项。"
 #Added in 0.31
-msg_next_session_cannot_be_determined: "The next Siege Session has not been scheduled. Try again later."
+msg_next_session_cannot_be_determined: "下一场围攻尚未安排，请稍后再试。"
 #Added in 0.33
 nation_help_siegewar_11: '收取所有军薪。'
 msg_err_siege_war_collect_unavailable: "没有任何东西可供您收集。"
@@ -393,7 +393,7 @@ msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&c不能为居民�
 sg_err_peaceful_town_cannot_move_homeblock: "&c和平城镇不能更改其中心区块。如果你想移动你的中心区块，请先变更和平状态。"
 msg_err_peaceful_towns_cannot_revolt: '&c和平城镇不能起义。'
 msg_err_capital_towns_cannot_go_peaceful: '&c首都城镇不能处于和平状态。'
-msg_err_cannot_subvert_not_enough_permissions: "&c你没有足够的权限使用这个指令去颠覆该镇。"
+msg_err_cannot_subvert_not_enough_permissions: "&c你没有足够的权限使用这个指令颠覆该镇。"
 msg_err_cannot_subvert_dont_own_guardian_town: "&cSubvert not possible, because your nation does not own the required Guardian Town: %s."
 msg_peaceful_towns_released_on_homeblock_move: "&b因为%s更改了其中心区块，其守卫的和平城镇%d从占领中自动释放。"
 #Town neutrality
@@ -406,18 +406,18 @@ msg_err_command_not_allowed_on_active_siege: "您不能在围攻未结束时运�
 #Timed wins
 msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > 属于%s的进攻部队击溃了属于 %s 的防守部队并取得了%s胜利！'
 msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > 属于%s的防守部队击溃了属于%s的进攻部队并取得了%s胜利！'
-msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > 属于%s的，曾占领该城镇的进攻部队击败了起义部队并取得了%s胜利！'
+msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > 曾占领该城镇的，属于%s的进攻部队击败了起义部队并取得了%s胜利！'
 msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > 起义胜利！进攻的起义部队成功地击退%s的进攻部队并取得了%s胜利！'
 msg_decisive: '绝对'
 msg_close: '相对'
 #Abandoning Attacks
-msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > The attacking army of %s has admitted defeat and retreated! This action will be confirmed when siege progress is complete.'
-msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has admitted defeat and retreated! This action will be confirmed when siege progress is complete.'
+msg_conquest_siege_attacker_abandon: '&bCONQUEST SIEGE at %s > 属于%s的进攻部队已承认其战败并选择撤退！该操作将在围攻进度完成时被确认并正式生效。'
+msg_revolt_siege_attacker_abandon: '&bREVOLT SIEGE at %s > 曾占领该城镇的，属于%s的进攻部队已承认其战败并选择撤退！该操作将在围攻进度完成时被确认并正式生效。'
 msg_conquest_siege_attacker_abandon_confirmed: '&bCONQUEST SIEGE at %s > 已确认进攻方放弃！'
 msg_revolt_siege_attacker_abandon_confirmed: '&bREVOLT SIEGE at %s > 已确认进攻方放弃！'
 #Surrendering Defence
-msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > The town has surrendered to the attacking army of %s! This action will be confirmed when siege progress is complete.'
-msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > The rebels have admitted defeat and surrendered to the attacking army of %s! This action will be confirmed when siege progress is complete.'
+msg_conquest_siege_defender_surrender: '&bCONQUEST SIEGE at %s > 该城镇已向属于%s的进攻部队投降！该操作将在围攻进度完成时被确认并正式生效。'
+msg_revolt_siege_defender_surrender: '&bREVOLT SIEGE at %s > 起义部队已承认其战败并向属于%s的进攻部队投降！该操作将在围攻进度完成时被确认并正式生效。'
 msg_conquest_siege_defender_surrender_confirmed: '&bCONQUEST SIEGE at %s > 已确认防守方投降！'
 msg_revolt_siege_defender_surrender_confirmed: '&bREVOLT SIEGE at %s > 已确认防守方投降！'
 msg_err_siege_occupied_towns_cannot_surrender_in_conquest_sieges: '&c在征服围攻中，被占领城镇不能投降。'
@@ -445,12 +445,12 @@ msg_err_cannot_invade_siege_still_in_progress: '&c你不能在围攻仍在进行
 msg_err_cannot_invade_town_already_occupied: '&c无需夺取这个城镇，因为你的民族已经占领并拥有了它。'
 msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&c不能为居民增加军衔，因为他们属于一个被占领的城镇。'
 msg_err_cannot_set_occupation_without_nation: '&c城镇%s不属于任何一个国家。您必须先设置国家，然后才能将该镇设置为被占领。'
-msg_err_cannot_invade_not_enough_permissions: "&c你没有足够的权限使用这个指令去占领该镇。"
+msg_err_cannot_invade_not_enough_permissions: "&c你没有足够的权限使用这个指令占领该镇。"
 msg_err_occupied_towns_cannot_leave_their_nations: "&c被占领的城镇不能以通常的方式离开自己的国家。如果您想要让您的城镇离开国家，就需要发动起义围攻。"
 #Siegezone proximity warning
 msg_siege_zone_proximity_warning: "&c警告: 你已进入围攻区！"
 #Plunder
-msg_err_cannot_plunder_not_enough_permissions: "&c你没有足够的权限使用这个指令去掠夺该镇。"
+msg_err_cannot_plunder_not_enough_permissions: "&c你没有足够的权限使用这个指令掠夺该镇。"
 #Not a town/nation member
 msg_err_siege_war_action_not_a_nation_member: '&c你必须是一个国家的成员才能执行此操作。'
 msg_err_siege_war_action_not_a_town_member: '&c你必须是一个城镇的成员才能执行此操作。'
