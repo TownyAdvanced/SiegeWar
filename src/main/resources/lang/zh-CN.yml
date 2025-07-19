@@ -52,7 +52,7 @@ msg_err_siege_war_banner_must_be_placed_above_ground: '&c围攻旗帜必须被�
 msg_err_siege_war_cannot_attack_own_town: '&b你不能攻击你自己的城镇。'
 msg_err_siege_war_cannot_attack_town_in_own_nation: '&c你不能攻击一个归属于自己所在国家的城镇。'
 msg_err_siege_war_cannot_attack_non_enemy_nation: '&c你不能攻击一个城镇，除非该城镇属于敌国。'
-msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&cYou cannot perform this action because this chunk is facing more than one town block. Try placing the item in a different area.'
+msg_err_siege_war_too_many_adjacent_cardinal_town_blocks: '&c你不能执行此操作，因为该区块与多于一个的城镇区块相邻。请尝试将物品放置在其他区域。'
 msg_err_siege_war_nation_already_attacking_town: '&c你的国家已经在攻击这个城镇。'
 msg_err_siege_war_cannot_attack_siege_immunity: '&c目标城镇豁免围攻。在围攻豁免到期之前，不能攻击该镇。'
 msg_err_siege_war_cannot_join_siege: '&c你不能攻击一个正在被另一个国家围攻的城镇。'
@@ -212,7 +212,7 @@ status_town_siege_status_attacker_abandon: '进攻方放弃'
 status_town_siege_status_pending_attacker_abandon: 'Attacker Abandon Pending'
 status_town_siege_status_defender_surrender: '防守方投降'
 status_town_siege_status_pending_defender_surrender: 'Defender Surrender Pending'
-status_town_siege_status_plundered: '&2 > Town Plundered: %s'
+status_town_siege_status_plundered: '&2 > 掠夺城镇: %s'
 #Siege statuses
 siege_status_attacker_abandon: '进攻方放弃'
 siege_status_defender_surrender: '防守方投降'
@@ -249,7 +249,7 @@ msg_set_revolt_immunities_all: '所有城镇的起义豁免被设置为 %s。'
 #Added in 0.23
 msg_siege_war_banner_control_remaining_session_time: '旗帜控制倒计时: %s'
 #Added in 0.25
-msg_err_siege_war_too_many_adjacent_towns: '&cYou cannot perform this action because the target chunk faces too many townblocks. Try placing the item in a different area.'
+msg_err_siege_war_too_many_adjacent_towns: '&c你不能执行此操作，因为目标区块与过多的城镇区块相邻。请尝试将物品放置在其他区域。'
 #Added in 0.26
 msg_siege_war_attacker_death: '&bSiege of %s > 进攻方 %s 死亡> 战斗点数 -%d'
 msg_siege_war_defender_death: '&bSiege of %s > 防守方 %s 死亡> 战斗点数 +%d'
@@ -481,7 +481,7 @@ msg_err_value_configured_too_low: "&c警告: 服务器配置的%s值太低。计
 msg_err_note_about_warnings: "&c注意: 如果您的服务器尚未启动，请不要担心理想值看起来有误。当玩家开始创建城镇/国家时，警告将会自动更正。"
 #Block Placement
 msg_err_banner_cannot_be_more_than_one_block_away: "&c旗帜距离目标城镇不能超过1个方块。"
-msg_err_banner_cannot_be_close_to_any_town_block: '&c旗帜必须至少距离任何城镇%s格以上。'
+msg_err_banner_cannot_be_close_to_any_town_block: '&c旗帜必须至少距离任何城镇%s个城镇区块以上。'
 #Battle Commanders / Mobile Spawn Points
 msg_battle_commanders_assigned: "&bSiege at %s > 战斗指挥官已被指派。进攻方指挥官: %s。防守方指挥官: %s。"
 no_battle_commander: "<None>"
