@@ -336,7 +336,7 @@ msg_plunder_debt_earned: "Your town's plunder costs were paid by the server! You
 #Shown when a town pays their daily plunder debt.
 msg_plunder_debt_payed: "Your town paid the daily plunder debt of %s."
 #Shown when a town pays their daily plunder debt with bankruptcy.
-msg_plunder_debt_payed_bankrupt: "Your town paid the daily plunder debt of %s by going bankrupt."
+msg_plunder_debt_payed_bankrupt: "你的城镇通过破产支付了%s的每日掠夺债务。"
 #Shown when a town cannot pay their daily plunder debt.
 msg_plunder_debt_cannot_be_payed: "&c城镇%s无法支付其掠夺债务，并且已被移除！"
 #Shown in the town status screen when a town has plunder debt.
