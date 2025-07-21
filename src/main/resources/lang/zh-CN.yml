@@ -324,7 +324,7 @@ msg_err_besieged_capital_cannot_change_king: "&c你的国家在你的城镇被�
 #Shown when a siege assembly is started in a town which already has a siege assembly.
 msg_err_town_already_has_a_siege_assembly: '&cThis town already has an active Siege Assembly.'
 #Shown when a town cannot be sieged or subverted because of the target town's isAllowedToWar setting.
-msg_err_this_town_is_not_allowed_to_be_attacked: 'You cannot siege or subvert this town, because they are not allowed to war.'
+msg_err_this_town_is_not_allowed_to_be_attacked: '你不能围攻或颠覆这个城镇，因为他们不被允许参与战争。'
 #Shown when a nation cannot afford to start a siege.
 msg_err_your_nation_cannot_afford_to_siege_for_x: "你的国家无法发动这个围攻，它将消耗%s。"
 #Shown when a town cannot afford to start a siege.
@@ -332,9 +332,9 @@ msg_err_your_town_cannot_afford_to_siege_for_x: "你的城镇无法发动这个�
 #Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
 msg_attackers_have_triggered_a_jail_break_freeing: "进攻方赢得了此战斗回合，导致越狱，释放了%s。"
 #Shown when a town takes on daily plunder debt.
-msg_plunder_debt_earned: "Your town's plunder costs were paid by the server! You will have to pay %s every day for %s days, to pay this back."
+msg_plunder_debt_earned: "你的城镇的掠夺税已经由服务器支付了！你必须每天支付 %s，%s 天才能偿还这笔费用。"
 #Shown when a town pays their daily plunder debt.
-msg_plunder_debt_payed: "Your town paid the daily plunder debt of %s."
+msg_plunder_debt_payed: "你的城镇通过破产支付了%s的每日掠夺债务。"
 #Shown when a town pays their daily plunder debt with bankruptcy.
 msg_plunder_debt_payed_bankrupt: "你的城镇通过破产支付了%s的每日掠夺债务。"
 #Shown when a town cannot pay their daily plunder debt.
@@ -373,8 +373,8 @@ msg_err_town_already_invaded: '&c你的国家已经占领了该镇。'
 msg_neutral_town_invaded: '&b%s已被 %s占领！'
 msg_nation_town_invaded: '&b%s，归属于%s，已被%s占领！'
 #Subverting
-msg_peaceful_town_subverted: "&b%s has been peacefully subverted and captured by %s."
-msg_err_cannot_subvert_town_already_occupied: "&cThere is no need to subvert this town, because your nation already owns and occupies it."
+msg_peaceful_town_subverted: "&b%s已经被%s和平颠覆并占领。"
+msg_err_cannot_subvert_town_already_occupied: "&c无需颠覆这个城镇，因为你的民族已经占领并拥有了它。"
 #Revolting
 msg_revolt_siege_started: '&b%s的城镇人民挺身而出，反对占领国%s，并宣布自己可以自由地选择属于他们自己的命运。一场起义围攻已经开始！'
 #war sickness
@@ -384,8 +384,8 @@ msg_you_received_war_sickness: '&c警告: 你已进入围攻区的野外，但�
 status_town_days_to_peacefulness_status_change: '&2和平状态变更天数: &b%d'
 #Town Peacefulness
 town_help_toggle_peaceful: '更改您的城镇和平状态'
-msg_war_common_town_declared_peaceful: '&b和平宣言！该镇将在%d天内被确认为和平城镇。'
-msg_war_common_town_declared_non_peaceful: '&b战争宣言！该镇将在%d天内被确认为非和平城镇。'
+msg_war_common_town_declared_peaceful: '&b和平状态已宣布！该镇将在%d天内被确认为和平城镇。'
+msg_war_common_town_declared_non_peaceful: '&b非和平状态已宣布！该镇将在%d天内被确认为非和平城镇。'
 msg_town_became_peaceful: '&b%s已被确认为和平城镇。该镇现在免受围攻攻击，但易受附近国家的颠覆，居民无法获得国家军衔。'
 msg_town_became_non_peaceful: '&b%s已被确认为非和平城镇。该镇现在不再免受围攻攻击，但不再易受附近国家的颠覆，居民现在可以获得国家军衔。'
 msg_war_common_town_peacefulness_countdown_cancelled: '&b和平状态变更倒计时已取消。'
@@ -394,7 +394,7 @@ sg_err_peaceful_town_cannot_move_homeblock: "&c和平城镇不能更改其中心
 msg_err_peaceful_towns_cannot_revolt: '&c和平城镇不能起义。'
 msg_err_capital_towns_cannot_go_peaceful: '&c首都城镇不能处于和平状态。'
 msg_err_cannot_subvert_not_enough_permissions: "&c你没有足够的权限使用这个指令颠覆该镇。"
-msg_err_cannot_subvert_dont_own_guardian_town: "&cSubvert not possible, because your nation does not own the required Guardian Town: %s."
+msg_err_cannot_subvert_dont_own_guardian_town: "&c不能颠覆，因为你的国家未拥有所需的守卫者城镇: %s。"
 msg_peaceful_towns_released_on_homeblock_move: "&b因为%s更改了其中心区块，其守卫的和平城镇%d从占领中自动释放。"
 #Town neutrality
 msg_err_town_neutrality_not_supported: "&cSiegewar不支持城镇中立。为了保护你的城镇免受围攻，请使用“/sw town togglepeaceful”将你的城镇更改为和平状态。"
@@ -533,7 +533,7 @@ siege_lore_banner_chat_5_NOBODY: ' 在为城镇%s作战中'
 siege_lore_shield_name: 'Siege Shield'
 siege_err_conquest_sieges_disabled_in_the_config: "&c在SiegeWar配置文件中，征服围攻已被禁用。"
 siege_err_revolt_sieges_disabled_in_the_config: "&c在SiegeWar配置文件中，起义围攻已被禁用。"
-msg_err_peaceful_subversion_disabled_in_the_config: "&c在SiegeWar配置文件中，颠覆城镇和平状态已被禁用。你不能对这个城镇发动围攻。"
+msg_err_peaceful_subversion_disabled_in_the_config: "&c在SiegeWar配置文件中，颠覆和平城镇已被禁用。你不能对这个城镇发动围攻。"
 msg_err_abandoning_attack_disabled_in_the_config: "&c在SiegeWar配置文件中，放弃进攻已被禁用。"
 msg_err_town_surrender_disabled_in_the_config: "&c在SiegeWar配置文件中，城镇投降已被禁用。"
 msg_err_invading_disabled_in_the_config: "&c在SiegeWar配置文件中，入侵城镇已被禁用。"
