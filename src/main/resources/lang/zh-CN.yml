@@ -123,7 +123,7 @@ msg_err_nation_not_registered: '&c国家%s未被注册。'
 msg_err_cannot_remove_enemy: '&c你不能移除敌国，如果在你目前在一场正在进行的围攻中与他们交战！'
 #Added in 0.09
 nation_help_siegewar_12: '酬劳你的士兵。给定的金额将按等级分配。'
-msg_siege_war_military_salary_available: "您现在可以获得%s的军薪。输入 '/sw collect' 来领取。"
+msg_siege_war_military_salary_available: "一份价值%s的军薪现在可用。输入\"/sw country claimrefund\"以领取。"
 msg_siege_war_military_salary_collected: "你已经领取了%s的军薪。"
 msg_err_siege_war_no_soldiers_to_pay: "没有士兵需要支付报酬。"
 msg_err_siege_war_not_enough_nation_funds_to_pay: "国家没有足够的资金来支付这笔款项。"
@@ -162,8 +162,8 @@ msg_swa_set_siege_balance_success: '&bSuccessfully set siege balance to %d for %
 #Added in 0.13
 msg_siege_war_version: '&b当前Siegewar插件版本为: %s。'
 #Added in 0.14
-msg_siege_war_banner_control_session_started: '&bBanner control session started. Remain within %d blocks of the banner, but staying out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
-msg_siege_war_banner_control_session_started_with_altitude: '&bBanner control session started. Remain within %d blocks of the banner, but staying below it''s altitude and out of the town, for %s. If your session succeeds, you will gain banner control for your side (or be added to the banner control list).'
+msg_siege_war_banner_control_session_started: '&b已开始尝试取得围攻旗帜控制权。请停留在以旗帜为中心的半径%d格内%s，请勿进入城镇。如果倒计时结束，己方将获得旗帜控制权(或被添加至旗帜控制列表)。'
+msg_siege_war_banner_control_session_started_with_altitude: '&b已开始尝试取得围攻旗帜控制权。请停留在以旗帜为中心的半径%d格内%s，请勿进入旗帜高度线以下的区域。如果倒计时结束，己方将获得旗帜控制权(或被添加至旗帜控制列表)。'
 msg_siege_war_banner_control_session_failure: '&c旗帜控制失败！常见原因包括: 死亡、离旗帜过远或进入城镇。'
 msg_siege_war_banner_control_session_failure_with_altitude: '&c旗帜控制失败！常见原因包括: 死亡、离旗帜过远、未与其处于同一高度线上或进入城镇。'
 ##### Added in 0.15
@@ -365,9 +365,9 @@ msg_occupation_taxes_collected_totaling: "&b你的国家征收了共计%s的占�
 #####################################################################
 #Nation Refund
 nation_help_refund: "领取任何有效的国家待付款项。"
-msg_siege_war_nation_refund_available: "A nation refund of %s is now available to you. It can be claimed using '/sw nation claimrefund'"
-msg_siege_war_nation_refund_claimed: "You have claimed the nation refund of %s."
-msg_err_siege_war_nation_refund_unavailable: "There is no nation refund available to you."
+msg_siege_war_nation_refund_available: "一份价值%s的国家退款现在可用。输入\"/sw country claimrefund\"以领取"
+msg_siege_war_nation_refund_claimed: "你已经领取国家退款%s。"
+msg_err_siege_war_nation_refund_unavailable: "没有可用的国家退款可供领取。"
 #Invasion
 msg_err_town_already_invaded: '&c你的国家已经占领了该镇。'
 msg_neutral_town_invaded: '&b%s已被 %s占领！'
@@ -467,7 +467,7 @@ msg_conquest_siege_attacker_close_win_warchest_reduced: "&b由于围攻胜利是
 msg_conquest_siege_defender_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的国家能够收回战争费用中的%s。"
 msg_conquest_siege_attacker_close_win_plunder_reduced: "&b因为最近的围攻胜利是相对性的，通常的掠夺量被减少%s。"
 msg_revolt_siege_attacker_close_win_plunder_reduced: "&b因为最近的围攻胜利是相对性的，通常的掠夺量被减少%s。"
-msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (%d siege-balance to conquest sieges it initiates), for %d days."
+msg_revolt_siege_defender_decisive_win_demoralization: "&b前占领国%s，因其殖民地的决定性丧失而元气大伤，并且士气低落(其发起的征服围攻将承受%d点战斗分数惩罚)，持续%d天。"
 #Toxicity Reduction
 msg_chat_now_disabled: " 战斗回合处于活跃状态时，公屏聊天、/lc 和 /tell已被禁用，%s后将重新可用。请尝试使用 /tc、/nc或 /ac。"
 msg_chat_now_restored: "&b公屏聊天、 /lc和 /tell已恢复使用。"
