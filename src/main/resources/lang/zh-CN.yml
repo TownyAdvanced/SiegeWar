@@ -272,8 +272,8 @@ msg_abandon_action_cancelled: '围攻放弃已取消。'
 #Added in 0.29
 msg_err_siegecamp_too_close_to_another_siegecamp: '围攻准备阶段的集结部署点过于接近另一个！'
 msg_err_too_soon_since_your_last_siegecamp: '距离你上次攻击这个城镇的时间还太短，暂时无法再次进攻！'
-msg_err_your_siegecamp_failed_you_must_wait_x: '本方未能在准备阶段获得足够的分数，你不能尝试再次攻击%s的城镇。'
-attackers_scored_points_towards_siege_camp_x_of_x: '%s准备阶段分数: %s/%s。'
+msg_err_your_siegecamp_failed_you_must_wait_x: '本方未能在准备阶段获得足够的分数，你不能再次尝试攻击城镇%s。'
+attackers_scored_points_towards_siege_camp_x_of_x: '%s已为其围攻准备阶段得分: %s/%s。'
 attacker_has_begun_a_siegecamp_session: '%s已经开始了针对%s的准备阶段集结部署。如果成功围攻将开始！进攻方必须在%s分钟内获得%s分。'
 #Added in 0.30
 msg_bossbar_preference_set: "&bBoss血条偏好设置为 %s。"
@@ -287,7 +287,7 @@ msg_next_session_cannot_be_determined: "下一场围攻尚未安排，请稍后�
 #Added in 0.33
 nation_help_siegewar_11: '收取所有军薪。'
 msg_err_siege_war_collect_unavailable: "没有任何东西可供您收集。"
-msg.battle.session.cleanup.starting: "上一场战斗回合未完成，正在启动战斗回合清理。每场战斗都将会被视作平局处理，而进攻方和防守方的战斗点数都会被算入围攻分数。"
+msg.battle.session.cleanup.starting: "上一场战斗回合未完成，正在启动战斗回合清理。每场战斗都将会被视作平局处理，而进攻方和防守方的战斗点数都会被算入围攻总分数。"
 msg.battle.session.cleanup.complete: "战斗回合清理完成。%d场战斗已被中止。"
 msg_err_cannot_start_sieges_today: "&c你的服务器限制了可发动围攻的每周天数。当前无法发动围攻。"
 #Added in 0.36
@@ -332,7 +332,7 @@ msg_err_your_town_cannot_afford_to_siege_for_x: "你的城镇无法发动这个�
 #Shown when the attackers win a battle session and their jailed players are freed from the defender's jail.
 msg_attackers_have_triggered_a_jail_break_freeing: "进攻方赢得了此战斗回合，导致越狱，释放了%s。"
 #Shown when a town takes on daily plunder debt.
-msg_plunder_debt_earned: "你的城镇的掠夺税已经由服务器支付了！你必须每天支付 %s，%s 天才能偿还这笔费用。"
+msg_plunder_debt_earned: "你的城镇的掠夺税已经由服务器支付了！你必须每天支付%s，%s天才能偿还这笔费用。"
 #Shown when a town pays their daily plunder debt.
 msg_plunder_debt_payed: "你的城镇通过破产支付了%s的每日掠夺债务。"
 #Shown when a town pays their daily plunder debt with bankruptcy.
@@ -442,7 +442,7 @@ status_nation_demoralization_days_left: '&2剩余天数: &a%d'
 #Town Capture & Occupation
 msg_err_cannot_invade_without_victory: "&c你不能占领这个城镇，除非你的国家在围攻中获胜。"
 msg_err_cannot_invade_siege_still_in_progress: '&c你不能在围攻仍在进行中时占领这个城镇。'
-msg_err_cannot_invade_town_already_occupied: '&c无需夺取这个城镇，因为你的民族已经占领并拥有了它。'
+msg_err_cannot_invade_town_already_occupied: '&c无需夺取这个城镇，因为你的国家已经占领并拥有了它。'
 msg_war_siege_cannot_add_military_rank_to_occupied_resident: '&c不能为居民增加军衔，因为他们属于一个被占领的城镇。'
 msg_err_cannot_set_occupation_without_nation: '&c城镇%s不属于任何一个国家。您必须先设置国家，然后才能将该镇设置为被占领。'
 msg_err_cannot_invade_not_enough_permissions: "&c你没有足够的权限使用这个指令占领该镇。"
@@ -467,7 +467,7 @@ msg_conquest_siege_attacker_close_win_warchest_reduced: "&b由于围攻胜利是
 msg_conquest_siege_defender_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的国家能够收回战争费用中的%s。"
 msg_conquest_siege_attacker_close_win_plunder_reduced: "&b因为最近的围攻胜利是相对性的，通常的掠夺量被减少%s。"
 msg_revolt_siege_attacker_close_win_plunder_reduced: "&b因为最近的围攻胜利是相对性的，通常的掠夺量被减少%s。"
-msg_revolt_siege_defender_decisive_win_demoralization: "&b前占领国%s，因其殖民地的决定性丧失而元气大伤，并且士气低落(其发起的征服围攻将承受%d点战斗分数惩罚)，持续%d天。"
+msg_revolt_siege_defender_decisive_win_demoralization: "&b前占领国%s，因其殖民地的决定性丧失而元气大伤，并且士气低落(其发起的征服围攻将承受%d点围攻分数惩罚)，持续%d天。"
 #Toxicity Reduction
 msg_chat_now_disabled: " 战斗回合处于活跃状态时，公屏聊天、/lc 和 /tell已被禁用，%s后将重新可用。请尝试使用 /tc、/nc或 /ac。"
 msg_chat_now_restored: "&b公屏聊天、 /lc和 /tell已恢复使用。"
