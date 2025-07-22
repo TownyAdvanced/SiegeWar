@@ -374,7 +374,7 @@ msg_neutral_town_invaded: '&b%s已被 %s占领！'
 msg_nation_town_invaded: '&b%s，归属于%s，已被%s占领！'
 #Subverting
 msg_peaceful_town_subverted: "&b%s已经被%s和平颠覆并占领。"
-msg_err_cannot_subvert_town_already_occupied: "&c无需颠覆这个城镇，因为你的民族已经占领并拥有了它。"
+msg_err_cannot_subvert_town_already_occupied: "&c无需颠覆这个城镇，因为你的国家已经占领并拥有了它。"
 #Revolting
 msg_revolt_siege_started: '&b%s的城镇人民挺身而出，反对占领国%s，并宣布自己可以自由地选择属于他们自己的命运。一场起义围攻已经开始！'
 #war sickness
@@ -394,7 +394,7 @@ sg_err_peaceful_town_cannot_move_homeblock: "&c和平城镇不能更改其中心
 msg_err_peaceful_towns_cannot_revolt: '&c和平城镇不能起义。'
 msg_err_capital_towns_cannot_go_peaceful: '&c首都城镇不能处于和平状态。'
 msg_err_cannot_subvert_not_enough_permissions: "&c你没有足够的权限使用这个指令颠覆该镇。"
-msg_err_cannot_subvert_dont_own_guardian_town: "&c不能颠覆，因为你的国家未拥有所需的守卫者城镇: %s。"
+msg_err_cannot_subvert_dont_own_guardian_town: "&c不能颠覆，因为你的国家未拥有所需的戍卫城镇: %s。"
 msg_peaceful_towns_released_on_homeblock_move: "&b因为%s更改了其中心区块，其守卫的和平城镇%d从占领中自动释放。"
 #Town neutrality
 msg_err_town_neutrality_not_supported: "&cSiegewar不支持城镇中立。为了保护你的城镇免受围攻，请使用“/sw town togglepeaceful”将你的城镇更改为和平状态。"
