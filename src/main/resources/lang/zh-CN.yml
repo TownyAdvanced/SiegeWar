@@ -23,8 +23,8 @@ msg_err_town_is_not_sieged: "该城镇未被围攻。"
 #Added in (Siegewar version)
 #Siege war happy-path messages
 msg_siege_war_attack_pay_war_chest: '&b一笔军费开支已经由%s准备，其价值为%s。任何赢得围攻的一方都会得到这笔钱。'
-msg_siege_war_attack_recover_war_chest: '&b军费开支已被%s收回，其值为%s。'
-msg_siege_war_attack_partially_recover_war_chest: '&b军费开支已被%s部分收回，其值为%s。'
+msg_siege_war_attack_recover_war_chest: '&b军费开支已被%s领取，其值为%s。'
+msg_siege_war_attack_partially_recover_war_chest: '&b军费开支已被%s部分领取，其值为%s。'
 msg_siege_war_neutral_town_plundered: '&b%s被%s掠夺了%s！'
 msg_siege_war_nation_town_plundered: '&b%s被%s掠夺了%s！'
 msg_siege_war_town_ruined_from_plunder: '&b%s 因无力支付 %s 所设置的掠夺税而沦为废墟！'
