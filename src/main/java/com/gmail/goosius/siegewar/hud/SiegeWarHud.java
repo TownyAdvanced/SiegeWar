@@ -69,9 +69,6 @@ public class SiegeWarHud {
                 battleDefenderScore_entry + " " + defBpSuffix,
                 battleTimeRemaining_entry + " " + timeSuffix
         );
-
-        int epmcLine = board.getLines().size() + 1;
-        board.updateLine(epmcLine, ChatColor.GREEN + "play.earthpol.com");
     }
 
     public static void toggleOn(Player p, Siege siege) {
