@@ -81,7 +81,7 @@ public class SiegeWarHud {
         updateInfo(p, siege);
     }
 
-    public static void hide(Player p) {
+    public static void toggleOff(Player p) {
         FastBoard board = BOARDS.remove(p.getUniqueId());
         if (board != null) {
             board.delete();

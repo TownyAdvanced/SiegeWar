@@ -34,7 +34,7 @@ public class SiegeHUDManager {
     public static void toggleOff(Player player) {
         warHudUsers.remove(player);
         if (player.isOnline())
-            player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+            SiegeWarHud.toggleOff(player);
     }
 
     public static void updateHUDs() {
