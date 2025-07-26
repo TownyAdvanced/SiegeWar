@@ -28,7 +28,7 @@ msg_siege_war_attack_partially_recover_war_chest: '&b军费开支已被%s部分�
 msg_siege_war_neutral_town_plundered: '&b%s被%s掠夺了%s！'
 msg_siege_war_nation_town_plundered: '&b%s被%s掠夺了%s！'
 msg_siege_war_town_ruined_from_plunder: '&b%s 因无力支付%s所设置的掠夺税而沦为废墟！'
-msg_siege_war_town_bankrupted_from_plunder: '&b%s 已因%s而破产！'
+msg_siege_war_town_bankrupted_from_plunder: '&b%s已因%s而破产！'
 msg_siege_war_nation_defeated: '&b%s已被击败！'
 msg_siege_war_attacking_troops_at_siege_banner: '&bSiege on %s > 进攻方抵达围攻旗帜处。'
 msg_siege_war_banner_control_session_success: '&b成功控制旗帜！你已被添加到旗帜控制列表。'
@@ -95,7 +95,7 @@ config_and_lang_file_reloaded_successfully: '配置和语言文件重新加载�
 config_and_lang_file_could_not_be_loaded: '重新加载失败。请查看控制台以了解详情。'
 #Added in 0.05:
 msg_err_not_being_sieged: '&c城镇%s没有正在进行的围攻。'
-msg_err_town_not_registered: '&c城镇 %s 未被注册。'
+msg_err_town_not_registered: '&c城镇%s未被注册。'
 #Scoreboard
 hud_title: '&6&l%s Siege'
 hud_siege_status: '围攻状态: '
