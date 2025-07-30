@@ -59,7 +59,7 @@ msg_err_siege_war_cannot_join_siege: '&c你不能攻击一个正在被另一个�
 msg_err_siege_war_nation_has_too_many_active_siege_attacks: '&c你的国家已达到围攻数上限。如果要发动另一次进攻，必须完成当前的一个或多个进攻。'
 msg_err_siege_war_town_not_close_enough_to_nation: '&c该镇离你的国家的首都太远，不能被攻击。'
 #Invade
-msg_err_siege_war_no_siege_on_target_town: '&c目标城镇 %s未被围攻。'
+msg_err_siege_war_no_siege_on_target_town: '&c目标城镇%s未被围攻。'
 #Plunder
 msg_err_siege_war_cannot_plunder_without_victory: "&c你不能掠夺，除非你的国家在围攻中获胜。"
 msg_err_siege_war_cannot_plunder_without_economy: "&c你不能掠夺，因为经济插件未处于活动状态"
@@ -150,7 +150,7 @@ msg_war_siege_battle_session_break_cannot_get_banner_control: "&c在下次战斗
 hud_siege_balance: '围攻分数: '
 hud_warchest: '军费开支: '
 hud_battle_time_remaining: '剩余战斗时间: '
-msg_err_hud_not_available_in_folia: "&cHUD在 Folia 中不可用。"
+msg_err_hud_not_available_in_folia: "&cHUD在Folia中不可用。"
 #Dynmap
 dynmap_siege_battle_time_left: '剩余战斗时间: %s'
 #Banner control
