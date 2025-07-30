@@ -137,7 +137,7 @@ msg_na: '不可用'
 status_town_siege_status_siege_balance: '&2 > 围攻分数: &a%d'
 status_town_siege_status_warchest: '&2 > 军费开支: &a%s'
 #Battle sessions
-status_town_siege_battle: '&2Battle:'
+status_town_siege_battle: '&2战斗: '
 status_town_siege_battle_time_remaining: '&2 > 剩余时间: &a%s'
 msg_war_siege_battle_session_started: "&b一个新的战斗回合已开始。围攻区内所有PVP保护将在此期间暂时失效。"
 msg_war_siege_battle_session_ended_with_battles: "&b当前战斗回合已结束，PVP保护已恢复。以下队伍赢得了战斗:"
@@ -376,7 +376,7 @@ msg_nation_town_invaded: '&b%s，归属于%s，已被%s占领！'
 msg_peaceful_town_subverted: "&b%s已经被%s和平颠覆并占领。"
 msg_err_cannot_subvert_town_already_occupied: "&c无需颠覆这个城镇，因为你的国家已经占领并拥有了它。"
 #Revolting
-msg_revolt_siege_started: '&b%s的城镇人民挺身而出，反对占领国%s，并宣布自己可以自由地选择属于他们自己的命运。一场起义围攻已经开始！'
+msg_revolt_siege_started: '&b来自%s的城镇公民挺身而出，反对占领国%s，并宣布自己可以自由地选择原本属于他们自己的命运。一场起义围攻已经开始！'
 #war sickness
 msg_you_will_get_sickness: '&c警告: 你已进入围攻区的野外，但你不是围攻的正式参与者。请进入一个城镇或离开围困区，否则你将在%s秒内患上战争病。'
 msg_you_received_war_sickness: '&c警告: 你已进入围攻区的野外，但你不是围攻的正式参与者。请进入一个城镇或离开围困区以消除战争病。'
@@ -501,7 +501,7 @@ msg_swa_remove_siege_nation_delete: '由于攻击方国家不再存在，位于%
 msg_swa_remove_siege_town_delete: '&%s的围攻已被移除，因为该镇已删除。'
 msg_swa_remove_siege_town_ruin: '&%s的围攻已被移除，因为该镇已沦为废墟。'
 msg_swa_remove_siege_immunity_expired: '&b位于%s的一场围攻已被移除，因为围攻豁免已过期。'
-msg_swa_battle: 'Battle'
+msg_swa_battle: '战斗'
 #Siege Lore
 siege_lore_color_attacker: '&c%s'
 siege_lore_color_defender: '&3%s'
