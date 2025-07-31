@@ -137,7 +137,7 @@ msg_na: '不可用'
 status_town_siege_status_siege_balance: '&2 > 围攻分数: &a%d'
 status_town_siege_status_warchest: '&2 > 军费开支: &a%s'
 #Battle sessions
-status_town_siege_battle: '&2战斗: '
+status_town_siege_battle: '&2战斗:'
 status_town_siege_battle_time_remaining: '&2 > 剩余时间: &a%s'
 msg_war_siege_battle_session_started: "&b一个新的战斗回合已开始。围攻区内所有PVP保护将在此期间暂时失效。"
 msg_war_siege_battle_session_ended_with_battles: "&b当前战斗回合已结束，PVP保护已恢复。以下队伍赢得了战斗:"
