@@ -105,7 +105,7 @@ hud_banner_control: "旗帜控制: "
 hud_siege_progress: '围攻进度: '
 msg_swa_resident_already_has_control: '&c居民%s已取得控制权。'
 msg_swa_resident_doesnt_have_control: "&c居民%s未取得控制权。"
-msg_swa_set_plunder_success: '已将掠夺状态 %s 设置给%s。'
+msg_swa_set_plunder_success: '&b已成功将掠夺状态设置%s应用到%s。'
 siege_status_in_progress: '正在进行中'
 siege_status_unknown: '未知'
 dynmap_siege_banner_control: '旗帜控制: %s'
@@ -115,10 +115,10 @@ dynmap_siege_status: '围攻状态: %s'
 msg_inventory_degrade_warning: '&4警告: &c你的部分装备因死亡惩罚而几近破裂。'
 msg_swa_remove_siege_success: '&b成功移除围攻。'
 #Added in 0.08:
-msg_swa_set_towns_gained_success: '&b已成功将获得城镇数量%d设置给%s。'
-msg_swa_set_towns_lost_success: '&b已成功将失去城镇数量%d设置给%s。'
-msg_swa_set_plunder_gained_success: '&b已成功将掠夺收益%d设置给%s。'
-msg_swa_set_plunder_lost_success: '&b已成功将掠夺损失%d设置给%s。'
+msg_swa_set_towns_gained_success: '&b已成功将获得城镇数量设置%d应用到%s。'
+msg_swa_set_towns_lost_success: '&b已成功将失去城镇数量设置%d应用到%s。'
+msg_swa_set_plunder_gained_success: '&b已成功将掠夺收益设置%d应用到%s。'
+msg_swa_set_plunder_lost_success: '&b已成功将掠夺损失设置%d应用到%s。'
 msg_err_nation_not_registered: '&c国家%s未被注册。'
 msg_err_cannot_remove_enemy: '&c你不能移除敌国，如果在你目前在一场正在进行的围攻中与他们交战！'
 #Added in 0.09
@@ -158,7 +158,7 @@ msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > 进攻方从
 msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > 防守方从进攻方手中夺回了旗帜控制权！(局势逆转)'
 msg_siege_war_banner_control_reversal_bonus: '。控制旗帜所给予的战斗点数的生成速率 × %s。'
 #Admin
-msg_swa_set_siege_balance_success: '&b成功将围攻分数%d设置给%s 。'
+msg_swa_set_siege_balance_success: '&b已成功将围攻分数设置%d应用到%s。'
 #Added in 0.13
 msg_siege_war_version: '&b当前Siegewar插件版本为: %s。'
 #Added in 0.14
@@ -399,7 +399,7 @@ msg_peaceful_towns_released_on_homeblock_move: "&b因为%s更改了其中心区�
 #Town neutrality
 msg_err_town_neutrality_not_supported: "&cSiegewar不支持城镇中立。为了保护你的城镇免受围攻，请使用“/sw town togglepeaceful”将你的城镇更改为和平状态。"
 #swa
-msg_swa_set_invade_success: '已将占领状态 %s 设置给%s。'
+msg_swa_set_invade_success: '&b已成功将占领状态设置%s应用到%s。'
 msg_swa_town_peacefulness_change_success: '&b成功将%s的和平状态变更为%s。'
 msg_swa_town_occupation_change_success: '&b成功将%s的占领状态变更为 %s。'
 msg_err_command_not_allowed_on_active_siege: "您不能在围攻未结束时运行此命令。"
