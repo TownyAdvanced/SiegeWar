@@ -74,7 +74,7 @@ status_town_revolt_immunity_timer: '&2起义豁免倒计时: &a%s'
 status_town_siege_status_in_progress: '正在进行中'
 status_town_siege_status_banner_xyz: '&2 > 旗帜坐标: &a%d,%d,%d'
 status_town_siege_immunity_timer: '&2 > 豁免倒计时: &a%s'
-status_town_siege_progress: '&2 > 进度：&a%d/%d'
+status_town_siege_progress: '&2 > 进度: &a%d/%d'
 status_town_banner_control: '&2 > 旗帜控制: %s &a[%s]&2: &f'
 status_town_banner_control_nobody: '&2 > 旗帜控制: %s'
 #General
