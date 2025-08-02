@@ -27,7 +27,7 @@ msg_siege_war_attack_recover_war_chest: '&b军费开支已被%s收回，其值�
 msg_siege_war_attack_partially_recover_war_chest: '&b军费开支已被%s部分收回，其值为%s。'
 msg_siege_war_neutral_town_plundered: '&b%s的掠夺税%s已被%s征缴！'
 msg_siege_war_nation_town_plundered: '&b%s的掠夺税%s已被%s征缴！'
-msg_siege_war_town_ruined_from_plunder: '&b%s 因无力支付%s所设置的掠夺税而沦为废墟！'
+msg_siege_war_town_ruined_from_plunder: '&b%s因无力支付%s所设置的掠夺税而沦为废墟！'
 msg_siege_war_town_bankrupted_from_plunder: '&b%s已因%s而破产！'
 msg_siege_war_nation_defeated: '&b%s已被击败！'
 msg_siege_war_attacking_troops_at_siege_banner: '&bSiege on %s > 进攻方抵达围攻旗帜处。'
