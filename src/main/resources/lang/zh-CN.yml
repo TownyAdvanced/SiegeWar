@@ -23,8 +23,8 @@ msg_err_town_is_not_sieged: "该城镇未被围攻。"
 #Added in (Siegewar version)
 #Siege war happy-path messages
 msg_siege_war_attack_pay_war_chest: '&b一笔军费开支已经由%s准备，其价值为%s。任何赢得围攻的一方都会得到这笔钱。'
-msg_siege_war_attack_recover_war_chest: '&b军费开支已被%s收取，其值为%s。'
-msg_siege_war_attack_partially_recover_war_chest: '&b军费开支已被%s部分收取，其值为%s。'
+msg_siege_war_attack_recover_war_chest: '&b军费开支已被%s收回，其值为%s。'
+msg_siege_war_attack_partially_recover_war_chest: '&b军费开支已被%s部分收回，其值为%s。'
 msg_siege_war_neutral_town_plundered: '&b%s的掠夺税%s已被%s征缴！'
 msg_siege_war_nation_town_plundered: '&b%s的掠夺税%s已被%s征缴！'
 msg_siege_war_town_ruined_from_plunder: '&b%s 因无力支付%s所设置的掠夺税而沦为废墟！'
@@ -463,8 +463,8 @@ siege_status_defender_close_win: '偏防守方胜利'
 siege_status_attacker_win: '绝对进攻方胜利'
 siege_status_defender_win: '绝对防守方胜利'
 #Siege Special Victory Effects
-msg_conquest_siege_attacker_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的城镇能够收回军费开支中的%s。"
-msg_conquest_siege_defender_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的国家能够收回军费开支中的%s。"
+msg_conquest_siege_attacker_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的城镇能够收取军费开支中的%s。"
+msg_conquest_siege_defender_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的国家能够收取军费开支中的%s。"
 msg_conquest_siege_attacker_close_win_plunder_reduced: "&b因为最近的围攻胜利是相对性的，通常的掠夺量被减少%s。"
 msg_revolt_siege_attacker_close_win_plunder_reduced: "&b因为最近的围攻胜利是相对性的，通常的掠夺量被减少%s。"
 msg_revolt_siege_defender_decisive_win_demoralization: "&b前占领国%s，因其殖民地的决定性丧失而元气大伤，并且士气低落(其发起的征服围攻将承受%d点围攻分数惩罚)，持续%d天。"
