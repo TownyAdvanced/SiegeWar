@@ -18,7 +18,7 @@ description: >
 siegewar_plugin_prefix: '&f[&6SiegeWar&f] '
 #SiegeWarAPI
 msg_err_player_town_is_not_sieged: "该玩家的城镇未被围攻。"
-msg_err_resident_town_is_not_sieged: "这个居民的城镇未被围攻。"
+msg_err_resident_town_is_not_sieged: "该居民的城镇未被围攻。"
 msg_err_town_is_not_sieged: "该城镇未被围攻。"
 #Added in (Siegewar version)
 #Siege war happy-path messages
