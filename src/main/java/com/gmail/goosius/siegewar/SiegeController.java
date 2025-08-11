@@ -358,7 +358,8 @@ public class SiegeController {
 		int distanceToCandidateSiege = 0;
 		for (Siege candidateSiege : getSieges()) {
 			if (candidateSiege.getStatus().isActive()) {
-				if (!candidateSiege.getFlagBlock().getWorld().getName().equals(loc.getWorld().getName()))
+				Block flagBlock = candidateSiege.getFlagBlock();
+				if (flagBlock == null || !flagBlock.getWorld().getName().equals(loc.getWorld().getName()))
 					continue;
 				distanceToCandidateSiege = SiegeWarDistanceUtil.getDistanceToSiege(loc, candidateSiege);
 				if(distanceToCandidateSiege < SiegeWarSettings.getWarSiegeZoneRadiusBlocks()) {
