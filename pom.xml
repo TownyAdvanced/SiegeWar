@@ -70,6 +70,11 @@
       <version>2.0.28-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>fr.mrmicky</groupId>
+      <artifactId>fastboard</artifactId>
+      <version>2.1.5</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -81,6 +86,29 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>
+                shade
+              </goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <relocations>
+            <relocation>
+              <pattern>fr.mrmicky.fastboard</pattern>
+              <shadedPattern>com.gmail.goosius.siegewar.fastboard</shadedPattern>
+            </relocation>
+          </relocations>
         </configuration>
       </plugin>
     </plugins>
