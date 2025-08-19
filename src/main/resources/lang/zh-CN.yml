@@ -46,7 +46,7 @@ msg_err_siege_besieged_town_cannot_unclaim: "&c被围攻的城镇(或最近在�
 msg_err_war_common_occupied_town_cannot_unclaim: "被占领城镇不能放弃土地。"
 #Revolt
 msg_err_siege_war_town_voluntary_leave_impossible: "&c城镇无法未经同意离开所在国家。如果你要离开你所在国家，请劝说国王(或一名国家官员)踢出你的城镇。"
-msg_err_siege_war_revolt_immunity_active: "&c你的镇处于起义豁免状态。在起义豁免到期之前不能反抗。"
+msg_err_siege_war_revolt_immunity_active: "&c你的城镇处于起义豁免状态。在起义豁免到期之前不能反抗。"
 #Attack
 msg_err_siege_war_banner_must_be_placed_above_ground: '&c围攻旗帜必须被放置在地表。'
 msg_err_siege_war_cannot_attack_own_town: '&b你不能攻击你自己的城镇。'
@@ -370,7 +370,7 @@ msg_siege_war_nation_refund_claimed: "你已经领取国家退款%s。"
 msg_err_siege_war_nation_refund_unavailable: "没有可用的国家退款可供领取。"
 #Invasion
 msg_err_town_already_invaded: '&c你的国家已经占领了该镇。'
-msg_neutral_town_invaded: '&b%s已被 %s占领！'
+msg_neutral_town_invaded: '&b%s已被%s占领！'
 msg_nation_town_invaded: '&b%s，归属于%s，已被%s占领！'
 #Subverting
 msg_peaceful_town_subverted: "&b%s已经被%s和平颠覆并占领。"
