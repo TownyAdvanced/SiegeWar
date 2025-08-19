@@ -497,7 +497,7 @@ msg_err_cannot_spawn_not_in_homeblock: "&c你必须在你的城镇中心区块�
 msg_err_cannot_spawn_outpost_during_battle_session: "&c你不能在你的国家正在战斗回合内参与进攻围攻时传送至前哨。"
 #Webhook
 msg_swa_remove_siege_admin_command: '&b位于%s的围攻已通过管理员命令删除。'
-msg_swa_remove_siege_nation_delete: '由于攻击方国家不再存在，位于%s的围攻已被移除。'
+msg_swa_remove_siege_nation_delete: '由于进攻方国家不再存在，位于%s的围攻已被移除。'
 msg_swa_remove_siege_town_delete: '&%s的围攻已被移除，因为该镇已删除。'
 msg_swa_remove_siege_town_ruin: '&%s的围攻已被移除，因为该镇已沦为废墟。'
 msg_swa_remove_siege_immunity_expired: '&b位于%s的一场围攻已被移除，因为围攻豁免已过期。'
@@ -547,5 +547,5 @@ msg_err_cannot_start_siege_as_a_peaceful_town: "&c你不能发动围攻，因为
 #Only One Action
 msg_err_town_already_plundered_only_one_action: "&c你不能入侵一个已经被掠夺的国家。"
 msg_err_town_already_invaded_only_one_action: "&c你不能掠夺一个已经被入侵的国家。"
-siege_msg_err_cannot_assign_rank_during_active_battlesession: "当战斗回合仍在进行时，&c你不能添加%s头衔。"
-siege_msg_err_cannot_assign_rank_during_active_siege: "&c你不能在你的城镇参与围攻时授予 %s 。"
+siege_msg_err_cannot_assign_rank_during_active_battlesession: "&c你不能在战斗回合仍在进行时授予%s头衔。"
+siege_msg_err_cannot_assign_rank_during_active_siege: "&c你不能在你的城镇正在参与围攻时授予%s 。"
