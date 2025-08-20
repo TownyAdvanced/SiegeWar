@@ -357,7 +357,7 @@ msg_occupation_tax_cannot_be_paid: "&c城镇%s无法支付其国家占领税，�
 #Shown in the nation status screen when a nation has nation occupation tax.
 status_nation_occupation_tax_per_plot: "&2国家占领税: &c每块地皮%s"
 #Shown in the town status screen when a town has nation occupation tax to pay.
-status_town_occupation_tax: "&2国家占领税: &c%s"
+status_town_occupation_tax: "&2国家占领税：&c%s"
 #Shown when the nation tries to set a nation occupation tax over the maximum.
 msg_err_occupation_tax_cannot_be_more_than: "&c国家不能设置一个大于%s的占领税。"
 #Shown to nation when they collect their occupation taxes.
