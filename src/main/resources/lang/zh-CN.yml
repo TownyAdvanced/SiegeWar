@@ -212,7 +212,7 @@ status_town_siege_status_attacker_abandon: '进攻方放弃'
 status_town_siege_status_pending_attacker_abandon: '进攻方请求放弃(等待确认中)'
 status_town_siege_status_defender_surrender: '防守方投降'
 status_town_siege_status_pending_defender_surrender: '防守方请求投降(等待确认中)'
-status_town_siege_status_plundered: '&2 > 掠夺城镇: %s'
+status_town_siege_status_plundered: '&2 > 城镇掠夺: %s'
 #Siege statuses
 siege_status_attacker_abandon: '进攻方放弃'
 siege_status_defender_surrender: '防守方投降'
@@ -427,7 +427,7 @@ msg_conquest_siege_defender_win_result: ' 该镇已被拯救！'
 msg_revolt_siege_attacker_win_result: ' 该镇现已开放供入侵和/或掠夺。'
 msg_revolt_siege_defender_win_result: ' 该镇赢得了自由！'
 #Town Screen
-status_town_siege_status_invaded: '&2 > 占领城镇: %s'
+status_town_siege_status_invaded: '&2 > 城镇占领: %s'
 status_town_peacefulness_flag: '&b(和平)'
 status_town_hover_title_changing_peacefulness: "%s[%s和平状态变更%s]"
 status_town_hover_title_revolt_immunity: "%s[%s起义豁免%s]"
