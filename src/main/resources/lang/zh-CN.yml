@@ -156,7 +156,7 @@ dynmap_siege_battle_time_left: '剩余战斗时间: %s'
 #Banner control
 msg_siege_war_banner_control_reversed_by_attacker: '&bSiege on %s > 进攻方从防守方手中夺回了旗帜控制权！(局势逆转)'
 msg_siege_war_banner_control_reversed_by_defender: '&bSiege on %s > 防守方从进攻方手中夺回了旗帜控制权！(局势逆转)'
-msg_siege_war_banner_control_reversal_bonus: '。控制旗帜所给予的战斗点数的生成速率 × %s。'
+msg_siege_war_banner_control_reversal_bonus: '因控制旗帜而给予的战斗点数的生成速率 × %s。'
 #Admin
 msg_swa_set_siege_balance_success: '&b已成功将围攻分数设置%d应用到%s。'
 #Added in 0.13
@@ -501,7 +501,7 @@ msg_swa_remove_siege_nation_delete: '由于进攻方国家不再存在，位于%
 msg_swa_remove_siege_town_delete: '&%s的围攻已被移除，因为该镇已删除。'
 msg_swa_remove_siege_town_ruin: '&%s的围攻已被移除，因为该镇已沦为废墟。'
 msg_swa_remove_siege_immunity_expired: '&b位于%s的一场围攻已被移除，因为围攻豁免已过期。'
-msg_swa_battle: '战斗'
+msg_swa_battle: '战役'
 #Siege Lore
 siege_lore_color_attacker: '&c%s'
 siege_lore_color_defender: '&3%s'
