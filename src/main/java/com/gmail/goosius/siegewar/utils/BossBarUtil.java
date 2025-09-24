@@ -10,15 +10,15 @@ import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.BannerControlSession;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.adventure.bossbar.BossBar;
-import com.palmergames.adventure.bossbar.BossBar.Color;
-import com.palmergames.adventure.bossbar.BossBar.Overlay;
-import com.palmergames.adventure.text.Component;
-import com.palmergames.adventure.text.TextComponent;
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Translation;
+
+import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.bossbar.BossBar.Color;
+import net.kyori.adventure.bossbar.BossBar.Overlay;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 
 public class BossBarUtil {
 
@@ -28,7 +28,7 @@ public class BossBarUtil {
 	public static void removeBattleSessionBossBars() {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			if (bossBarBattleSessionMap.containsKey(player)) {
-				Towny.getAdventure().player(player).hideBossBar(bossBarBattleSessionMap.get(player));
+				player.hideBossBar(bossBarBattleSessionMap.get(player));
 			}
 		}
 		bossBarBattleSessionMap.clear();
@@ -47,7 +47,7 @@ public class BossBarUtil {
 			bossBar.name(comp);
 			if (!bossBarBattleSessionMap.containsKey(player)) {
 				bossBarBattleSessionMap.put(player, bossBar);
-				Towny.getAdventure().player(player).showBossBar(bossBar);
+				player.showBossBar(bossBar);
 			}
 		}
 		
@@ -55,7 +55,7 @@ public class BossBarUtil {
 
 	public static void removeBannerCapBossBar(Player player) {
 		if (player.isOnline()) {
-			Towny.getAdventure().player(player).hideBossBar(bossBarBannerCapMap.get(player));
+			player.hideBossBar(bossBarBannerCapMap.get(player));
 		}
 		bossBarBannerCapMap.remove(player);
 	}
@@ -71,13 +71,13 @@ public class BossBarUtil {
 		bossBar.name(comp);
 		if (!bossBarBannerCapMap.containsKey(player)) {
 			bossBarBannerCapMap.put(player, bossBar);
-			Towny.getAdventure().player(player).showBossBar(bossBar);
+			player.showBossBar(bossBar);
 		}
 	}
 	
 	public static void removeBossBars(Player player) {
 		if (bossBarBattleSessionMap.containsKey(player)) {
-			Towny.getAdventure().player(player).hideBossBar(bossBarBattleSessionMap.get(player));
+			player.hideBossBar(bossBarBattleSessionMap.get(player));
 			bossBarBattleSessionMap.remove(player);
 		}
 		removeBannerCapBossBar(player);

@@ -22,9 +22,7 @@ import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.ChatTools;
 import com.gmail.goosius.siegewar.utils.SiegeWarBattleSessionUtil;
-import com.palmergames.adventure.text.Component;
-import com.palmergames.adventure.text.event.ClickEvent;
-import com.palmergames.adventure.text.event.HoverEvent;
+
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyFormatter;
 import com.palmergames.bukkit.towny.event.statusscreen.NationStatusScreenEvent;
@@ -38,6 +36,10 @@ import com.palmergames.bukkit.towny.object.Translator;
 import com.palmergames.bukkit.towny.utils.TownyComponents;
 import com.palmergames.util.StringMgmt;
 import com.palmergames.util.TimeMgmt;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 
 public class SiegeWarStatusScreenListener implements Listener {
 

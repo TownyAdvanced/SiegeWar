@@ -1,11 +1,12 @@
 package com.gmail.goosius.siegewar.events;
 
-import com.palmergames.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import com.palmergames.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
+
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 public class BattleSessionStartedEvent extends Event {
 

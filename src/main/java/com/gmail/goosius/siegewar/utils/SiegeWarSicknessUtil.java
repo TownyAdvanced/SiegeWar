@@ -119,11 +119,11 @@ public class SiegeWarSicknessUtil {
     private static void givePlayerFullWarSicknessNow(Player player) {
         int effectDurationTicks = (int)(TimeTools.convertToTicks(TownySettings.getShortInterval() + 5));
         List<PotionEffect> potionEffects = new ArrayList<>();
-        potionEffects.add(new PotionEffect(PotionEffectType.CONFUSION, effectDurationTicks, 4));
+        potionEffects.add(new PotionEffect(PotionEffectType.BLINDNESS, effectDurationTicks, 4));
         potionEffects.add(new PotionEffect(PotionEffectType.POISON, effectDurationTicks, 4));
         potionEffects.add(new PotionEffect(PotionEffectType.WEAKNESS, effectDurationTicks, 4));
-        potionEffects.add(new PotionEffect(PotionEffectType.SLOW, effectDurationTicks, 2));
-        potionEffects.add(new PotionEffect(PotionEffectType.SLOW_DIGGING, effectDurationTicks, 2));
+        potionEffects.add(new PotionEffect(PotionEffectType.SLOWNESS, effectDurationTicks, 2));
+        potionEffects.add(new PotionEffect(PotionEffectType.MINING_FATIGUE, effectDurationTicks, 2));
         player.addPotionEffects(potionEffects);
         player.setHealth(1);
     }

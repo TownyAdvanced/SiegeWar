@@ -2,11 +2,9 @@ package com.gmail.goosius.siegewar.listeners;
 
 import com.palmergames.bukkit.towny.event.time.NewShortTimeEvent;
 
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
-
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,7 +26,7 @@ public class SiegeWarSafeModeListener implements Listener {
 	}
 
 	private void sendErrorMessage(Player player, String message) {
-		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.DARK_RED + message));
+		player.sendActionBar(Component.text(NamedTextColor.DARK_RED + message));
 	}
 	
 	private String getActionErrMsg() {
