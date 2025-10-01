@@ -171,17 +171,21 @@ public class SiegeWarNationEventListener implements Listener {
 		if(!SiegeWarSettings.getWarSiegeEnabled() || !event.isCapitalChange())
 			return;
 
+		/*
+		 * 1. Cannot change a besieged regular town to a capital,
+		 *    as that would render the besieged town immune to capture
+		 * 2. Cannot change a besieged capital to a regular town,
+		 *    as that might interfere with misc. capital-related mechanics
+		 */
 		Town oldCapital = event.getOldKing().getTownOrNull();
 		Town newCapital = event.getNewKing().getTownOrNull();
-		if (SiegeWarSettings.getWarSiegeBesiegedCapitalsCannotChangeKing()
-			&& (SiegeController.hasSiege(oldCapital) || SiegeController.hasSiege(newCapital))) {
+		if (SiegeController.hasSiege(oldCapital) || SiegeController.hasSiege(newCapital)) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_besieged_capital_cannot_change_king"));
 			return;
 		}
 
-		if (!SiegeWarSettings.capitalsAllowedTownPeacefulness()
-				&& SiegeWarTownPeacefulnessUtil.isTownPeaceful(newCapital)) {
+		if (SiegeWarTownPeacefulnessUtil.isTownPeaceful(newCapital)) {
 			event.setCancelled(true);
 			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_change_capital_because_peaceful"));
 			return;

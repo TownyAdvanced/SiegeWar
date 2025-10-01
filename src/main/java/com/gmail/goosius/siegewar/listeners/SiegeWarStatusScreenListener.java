@@ -227,6 +227,26 @@ public class SiegeWarStatusScreenListener implements Listener {
 				event.getStatusScreen().addComponentOf("siegeWar_plunderDebt", Component.text(translator.of("status_town_plunder_debt", getMoney(days * amount), days, getMoney(amount))));
 			}
 
+			//[Occupied]
+			if(TownOccupationController.isTownOccupied(town)) {
+				//Create the text inside the hover item
+				Nation homeNation = TownOccupationController.getHomeNationOrNull(town);
+				Component hoverText = Component.empty();
+				if(homeNation != null)
+				{
+					hoverText = hoverText.append(Component.text(translator.of("status_town_occupied_home_nation", TownOccupationController.getHomeNationOrNull(town).getName())));
+				}
+				else
+				{
+					hoverText = hoverText.append(Component.text(translator.of("msg_na")));
+				}
+				//Add the hover item to the screen
+				event.getStatusScreen().addComponentOf("siegeWar_homeNationChangeHover", 
+							Component.empty()
+								.append(Component.text(hoverFormat(translator.of("status_town_hover_title_occupied")))
+									.hoverEvent(HoverEvent.showText(hoverText))));
+			}
+
 			//[Changing-Peacefulness]
 			//Days to Peacefulness Status Change: 2
 			if(SiegeWarTownPeacefulnessUtil.getTownPeacefulnessChangeCountdownDays(town) > 0) {

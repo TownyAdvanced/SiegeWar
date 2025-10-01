@@ -168,10 +168,6 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_ENABLED);
 	}
 	
-	public static boolean capitalsAllowedTownPeacefulness() {
-		return Settings.getBoolean(ConfigNodes.PEACEFUL_CAPITALS_ENABLED);
-	}
-
 	public static boolean getNewTownPeacefulness() {
 		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_NEW_TOWN_PEACEFULNESS);
 	}
@@ -190,10 +186,6 @@ public class SiegeWarSettings {
 
 	public static boolean getWarSiegeBesiegedTownUnClaimingDisabled() {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BESIEGED_TOWN_UNCLAIMING_DISABLED);
-	}
-	
-	public static boolean getWarSiegeBesiegedCapitalsCannotChangeKing() {
-		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_BESIEGED_TOWN_CANNOT_CHANGE_KING);
 	}
 
 	public static int getWarSiegeExtraMoneyPercentagePerTownLevel() {

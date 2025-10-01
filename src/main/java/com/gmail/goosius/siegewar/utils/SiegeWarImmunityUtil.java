@@ -17,6 +17,8 @@ import java.util.ArrayList;
  */
 public class SiegeWarImmunityUtil {
 
+	public static final long CAPITAL_IMMUNITY_DURATION_MULTIPLIER = 2;
+
 	/**
 	 * Grant revolt immunity to the town which was besieged.
 	 *
@@ -28,16 +30,19 @@ public class SiegeWarImmunityUtil {
 		town.save();
 	}
 
-    /**
-     * Grant siege immunity to the town which was besieged.
-     *
-     * @param town the town which was besieged
-     */
-    public static void grantSiegeImmunityAfterEndedSiege(Town town) {
-        long siegeImmunityDurationMillis = (long)(SiegeWarSettings.getSiegeImmunityPostSiegeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS) ;
-        TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + siegeImmunityDurationMillis);
-        town.save();
-    }
+	/**
+	 * Grant siege immunity to the town which was besieged.
+	 *
+	 * @param town the town which was besieged
+	 */
+	public static void grantSiegeImmunityAfterEndedSiege(Town town) {
+		long siegeImmunityDurationMillis = (long)(SiegeWarSettings.getSiegeImmunityPostSiegeHours() * TimeMgmt.ONE_HOUR_IN_MILLIS);
+		if(town.isCapital())
+			siegeImmunityDurationMillis = siegeImmunityDurationMillis * CAPITAL_IMMUNITY_DURATION_MULTIPLIER;
+
+		TownMetaDataController.setSiegeImmunityEndTime(town, System.currentTimeMillis() + siegeImmunityDurationMillis);
+		town.save();
+	}
 
 	public static void evaluateExpiredImmunities() {
 		final long olderThanAnHour = (long)(System.currentTimeMillis() - TimeMgmt.ONE_HOUR_IN_MILLIS);

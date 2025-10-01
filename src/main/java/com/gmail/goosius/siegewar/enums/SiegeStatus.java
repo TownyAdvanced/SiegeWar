@@ -35,9 +35,9 @@ public enum SiegeStatus {
         switch (line) {
             case "IN_PROGRESS":
                 return IN_PROGRESS;
-            case "ATTACKER_WIN":
+            case "ATTACKER_DECISIVE_WIN":
                 return ATTACKER_DECISIVE_WIN;
-            case "DEFENDER_WIN":
+            case "DEFENDER_DECISIVE_WIN":
                 return DEFENDER_DECISIVE_WIN;
 			case "ATTACKER_CLOSE_WIN":
 				return ATTACKER_CLOSE_WIN;

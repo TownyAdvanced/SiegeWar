@@ -102,6 +102,12 @@ public class DataCleanupUtil {
             if(TownMetaDataController.hasLegacyOccupierUUID(town)) {
                 Nation occupyingNation = TownyAPI.getInstance().getNation(UUID.fromString(TownMetaDataController.getLegacyOccupierUUID(town)));
                 if(occupyingNation != null) {
+                    //Set home nation data
+                    Nation homeNation = town.getNationOrNull();
+                    if(homeNation != null) {
+                        TownOccupationController.setHomeNation(town, homeNation);
+                    }
+                    //Set town to be occupied, and move the town to the new nation
                     TownOccupationController.setTownOccupation(town, occupyingNation);
                     success = true;
                 }
