@@ -730,3 +730,4 @@ msg_err_cannot_subvert_capital_town: "&cNation capitals cannot be subverted."
 msg_err_capital_towns_cannot_cancel_non_peaceful_switch: "&cNation capitals cannot cancel the switch to non-peaceful."
 status_town_hover_title_occupied: "%s[%sOccupied%s]"
 status_town_occupied_home_nation: "&2Home Nation: &a%s"
+msg_err_cannot_merge_towns_without_same_occupier: '&cCannot merge an occupied town, unless both towns have the same occupier.'
