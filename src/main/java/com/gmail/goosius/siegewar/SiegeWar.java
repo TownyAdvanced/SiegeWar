@@ -43,7 +43,7 @@ import java.nio.file.Path;
 public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
-	private final String requiredTownyVersion = "0.100.4.0";
+	private final String requiredTownyVersion = "0.101.2.5";
 	private static final SiegeHUDManager siegeHUDManager = new SiegeHUDManager();
 	private final Object scheduler;
 
@@ -133,7 +133,7 @@ public class SiegeWar extends JavaPlugin {
     }
 
 	public String getVersion() {
-		return getDescription().getVersion();
+		return getPluginMeta().getVersion();
 	}
 	
     private boolean townyVersionCheck() {
@@ -145,7 +145,7 @@ public class SiegeWar extends JavaPlugin {
     }
 
     private String getTownyVersion() {
-        return Towny.getPlugin().getDescription().getVersion();
+        return Towny.getPlugin().getPluginMeta().getVersion();
     }
 
 	private void checkIntegrations() {
