@@ -392,7 +392,7 @@ msg_war_common_town_peacefulness_countdown_cancelled: '&b和平状态变更倒�
 msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&c不能为居民增加军衔，因为他们属于一个和平的城镇。'
 sg_err_peaceful_town_cannot_move_homeblock: "&c和平城镇不能更改其中心区块。如果你想移动你的中心区块，请先变更和平状态。"
 msg_err_peaceful_towns_cannot_revolt: '&c和平城镇不能起义。'
-msg_err_capital_towns_cannot_go_peaceful: '&c首都城镇不能处于和平状态。'
+msg_err_capital_towns_cannot_go_peaceful: '&cNation Capitals cannot go peaceful.'
 msg_err_cannot_subvert_not_enough_permissions: "&c你没有足够的权限使用这个指令颠覆该镇。"
 msg_err_cannot_subvert_dont_own_guardian_town: "&c不能颠覆，因为你的国家未拥有所需的戍卫城镇: %s。"
 msg_peaceful_towns_released_on_homeblock_move: "&b因为%s更改了其中心区块，其守卫的和平城镇%d从占领中自动释放。"
@@ -541,7 +541,7 @@ msg_err_action_disable_missing_node: '&c你没有足够的权限进行该操作:
 msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "你的国家不是攻击方，你不能入侵这个城镇。"
 msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "你无权在这场围攻中放弃或投降。"
 msg_err_cannot_change_capital_because_peaceful: "&c你不能更改国家首都，因为新首都处于和平状态。"
-msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&c你的城镇不能被设置为和平状态，因为首都城镇不可被设置为和平。"
+msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cYour town could not change to peaceful because nation capitals are not allowed to be peaceful."
 msg_err_cannot_start_siege_as_a_peaceful_town: "&c你不能发动围攻，因为你的城镇处于和平状态。"
 #Added in 2.13.0
 #Only One Action
@@ -549,3 +549,10 @@ msg_err_town_already_plundered_only_one_action: "&c你不能入侵一个已经�
 msg_err_town_already_invaded_only_one_action: "&c你不能掠夺一个已经被入侵的国家。"
 siege_msg_err_cannot_assign_rank_during_active_battlesession: "&c你不能在战斗回合仍在进行时授予%s头衔。"
 siege_msg_err_cannot_assign_rank_during_active_siege: "&c你不能在你的城镇正在参与围攻时授予%s 。"
+#Added in 2.20.0
+msg_err_cannot_capture_capital_town: "&cNation capitals cannot be captured."
+msg_err_cannot_subvert_capital_town: "&cNation capitals cannot be subverted."
+msg_err_capital_towns_cannot_cancel_non_peaceful_switch: "&cNation capitals cannot cancel the switch to non-peaceful."
+status_town_hover_title_occupied: "%s[%sOccupied%s]"
+status_town_occupied_home_nation: "&2Home Nation: &a%s"
+msg_err_cannot_merge_towns_without_same_occupier: '&cCannot merge an occupied town, unless both towns have the same occupier.'
