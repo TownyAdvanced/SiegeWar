@@ -94,6 +94,9 @@ public class PeacefullySubvertTown {
 		if(SiegeController.hasActiveSiege(targetPeacefulTown))
 			throw new TownyException(translator.of("msg_err_cannot_change_occupation_of_besieged_town"));
 
+        if (targetPeacefulTown.isCapital())
+            throw new TownyException(translator.of("msg_err_cannot_subvert_capital_town"));
+
 		if(TownOccupationController.isTownOccupiedByNation(residentsNation, targetPeacefulTown))
 			throw new TownyException(translator.of("msg_err_cannot_subvert_town_already_occupied"));
 

@@ -140,7 +140,7 @@ public class SiegeWarTownyEventListener implements Listener {
     }
 
     /*
-     * On each ShortTime period, SW makes some calcuations.
+     * On each ShortTime period, SW makes some calculations.
      */
     @EventHandler(ignoreCancelled = true)
     public void onShortTime(NewShortTimeEvent event) {
@@ -153,6 +153,7 @@ public class SiegeWarTownyEventListener implements Listener {
             SiegeWarTimerTaskController.evaluateTimedSiegeOutcomes();
             SiegeHUDManager.updateHUDs();
             SiegeWarTimerTaskController.evaluateBeacons();
+			SiegeWarTownPeacefulnessUtil.switchOffPeacefulnessForCapitals();
         }
     }
 

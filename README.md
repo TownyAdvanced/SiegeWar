@@ -2,10 +2,11 @@
 *SiegeWar* adds a war system to *Towny*.
 ### Features
 * ⚔️ **Sieges:** Wars are conducted by means of sieges. A siege occurs when a nation attacks a town.
-* 🌍 **Inclusive:** The whole server is involved, with no opt-outs. So a nation can conquer the world!. 
 * 🤖 **Automatic:** Sieges are started by players and automatically managed by the plugin. Daily staff management of sieges is not required.
-* 🚶 **Slow Paced:** Each siege consists of 7 hours fighting time, spread over the course of a weekend.
-* 🏙️ **Non-Destructive:** Towns cannot be damaged or stolen from during sieges. Towns can get extra protection by activating the *Peaceful* option, which makes them immune to sieges, but vulnerable to instant-capture.
+* 🚩 **Geo-political:** Players can "work out" their in-game geopolitical ambitions e.g. a nation can, in-principle, capture all the non-capital towns on a server, and/or it can use sieges or the threat of sieges to extract in-game money from enemy towns and nations.
+* ☔ **Town Protections:** Towns cannot be damaged or stolen-from during sieges. Also, non-capital towns can activate the *Peaceful* option, making them immune to sieges, but vulnerable to instant subversion (capture). Captured towns remain in the /nation and /alliance chat channels of their Home Nations, and do not get added to the chat channels of their Occupying Nations."
+* ☔️ **Nation Protections:** Nation capitals cannot be captured, and if they do get sieged, they receive double the usual post-siege immunity duration. 
+* 🕒 **Cross-Timezone Support:** Each siege consists of 7 hours fighting time, spread over the course of a weekend, which allows nations in different IRL-time-zones to compete against each other.
 ### Videos
 * https://www.youtube.com/watch?v=0UU9-lVuHSY: Demonstrates how the plugin fits into a geopolitical context (*nation building, diplomacy, and war*), and also demonstrates some tactical features of sieges.
 * https://www.youtube.com/watch?v=raiAhk2Ru5Y: Demonstrates some tactical features of sieges (*players assembling an army, marching to a siegezone, approaching a siege banner surrounded by a fort, and attacking the enemy*).

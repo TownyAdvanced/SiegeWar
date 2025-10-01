@@ -18,6 +18,7 @@ import com.palmergames.util.TimeMgmt;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -86,7 +87,7 @@ public class SiegeWarTownPeacefulnessUtil {
 		TownMetaDataController.setPeacefulnessChangeCountdownDays(town, 0);
 		
 		// The Town would become a peaceful capital city, which is not allowed.
-		if (!SiegeWarSettings.capitalsAllowedTownPeacefulness() && town.isCapital() && !TownMetaDataController.getPeacefulness(town)) {
+		if (town.isCapital() && !TownMetaDataController.getPeacefulness(town)) {
 			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_err_your_town_cannot_be_peaceful_while_a_capital_city"));
 			return;
 		}
@@ -109,28 +110,44 @@ public class SiegeWarTownPeacefulnessUtil {
 	public static void toggleTownPeacefulness(Player player) {
 		Translator translator = Translator.locale(player);
 		if (!SiegeWarSettings.getWarSiegeEnabled()) {
-			player.sendMessage(translator.of("msg_err_command_disable"));
+			TownyMessaging.sendErrorMsg(player, translator.of("msg_err_command_disable"));
 			return;
 		}
 
 		if(!SiegeWarSettings.getWarCommonPeacefulTownsEnabled()) {
-			player.sendMessage(translator.of("msg_err_command_disable"));
+ 			TownyMessaging.sendErrorMsg(player, translator.of("msg_err_command_disable"));
 			return;
 		}
 
 		Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
 		if(resident == null || !resident.hasTown()) {
-			player.sendMessage(translator.of("msg_err_command_disable"));
+			TownyMessaging.sendErrorMsg(player, translator.of("msg_err_command_disable"));
 			return;
 		}
 
-		//Capital towns cannot go peaceful.
 		Town town = resident.getTownOrNull();
-		if (town.isCapital() && !SiegeWarSettings.capitalsAllowedTownPeacefulness()) {
-			player.sendMessage(translator.of("msg_err_capital_towns_cannot_go_peaceful"));
-			return;
+		if (town.isCapital()) {
+			if (!isTownPeaceful(town)) {
+				//If the capital is non-peaceful, it cannot switch to peaceful
+				TownyMessaging.sendErrorMsg(player, translator.of("msg_err_capital_towns_cannot_go_peaceful"));
+				return;
+            } else {
+				/*
+				 * If the capital is peaceful and switching to non-peaceful
+				 * (e.g. after recently becoming the capital)
+				 * then it cannot cancel the switch
+				 */
+				if(getTownPeacefulnessChangeCountdownDays(town) > 0) {
+					TownyMessaging.sendErrorMsg(player, translator.of("msg_err_capital_towns_cannot_cancel_non_peaceful_switch"));
+					return;
+				}
+			}
 		}
 
+		toggleTownPeacefulness(town);
+	}
+
+	public static void toggleTownPeacefulness(Town town) {
 		//Get the days required for a status change
 		int daysRequiredForStatusChange;
 		if(System.currentTimeMillis() < (town.getRegistered() + (TimeMgmt.ONE_DAY_IN_MILLIS * 7))) {
@@ -142,7 +159,7 @@ public class SiegeWarTownPeacefulnessUtil {
 		//Check if there is a countdown in progress
 		if (TownMetaDataController.getPeacefulnessChangeCountdownDays(town) == 0) {
 			//No countdown in progress
-			TownMetaDataController.setDesiredPeacefulness(town, !SiegeWarTownPeacefulnessUtil.isTownPeaceful(town));
+			TownMetaDataController.setDesiredPeacefulness(town, !isTownPeaceful(town));
 			TownMetaDataController.setPeacefulnessChangeCountdownDays(town, daysRequiredForStatusChange);
 
 			//Send message to town
@@ -152,7 +169,7 @@ public class SiegeWarTownPeacefulnessUtil {
 				TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_war_common_town_declared_non_peaceful", daysRequiredForStatusChange));
 		} else {
 			//Countdown in progress. Cancel the countdown
-			TownMetaDataController.setDesiredPeacefulness(town, SiegeWarTownPeacefulnessUtil.isTownPeaceful(town));
+			TownMetaDataController.setDesiredPeacefulness(town, isTownPeaceful(town));
 			TownMetaDataController.setPeacefulnessChangeCountdownDays(town, 0);
 			//Send message to town
 			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_war_common_town_peacefulness_countdown_cancelled"));
@@ -235,5 +252,19 @@ public class SiegeWarTownPeacefulnessUtil {
 
 	private static void removePeacefulness(Town town) {
 		setTownPeacefulness(town, false);
+	}
+
+	/*
+	 * Scan nation capitals
+	 *
+	 * If a capital is found which is peaceful and not already switching,
+	 * then start the switch process
+	 */
+	public static void switchOffPeacefulnessForCapitals() {
+		for(Nation nation: new ArrayList<>(TownyAPI.getInstance().getNations())) {
+			if(isTownPeaceful(nation.getCapital()) && getTownPeacefulnessChangeCountdownDays(nation.getCapital()) == 0) {
+				toggleTownPeacefulness(nation.getCapital());
+			}
+		}
 	}
 }

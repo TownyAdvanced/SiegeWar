@@ -114,12 +114,6 @@ public enum ConfigNodes {
 			"",
 			"# If this value is true, then a town under active siege cannot unclaim.",
 			"#  This setting is recommended if invasion/occupation is enabled, to avoid occupation escape exploits."),
-	WAR_SIEGE_BESIEGED_TOWN_CANNOT_CHANGE_KING(
-			"war.siege.switches.besieged_capitals_cannot_change_kings",
-			"false",
-			"",
-			"# If this value is true, then a town which is a capital of a nation that is under siege, cannot",
-			"# change capital to another city via /n set king|capital."),
 	WAR_SIEGE_NATION_STATISTICS_ENABLED(
 			"war.siege.switches.nation_statistics_enabled",
 			"true",
@@ -599,11 +593,6 @@ public enum ConfigNodes {
             "# - Town is vulnerable to getting instantly subverted (captured and occupied).",
 			"#   (see user guide for full details)",
 			"#"),
-	PEACEFUL_CAPITALS_ENABLED(
-			"peaceful_towns.nation_capital_can_be_peaceful",
-			"false",
-			"",
-			"# If this is true, a nation capital can be a peaceful town. If false, any capital will not be able to turn peaceful."),
 	PEACEFUL_TOWNS_NEW_TOWN_PEACEFULNESS(
 			"peaceful_towns.new_town_peacefulness",
 			"false",

@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar;
 
 import com.gmail.goosius.siegewar.metadata.NationMetaDataController;
+import com.gmail.goosius.siegewar.metadata.TownMetaDataController;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.gmail.goosius.siegewar.utils.SiegeWarMilitaryRanksUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -11,11 +12,13 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.event.DeleteTownEvent.Cause;
 import com.palmergames.bukkit.towny.exceptions.AlreadyRegisteredException;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.utils.MoneyUtil;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,10 @@ public class TownOccupationController {
 		return town.isConquered() && town.hasNation();
 	}
 
+    public static boolean isResidentInAnOccupiedTown(Resident resident) {
+        return resident.hasTown() && isTownOccupied(resident.getTownOrNull());
+    }
+    
 	/**
 	 * Gets the occupier of the town
 	 * This method is depreciated, because with SW 2.0.0, this can be done simply with town.getNationOrNull().
@@ -43,27 +50,30 @@ public class TownOccupationController {
 	}
 
     public static void removeTownOccupation(Town occupiedTown) {
-		//Remove the town from its nation, if it has one
-		Nation existingNation = null;
+		//Remove the town from the occupier nation, if there is one
+		Nation occupierNation = null;
 		if(occupiedTown.hasNation()) {
-			existingNation = occupiedTown.getNationOrNull();
+			occupierNation = occupiedTown.getNationOrNull();
 			occupiedTown.removeNation();
 		}
 
 		//Set town occupied flag
 		occupiedTown.setConquered(false);
+        
+        //Remove home nation if any
+        removeHomeNationIfAny(occupiedTown);
 
 		//Save data
 		occupiedTown.save();
-		if(existingNation != null) {
-			existingNation.save();
+		if(occupierNation != null) {
+			occupierNation.save();
 		}
     }
 
     public static void setTownOccupation(Town targetTown, @NotNull Nation occupyingNation) {
         //If the town has a nation which is different than the incoming one, remove town from nation
-		Nation existingNation = targetTown.getNationOrNull();
-		if(existingNation != null && existingNation != occupyingNation) {
+		Nation homeNation = targetTown.getNationOrNull();
+		if(homeNation != null && homeNation != occupyingNation) {
 			targetTown.removeNation();
 		}
 
@@ -78,6 +88,12 @@ public class TownOccupationController {
 
 		//Set town occupied flag
 		targetTown.setConquered(true);
+        
+        //Set home nation if there is one
+        if(homeNation != null)
+        {
+            setHomeNation(targetTown, homeNation);
+        }
 
 		//Remove military ranks
 		SiegeWarMilitaryRanksUtil.removeMilitaryRanksFromTownResidents(targetTown);
@@ -85,8 +101,8 @@ public class TownOccupationController {
 		//Save data
 		targetTown.save();
 		occupyingNation.save();
-		if(existingNation != null && existingNation != occupyingNation) {
-			existingNation.save();
+		if(homeNation != null && homeNation != occupyingNation) {
+            homeNation.save();
 		}
     }
 
@@ -185,5 +201,47 @@ public class TownOccupationController {
 	public static List<String> getOccupiedForeignTowns(Nation nation) {
 		return new ArrayList<>();
 	}
+    
+    /**
+     * Get the home nation of the given occupied town
+     * 
+     * @param occupiedTown an occupied town
+     * @return home nation of the occupied town
+     */
+    public @Nullable static Nation getHomeNationOrNull(Town occupiedTown)
+    {
+        if(TownMetaDataController.hasHomeNationUUID(occupiedTown))
+        {
+            return TownyAPI.getInstance().getNation(TownMetaDataController.getHomeNationUUID(occupiedTown));
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    /**
+     * Set the home nation of the given occupied town
+     *
+     * @param occupiedTown an occupied town
+     * @return home nation of the occupied town
+     */
+    public static void setHomeNation(Town occupiedTown, Nation nation)
+    {
+        TownMetaDataController.setHomeNationUUID(occupiedTown, nation);
+    }
+
+    /**
+     * Removes the home nation, if there is one
+     *
+     * @param occupiedTown an occupied town
+     */
+    public static void removeHomeNationIfAny(Town occupiedTown)
+    {
+        if(TownMetaDataController.hasHomeNationUUID(occupiedTown))
+        {
+            TownMetaDataController.removeHomeNationUUID(occupiedTown);
+        }
+    }
 }
 

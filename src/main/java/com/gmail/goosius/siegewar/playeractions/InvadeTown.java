@@ -121,6 +121,9 @@ public class InvadeTown {
 		if (!siege.getStatus().allowsInvading())
 			throw new TownyException(translator.of("msg_err_cannot_invade_without_victory"));
 
+        if (siege.getTown().isCapital())
+            throw new TownyException(translator.of("msg_err_cannot_capture_capital_town"));
+        
 		if (siege.isTownInvaded())
 			throw new TownyException(translator.of("msg_err_town_already_invaded"));
 

@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.metadata;
 
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.metadata.BooleanDataField;
 import com.palmergames.bukkit.towny.object.metadata.DecimalDataField;
@@ -9,6 +10,8 @@ import com.palmergames.bukkit.towny.object.metadata.LongDataField;
 import com.palmergames.bukkit.towny.object.metadata.StringDataField;
 import com.palmergames.bukkit.towny.utils.MetaDataUtil;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
 
 /**
  * 
@@ -27,6 +30,7 @@ public class TownMetaDataController {
 	private static StringDataField failedCampList = new StringDataField("siegewar_failedCampList", "");
 	private static IntegerDataField plunderDebtDays = new IntegerDataField("siegewar_plunderDays", 0);
 	private static DecimalDataField dailyPlunderCost = new DecimalDataField("siegewar_dailyPlunderCost", 0.0);
+    private static StringDataField homeNationUUID = new StringDataField("siegewar_homeNationUUID", "");
 	
 	//Legacy Metadata
 	private static StringDataField legacyDataOccupyingNationUUID = new StringDataField("siegewar_occupyingNationUUID", "");
@@ -57,7 +61,19 @@ public class TownMetaDataController {
 		else
 			town.addMetaData(new StringDataField("siegewar_failedCampList", campList));
 	}
-	
+
+    public static void setHomeNationUUID(Town town, Nation nation) {
+        StringDataField sdf = (StringDataField) homeNationUUID.clone();
+        if (town.hasMeta(sdf.getKey()))
+            MetaDataUtil.setString(town, sdf, nation.getUUID().toString(), true);
+        else
+            town.addMetaData(new StringDataField("siegewar_homeNationUUID", nation.getUUID().toString()));
+    }
+
+    public static void removeHomeNationUUID(Town town) {
+        town.removeMetaData((StringDataField) homeNationUUID.clone());
+    }
+    
 	public static void removeFailedCampSiegeList(Town town) {
 		town.removeMetaData((StringDataField) failedCampList.clone());
 	}
@@ -185,13 +201,21 @@ public class TownMetaDataController {
 		return MetaDataUtil.getDouble(town, dailyPlunderCost);
 	}
 
-	public static boolean hasLegacyOccupierUUID(Town town) {
+    public static boolean hasHomeNationUUID(Town town) {
+        return MetaDataUtil.hasMeta(town, homeNationUUID);
+    }
+    
+    public static boolean hasLegacyOccupierUUID(Town town) {
 		return MetaDataUtil.hasMeta(town, legacyDataOccupyingNationUUID);
 	}
 
 	public static boolean hasLegacySiegeStartTime(Town town) {
 		return MetaDataUtil.hasMeta(town, legacySiegeStartTime);
 	}
+
+    public static UUID getHomeNationUUID(Town town) {
+        return UUID.fromString(MetaDataUtil.getString(town, homeNationUUID));
+    }
 
 	public static String getLegacyOccupierUUID(Town town) {
 		return MetaDataUtil.getString(town, legacyDataOccupyingNationUUID);
