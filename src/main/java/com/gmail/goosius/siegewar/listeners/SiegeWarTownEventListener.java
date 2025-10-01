@@ -206,15 +206,28 @@ public class SiegeWarTownEventListener implements Listener {
 	 */
 	@EventHandler(ignoreCancelled = true)
 	public void onDeleteTown(DeleteTownEvent event) {
+		if(!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+
 		if (SiegeController.hasSiege(event.getTownUUID()))
 			SiegeController.removeSiege(SiegeController.getSiegeByTownUUID(event.getTownUUID()), SiegeRemoveReason.TOWN_DELETE);
 	}
 
 	@EventHandler(ignoreCancelled = true)
 	public void onTownMerge(TownPreMergeEvent event) {
+		if(!SiegeWarSettings.getWarSiegeEnabled())
+			return;
+
 		if (SiegeController.hasSiege(event.getSuccumbingTown())) {
 			event.setCancelMessage(Translation.of("msg_err_cannot_merge_towns"));
 			event.setCancelled(true);
+		}
+
+		if (TownOccupationController.isTownOccupied(event.getSuccumbingTown())) {
+			if(!(TownOccupationController.isTownOccupied(event.getRemainingTown()) && event.getSuccumbingTown().getNationOrNull().equals(event.getRemainingTown().getNationOrNull()))) {
+				event.setCancelMessage(Translation.of("msg_err_cannot_merge_towns_without_same_occupier"));
+				event.setCancelled(true);
+			}
 		}
 	}
 
