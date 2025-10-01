@@ -392,7 +392,7 @@ msg_war_common_town_peacefulness_countdown_cancelled: '&bĐếm ngược thay đ
 msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cKhông thể thêm cấp bậc quân sự cho cư dân, vì họ thuộc về một thị trấn Hòa bình.'
 sg_err_peaceful_town_cannot_move_homeblock: "&cCác thị trấn yên bình không thể thay đổi vị trí homeblock của họ. Nếu bạn muốn di chuyển vị trí homeblock của mình, trước tiên hãy tắt trạng thái yên bình."
 msg_err_peaceful_towns_cannot_revolt: '&cCác thị trấn yên bình không thể nổi dậy.'
-msg_err_capital_towns_cannot_go_peaceful: '&cCác thành phố trung tâm, thủ đô không thể đặt trạng thái yên bình.'
+msg_err_capital_towns_cannot_go_peaceful: '&cNation Capitals cannot go peaceful.'
 msg_err_cannot_subvert_not_enough_permissions: "&cBạn không có đủ quyền để lật đổ thị trấn."
 msg_err_cannot_subvert_dont_own_guardian_town: "&cKhông thể lật đổ, bởi vì quốc gia của bạn không sở hữu Guardian Town cần thiết: %s."
 msg_peaceful_towns_released_on_homeblock_move: "&bBởi vì %s đã thay đổi vị trí homeblock của mình, %d (các) thị trấn yên bình mà nó đang bảo vệ đã được giải phóng khỏi sự chiếm đóng."
@@ -541,7 +541,7 @@ msg_err_action_disable_missing_node: '&cBạn không có đủ quyền cho hành
 msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "Quốc gia của bạn không phải là bên tấn công, bạn không thể xâm lược thị trấn này."
 msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "Bạn không có thẩm quyền từ bỏ hoặc đầu hàng cuộc bao vây này."
 msg_err_cannot_change_capital_because_peaceful: "&cBạn không thể thay đổi thủ đô của quốc gia, vì thủ đô mới là nơi yên bình."
-msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cThị trấn của bạn không thể trở nên yên bình vì các thủ đô không được phép yên bình."
+msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cYour town could not change to peaceful because nation capitals are not allowed to be peaceful."
 msg_err_cannot_start_siege_as_a_peaceful_town: "&cBạn không thể bắt đầu cuộc bao vây vì thị trấn của bạn đang yên bình."
 #Added in 2.13.0
 #Only One Action
@@ -549,3 +549,10 @@ msg_err_town_already_plundered_only_one_action: "&cBạn không thể xâm lư�
 msg_err_town_already_invaded_only_one_action: "&cBạn không thể cướp bóc một quốc gia đã bị xâm lược."
 siege_msg_err_cannot_assign_rank_during_active_battlesession: "&cBạn không thể thêm thứ hạng %s khi phiên chiến đấu đang diễn ra."
 siege_msg_err_cannot_assign_rank_during_active_siege: "&cBạn không thể thêm thứ hạng %s khi thị trấn của bạn đang bị bao vây."
+#Added in 2.20.0
+msg_err_cannot_capture_capital_town: "&cNation capitals cannot be captured."
+msg_err_cannot_subvert_capital_town: "&cNation capitals cannot be subverted."
+msg_err_capital_towns_cannot_cancel_non_peaceful_switch: "&cNation capitals cannot cancel the switch to non-peaceful."
+status_town_hover_title_occupied: "%s[%sOccupied%s]"
+status_town_occupied_home_nation: "&2Home Nation: &a%s"
+msg_err_cannot_merge_towns_without_same_occupier: '&cCannot merge an occupied town, unless both towns have the same occupier.'
