@@ -300,16 +300,6 @@ public class SiegeWarTownEventListener implements Listener {
 		if(SiegeWarSettings.getWarSiegeEnabled()) {
 			Town toTown = event.getToTown();
 
-			if (SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
-				&& SiegeWarSettings.isPeacefulTownPublicSpawnEnabled()) {
-				if (event.isCancelled()
-						&& SiegeWarTownPeacefulnessUtil.isTownPeaceful(toTown)
-						&& toTown.isPublic()) {
-					event.setCancelled(false); //UN-Cancel the event
-					return; //Avoid re-cancelling event
-				}
-			}
-
 			Nation nation = toTown.getNationOrNull();
 			TownBlock tb = WorldCoord.parseWorldCoord(event.getTo()).getTownBlockOrNull();
 			if (nation == null || tb == null)
