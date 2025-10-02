@@ -982,48 +982,29 @@ public enum ConfigNodes {
 			"",
 			"# The threshold required to cause defenders to lose their inventory. If the Siege point balance is equal to or greater than this number",
 			"# and disable_for_defenders is enabled, defenders will not keep their inventories."),
-
-	SPECIAL_VICTORY_EFFECTS(
-			"special_victory_effects",
+	TIMED_VICTORY_TYPES(
+			"timed_victory_types",
 			"",
 			"",
 			"",
 			"############################################################",
 			"# +------------------------------------------------------+ #",
-			"# |             Special Victory Effects                  | #",
+			"# |                Timed Victory Types               | #",
 			"# +------------------------------------------------------+ #",
 			"############################################################",
 			""),
-	SPECIAL_VICTORY_EFFECTS_DECISIVE_VICTORY_THRESHOLD(
-			"special_victory_effects.decisive_victory_threshold",
+    TIMED_VICTORY_TYPES_CRUSHING_VICTORY_THRESHOLD(
+            "timed_victory_types.crushing_victory_threshold",
+            "15000",
+            "",
+            "# If the siege ends in a timed win, with siege points over this threshold (positive or negative),",
+            "# then a crushing victory is declared."),
+	TIMED_VICTORY_TYPES_DECISIVE_VICTORY_THRESHOLD(
+			"timed_victory_types.decisive_victory_threshold",
 			"5000",
 			"",
-			"# If the siege ends without surrender/abandon, and if the siege points are at this threshold (positive or negative),",
+			"# If the siege ends in a timed win which is not a crushing victory, with siege points over this threshold (positive or negative),",
 			"# then a decisive victory is declared, otherwise a close victory is declared."),
-	SPECIAL_VICTORY_EFFECTS_WARCHEST_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY(
-			"special_victory_effects.warchest_reduction_percentage_on_close_victory",
-			"5",
-			"",
-			"# After a close victory, where a warchest is applicable, the warchest will be reduced by this amount.",
-			"# The losing side will receive the remainder."),
-	SPECIAL_VICTORY_EFFECTS_PLUNDER_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY(
-			"special_victory_effects.plunder_reduction_percentage_on_close_victory",
-			"50",
-			"",
-			"# After a close victory, where plunder is applicable, plunder will be reduced by this amount."),
-	SPECIAL_VICTORY_EFFECTS_SIEGE_BALANCE_PENALTY_ON_DECISIVE_REBEL_VICTORY(
-			"special_victory_effects.siege_balance_penalty_on_decisive_rebel_victory",
-			"-1500",
-			"",
-			"# After a decisive defender victory in a revolt siege,",
-			"# the former occupying nation is subject to a starting-siege-balance-penalty to any conquest sieges it initiates.",
-			"# If another such defeat occurs, the penalty is increased by this amount"),
-	SPECIAL_VICTORY_EFFECTS_SIEGE_BALANCE_PENALTY_DURATION_DAYS(
-			"special_victory_effects.siege_balance_penalty_duration_days",
-			"7",
-			"",
-			"# this value determines the duration of the starting-siege-balance-penalty.",
-			"# If another such defeat occurs, the the duration is refreshed."),
 	TOXICITY_REDUCTION(
 			"toxicity_reduction",
 			"",

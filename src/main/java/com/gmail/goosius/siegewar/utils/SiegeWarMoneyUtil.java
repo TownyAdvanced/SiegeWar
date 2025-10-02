@@ -37,48 +37,15 @@ public class SiegeWarMoneyUtil {
 	 *
 	 * @param siege Siege
 	 * @param winningGovernment the winning Government
-	 * @param losingGovernment the losing Government, or null if the amount should be paid in full to the winner.
 	 */
-	public static void handleWarChest(Siege siege, Government winningGovernment, Government losingGovernment) {
+	public static void handleWarChest(Siege siege, Government winningGovernment) {
 		if (!siege.getSiegeType().paysWarChest() || !TownyEconomyHandler.isActive()) // Not a CONQUEST Siege.
 			return;
-
-		// If no losingGovernment is supplied, or it is a decisive ATTACKER_WIN, pay only the winner.
-		if (losingGovernment == null || siege.getStatus().awardsOnlyWinners()) {
-			giveWarChestTo(winningGovernment,
-					siege.getWarChestAmount(),
-					"War Chest Captured",
-					"msg_siege_war_attack_recover_war_chest");
-		
-		} else {
-			giveWarChestToBoth(siege, winningGovernment, losingGovernment);
-		}
-	}
-
-	/**
-	 * Split the warchest between both given governments
-	 * Used for a close victory
-	 * 
-	 * @param siege siege
-	 * @param winningGovernment the (closely) winning government
-	 * @param losingGovernment the (closely) losing government
-	 */
-	private static void giveWarChestToBoth(Siege siege, Government winningGovernment, Government losingGovernment) {
-		//Calculate amounts
-		double amountForLosingGovernment = siege.getWarChestAmount() / 100 * SiegeWarSettings.getSpecialVictoryEffectsWarchestReductionPercentageOnCloseVictory();
-		double amountForWinningGovernment = siege.getWarChestAmount() - amountForLosingGovernment;
-
-		//Give partial war chest to winner
+        
 		giveWarChestTo(winningGovernment,
-				amountForWinningGovernment,
-				"War Chest Partially Recovered",
-				"msg_siege_war_attack_partially_recover_war_chest");
-
-		//Give partial war chest to loser
-		giveWarChestTo(losingGovernment,
-				amountForLosingGovernment,
-				"War Chest Partially Recovered",
-				"msg_siege_war_attack_partially_recover_war_chest");
+				siege.getWarChestAmount(),
+				"War Chest Captured",
+				"msg_siege_war_attack_recover_war_chest");
 	}
 
 	private static void giveWarChestTo(Government governmentToAward,

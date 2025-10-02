@@ -12,9 +12,11 @@ import com.palmergames.bukkit.towny.object.Translation;
  * @author Goosius
  */
 public enum SiegeStatus {
-    IN_PROGRESS(true, Translation.of("siege_status_in_progress")), 
-	ATTACKER_DECISIVE_WIN(false, Translation.of("siege_status_attacker_win")), 
-	DEFENDER_DECISIVE_WIN(false, Translation.of("siege_status_defender_win")), 
+	IN_PROGRESS(true, Translation.of("siege_status_in_progress")),
+	ATTACKER_CRUSHING_WIN(false, Translation.of("siege_status_attacker_crushing_win")),
+	DEFENDER_CRUSHING_WIN(false, Translation.of("siege_status_defender_crushing_win")),
+	ATTACKER_DECISIVE_WIN(false, Translation.of("siege_status_attacker_decisive_win")), 
+	DEFENDER_DECISIVE_WIN(false, Translation.of("siege_status_defender_decisive_win")), 
 	ATTACKER_CLOSE_WIN(false, Translation.of("siege_status_attacker_close_win")),
 	DEFENDER_CLOSE_WIN(false, Translation.of("siege_status_defender_close_win")),
 	ATTACKER_ABANDON(false, Translation.of("siege_status_attacker_abandon")), 
@@ -35,6 +37,10 @@ public enum SiegeStatus {
         switch (line) {
             case "IN_PROGRESS":
                 return IN_PROGRESS;
+            case "ATTACKER_CRUSHING_WIN":
+                return ATTACKER_CRUSHING_WIN;
+            case "DEFENDER_CRUSHING_WIN":
+                return DEFENDER_CRUSHING_WIN;
             case "ATTACKER_DECISIVE_WIN":
                 return ATTACKER_DECISIVE_WIN;
             case "DEFENDER_DECISIVE_WIN":
@@ -82,6 +88,7 @@ public enum SiegeStatus {
 
 	public boolean attackersWon() {
 		switch(this) {
+		case ATTACKER_CRUSHING_WIN:
 		case ATTACKER_DECISIVE_WIN:
 		case ATTACKER_CLOSE_WIN:
 		case DEFENDER_SURRENDER:
@@ -93,29 +100,9 @@ public enum SiegeStatus {
 
 	public boolean defendersWon() {
 		switch(this) {
+		case DEFENDER_CRUSHING_WIN:
 		case DEFENDER_DECISIVE_WIN:
 		case DEFENDER_CLOSE_WIN:
-		case ATTACKER_ABANDON:
-			return true;
-		default:
-			return false;
-		}
-	}
-
-	public boolean reducesPlunder() {
-		switch(this) {
-		case ATTACKER_CLOSE_WIN:
-			return true;
-		default:
-			return false;
-		}
-	}
-
-	public boolean awardsOnlyWinners() {
-		switch(this) {
-		case ATTACKER_DECISIVE_WIN:
-		case DEFENDER_DECISIVE_WIN:
-		case DEFENDER_SURRENDER:
 		case ATTACKER_ABANDON:
 			return true;
 		default:
@@ -130,6 +117,9 @@ public enum SiegeStatus {
 	 */
 	public Translatable getTimedVictoryTypeText() {
 		switch(this) {
+			case ATTACKER_CRUSHING_WIN:
+			case DEFENDER_CRUSHING_WIN:
+				return Translatable.of("msg_crushing");
 			case ATTACKER_DECISIVE_WIN:
 			case DEFENDER_DECISIVE_WIN:
 				return Translatable.of("msg_decisive");

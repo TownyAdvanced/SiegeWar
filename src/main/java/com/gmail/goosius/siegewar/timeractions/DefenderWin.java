@@ -21,7 +21,7 @@ public class DefenderWin
     public static void defenderWin(Siege siege) {
     	siege.setSiegeWinner(SiegeSide.DEFENDERS);
 		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege);
-		SiegeWarMoneyUtil.handleWarChest(siege, siege.getTown(), siege.getAttacker());
+		SiegeWarMoneyUtil.handleWarChest(siege, siege.getTown());
     }
 
 }

@@ -543,24 +543,12 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.KEEP_INVENTORY_ON_SIEGEZONE_DEATH_DISABLE_FOR_DEFENDERS_THRESHOLD);
 	}
 
-	public static int getSpecialVictoryEffectsDecisiveVictoryThreshold() {
-		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_DECISIVE_VICTORY_THRESHOLD);
+	public static int getTimedVictoryTypesCrushingVictoryThreshold() {
+		return Settings.getInt(ConfigNodes.TIMED_VICTORY_TYPES_CRUSHING_VICTORY_THRESHOLD);
 	}
 
-	public static int getSpecialVictoryEffectsWarchestReductionPercentageOnCloseVictory() {
-		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_WARCHEST_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY);
-	}
-
-	public static int getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() {
-		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_PLUNDER_REDUCTION_PERCENTAGE_ON_CLOSE_VICTORY);
-	}
-
-	public static int getSpecialVictoryEffectsSiegeBalancePenaltyOnDecisiveRebelVictory() {
-		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_SIEGE_BALANCE_PENALTY_ON_DECISIVE_REBEL_VICTORY);
-	}
-
-	public static int getSpecialVictoryEffectsSiegeBalancePenaltyDurationDays() {
-		return Settings.getInt(ConfigNodes.SPECIAL_VICTORY_EFFECTS_SIEGE_BALANCE_PENALTY_DURATION_DAYS);
+	public static int getTimedVictoryTypesDecisiveVictoryThreshold() {
+		return Settings.getInt(ConfigNodes.TIMED_VICTORY_TYPES_DECISIVE_VICTORY_THRESHOLD);
 	}
 
 	public static boolean isToxicityReductionEnabled() {

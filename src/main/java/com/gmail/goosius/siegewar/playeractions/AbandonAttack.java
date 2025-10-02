@@ -3,7 +3,6 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
-import com.gmail.goosius.siegewar.enums.SiegeType;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
@@ -70,13 +69,6 @@ public class AbandonAttack {
 			//Standard effects
 			key= String.format("msg_%s_siege_defender_win_result", siege.getSiegeType().toLowerCase());
 			message.append(Translatable.of(key));
-			//Special effects
-			if(siege.getSiegeType() == SiegeType.REVOLT) {
-				message.append(Translatable.of("msg_revolt_siege_defender_decisive_win_demoralization", 
-						siege.getAttacker().getName(),
-						SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyOnDecisiveRebelVictory(),
-						SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyDurationDays()));
-			}
 		}
 
 		return message;
