@@ -251,9 +251,6 @@ public class SiegeWarSettings {
 		return siegeZoneWildernessForbiddenExplodeEntityTypes;
 	}
 	
-	public static boolean isPeacefulTownPublicSpawnEnabled() {
-		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_PUBLIC_SPAWN_ENABLED);
-	}
 
 	public static boolean isPeacefulTownsSubvertEnabled() {
 		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_SUBVERT_ENABLED);
