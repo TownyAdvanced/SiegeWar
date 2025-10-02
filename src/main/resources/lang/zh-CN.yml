@@ -378,8 +378,8 @@ msg_err_cannot_subvert_town_already_occupied: "&c无需颠覆这个城镇，因�
 #Revolting
 msg_revolt_siege_started: '&b来自%s的城镇公民挺身而出，反对占领国%s，并宣布自己可以自由地选择原本属于他们自己的命运。一场起义围攻已经开始！'
 #war sickness
-msg_you_will_get_sickness: '&c警告: 你已进入围攻区的野外，但你不是围攻的正式参与者。请进入一个城镇或离开围困区，否则你将在%s秒内患上战争病。'
-msg_you_received_war_sickness: '&c警告: 你已进入围攻区的野外，但你不是围攻的正式参与者。请进入一个城镇或离开围困区以消除战争病。'
+msg_you_will_get_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. Please enter a non-besieged town or leave the Siege Zone, otherwise you will get War Sickness in %s seconds.'
+msg_you_received_war_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. To remove the War Sickness, enter a non-besieged town or leave the Siege Zone.'
 #Town Status Screen
 status_town_days_to_peacefulness_status_change: '&2和平状态变更天数: &b%d'
 #Town Peacefulness

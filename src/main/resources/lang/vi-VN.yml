@@ -378,8 +378,8 @@ msg_err_cannot_subvert_town_already_occupied: "&cKhông cần phải lật đổ
 #Revolting
 msg_revolt_siege_started: '&bNgười dân thị trấn %s đã nổi dậy chống lại quốc gia chiếm đóng %s, và tuyên bố họ được tự do lựa chọn vận mệnh của mình. CUỘC CHIẾN NỔI DẬY đã bắt đầu!'
 #war sickness
-msg_you_will_get_sickness: '&cCẢNH Báo: Bạn đang ở vùng hoang dã của Khu vực bị bao vây, nhưng bạn không phải là người tham gia chính thức trong cuộc bao vây. Vui lòng vào một thị trấn hoặc rời khỏi Khu vực bị bao vây, nếu không bạn sẽ bị Bệnh Chiến tranh sau %s giây.'
-msg_you_received_war_sickness: '&cCẢNH Báo: Bạn đang ở vùng hoang dã của Khu vực bị bao vây, nhưng bạn không phải là người tham gia chính thức trong cuộc bao vây. Để loại bỏ War Sickness, hãy vào một thị trấn hoặc rời khỏi Khu vực bị bao vây.'
+msg_you_will_get_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. Please enter a non-besieged town or leave the Siege Zone, otherwise you will get War Sickness in %s seconds.'
+msg_you_received_war_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. To remove the War Sickness, enter a non-besieged town or leave the Siege Zone.'
 #Town Status Screen
 status_town_days_to_peacefulness_status_change: '&2Ngày để thay đổi trạng thái Hòa bình: &b%d'
 #Town Peacefulness

@@ -378,8 +378,8 @@ msg_err_cannot_subvert_town_already_occupied: "&cNão há necessidade de subvert
 #Revolting
 msg_revolt_siege_started: '&bOs habitantes de %s se levantaram contra a nação ocupante de %s, e se declararam livres para escolher seu próprio destino. Um CERCO DE REVOLTA começou!'
 #war sickness
-msg_you_will_get_sickness: '&cATENÇÃO: Você está na selva de uma Zona de Cerco, mas não é um participante oficial do cerco. Por favor, entre em uma cidade ou saia da Zona de Cerco, caso contrário, você sofrerá de Doença de Guerra em %s segundos.'
-msg_you_received_war_sickness: '&cATENÇÃO: Você está na selva de uma Zona de Cerco, mas não é um participante oficial do cerco. Para remover a Doença de Guerra, entre em uma cidade ou saia da Zona de Cerco.'
+msg_you_will_get_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. Please enter a non-besieged town or leave the Siege Zone, otherwise you will get War Sickness in %s seconds.'
+msg_you_received_war_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. To remove the War Sickness, enter a non-besieged town or leave the Siege Zone.'
 #Town Status Screen
 status_town_days_to_peacefulness_status_change: '&2Dias Para Mudança de Status de Paz: &b%d'
 #Town Peacefulness

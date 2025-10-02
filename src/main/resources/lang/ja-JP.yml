@@ -378,8 +378,8 @@ msg_err_cannot_subvert_town_already_occupied: "&cこの町を転覆する必要�
 #Revolting
 msg_revolt_siege_started: '&b%sの町の住民は%sの占拠国に対して立ち上がり、自分たちの運命を選ぶ自由を宣言しました。反乱の包囲が始まりました！'
 #war sickness
-msg_you_will_get_sickness: '&c警告: Siege Zoneの野外にいますが、包囲戦の公式参加者ではありません。町に入るかSiege Zoneを離れない限り、%s秒後に戦争病を発症します。'
-msg_you_received_war_sickness: '&c警告: Siege Zoneの野外にいますが、包囲戦の公式参加者ではありません。戦争病を解消するには、町に入るかSiege Zoneを離れてください。'
+msg_you_will_get_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. Please enter a non-besieged town or leave the Siege Zone, otherwise you will get War Sickness in %s seconds.'
+msg_you_received_war_sickness: '&cWARNING: You are in the wilderness of a Siege Zone, but you are not an official participant in the siege. To remove the War Sickness, enter a non-besieged town or leave the Siege Zone.'
 #Town Status Screen
 status_town_days_to_peacefulness_status_change: '&2Days To Peacefulness Status Change: &b%d'
 #Town Peacefulness
