@@ -83,18 +83,18 @@ msg_nobody: '&aNinguém'
 msg_attackers: '&aAtacantes'
 msg_defenders: '&aDefensores'
 #Siege immunities
-msg_set_siege_immunities_town: 'Siege immunity for town %s set to %s.'
-msg_set_siege_immunities_nation: 'Siege immunities for all towns in nation %s set to %s.'
-msg_set_siege_immunities_all: 'Siege immunities for all towns set to %s.'
+msg_set_siege_immunities_town: "\nImunidade de cerco para a cidade %s definida como %s."
+msg_set_siege_immunities_nation: "\nImunidades de cerco para todas as cidades na nação %s definidas como %s."
+msg_set_siege_immunities_all: "\nImunidades de cerco para todas as cidades definidas como %s."
 #Siege-zone block placement restrictions
-msg_war_siege_zone_block_placement_forbidden: '&cYou cannot place this type of block in the wilderness area of a siege zone.'
-msg_war_siege_zone_bucket_emptying_forbidden: '&cYou cannot use this type of bucket in the wilderness area of a siege zone.'
+msg_war_siege_zone_block_placement_forbidden: '&cVocê não pode colocar esse tipo de bloco na área selvagem de uma zona de cerco.'
+msg_war_siege_zone_bucket_emptying_forbidden: '&cVocê não pode usar este tipo de balde na área selvagem de uma zona de cerco.'
 #Added in 0.02:
-admin_help_1: 'Reload the config and language file.'
-config_and_lang_file_reloaded_successfully: 'Config and Language file reloaded successfully.'
-config_and_lang_file_could_not_be_loaded: 'Reload unsuccessful. See console for details.'
+admin_help_1: 'Recarregue o arquivo de configuração e idioma.'
+config_and_lang_file_reloaded_successfully: 'Arquivo de configuração e idioma recarregados com sucesso.'
+config_and_lang_file_could_not_be_loaded: 'Recarregamento malsucedido. Consulte o console para obter detalhes.'
 #Added in 0.05:
-msg_err_not_being_sieged: '&cTown %s does not have an active siege.'
+msg_err_not_being_sieged: '&cA cidade %s não tem um cerco ativo.'
 msg_err_town_not_registered: '&cTown %s is not registered.'
 #Scoreboard
 hud_title: '&6&l%s Siege'
@@ -392,7 +392,7 @@ msg_war_common_town_peacefulness_countdown_cancelled: '&bA contagem regressiva p
 msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cIncapaz de adicionar posto militar ao residente, porque eles pertencem a uma cidade Pacífica.'
 sg_err_peaceful_town_cannot_move_homeblock: "&cCidades Pacíficas não podem mover seus homeblocks. Se você deseja mover seu homeblock, primeiro desative a paz."
 msg_err_peaceful_towns_cannot_revolt: '&cCidades Pacíficas não podem revoltar-se.'
-msg_err_capital_towns_cannot_go_peaceful: '&cCidades capitais não podem se tornar pacíficas.'
+msg_err_capital_towns_cannot_go_peaceful: '&cNation Capitals cannot go peaceful.'
 msg_err_cannot_subvert_not_enough_permissions: "&cVocê não tem permissões suficientes para subverter a cidade."
 msg_err_cannot_subvert_dont_own_guardian_town: "&cSubverter não é possível, porque sua nação não possui a Cidade Guardiã necessária: %s."
 msg_peaceful_towns_released_on_homeblock_move: "&bPorque %s moveu seu homeblock, %d cidade(s) pacífica(s) que estava protegendo foram liberadas da ocupação."
@@ -541,7 +541,7 @@ msg_err_action_disable_missing_node: '&cVocê não tem permissões suficientes p
 msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "Sua nação não é a atacante, você não pode invadir esta cidade."
 msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "Você não tem autoridade para abandonar ou se render neste cerco."
 msg_err_cannot_change_capital_because_peaceful: "&cVocê não pode mudar a capital da nação, porque a nova capital é pacífica."
-msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cSua cidade não pode mudar para pacífica porque cidades capitais não podem ser pacíficas."
+msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cYour town could not change to peaceful because nation capitals are not allowed to be peaceful."
 msg_err_cannot_start_siege_as_a_peaceful_town: "&cVocê não pode iniciar um cerco, porque sua cidade é pacífica."
 #Added in 2.13.0
 #Only One Action
@@ -549,3 +549,10 @@ msg_err_town_already_plundered_only_one_action: "&cVocê não pode invadir uma n
 msg_err_town_already_invaded_only_one_action: "&cVocê não pode saquear uma nação já invadida."
 siege_msg_err_cannot_assign_rank_during_active_battlesession: "&cYou cannot add the %s rank while the battle session is active."
 siege_msg_err_cannot_assign_rank_during_active_siege: "&cYou cannot add the %s rank while your town is involved in a siege."
+#Added in 2.20.0
+msg_err_cannot_capture_capital_town: "&cNation capitals cannot be captured."
+msg_err_cannot_subvert_capital_town: "&cNation capitals cannot be subverted."
+msg_err_capital_towns_cannot_cancel_non_peaceful_switch: "&cNation capitals cannot cancel the switch to non-peaceful."
+status_town_hover_title_occupied: "%s[%sOccupied%s]"
+status_town_occupied_home_nation: "&2Home Nation: &a%s"
+msg_err_cannot_merge_towns_without_same_occupier: '&cCannot merge an occupied town, unless both towns have the same occupier.'

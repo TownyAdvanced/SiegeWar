@@ -392,7 +392,7 @@ msg_war_common_town_peacefulness_countdown_cancelled: '&bThe Peaceful status cha
 msg_war_siege_cannot_add_military_rank_to_peaceful_resident: '&cUnable to add military rank to resident, because they belong to a Peaceful town.'
 sg_err_peaceful_town_cannot_move_homeblock: "&cPeaceful towns cannot move their homeblocks. If you wish to move your homeblock, first toggle peacefulness off."
 msg_err_peaceful_towns_cannot_revolt: '&cPeaceful towns cannot revolt.'
-msg_err_capital_towns_cannot_go_peaceful: '&cCapital towns cannot go peaceful.'
+msg_err_capital_towns_cannot_go_peaceful: '&cNation Capitals cannot go peaceful.'
 msg_err_cannot_subvert_not_enough_permissions: "&cYou do not have enough permissions to subvert the town."
 msg_err_cannot_subvert_dont_own_guardian_town: "&cSubvert not possible, because your nation does not own the required Guardian Town: %s."
 msg_peaceful_towns_released_on_homeblock_move: "&bBecause %s moved its homeblock, %d peaceful town(s) which it was guarding, were released from occupation."
@@ -541,7 +541,7 @@ msg_err_action_disable_missing_node: '&cYou don''t have enough permissions for t
 msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "Your nation is not the attacker, you cannot invade this town."
 msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "You do not have the authority to abandon or surrender this siege."
 msg_err_cannot_change_capital_because_peaceful: "&cYou cannot change the capital of the nation, because the new capital is peaceful."
-msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cYour town could not change to peaceful because capital cities are not allowed to be peaceful."
+msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&cYour town could not change to peaceful because nation capitals are not allowed to be peaceful."
 msg_err_cannot_start_siege_as_a_peaceful_town: "&cYou cannot begin a siege, because your town is peaceful."
 #Added in 2.13.0
 #Only One Action
@@ -549,3 +549,10 @@ msg_err_town_already_plundered_only_one_action: "&cYou cannot invade an already 
 msg_err_town_already_invaded_only_one_action: "&cYou cannot plunder an already invaded nation."
 siege_msg_err_cannot_assign_rank_during_active_battlesession: "&cYou cannot add the %s rank while the battle session is active."
 siege_msg_err_cannot_assign_rank_during_active_siege: "&cYou cannot add the %s rank while your town is involved in a siege."
+#Added in 2.20.0
+msg_err_cannot_capture_capital_town: "&cNation capitals cannot be captured."
+msg_err_cannot_subvert_capital_town: "&cNation capitals cannot be subverted."
+msg_err_capital_towns_cannot_cancel_non_peaceful_switch: "&cNation capitals cannot cancel the switch to non-peaceful."
+status_town_hover_title_occupied: "%s[%sOccupied%s]"
+status_town_occupied_home_nation: "&2Home Nation: &a%s"
+msg_err_cannot_merge_towns_without_same_occupier: '&cCannot merge an occupied town, unless both towns have the same occupier.'
