@@ -3,7 +3,7 @@
 ### Features
 * ⚔️ **Sieges:** Wars are conducted by means of sieges. A siege occurs when a nation attacks a town.
 * 🤖 **Automatic:** Sieges are started by players and automatically managed by the plugin. Daily staff management of sieges is not required.
-* 🚩 **Geo-political:** Players can "work out" their in-game geopolitical ambitions e.g. a nation can, in-principle, capture all the non-capital towns on a server, and/or it can use sieges or the threat of sieges to extract in-game money from enemy towns and nations.
+* 🚩 **Geopolitical:** Players can "work out" their in-game geopolitical ambitions e.g. a nation can, in-principle, capture all the non-capital towns on a server, and/or it can use sieges or the threat of sieges to extract in-game money from enemy towns and nations.
 * ☔ **Town Protections:** Towns cannot be damaged or stolen-from during sieges. Also, non-capital towns can activate the *Peaceful* option, making them immune to sieges, but vulnerable to instant subversion (capture). Captured towns remain in the /nation and /alliance chat channels of their Home Nations, and do not get added to the chat channels of their Occupying Nations."
 * ☔️ **Nation Protections:** Nation capitals cannot be captured, and if they do get sieged, they receive double the usual post-siege immunity duration. 
 * 🕒 **Cross-Timezone Support:** Each siege consists of 7 hours fighting time, spread over the course of a weekend, which allows nations in different IRL-time-zones to compete against each other.
