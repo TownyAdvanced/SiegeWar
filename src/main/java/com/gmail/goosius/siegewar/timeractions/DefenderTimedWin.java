@@ -15,19 +15,14 @@ import com.palmergames.bukkit.towny.object.Translatable;
 public class DefenderTimedWin {
 
     public static void defenderTimedWin(Siege siege) {
-        if(Math.abs(siege.getSiegeBalance()) >= SiegeWarSettings.getSpecialVictoryEffectsDecisiveVictoryThreshold()) {
+        if(Math.abs(siege.getSiegeBalance()) >= SiegeWarSettings.getTimedVictoryTypesCrushingVictoryThreshold()) {
+            siege.setStatus(SiegeStatus.DEFENDER_CRUSHING_WIN);
+        } else if(Math.abs(siege.getSiegeBalance()) >= SiegeWarSettings.getTimedVictoryTypesDecisiveVictoryThreshold()) {
             siege.setStatus(SiegeStatus.DEFENDER_DECISIVE_WIN);
-            Messaging.sendGlobalMessage(getStandardTimedDefenderWinMessage(siege));
-            Translatable specialEffectsMessage = getSpecialTimedDefenderWinMessage(siege);
-            if(specialEffectsMessage != null)
-                Messaging.sendGlobalMessage(specialEffectsMessage);
         } else {
             siege.setStatus(SiegeStatus.DEFENDER_CLOSE_WIN);
-            Messaging.sendGlobalMessage(getStandardTimedDefenderWinMessage(siege));
-            Translatable specialEffectsMessage = getSpecialTimedDefenderWinMessage(siege);
-            if(specialEffectsMessage != null)
-                Messaging.sendGlobalMessage(specialEffectsMessage);
         }
+        Messaging.sendGlobalMessage(getStandardTimedDefenderWinMessage(siege));
         DefenderWin.defenderWin(siege);
     }
 
@@ -57,27 +52,4 @@ public class DefenderTimedWin {
         siege.setEndMessage(message.defaultLocale());
         return message;
     }
-
-    private static Translatable getSpecialTimedDefenderWinMessage(Siege siege) {
-        //Special effects message
-        Translatable message = null;
-        switch (siege.getSiegeType()) {
-            case CONQUEST:
-                if(siege.getStatus() == SiegeStatus.DEFENDER_CLOSE_WIN) {
-                    message = Translatable.of("msg_conquest_siege_defender_close_win_warchest_reduced",
-                            SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() + "%");
-                }
-                break;
-            case REVOLT:
-                if(siege.getStatus() == SiegeStatus.DEFENDER_DECISIVE_WIN) {
-                    message = Translatable.of("msg_revolt_siege_defender_decisive_win_demoralization",
-                            siege.getAttacker().getName(),
-                            SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyOnDecisiveRebelVictory(),
-                            SiegeWarSettings.getSpecialVictoryEffectsSiegeBalancePenaltyDurationDays());
-                }
-                break;
-        }
-        return message;
-    }
-
 }

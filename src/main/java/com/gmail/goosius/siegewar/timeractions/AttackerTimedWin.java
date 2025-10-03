@@ -15,16 +15,14 @@ import com.palmergames.bukkit.towny.object.Translatable;
 public class AttackerTimedWin {
 
     public static void attackerTimedWin(Siege siege) {
-        if(Math.abs(siege.getSiegeBalance()) >= SiegeWarSettings.getSpecialVictoryEffectsDecisiveVictoryThreshold()) {
+        if(Math.abs(siege.getSiegeBalance()) >= SiegeWarSettings.getTimedVictoryTypesCrushingVictoryThreshold()) {
+            siege.setStatus(SiegeStatus.ATTACKER_CRUSHING_WIN);
+        } else if(Math.abs(siege.getSiegeBalance()) >= SiegeWarSettings.getTimedVictoryTypesDecisiveVictoryThreshold()) {
             siege.setStatus(SiegeStatus.ATTACKER_DECISIVE_WIN);
-            Messaging.sendGlobalMessage(getStandardAttackerWinMessage(siege));
         } else {
             siege.setStatus(SiegeStatus.ATTACKER_CLOSE_WIN);
-            Messaging.sendGlobalMessage(getStandardAttackerWinMessage(siege));
-            Translatable specialEffectsMessage = getSpecialTimedAttackerWinMessage(siege);
-            if(specialEffectsMessage != null)
-                Messaging.sendGlobalMessage(specialEffectsMessage);
         }
+        Messaging.sendGlobalMessage(getStandardAttackerWinMessage(siege));
         AttackerWin.attackerWin(siege);
     }
 
@@ -52,21 +50,6 @@ public class AttackerTimedWin {
         String key2 = String.format("msg_%s_siege_attacker_win_result", siege.getSiegeType().toLowerCase());
         message.append(Translatable.of(key2));
         siege.setEndMessage(message.defaultLocale());
-        return message;
-    }
-
-    private static Translatable getSpecialTimedAttackerWinMessage(Siege siege) {
-        //Special effects message
-        Translatable message = null;
-        switch (siege.getSiegeType()) {
-            case CONQUEST:
-                if(siege.getStatus() == SiegeStatus.ATTACKER_CLOSE_WIN) {
-                    message = Translatable.of("msg_conquest_siege_attacker_close_win_warchest_reduced",
-                            SiegeWarSettings.getSpecialVictoryEffectsWarchestReductionPercentageOnCloseVictory() + "%",
-                            SiegeWarSettings.getSpecialVictoryEffectsPlunderReductionPercentageOnCloseVictory() + "%");
-                }
-                break;
-        }
         return message;
     }
 }

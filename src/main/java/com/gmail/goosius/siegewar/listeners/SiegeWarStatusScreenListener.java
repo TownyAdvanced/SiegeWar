@@ -317,6 +317,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 						out.addAll(getInProgressStatusLines(siege, translator, event.getCommandSender()));
 						break;
 
+					case ATTACKER_CRUSHING_WIN:
+					case DEFENDER_CRUSHING_WIN:
 					case ATTACKER_DECISIVE_WIN:
 					case DEFENDER_DECISIVE_WIN:
 					case ATTACKER_CLOSE_WIN:
@@ -417,14 +419,18 @@ public class SiegeWarStatusScreenListener implements Listener {
         switch (siege.getStatus()) {
             case IN_PROGRESS:
                 return translator.of("status_town_siege_status_in_progress");
+            case ATTACKER_CRUSHING_WIN:
+                return translator.of("status_town_siege_status_crushing_attacker_win");
             case ATTACKER_DECISIVE_WIN:
-                return translator.of("status_town_siege_status_attacker_win");
+                return translator.of("status_town_siege_status_decisive_attacker_win");
 			case ATTACKER_CLOSE_WIN:
 				return translator.of("status_town_siege_status_close_attacker_win");
             case DEFENDER_SURRENDER:
                 return translator.of("status_town_siege_status_defender_surrender");
+            case DEFENDER_CRUSHING_WIN:
+                return translator.of("status_town_siege_status_crushing_defender_win");
             case DEFENDER_DECISIVE_WIN:
-                return translator.of("status_town_siege_status_defender_win");
+                return translator.of("status_town_siege_status_decisive_defender_win");
 			case DEFENDER_CLOSE_WIN:
 				return translator.of("status_town_siege_status_close_defender_win");
             case ATTACKER_ABANDON:

@@ -242,7 +242,7 @@ public class SiegeController {
 		siege.setSiegeWinner(SiegeSide.NOBODY);
 		siege.setStatus(SiegeStatus.UNKNOWN);
 		SiegeWarSiegeCompletionUtil.setCommonSiegeCompletionValues(siege);
-		SiegeWarMoneyUtil.handleWarChest(siege, siege.getAttacker(), null);
+		SiegeWarMoneyUtil.handleWarChest(siege, siege.getAttacker());
 	}
 
 	/**
