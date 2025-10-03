@@ -204,8 +204,10 @@ status_town_siege_status: '&2 > Status: &a%s'
 status_town_siege_attacker: '&2 > Attacker: &a%s'
 status_town_siege_defender: '&2 > Defender: &a%s'
 status_town_siege_battle_points: '&2 > Points: &a%s &2/ &a%s'
-status_town_siege_status_attacker_win: '決定的な攻撃者の勝利'
-status_town_siege_status_defender_win: '決定的な防衛者の勝利'
+status_town_siege_status_crushing_attacker_win: 'Crushing Attacker Victory'
+status_town_siege_status_crushing_defender_win: 'Crushing Defender Victory'
+status_town_siege_status_decisive_attacker_win: 'Decisive Attacker Victory'
+status_town_siege_status_decisive_defender_win: 'Decisive Defender Victory'
 status_town_siege_status_close_attacker_win: '接戦の攻撃者の勝利'
 status_town_siege_status_close_defender_win: '接戦の防衛者の勝利'
 status_town_siege_status_attacker_abandon: '攻撃者の放棄'
@@ -408,6 +410,7 @@ msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > %sの攻撃軍�
 msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > %sの防衛軍が%sの勝利を収め、%sの攻撃軍に対抗しました！'
 msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > 以前に町を占拠していた%sの攻撃軍が%sの勝利を収め、反乱軍を打ち負かしました！'
 msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > 反乱が成功しました！反乱軍が%sの攻撃軍を%sの勝利を収め、町から追い払いました！'
+msg_crushing: 'CRUSHING'
 msg_decisive: 'DECISIVE'
 msg_close: 'CLOSE'
 #Abandoning Attacks
@@ -460,14 +463,10 @@ msg_nation_pay_upfront_siege_cost: '&bYour nation paid an upfront siege cost of 
 #Siege Statuses
 siege_status_attacker_close_win: 'Close Attacker Victory'
 siege_status_defender_close_win: 'Close Defender Victory'
-siege_status_attacker_win: 'Decisive Attacker Victory'
-siege_status_defender_win: 'Decisive Defender Victory'
-#Siege Special Victory Effects
-msg_conquest_siege_attacker_close_win_warchest_reduced: "&b包囲の勝利が接戦だったため、包囲された町はWar Chestの%sを回復することができました。"
-msg_conquest_siege_defender_close_win_warchest_reduced: "&b包囲の勝利が接戦だったため、包囲国はWar Chestの%sを回復することができました。"
-msg_conquest_siege_attacker_close_win_plunder_reduced: "&b直近の包囲の勝利が接戦だったため、通常の略奪額が%s減少しました。"
-msg_revolt_siege_attacker_close_win_plunder_reduced: "&b直近の包囲の勝利が接戦だったため、通常の略奪額が%s減少しました。"
-msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (%d siege-balance to conquest sieges it initiates), for %d days."
+siege_status_attacker_decisive_win: 'Decisive Attacker Victory'
+siege_status_defender_decisive_win: 'Decisive Defender Victory'
+siege_status_attacker_crushing_win: 'Crushing Attacker Victory'
+siege_status_defender_crushing_win: 'Crushing Defender Victory'
 #Toxicity Reduction
 msg_chat_now_disabled: "戦闘セッションがアクティブで、終了後%s間、一般チャット、/lc、/tellは無効になります。チャットを行いたい場合、/tc、/nc、または/allyを使用してみてください。"
 msg_chat_now_restored: "&bGeneral Chat, /lc, and /tell, have been restored."
