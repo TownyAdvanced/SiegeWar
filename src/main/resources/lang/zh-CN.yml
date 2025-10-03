@@ -204,8 +204,10 @@ status_town_siege_status: '&2 > 状态: &a%s'
 status_town_siege_attacker: '&2 > 进攻方: &a%s'
 status_town_siege_defender: '&2 > 防守方: &a%s'
 status_town_siege_battle_points: '&2 > 战斗点数: &a%s &2/ &a%s'
-status_town_siege_status_attacker_win: '绝对进攻方胜利'
-status_town_siege_status_defender_win: '绝对防守方胜利'
+status_town_siege_status_crushing_attacker_win: 'Crushing Attacker Victory'
+status_town_siege_status_crushing_defender_win: 'Crushing Defender Victory'
+status_town_siege_status_decisive_attacker_win: 'Decisive Attacker Victory'
+status_town_siege_status_decisive_defender_win: 'Decisive Defender Victory'
 status_town_siege_status_close_attacker_win: '偏进攻方胜利'
 status_town_siege_status_close_defender_win: '偏防守方胜利'
 status_town_siege_status_attacker_abandon: '进攻方放弃'
@@ -408,6 +410,7 @@ msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > 属于%s的进�
 msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > 属于%s的防守部队击溃了属于%s的进攻部队并取得了%s胜利！'
 msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > 曾占领该城镇的，属于%s的进攻部队击败了起义部队并取得了%s胜利！'
 msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > 起义胜利！进攻的起义部队成功地击退%s的进攻部队并取得了%s胜利！'
+msg_crushing: 'CRUSHING'
 msg_decisive: '绝对'
 msg_close: '相对'
 #Abandoning Attacks
@@ -460,14 +463,10 @@ msg_nation_pay_upfront_siege_cost: '&b你的国家预付了%s的围攻费用。'
 #Siege Statuses
 siege_status_attacker_close_win: '偏进攻方胜利'
 siege_status_defender_close_win: '偏防守方胜利'
-siege_status_attacker_win: '绝对进攻方胜利'
-siege_status_defender_win: '绝对防守方胜利'
-#Siege Special Victory Effects
-msg_conquest_siege_attacker_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的城镇能够收取军费开支中的%s。"
-msg_conquest_siege_defender_close_win_warchest_reduced: "&b由于围攻胜利是非绝对性的，被围攻的国家能够收取军费开支中的%s。"
-msg_conquest_siege_attacker_close_win_plunder_reduced: "&b因为最近的围攻胜利是相对性的，通常的掠夺量被减少%s。"
-msg_revolt_siege_attacker_close_win_plunder_reduced: "&b因为最近的围攻胜利是相对性的，通常的掠夺量被减少%s。"
-msg_revolt_siege_defender_decisive_win_demoralization: "&b前占领国%s，因其殖民地的决定性丧失而元气大伤，并且士气低落(其发起的征服围攻将承受%d点围攻分数惩罚)，持续%d天。"
+siege_status_attacker_decisive_win: 'Decisive Attacker Victory'
+siege_status_defender_decisive_win: 'Decisive Defender Victory'
+siege_status_attacker_crushing_win: 'Crushing Attacker Victory'
+siege_status_defender_crushing_win: 'Crushing Defender Victory'
 #Toxicity Reduction
 msg_chat_now_disabled: " 战斗回合处于活跃状态时，公屏聊天、/lc 和 /tell已被禁用，%s后将重新可用。请尝试使用 /tc、/nc或 /ac。"
 msg_chat_now_restored: "&b公屏聊天、 /lc和 /tell已恢复使用。"
