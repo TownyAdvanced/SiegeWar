@@ -5,6 +5,7 @@ import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
+import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
@@ -32,6 +33,10 @@ public class SiegeWarSicknessUtil {
      */
     public static void evaluateWarSickness() {
         if(!SiegeWarSettings.getPunishingNonSiegeParticipantsInSiegeZone())
+            return;
+
+        //Check if battle session is in progress
+        if(!BattleSession.getBattleSession().isActive())
             return;
 
         for (Player player : Bukkit.getOnlinePlayers()) {
