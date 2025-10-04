@@ -1,6 +1,7 @@
 package com.gmail.goosius.siegewar.settings;
 
 import java.awt.Color;
+import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -22,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class SiegeWarSettings {
 	
 	private static List<DayOfWeek> allowedDaysList = null;
+	private static String allowedWeeks = null;
 	private static List<Material> siegeZoneWildernessForbiddenBlockMaterials = null;
 	private static List<Material> siegeZoneWildernessForbiddenBucketMaterials = null;
 	private static List<EntityType> siegeZoneWildernessForbiddenExplodeEntityTypes = null;
@@ -373,6 +375,10 @@ public class SiegeWarSettings {
 		return Settings.getInt(ConfigNodes.WAR_SIEGE_SIEGECAMPS_DURATION_IN_MINUTES);
 	}
 
+	public static String getSiegeStartDayLimiterAllowedWeeks() {
+		return Settings.getString(ConfigNodes.SIEGE_START_DAY_LIMITER_ALLOWED_WEEKS);
+	}
+
 	public static List<DayOfWeek> getSiegeStartDayLimiterAllowedDays() {
 		List<DayOfWeek> allowedDaysList = new ArrayList<>();
 		String[] allowedDaysStringArray = Settings.getString(ConfigNodes.SIEGE_START_DAY_LIMITER_ALLOWED_DAYS).toUpperCase(Locale.ROOT).replaceAll(" ", "").split(",");
@@ -387,9 +393,22 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean doesTodayAllowASiegeToStart() {
-		if (allowedDaysList == null)
+		//Check week of year
+		if(allowedWeeks == null)
+			allowedWeeks = getSiegeStartDayLimiterAllowedWeeks();
+		int weekOfYear = LocalDate.now().get(WeekFields.ISO.weekOfWeekBasedYear());
+		if(allowedWeeks.equalsIgnoreCase("even-weeks-only") && weekOfYear %2 != 0)
+			return false;
+		if(allowedWeeks.equalsIgnoreCase("odd-weeks-only") && weekOfYear %2 != 1)
+			return false;
+
+		//Check day of week
+		if(allowedDaysList == null)
 			allowedDaysList = getSiegeStartDayLimiterAllowedDays();
-		return allowedDaysList.contains(LocalDate.now().getDayOfWeek());
+		if(!allowedDaysList.contains(LocalDate.now().getDayOfWeek()))
+			return false;
+
+		return true;
 	}
 
 	public static int getSiegeBalanceCapValue() {
