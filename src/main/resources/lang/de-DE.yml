@@ -204,8 +204,10 @@ status_town_siege_status: '&2 > Status: &a%s'
 status_town_siege_attacker: '&2 > Angreifer: &a%s'
 status_town_siege_defender: '&2 > Verteidiger: &a%s'
 status_town_siege_battle_points: '&2 > Punkte: &a%s &2/ &a%s'
-status_town_siege_status_attacker_win: 'Decisive Attacker Victory'
-status_town_siege_status_defender_win: 'Decisive Defender Victory'
+status_town_siege_status_crushing_attacker_win: 'Crushing Attacker Victory'
+status_town_siege_status_crushing_defender_win: 'Crushing Defender Victory'
+status_town_siege_status_decisive_attacker_win: 'Decisive Attacker Victory'
+status_town_siege_status_decisive_defender_win: 'Decisive Defender Victory'
 status_town_siege_status_close_attacker_win: 'Close Attacker Victory'
 status_town_siege_status_close_defender_win: 'Close Defender Victory'
 status_town_siege_status_attacker_abandon: 'Die Angreifer haben aufgegeben'
@@ -408,6 +410,7 @@ msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > The attacking a
 msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > The defending army of %s has won a %s victory against the attacking army of %s!'
 msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > The attacking army of %s, which previously occupied the town, has defeated the rebels with a %s victory!'
 msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > The rebellion has succeeded! The attacking rebels have successfully driven off the attacking army of %s!, with a %s victory!'
+msg_crushing: 'CRUSHING'
 msg_decisive: 'DECISIVE'
 msg_close: 'CLOSE'
 #Abandoning Attacks
@@ -460,14 +463,10 @@ msg_nation_pay_upfront_siege_cost: '&bYour nation paid an upfront siege cost of 
 #Siege Statuses
 siege_status_attacker_close_win: 'Close Attacker Victory'
 siege_status_defender_close_win: 'Close Defender Victory'
-siege_status_attacker_win: 'Decisive Attacker Victory'
-siege_status_defender_win: 'Decisive Defender Victory'
-#Siege Special Victory Effects
-msg_conquest_siege_attacker_close_win_warchest_reduced: "&bBecause the siege victory was CLOSE, the besieged town was able to recover %s of the War Chest."
-msg_conquest_siege_defender_close_win_warchest_reduced: "&bBecause the siege victory was CLOSE, the besieging nation was able to recover %s of the War Chest."
-msg_conquest_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege victory was CLOSE, the usual plunder amount was reduced by %s."
-msg_revolt_siege_attacker_close_win_plunder_reduced: "&bBecause the recent siege victory CLOSE, the usual plunder amount was reduced by %s."
-msg_revolt_siege_defender_decisive_win_demoralization: "&bThe former occupying nation, %s, reels from the decisive loss of its colony, and is demoralized (%d siege-balance to conquest sieges it initiates), for %d days."
+siege_status_attacker_decisive_win: 'Decisive Attacker Victory'
+siege_status_defender_decisive_win: 'Decisive Defender Victory'
+siege_status_attacker_crushing_win: 'Crushing Attacker Victory'
+siege_status_defender_crushing_win: 'Crushing Defender Victory'
 #Toxicity Reduction
 msg_chat_now_disabled: " General Chat, /lc, and /tell, will be disabled while the Battle Session is active, and for %s after it ends. If you want to chat, try using /tc, /nc, or /ac."
 msg_chat_now_restored: "&bGeneral Chat, /lc, and /tell, have been restored."
