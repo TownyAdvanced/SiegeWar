@@ -774,6 +774,12 @@ public enum ConfigNodes {
 			"# Multiple entries should be separated by a comma.",
 			"# Permitted values: monday, tuesday, wednesday, thursday, friday, saturday, sunday.",
 			"# By default, sieges are started only on Thursday"),
+	SIEGE_START_DAY_LIMITER_ALLOWED_WEEKS(
+			"siege_start_day_limiter.allowed_siege_start_weeks",
+			"weekly",
+			"",
+			"# This setting allows siege starts to be limited by week.",
+			"# Permitted values: weekly, odd-weeks-only, even-weeks-only"),
 	BATTLE_SESSION_SCHEDULER(
 			"battle_session_scheduler",
 			"",
