@@ -204,8 +204,8 @@ status_town_siege_status: '&2 > 状态: &a%s'
 status_town_siege_attacker: '&2 > 进攻方: &a%s'
 status_town_siege_defender: '&2 > 防守方: &a%s'
 status_town_siege_battle_points: '&2 > 战斗点数: &a%s &2/ &a%s'
-status_town_siege_status_crushing_attacker_win: 'Crushing Attacker Victory'
-status_town_siege_status_crushing_defender_win: 'Crushing Defender Victory'
+status_town_siege_status_crushing_attacker_win: '进攻方大获全胜'
+status_town_siege_status_crushing_defender_win: '防守方大获全胜'
 status_town_siege_status_decisive_attacker_win: '绝对进攻方胜利'
 status_town_siege_status_decisive_defender_win: '绝对防守方胜利'
 status_town_siege_status_close_attacker_win: '偏进攻方胜利'
@@ -410,7 +410,7 @@ msg_conquest_siege_timed_attacker_win: '&bCONQUEST SIEGE at %s > 属于%s的进�
 msg_conquest_siege_timed_defender_win: '&bCONQUEST SIEGE at %s > 属于%s的防守部队击溃了属于%s的进攻部队并取得了%s胜利！'
 msg_revolt_siege_timed_attacker_win: '&bREVOLT SIEGE at %s > 曾占领该城镇的，属于%s的进攻部队击败了起义部队并取得了%s胜利！'
 msg_revolt_siege_timed_defender_win: '&bREVOLT SIEGE at %s > 起义胜利！进攻的起义部队成功地击退%s的进攻部队并取得了%s胜利！'
-msg_crushing: 'CRUSHING'
+msg_crushing: '全胜'
 msg_decisive: '绝对'
 msg_close: '相对'
 #Abandoning Attacks
@@ -465,8 +465,8 @@ siege_status_attacker_close_win: '偏进攻方胜利'
 siege_status_defender_close_win: '偏防守方胜利'
 siege_status_attacker_decisive_win: '绝对进攻方胜利'
 siege_status_defender_decisive_win: '绝对防守方胜利'
-siege_status_attacker_crushing_win: 'Crushing Attacker Victory'
-siege_status_defender_crushing_win: 'Crushing Defender Victory'
+siege_status_attacker_crushing_win: '进攻方大获全胜'
+siege_status_defender_crushing_win: '防守方大获全胜'
 #Toxicity Reduction
 msg_chat_now_disabled: " 战斗回合处于活跃状态时，公屏聊天、/lc 和 /tell已被禁用，%s后将重新可用。请尝试使用 /tc、/nc或 /ac。"
 msg_chat_now_restored: "&b公屏聊天、 /lc和 /tell已恢复使用。"
@@ -540,7 +540,7 @@ msg_err_action_disable_missing_node: '&c你没有足够的权限进行该操作:
 msg_err_your_nation_is_not_the_attacking_nation_cannot_invade: "你的国家不是攻击方，你不能入侵这个城镇。"
 msg_err_you_arent_able_to_abandon_or_surrender_this_siege: "你无权在这场围攻中放弃或投降。"
 msg_err_cannot_change_capital_because_peaceful: "&c你不能更改国家首都，因为新首都处于和平状态。"
-msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&c你的城镇不能被设置为和平状态，因为国家首都不可被设置为和平。"
+msg_err_your_town_cannot_be_peaceful_while_a_capital_city: "&c你的城镇不能被设置为和平状态，因为国家首都不能处于状态和平。"
 msg_err_cannot_start_siege_as_a_peaceful_town: "&c你不能发动围攻，因为你的城镇处于和平状态。"
 #Added in 2.13.0
 #Only One Action
@@ -553,5 +553,5 @@ msg_err_cannot_capture_capital_town: "&c国家首都不能被占领。"
 msg_err_cannot_subvert_capital_town: "&c国家首都不能被颠覆。"
 msg_err_capital_towns_cannot_cancel_non_peaceful_switch: "&c国家首都不能取消对非和平状态的转换。"
 status_town_hover_title_occupied: "%s[%s被占领%s]"
-status_town_occupied_home_nation: "&2Home Nation: &a%s"
+status_town_occupied_home_nation: "&2母国: &a%s"
 msg_err_cannot_merge_towns_without_same_occupier: '&c被占领的城镇不能被合并，除非这两个城镇具有同样的占领国。'
