@@ -8,8 +8,12 @@
 * ☔️ **Nation Protections:** Nation capitals cannot be captured, and if they do get sieged, they receive double the usual post-siege immunity duration. 
 * 🕒 **Cross-Timezone Support:** Each siege consists of 7 hours fighting time, spread over the course of a weekend, which allows nations in different IRL-time-zones to compete against each other.
 ### Videos
-* https://www.youtube.com/watch?v=0UU9-lVuHSY: Demonstrates how the plugin fits into a geopolitical context (*nation building, diplomacy, and war*), and also demonstrates some tactical features of sieges.
-* https://www.youtube.com/watch?v=raiAhk2Ru5Y: Demonstrates some tactical features of sieges (*players assembling an army, marching to a siegezone, approaching a siege banner surrounded by a fort, and attacking the enemy*).
+* [Introduction](https://www.youtube.com/watch?v=0UU9-lVuHSY): The narrator explains some features of SiegeWar, and how the plugin fits into a geopolitical context (*nation building, diplomacy, and war*).
+* [Siege on Nefarious, Earthpol](https://www.youtube.com/watch?v=raiAhk2Ru5Y), featuring players assembling an army, marching to a SiegeZone, and attacking a fort surrounding a Siege Banner.
+* [Siege of Cerberus, CCNET](https://www.youtube.com/watch?v=EM--SfQYNQA
+), featuring infantry and cavalry contesting a Siege Banner.
+* [Siege of Vienna, Earthpol](https://www.youtube.com/watch?v=ccQW0S05si8), featuring infantry contesting a Siege Banner, including bombing by TNT-minecart, and fighting on a high platform over the banner.
+* [Siege of Livland, CCNET](https://www.youtube.com/watch?v=LomXsdhzK1Y), featuring infantry, tanks, and aircraft(!), contesting a Siege Banner
 ### Links
 * [Download](https://github.com/TownyAdvanced/SiegeWar/releases)
 * [Installation Guide](https://github.com/TownyAdvanced/SiegeWar/wiki/Siege-War-Installation)
