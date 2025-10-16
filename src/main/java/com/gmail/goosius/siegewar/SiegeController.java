@@ -453,6 +453,7 @@ public class SiegeController {
 	 * @param attacker the attacking government
 	 * @param defender the defending government
 	 * @param townOfSiegeStarter the town of the siege starter
+     * @param siegeStarter the starter of the siege
 	 * @param useWarchest true if warchest should be used
 	 */
 	public static void startSiege(Block bannerBlock,
@@ -461,6 +462,7 @@ public class SiegeController {
 								   Government attacker,
 								   Government defender,
 								   Town townOfSiegeStarter,
+                                   Player siegeStarter,
 								   boolean useWarchest) {
 		//Create Siege
 		SiegeController.newSiege(targetTown);
@@ -520,7 +522,7 @@ public class SiegeController {
 		SiegeController.saveSiege(siege);
 
 		//Call event
-		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, startMessage.defaultLocale()));
+		Bukkit.getPluginManager().callEvent(new SiegeWarStartEvent(siege, townOfSiegeStarter, siegeStarter, startMessage.defaultLocale()));
 	}
 
 	public static Translatable getGlobalSiegeStartMessage(Siege siege) {
