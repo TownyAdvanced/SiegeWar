@@ -8,7 +8,6 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
@@ -19,18 +18,16 @@ public class SiegeWarStartEvent extends Event {
     private final String siegeType;
     private final Siege siege;
     private final Town townOfSiegeStarter;
-    private final Player siegeStarter;
     private final Nation nation;
     private final Block flag;
     private final Town targetTown;
     private final String message;
 
-    public SiegeWarStartEvent(Siege siege, Town townOfSiegeStarter, Player siegeStarter, String message) {
+    public SiegeWarStartEvent(Siege siege, Town townOfSiegeStarter, String message) {
         this.siege = siege;
         this.siegeType = siege.getSiegeType().getName();
         this.targetTown = siege.getTown();
         this.townOfSiegeStarter = townOfSiegeStarter;
-        this.siegeStarter = siegeStarter;
         this.nation = siege.isRevoltSiege() ? targetTown.getNationOrNull() : (Nation)siege.getAttackingNationIfPossibleElseTown();
         this.flag = siege.getFlagLocation().getBlock();
         this.message = message;
@@ -52,10 +49,6 @@ public class SiegeWarStartEvent extends Event {
 
     public Town getTownOfSiegeStarter() {
         return townOfSiegeStarter;
-    }
-
-    public Player getSiegeStarter() {
-        return siegeStarter;
     }
 
     public Block getFlag() {

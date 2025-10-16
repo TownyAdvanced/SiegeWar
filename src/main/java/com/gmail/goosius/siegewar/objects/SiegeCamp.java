@@ -138,7 +138,7 @@ public class SiegeCamp {
 		}
 
 		// Call event
-		PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(siegeType, targetTown, (Nation)attacker, townOfSiegeStarter, player, bannerBlock, townBlock);
+		PreSiegeWarStartEvent preSiegeWarStartEvent = new PreSiegeWarStartEvent(siegeType, targetTown, (Nation)attacker, townOfSiegeStarter, bannerBlock, townBlock);
 		Bukkit.getPluginManager().callEvent(preSiegeWarStartEvent);
 
 		// Setup attack
@@ -149,8 +149,7 @@ public class SiegeCamp {
 					targetTown, 
 					attacker, 
 					defender,
-					townOfSiegeStarter,
-                    player,
+					townOfSiegeStarter, 
 					!siegeType.equals(SiegeType.REVOLT));
 		} else {
 			Messaging.sendErrorMsg(player, preSiegeWarStartEvent.getCancellationMsg());
