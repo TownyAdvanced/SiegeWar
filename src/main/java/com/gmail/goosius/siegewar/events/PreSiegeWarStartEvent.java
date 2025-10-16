@@ -5,6 +5,7 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -15,6 +16,7 @@ public class PreSiegeWarStartEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private final SiegeType siegeType;
     private final Town townOfSiegeStarter;
+    private final Player siegeStarter;
     private final Nation nation;
     private final Block flag;
     private final TownBlock townBlock;
@@ -25,11 +27,12 @@ public class PreSiegeWarStartEvent extends Event implements Cancellable {
     public PreSiegeWarStartEvent(SiegeType siegeType,
                                  Town targetTown,
                                  Nation nation,
-                                 Town townOfSiegeStarter,
+                                 Town townOfSiegeStarter, Player siegeStarter,
                                  Block flag,
                                  TownBlock townBlock){
         this.siegeType = siegeType;
         this.targetTown = targetTown;
+        this.siegeStarter = siegeStarter;
         this.townOfSiegeStarter = townOfSiegeStarter;
         this.nation = nation;
         this.flag = flag;
@@ -48,6 +51,10 @@ public class PreSiegeWarStartEvent extends Event implements Cancellable {
 
     public Town getTownOfSiegeStarter() {
         return townOfSiegeStarter;
+    }
+
+    public Player getSiegeStarter() {
+        return siegeStarter;
     }
 
     public Nation getNation() {
