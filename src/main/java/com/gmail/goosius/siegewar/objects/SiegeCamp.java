@@ -149,7 +149,7 @@ public class SiegeCamp {
 					targetTown, 
 					attacker, 
 					defender,
-					townOfSiegeStarter,
+					townOfSiegeStarter, 
                     player,
 					!siegeType.equals(SiegeType.REVOLT));
 		} else {
@@ -158,3 +158,4 @@ public class SiegeCamp {
 	}
 
 }
+
