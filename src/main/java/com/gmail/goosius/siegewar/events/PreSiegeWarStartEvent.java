@@ -27,7 +27,7 @@ public class PreSiegeWarStartEvent extends Event implements Cancellable {
     public PreSiegeWarStartEvent(SiegeType siegeType,
                                  Town targetTown,
                                  Nation nation,
-                                 Town townOfSiegeStarter, 
+                                 Town townOfSiegeStarter,
                                  Player siegeStarter,
                                  Block flag,
                                  TownBlock townBlock){
