@@ -55,7 +55,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 			final Translator translator = Translator.locale(event.getCommandSender());
 			event.getStatusScreen().addComponentOf("siegeWarNationSalary",
 					formatKeyValue(translator.of("status_military_salary"), formatMoney(salary)),
-					HoverEvent.showText(Component.text(translator.of("hover_message_click_to_claim"))),
+					HoverEvent.showText(TownyComponents.miniMessage(translator.of("hover_message_click_to_claim"))),
 					ClickEvent.runCommand("/sw collect"));
 		}
 	}
@@ -82,7 +82,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 				}
 				
 				String occupationTaxString = TownyEconomyHandler.getFormattedBalance(occupationTaxPerPlot);
-				Component occupationTaxComponent = Component.text(translator.of("status_splitter")).append(Component.text(translator.of("status_nation_occupation_tax_per_plot", occupationTaxString)));
+				Component occupationTaxComponent = TownyComponents.miniMessage(translator.of("status_splitter")).append(TownyComponents.miniMessage(translator.of("status_nation_occupation_tax_per_plot", occupationTaxString)));
 				Component existingComponent;
 				Component updatedComponent;
 
@@ -105,7 +105,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 			if(SiegeWarSettings.getWarSiegeNationStatisticsEnabled()) {
 				//Create the text inside the hover item
 				Component hoverText = Component.empty();
-				hoverText = hoverText.append(Component.text(translator.of("status_nation_town_stats", NationMetaDataController.getTotalTownsGained(nation), NationMetaDataController.getTotalTownsLost(nation))));
+				hoverText = hoverText.append(TownyComponents.miniMessage(translator.of("status_nation_town_stats", NationMetaDataController.getTotalTownsGained(nation), NationMetaDataController.getTotalTownsLost(nation))));
 				hoverText = hoverText.append(Component.newline());
 
 				/*
@@ -114,11 +114,11 @@ public class SiegeWarStatusScreenListener implements Listener {
 				 * 2. Thus if a winning besieger invades first before plundering ... the system has no knowledge of the previous nation, to record the plunderLost stat.
 				 * 3. I suggest this fix be part of a wider scheme to upgrade the feature .... e.g. add siege victories, defeats, type of sieges, types of victory etc. 
 				 */
-				hoverText = hoverText.append(Component.text(translator.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation))));
+				hoverText = hoverText.append(TownyComponents.miniMessage(translator.of("status_nation_plunder_stats", NationMetaDataController.getTotalPlunderGained(nation))));
 				//Add the hover item to the screen
 				event.getStatusScreen().addComponentOf("siegeWar_warHistoryHover",
 						Component.empty()
-								.append(Component.text(hoverFormat(translator.of("status_nation_hover_title_war_history")))
+								.append(TownyComponents.miniMessage(hoverFormat(translator.of("status_nation_hover_title_war_history")))
 										.hoverEvent(HoverEvent.showText(hoverText))));
 			}
 									
@@ -128,13 +128,13 @@ public class SiegeWarStatusScreenListener implements Listener {
 			if(NationMetaDataController.getDemoralizationDaysLeft(nation) > 0) {
 				//Create the text inside the hover item
 				Component hoverText = Component.empty();
-				hoverText = hoverText.append(Component.text(translator.of("status_nation_demoralization_amount", NationMetaDataController.getDemoralizationAmount(nation))));
+				hoverText = hoverText.append(TownyComponents.miniMessage(translator.of("status_nation_demoralization_amount", NationMetaDataController.getDemoralizationAmount(nation))));
 				hoverText = hoverText.append(Component.newline());
-				hoverText = hoverText.append(Component.text(translator.of("status_nation_demoralization_days_left", NationMetaDataController.getDemoralizationDaysLeft(nation))));
+				hoverText = hoverText.append(TownyComponents.miniMessage(translator.of("status_nation_demoralization_days_left", NationMetaDataController.getDemoralizationDaysLeft(nation))));
 				//Add the hover item to the screen
 				event.getStatusScreen().addComponentOf("siegeWar_demoralizationHover",
 						Component.empty()
-							.append(Component.text(hoverFormat(translator.of("status_nation_hover_title_demoralization")))
+							.append(TownyComponents.miniMessage(hoverFormat(translator.of("status_nation_hover_title_demoralization")))
 							.hoverEvent(HoverEvent.showText(hoverText))));
 			}
 
@@ -146,15 +146,15 @@ public class SiegeWarStatusScreenListener implements Listener {
 			if(siegeAttacks.size() > 0 || siegeDefences.size() > 0) {
 				//Create the text inside the hover item
 				Component hoverText = Component.empty();
-				hoverText = hoverText.append(Component.text(translator.of("status_nation_offensive_sieges", siegeAttacks.size())
+				hoverText = hoverText.append(TownyComponents.miniMessage(translator.of("status_nation_offensive_sieges", siegeAttacks.size())
 						+ getFormattedTownList(siegeAttacks)));
 				hoverText = hoverText.append(Component.newline());
-				hoverText = hoverText.append(Component.text(translator.of("status_nation_defensive_sieges", siegeDefences.size())
+				hoverText = hoverText.append(TownyComponents.miniMessage(translator.of("status_nation_defensive_sieges", siegeDefences.size())
 						+ getFormattedTownList(siegeDefences)));
 				//Add the hover item to the screen
 				event.getStatusScreen().addComponentOf("siegeWar_siegesHover",
 						Component.empty()
-							.append(Component.text(hoverFormat(translator.of("status_nation_hover_title_sieges")))
+							.append(TownyComponents.miniMessage(hoverFormat(translator.of("status_nation_hover_title_sieges")))
 							.hoverEvent(HoverEvent.showText(hoverText))));
 			}
 		}
@@ -179,7 +179,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 				existingSubtitleEntries.add(0, peacefulnessFlag);
 				//3. Generate the subtitle component
 				String townSubtitle = com.palmergames.bukkit.util.ChatTools.formatSubTitle(StringMgmt.join(existingSubtitleEntries, " "));
-				Component subtitleComponent = Component.text(townSubtitle);
+				Component subtitleComponent = TownyComponents.miniMessage(townSubtitle);
 
 				//Put the subtitle line on the screen
 				if(event.getStatusScreen().hasComponent("subtitle")) {
@@ -204,7 +204,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 				double occupationTax = TownOccupationController.getNationOccupationTax(town);
 				String occupationTaxString = TownyEconomyHandler.getFormattedBalance(occupationTax);
-				Component occupationTaxComponent = Component.text(translator.of("status_splitter")).append(Component.text(translator.of("status_town_occupation_tax", occupationTaxString)));
+				Component occupationTaxComponent = TownyComponents.miniMessage(translator.of("status_splitter")).append(TownyComponents.miniMessage(translator.of("status_town_occupation_tax", occupationTaxString)));
 				Component existingComponent;
 				Component updatedComponent;
 
@@ -224,7 +224,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 			if (TownMetaDataController.hasPlunderDebt(town)) {
 				int days = TownMetaDataController.getPlunderDebtDays(town);
 				double amount = TownMetaDataController.getDailyPlunderDebt(town);
-				event.getStatusScreen().addComponentOf("siegeWar_plunderDebt", Component.text(translator.of("status_town_plunder_debt", getMoney(days * amount), days, getMoney(amount))));
+				event.getStatusScreen().addComponentOf("siegeWar_plunderDebt", TownyComponents.miniMessage(translator.of("status_town_plunder_debt", getMoney(days * amount), days, getMoney(amount))));
 			}
 
 			//[Occupied]
@@ -234,16 +234,16 @@ public class SiegeWarStatusScreenListener implements Listener {
 				Component hoverText = Component.empty();
 				if(homeNation != null)
 				{
-					hoverText = hoverText.append(Component.text(translator.of("status_town_occupied_home_nation", TownOccupationController.getHomeNationOrNull(town).getName())));
+					hoverText = hoverText.append(TownyComponents.miniMessage(translator.of("status_town_occupied_home_nation", TownOccupationController.getHomeNationOrNull(town).getName())));
 				}
 				else
 				{
-					hoverText = hoverText.append(Component.text(translator.of("msg_na")));
+					hoverText = hoverText.append(TownyComponents.miniMessage(translator.of("msg_na")));
 				}
 				//Add the hover item to the screen
 				event.getStatusScreen().addComponentOf("siegeWar_homeNationChangeHover", 
 							Component.empty()
-								.append(Component.text(hoverFormat(translator.of("status_town_hover_title_occupied")))
+								.append(TownyComponents.miniMessage(hoverFormat(translator.of("status_town_hover_title_occupied")))
 									.hoverEvent(HoverEvent.showText(hoverText))));
 			}
 
@@ -252,11 +252,11 @@ public class SiegeWarStatusScreenListener implements Listener {
 			if(SiegeWarTownPeacefulnessUtil.getTownPeacefulnessChangeCountdownDays(town) > 0) {
 				//Create the text inside the hover item
 				Component hoverText = Component.empty();
-				hoverText = hoverText.append(Component.text(translator.of("status_town_days_to_peacefulness_status_change", SiegeWarTownPeacefulnessUtil.getTownPeacefulnessChangeCountdownDays(town))));
+				hoverText = hoverText.append(TownyComponents.miniMessage(translator.of("status_town_days_to_peacefulness_status_change", SiegeWarTownPeacefulnessUtil.getTownPeacefulnessChangeCountdownDays(town))));
 				//Add the hover item to the screen
 				event.getStatusScreen().addComponentOf("siegeWar_peacefulnessChangeHover",
 						Component.empty()
-							.append(Component.text(hoverFormat(translator.of("status_town_hover_title_changing_peacefulness")))
+							.append(TownyComponents.miniMessage(hoverFormat(translator.of("status_town_hover_title_changing_peacefulness")))
 							.hoverEvent(HoverEvent.showText(hoverText))));
 			}
 
@@ -267,11 +267,11 @@ public class SiegeWarStatusScreenListener implements Listener {
 				//Create the text inside the hover item
 				String immunityText = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
 				Component hoverText = Component.empty();
-				hoverText = hoverText.append(Component.text(translator.of("status_town_revolt_immunity_timer", immunityText)));
+				hoverText = hoverText.append(TownyComponents.miniMessage(translator.of("status_town_revolt_immunity_timer", immunityText)));
 				//Add the hover item to the screen
 				event.getStatusScreen().addComponentOf("siegeWar_revoltImmunityHover",
 						Component.empty()
-							.append(Component.text(hoverFormat(translator.of("status_town_hover_title_revolt_immunity")))
+							.append(TownyComponents.miniMessage(hoverFormat(translator.of("status_town_hover_title_revolt_immunity")))
 							.hoverEvent(HoverEvent.showText(hoverText))));
 	        }
 
@@ -338,13 +338,13 @@ public class SiegeWarStatusScreenListener implements Listener {
 
 				//Add the hover item to the screen
 				Component hoverText = Component.empty();
-				hoverText = hoverText.append(Component.text(translator.of("status_town_siege")));
+				hoverText = hoverText.append(TownyComponents.miniMessage(translator.of("status_town_siege")));
 				for (String line : out) {
 					hoverText = hoverText.append(Component.newline().append(TownyComponents.miniMessage(line)));
 				}
 				event.getStatusScreen().addComponentOf("siegeWar_siegeHover", 
 						Component.empty()
-							.append(Component.text(hoverFormat(translator.of("status_sieged")))
+							.append(TownyComponents.miniMessage(hoverFormat(translator.of("status_sieged")))
 							.hoverEvent(HoverEvent.showText(hoverText))));
 
 	        } else {
@@ -354,11 +354,11 @@ public class SiegeWarStatusScreenListener implements Listener {
 					//Create the text inside the hover item
 					String time = immunity == -1l ? translator.of("msg_permanent") : TimeMgmt.getFormattedTimeValue(immunity- System.currentTimeMillis());
 					Component hoverText = Component.empty();
-					hoverText = hoverText.append(Component.text(translator.of("status_town_standalone_siege_immunity_timer", time)));
+					hoverText = hoverText.append(TownyComponents.miniMessage(translator.of("status_town_standalone_siege_immunity_timer", time)));
 					//Add the hover item to the screen
 					event.getStatusScreen().addComponentOf("siegeWar_siegeImmunityHover",
 							Component.empty()
-								.append(Component.text(hoverFormat(translator.of("status_town_hover_title_siege_immunity")))
+								.append(TownyComponents.miniMessage(hoverFormat(translator.of("status_town_hover_title_siege_immunity")))
 								.hoverEvent(HoverEvent.showText(hoverText))));
 				}
 	        }
