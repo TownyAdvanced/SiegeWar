@@ -66,7 +66,7 @@ msg_err_siege_war_cannot_plunder_without_economy: "&c你不能掠夺，因为经
 msg_err_siege_war_town_already_plundered: '&c此镇已被掠夺。'
 #Block change
 msg_err_siege_war_cannot_destroy_siege_banner: "&c围攻正在进行中，你不能摧毁围攻旗帜或旗帜所附着的方块。"
-msg_err_siege_war_banner_support_block_not_stable: "&c您不能将旗帜放置在不稳定的地面上，例如沙子或沙砾。"
+msg_err_siege_war_banner_support_block_not_stable: "&c你不能将旗帜放置在不稳定的地面上，例如沙子或沙砾。"
 #Banner control
 msg_war_siege_zone_milk_bucket_forbidden_while_attempting_banner_control: '你不能在尝试取得旗帜控制权时使用此物品。'
 #Town Info Siege Section
