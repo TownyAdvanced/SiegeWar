@@ -30,6 +30,7 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -302,9 +303,6 @@ public class PlaceBlock {
 		if (nearbyTown.isRuined())
 			throw new TownyException(translator.of("msg_err_cannot_start_siege_at_ruined_town"));
 
-		if(SiegeWarBlockUtil.isSupportBlockUnstable(bannerBlock))
-			throw new TownyException(translator.of("msg_err_siege_war_banner_support_block_not_stable"));
-
 		if (!SiegeWarSettings.doesTodayAllowASiegeToStart())
 			throw new TownyException(translator.of("msg_err_cannot_start_sieges_today"));
 
@@ -313,6 +311,9 @@ public class PlaceBlock {
 			SiegeWarMoneyUtil.throwIfTownCannotAffordToStartSiege(nearbyTown);
 			//Start Revolt siege
 			StartRevoltSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
+			// Replace unstable block below banner.
+			if(SiegeWarBlockUtil.isSupportBlockUnstable(bannerBlock))
+				bannerBlock.getRelative(BlockFace.DOWN).setType(Material.STONE);
 			//Immediately remove occupation
 			TownOccupationController.removeTownOccupation(nearbyTown);
 		} else {
@@ -327,6 +328,10 @@ public class PlaceBlock {
 
 			if (SiegeWarSettings.doesThisNationHaveTooManyActiveSieges(residentsNation))
 				throw new TownyException(translator.of("msg_err_siege_war_nation_has_too_many_active_siege_attacks"));
+
+			// Replace unstable block below banner.
+			if(SiegeWarBlockUtil.isSupportBlockUnstable(bannerBlock))
+				bannerBlock.getRelative(BlockFace.DOWN).setType(Material.STONE);
 
 			//Conquest siege
 			StartConquestSiege.processStartSiegeRequest(player, residentsTown, residentsNation, nearbyTownBlock, nearbyTown, bannerBlock);
