@@ -2,10 +2,12 @@ package com.gmail.goosius.siegewar.utils;
 
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
+import com.gmail.goosius.siegewar.events.BattleSessionPenaltyPointsEvent;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Translatable;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -65,8 +67,10 @@ public class SiegeWarScoringUtil {
 		//Generate message
 		String langKey;
 		Translatable message;
+		final BattleSessionPenaltyPointsEvent.Reason reason;
 		Player killer = getPlayerKiller(player);
 		if(killer != null) {
+			reason = residentIsAttacker ? BattleSessionPenaltyPointsEvent.Reason.KILLED_BY_DEFENDER : BattleSessionPenaltyPointsEvent.Reason.KILLED_BY_ATTACKER;
 			langKey = residentIsAttacker ? 	"msg_siege_war_attacker_killed_by_player" : "msg_siege_war_defender_killed_by_player";
 			message = Translatable.of(
 				langKey,
@@ -75,6 +79,7 @@ public class SiegeWarScoringUtil {
 				killer.getName(),
 				Math.abs(battlePoints));
 		} else {
+			reason = BattleSessionPenaltyPointsEvent.Reason.DEATH;
 			langKey = residentIsAttacker ? 	"msg_siege_war_attacker_death" : "msg_siege_war_defender_death";
 			message = Translatable.of(
 				langKey,
@@ -82,6 +87,9 @@ public class SiegeWarScoringUtil {
 				player.getName(),
 				Math.abs(battlePoints));
 		}
+
+		Bukkit.getPluginManager().callEvent( new BattleSessionPenaltyPointsEvent(siege, Math.abs(battlePoints), reason, residentIsAttacker, player, killer));
+
 
 		//Send messages to siege participants
 		SiegeWarNotificationUtil.informSiegeParticipants(siege, message);
