@@ -626,6 +626,17 @@ public enum ConfigNodes {
 			"",
 			"# Prevents players in peaceful towns from being given ranks with military-rank-permission nodes.",
 			"# It is not recommended to set this to false."),
+	PEACEFUL_TOWNS_CANNOT_MOVE_HOMEBLOCK(
+			"peaceful_towns.cannot_move_homeblock",
+			"true",
+			"",
+			"# If this is true, peaceful towns cannot move their homeblock."),
+	PEACEFUL_TOWNS_ALLOW_PEACEFUL_CAPITALS(
+			"peaceful_towns.allow_peaceful_capitals",
+			"false",
+			"",
+			"# If this is true, nation capital towns are allowed to be peaceful.",
+			"# By default, capital towns are forced to be non-peaceful."),
 
 	OCCUPIED_TOWNS(
 			"occupied_towns",

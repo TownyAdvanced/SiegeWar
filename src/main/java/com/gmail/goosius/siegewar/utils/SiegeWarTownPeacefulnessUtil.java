@@ -86,8 +86,8 @@ public class SiegeWarTownPeacefulnessUtil {
 		}
 		TownMetaDataController.setPeacefulnessChangeCountdownDays(town, 0);
 		
-		// The Town would become a peaceful capital city, which is not allowed.
-		if (town.isCapital() && !TownMetaDataController.getPeacefulness(town)) {
+		// The Town would become a peaceful capital city, which is not allowed (unless configured).
+		if (!SiegeWarSettings.arePeacefulCapitalsAllowed() && town.isCapital() && !TownMetaDataController.getPeacefulness(town)) {
 			TownyMessaging.sendPrefixedTownMessage(town, Translatable.of("msg_err_your_town_cannot_be_peaceful_while_a_capital_city"));
 			return;
 		}
@@ -126,7 +126,7 @@ public class SiegeWarTownPeacefulnessUtil {
 		}
 
 		Town town = resident.getTownOrNull();
-		if (town.isCapital()) {
+		if (!SiegeWarSettings.arePeacefulCapitalsAllowed() && town.isCapital()) {
 			if (!isTownPeaceful(town)) {
 				//If the capital is non-peaceful, it cannot switch to peaceful
 				TownyMessaging.sendErrorMsg(player, translator.of("msg_err_capital_towns_cannot_go_peaceful"));
@@ -261,6 +261,8 @@ public class SiegeWarTownPeacefulnessUtil {
 	 * then start the switch process
 	 */
 	public static void switchOffPeacefulnessForCapitals() {
+		if (SiegeWarSettings.arePeacefulCapitalsAllowed())
+			return;
 		for(Nation nation: new ArrayList<>(TownyAPI.getInstance().getNations())) {
 			if(isTownPeaceful(nation.getCapital()) && getTownPeacefulnessChangeCountdownDays(nation.getCapital()) == 0) {
 				toggleTownPeacefulness(nation.getCapital());
