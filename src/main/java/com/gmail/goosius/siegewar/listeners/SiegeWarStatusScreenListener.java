@@ -415,7 +415,7 @@ public class SiegeWarStatusScreenListener implements Listener {
 		return TownyEconomyHandler.isActive() ? TownyEconomyHandler.getFormattedBalance(amount) : String.valueOf(amount);
 	}
 
-	private static String getStatusTownSiegeSummary(@NotNull Siege siege, Translator translator) {
+	public static String getStatusTownSiegeSummary(@NotNull Siege siege, Translator translator) {
         switch (siege.getStatus()) {
             case IN_PROGRESS:
                 return translator.of("status_town_siege_status_in_progress");
