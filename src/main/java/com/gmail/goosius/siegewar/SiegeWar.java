@@ -20,10 +20,14 @@ import com.palmergames.bukkit.towny.scheduling.impl.BukkitTaskScheduler;
 import com.palmergames.bukkit.towny.scheduling.impl.FoliaTaskScheduler;
 import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
+
+import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarNationSetOccupationTaxAddonCommand;
 import com.gmail.goosius.siegewar.hud.SiegeHUDManager;
+import com.gmail.goosius.siegewar.integration.PAPIPlaceholderExpansion;
 import com.gmail.goosius.siegewar.integration.dynmap.DynmapIntegration;
 import com.gmail.goosius.siegewar.listeners.SiegeWarActionListener;
 import com.gmail.goosius.siegewar.listeners.SiegeWarBukkitEventListener;
@@ -157,6 +161,11 @@ public class SiegeWar extends JavaPlugin {
 			if (getServer().getPluginManager().isPluginEnabled("dynmap")) {
 				info("SiegeWar found Dynmap plugin, enabling Dynmap support.");
 				new DynmapIntegration(this);
+			}
+			if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+				info("SiegeWar found PlaceholderAPI plugin, enabling PAPI support.");
+				PlaceholderExpansion expansion = new PAPIPlaceholderExpansion();
+				expansion.register();
 			}
 		}
 	}
