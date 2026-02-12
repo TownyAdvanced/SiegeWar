@@ -266,6 +266,14 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_CANNOT_ASSIGN_MILITARY_RANKS);
 	}
 
+	public static boolean arePeacefulTownsNotAllowedToMoveHomeBlock() {
+		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_CANNOT_MOVE_HOMEBLOCK);
+	}
+
+	public static boolean arePeacefulCapitalsAllowed() {
+		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_ALLOW_PEACEFUL_CAPITALS);
+	}
+
 	public static int getWarCommonPeacefulTownsNewTownConfirmationRequirementDays() {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_NEW_TOWN_CONFIRMATION_REQUIREMENT_DAYS);
 	}

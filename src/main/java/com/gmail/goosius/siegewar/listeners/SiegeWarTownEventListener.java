@@ -162,7 +162,7 @@ public class SiegeWarTownEventListener implements Listener {
 	}
 
 	/*
-	 * If town is peaceful, sieged, or occupied, it can't move homeblock.
+	 * If town is peaceful (configurable), sieged, or occupied, it can't move homeblock.
 	 * otherwise the move homeblock command could be / definitely would be
 	 * used by players as an easy exploit to escape occupation.
 	 * 
@@ -176,6 +176,7 @@ public class SiegeWarTownEventListener implements Listener {
 		if (SiegeWarSettings.getWarSiegeEnabled()) {
 			Translator translator = Translator.locale(event.getPlayer());
 			if(SiegeWarSettings.getWarCommonPeacefulTownsEnabled()
+				&& SiegeWarSettings.arePeacefulTownsNotAllowedToMoveHomeBlock()
 				&& SiegeWarTownPeacefulnessUtil.isTownPeaceful(event.getTown())) {
 				event.setCancelled(true);
 				event.setCancelMessage(translator.of("siegewar_plugin_prefix") + translator.of("msg_err_peaceful_town_cannot_move_homeblock"));
