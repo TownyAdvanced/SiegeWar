@@ -37,7 +37,8 @@ import java.util.*;
 
 public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	
-	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", "preference", "version", "nextsession", "spawn");
+	private static final List<String> siegewarTabCompletes = Arrays.asList("collect", "town", "nation", "hud", 
+			"listpeacefultowns", "preference", "version", "nextsession", "spawn");
 
 	private static final List<String> siegewarTownTabCompletes = Arrays.asList("togglepeaceful");
 	
@@ -80,6 +81,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw hud", "[town]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw spawn", "[town]", ""));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw collect", "", Translatable.of("nation_help_siegewar_11").forLocale(sender)));
+		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw listpeacefultowns", "", Translatable.of("sw_command_help_list_peaceful_towns").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nation", "paysoldiers [amount]", Translatable.of("nation_help_siegewar_12").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw town", "togglepeaceful", Translatable.of("town_help_toggle_peaceful").forLocale(sender)));
 		TownyMessaging.sendMessage(sender, ChatTools.formatCommand("Eg", "/sw nextsession", "", ""));
@@ -137,6 +139,9 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			break;
 		case "spawn":
 			parseSiegeWarSpawnCommand(player, StringMgmt.remFirstArg(args));
+			break;
+		case "listpeacefultowns":
+			parseSiegeWarListPeacefulTownsCommand(player);
 			break;
 		case "town":
 			parseSiegeWarTownCommand(player, StringMgmt.remFirstArg(args));
@@ -327,6 +332,17 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 			default:
 				showNationHelp(player);
 		}
+	}
+
+
+	private void parseSiegeWarListPeacefulTownsCommand(Player player) {
+		TownyMessaging.sendMessage(player, ChatTools.formatTitle(Translatable.of("sw_peaceful_towns_title").forLocale(player)));
+		for (Town town : TownyAPI.getInstance().getTowns()) {
+			if (SiegeWarTownPeacefulnessUtil.isTownPeaceful(town))
+				continue;
+			TownyMessaging.sendMessage(player, "<aqua>" + town.getFormattedName());
+		}
+		
 	}
 
 	private void parseSiegeWarTownCommand(Player player, String[] args) {
