@@ -48,6 +48,7 @@ permissions:
             siegewar.command.siegewar.town.*: true
             siegewar.command.siegewar.nation.*: true
             siegewar.command.siegewar.collect: true
+            siegewar.command.siegewar.listpeacefultowns: true
 
     siegewar.command.siegewar.preference:
         description: User is able to use /sw preference.
