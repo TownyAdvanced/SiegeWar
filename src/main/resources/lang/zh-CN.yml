@@ -555,3 +555,5 @@ msg_err_capital_towns_cannot_cancel_non_peaceful_switch: "&c国家首都不能�
 status_town_hover_title_occupied: "%s[%s被占领%s]"
 status_town_occupied_home_nation: "&2母国: &a%s"
 msg_err_cannot_merge_towns_without_same_occupier: '&c被占领的城镇不能被合并，除非这两个城镇具有同样的占领国。'
+sw_command_help_list_peaceful_towns: 'List towns which are currently peaceful.'
+sw_peaceful_towns_title: 'Peaceful Towns'
