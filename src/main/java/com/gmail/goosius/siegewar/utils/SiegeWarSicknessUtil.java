@@ -8,7 +8,6 @@ import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
 import com.gmail.goosius.siegewar.objects.BattleSession;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -16,6 +15,7 @@ import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.util.TimeTools;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -43,7 +43,9 @@ public class SiegeWarSicknessUtil {
             Location location = player.getLocation();
 
             // Players immune to war nausea won't be punished
-            if (player.isOp() || player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()))
+            if (player.isOp() ||
+				player.hasPermission(SiegeWarPermissionNodes.SIEGEWAR_IMMUNE_TO_WAR_NAUSEA.getNode()) ||
+				player.getGameMode().equals(GameMode.SPECTATOR))
                 continue;
 
             // Check if in a siege zone
