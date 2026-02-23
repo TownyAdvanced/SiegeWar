@@ -337,7 +337,7 @@ public class SiegeWarCommand implements CommandExecutor, TabCompleter {
 	private void parseSiegeWarListPeacefulTownsCommand(Player player) {
 		TownyMessaging.sendMessage(player, ChatTools.formatTitle(Translatable.of("sw_peaceful_towns_title").forLocale(player)));
 		for (Town town : TownyAPI.getInstance().getTowns()) {
-			if (SiegeWarTownPeacefulnessUtil.isTownPeaceful(town))
+			if (!SiegeWarTownPeacefulnessUtil.isTownPeaceful(town))
 				continue;
 			TownyMessaging.sendMessage(player, " - <aqua>" + town.getFormattedName());
 		}
