@@ -381,6 +381,14 @@ public enum ConfigNodes {
 			"# If true will check if the player is in wilderness and check the radius blocks when checking if a player is in a timed point zone.",
 			"# If false it will only check the radius blocks when checking if a player is in a timed point zone.",
 			"# Setting this to false is not intended behavior and may break some features, you should only really use this if you're moving the banner to inside of towns"),
+	WAR_SIEGE_EXTRA_NATION_PROXIMITY_TOWNBLOCKS(
+			"war.siege.distances.extra_nation_proximity_townblocks",
+			"0",
+			"",
+			"# This value adds extra townblocks on top of Towny's nation_proximity_to_capital setting,",
+			"# extending the maximum siege/invasion/subversion range.",
+			"# Example: If Towny proximity is 500 and this is 250, siege range becomes 750 townblocks.",
+			"# Set to 0 to use only the Towny proximity setting."),
 	WAR_SIEGE_BANNER_PLACE_DISTANCE_TOWN_BLOCKS(
 			"war.siege.distances.banner_place_distance_town_blocks","","",""),
 	WAR_SIEGE_BANNER_PLACE_DISTANCE_TOWN_BLOCKS_MAX(

@@ -271,7 +271,8 @@ public class SiegeWarDistanceUtil {
 	 * @throws TownyException thrown if the town or nation capital has no Homeblock set.
 	 */
 	private static boolean isTownTooFarFromNationCapitalByDistance(Nation nation, Town town) throws TownyException {
-		return TownySettings.getNationProximityToCapital() > 0 && MathUtil.distance(nation.getCapital().getHomeBlock().getCoord(), town.getHomeBlock().getCoord()) > TownySettings.getNationProximityToCapital();
+		double maxProximity = TownySettings.getNationProximityToCapital() + SiegeWarSettings.getExtraNationProximityTownblocks();
+		return TownySettings.getNationProximityToCapital() > 0 && MathUtil.distance(nation.getCapital().getHomeBlock().getCoord(), town.getHomeBlock().getCoord()) > maxProximity;
 	}
 
 	/**
