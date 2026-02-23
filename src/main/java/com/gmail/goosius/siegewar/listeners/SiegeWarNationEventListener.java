@@ -186,9 +186,13 @@ public class SiegeWarNationEventListener implements Listener {
 		}
 
 		if (SiegeWarTownPeacefulnessUtil.isTownPeaceful(newCapital)) {
-			event.setCancelled(true);
-			event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_change_capital_because_peaceful"));
-			return;
+			// Allow capital move if both old and new capitals are peaceful and the setting permits it
+			if (!(SiegeWarSettings.arePeacefulCapitalMovesAllowed()
+				&& SiegeWarTownPeacefulnessUtil.isTownPeaceful(oldCapital))) {
+				event.setCancelled(true);
+				event.setCancelMessage(Translation.of("plugin_prefix") + Translation.of("msg_err_cannot_change_capital_because_peaceful"));
+				return;
+			}
 		}
 	}
 	

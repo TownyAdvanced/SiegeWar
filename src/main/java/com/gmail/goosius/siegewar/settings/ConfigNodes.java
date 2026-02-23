@@ -637,6 +637,12 @@ public enum ConfigNodes {
 			"",
 			"# If this is true, nation capital towns are allowed to be peaceful.",
 			"# By default, capital towns are forced to be non-peaceful."),
+	PEACEFUL_TOWNS_ALLOW_PEACEFUL_CAPITAL_MOVES(
+			"peaceful_towns.allow_peaceful_capital_moves",
+			"false",
+			"",
+			"# If this is true, nation capitals can be moved to a peaceful town,",
+			"# as long as both the current capital and the new capital are peaceful."),
 
 	OCCUPIED_TOWNS(
 			"occupied_towns",

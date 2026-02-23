@@ -274,6 +274,10 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_ALLOW_PEACEFUL_CAPITALS);
 	}
 
+	public static boolean arePeacefulCapitalMovesAllowed() {
+		return Settings.getBoolean(ConfigNodes.PEACEFUL_TOWNS_ALLOW_PEACEFUL_CAPITAL_MOVES);
+	}
+
 	public static int getWarCommonPeacefulTownsNewTownConfirmationRequirementDays() {
 		return Settings.getInt(ConfigNodes.PEACEFUL_TOWNS_NEW_TOWN_CONFIRMATION_REQUIREMENT_DAYS);
 	}
