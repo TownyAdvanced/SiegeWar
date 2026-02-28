@@ -50,6 +50,10 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_INVADE_ENABLED);
 	}
 
+		public static boolean getWarSiegeInvadeCapitalEnabled() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_INVADE_CAPITAL_ENABLED);
+	}
+
 	public static boolean getWarSiegePlunderEnabled() {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_PLUNDER_AMOUNT_PER_PLOT) > 0;
 	}
