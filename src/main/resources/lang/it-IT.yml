@@ -555,3 +555,5 @@ msg_err_capital_towns_cannot_cancel_non_peaceful_switch: "&cNation capitals cann
 status_town_hover_title_occupied: "%s[%sOccupied%s]"
 status_town_occupied_home_nation: "&2Home Nation: &a%s"
 msg_err_cannot_merge_towns_without_same_occupier: '&cCannot merge an occupied town, unless both towns have the same occupier.'
+sw_command_help_list_peaceful_towns: 'List towns which are currently peaceful.'
+sw_peaceful_towns_title: 'Peaceful Towns'
