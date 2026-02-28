@@ -72,6 +72,11 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# If true, then invasions are enabled."),
+	WAR_SIEGE_INVADE_CAPITAL_ENABLED(
+			"war.siege.switches.invade_capital_enabled",
+			"false",
+			"",
+			"# If true, then invasions of capitals are enabled."),
 	WAR_SIEGE_MILITARY_SALARY_ENABLED(
 			"war.siege.switches.military_salary_enabled",
 			"true",
