@@ -122,7 +122,7 @@ msg_swa_set_plunder_lost_success: '&b已成功将掠夺损失设置%d应用到%s
 msg_err_nation_not_registered: '&c国家%s未被注册。'
 msg_err_cannot_remove_enemy: '&c你不能移除敌国，如果在你目前在一场正在进行的围攻中与他们交战！'
 #Added in 0.09
-nation_help_siegewar_12: '酬劳你的士兵。给定的金额将按等级分配。'
+nation_help_siegewar_12: '酬劳你的士兵，给定的金额将按照国家军衔等级分配。'
 msg_siege_war_military_salary_available: "一份价值%s的军薪现在可用。输入\"/sw collect\"以领取。"
 msg_siege_war_military_salary_collected: "你已经领取了%s的军薪。"
 msg_err_siege_war_no_soldiers_to_pay: "没有士兵需要支付报酬。"
