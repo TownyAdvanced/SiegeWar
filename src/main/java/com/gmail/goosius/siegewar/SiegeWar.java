@@ -47,7 +47,7 @@ import java.nio.file.Path;
 public class SiegeWar extends JavaPlugin {
 	
 	private static SiegeWar plugin;
-	private final String requiredTownyVersion = "0.102.0.0";
+	private final String requiredTownyVersion = "0.102.0.10";
 	private static final SiegeHUDManager siegeHUDManager = new SiegeHUDManager();
 	private final Object scheduler;
 
@@ -177,7 +177,8 @@ public class SiegeWar extends JavaPlugin {
 			return false;
 		} else {
 			pm.registerEvents(new SiegeWarActionListener(this), this);
-			pm.registerEvents(new SiegeWarBukkitEventListener(), this);		
+			pm.registerEvents(new SiegeWarBukkitEventListener(), this);
+			pm.registerEvents(new SiegeHUDManager(), this);
 			pm.registerEvents(new SiegeWarTownyEventListener(this), this);
 			pm.registerEvents(new SiegeWarNationEventListener(), this);
 			pm.registerEvents(new SiegeWarTownEventListener(this), this);

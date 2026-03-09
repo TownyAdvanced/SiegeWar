@@ -1,51 +1,70 @@
 package com.gmail.goosius.siegewar.hud;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.huds.HUDManager;
+import com.palmergames.bukkit.towny.huds.providers.FoliaHUD;
+import com.palmergames.bukkit.towny.huds.providers.HUD;
+import com.palmergames.bukkit.towny.huds.providers.PaperHUD;
+import com.palmergames.bukkit.towny.huds.providers.ServerHUD;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class SiegeHUDManager {
+public class SiegeHUDManager implements Listener {
 
-    static Map<Player, Siege> warHudUsers;
+	private static final String SIEGE_WAR_HUD_NAME = "siegeWarHUD";
+	private static final String SIEGE_WAR_HUD_OBJ = "SIEGE_HUD_OBJ";
+	static Map<Player, Siege> warHudUsers;
 
     public SiegeHUDManager() {
+		boolean isFolia = Towny.getPlugin().isFolia();
+
+		HUD siegeWarHUD = new HUD(SIEGE_WAR_HUD_NAME, SIEGE_WAR_HUD_OBJ, (p) -> SiegeWarHud.updateHUD(p), (p, siege) -> SiegeWarHud.updateHUD(p, (Siege) siege));
+		SiegeWarHud siegeHUD = new SiegeWarHud(siegeWarHUD);
+		HUDManager.addHUD(SIEGE_WAR_HUD_NAME, isFolia ? new FoliaHUD(siegeHUD) : new PaperHUD(siegeHUD));
         warHudUsers = new HashMap<>();
     }
 
     public void toggleWarHud(Player player, Siege siege) {
+		ServerHUD hud = HUDManager.getHUD(SIEGE_WAR_HUD_NAME);
+		if (hud == null)
+			return;
+
         if (!warHudUsers.containsKey(player)) {
             warHudUsers.put(player, siege);
-            SiegeWarHud.toggleOn(player, siege);
+			hud.toggleOn(player);
+			SiegeWarHud.updateHUD(player, siege);
         } else if (warHudUsers.get(player) != siege) {
             warHudUsers.replace(player, siege);
-            SiegeWarHud.updateInfo(player, siege);
+			hud.toggleOn(player);
+			SiegeWarHud.updateHUD(player, siege);
         } else
             toggleOff(player);
     }
 
     public static void toggleOff(Player player) {
         warHudUsers.remove(player);
-        if (player.isOnline())
-            player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        HUDManager.toggleAllOff(player);
     }
 
-    public static void updateHUDs() {
-        for (Entry<Player, Siege> entry : new ArrayList<>(warHudUsers.entrySet())) {
-            if (entry.getKey().getScoreboard().getTeam("balance") == null) {
-                warHudUsers.remove(entry.getKey());
-                continue;
-            } else
-                SiegeWarHud.updateInfo(entry.getKey(), entry.getValue());
-        }
-    }
+	public static void updateHUDs() {
+		ServerHUD hud = HUDManager.getHUD(SIEGE_WAR_HUD_NAME);
+		if (hud == null)
+			return;
+
+		for (Player player : hud.getPlayers()) {
+			if (!hud.isActive(player)) {
+				hud.removePlayer(player);
+				warHudUsers.remove(player);
+			} else
+				SiegeWarHud.updateHUD(player, warHudUsers.get(player));
+		}
+	}
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
