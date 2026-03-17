@@ -262,6 +262,12 @@ public enum ConfigNodes {
 			"# A low setting will generally reduce the aggression level on the server.",
 			"# A low setting will also rebalance the system in favour of smaller nations.",
 		 	"# This is because it will prevent larger nations from conducting as many sieges as their resources would otherwise allow."),
+	WAR_SIEGE_MAX_ACTIVE_SIEGE_ATTACKS_PER_NATION_USE_LEVELS(
+		"war.siege.quantities.max_active_siege_attacks_per_nation_use_levels",
+		"false",
+		"",
+			"# If true then the above `max_active_siege_attacks_per_nation` is multiplied by the nations level",
+			"# So if `max_active_siege_attacks_per_nation` is 3 and the nation level is 2 then a level 2 nation can have 6 sieges."),			
 	WAR_SIEGE_SIEGECAMPS(
             "war.siege.siege_assemblies",
             "",
