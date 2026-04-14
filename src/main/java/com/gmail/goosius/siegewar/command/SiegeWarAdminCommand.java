@@ -207,6 +207,10 @@ public class SiegeWarAdminCommand implements TabExecutor {
 			groupNodes.add("siegewar.town.siege.*");
 		if (!groupNodes.contains("siegewar.command.siegewar.town.*"))
 			groupNodes.add("siegewar.command.siegewar.town.*");
+		if (!groupNodes.contains("siegewar.command.siegewar.collect"))
+			groupNodes.add("siegewar.command.siegewar.collect");
+		if (!groupNodes.contains("siegewar.command.siegewar.listpeacefultowns"))
+			groupNodes.add("siegewar.command.siegewar.listpeacefultowns");
 		file.set("towns.mayor", groupNodes);
 		
 		// Add nodes to the town assistant rank.
