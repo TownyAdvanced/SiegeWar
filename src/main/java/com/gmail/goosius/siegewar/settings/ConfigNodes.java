@@ -854,6 +854,12 @@ public enum ConfigNodes {
 			"true",
 			"",
 			"# Should sessions be cancelled when there are no active sieges?"),
+	BATTLE_SESSION_SCHEDULER_ALLOWED_WEEKS(
+			"battle_session_scheduler.allowed_siege_battle_session_weeks",
+			"weekly",
+			"",
+			"# This setting allows siege battle sessions to be limited by week.",
+			"# Permitted values: weekly, odd-weeks-only, even-weeks-only"),
 	PVP_PROTECTION_OVERRIDES(
 			"pvp_protection_overrides",
 			"",

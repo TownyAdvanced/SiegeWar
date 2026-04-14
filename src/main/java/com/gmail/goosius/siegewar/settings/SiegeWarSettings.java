@@ -23,12 +23,15 @@ import org.jetbrains.annotations.Nullable;
 public class SiegeWarSettings {
 	
 	private static List<DayOfWeek> allowedDaysList = null;
-	private static String allowedWeeks = null;
+	private static String allowedWeeksStartSiege = null;
+	private static String allowedWeeksBattleSession = null;
 	private static List<Material> siegeZoneWildernessForbiddenBlockMaterials = null;
 	private static List<Material> siegeZoneWildernessForbiddenBucketMaterials = null;
 	private static List<EntityType> siegeZoneWildernessForbiddenExplodeEntityTypes = null;
 	protected static void resetCachedSettings() {
 		allowedDaysList = null;
+		allowedWeeksStartSiege = null;
+		allowedWeeksBattleSession = null;
 		siegeZoneWildernessForbiddenBlockMaterials = null;
 		siegeZoneWildernessForbiddenBucketMaterials = null;
 		siegeZoneWildernessForbiddenExplodeEntityTypes = null;
@@ -397,6 +400,10 @@ public class SiegeWarSettings {
 		return Settings.getString(ConfigNodes.SIEGE_START_DAY_LIMITER_ALLOWED_WEEKS);
 	}
 
+	public static String getBattleSessionSchedulerAllowedWeeks() {
+		return Settings.getString(ConfigNodes.BATTLE_SESSION_SCHEDULER_ALLOWED_WEEKS);
+	}
+
 	public static List<DayOfWeek> getSiegeStartDayLimiterAllowedDays() {
 		List<DayOfWeek> allowedDaysList = new ArrayList<>();
 		String[] allowedDaysStringArray = Settings.getString(ConfigNodes.SIEGE_START_DAY_LIMITER_ALLOWED_DAYS).toUpperCase(Locale.ROOT).replaceAll(" ", "").split(",");
@@ -411,13 +418,9 @@ public class SiegeWarSettings {
 	}
 
 	public static boolean doesTodayAllowASiegeToStart() {
-		//Check week of year
-		if(allowedWeeks == null)
-			allowedWeeks = getSiegeStartDayLimiterAllowedWeeks();
-		int weekOfYear = LocalDate.now().get(WeekFields.ISO.weekOfWeekBasedYear());
-		if(allowedWeeks.equalsIgnoreCase("even-weeks-only") && weekOfYear %2 != 0)
-			return false;
-		if(allowedWeeks.equalsIgnoreCase("odd-weeks-only") && weekOfYear %2 != 1)
+		if(allowedWeeksStartSiege == null)
+			allowedWeeksStartSiege = getSiegeStartDayLimiterAllowedWeeks();
+		if(!doesDateIsAllowedWeeks(LocalDate.now(), allowedWeeksStartSiege))
 			return false;
 
 		//Check day of week
@@ -427,6 +430,23 @@ public class SiegeWarSettings {
 			return false;
 
 		return true;
+	}
+
+	private static boolean doesDateIsAllowedWeeks(LocalDate date, String allowedWeeks) {
+		int weekOfYear = date.get(WeekFields.ISO.weekOfWeekBasedYear());
+		if(allowedWeeks.equalsIgnoreCase("even-weeks-only"))
+			return weekOfYear % 2 == 0;
+		if(allowedWeeks.equalsIgnoreCase("odd-weeks-only"))
+			return weekOfYear % 2 == 1;
+
+		return true;
+	}
+
+	private static int getBattleSessionSearchWindowDays() {
+		if (allowedWeeksBattleSession == null)
+			allowedWeeksBattleSession = getBattleSessionSchedulerAllowedWeeks();
+
+		return allowedWeeksBattleSession.equalsIgnoreCase("even-weeks-only") || allowedWeeksBattleSession.equalsIgnoreCase("odd-weeks-only") ? 14 : 7;
 	}
 
 	public static int getSiegeBalanceCapValue() {
@@ -452,8 +472,8 @@ public class SiegeWarSettings {
 	@Nullable
 	public static LocalDateTime getNextBattleSessionDaysInAdvance() {
 		LocalDateTime nextSession = null;
-		// Check the next 1-6 days for battle session start times. 
-		for (int i = 1 ; i < 7 ; i++) {
+		// Check the next 1-6 days for battle session start times. Or 1 to 13 days if even-weeks-only or odd-weeks-only.
+		for (int i = 1 ; i < getBattleSessionSearchWindowDays() ; i++) {
 			List<LocalDateTime> allBattleSessionStartTimesForDate = getAllBattleSessionStartTimesForDay(LocalDate.now().plusDays(i));
 			if (allBattleSessionStartTimesForDate.size() != 0) {
 				nextSession = allBattleSessionStartTimesForDate.get(0);
@@ -464,6 +484,12 @@ public class SiegeWarSettings {
 	}
 
 	private static List<LocalDateTime> getAllBattleSessionStartTimesForDay(LocalDate day) {
+		if(allowedWeeksBattleSession == null)
+			allowedWeeksBattleSession = getBattleSessionSchedulerAllowedWeeks();
+		
+		if(!doesDateIsAllowedWeeks(day, allowedWeeksBattleSession))
+			return new ArrayList<>();
+
 		//Get Start times for the given day
 		String startTimesAsString = "";
 		switch (day.getDayOfWeek()) {
