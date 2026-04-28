@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.playeractions;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.enums.SiegeWarPermissionNodes;
@@ -62,7 +63,7 @@ public class PlayerDeath {
 		try {
 			Resident deadResident = TownyUniverse.getInstance().getResident(deadPlayer.getUniqueId());
 			// Weed out invalid residents, residents without a town, and players who cannot collect Points in a Siege.
-			if (deadResident == null || !deadResident.hasTown() || playerIsMissingSiegePointsNodes(deadPlayer))
+			if (deadResident == null || !deadResident.hasTown() || playerIsMissingSiegePointsNodes(deadPlayer) || TownOccupationController.isResidentInAnOccupiedTown(deadResident))
 				return;
 
 			Town deadResidentTown = deadResident.getTownOrNull();

@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
 import com.gmail.goosius.siegewar.events.BannerControlSessionEndedEvent;
@@ -161,7 +162,10 @@ public class SiegeWarBannerControlUtil {
 			return false; //Player is a nomad
 
 		if (SiegeWarTownPeacefulnessUtil.isTownPeaceful(resident.getTownOrNull())) 
-			return false; //Player if from a peaceful town
+			return false; //Player is from a peaceful town
+
+		if (TownOccupationController.isResidentInAnOccupiedTown(resident)) 
+			return false; //Player is from an occupied town
 
 		if(player.isFlying() || player.isGliding())
 			return false;   // Player is flying
