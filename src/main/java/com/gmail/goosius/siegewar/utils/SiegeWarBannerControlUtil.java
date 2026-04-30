@@ -164,7 +164,7 @@ public class SiegeWarBannerControlUtil {
 		if (SiegeWarTownPeacefulnessUtil.isTownPeaceful(resident.getTownOrNull())) 
 			return false; //Player is from a peaceful town
 
-		if (TownOccupationController.isResidentInAnOccupiedTown(resident)) 
+		if (SiegeWarSettings.getWarCommonOccupiedTownBattleParticipationDisabled() && TownOccupationController.isResidentInAnOccupiedTown(resident)) 
 			return false; //Player is from an occupied town
 
 		if(player.isFlying() || player.isGliding())
