@@ -3,6 +3,7 @@ package com.gmail.goosius.siegewar.enums;
 import org.bukkit.entity.Player;
 
 import com.gmail.goosius.siegewar.objects.Siege;
+import com.gmail.goosius.siegewar.utils.SiegeWarTownPeacefulnessUtil;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Government;
 import com.palmergames.bukkit.towny.object.Nation;
@@ -67,6 +68,8 @@ public enum SiegeSide {
 			// The government-to-check is a nation
 			return nation == governmentToCheck || nation.hasMutualAlly((Nation) governmentToCheck);
 		} else if (((Town) governmentToCheck).hasNation()) {
+			if (SiegeWarTownPeacefulnessUtil.isTownPeaceful(residentTown))
+				return false;
 			// The government-to-check is a nation town
 			return nation.hasTown((Town) governmentToCheck)
 					|| nation.hasMutualAlly(((Town) governmentToCheck).getNationOrNull());
