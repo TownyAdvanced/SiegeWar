@@ -670,8 +670,8 @@ public enum ConfigNodes {
 			"occupied_towns.occupied_town_battle_participation_disabled",
 			"true",
 			"",
-			"# By default, military ranks are removed from occupied residents, however mayors can still attend battle sessions, since they have permission siegewar.town.siege.battle.points.",
-			"# If this value is true, then all occupied residents cannot gain or lose points at battle sessions, regardless of whether or not they have battle points permissions.",
+			"# SiegeWar removes military ranks from occupied residents, however mayors can still attend battle sessions, since they have permission siegewar.town.siege.battle.points. To keep this behaviour set this config setting to false.",
+			"# If this value is true, then all occupied residents (including the mayor,) cannot gain or lose points at battle sessions, regardless of whether or not they have battle points permissions.",
 			"#  This setting is recommended, to avoid occupation escape by purposeful war loss."),
 	PUNISH_NON_SIEGE_PARTICIPANTS_IN_SIEGE_ZONE(
 			"punish_non_siege_participants_in_siege_zones",
