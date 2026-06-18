@@ -594,6 +594,10 @@ public class SiegeWarSettings {
 		return Settings.getDouble(ConfigNodes.WAR_SIEGE_TOWN_PEACEFULNESS_COST);
 	}
 
+	public static boolean getTownPeacefulnessCostUseTownLevels() {
+		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_TOWN_PEACEFULNESS_COST_USE_TOWN_LEVELS);
+	}
+
 	public static boolean isKeepInventoryOnSiegeZoneDeathEnabled() {
 		return Settings.getBoolean(ConfigNodes.KEEP_INVENTORY_ON_SIEGEZONE_DEATH_ENABLED);
 	}

@@ -242,7 +242,15 @@ public enum ConfigNodes {
 			"# The cost that a town must pay to remain peaceful. Disabled when set to 0.0.",
 			"# This cost is paid after a town pays their upkeep and has their days-to-peaceful-change counted.",
 			"# If a town cannot pay the peaceful cost after they have their peaceful setting changed back to false."),
-	
+	WAR_SIEGE_TOWN_PEACEFULNESS_COST_USE_TOWN_LEVELS(
+			"war.siege.money.town_peacefulness_daily_cost_use_town_levels",
+			"false",
+			"",
+			"# When true, the town_peacefulness_daily_cost is multiplied by the town's level number.",
+			"# This scales the peaceful cost so that larger towns pay proportionally more.",
+			"# Example: if town_peacefulness_daily_cost is 100 and a town is level 3, the daily cost is 300.",
+			"# Has no effect when town_peacefulness_daily_cost is 0.0."),
+
 	WAR_SIEGE_QUANTITIES(
 			"war.siege.quantities",
 			"",
