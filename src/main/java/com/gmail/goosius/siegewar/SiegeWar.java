@@ -21,8 +21,6 @@ import com.palmergames.bukkit.towny.scheduling.impl.FoliaTaskScheduler;
 import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.Version;
 
-import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-
 import com.gmail.goosius.siegewar.command.SiegeWarAdminCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarCommand;
 import com.gmail.goosius.siegewar.command.SiegeWarNationSetOccupationTaxAddonCommand;
@@ -164,8 +162,7 @@ public class SiegeWar extends JavaPlugin {
 			}
 			if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
 				info("SiegeWar found PlaceholderAPI plugin, enabling PAPI support.");
-				PlaceholderExpansion expansion = new PAPIPlaceholderExpansion();
-				expansion.register();
+				new PAPIPlaceholderExpansion().register();
 			}
 		}
 	}
