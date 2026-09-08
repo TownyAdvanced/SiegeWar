@@ -233,8 +233,7 @@ public class SiegeWarTownPeacefulnessUtil {
 	}
 
 	public static void chargeForPeacefulTowns() {
-		double townPeacefulnessCost = SiegeWarSettings.getTownPeacefulnessCost();
-		if (townPeacefulnessCost <= 0.0)
+		if (SiegeWarSettings.getTownPeacefulnessCost() <= 0.0)
 			return;
 		TownyAPI.getInstance().getTowns().stream()
 			.filter(SiegeWarTownPeacefulnessUtil::isTownPeaceful)
@@ -243,11 +242,18 @@ public class SiegeWarTownPeacefulnessUtil {
 
 		TownyAPI.getInstance().getTowns().stream()
 			.filter(SiegeWarTownPeacefulnessUtil::isTownPeaceful)
-			.forEach(t-> t.getAccount().withdraw(townPeacefulnessCost, "Daily SiegeWar peaceful cost."));
+			.forEach(t -> t.getAccount().withdraw(getPeacefulnessCostForTown(t), "Daily SiegeWar peaceful cost."));
+	}
+
+	public static double getPeacefulnessCostForTown(Town town) {
+		double baseCost = SiegeWarSettings.getTownPeacefulnessCost();
+		if (SiegeWarSettings.getTownPeacefulnessCostUseTownLevels())
+			return baseCost * town.getLevelNumber();
+		return baseCost;
 	}
 
 	private static boolean cannotAffordPeacefulNess(Town town) {
-		return !town.getAccount().canPayFromHoldings(SiegeWarSettings.getTownPeacefulnessCost());
+		return !town.getAccount().canPayFromHoldings(getPeacefulnessCostForTown(town));
 	}
 
 	private static void removePeacefulness(Town town) {
