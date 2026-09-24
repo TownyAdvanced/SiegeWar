@@ -80,8 +80,10 @@ public class ResidentMetaDataController {
 
 	public static void setBoolean(Resident resident, String key, boolean bool) {
 		if (resident.hasMeta(key)) {
-			if (bool == false)
+			if (bool == false) {
 				resident.removeMetaData(resident.getMetadata(key));
+				resident.save();
+			}
 			else {
 				CustomDataField<?> cdf = resident.getMetadata(key);
 				if (cdf instanceof BooleanDataField) {
@@ -92,6 +94,7 @@ public class ResidentMetaDataController {
 			}
 		} else if (bool)
 			resident.addMetaData(new BooleanDataField(key, bool));
+			resident.save();
 	}
 
 	public static boolean getBoolean(Resident resident, String key) {
