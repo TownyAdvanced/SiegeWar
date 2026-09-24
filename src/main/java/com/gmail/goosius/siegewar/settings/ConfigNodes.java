@@ -268,6 +268,16 @@ public enum ConfigNodes {
 		"",
 			"# When true, the above `max_active_siege_attacks_per_nation` is multiplied by the nations NationLevel number to calculate the maximum number of sieges for a nation.",
 			"# For example: if `max_active_siege_attacks_per_nation` is 3 and the nation's NationLevel is 2 then the nation in question can have up to 6 sieges."),			
+	WAR_SIEGE_MAX_ACTIVE_SIEGE_ATTACKS_PER_NATION_PER_LEVEL(
+			"war.siege.quantities.max_active_siege_attacks_per_nation_per_level",
+			"",
+			"",
+			"# Each nation can have a different maximum number of active siege attacks.",
+			"# The value is a comma-separated list of pairs of nation-levels and maximum number of active siege attacks per nation for that level.",
+			"# If no value is define for a nation level, it use max_active_siege_attacks_per_nation.",
+			"# max_active_siege_attacks_per_nation_use_levels has to be true for this to have an effect.",
+			"# For example to get 1 siege per nation level and 10 with the last level (Nation levels start at 0, but we started at 1):",
+			"# \"0:1,1:2,2:3,3:4,4:5,5:6,6:10\""),
 	WAR_SIEGE_SIEGECAMPS(
             "war.siege.siege_assemblies",
             "",

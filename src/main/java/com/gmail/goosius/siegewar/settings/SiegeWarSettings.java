@@ -5,7 +5,7 @@ import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
-
+import java.util.Map;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
@@ -28,6 +28,7 @@ public class SiegeWarSettings {
 	private static List<Material> siegeZoneWildernessForbiddenBlockMaterials = null;
 	private static List<Material> siegeZoneWildernessForbiddenBucketMaterials = null;
 	private static List<EntityType> siegeZoneWildernessForbiddenExplodeEntityTypes = null;
+	private static Map<Integer, Integer> maxActiveSiegeAttacksPerNationPerLevel = null;
 	protected static void resetCachedSettings() {
 		allowedDaysList = null;
 		allowedWeeksStartSiege = null;
@@ -35,6 +36,7 @@ public class SiegeWarSettings {
 		siegeZoneWildernessForbiddenBlockMaterials = null;
 		siegeZoneWildernessForbiddenBucketMaterials = null;
 		siegeZoneWildernessForbiddenExplodeEntityTypes = null;
+		maxActiveSiegeAttacksPerNationPerLevel = null;
 	}
 
 	public static boolean getWarSiegeEnabled() {
@@ -173,9 +175,16 @@ public class SiegeWarSettings {
 		return Settings.getBoolean(ConfigNodes.WAR_SIEGE_MAX_ACTIVE_SIEGE_ATTACKS_PER_NATION_USE_LEVELS);
 	}
 
+	public static int getWarSiegeMaxActiveSiegeAttacksPerNation(Nation nation) {
+		if(maxActiveSiegeAttacksPerNationPerLevel == null) {
+			maxActiveSiegeAttacksPerNationPerLevel = Settings.getMapIntegerInteger(ConfigNodes.WAR_SIEGE_MAX_ACTIVE_SIEGE_ATTACKS_PER_NATION_PER_LEVEL);
+		}
+		return maxActiveSiegeAttacksPerNationPerLevel.getOrDefault(nation.getLevelNumber(), getWarSiegeMaxActiveSiegeAttacksPerNation());
+	}
+
 	public static boolean doesThisNationHaveTooManyActiveSieges(Nation nation) {
 		int multiplier = getWarSiegeMaxActiveSiegeAttacksPerNationUseLevels() ? nation.getLevelNumber() : 1;
-		int maxAllowedSieges = (multiplier * getWarSiegeMaxActiveSiegeAttacksPerNation());
+		int maxAllowedSieges = (multiplier * getWarSiegeMaxActiveSiegeAttacksPerNation(nation));
 		return SiegeController.getNumActiveConquestAttackSieges(nation) >= maxAllowedSieges;
 	}
 
