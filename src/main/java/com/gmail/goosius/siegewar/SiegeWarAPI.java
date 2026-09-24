@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
@@ -417,5 +418,62 @@ public class SiegeWarAPI {
 	 */
 	public static Set<Player> getPlayersInBannerControlSessions() {
 		return SiegeController.getPlayersInBannerControlSessions();
+	}
+
+	/**
+	 * @return the siege's stable UUID, assigned at creation or loaded from metadata.
+	 */
+	public static @NotNull UUID getSiegeUUID(@NotNull Siege siege) {
+		return siege.getUUID();
+	}
+
+	/**
+	 * @return when the siege started in epoch milliseconds, or the migration time for legacy sieges.
+	 */
+	public static long getSiegeStartedAtMillis(@NotNull Siege siege) {
+		return siege.getStartedAtMillis();
+	}
+
+	/**
+	 * @return when the siege ended in epoch milliseconds, or 0 if not ended or unknown.
+	 */
+	public static long getSiegeEndedAtMillis(@NotNull Siege siege) {
+		return siege.getEndedAtMillis();
+	}
+
+	/**
+	 * @return the loaded siege with the given UUID, or null if not found.
+	 */
+	@Nullable
+	public static Siege getSiegeByUUIDOrNull(@NotNull UUID siegeUUID) {
+		for (Siege siege : getSieges()) {
+			if (siegeUUID.equals(siege.getUUID()))
+				return siege;
+		}
+		return null;
+	}
+
+	public static @NotNull Optional<Siege> getSiegeByUUID(@NotNull UUID siegeUUID) {
+		return Optional.ofNullable(getSiegeByUUIDOrNull(siegeUUID));
+	}
+
+	/**
+	 * @return the active siege with the given UUID, or null if not found.
+	 */
+	@Nullable
+	public static Siege getActiveSiegeByUUIDOrNull(@NotNull UUID siegeUUID) {
+		Siege siege = getSiegeByUUIDOrNull(siegeUUID);
+		return (siege != null && isActive(siege)) ? siege : null;
+	}
+
+	public static @NotNull Optional<Siege> getActiveSiegeByUUID(@NotNull UUID siegeUUID) {
+		return Optional.ofNullable(getActiveSiegeByUUIDOrNull(siegeUUID));
+	}
+
+	/**
+	 * @return all active sieges.
+	 */
+	public static @NotNull List<Siege> getActiveSieges() {
+		return getSieges().stream().filter(SiegeWarAPI::isActive).collect(Collectors.toList());
 	}
 }

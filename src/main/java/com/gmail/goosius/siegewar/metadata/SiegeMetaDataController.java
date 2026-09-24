@@ -43,6 +43,9 @@ public class SiegeMetaDataController {
 	private static BooleanDataField townPlundered = new BooleanDataField("siegewar_townPlundered", false);
 	private static BooleanDataField townInvaded = new BooleanDataField("siegewar_townInvaded", false);
 	private static IntegerDataField numBattleSessionsCompleted = new IntegerDataField("siegewar_numBattleSessionsCompleted", 0);
+	private static StringDataField siegeUUID = new StringDataField("siegewar_siegeUUID", "");
+	private static DecimalDataField siegeStartedAtMillis = new DecimalDataField("siegewar_startedAtMillis", 0.0);
+	private static DecimalDataField siegeEndedAtMillis = new DecimalDataField("siegewar_endedAtMillis", 0.0);
 	
 	public SiegeMetaDataController(SiegeWar plugin) {
 		this.plugin = plugin;
@@ -289,6 +292,56 @@ public class SiegeMetaDataController {
 			town.addMetaData(new IntegerDataField("siegewar_numBattleSessionsCompleted", num));
 	}
 
+	public static boolean hasSiegeUUID(Town town) {
+		return town.hasMeta(siegeUUID.getKey());
+	}
+
+	@Nullable
+	public static String getSiegeUUID(Town town) {
+		StringDataField sdf = (StringDataField) siegeUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			return MetaDataUtil.getString(town, sdf);
+		return null;
+	}
+
+	public static void setSiegeUUID(Town town, String uuid) {
+		StringDataField sdf = (StringDataField) siegeUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			MetaDataUtil.setString(town, sdf, uuid, true);
+		else
+			town.addMetaData(new StringDataField("siegewar_siegeUUID", uuid));
+	}
+
+	public static long getSiegeStartedAtMillis(Town town) {
+		DecimalDataField ddf = (DecimalDataField) siegeStartedAtMillis.clone();
+		if (town.hasMeta(ddf.getKey()))
+			return (long) MetaDataUtil.getDouble(town, ddf);
+		return 0L;
+	}
+
+	public static void setSiegeStartedAtMillis(Town town, long millis) {
+		DecimalDataField ddf = (DecimalDataField) siegeStartedAtMillis.clone();
+		if (town.hasMeta(ddf.getKey()))
+			MetaDataUtil.setDouble(town, ddf, (double) millis, true);
+		else
+			town.addMetaData(new DecimalDataField("siegewar_startedAtMillis", (double) millis));
+	}
+
+	public static long getSiegeEndedAtMillis(Town town) {
+		DecimalDataField ddf = (DecimalDataField) siegeEndedAtMillis.clone();
+		if (town.hasMeta(ddf.getKey()))
+			return (long) MetaDataUtil.getDouble(town, ddf);
+		return 0L;
+	}
+
+	public static void setSiegeEndedAtMillis(Town town, long millis) {
+		DecimalDataField ddf = (DecimalDataField) siegeEndedAtMillis.clone();
+		if (town.hasMeta(ddf.getKey()))
+			MetaDataUtil.setDouble(town, ddf, (double) millis, true);
+		else
+			town.addMetaData(new DecimalDataField("siegewar_endedAtMillis", (double) millis));
+	}
+
 	public static void removeSiegeMeta (Town town) {
 		StringDataField sdf = (StringDataField) siegeName.clone();
 		if (town.hasMeta(sdf.getKey()))
@@ -323,6 +376,10 @@ public class SiegeMetaDataController {
 		if (town.hasMeta(sdf.getKey()))
 			town.removeMetaData(sdf);
 
+		sdf = (StringDataField) siegeUUID.clone();
+		if (town.hasMeta(sdf.getKey()))
+			town.removeMetaData(sdf);
+
 		IntegerDataField idf = (IntegerDataField) siegeBalance.clone();
 		if (town.hasMeta(idf.getKey()))
 			town.removeMetaData(idf);
@@ -334,6 +391,12 @@ public class SiegeMetaDataController {
 			town.removeMetaData(idf);
 
 		DecimalDataField ddf = (DecimalDataField) siegeWarChestAmount.clone();
+		if (town.hasMeta(ddf.getKey()))
+			town.removeMetaData(ddf);
+		ddf = (DecimalDataField) siegeStartedAtMillis.clone();
+		if (town.hasMeta(ddf.getKey()))
+			town.removeMetaData(ddf);
+		ddf = (DecimalDataField) siegeEndedAtMillis.clone();
 		if (town.hasMeta(ddf.getKey()))
 			town.removeMetaData(ddf);
 

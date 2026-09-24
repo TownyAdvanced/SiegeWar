@@ -80,6 +80,11 @@ public class SiegeController {
 
 	public static void saveSiege(Siege siege) {
 		Town town = siege.getTown();
+		if (siege.getStartedAtMillis() <= 0L)
+			siege.setStartedAtMillis(System.currentTimeMillis());
+		SiegeMetaDataController.setSiegeUUID(town, siege.getUUID().toString());
+		SiegeMetaDataController.setSiegeStartedAtMillis(town, siege.getStartedAtMillis());
+		SiegeMetaDataController.setSiegeEndedAtMillis(town, siege.getEndedAtMillis());
 		SiegeMetaDataController.setTownUUID(town, siege.getTown().getUUID().toString());
 		SiegeMetaDataController.setAttackerUUID(town, siege.getAttacker().getUUID().toString());
 		SiegeMetaDataController.setDefenderUUID(town, siege.getDefender().getUUID().toString());
@@ -151,6 +156,36 @@ public class SiegeController {
 		//Town will be already loaded
 		Town town = siege.getTown();
 
+		boolean needsResave = false;
+		try {
+			String uuid = SiegeMetaDataController.getSiegeUUID(town);
+			if (uuid == null || uuid.isEmpty()) {
+				siege.setUUID(UUID.randomUUID());
+				needsResave = true;
+			} else {
+				siege.setUUID(UUID.fromString(uuid));
+			}
+		} catch (Exception ex) {
+			siege.setUUID(UUID.randomUUID());
+			needsResave = true;
+		}
+
+		long startedAt = 0L;
+		try {
+			startedAt = SiegeMetaDataController.getSiegeStartedAtMillis(town);
+		} catch (Exception ignored) {
+		}
+		if (startedAt <= 0L) {
+			// Legacy records have no historical start time; use the migration time.
+			startedAt = System.currentTimeMillis();
+			needsResave = true;
+		}
+		siege.setStartedAtMillis(startedAt);
+		try {
+			siege.setEndedAtMillis(Math.max(0L, SiegeMetaDataController.getSiegeEndedAtMillis(town)));
+		} catch (Exception ignored) {
+		}
+
 		//Load siege type
 		String siegeTypeString = SiegeMetaDataController.getSiegeType(town);
 		if (siegeTypeString== null || siegeTypeString.isEmpty())
@@ -211,6 +246,9 @@ public class SiegeController {
 		siege.setWarChestAmount(SiegeMetaDataController.getWarChestAmount(town));
 		siege.setTownPlundered(SiegeMetaDataController.townPlundered(town));
 		siege.setTownInvaded(SiegeMetaDataController.townInvaded(town));
+
+		if (needsResave)
+			saveSiege(siege);
 
 		return true;
 	}
