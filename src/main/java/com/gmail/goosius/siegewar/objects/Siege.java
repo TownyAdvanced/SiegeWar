@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * This class represents a "Siege".
@@ -40,6 +41,9 @@ import java.util.Map;
  * @author Goosius
  */
 public class Siege {
+	private UUID uuid;
+	private long startedAtMillis;
+	private long endedAtMillis;
 	private SiegeType siegeType;
 	private Town town;
 	private Government attacker; //Always the attacking nation
@@ -66,6 +70,8 @@ public class Siege {
 
 	public Siege(Town town) {
 		this.town = town;
+		this.uuid = UUID.randomUUID();
+		this.startedAtMillis = System.currentTimeMillis();
         siegeType = null;
         attacker = null;
         defender = null;
@@ -90,6 +96,31 @@ public class Siege {
     public Town getTown() {
         return town;
     }
+
+	public UUID getUUID() {
+		return uuid;
+	}
+
+	public void setUUID(UUID uuid) {
+		if (uuid == null) throw new IllegalArgumentException("UUID cannot be null");
+		this.uuid = uuid;
+	}
+
+	public long getStartedAtMillis() {
+		return startedAtMillis;
+	}
+
+	public void setStartedAtMillis(long startedAtMillis) {
+		this.startedAtMillis = startedAtMillis;
+	}
+
+	public long getEndedAtMillis() {
+		return endedAtMillis;
+	}
+
+	public void setEndedAtMillis(long endedAtMillis) {
+		this.endedAtMillis = endedAtMillis;
+	}
 	
 	public void setStatus(SiegeStatus status) {
         this.status = status;
