@@ -6,6 +6,7 @@ import com.gmail.goosius.siegewar.SiegeWar;
 import com.gmail.goosius.siegewar.TownOccupationController;
 import com.gmail.goosius.siegewar.enums.SiegeSide;
 import com.gmail.goosius.siegewar.enums.SiegeStatus;
+import com.gmail.goosius.siegewar.events.BannerControlPointsEvent;
 import com.gmail.goosius.siegewar.events.BannerControlSessionEndedEvent;
 import com.gmail.goosius.siegewar.events.BannerControlSessionPreStartEvent;
 import com.gmail.goosius.siegewar.events.BannerControlSessionStartedEvent;
@@ -298,18 +299,24 @@ public class SiegeWarBannerControlUtil {
 
 		//Award battle points
 		int battlePoints = 0;
+		int sessionNumber = Math.min(siege.getNumBattleSessionsCompleted() + 1,
+				SiegeWarSettings.getSiegeDurationBattleSessions());
 		switch(siege.getBannerControllingSide()) {
 			case ATTACKERS:
 				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarBattlePointsForAttackerOccupation();
 				if(siege.getNumberOfBannerControlReversals() > 0)
 					battlePoints *= siege.getNumberOfBannerControlReversals() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor();
 				siege.adjustAttackerBattlePoints(battlePoints);
+				Bukkit.getPluginManager().callEvent(new BannerControlPointsEvent(siege,
+						siege.getBannerControllingSide(), siege.getBannerControllingResidents().size(), battlePoints, sessionNumber));
 			break;
 			case DEFENDERS:
 				battlePoints = siege.getBannerControllingResidents().size() * SiegeWarSettings.getWarBattlePointsForDefenderOccupation();
 				if(siege.getNumberOfBannerControlReversals() > 0)
 					battlePoints *= siege.getNumberOfBannerControlReversals() * SiegeWarSettings.getWarSiegeBannerControlReversalBonusFactor();
 				siege.adjustDefenderBattlePoints(battlePoints);
+				Bukkit.getPluginManager().callEvent(new BannerControlPointsEvent(siege,
+						siege.getBannerControllingSide(), siege.getBannerControllingResidents().size(), battlePoints, sessionNumber));
 			break;
 			default:
 		}
