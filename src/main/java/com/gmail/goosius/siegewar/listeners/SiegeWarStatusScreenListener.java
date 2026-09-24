@@ -157,6 +157,8 @@ public class SiegeWarStatusScreenListener implements Listener {
 							.append(TownyComponents.miniMessage(hoverFormat(translator.of("status_nation_hover_title_sieges")))
 							.hoverEvent(HoverEvent.showText(hoverText))));
 			}
+
+			event.getStatusScreen().addComponentOf("siegeWar_startedSiege", TownyFormatter.colourKeyValue(translator.of("sw_started_siege"), SiegeController.getNumActiveConquestAttackSieges(nation) + "/" +SiegeWarSettings.getWarSiegeMaxActiveSiegeAttacksPerNation(nation)));
 		}
 	}
 	
