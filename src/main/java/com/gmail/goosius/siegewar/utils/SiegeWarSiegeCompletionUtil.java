@@ -20,6 +20,8 @@ public class SiegeWarSiegeCompletionUtil {
 	 */
 	public static void setCommonSiegeCompletionValues(Siege siege) {
 		//Update values
+		if (siege.getEndedAtMillis() <= 0L)
+			siege.setEndedAtMillis(System.currentTimeMillis());
 		SiegeWarImmunityUtil.grantSiegeImmunityAfterEndedSiege(siege.getTown());
 		SiegeWarImmunityUtil.grantRevoltImmunityAfterEndedSiege(siege.getTown());
 		CosmeticUtil.removeFakeBeacons(siege);
