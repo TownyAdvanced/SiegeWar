@@ -272,7 +272,7 @@ public enum ConfigNodes {
 			"war.siege.quantities.max_active_siege_attacks_per_nation_per_level",
 			"",
 			"",
-			"# This setting requires the above max_active_siege_attacks_per_nation_use_levels setting to be true.",
+			"# This setting requires the above max_active_siege_attacks_per_nation_use_levels setting to be false.",
 			"# This setting will allow a more complicated system than just max sieges = nation_level * max_active_siege_attacks_per_nation.",
 			"# The setting value must be a comma-separated list of pairs of nation_level number and maximum number of active siege attacks per nation for that level.",
 			"# If no value is defined for a nation level, it uses the  max_active_siege_attacks_per_nation value.",
