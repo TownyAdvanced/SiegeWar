@@ -176,19 +176,23 @@ public class SiegeWarSettings {
 	}
 
 	public static int getWarSiegeMaxActiveSiegeAttacksPerNation(Nation nation) {
-		if(maxActiveSiegeAttacksPerNationPerLevel == null) {
+		int defaultSiegePerNation = getWarSiegeMaxActiveSiegeAttacksPerNation();
+		
+		if (getWarSiegeMaxActiveSiegeAttacksPerNationUseLevels()) {
+			return nation.getLevelNumber() * defaultSiegePerNation;
+		}
+		if (maxActiveSiegeAttacksPerNationPerLevel == null) {
 			maxActiveSiegeAttacksPerNationPerLevel = Settings.getMapIntegerInteger(ConfigNodes.WAR_SIEGE_MAX_ACTIVE_SIEGE_ATTACKS_PER_NATION_PER_LEVEL);
 		}
-		return maxActiveSiegeAttacksPerNationPerLevel.getOrDefault(nation.getLevelNumber(), getWarSiegeMaxActiveSiegeAttacksPerNation());
+		if (maxActiveSiegeAttacksPerNationPerLevel.isEmpty()) {
+			return defaultSiegePerNation;
+		} else {
+			return maxActiveSiegeAttacksPerNationPerLevel.getOrDefault(nation.getLevelNumber(), defaultSiegePerNation);
+		}
 	}
 
 	public static boolean doesThisNationHaveTooManyActiveSieges(Nation nation) {
-		int maxAllowedSieges;
-		if (getWarSiegeMaxActiveSiegeAttacksPerNationUseLevels()) {
-			maxAllowedSieges = nation.getLevelNumber() * getWarSiegeMaxActiveSiegeAttacksPerNation();
-		} else {
-			maxAllowedSieges = getWarSiegeMaxActiveSiegeAttacksPerNation(nation);
-		}
+		int maxAllowedSieges = getWarSiegeMaxActiveSiegeAttacksPerNation(nation);
 		return SiegeController.getNumActiveConquestAttackSieges(nation) >= maxAllowedSieges;
 	}
 
