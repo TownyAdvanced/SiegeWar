@@ -20,6 +20,7 @@ public class ResidentMetaDataController {
 	private static IntegerDataField nationRefund = new IntegerDataField("siegewar_nationrefund", 0, "Nation Refund");
 	static String beaconsDisabled = "siegewar_beaconsdisabled";
 	static String bossBarsDisabled = "siegewar_bossBarsdisabled";
+	static String notificationsDisabled = "siegewar_notificationsdisabled";
 	private static IntegerDataField legacy_plunder = new IntegerDataField("siegewar_plunder", 0); //Field no longer in use
 	private static StringDataField legacyRecentBattleSessions = new StringDataField("siegewar_recentbattlesessions", "");
 
@@ -120,6 +121,14 @@ public class ResidentMetaDataController {
 
 	public static boolean getBossBarsDisabled(Resident resident) {
 		return getBoolean(resident, bossBarsDisabled);
+	}
+
+	public static void setNotificationsDisabled(Resident resident, boolean disabled) {
+		setBoolean(resident, notificationsDisabled, disabled);
+	}
+
+	public static boolean getNotificationsDisabled(Resident resident) {
+		return getBoolean(resident, notificationsDisabled);
 	}
 
 	public static int getNationRefundAmount(Resident resident) {
