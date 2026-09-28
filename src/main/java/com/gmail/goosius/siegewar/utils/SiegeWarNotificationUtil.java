@@ -3,10 +3,11 @@ package com.gmail.goosius.siegewar.utils;
 import com.gmail.goosius.siegewar.Messaging;
 import com.gmail.goosius.siegewar.SiegeController;
 import com.gmail.goosius.siegewar.SiegeWar;
+import com.gmail.goosius.siegewar.metadata.ResidentMetaDataController;
 import com.gmail.goosius.siegewar.objects.Siege;
 import com.gmail.goosius.siegewar.settings.SiegeWarSettings;
-import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.palmergames.bukkit.towny.object.Translatable;
 
@@ -113,15 +114,22 @@ public class SiegeWarNotificationUtil {
 			}
 
 			//Inform required towns and nations
+			Set<Resident> residentsToInform = new HashSet<>();
 			for(Nation nationToInform: nationsToInform) {
-				for (Translatable line : message) 
-					if (line != null)
-						TownyMessaging.sendPrefixedNationMessage(nationToInform, line);
+				residentsToInform.addAll(nationToInform.getResidents());
 			}
 			for(Town townToInform: townsToInform) {
+				residentsToInform.addAll(townToInform.getResidents());
+			}
+			for (Resident resident : residentsToInform) {
+				if (ResidentMetaDataController.getNotificationsDisabled(resident))
+					continue;
+				Player player = resident.getPlayer();
+				if (player == null || !player.isOnline())
+					continue;
 				for (Translatable line : message)
 					if (line != null)
-						TownyMessaging.sendPrefixedTownMessage(townToInform, line);
+						Messaging.sendMsg(player, line);
 			}
 
 		} catch (Exception e) {
