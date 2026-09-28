@@ -5,10 +5,13 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import java.util.stream.Collectors;
 import org.bukkit.plugin.Plugin;
 
 import com.gmail.goosius.siegewar.SiegeWar;
@@ -240,5 +243,34 @@ public class Settings {
 			result.add(matcher.group(1));	
 		}
 		return result;
-	}	
+	}
+
+	public static Map<Integer, Integer> getMapIntegerInteger(ConfigNodes node) {
+		return getMapIntegerInteger(getString(node));
+	}
+	
+	public static Map<Integer, Integer> getMapIntegerInteger(String input) {
+		if (input == null || input.isBlank()) {
+			return new HashMap<>();
+		}
+
+		return Arrays.stream(input.split(","))
+				.map(String::trim)
+				.map(entry -> entry.split(":", 2))
+				.filter(parts -> parts.length == 2)
+				.filter(parts -> {
+					try {
+						Integer.parseInt(parts[0].trim());
+						Integer.parseInt(parts[1].trim());
+						return true;
+					} catch (NumberFormatException e) {
+						return false;
+					}
+				})
+				.collect(Collectors.toMap(
+						parts -> Integer.parseInt(parts[0].trim()),
+						parts -> Integer.parseInt(parts[1].trim()),
+						(existing, replacement) -> replacement
+				));
+	}
 }
