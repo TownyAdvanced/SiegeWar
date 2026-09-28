@@ -557,3 +557,5 @@ status_town_occupied_home_nation: "&2母国: &a%s"
 msg_err_cannot_merge_towns_without_same_occupier: '&c被占领的城镇不能被合并，除非这两个城镇具有同样的占领国。'
 sw_command_help_list_peaceful_towns: '列出现存所有和平城镇。'
 sw_peaceful_towns_title: '和平城镇'
+#Added in 3.6.3
+msg_notifications_preference_set: "&bNotifications preference set to %s."
