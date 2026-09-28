@@ -22,9 +22,9 @@ msg_err_resident_town_is_not_sieged: "该居民的城镇未被围攻。"
 msg_err_town_is_not_sieged: "该城镇未被围攻。"
 #Added in (Siegewar version)
 #Siege war happy-path messages
-msg_siege_war_attack_pay_war_chest: '&b一笔军费开支已经由%s准备，其价值为%s。任何赢得围攻的一方都会得到这笔钱。'
-msg_siege_war_attack_recover_war_chest: '&b军费开支已被%s收回，其值为%s。'
-msg_siege_war_attack_partially_recover_war_chest: '&b军费开支已被%s部分收回，其值为%s。'
+msg_siege_war_attack_pay_war_chest: '&b围攻战争奖励箱已经由%s准备完毕，其价值为%s。任何赢得围攻的一方都会得到这笔钱。'
+msg_siege_war_attack_recover_war_chest: '&b战争奖励箱已被%s收取，其值为%s。'
+msg_siege_war_attack_partially_recover_war_chest: '&b战争奖励箱已被%s部分收取，其值为%s。'
 msg_siege_war_neutral_town_plundered: '&b%s的掠夺税%s已被%s征缴！'
 msg_siege_war_nation_town_plundered: '&b%s的掠夺税%s已被%s征缴！'
 msg_siege_war_town_ruined_from_plunder: '&b%s因无力支付%s所设置的掠夺税而沦为废墟！'
@@ -135,7 +135,7 @@ msg_beacon_preference_set: "&b旗帜信标光束偏好设置为 %s"
 msg_na: '不可用'
 #Town screen
 status_town_siege_status_siege_balance: '&2 > 围攻分数: &a%d'
-status_town_siege_status_warchest: '&2 > 军费开支: &a%s'
+status_town_siege_status_warchest: '&2 > 战争奖励箱: &a%s'
 #Battle sessions
 status_town_siege_battle: '&2战况:'
 status_town_siege_battle_time_remaining: '&2 > 剩余时间: &a%s'
@@ -148,7 +148,7 @@ msg_war_siege_battle_session_ended_draw_result: "&b * 平局@ %s (0)"
 msg_war_siege_battle_session_break_cannot_get_banner_control: "&c在下次战斗回合开始之前无法控制旗帜。下一个战斗回合将在%s内开始。"
 #Hud
 hud_siege_balance: '围攻分数: '
-hud_warchest: '军费开支: '
+hud_warchest: '战争奖励箱: '
 hud_battle_time_remaining: '剩余战斗时间: '
 msg_err_hud_not_available_in_folia: "&cHUD在Folia中不可用。"
 #Dynmap
@@ -183,7 +183,7 @@ dynmap_siege_title: 'Siege: %s vs %s'
 dynmap_siege_type: '类型:%s'
 dynmap_siege_town: '城镇: %s'
 dynmap_siege_balance: '围攻分数: %d'
-dynmap_siege_war_chest: '军费开支: %s'
+dynmap_siege_war_chest: '战争奖励箱: %s'
 dynmap_siege_battle_points: '战斗点数: %s / %s'
 #HUD
 hud_siege_type: '类型: '
